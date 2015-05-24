@@ -1,10 +1,10 @@
 package br.com.milksys.controller;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -31,24 +31,18 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	@FXML
 	private TextField descricaoField;
 
-	public RacaController() {
-		super();
-	}
-
 	@FXML
-	protected void initialize() {
+	public void initialize() {
 		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
 		// Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
-		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showDetails(newValue));
-		if ( data.size() <= 0 ){
-			data.addAll(service.findAll());
-			table.setItems(data);
-		}
+		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
 		
+        super.initialize();
+        
 	}
 	
-	public void showFormDialog(Object object) {
+	protected void showFormDialog(Object object) {
 		// Carrega o arquivo fxml e cria um novo stage para a janela popup.
 		AnchorPane racaForm = (AnchorPane) MainApp.load("view/raca/RacaFormDialog.fxml");
 
@@ -73,86 +67,29 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	}
 	
 	/**
-	 * Chamado quando o usuário clica no botão novo. Abre uma janela para editar
-	 * detalhes da nova pessoa.
-	 */
-	@FXML
-	private void handleNew() {
-		object = new Raca();
-		showFormDialog(object);
-	}
-
-
-	/**
-	 * Chamado quando o usuário clica no botão edit. Abre a janela para editar
-	 * detalhes da pessoa selecionada.
-	 */
-	@FXML
-	private void handleEdit() {
-		object = table.getSelectionModel().getSelectedItem();
-		if (object != null) {
-			showFormDialog(object);
-		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleção");
-			alert.setHeaderText("Nenhum animal selecionado");
-			alert.setContentText("Selecione pelo menos um registro na tabela!");
-			alert.showAndWait();
-		}
-	}
-
-	/**
-	 * Chamado quando o usuário clica no botão delete.
-	 */
-	@FXML
-	private void handleDelete() {
-		int selectedIndex = table.getSelectionModel().getSelectedIndex();
-		if (selectedIndex > 0) {
-			service.remove(table.getItems().get(selectedIndex));
-			table.getItems().remove(selectedIndex);
-		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleção");
-			alert.setHeaderText("Nenhum registro selecionado");
-			alert.setContentText("Selecione pelo menos um registro na tabela!");
-			alert.showAndWait();
-		}
-
-	}
-	
-	/**
 	 * Chamado quando o usuário clica OK no pop up.
 	 */
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
 			//fazer via reflection ou eventListener
-			((Raca) object).setDescricao(descricaoField.getText());
+			object().setDescricao(descricaoField.getText());
 			dialogStage.close();
 
-			if(((Raca) object).getId() > 0){
+			if(object().getId() > 0){
 				data.remove(table.getSelectionModel().getSelectedIndex());
 			}
 			
-			data.add((Raca)object);
+			data.add(object());
 			
-			service.save((Raca) object);
+			service.save(object());
 		}
 	}
-
-	/**
-	 * Chamado quando o usuário clica Cancel.
-	 */
-	@FXML
-	private void handleCancel() {
-		dialogStage.close();
+	
+	public Raca object(){
+		return (Raca) super.object;
 	}
-
-	@Override
-	protected void showDetails(Object value) {
-
-	}
-
+	
 	/**
 	 * Valida a entrada do usuário nos campos de texto.
 	 * 
