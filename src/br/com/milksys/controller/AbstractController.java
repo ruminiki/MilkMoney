@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -40,7 +41,7 @@ public class AbstractController<K, E> {
 	protected IService<K, E> service;
 	private   boolean isInitialized = false;
 	
-	public void initialize(){
+	public void initialize() {
 
 		if ( !isInitialized ){ 
 			
@@ -69,32 +70,31 @@ public class AbstractController<K, E> {
 			isInitialized = true;
 		}
 
+		//CONFIGURA O BIND DOS CAMPOS DA TELA COM O MODELO
 		//recupera os atributos TextFields da classe filha e faz o bind com o object
 		for ( Field f : this.getClass().getDeclaredFields() ){
+			//SE O ATRIBUTO FOR STRING E TEXT FIELD
 			if ( f.getType().equals(TextField.class) ){
 				Annotation a = f.getAnnotation(ColumnBind.class);
 				if ( a != null ){
-					Method method;
 					String columnName = ((ColumnBind)a).name();
 					//se o atributo com o nome do atributo do objeto foi setado na annotation
 					if ( columnName != null && !columnName.isEmpty() ){
-						String methodName = "set" + Character.toString(columnName.charAt(0)).toUpperCase()+columnName.substring(1);
 						try {
 							if ( object != null ){
-								//localiza o fiedl definido na annotation para pegar o tipo da classe
-								object.getClass().getDeclaredField(columnName).setAccessible(true);
-								Field fobject = object.getClass().getDeclaredField(columnName);
-								//recupera o methodo para fazer a invocação
-								method = object.getClass().getMethod(methodName, fobject.getType());	
+								
+								Method method = object.getClass().getMethod(columnName);
 								method.setAccessible(true);
 								
 								f.setAccessible(true);
 								Object faux = f.get(this);
 								
 								TextField tf = ((TextField) faux);
-								tf.textProperty().addListener((observable, oldValue, newValue) -> invokeMethodListener(method, newValue));
+								tf.textProperty().bindBidirectional((StringProperty)method.invoke(object));
+								
 							}
-						} catch (NoSuchMethodException | SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+						} catch (NoSuchMethodException | SecurityException | 
+								IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
 							e.printStackTrace();
 						}
 					}
@@ -104,19 +104,6 @@ public class AbstractController<K, E> {
 			
 		}
 		
-	}
-	
-	/**
-	 * Método chamado pelo listener no field do controller.
-	 * @param method
-	 * @param parameter
-	 */
-	private void invokeMethodListener(Method method, Object parameter){
-		try {
-			method.invoke(object, parameter);
-		} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public void setDialogStage(Stage dialogStage) {

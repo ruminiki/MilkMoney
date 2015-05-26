@@ -29,6 +29,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) {
 		MainApp.primaryStage = primaryStage;
 		MainApp.primaryStage.setTitle("Milk Money");
+		MainApp.primaryStage.setMaximized(true);
 		initRootLayout();
 	}
 

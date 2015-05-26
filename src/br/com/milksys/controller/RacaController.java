@@ -27,14 +27,16 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	private TableColumn<Raca, String> descricaoColumn;
 	@FXML
 	private TextField idField;
-	@FXML @ColumnBind(name="descricao")
+	@FXML @ColumnBind(name="descricaoProperty")
 	private TextField descricaoField;
 
 	@FXML
 	public void initialize() {
 		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+		
         super.initialize();
+        
 	}
 	
 	protected void showFormDialog(Object object) {
@@ -55,14 +57,8 @@ public class RacaController extends AbstractController<Integer, Raca> {
 		controller.setDialogStage(dialogStage);
 		controller.setObject(object);
 		
-		//descricaoField.selectedTextProperty()(((Raca)object).getDescricao());
-
 		// Mostra a janela e espera até o usuário fechar.
 		dialogStage.showAndWait();
-	}
-	
-	public Raca object(){
-		return (Raca) super.object;
 	}
 	
 	protected boolean isInputValid() {
