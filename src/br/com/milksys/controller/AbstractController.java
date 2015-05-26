@@ -8,12 +8,14 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -29,33 +31,44 @@ import br.com.milksys.service.IService;
 public class AbstractController<K, E> {
 	@FXML
 	protected TableView<E> table;
+	@FXML
+	protected Label lblNumRegistros;
 	protected ObservableList<E> data = FXCollections.observableArrayList();
 	protected Stage dialogStage;
 	protected Object object;
 	protected boolean okClicked = false;
 	protected IService<K, E> service;
+	private   boolean isInitialized = false;
 	
 	public void initialize(){
 
-		// sempre que cria a tela ele carrega o controller novamente duplicando os registros na tabela.
-		data.addAll(service.findAll());
-		table.setItems(data);
+		if ( !isInitialized ){ 
+			
+			//evento de seleção de objeto na tabela
+			data.addListener((ListChangeListener.Change<? extends E> c) ->{lblNumRegistros.setText(String.valueOf(data.size()));});
+			
+			// sempre que cria a tela ele carrega o controller novamente duplicando os registros na tabela.
+			data.addAll(service.findAll());
+			table.setItems(data);
+			
+			// captura o evento de double click da tables
+			table.setOnMousePressed(new EventHandler<MouseEvent>() {
 
-		// captura o evento de double click da tables
-		table.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-					handleEdit();
+				@Override
+				public void handle(MouseEvent event) {
+					if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+						handleEdit();
+					}
 				}
-			}
 
-		});
-		
-		//evento de seleção de objeto na tabela
-		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
-		
+			});
+			
+			//evento de seleção de objeto na tabela
+			table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
+
+			isInitialized = true;
+		}
+
 		//recupera os atributos TextFields da classe filha e faz o bind com o object
 		for ( Field f : this.getClass().getDeclaredFields() ){
 			if ( f.getType().equals(TextField.class) ){
