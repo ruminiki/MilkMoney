@@ -25,7 +25,6 @@ public class Raca implements Serializable {
 
 	public Raca() {
 	}
-
 	public String getDescricao() {
 		return this.descricao;
 	}

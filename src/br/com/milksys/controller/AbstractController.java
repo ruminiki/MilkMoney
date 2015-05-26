@@ -1,5 +1,9 @@
 package br.com.milksys.controller;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
@@ -11,12 +15,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import org.springframework.stereotype.Controller;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.service.IService;
 
 @Controller
@@ -29,11 +35,9 @@ public class AbstractController<K, E> {
 	protected boolean okClicked = false;
 	protected IService<K, E> service;
 	
-	public void initialize() {
+	public void initialize(){
 
-		// FIXME descobrir se está sendo incluido ou alterado um item
-		// sempre que cria a tela ele carrega o controller novamente duplicando
-		// os registros na tabela.
+		// sempre que cria a tela ele carrega o controller novamente duplicando os registros na tabela.
 		data.addAll(service.findAll());
 		table.setItems(data);
 
@@ -48,7 +52,58 @@ public class AbstractController<K, E> {
 			}
 
 		});
-
+		
+		//evento de seleção de objeto na tabela
+		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
+		
+		//recupera os atributos TextFields da classe filha e faz o bind com o object
+		for ( Field f : this.getClass().getDeclaredFields() ){
+			if ( f.getType().equals(TextField.class) ){
+				Annotation a = f.getAnnotation(ColumnBind.class);
+				if ( a != null ){
+					Method method;
+					String columnName = ((ColumnBind)a).name();
+					//se o atributo com o nome do atributo do objeto foi setado na annotation
+					if ( columnName != null && !columnName.isEmpty() ){
+						String methodName = "set" + Character.toString(columnName.charAt(0)).toUpperCase()+columnName.substring(1);
+						try {
+							if ( object != null ){
+								//localiza o fiedl definido na annotation para pegar o tipo da classe
+								object.getClass().getDeclaredField(columnName).setAccessible(true);
+								Field fobject = object.getClass().getDeclaredField(columnName);
+								//recupera o methodo para fazer a invocação
+								method = object.getClass().getMethod(methodName, fobject.getType());	
+								method.setAccessible(true);
+								
+								f.setAccessible(true);
+								Object faux = f.get(this);
+								
+								TextField tf = ((TextField) faux);
+								tf.textProperty().addListener((observable, oldValue, newValue) -> invokeMethodListener(method, newValue));
+							}
+						} catch (NoSuchMethodException | SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+			//para outros tipos fazer o mesmo procedimento
+			
+		}
+		
+	}
+	
+	/**
+	 * Método chamado pelo listener no field do controller.
+	 * @param method
+	 * @param parameter
+	 */
+	private void invokeMethodListener(Method method, Object parameter){
+		try {
+			method.invoke(object, parameter);
+		} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setDialogStage(Stage dialogStage) {
@@ -63,11 +118,6 @@ public class AbstractController<K, E> {
 		this.service = service;
 	}
 
-	@FXML
-	private void handleCancel() {
-		dialogStage.close();
-	}
-
 	protected void selectRowTableHandler(Object value) {
 		object = value;
 	}
@@ -76,14 +126,12 @@ public class AbstractController<K, E> {
 		throw new NotImplementedException();
 	}
 
-	/**
-	 * Chamado quando o usuário clica no botão novo. Abre uma janela para
-	 * inserir um novo objeto.
-	 * 
-	 * @throws IllegalAccessException
-	 * @throws InstantiationException
-	 * @throws ClassNotFoundException 
-	 */
+	protected boolean isInputValid() {
+		throw new NotImplementedException();
+	}
+	
+	//========= HANDLERS INTERFACE=============//
+
 	@FXML
 	private void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
 		
@@ -125,5 +173,37 @@ public class AbstractController<K, E> {
 			alert.showAndWait();
 		}
 	}
-
+	
+	@FXML
+	private void handleCancel() {
+		dialogStage.close();
+	}
+	
+	@FXML @SuppressWarnings("unchecked")
+	private void handleOk(){
+		if (isInputValid()) {
+			
+			dialogStage.close();
+			Method methodGetId;
+			
+			try {
+				
+				methodGetId = object.getClass().getMethod("getId");
+				boolean isNew = ((int) methodGetId.invoke(object)) <= 0;
+				if( isNew ){
+					data.add((E) object);
+				}else{
+					data.set(table.getSelectionModel().getSelectedIndex(), (E) object);
+				}
+				
+				service.save((E) object);
+				
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | 
+					IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
+	
 }

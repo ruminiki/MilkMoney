@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
+import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.model.Raca;
 import br.com.milksys.service.IService;
 
@@ -26,18 +27,14 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	private TableColumn<Raca, String> descricaoColumn;
 	@FXML
 	private TextField idField;
-	@FXML
+	@FXML @ColumnBind(name="descricao")
 	private TextField descricaoField;
 
 	@FXML
 	public void initialize() {
 		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-		// Detecta mudanças de seleção e mostra os detalhes da pessoa quando houver mudança.
-		table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
-		
         super.initialize();
-        
 	}
 	
 	protected void showFormDialog(Object object) {
@@ -58,42 +55,17 @@ public class RacaController extends AbstractController<Integer, Raca> {
 		controller.setDialogStage(dialogStage);
 		controller.setObject(object);
 		
-		descricaoField.setText(((Raca)object).getDescricao());
+		//descricaoField.selectedTextProperty()(((Raca)object).getDescricao());
 
 		// Mostra a janela e espera até o usuário fechar.
 		dialogStage.showAndWait();
-	}
-	
-	/**
-	 * Chamado quando o usuário clica OK no pop up.
-	 */
-	@FXML
-	private void handleOk() {
-		if (isInputValid()) {
-			//fazer via reflection ou eventListener
-			object().setDescricao(descricaoField.getText());
-			dialogStage.close();
-
-			if(object().getId() > 0){
-				data.remove(table.getSelectionModel().getSelectedIndex());
-			}
-			
-			data.add(object());
-			
-			service.save(object());
-		}
 	}
 	
 	public Raca object(){
 		return (Raca) super.object;
 	}
 	
-	/**
-	 * Valida a entrada do usuário nos campos de texto.
-	 * 
-	 * @return true se a entrada é válida
-	 */
-	private boolean isInputValid() {
+	protected boolean isInputValid() {
 		return true;
 	}
 
