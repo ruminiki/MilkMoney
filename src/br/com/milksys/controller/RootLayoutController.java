@@ -9,8 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import br.com.milksys.MainApp;
 
 /**
- * O controlador para o root layout. O root layout provê um layout básico
- * para a aplicação contendo uma barra de menu e um espaço onde outros elementos
+ * O controlador para o root layout. O root layout provï¿½ um layout bï¿½sico
+ * para a aplicaï¿½ï¿½o contendo uma barra de menu e um espaï¿½o onde outros elementos
  * JavaFX podem ser colocados.
  * 
  * @author Marco Jakob
@@ -31,27 +31,27 @@ public class RootLayoutController {
     }
 
     /**
-     * Abre o FileChooser para permitir o usuário selecionar uma agenda
+     * Abre o FileChooser para permitir o usuï¿½rio selecionar uma agenda
      * para carregar.
      */
     @FXML
     private void handleCadastroRaca() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/raca/RacaForm.fxml");
+    	AnchorPane form = (AnchorPane) MainApp.load("view/raca/RacaOverview.fxml");
     	MainApp.rootLayout.setCenter(form);
     	
     }
 
     /**
-     * Salva o arquivo para o arquivo de pessoa aberto atualmente. Se não houver
-     * arquivo aberto, a janela "salvar como" é mostrada.
+     * Salva o arquivo para o arquivo de pessoa aberto atualmente. Se nï¿½o houver
+     * arquivo aberto, a janela "salvar como" ï¿½ mostrada.
      */
     @FXML
     private void handleSave() {
     }
 
     /**
-     * Abre um FileChooser para permitir o usuário selecionar um arquivo
+     * Abre um FileChooser para permitir o usuï¿½rio selecionar um arquivo
      * para salvar.
      */
     @FXML
@@ -73,7 +73,7 @@ public class RootLayoutController {
     }
 
     /**
-     * Fecha a aplicação.
+     * Fecha a aplicaï¿½ï¿½o.
      */
     @FXML
     private void handleExit() {

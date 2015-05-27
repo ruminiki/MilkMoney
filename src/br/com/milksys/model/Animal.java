@@ -3,11 +3,14 @@ package br.com.milksys.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,7 +22,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="ANIMAL")
+@Table(name="animal")
 @NamedQuery(name="Animal.findAll", query="SELECT a FROM Animal a")
 public class Animal implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +32,6 @@ public class Animal implements Serializable {
 	private int id;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name="DATA_NASCIMENTO")
 	private Date dataNascimento;
 
 	@Column(length=100)
@@ -38,21 +40,13 @@ public class Animal implements Serializable {
 	@Column(length=50)
 	private String numero;
 
-	@Column(length=100)
-	private String raca;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="raca")
+	private Raca raca;
 
 	public Animal() {
 	}
 
-	public Animal(String numero, String nome) {
-		this.numero = new String(numero);
-		this.nome = new String(nome);
-
-		// Alguns dados de exemplo, apenas para testes.
-		this.raca = new String("HOLANDESA");
-		this.dataNascimento = new Date();
-	}
-	
 	public Date getDataNascimento() {
 		return this.dataNascimento;
 	}
@@ -85,12 +79,13 @@ public class Animal implements Serializable {
 		this.numero = numero;
 	}
 
-	public String getRaca() {
-		return this.raca;
+	public Raca getRaca() {
+		return raca;
 	}
 
-	public void setRaca(String raca) {
+	public void setRaca(Raca raca) {
 		this.raca = raca;
 	}
+	
 
 }

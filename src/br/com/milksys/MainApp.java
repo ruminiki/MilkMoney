@@ -22,19 +22,19 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public MainApp() {
-		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml"});
+		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml", "beans.xml"});
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
 		MainApp.primaryStage = primaryStage;
 		MainApp.primaryStage.setTitle("Milk Money");
-		MainApp.primaryStage.setMaximized(true);
+		//MainApp.primaryStage.setMaximized(true);
 		initRootLayout();
 	}
 
 	/**
-	 * Inicializa o root layout e tenta carregar o último arquivo
+	 * Inicializa o root layout e tenta carregar o ï¿½ltimo arquivo
 	 * de pessoa aberto.
 	 */
 	public void initRootLayout() {
@@ -57,7 +57,7 @@ public class MainApp extends Application {
 		return context.getBean(clazz);
 	}
 	/**
-	 * Neste método é feita a substituição do objeto controller da interface
+	 * Neste mï¿½todo ï¿½ feita a substituiï¿½ï¿½o do objeto controller da interface
 	 * pelo controller instanciado pelo Spring.
 	 * @param url
 	 * @return
