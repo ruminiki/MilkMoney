@@ -22,7 +22,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="precoleite")
+@Table(name="precoLeite")
 @NamedQuery(name="PrecoLeite.findAll", query="SELECT p FROM PrecoLeite p")
 public class PrecoLeite implements Serializable {
 	private static final long serialVersionUID = 1L;

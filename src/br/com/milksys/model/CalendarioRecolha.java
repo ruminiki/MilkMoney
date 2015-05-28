@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="calendariorecolha")
+@Table(name="calendarioRecolha")
 @NamedQuery(name="CalendarioRecolha.findAll", query="SELECT c FROM CalendarioRecolha c")
 public class CalendarioRecolha implements Serializable {
 	private static final long serialVersionUID = 1L;

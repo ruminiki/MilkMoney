@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.com.milksys.components.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -20,7 +21,7 @@
               </rowConstraints>
                <children>
                   <Label text="Descrição" />
-                  <TextField fx:id="descricaoField" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="descricaoField" GridPane.columnIndex="1" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

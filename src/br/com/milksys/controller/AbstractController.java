@@ -20,6 +20,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -28,6 +30,7 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
+import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.service.IService;
 
@@ -67,6 +70,24 @@ public abstract class AbstractController<K, E> {
 
 			});
 			
+			// captura o evento de ENTER de DELETE na tabela
+			table.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+				@Override
+				public void handle(KeyEvent event) {
+					
+					if ( event.getCode().equals(KeyCode.ENTER) ){
+						showForm();
+					}
+					
+					if ( event.getCode().equals(KeyCode.DELETE) ){
+						handleDelete();
+					}
+					
+				}
+
+			});
+			
 			//evento de seleï¿½ï¿½o de objeto na tabela
 			table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
 
@@ -75,9 +96,9 @@ public abstract class AbstractController<K, E> {
 
 		//CONFIGURA O BIND DOS CAMPOS DE TELA COM O MODELO
 		//recupera os atributos TextFields da classe filha e faz o bind com o object
-		/*for ( Field f : this.getClass().getDeclaredFields() ){
+		for ( Field f : this.getClass().getDeclaredFields() ){
 			//SE O ATRIBUTO FOR STRING E TEXT FIELD
-			if ( f.getType().equals(TextField.class) ){
+			if ( f.getType().equals(UCTextField.class) ){
 				Annotation a = f.getAnnotation(ColumnBind.class);
 				if ( a != null ){
 					String columnName = ((ColumnBind)a).name();
@@ -92,7 +113,7 @@ public abstract class AbstractController<K, E> {
 								f.setAccessible(true);
 								Object faux = f.get(this);
 								
-								TextField tf = ((TextField) faux);
+								UCTextField tf = ((UCTextField) faux);
 								tf.textProperty().bindBidirectional((StringProperty)method.invoke(object));
 								
 							}
@@ -105,7 +126,7 @@ public abstract class AbstractController<K, E> {
 			}
 			//para outros tipos fazer o mesmo procedimento
 			
-		}*/
+		}
 		
 	}
 	
@@ -135,6 +156,23 @@ public abstract class AbstractController<K, E> {
 
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
+		
+		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+				@Override
+				public void handle(KeyEvent event) {
+					
+					if ( event.getCode().equals(KeyCode.ENTER) ){
+						handleOk();
+					}
+					
+					if ( event.getCode().equals(KeyCode.ESCAPE) ){
+						handleCancel();
+					}
+					
+				}
+
+			});
 		
 		dialogStage.showAndWait();
 	}
@@ -168,10 +206,10 @@ public abstract class AbstractController<K, E> {
 	@FXML
 	protected void handleDelete() {
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
-		if (selectedIndex > 0) {
+		if (selectedIndex >= 0) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmaçãoso");
-			alert.setHeaderText("Confirme a exclusão do registro");
+			alert.setTitle("Confirmaï¿½ï¿½oso");
+			alert.setHeaderText("Confirme a exclusï¿½o do registro");
 			alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
@@ -180,7 +218,7 @@ public abstract class AbstractController<K, E> {
 			}
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleção");
+			alert.setTitle("Nenhuma Seleï¿½ï¿½o");
 			alert.setHeaderText("Nenhum registro selecionado");
 			alert.setContentText("Selecione pelo menos um registro na tabela!");
 			alert.showAndWait();

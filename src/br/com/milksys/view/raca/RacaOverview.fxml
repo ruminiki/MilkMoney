@@ -50,7 +50,7 @@
             <Insets right="5.0" />
          </padding>
       </HBox>
-      <TableView fx:id="table" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="table" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="idColumn" maxWidth="50.0" prefWidth="97.0" resizable="false" text="ID" />
           <TableColumn fx:id="descricaoColumn" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" text="Descrição" />

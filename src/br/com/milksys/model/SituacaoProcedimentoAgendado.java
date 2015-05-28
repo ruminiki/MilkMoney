@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="situacaoprocedimentoagendado")
+@Table(name="situacaoProcedimentoAgendado")
 @NamedQuery(name="SituacaoProcedimentoAgendado.findAll", query="SELECT s FROM SituacaoProcedimentoAgendado s")
 public class SituacaoProcedimentoAgendado implements Serializable {
 	private static final long serialVersionUID = 1L;

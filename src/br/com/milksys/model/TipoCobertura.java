@@ -19,7 +19,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="tipocobertura")
+@Table(name="tipoCobertura")
 @NamedQuery(name="TipoCobertura.findAll", query="SELECT t FROM TipoCobertura t")
 public class TipoCobertura implements Serializable {
 	private static final long serialVersionUID = 1L;

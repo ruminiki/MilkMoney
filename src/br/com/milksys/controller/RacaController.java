@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.model.Raca;
 import br.com.milksys.service.IService;
@@ -22,23 +23,19 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	private TableColumn<Raca, String> descricaoColumn;
 	@FXML
 	private TextField idField;
-	@FXML @ColumnBind(name="descricaoProperty")
-	private TextField descricaoField;
+	@FXML
+	@ColumnBind(name = "descricaoProperty")
+	private UCTextField descricaoField;
 
 	@FXML
 	public void initialize() {
-		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
+		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(	String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-		
-		if ( descricaoField != null ){
-			descricaoField.textProperty().bind(((Raca)object).descricaoProperty());
-			descricaoField.textProperty().addListener((event) -> {descricaoField.setText(descricaoField.getText().toUpperCase());});
-		}
-		
-        super.initialize();
-        
+
+		super.initialize();
+
 	}
-	
+
 	@Override
 	protected boolean isInputValid() {
 		return true;
@@ -48,12 +45,12 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	protected String getFormName() {
 		return "view/raca/RacaForm.fxml";
 	}
-	
+
 	@Override
 	protected String getFormTitle() {
-		return "Raça";
+		return "Raï¿½a";
 	}
-	
+
 	@Override
 	@Resource(name = "racaService")
 	protected void setService(IService<Integer, Raca> service) {
