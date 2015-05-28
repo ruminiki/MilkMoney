@@ -75,7 +75,7 @@ public abstract class AbstractController<K, E> {
 
 		//CONFIGURA O BIND DOS CAMPOS DE TELA COM O MODELO
 		//recupera os atributos TextFields da classe filha e faz o bind com o object
-		for ( Field f : this.getClass().getDeclaredFields() ){
+		/*for ( Field f : this.getClass().getDeclaredFields() ){
 			//SE O ATRIBUTO FOR STRING E TEXT FIELD
 			if ( f.getType().equals(TextField.class) ){
 				Annotation a = f.getAnnotation(ColumnBind.class);
@@ -105,7 +105,7 @@ public abstract class AbstractController<K, E> {
 			}
 			//para outros tipos fazer o mesmo procedimento
 			
-		}
+		}*/
 		
 	}
 	

@@ -30,6 +30,11 @@ public class RacaController extends AbstractController<Integer, Raca> {
 		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
 		
+		if ( descricaoField != null ){
+			descricaoField.textProperty().bind(((Raca)object).descricaoProperty());
+			descricaoField.textProperty().addListener((event) -> {descricaoField.setText(descricaoField.getText().toUpperCase());});
+		}
+		
         super.initialize();
         
 	}

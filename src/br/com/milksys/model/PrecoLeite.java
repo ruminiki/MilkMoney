@@ -5,7 +5,11 @@ import java.io.Serializable;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +27,7 @@ import javax.persistence.Table;
 public class PrecoLeite implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private FloatProperty valor;
@@ -40,7 +44,7 @@ public class PrecoLeite implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	@Access(AccessType.PROPERTY)
 	public float getValor() {
 		return this.valor.get();
 	}
@@ -55,6 +59,7 @@ public class PrecoLeite implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="periodoReferencia")
+	@Access(AccessType.PROPERTY)
 	public CalendarioRecolha getCalendariorecolha() {
 		return this.calendariorecolha.get();
 	}
