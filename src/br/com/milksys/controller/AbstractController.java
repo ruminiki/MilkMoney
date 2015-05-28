@@ -126,11 +126,9 @@ public abstract class AbstractController<K, E> {
 	}
 
 	protected void showForm() {
-		// Carrega o arquivo fxml e cria um novo stage para a janela popup.
 		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
 
-		// Cria o palco dialogStage.
-		Stage dialogStage = new Stage();
+		dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
 		dialogStage.initModality(Modality.WINDOW_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
@@ -138,12 +136,6 @@ public abstract class AbstractController<K, E> {
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
 		
-		// Define o objeto no controller.
-		//AbstractController<K, E> controller = MainApp.getController(RacaController.class);
-		//controller.setDialogStage(dialogStage);
-		//controller.setObject(object);
-		
-		// Mostra a janela e espera atï¿½ o usuï¿½rio fechar.
 		dialogStage.showAndWait();
 	}
 
@@ -178,8 +170,8 @@ public abstract class AbstractController<K, E> {
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
 		if (selectedIndex > 0) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmaï¿½ï¿½o");
-			alert.setHeaderText("Confirme a exclusï¿½o do registro");
+			alert.setTitle("Confirmaçãoso");
+			alert.setHeaderText("Confirme a exclusão do registro");
 			alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
@@ -188,7 +180,7 @@ public abstract class AbstractController<K, E> {
 			}
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleï¿½ï¿½o");
+			alert.setTitle("Nenhuma Seleção");
 			alert.setHeaderText("Nenhum registro selecionado");
 			alert.setContentText("Selecione pelo menos um registro na tabela!");
 			alert.showAndWait();

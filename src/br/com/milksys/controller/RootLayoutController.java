@@ -65,7 +65,7 @@ public class RootLayoutController {
     private void handleAbout() {
     	
 		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("MilkSys");
+		alert.setTitle("Milk Money 1.0");
 		alert.setHeaderText("Sobre");
 		alert.setContentText("Autor: Ruminiki Schmoeller");
 		alert.showAndWait();
