@@ -25,7 +25,7 @@ import javax.persistence.Table;
 public class Raca implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private StringProperty descricao = new SimpleStringProperty();;
+	private StringProperty descricao = new SimpleStringProperty();
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

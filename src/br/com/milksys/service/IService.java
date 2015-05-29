@@ -10,5 +10,4 @@ public interface IService<K, E> {
     E findById(K id);
     List<E> findAll();
 	
-	
 }

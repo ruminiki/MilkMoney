@@ -2,8 +2,9 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
@@ -29,13 +30,10 @@ public class CalendarioRecolha implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private BooleanProperty calendarioAtual;
-
-	private IntegerProperty dataFim;
-
-	private IntegerProperty dataInicio;
-
-	private StringProperty descricao;
+	private Property<String> calendarioAtual = new SimpleStringProperty();
+	private Property<Number> dataFim = new SimpleIntegerProperty();
+	private Property<Number> dataInicio = new SimpleIntegerProperty();
+	private StringProperty descricao = new SimpleStringProperty();
 
 	public CalendarioRecolha() {
 	}
@@ -48,39 +46,39 @@ public class CalendarioRecolha implements Serializable {
 		this.id = id;
 	}
 	@Access(AccessType.PROPERTY)
-	public boolean getCalendarioAtual() {
-		return this.calendarioAtual.get();
+	public String getCalendarioAtual() {
+		return this.calendarioAtual.getValue();
 	}
 
-	public void setCalendarioAtual(boolean calendarioAtual) {
-		this.calendarioAtual.set(calendarioAtual);
+	public void setCalendarioAtual(String calendarioAtual) {
+		this.calendarioAtual.setValue(calendarioAtual);
 	}
 	
-	public BooleanProperty calendarioAtualProperty(){
+	public Property<String> calendarioAtualProperty(){
 		return this.calendarioAtual;
 	}
 	@Access(AccessType.PROPERTY)
 	public int getDataFim() {
-		return this.dataFim.get();
+		return (int) this.dataFim.getValue();
 	}
 
 	public void setDataFim(int dataFim) {
-		this.dataFim.set(dataFim);
+		this.dataFim.setValue(dataFim);
 	}
 	
-	public IntegerProperty dataFimProperty(){
+	public Property<Number> dataFimProperty(){
 		return this.dataFim;
 	}
 	@Access(AccessType.PROPERTY)
 	public int getDataInicio() {
-		return this.dataInicio.get();
+		return (int) this.dataInicio.getValue();
 	}
 
 	public void setDataInicio(int dataInicio) {
-		this.dataInicio.set(dataInicio);
+		this.dataInicio.setValue(dataInicio);
 	}
 
-	public IntegerProperty dataInicioProperty(){
+	public Property<Number> dataInicioProperty(){
 		return this.dataInicio;
 	}
 	@Access(AccessType.PROPERTY)

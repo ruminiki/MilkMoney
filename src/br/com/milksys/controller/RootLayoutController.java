@@ -17,10 +17,6 @@ import br.com.milksys.MainApp;
  */
 public class RootLayoutController {
 
-    /**
-     * Cria uma agenda vazia.
-     * @throws IOException 
-     */
     @FXML
     private void handleCadastroAnimal() throws IOException {
         
@@ -30,10 +26,6 @@ public class RootLayoutController {
     	
     }
 
-    /**
-     * Abre o FileChooser para permitir o usu�rio selecionar uma agenda
-     * para carregar.
-     */
     @FXML
     private void handleCadastroRaca() {
         
@@ -42,18 +34,14 @@ public class RootLayoutController {
     	
     }
 
-    /**
-     * Salva o arquivo para o arquivo de pessoa aberto atualmente. Se n�o houver
-     * arquivo aberto, a janela "salvar como" � mostrada.
-     */
     @FXML
-    private void handleSave() {
+    private void handleCadastroCalendarioRecolha() {
+        
+    	AnchorPane form = (AnchorPane) MainApp.load("view/calendarioRecolha/CalendarioRecolhaOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
     }
 
-    /**
-     * Abre um FileChooser para permitir o usu�rio selecionar um arquivo
-     * para salvar.
-     */
     @FXML
     private void handleSaveAs() {
     }

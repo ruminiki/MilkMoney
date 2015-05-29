@@ -21,7 +21,7 @@
 								<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
-						<MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
+						<MenuItem mnemonicParsing="false" onAction="#handleCadastroCalendarioRecolha" text="Calendário Recolha">
 							<accelerator>
 								<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
