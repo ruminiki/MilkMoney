@@ -10,28 +10,29 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.UCTextField;
-import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.model.Raca;
+import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
 public class RacaController extends AbstractController<Integer, Raca> {
 
-	@FXML
-	private TableColumn<Raca, String> idColumn;
-	@FXML
-	private TableColumn<Raca, String> descricaoColumn;
-	@FXML
-	private TextField idField;
-	@FXML
-	@ColumnBind(name = "descricaoProperty")
-	private UCTextField descricaoField;
+	@FXML private TableColumn<Raca, String> idColumn;
+	@FXML private TableColumn<Raca, String> descricaoColumn;
+	@FXML private TextField idField;
+	@FXML private UCTextField descricaoField;
 
 	@FXML
 	public void initialize() {
-		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(	String.valueOf(cellData.getValue().getId())));
-		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-
+		
+		if (!state.equals(State.INSERT_TO_SELECT)){
+			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
+			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+		}
+		if ( descricaoField != null ){
+			descricaoField.textProperty().bindBidirectional(((Raca)object).descricaoProperty());
+		}
+		
 		super.initialize();
 
 	}
@@ -48,7 +49,7 @@ public class RacaController extends AbstractController<Integer, Raca> {
 
 	@Override
 	protected String getFormTitle() {
-		return "Raï¿½a";
+		return "Raça";
 	}
 
 	@Override

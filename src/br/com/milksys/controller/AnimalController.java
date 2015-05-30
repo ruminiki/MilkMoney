@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
+import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
 import br.com.milksys.util.DateUtil;
@@ -34,6 +35,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private ComboBox<Raca> inputRaca;
 	@Resource(name="racaService")
 	private RacaService racaService;
+	@Resource(name="racaController")
+	private RacaController racaController;
 
 	@FXML
 	public void initialize() {
@@ -118,6 +121,17 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@Resource(name = "animalService")
 	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
+	}
+
+	@FXML
+	protected void openFormRacaToInsertAndSelect() {
+		racaController.state = State.INSERT_TO_SELECT;
+		racaController.object = new Raca();
+		racaController.showForm();
+		if ( racaController.getObject() != null ){
+			inputRaca.getItems().add((Raca)racaController.getObject());
+			inputRaca.getSelectionModel().select((Raca)racaController.getObject());
+		}
 	}
 
 }
