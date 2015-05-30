@@ -3,7 +3,6 @@ package br.com.milksys.model;
 import java.io.Serializable;
 
 import javafx.beans.property.FloatProperty;
-import javafx.beans.property.ObjectProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -11,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -29,10 +26,7 @@ public class PrecoLeite implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	private FloatProperty valor;
-
-	private ObjectProperty<CalendarioRecolha> calendariorecolha;
 
 	public PrecoLeite() {
 	}
@@ -57,19 +51,4 @@ public class PrecoLeite implements Serializable {
 		return this.valor;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="periodoReferencia")
-	@Access(AccessType.PROPERTY)
-	public CalendarioRecolha getCalendariorecolha() {
-		return this.calendariorecolha.get();
-	}
-
-	public void setCalendariorecolha(CalendarioRecolha calendariorecolha) {
-		this.calendariorecolha.set(calendariorecolha);
-	}
-	
-	public ObjectProperty<CalendarioRecolha> calendarioRecolhaProperty(){
-		return this.calendariorecolha;
-	}
-
 }

@@ -1,8 +1,11 @@
 package br.com.milksys.util;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 
 public class DateUtil {
 	
@@ -26,6 +29,40 @@ public class DateUtil {
 	    }
 	    return DATE_FORMATTER.format(date);
 	}
+	
+	/**
+	 * Retorna os dados como String formatado. O 
+	 * {@link DateUtil#DATE_PATTERN}  (padrão de data) que é utilizado.
+	 * 
+	 * @param date A data a ser retornada como String
+	 * @return String formadado
+	 */
+	public static String format(Date date) {
+	    if (date == null) {
+	        return null;
+	    }
+	    LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    return DATE_FORMATTER.format(localDate);
+	}
+	
+	
+    public static LocalDate asLocalDate(Date date) {
+        if (date == null)
+            return null;
+
+        if (date instanceof java.sql.Date)
+            return ((java.sql.Date) date).toLocalDate();
+        else
+            return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+    
+    public static Date asDate(LocalDate localDate) {
+        if (localDate == null)
+            return null;
+        else
+        	return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
+
 	
 	/**
 	 * Converte um String no formato definido {@link DateUtil#DATE_PATTERN} 

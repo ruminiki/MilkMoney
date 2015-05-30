@@ -52,7 +52,7 @@ public class CalendarioRecolhaController extends AbstractController<Integer, Cal
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
 		dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDataInicio())));
 		dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDataFim())));
-		calendarioAtualColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCalendarioAtual()));
+		calendarioAtualColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCalendarioVigente()));
 		
 		if ( inputDataInicio != null ){
 			inputDataInicio.setItems(Util.generateListNumbers(1, 31));
@@ -66,12 +66,8 @@ public class CalendarioRecolhaController extends AbstractController<Integer, Cal
 		
 		if ( inputCalendarioAtual != null ){
 			inputCalendarioAtual.setItems(optionsSimNao);
-			inputCalendarioAtual.valueProperty().bindBidirectional(((CalendarioRecolha)object).calendarioAtualProperty());
+			inputCalendarioAtual.valueProperty().bindBidirectional(((CalendarioRecolha)object).calendarioVigenteProperty());
 		}
-		
-		/*if ( inputDescricao != null ){
-			inputDescricao.textProperty().bindBidirectional(((CalendarioRecolha)object).descricaoProperty());
-		}*/
 		
 		super.initialize();
 

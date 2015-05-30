@@ -30,7 +30,7 @@ public class CalendarioRecolha implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private Property<String> calendarioAtual = new SimpleStringProperty();
+	private Property<String> calendarioVigente = new SimpleStringProperty();
 	private Property<Number> dataFim = new SimpleIntegerProperty();
 	private Property<Number> dataInicio = new SimpleIntegerProperty();
 	private StringProperty descricao = new SimpleStringProperty();
@@ -46,16 +46,16 @@ public class CalendarioRecolha implements Serializable {
 		this.id = id;
 	}
 	@Access(AccessType.PROPERTY)
-	public String getCalendarioAtual() {
-		return this.calendarioAtual.getValue();
+	public String getCalendarioVigente() {
+		return this.calendarioVigente.getValue();
 	}
 
-	public void setCalendarioAtual(String calendarioAtual) {
-		this.calendarioAtual.setValue(calendarioAtual);
+	public void setCalendarioVigente(String calendarioVigente) {
+		this.calendarioVigente.setValue(calendarioVigente);
 	}
 	
-	public Property<String> calendarioAtualProperty(){
-		return this.calendarioAtual;
+	public Property<String> calendarioVigenteProperty(){
+		return this.calendarioVigente;
 	}
 	@Access(AccessType.PROPERTY)
 	public int getDataFim() {
