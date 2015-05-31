@@ -6,14 +6,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import br.com.milksys.dao.GenericDao;
+import br.com.milksys.dao.CalendarioRecolhaDao;
 import br.com.milksys.model.CalendarioRecolha;
 
 @Service
 public class CalendarioRecolhaService implements IService<Integer, CalendarioRecolha>{
 
 	@Resource(name = "calendarioRecolhaDao")
-	public GenericDao<Integer, CalendarioRecolha> dao;
+	public CalendarioRecolhaDao dao;
 
 	@Override
 	public void save(CalendarioRecolha entity) {
@@ -35,5 +35,8 @@ public class CalendarioRecolhaService implements IService<Integer, CalendarioRec
 		return dao.findAll(CalendarioRecolha.class);
 	}
 	
+	public CalendarioRecolha getCalendarioVigente(){
+		return dao.getCalendarioVigente();
+	}
 	
 }

@@ -6,67 +6,64 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.UCTextField;
-import br.com.milksys.controller.annotations.ColumnBind;
 import br.com.milksys.model.CalendarioRecolha;
 import br.com.milksys.service.IService;
-import br.com.milksys.util.Util;
 
 @Controller
 public class CalendarioRecolhaController extends AbstractController<Integer, CalendarioRecolha> {
 
-	@FXML
-	private TableColumn<CalendarioRecolha, String> idColumn;
-	@FXML
-	private TableColumn<CalendarioRecolha, String> descricaoColumn;
-	@FXML
-	private TableColumn<CalendarioRecolha, String> dataInicioColumn;
-	@FXML
-	private TableColumn<CalendarioRecolha, String> dataFimColumn;
-	@FXML
-	private TableColumn<CalendarioRecolha, String> calendarioAtualColumn;
-	@FXML
-	private ComboBox<Number> inputDataInicio;
-	@FXML
-	private ComboBox<Number> inputDataFim;
-	@FXML
-	private ComboBox<String> inputCalendarioAtual;
-	@FXML
-	@ColumnBind(name = "descricaoProperty")
-	private UCTextField inputDescricao;
-	private ObservableList<String> optionsSimNao = FXCollections.observableArrayList();
+	@FXML private TableColumn<CalendarioRecolha, String> idColumn;
+	@FXML private TableColumn<CalendarioRecolha, String> descricaoColumn;
+	@FXML private TableColumn<CalendarioRecolha, String> dataInicioColumn;
+	@FXML private TableColumn<CalendarioRecolha, String> dataFimColumn;
+	@FXML private TableColumn<CalendarioRecolha, String> calendarioAtualColumn;
+	@FXML private TableColumn<CalendarioRecolha, String> mesInicioColumn;
+	@FXML private TextField inputDiaInicio;
+	@FXML private TextField inputDiaFim;
+	@FXML private ComboBox<String> inputCalendarioAtual;
+	@FXML private ComboBox<String> inputMesInicio;
+	@FXML private UCTextField inputDescricao;
+	private ObservableList<String> optionsSimNao = FXCollections.observableArrayList("SIM", "NÃO");
+	private ObservableList<String> optionsMesInicio = FXCollections.observableArrayList("ANTERIOR", "CORRENTE");
 	
-	{
-		optionsSimNao.add("SIM");
-		optionsSimNao.add("NÃO");
-	}
-
 	@FXML
 	public void initialize() {
 		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-		dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDataInicio())));
-		dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDataFim())));
+		dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaInicio())));
+		dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaFim())));
 		calendarioAtualColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCalendarioVigente()));
+		mesInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesInicio()));
 		
-		if ( inputDataInicio != null ){
-			inputDataInicio.setItems(Util.generateListNumbers(1, 31));
-			inputDataInicio.valueProperty().bindBidirectional(((CalendarioRecolha)object).dataInicioProperty());
+		if ( inputDiaInicio != null ){
+			inputDiaInicio.textProperty().bindBidirectional(((CalendarioRecolha)object).diaInicioProperty());
 		}
 		
-		if ( inputDataFim != null ){
-			inputDataFim.setItems(Util.generateListNumbers(1, 31));
-			inputDataFim.valueProperty().bindBidirectional(((CalendarioRecolha)object).dataFimProperty());
+		if ( inputDiaFim != null ){
+			inputDiaFim.textProperty().bindBidirectional(((CalendarioRecolha)object).diaFimProperty());
 		}
 		
 		if ( inputCalendarioAtual != null ){
 			inputCalendarioAtual.setItems(optionsSimNao);
+			inputCalendarioAtual.getSelectionModel().selectFirst();
 			inputCalendarioAtual.valueProperty().bindBidirectional(((CalendarioRecolha)object).calendarioVigenteProperty());
+		}
+		
+		if ( inputMesInicio != null ){
+			inputMesInicio.setItems(optionsMesInicio);
+			inputMesInicio.getSelectionModel().selectFirst();
+			inputMesInicio.valueProperty().bindBidirectional(((CalendarioRecolha)object).mesInicioProperty());
+		}
+		
+		if ( inputDescricao != null ){
+			inputDescricao.textProperty().bindBidirectional(((CalendarioRecolha)object).descricaoProperty());
 		}
 		
 		super.initialize();

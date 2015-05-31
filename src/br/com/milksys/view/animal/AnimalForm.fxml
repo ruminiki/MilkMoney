@@ -27,15 +27,15 @@
                   <Label text="Raça" GridPane.rowIndex="2" />
                   <Label graphicTextGap="10.0" text="Data Nascimento" GridPane.rowIndex="3" />
                   <Label text="Número" />
-                  <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputNumero" prefWidth="100.0" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <ComboBox fx:id="inputRaca" prefWidth="250.0" promptText="Selecione..." />
                         <Button mnemonicParsing="false" onAction="#openFormRacaToInsertAndSelect" text="Novo" />
                      </children>
                   </HBox>
+                  <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -20,7 +20,6 @@ public class RootLayoutController {
     @FXML
     private void handleCadastroAnimal() throws IOException {
         
-        //loader.setLocation(MainApp.class.getResource("view/animal/AnimalOverview.fxml"));
     	AnchorPane animalOverview = (AnchorPane) MainApp.load("view/animal/AnimalOverview.fxml");
     	MainApp.rootLayout.setCenter(animalOverview);
     	
@@ -38,6 +37,14 @@ public class RootLayoutController {
     private void handleCadastroCalendarioRecolha() {
         
     	AnchorPane form = (AnchorPane) MainApp.load("view/calendarioRecolha/CalendarioRecolhaOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
+    }
+    
+    @FXML
+    private void handleCadastroEntregaLeite() {
+        
+    	AnchorPane form = (AnchorPane) MainApp.load("view/entregaLeite/EntregaLeiteForm.fxml");
     	MainApp.rootLayout.setCenter(form);
     	
     }

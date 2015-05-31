@@ -13,11 +13,12 @@
          <children>
             <GridPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="130.0" minWidth="100.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="373.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="130.0" minWidth="68.0" prefWidth="68.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="369.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,11 +27,13 @@
                   <Label text="Descrição" />
                   <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" />
                   <Label text="Dia Início" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="inputDataInicio" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="inputDataFim" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Dia Fim" GridPane.rowIndex="2" />
-                  <Label text="Vigente" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="inputCalendarioAtual" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Mês Início" GridPane.rowIndex="3" />
+                  <Label text="Vigente" GridPane.rowIndex="4" />
+                  <TextField fx:id="inputDiaInicio" maxWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputDiaFim" maxWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="inputMesInicio" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="inputCalendarioAtual" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
