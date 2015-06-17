@@ -1,5 +1,6 @@
 package br.com.milksys.util;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -10,7 +11,7 @@ import java.util.Date;
 public class DateUtil {
 	
 	/** O padrão usado para conversão. Mude como quiser. */
-	private static final String DATE_PATTERN = "dd.MM.yyyy";
+	private static final String DATE_PATTERN = "dd/MM/yyyy";
 	
 	/** O formatador de data. */
 	private static final DateTimeFormatter DATE_FORMATTER = 
@@ -38,11 +39,13 @@ public class DateUtil {
 	 * @return String formadado
 	 */
 	public static String format(Date date) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 	    if (date == null) {
 	        return null;
 	    }
-	    LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	    return DATE_FORMATTER.format(localDate);
+	    return sdf.format(date);
+	    
 	}
 	
 	

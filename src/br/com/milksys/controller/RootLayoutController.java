@@ -44,7 +44,7 @@ public class RootLayoutController {
     @FXML
     private void handleCadastroEntregaLeite() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/entregaLeite/EntregaLeiteForm.fxml");
+    	AnchorPane form = (AnchorPane) MainApp.load("view/entregaLeite/EntregaLeiteOverview.fxml");
     	MainApp.rootLayout.setCenter(form);
     	
     }

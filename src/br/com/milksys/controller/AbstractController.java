@@ -6,7 +6,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -34,7 +33,6 @@ public abstract class AbstractController<K, E> {
 	protected ObservableList<E> data = FXCollections.observableArrayList();
 	protected Stage dialogStage;
 	protected Object object;
-	protected boolean okClicked = false;
 	protected IService<K, E> service;
 	protected boolean isInitialized = false;
 	@FXML protected TableView<E> table;
@@ -46,23 +44,16 @@ public abstract class AbstractController<K, E> {
 		if (!state.equals(State.INSERT_TO_SELECT)) {
 
 			if (!isInitialized) {
-				data.addAll(service.findAll());
+				this.initializeTableOverview();
 			} 
 			
 			table.setItems(data);
-			lblNumRegistros.setText(String.valueOf(data.size()));
-
-			data.addListener(new ListChangeListener<E>(){
-
-				@Override
-				public void onChanged(javafx.collections.ListChangeListener.Change<? extends E> c) {
-					System.out.println("Alterou lista");
-					
-				}
-				
-			});
 			
-			// captura o evento de double click da tables
+			if ( lblNumRegistros != null ){
+				lblNumRegistros.setText(String.valueOf(data.size()));
+			}
+			
+			// captura o evento de double click da table
 			table.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 				@Override
@@ -117,6 +108,8 @@ public abstract class AbstractController<K, E> {
 	}
 
 	protected void showForm() {
+		this.state = State.INSERT_OR_UPDATE;
+		
 		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
 
 		dialogStage = new Stage();
@@ -146,16 +139,24 @@ public abstract class AbstractController<K, E> {
 		
 		dialogStage.setResizable(false);
 		dialogStage.showAndWait();
+		
+		this.state = State.LIST;
+		
 	}
 
 	public Object getObject() {
 		return object;
 	}
 
+	protected void initializeTableOverview(){
+		this.data.clear();
+		this.data.addAll(service.findAll());
+	}
+	
 	protected abstract String getFormName();
 	protected abstract String getFormTitle();
 	protected abstract boolean isInputValid();
-
+	
 	// ========= HANDLERS INTERFACE=============//
 
 	@FXML
@@ -206,13 +207,12 @@ public abstract class AbstractController<K, E> {
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
-		object = null;
 		this.state = State.LIST;
 	}
 
 	@FXML
 	@SuppressWarnings("unchecked")
-	private void handleOk() {
+	protected void handleOk() {
 		if (isInputValid()) {
 
 			dialogStage.close();

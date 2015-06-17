@@ -1,58 +1,73 @@
 package br.com.milksys.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Calendar;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.CustomCellFactory;
+import br.com.milksys.components.CustomStringConverter;
+import br.com.milksys.components.NumberTextField;
 import br.com.milksys.model.CalendarioRecolha;
 import br.com.milksys.model.EntregaLeite;
 import br.com.milksys.model.Mes;
+import br.com.milksys.model.State;
 import br.com.milksys.service.CalendarioRecolhaService;
 import br.com.milksys.service.EntregaLeiteService;
 import br.com.milksys.util.DateUtil;
+import br.com.milksys.util.NumberFormatUtil;
 
 @Controller
-public class EntregaLeiteController {
+public class EntregaLeiteController extends AbstractController<Integer, EntregaLeite> {
 
-	private ObservableList<EntregaLeite> data = FXCollections.observableArrayList();
-	@Autowired
-	private EntregaLeiteService service;
-	@FXML private TableView<EntregaLeite> table;
+	@FXML private TextField inputData;
+	@FXML private NumberTextField inputNumeroVacasOrdenhadas;
+	@FXML private NumberTextField inputVolume;
+	@FXML private TextField inputObservacao;
+
 	@FXML private TableColumn<EntregaLeite, String> dataColumn;
 	@FXML private TableColumn<EntregaLeite, String> numeroVacasOrdenhadasColumn;
 	@FXML private TableColumn<EntregaLeite, String> volumeColumn;
 	@FXML private TableColumn<EntregaLeite, String> observacaoColumn;
-	@FXML private TableColumn<EntregaLeite, String> calendarioRecolhaColumn;
+	@FXML private TableColumn<EntregaLeite, String> mediaProducaoColumn;
+	
 	@FXML private ComboBox<Mes> inputMesReferencia;
-	@FXML private TextField inputAno;
+	@FXML private Button btnIncrease;
+	@FXML private Button btnDecrease;
+	
 	@FXML private Label lblPeriodo;
+	@FXML private Label lblTotalEntregas;
+	@FXML private Label lblTotalEntregue;
+	@FXML private Label lblMediaMes;
+	@FXML private Label lblValorEstimado;
+	@FXML private Label lblMediaProdutividadeMes;
+	@FXML private Label lblTotalVacasOrdenhadas;
+	@FXML private Label lblAno;
+	
 	@Resource(name="calendarioRecolhaService")
 	private CalendarioRecolhaService calendarioRecolhaService;
-	private ObservableList<Mes> optionsMesReferencia = FXCollections.observableArrayList();
+	@Resource(name="entregaLeiteService")
+	private EntregaLeiteService service;
 	
 	private LocalDate dataInicio, dataFim;
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
+	
+	private ObservableList<Mes> optionsMesReferencia = FXCollections.observableArrayList();
 	
 	{
 		optionsMesReferencia.add(new Mes(1,  "JANEIRO"));
@@ -69,70 +84,93 @@ public class EntregaLeiteController {
 		optionsMesReferencia.add(new Mes(12, "DEZEMBRO"));
 	}
 
-	@FXML
-	public void initialize() {
-		dataColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getData())));
-		numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
-		volumeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getVolume())));
-		observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
-
-		configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
-		
-		inputAno.setText(String.valueOf(selectedAnoReferencia));
-		inputAno.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				selectedAnoReferencia = Integer.parseInt(newValue);
-				configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
-			}
-		});
-				
-		lblPeriodo.setText("Período de " + DateUtil.format(dataInicio) + " à " + DateUtil.format(dataFim));
-		
-		inputMesReferencia.setItems(optionsMesReferencia);
-		inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
-		inputMesReferencia.valueProperty().addListener(new ChangeListener<Mes>() {
-			@Override
-			public void changed(ObservableValue<? extends Mes> observable, Mes oldValue, Mes newValue) {
-				selectedMesReferencia = newValue.getMesDoAno();
-				configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
-			}    
-		});
-		 // list of values showed in combo box drop down
-		inputMesReferencia.setCellFactory(new Callback<ListView<Mes>,ListCell<Mes>>(){
-            @Override
-            public ListCell<Mes> call(ListView<Mes> l){
-                return new ListCell<Mes>(){
-                    @Override
-                    protected void updateItem(Mes item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item == null || empty) {
-                            setGraphic(null);
-                        } else {
-                            setText(item.getNome());
-                        }
-                    }
-                } ;
-            }
-        });
-		//selected value showed in combo box
-		inputMesReferencia.setConverter(new StringConverter<Mes>() {
-              @Override
-              public String toString(Mes mes) {
-                if (mes == null){
-                  return null;
-                } else {
-                  return mes.getNome();
-                }
-              }
-
-            @Override
-            public Mes fromString(String mes) {
-                return null;
-            }
-        });
 	
+	@FXML
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void initialize() {
+		
+		if ( state.equals(State.LIST) ){
+			
+			dataColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getData())));
+			numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
+			volumeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolume())));
+			mediaProducaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getMediaProducao())));
+			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
+			
+			inputMesReferencia.setItems(optionsMesReferencia);
+			inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
+			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
+			inputMesReferencia.setCellFactory(new CustomCellFactory("getNome"));
+			inputMesReferencia.setConverter(new CustomStringConverter("getNome"));
+			
+			if ( !isInitialized ){
+				super.service = this.service;
+				configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
+				super.initialize();
+			}
+			
+		}
+		
+		if ( state.equals(State.INSERT_OR_UPDATE) ){
+			
+			inputNumeroVacasOrdenhadas.textProperty().bindBidirectional(((EntregaLeite)object).numeroVacasOrdenhadasProperty());
+			inputVolume.textProperty().bindBidirectional(((EntregaLeite)object).volumeProperty());
+			inputObservacao.textProperty().bindBidirectional(((EntregaLeite)object).observacaoProperty());
+			inputData.setText(((EntregaLeite)object).dataProperty().get());
+			
+		}
+		
 	}
+	
+	/**
+	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
+	 * @param newValue
+	 */
+	@FXML
+	private void handleIncreaseAnoReferencia() {
+		selectedAnoReferencia++;
+		configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
+	}
+	
+	/**
+	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
+	 * @param newValue
+	 */
+	@FXML
+	private void handleDecreaseAnoReferencia() {
+		selectedAnoReferencia--;
+		configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
+	}
+	
+	/**
+	 * Ao alterar o mês de referência carrega o respectivo calendário de entrega.
+	 * @param newValue
+	 */
+	private void changeMesReferenciaListener(Mes newValue) {
+		selectedMesReferencia = newValue.getMesDoAno();
+		configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
+	}    
+
+	@Override
+	protected void initializeTableOverview() {
+		super.data.clear();
+		super.data.addAll(service.findAllByPeriodoAsObservableList(DateUtil.asDate(dataInicio), DateUtil.asDate(dataFim)));
+	}
+	
+	@Override
+	protected void handleOk() {
+		int vacasOrdenhadas = ((EntregaLeite)object).getNumeroVacasOrdenhadas();
+		BigDecimal volume = ((EntregaLeite)object).getVolume();
+		
+		if ( vacasOrdenhadas > 0 && volume.compareTo(BigDecimal.ZERO) > 0 ){
+			((EntregaLeite)object).setMediaProducao(volume.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
+		}
+		
+		super.handleOk();
+		
+		this.resume();
+	}
+	
 	
 	private void configureDataEntregaMesAnoReferencia(int mes, int ano){
 		
@@ -184,19 +222,69 @@ public class EntregaLeiteController {
 		cDataFim.setTimeInMillis(DateUtil.asDate(dataFim).getTime());
 		
 		while ( cDataInicio.before(cDataFim) || cDataInicio.equals(cDataFim) ){
-			EntregaLeite el = new EntregaLeite(LocalDate.of(cDataInicio.get(Calendar.YEAR), cDataInicio.get(Calendar.MONTH) + 1, cDataInicio.get(Calendar.DAY_OF_MONTH)), 0, 0, calendarioVigente);
+			EntregaLeite el = new EntregaLeite(LocalDate.of(cDataInicio.get(Calendar.YEAR), cDataInicio.get(Calendar.MONTH) + 1, cDataInicio.get(Calendar.DAY_OF_MONTH)), 0, 0, 0, calendarioVigente);
 			service.save(el);
 			cDataInicio.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		
-		data.clear();
-		data.addAll(service.findAllByPeriodoAsObservableList(DateUtil.asDate(dataInicio), DateUtil.asDate(dataFim)));
+		this.initializeTableOverview();
 		table.setItems(data);
+		lblPeriodo.setText(DateUtil.format(dataInicio) + " à " + DateUtil.format(dataFim));
+		lblAno.setText(String.valueOf(selectedAnoReferencia));
+		resume();
 		
 	}
-
+	
+	/**
+	 * Faz a somatória das entregas e gera
+	 * Média
+	 * Total Entregas
+	 * Valor Estimado
+	 * Total Entregue
+	 */
+	protected void resume(){
+		
+		if ( data != null && data.size() > 0 ){
+			
+			int totalEntregas = 0;
+			BigDecimal totalEntregue = new BigDecimal(0);
+			int totalVacasOrdenhadas = 0;
+			
+			for (int i = 0; i < data.size(); i++){
+				EntregaLeite e = data.get(i);
+				if ( e.getVolume().compareTo(BigDecimal.ZERO) > 0 ){
+					totalEntregas++;
+					totalEntregue = totalEntregue.add(e.getVolume());
+					totalVacasOrdenhadas += e.getNumeroVacasOrdenhadas();
+				}
+			}
+			
+			lblTotalEntregas.setText(String.valueOf(totalEntregas));
+			lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
+			lblTotalVacasOrdenhadas.setText(String.valueOf(totalVacasOrdenhadas));
+			if ( totalEntregue.compareTo(BigDecimal.ZERO) > 0 && totalEntregas > 0 ){
+				lblMediaMes.setText(NumberFormatUtil.decimalFormat(totalEntregue.divide(new BigDecimal(totalEntregas), 2, RoundingMode.HALF_UP)));
+				lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(totalEntregue.divide(new BigDecimal(totalVacasOrdenhadas), 2, RoundingMode.HALF_UP)));
+			}else{
+				lblMediaMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
+				lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
+			}
+			
+		}
+	}
+	
 	protected boolean isInputValid() {
 		return true;
 	}
 
+	@Override
+	protected String getFormName() {
+		return "view/entregaLeite/EntregaLeiteForm.fxml";
+	}
+
+	@Override
+	protected String getFormTitle() {
+		return "Entrega Leite";
+	}
+	
 }

@@ -1,0 +1,2 @@
+- nao alterar um calendario de recolha que já tenha entregas
+- carregar o número de vacas em lactação no lançamento de entrega de leite

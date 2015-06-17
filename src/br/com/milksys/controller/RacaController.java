@@ -25,16 +25,16 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	@FXML
 	public void initialize() {
 		
-		if (!state.equals(State.INSERT_TO_SELECT)){
+		if ( state.equals(State.LIST) ){
 			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
 			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+			super.initialize();
 		}
-		if ( descricaoField != null ){
+		
+		if ( state.equals(State.INSERT_OR_UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			descricaoField.textProperty().bindBidirectional(((Raca)object).descricaoProperty());
 		}
 		
-		super.initialize();
-
 	}
 
 	@Override

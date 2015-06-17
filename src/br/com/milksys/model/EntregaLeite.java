@@ -1,14 +1,11 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
-import javafx.beans.property.FloatProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.milksys.util.DateUtil;
+import br.com.milksys.util.NumberFormatUtil;
 
 
 /**
@@ -43,33 +41,35 @@ public class EntregaLeite implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(DateUtil.asLocalDate(new Date()));  
-	private Property<Number> numeroVacasOrdenhadas = new SimpleIntegerProperty();
-	private FloatProperty volume = new SimpleFloatProperty();
+	private StringProperty data = new SimpleStringProperty();  
+	private StringProperty numeroVacasOrdenhadas = new SimpleStringProperty();
+	private StringProperty volume = new SimpleStringProperty();
 	private ObjectProperty<CalendarioRecolha> calendarioRecolha = new SimpleObjectProperty<CalendarioRecolha>();
 	private StringProperty observacao = new SimpleStringProperty();
+	private StringProperty mediaProducao = new SimpleStringProperty();
 
 	public EntregaLeite() {
 	}
 	
-	public EntregaLeite(LocalDate data, int numeroVacasOrdenhadas, float volume, CalendarioRecolha cr) {
+	public EntregaLeite(LocalDate data, int numeroVacasOrdenhadas, float volume, float media, CalendarioRecolha cr) {
 		this.calendarioRecolha.set(cr);
-		this.volume.set(volume);
-		this.numeroVacasOrdenhadas.setValue(numeroVacasOrdenhadas);
-		this.data.set(data);
+		this.volume.set(String.valueOf(volume));
+		this.mediaProducao.set(String.valueOf(media));
+		this.numeroVacasOrdenhadas.setValue(String.valueOf(numeroVacasOrdenhadas));
+		this.data.set(DateUtil.format(data));
 	}
 
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getData() {
-		return DateUtil.asDate(this.data.get());
+		return DateUtil.asDate(DateUtil.parse(data.get()));
 	}
 
 	public void setData(Date data) {
-		this.data.set(DateUtil.asLocalDate(data));
+		this.data.set(DateUtil.format(data));
 	}
 	
-	public ObjectProperty<LocalDate> dataProperty(){
+	public StringProperty dataProperty(){
 		return data;
 	}
 
@@ -81,27 +81,27 @@ public class EntregaLeite implements Serializable {
 		this.id = id;
 	}
 	@Access(AccessType.PROPERTY)
-	public Float getVolume() {
-		return this.volume.get();
+	public BigDecimal getVolume() {
+		return NumberFormatUtil.fromString(this.volume.get());
 	}
 
-	public void setVolume(Float volume) {
-		this.volume.set(volume);
+	public void setVolume(BigDecimal volume) {
+		this.volume.set(NumberFormatUtil.decimalFormat(volume));
 	}
 
-	public FloatProperty volumeProperty(){
+	public StringProperty volumeProperty(){
 		return volume;
 	}
 	@Access(AccessType.PROPERTY)
 	public int getNumeroVacasOrdenhadas() {
-		return (int) this.numeroVacasOrdenhadas.getValue();
+		return Integer.parseInt(numeroVacasOrdenhadas.getValue());
 	}
 
 	public void setNumeroVacasOrdenhadas(int numeroVacasOrdenhadas) {
-		this.numeroVacasOrdenhadas.setValue(numeroVacasOrdenhadas);
+		this.numeroVacasOrdenhadas.setValue(String.valueOf(numeroVacasOrdenhadas));
 	}
 	
-	public Property<Number> numeroVacasOrdenhadasProperty(){
+	public StringProperty numeroVacasOrdenhadasProperty(){
 		return numeroVacasOrdenhadas;
 	}
 	
@@ -132,5 +132,18 @@ public class EntregaLeite implements Serializable {
 	public StringProperty observacaoProperty(){
 		return observacao;
 	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getMediaProducao() {
+		return NumberFormatUtil.fromString(this.mediaProducao.get());
+	}
 
+	public void setMediaProducao(BigDecimal mediaProducao) {
+		this.mediaProducao.set(NumberFormatUtil.decimalFormat(mediaProducao));
+	}
+	
+	public StringProperty mediaProducaoProperty(){
+		return mediaProducao;
+	}
+	
 }
