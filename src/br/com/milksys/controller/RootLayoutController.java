@@ -42,6 +42,15 @@ public class RootLayoutController {
     }
     
     @FXML
+    private void handleCadastroFinalidadeLote() {
+        
+    	AnchorPane form = (AnchorPane) MainApp.load("view/finalidadeLote/FinalidadeLoteOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
+    }
+       
+    
+    @FXML
     private void handleCadastroEntregaLeite() {
         
     	AnchorPane form = (AnchorPane) MainApp.load("view/entregaLeite/EntregaLeiteOverview.fxml");

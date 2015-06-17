@@ -9,11 +9,13 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 
 import javax.annotation.Resource;
 
@@ -179,6 +181,14 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		int mesInicio, anoInicio, mesFim, anoFim;
 		
 		CalendarioRecolha calendarioVigente = calendarioRecolhaService.getCalendarioVigente();
+		
+		if ( calendarioVigente == null ){
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Nenhum Calendário Vigente");
+			alert.setHeaderText("Nenhum Calendário de Recolha Vigente");
+			alert.setContentText("Por favor, cadastre o calendário de recolha de leite!");
+			alert.showAndWait();
+		}
 		
 		//verifica se o calendario de recolha considera dias do mes anterior
 		if ( calendarioVigente.getMesInicio().equals(CalendarioRecolha.MES_ANTERIOR) ){
