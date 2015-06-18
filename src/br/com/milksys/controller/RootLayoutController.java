@@ -49,7 +49,14 @@ public class RootLayoutController {
     	
     }
        
-    
+    @FXML
+    private void handleCadastroPrecoLeite() {
+        
+    	AnchorPane form = (AnchorPane) MainApp.load("view/precoLeite/PrecoLeiteOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
+    }
+       
     @FXML
     private void handleCadastroEntregaLeite() {
         

@@ -1,8 +1,12 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
-import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -12,6 +16,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import br.com.milksys.util.NumberFormatUtil;
 
 
 /**
@@ -26,7 +32,9 @@ public class PrecoLeite implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private FloatProperty valor;
+	private StringProperty valor = new SimpleStringProperty();
+	private StringProperty mesReferencia = new SimpleStringProperty();
+	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
 
 	public PrecoLeite() {
 	}
@@ -38,17 +46,44 @@ public class PrecoLeite implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	@Access(AccessType.PROPERTY)
-	public float getValor() {
-		return this.valor.get();
+	public BigDecimal getValor() {
+		return NumberFormatUtil.fromString(this.valor.get());
 	}
 
-	public void setValor(float valor) {
-		this.valor.set(valor);
+	public void setValor(BigDecimal valor) {
+		this.valor.set(NumberFormatUtil.decimalFormat(valor));
 	}
 	
-	public FloatProperty valorProperty(){
-		return this.valor;
+	public StringProperty valorProperty(){
+		return valor;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getMesReferencia() {
+		return this.mesReferencia.get();
+	}
+
+	public void setMesReferencia(String value) {
+		this.mesReferencia.set(value);
+	}
+	
+	public StringProperty mesReferenciaProperty(){
+		return mesReferencia;
+	}
+
+	@Access(AccessType.PROPERTY)
+	public int getAnoReferencia() {
+		return this.anoReferencia.get();
+	}
+
+	public void setAnoReferencia(int value) {
+		this.anoReferencia.set(value);
+	}
+	
+	public IntegerProperty anoReferenciaProperty(){
+		return anoReferencia;
 	}
 	
 }

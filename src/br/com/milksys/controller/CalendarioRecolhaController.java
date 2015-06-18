@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.CalendarioRecolha;
+import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
@@ -35,35 +36,38 @@ public class CalendarioRecolhaController extends AbstractController<Integer, Cal
 	
 	@FXML
 	public void initialize() {
-		idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
-		descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-		dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaInicio())));
-		dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaFim())));
-		calendarioAtualColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCalendarioVigente()));
-		mesInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesInicio()));
 		
-		if ( inputDiaInicio != null ){
+		if ( state.equals(State.LIST) ){
+			
+			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
+			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+			dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaInicio())));
+			dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getDiaFim())));
+			calendarioAtualColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCalendarioVigente()));
+			mesInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesInicio()));
+			
+		}
+		
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
+			
 			inputDiaInicio.textProperty().bindBidirectional(((CalendarioRecolha)object).diaInicioProperty());
-		}
-		
-		if ( inputDiaFim != null ){
 			inputDiaFim.textProperty().bindBidirectional(((CalendarioRecolha)object).diaFimProperty());
-		}
-		
-		if ( inputCalendarioAtual != null ){
+			
+			if ( state.equals(State.INSERT) ) {
+				((CalendarioRecolha)object).setCalendarioVigente("SIM");
+				((CalendarioRecolha)object).setMesInicio(optionsMesInicio.get(0));	
+			}
+
 			inputCalendarioAtual.setItems(optionsSimNao);
 			inputCalendarioAtual.getSelectionModel().selectFirst();
 			inputCalendarioAtual.valueProperty().bindBidirectional(((CalendarioRecolha)object).calendarioVigenteProperty());
-		}
-		
-		if ( inputMesInicio != null ){
+			
 			inputMesInicio.setItems(optionsMesInicio);
 			inputMesInicio.getSelectionModel().selectFirst();
 			inputMesInicio.valueProperty().bindBidirectional(((CalendarioRecolha)object).mesInicioProperty());
-		}
-		
-		if ( inputDescricao != null ){
+			
 			inputDescricao.textProperty().bindBidirectional(((CalendarioRecolha)object).descricaoProperty());
+			
 		}
 		
 		super.initialize();

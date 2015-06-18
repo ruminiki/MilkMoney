@@ -1,2 +1,5 @@
-- nao alterar um calendario de recolha que já tenha entregas
+- nao alterar um calendario de recolha que já tenha entregas (reformular)
 - carregar o número de vacas em lactação no lançamento de entrega de leite
+- fazer gráfico preço leite
+- não permitir salvar dois preços mesmo mês
+- navegação por ano preço leite

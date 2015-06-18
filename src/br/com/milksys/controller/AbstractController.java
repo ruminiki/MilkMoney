@@ -49,9 +49,7 @@ public abstract class AbstractController<K, E> {
 			
 			table.setItems(data);
 			
-			if ( lblNumRegistros != null ){
-				lblNumRegistros.setText(String.valueOf(data.size()));
-			}
+			updateLabelNumRegistros();
 			
 			// captura o evento de double click da table
 			table.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -91,6 +89,12 @@ public abstract class AbstractController<K, E> {
 
 	}
 
+	private void updateLabelNumRegistros(){
+		if ( lblNumRegistros != null ){
+			lblNumRegistros.setText(String.valueOf(data.size()));
+		}
+	}
+	
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
@@ -108,7 +112,6 @@ public abstract class AbstractController<K, E> {
 	}
 
 	protected void showForm() {
-		this.state = State.INSERT_OR_UPDATE;
 		
 		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
 
@@ -161,7 +164,7 @@ public abstract class AbstractController<K, E> {
 
 	@FXML
 	private void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
-		this.state = State.INSERT_OR_UPDATE;
+		this.state = State.INSERT;
 		object = ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
@@ -171,7 +174,7 @@ public abstract class AbstractController<K, E> {
 	@FXML
 	protected void handleEdit() {
 		if (object != null) {
-			this.state = State.INSERT_OR_UPDATE;
+			this.state = State.UPDATE;
 			showForm();
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -194,6 +197,7 @@ public abstract class AbstractController<K, E> {
 			if (result.get() == ButtonType.OK) {
 				service.remove(table.getItems().get(selectedIndex));
 				table.getItems().remove(selectedIndex);
+				updateLabelNumRegistros();
 			}
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
@@ -227,6 +231,7 @@ public abstract class AbstractController<K, E> {
 
 				if (isNew) {
 					data.add((E) object);
+					updateLabelNumRegistros();
 				} else {
 					data.set(table.getSelectionModel().getSelectedIndex(),(E) object);
 				}

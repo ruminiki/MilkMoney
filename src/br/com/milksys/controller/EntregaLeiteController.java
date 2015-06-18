@@ -6,32 +6,29 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomCellFactory;
-import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.model.CalendarioRecolha;
 import br.com.milksys.model.EntregaLeite;
-import br.com.milksys.model.Mes;
 import br.com.milksys.model.State;
 import br.com.milksys.service.CalendarioRecolhaService;
 import br.com.milksys.service.EntregaLeiteService;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
+import br.com.milksys.util.Util;
 
 @Controller
 public class EntregaLeiteController extends AbstractController<Integer, EntregaLeite> {
@@ -47,7 +44,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	@FXML private TableColumn<EntregaLeite, String> observacaoColumn;
 	@FXML private TableColumn<EntregaLeite, String> mediaProducaoColumn;
 	
-	@FXML private ComboBox<Mes> inputMesReferencia;
+	@FXML private ComboBox<String> inputMesReferencia;
 	@FXML private Button btnIncrease;
 	@FXML private Button btnDecrease;
 	
@@ -69,26 +66,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
 	
-	private ObservableList<Mes> optionsMesReferencia = FXCollections.observableArrayList();
-	
-	{
-		optionsMesReferencia.add(new Mes(1,  "JANEIRO"));
-		optionsMesReferencia.add(new Mes(2,  "FEVEREIRO"));
-		optionsMesReferencia.add(new Mes(3,  "MARÇO"));
-		optionsMesReferencia.add(new Mes(4,  "ABRIL"));
-		optionsMesReferencia.add(new Mes(5,  "MAIO"));
-		optionsMesReferencia.add(new Mes(6,  "JUNHO"));
-		optionsMesReferencia.add(new Mes(7,  "JULHO"));
-		optionsMesReferencia.add(new Mes(8,  "AGOSTO"));
-		optionsMesReferencia.add(new Mes(9,  "SETEMBRO"));
-		optionsMesReferencia.add(new Mes(10, "OUTUBRO"));
-		optionsMesReferencia.add(new Mes(11, "NOVEMBRO"));
-		optionsMesReferencia.add(new Mes(12, "DEZEMBRO"));
-	}
-
+	private ObservableList<String> meses = Util.generateListMonthsString();
 	
 	@FXML
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
@@ -99,11 +79,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			mediaProducaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getMediaProducao())));
 			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
 			
-			inputMesReferencia.setItems(optionsMesReferencia);
+			inputMesReferencia.setItems(meses);
 			inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
 			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
-			inputMesReferencia.setCellFactory(new CustomCellFactory("getNome"));
-			inputMesReferencia.setConverter(new CustomStringConverter("getNome"));
 			
 			if ( !isInitialized ){
 				super.service = this.service;
@@ -113,7 +91,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			
 		}
 		
-		if ( state.equals(State.INSERT_OR_UPDATE) ){
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
 			
 			inputNumeroVacasOrdenhadas.textProperty().bindBidirectional(((EntregaLeite)object).numeroVacasOrdenhadasProperty());
 			inputVolume.textProperty().bindBidirectional(((EntregaLeite)object).volumeProperty());
@@ -148,8 +126,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	 * Ao alterar o mês de referência carrega o respectivo calendário de entrega.
 	 * @param newValue
 	 */
-	private void changeMesReferenciaListener(Mes newValue) {
-		selectedMesReferencia = newValue.getMesDoAno();
+	private void changeMesReferenciaListener(String newValue) {
+		selectedMesReferencia = meses.indexOf(newValue);
 		configureDataEntregaMesAnoReferencia(selectedMesReferencia, selectedAnoReferencia);
 	}    
 
@@ -188,6 +166,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			alert.setHeaderText("Nenhum Calendário de Recolha Vigente");
 			alert.setContentText("Por favor, cadastre o calendário de recolha de leite!");
 			alert.showAndWait();
+			return;
 		}
 		
 		//verifica se o calendario de recolha considera dias do mes anterior

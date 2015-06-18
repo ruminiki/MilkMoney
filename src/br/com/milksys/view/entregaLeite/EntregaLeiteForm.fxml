@@ -25,14 +25,14 @@
               </rowConstraints>
                <children>
                   <Label text="Data" />
-                  <UCTextField fx:id="inputData" disable="true" editable="false" maxWidth="100.0" GridPane.columnIndex="1" />
                   <Label text="Vacas Ordenhadas" GridPane.rowIndex="1" />
                   <Label text="Volume" GridPane.rowIndex="2" />
                   <Label text="Observação" GridPane.rowIndex="3" />
                   <Label text="Ocorrência" GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputData" disable="true" editable="false" maxWidth="100.0" GridPane.columnIndex="1" />
                   <NumberTextField fx:id="inputNumeroVacasOrdenhadas" maxWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <NumberTextField fx:id="inputVolume" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

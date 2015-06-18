@@ -31,7 +31,7 @@ public class RacaController extends AbstractController<Integer, Raca> {
 			super.initialize();
 		}
 		
-		if ( state.equals(State.INSERT_OR_UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			descricaoField.textProperty().bindBidirectional(((Raca)object).descricaoProperty());
 		}
 		
