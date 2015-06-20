@@ -6,12 +6,12 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.milksys.model.Animal</class>
 		<class>br.com.milksys.model.Raca</class>
-		<class>br.com.milksys.model.CalendarioRecolha</class>
 		<class>br.com.milksys.model.FinalidadeLote</class>
 		<class>br.com.milksys.model.TipoCobertura</class>
 		<class>br.com.milksys.model.PrecoLeite</class>
 		<class>br.com.milksys.model.SituacaoProcedimentoAgendado</class>
 		<class>br.com.milksys.model.EntregaLeite</class>
+		<class>br.com.milksys.model.ProducaoLeite</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

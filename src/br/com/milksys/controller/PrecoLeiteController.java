@@ -28,7 +28,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@FXML private NumberTextField inputValor;
 	@FXML private ComboBox<String> inputMesReferencia;
 	@FXML private ComboBox<Number> inputAnoReferencia;
-	private ObservableList<String> meses = Util.generateListMonthsString();
+	private ObservableList<String> meses = Util.generateListMonths();
 	private ObservableList<Number> anos = Util.generateListNumbers(1980, LocalDate.now().getYear());
 
 	@FXML

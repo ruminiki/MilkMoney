@@ -27,9 +27,9 @@ public class NumberFormatUtil {
 		df.setDecimalFormatSymbols(symbols);
 		try {
 			return new BigDecimal(df.parse(value).doubleValue()).setScale(2, BigDecimal.ROUND_HALF_EVEN);
-		} catch (ParseException e) {
+		} catch (ParseException | NullPointerException e) {
 			e.printStackTrace();
-			return null;
+			return BigDecimal.ZERO;
 		}
 	}
 

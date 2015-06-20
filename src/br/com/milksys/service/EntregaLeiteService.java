@@ -1,6 +1,5 @@
 package br.com.milksys.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -22,7 +21,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	@Override
 	public void save(EntregaLeite entity) {
 		if ( entity.getId() <= 0 ){
-			EntregaLeite el = dao.findByDate(entity.getData());
+			EntregaLeite el = dao.findByMes(entity.getMesReferencia());
 			if ( el == null ){
 				dao.persist(entity);
 			}
@@ -39,7 +38,6 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
 	@Override
 	public EntregaLeite findById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -48,9 +46,9 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		return dao.findAll(EntregaLeite.class);
 	}
 	
-	public ObservableList<EntregaLeite> findAllByPeriodoAsObservableList(Date inicio, Date fim) {
+	public ObservableList<EntregaLeite> findAllByAnoAsObservableList(int anoReferencia) {
 		ObservableList<EntregaLeite> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAllByPeriodo(inicio, fim));
+		list.addAll(dao.findAllByAno(anoReferencia));
 		return list;
 	}
 	

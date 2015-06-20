@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milksys.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="201.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoLeiteController">
+   <children>
+      <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
+         <children>
+            <GridPane alignment="CENTER_LEFT" prefHeight="204.0" prefWidth="437.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="150.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="369.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="87.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Data" />
+                  <Label text="Vacas Ordenhadas" GridPane.rowIndex="1" />
+                  <Label text="Volume Produzido" GridPane.rowIndex="2" />
+                  <Label text="Observação" GridPane.rowIndex="4" />
+				  <Label text="Volume Entregue" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputData" disable="true" editable="false" maxWidth="100.0" GridPane.columnIndex="1" />
+                  <NumberTextField fx:id="inputNumeroVacasOrdenhadas" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <NumberTextField fx:id="inputVolumeProduzido" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <NumberTextField fx:id="inputVolumeEntregue" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="13.0" prefWidth="442.0" spacing="5.0">
+               <children>
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleOk" text="Ok">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

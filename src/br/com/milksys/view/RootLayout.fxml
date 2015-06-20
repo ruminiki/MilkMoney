@@ -23,18 +23,13 @@
 								<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
-						<MenuItem mnemonicParsing="false" onAction="#handleCadastroCalendarioRecolha" text="Calendário Recolha">
-							<accelerator>
-								<KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-							</accelerator>
-						</MenuItem>
-						<MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
 						<MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
 					</items>
 				</Menu>
-				<Menu mnemonicParsing="false" text="Statistics">
+				<Menu mnemonicParsing="false" text="Produção">
 					<items>
-						<MenuItem mnemonicParsing="false" text="Show Statistics" />
+						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Help">

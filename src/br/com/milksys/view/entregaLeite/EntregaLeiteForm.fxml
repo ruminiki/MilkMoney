@@ -7,14 +7,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="197.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.EntregaLeiteController">
+<AnchorPane prefHeight="197.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.EntregaLeiteController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
          <children>
             <GridPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="437.0">
               <columnConstraints>
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="150.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="369.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="216.0" minWidth="68.0" prefWidth="183.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="153.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="149.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
@@ -24,15 +25,18 @@
                   <RowConstraints maxHeight="114.0" minHeight="8.0" prefHeight="28.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Data" />
-                  <Label text="Vacas Ordenhadas" GridPane.rowIndex="1" />
-                  <Label text="Volume" GridPane.rowIndex="2" />
-                  <Label text="Observação" GridPane.rowIndex="3" />
-                  <Label text="Ocorrência" GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputData" disable="true" editable="false" maxWidth="100.0" GridPane.columnIndex="1" />
-                  <NumberTextField fx:id="inputNumeroVacasOrdenhadas" maxWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <NumberTextField fx:id="inputVolume" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Referência (mês e ano)" />
+                  <Label text="Período Produção (início e fim)" GridPane.rowIndex="1" />
+                  <Label text="Volume (litros)" GridPane.rowIndex="2" />
+                  <Label text="Valor Máximo Praticado (R$ litro)" GridPane.rowIndex="3" />
+                  <Label text="Valor Recebido (R$ litro)" GridPane.rowIndex="4" />
+                  <NumberTextField fx:id="inputVolume" editable="false" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="inputMesReferencia" prefWidth="150.0" GridPane.columnIndex="1" />
+                  <ComboBox fx:id="inputAnoReferencia" prefHeight="25.0" prefWidth="92.0" GridPane.columnIndex="2" />
+                  <DatePicker fx:id="inputDataInicio" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="inputDataFim" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <NumberTextField fx:id="inputValorMaximoPraticado" maxWidth="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <NumberTextField fx:id="inputValorRecebido" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

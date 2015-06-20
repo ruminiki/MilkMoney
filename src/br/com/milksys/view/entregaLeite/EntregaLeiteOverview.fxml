@@ -17,19 +17,6 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" spacing="5.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="38.0" prefWidth="154.0">
-                     <children>
-                        <ComboBox fx:id="inputMesReferencia" focusTraversable="false" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
-                        <Label text="Mês Referência">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </VBox>
                   <VBox alignment="CENTER">
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
@@ -63,26 +50,6 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <Label fx:id="lblPeriodo" alignment="CENTER" disable="true" text="0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Período">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </VBox>
                </children>
                <padding>
                   <Insets left="5.0" />
@@ -91,73 +58,23 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <GridPane alignment="CENTER" maxHeight="30.0" minHeight="45.0" prefHeight="45.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="120.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="15.0" minHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="15.0" minHeight="10.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label maxHeight="100.0" text="Total de Entregas" />
-                  <Label text="Total Entregue (l)" GridPane.columnIndex="2" />
-                  <Label text="Média (litros/dia)" GridPane.columnIndex="3" />
-                  <Label text="Valor Estimado (R$)" GridPane.columnIndex="5" />
-                  <Label fx:id="lblTotalEntregas" text="lblTotalEntregas" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblTotalEntregue" text="lblTotalEntregue" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label fx:id="lblMediaMes" text="lblMediaMes" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label fx:id="lblValorEstimado" text="lblValorEstimado" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label text="Média Animal (l)" GridPane.columnIndex="4" />
-                  <Label fx:id="lblMediaProdutividadeMes" text="lblMediaProdutividadeMes" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-                  <Label text="Ordenhas Realizadas" GridPane.columnIndex="1" />
-                  <Label fx:id="lblTotalVacasOrdenhadas" text="lblTotalVacasOrdenhadas" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-               <opaqueInsets>
-                  <Insets bottom="5.0" top="5.0" />
-               </opaqueInsets>
-            </GridPane>
             <TableView fx:id="table" editable="true" VBox.vgrow="SOMETIMES">
               <columns>
-                <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
-                <TableColumn fx:id="numeroVacasOrdenhadasColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Nº Vacas" />
-                  <TableColumn maxWidth="172.0" minWidth="100.0" prefWidth="172.0" style="-fx-alignment: CENTER;" text="Produção">
+                <TableColumn fx:id="mesReferenciaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Mês" />
+                  <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Período Produção">
                      <columns>
-                        <TableColumn fx:id="volumeColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Volume" />
-                        <TableColumn fx:id="mediaProducaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Média" />
+                        <TableColumn fx:id="dataInicioColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Início" />
+                        <TableColumn fx:id="dataFimColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Fim" />
                      </columns>
                   </TableColumn>
+                <TableColumn fx:id="volumeColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Volume (l)" />
+                  <TableColumn maxWidth="172.0" minWidth="100.0" prefWidth="172.0" style="-fx-alignment: CENTER;" text="Preço do Leite (R$ litro)">
+                     <columns>
+                        <TableColumn fx:id="valorMaximoPraticadoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Máximo Praticado" />
+                        <TableColumn fx:id="valorRecebidoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Recebido" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Valor Total" />
                   <TableColumn fx:id="observacaoColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="1.0" text="Observaçao" />
               </columns>
                <columnResizePolicy>

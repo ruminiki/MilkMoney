@@ -2,23 +2,19 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -41,38 +37,25 @@ public class EntregaLeite implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private StringProperty data = new SimpleStringProperty();  
-	private StringProperty numeroVacasOrdenhadas = new SimpleStringProperty();
+	private StringProperty mesReferencia = new SimpleStringProperty();
+	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
+	private StringProperty dataInicio = new SimpleStringProperty();  
+	private StringProperty dataFim = new SimpleStringProperty();  
 	private StringProperty volume = new SimpleStringProperty();
-	private ObjectProperty<CalendarioRecolha> calendarioRecolha = new SimpleObjectProperty<CalendarioRecolha>();
+	private StringProperty valorRecebido = new SimpleStringProperty();
+	private StringProperty valorMaximoPraticado = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
-	private StringProperty mediaProducao = new SimpleStringProperty();
+	
 
 	public EntregaLeite() {
+		
 	}
 	
-	public EntregaLeite(LocalDate data, int numeroVacasOrdenhadas, float volume, float media, CalendarioRecolha cr) {
-		this.calendarioRecolha.set(cr);
-		this.volume.set(String.valueOf(volume));
-		this.mediaProducao.set(String.valueOf(media));
-		this.numeroVacasOrdenhadas.setValue(String.valueOf(numeroVacasOrdenhadas));
-		this.data.set(DateUtil.format(data));
-	}
-
-	@Temporal(TemporalType.DATE)
-	@Access(AccessType.PROPERTY)
-	public Date getData() {
-		return DateUtil.asDate(DateUtil.parse(data.get()));
-	}
-
-	public void setData(Date data) {
-		this.data.set(DateUtil.format(data));
+	public EntregaLeite(String mesReferencia, int anoReferencia) {
+		this.mesReferencia.set(mesReferencia);
+		this.anoReferencia.set(anoReferencia);
 	}
 	
-	public StringProperty dataProperty(){
-		return data;
-	}
-
 	public int getId() {
 		return this.id;
 	}
@@ -80,6 +63,35 @@ public class EntregaLeite implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	public Date getDataInicio() {
+		return DateUtil.asDate(DateUtil.parse(dataInicio.get()));
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio.set(DateUtil.format(dataInicio));
+	}
+	
+	public StringProperty dataInicioProperty(){
+		return dataInicio;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	public Date getDataFim() {
+		return DateUtil.asDate(DateUtil.parse(dataFim.get()));
+	}
+
+	public void setDataFim(Date dataInicio) {
+		this.dataFim.set(DateUtil.format(dataInicio));
+	}
+	
+	public StringProperty dataFimProperty(){
+		return dataFim;
+	}
+
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getVolume() {
 		return NumberFormatUtil.fromString(this.volume.get());
@@ -92,34 +104,33 @@ public class EntregaLeite implements Serializable {
 	public StringProperty volumeProperty(){
 		return volume;
 	}
-	@Access(AccessType.PROPERTY)
-	public int getNumeroVacasOrdenhadas() {
-		return Integer.parseInt(numeroVacasOrdenhadas.getValue());
-	}
-
-	public void setNumeroVacasOrdenhadas(int numeroVacasOrdenhadas) {
-		this.numeroVacasOrdenhadas.setValue(String.valueOf(numeroVacasOrdenhadas));
-	}
-	
-	public StringProperty numeroVacasOrdenhadasProperty(){
-		return numeroVacasOrdenhadas;
-	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="calendarioRecolha")
-	public CalendarioRecolha getCalendarioRecolha() {
-		return calendarioRecolha.get();
-	}
-	
-	public void setCalendarioRecolha(CalendarioRecolha calendarioRecolha) {
-		this.calendarioRecolha.set(calendarioRecolha);
-	}
-	
-	public ObjectProperty<CalendarioRecolha> calendarioRecolhaProperty(){
-		return calendarioRecolha;
+	public String getMesReferencia() {
+		return this.mesReferencia.get();
 	}
 
+	public void setMesReferencia(String value) {
+		this.mesReferencia.set(value);
+	}
+	
+	public StringProperty mesReferenciaProperty(){
+		return mesReferencia;
+	}
+
+	@Access(AccessType.PROPERTY)
+	public int getAnoReferencia() {
+		return this.anoReferencia.get();
+	}
+
+	public void setAnoReferencia(int value) {
+		this.anoReferencia.set(value);
+	}
+	
+	public IntegerProperty anoReferenciaProperty(){
+		return anoReferencia;
+	}
+	
 	@Access(AccessType.PROPERTY)
 	public String getObservacao() {
 		return this.observacao.get();
@@ -134,16 +145,29 @@ public class EntregaLeite implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public BigDecimal getMediaProducao() {
-		return NumberFormatUtil.fromString(this.mediaProducao.get());
+	public BigDecimal getValorRecebido() {
+		return NumberFormatUtil.fromString(this.valorRecebido.get());
 	}
 
-	public void setMediaProducao(BigDecimal mediaProducao) {
-		this.mediaProducao.set(NumberFormatUtil.decimalFormat(mediaProducao));
+	public void setValorRecebido(BigDecimal valorRecebido) {
+		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido));
 	}
 	
-	public StringProperty mediaProducaoProperty(){
-		return mediaProducao;
+	public StringProperty valorRecebidoProperty(){
+		return valorRecebido;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getValorMaximoPraticado() {
+		return NumberFormatUtil.fromString(this.valorMaximoPraticado.get());
+	}
+
+	public void setValorMaximoPraticado(BigDecimal valorMaximoPraticado) {
+		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado));
+	}
+	
+	public StringProperty valorMaximoPraticadoProperty(){
+		return valorMaximoPraticado;
 	}
 	
 }

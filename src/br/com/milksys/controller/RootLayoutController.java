@@ -34,14 +34,6 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleCadastroCalendarioRecolha() {
-        
-    	AnchorPane form = (AnchorPane) MainApp.load("view/calendarioRecolha/CalendarioRecolhaOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
-    	
-    }
-    
-    @FXML
     private void handleCadastroFinalidadeLote() {
         
     	AnchorPane form = (AnchorPane) MainApp.load("view/finalidadeLote/FinalidadeLoteOverview.fxml");
@@ -53,6 +45,14 @@ public class RootLayoutController {
     private void handleCadastroPrecoLeite() {
         
     	AnchorPane form = (AnchorPane) MainApp.load("view/precoLeite/PrecoLeiteOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
+    }
+    
+    @FXML
+    private void handleCadastroProducaoLeite() {
+        
+    	AnchorPane form = (AnchorPane) MainApp.load("view/producaoLeite/ProducaoLeiteOverview.fxml");
     	MainApp.rootLayout.setCenter(form);
     	
     }

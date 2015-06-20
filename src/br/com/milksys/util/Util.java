@@ -20,7 +20,7 @@ public class Util {
 		
 	}
 	
-	public static ObservableList<String> generateListMonthsString(){
+	public static ObservableList<String> generateListMonths(){
 		ObservableList<String> optionsMesReferencia = FXCollections.observableArrayList();
 		optionsMesReferencia.add("JANEIRO");
 		optionsMesReferencia.add("FEVEREIRO");
