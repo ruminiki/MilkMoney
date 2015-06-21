@@ -91,8 +91,8 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			
 			if ( !isInitialized ){
 				super.service = this.service;
-				configuraTabelaDiasMesSelecionado();
 				this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
+				configuraTabelaDiasMesSelecionado();
 				super.initialize();
 			}
 			
@@ -117,6 +117,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
+		configuraTabelaDiasMesSelecionado();
 	}
 	
 	/**
@@ -126,6 +127,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
+		configuraTabelaDiasMesSelecionado();
 	}
 	
 	/**
@@ -152,10 +154,12 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		if ( vacasOrdenhadas > 0 && volumeProduzido.compareTo(BigDecimal.ZERO) > 0 ){
 			((ProducaoLeite)object).setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
+			if(precoLeite != null){
+				((ProducaoLeite)object).setValorEstimado(precoLeite.getValor().multiply(((ProducaoLeite)object).getVolumeEntregue()));
+			}
 		}
 		
 		super.handleOk();
-		
 		this.resume();
 	}
 	
@@ -221,7 +225,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 					totalVacasOrdenhadas += e.getNumeroVacasOrdenhadas();
 				}
 				
-				totalEntregue = totalEntregue.add(e.getVolumeProduzido());
+				totalEntregue = totalEntregue.add(e.getVolumeEntregue());
 				
 			}
 			
@@ -270,12 +274,25 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleCadastrarPrecoLeite(){
 		
-		if ( precoLeite == null ){ 
+		if ( this.precoLeite == null ){ 
 			precoLeiteController.state = State.INSERT_TO_SELECT;
-			precoLeiteController.object = new PrecoLeite();
-			precoLeiteController.showForm();
 			
+			PrecoLeite p = new PrecoLeite();
+			p.setMesReferencia(meses.get(selectedMesReferencia-1));
+			p.setAnoReferencia(selectedAnoReferencia);
+			precoLeiteController.object = p;
+			precoLeiteController.showForm();
 			if ( precoLeiteController.getObject() != null ){
+				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
+				atualizaValorEstimado();
+				resume();
+			}
+		}else{
+			precoLeiteController.state = State.INSERT_TO_SELECT;
+			precoLeiteController.object = precoLeite;
+			precoLeiteController.showForm();
+			if ( precoLeiteController.getObject() != null ){
+				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
 				atualizaValorEstimado();
 				resume();
 			}

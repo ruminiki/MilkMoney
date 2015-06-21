@@ -62,8 +62,14 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			
 		}
 		
+		//permite cadastrar apenas para o mês especificado na tela que invoca o cadastro
+		if ( state.equals(State.INSERT_TO_SELECT) ){
+			inputMesReferencia.setDisable(true);
+			inputAnoReferencia.setDisable(true);
+		}
+		
 	}
-
+	
 	@Override
 	protected boolean isInputValid() {
 		return true;
