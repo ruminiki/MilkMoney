@@ -2,10 +2,13 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -39,11 +42,12 @@ public class EntregaLeite implements Serializable {
 	
 	private StringProperty mesReferencia = new SimpleStringProperty();
 	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
-	private StringProperty dataInicio = new SimpleStringProperty();  
-	private StringProperty dataFim = new SimpleStringProperty();  
+	private ObjectProperty<LocalDate> dataInicio = new SimpleObjectProperty<LocalDate>();  
+	private ObjectProperty<LocalDate> dataFim = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty volume = new SimpleStringProperty();
 	private StringProperty valorRecebido = new SimpleStringProperty();
 	private StringProperty valorMaximoPraticado = new SimpleStringProperty();
+	private StringProperty valorTotal = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	
 
@@ -51,9 +55,15 @@ public class EntregaLeite implements Serializable {
 		
 	}
 	
-	public EntregaLeite(String mesReferencia, int anoReferencia) {
+	public EntregaLeite(String mesReferencia, int anoReferencia, 
+			BigDecimal volume, BigDecimal valorRecebido, BigDecimal valorMaximoPraticado, BigDecimal valorTotal) {
 		this.mesReferencia.set(mesReferencia);
 		this.anoReferencia.set(anoReferencia);
+		this.volume.set(String.valueOf(volume));
+		this.valorRecebido.set(String.valueOf(valorRecebido));
+		this.valorMaximoPraticado.set(String.valueOf(valorMaximoPraticado));
+		this.valorTotal.set(String.valueOf(valorTotal));
+		
 	}
 	
 	public int getId() {
@@ -67,28 +77,32 @@ public class EntregaLeite implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getDataInicio() {
-		return DateUtil.asDate(DateUtil.parse(dataInicio.get()));
+		if ( dataInicio != null && dataInicio.get() != null )
+			return DateUtil.asDate(dataInicio.get());
+		return null;
 	}
 
 	public void setDataInicio(Date dataInicio) {
-		this.dataInicio.set(DateUtil.format(dataInicio));
+		this.dataInicio.set(DateUtil.asLocalDate(dataInicio));
 	}
 	
-	public StringProperty dataInicioProperty(){
+	public ObjectProperty<LocalDate> dataInicioProperty(){
 		return dataInicio;
 	}
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getDataFim() {
-		return DateUtil.asDate(DateUtil.parse(dataFim.get()));
+		if ( dataFim != null && dataFim.get() != null )
+			return DateUtil.asDate(dataFim.get());	
+		return null;
 	}
 
 	public void setDataFim(Date dataInicio) {
-		this.dataFim.set(DateUtil.format(dataInicio));
+		this.dataFim.set(DateUtil.asLocalDate(dataInicio));
 	}
 	
-	public StringProperty dataFimProperty(){
+	public ObjectProperty<LocalDate> dataFimProperty(){
 		return dataFim;
 	}
 
@@ -168,6 +182,19 @@ public class EntregaLeite implements Serializable {
 	
 	public StringProperty valorMaximoPraticadoProperty(){
 		return valorMaximoPraticado;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getValorTotal() {
+		return NumberFormatUtil.fromString(this.valorTotal.get());
+	}
+
+	public void setValorTotal(BigDecimal valorTotal) {
+		this.valorTotal.set(NumberFormatUtil.decimalFormat(valorTotal));
+	}
+	
+	public StringProperty valorTotalProperty(){
+		return valorTotal;
 	}
 	
 }

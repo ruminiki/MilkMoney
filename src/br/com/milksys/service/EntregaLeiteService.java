@@ -20,14 +20,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
 	@Override
 	public void save(EntregaLeite entity) {
-		if ( entity.getId() <= 0 ){
-			EntregaLeite el = dao.findByMes(entity.getMesReferencia());
-			if ( el == null ){
-				dao.persist(entity);
-			}
-		}else{
-			dao.persist(entity);	
-		}
+		dao.persist(entity);	
 	}
 	
 	@Override
@@ -44,6 +37,10 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	@Override
 	public List<EntregaLeite> findAll() {
 		return dao.findAll(EntregaLeite.class);
+	}
+	
+	public EntregaLeite findByMesAno(String mes, int ano){
+		return dao.findByMesAno(mes, ano);
 	}
 	
 	public ObservableList<EntregaLeite> findAllByAnoAsObservableList(int anoReferencia) {

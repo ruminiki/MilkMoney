@@ -19,9 +19,10 @@ public class EntregaLeiteDao extends AbstractGenericDao<Integer, EntregaLeite> {
 		return query.getResultList();
 	}
 
-	public EntregaLeite findByMes(String mesReferencia) {
-		Query query = entityManager.createQuery("SELECT c FROM EntregaLeite c WHERE c.mesReferencia = :mesReferencia");
+	public EntregaLeite findByMesAno(String mesReferencia, int anoReferencia) {
+		Query query = entityManager.createQuery("SELECT c FROM EntregaLeite c WHERE c.mesReferencia = :mesReferencia and c.anoReferencia = :anoReferencia");
 		query.setParameter("mesReferencia", mesReferencia);
+		query.setParameter("anoReferencia", anoReferencia);
 		try{
 			return (EntregaLeite) query.getSingleResult();
 		}catch(NoResultException e){
