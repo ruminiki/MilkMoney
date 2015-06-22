@@ -4,16 +4,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.CustomCellFactory;
+import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
@@ -39,62 +37,26 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	private RacaController racaController;
 
 	@FXML
+	@SuppressWarnings("unchecked")
 	public void initialize() {
-		nomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
-		numeroColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumero()));
-		dataNascimentoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getDataNascimento())));
-		racaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRaca().getDescricao()));
+		
+		if ( state.equals(State.LIST) ){
+			
+			nomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+			numeroColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumero()));
+			dataNascimentoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getDataNascimento())));
+			racaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRaca().getDescricao()));
 
-		if ( inputNumero != null ){
+		}
+		
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			inputNumero.textProperty().bindBidirectional(((Animal)object).numeroProperty());
-		}
-		
-		if ( inputNome != null ){
 			inputNome.textProperty().bindBidirectional(((Animal)object).nomeProperty());
-		}
-		
-		if ( inputDataNascimento != null ){
 			inputDataNascimento.valueProperty().bindBidirectional(((Animal)object).dataNascimentoProperty());
-		}
-		
-		if ( inputRaca != null ){
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
-			
-	        // list of values showed in combo box drop down
-			inputRaca.setCellFactory(new Callback<ListView<Raca>,ListCell<Raca>>(){
-	            @Override
-	            public ListCell<Raca> call(ListView<Raca> l){
-	                return new ListCell<Raca>(){
-	                    @Override
-	                    protected void updateItem(Raca item, boolean empty) {
-	                        super.updateItem(item, empty);
-	                        if (item == null || empty) {
-	                            setGraphic(null);
-	                        } else {
-	                            setText(item.getDescricao());
-	                        }
-	                    }
-	                } ;
-	            }
-	        });
-			//selected value showed in combo box
-			inputRaca.setConverter(new StringConverter<Raca>() {
-	              @Override
-	              public String toString(Raca raca) {
-	                if (raca == null){
-	                  return null;
-	                } else {
-	                  return raca.getDescricao();
-	                }
-	              }
-
-	            @Override
-	            public Raca fromString(String raca) {
-	                return null;
-	            }
-	        });
-			
+			inputRaca.setCellFactory(new CustomCellFactory<>("descricao"));
+			inputRaca.setConverter(new CustomStringConverter("descricao"));
 			inputRaca.valueProperty().bindBidirectional(((Animal)object).racaProperty());
 		}
 		

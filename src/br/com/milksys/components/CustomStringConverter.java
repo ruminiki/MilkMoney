@@ -8,10 +8,10 @@ import javafx.util.StringConverter;
 @SuppressWarnings("rawtypes")
 public class CustomStringConverter extends StringConverter {
 
-	String methodGet;
+	String attrToGet;
 	
-	public CustomStringConverter(String methodGet) {
-		this.methodGet = methodGet;
+	public CustomStringConverter(String attrToGet) {
+		this.attrToGet = attrToGet;
 	}
 	
 	@Override
@@ -20,8 +20,16 @@ public class CustomStringConverter extends StringConverter {
 			return null;
 		} else {
 			Method method;
+			
+			String methodName;
+			if ( !attrToGet.startsWith("get")){
+				methodName = "get"+attrToGet.substring(0, 1).toUpperCase()+attrToGet.substring(1, attrToGet.length());
+			}else{
+				methodName = attrToGet;
+			}
+			
 			try {
-				method = object.getClass().getMethod(methodGet);
+				method = object.getClass().getMethod(methodName);
 				return (String) method.invoke(object);
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
 				return "";

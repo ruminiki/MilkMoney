@@ -87,11 +87,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			valorTotalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorTotal())));
 			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
 			
-			if ( !isInitialized ){
-				super.service = this.service;
-				configuraMesesEntregaAnoReferencia();
-				super.initialize();
-			}
+			super.service = this.service;
+			configuraMesesEntregaAnoReferencia();
+			super.initialize();
 			
 		}
 		

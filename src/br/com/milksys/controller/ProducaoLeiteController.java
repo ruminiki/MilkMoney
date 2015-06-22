@@ -89,12 +89,10 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
 			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
 			
-			if ( !isInitialized ){
-				super.service = this.service;
-				this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
-				configuraTabelaDiasMesSelecionado();
-				super.initialize();
-			}
+			super.service = this.service;
+			this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
+			configuraTabelaDiasMesSelecionado();
+			super.initialize();
 			
 		}
 		

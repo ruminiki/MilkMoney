@@ -9,10 +9,10 @@ import javafx.util.Callback;
 
 public class CustomCellFactory<R, P> implements Callback<ListView<R>, ListCell<P>> {
 
-	String methodGet;
+	String attrToGet;
 	
-	public CustomCellFactory(String methodGet) {
-		this.methodGet = methodGet;
+	public CustomCellFactory(String attrToGet) {
+		this.attrToGet = attrToGet;
 	}
 
 	@Override
@@ -24,8 +24,16 @@ public class CustomCellFactory<R, P> implements Callback<ListView<R>, ListCell<P
                     setGraphic(null);
                 } else {
                 	Method method;
+                	
+    				String methodName;
+    				if ( !attrToGet.startsWith("get")){
+    					methodName = "get"+attrToGet.substring(0, 1).toUpperCase()+attrToGet.substring(1, attrToGet.length());
+    				}else{
+    					methodName = attrToGet;
+    				}
+    				
 					try {
-						method = item.getClass().getMethod(methodGet);
+						method = item.getClass().getMethod(methodName);
 						setText((String) method.invoke(item));
 					} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException e) {
 						setText("");

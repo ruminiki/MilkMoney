@@ -43,9 +43,7 @@ public abstract class AbstractController<K, E> {
 
 		if (!state.equals(State.INSERT_TO_SELECT)) {
 
-			if (!isInitialized) {
-				this.initializeTableOverview();
-			} 
+			this.initializeTableOverview();
 			
 			table.setItems(data);
 			
