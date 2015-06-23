@@ -2,6 +2,9 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -36,6 +39,12 @@ public class AnimalService implements IService<Integer, Animal>{
 	@Override
 	public List<Animal> findAll() {
 		return animalDao.findAll(Animal.class);
+	}
+
+	public ObservableList<Animal> findAllAsObservableList() {
+		ObservableList<Animal> list = FXCollections.observableArrayList();
+		list.addAll(animalDao.findAll(Animal.class));
+		return list;
 	}
 	
 	

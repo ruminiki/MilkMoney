@@ -30,6 +30,7 @@
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarProducaoIndividual" text="Produção Individual" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Help">

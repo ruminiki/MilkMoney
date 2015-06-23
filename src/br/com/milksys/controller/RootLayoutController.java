@@ -66,7 +66,11 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleSaveAs() {
+    private void handleCadastrarProducaoIndividual() {
+    	
+    	AnchorPane form = (AnchorPane) MainApp.load("view/producaoIndividual/ProducaoIndividualOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
     }
 
     /**

@@ -106,5 +106,9 @@ public class Animal implements Serializable {
 	public ObjectProperty<Raca> racaProperty(){
 		return raca;
 	}
+	
+	public String getNumeroNome(){
+		return this.numero.get() + " - " + this.nome.get();
+	}
 
 }
