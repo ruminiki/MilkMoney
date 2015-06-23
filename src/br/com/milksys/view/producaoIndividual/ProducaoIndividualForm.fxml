@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="316.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
+<AnchorPane prefHeight="370.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -28,9 +28,9 @@
                   <Label text="Volume (litros)" GridPane.rowIndex="2" />
                   <Label text="Observação" GridPane.rowIndex="3" />
                   <DatePicker fx:id="inputData" maxWidth="120.0" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="inputAnimal" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="inputAnimal" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <NumberTextField fx:id="inputVolume" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputObservacao" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -55,14 +55,16 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <ListView fx:id="inputList" prefHeight="95.0" prefWidth="447.0">
-               <opaqueInsets>
-                  <Insets bottom="5.0" />
-               </opaqueInsets>
+            <TableView fx:id="tableForm" prefHeight="160.0">
+              <columns>
+                <TableColumn fx:id="dataColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                <TableColumn fx:id="animalColumnTableForm" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Animal" />
+                  <TableColumn fx:id="volumeColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Quantidade" />
+              </columns>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
-            </ListView>
+            </TableView>
             <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="447.0" VBox.vgrow="ALWAYS">
                <children>
                   <Button fx:id="btnRemover" mnemonicParsing="false" text="Remover" />

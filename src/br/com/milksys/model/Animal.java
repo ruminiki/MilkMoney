@@ -108,7 +108,7 @@ public class Animal implements Serializable {
 	}
 	
 	public String getNumeroNome(){
-		return this.numero.get() + " - " + this.nome.get();
+		return this.numero.get() + "-" + this.nome.get();
 	}
 
 }
