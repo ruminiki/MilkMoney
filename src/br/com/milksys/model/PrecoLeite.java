@@ -35,8 +35,16 @@ public class PrecoLeite implements Serializable {
 	private StringProperty valor = new SimpleStringProperty();
 	private StringProperty mesReferencia = new SimpleStringProperty();
 	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
+	private int codigoMes;
 
 	public PrecoLeite() {
+	}
+
+	public PrecoLeite(String mesReferencia, int codigoMes, int anoReferencia, BigDecimal valor) {
+		this.mesReferencia.set(mesReferencia);
+		this.codigoMes = codigoMes;
+		this.anoReferencia.set(anoReferencia);
+		this.valor.set(NumberFormatUtil.decimalFormat(valor));
 	}
 
 	public int getId() {
@@ -84,6 +92,14 @@ public class PrecoLeite implements Serializable {
 	
 	public IntegerProperty anoReferenciaProperty(){
 		return anoReferencia;
+	}
+
+	public int getCodigoMes() {
+		return codigoMes;
+	}
+
+	public void setCodigoMes(int codigoMes) {
+		this.codigoMes = codigoMes;
 	}
 	
 }

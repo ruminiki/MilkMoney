@@ -15,8 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
@@ -60,12 +59,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	@FXML private Label lblTotalEntregue;
 	@FXML private Label lblTotalRecebido;
 	
-	@Resource(name="entregaLeiteService")
-	private EntregaLeiteService service;
-	@Resource(name="producaoLeiteService")
-	private ProducaoLeiteService producaoLeiteService;
-	@Resource(name="precoLeiteService")
-	private PrecoLeiteService precoLeiteService;
+	@Autowired private EntregaLeiteService service;
+	@Autowired private ProducaoLeiteService producaoLeiteService;
+	@Autowired private PrecoLeiteService precoLeiteService;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private ObservableList<String> meses = Util.generateListMonths();

@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.HBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,46 +97,81 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			inputData.setDisable(true);
 			btnOk.setText("Adicionar");
 			btnOk.setOnAction(new EventHandler<ActionEvent>() {
+				
 			    @Override public void handle(ActionEvent e) {
+			    	
+			    	//atualiza o objeto com os dados da tela
 			    	ProducaoIndividual pi = (ProducaoIndividual)object;
 			    	pi.setAnimal(inputAnimal.getSelectionModel().getSelectedItem());
 			    	pi.setData(DateUtil.asDate(inputData.getValue()));
 			    	pi.setVolume(inputVolume.getNumber());
 			    	pi.setObservacao(inputObservacao.getText());
+			    	
+			    	//caso já exista registro para o mesmo animal no mesmo dia remove o anterior
+			    	for ( int index = 0; index < tableForm.getItems().size(); index++ ){
+			    		ProducaoIndividual p = tableForm.getItems().get(index);
+			    		
+						if ( p.getData().equals(((ProducaoIndividual)object).getData()) && 
+								p.getAnimal().getId() == pi.getAnimal().getId() ){
+							
+							//atualiza o volume para atualizar a table view
+							p.setVolume(((ProducaoIndividual)object).getVolume());
+							//seta o id para fazer update e não insert
+							object = p;
+							tableForm.getItems().set(index, p);
+							break;
+						}
+						
+					}
+			    	
+			    	//adiciona na tabela somente novos registros
+			    	if ( ((ProducaoIndividual)object).getId() <= 0 )
+			    		tableForm.getItems().add((ProducaoIndividual)object);
+			    	
+			    	//salva o objeto
 			    	service.save((ProducaoIndividual)object);
-			    	tableForm.getItems().add((ProducaoIndividual)object);
+			    	
 			    	object = new ProducaoIndividual();
+			    	
 			    }
+			    
 			});			
 			
 			btnRemover.setOnAction(new EventHandler<ActionEvent>() {
 			    @Override public void handle(ActionEvent e) {
-			    	int index = tableForm.getSelectionModel().getSelectedIndex();
+			    	
 			        object = tableForm.getSelectionModel().getSelectedItem();
+			        
 			        if ( object != null ){
+			        	
 		    			Alert alert = new Alert(AlertType.CONFIRMATION);
 		    			alert.setTitle("Confirmação");
 		    			alert.setHeaderText("Confirme a exclusão do registro");
 		    			alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 		    			Optional<ButtonType> result = alert.showAndWait();
+		    			
 		    			if (result.get() == ButtonType.OK) {
 		    				service.remove((ProducaoIndividual)object);
-		    				tableForm.getItems().remove(index);
+		    				tableForm.getItems().remove(tableForm.getSelectionModel().getSelectedIndex());
 		    				object = new ProducaoIndividual();
 		    			}
+		    			
 			        }
+			        
 			    }
 			});		
 			
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
+			
 			tableForm.setVisible(false);
 			btnRemover.setVisible(false);
 			tableForm.setMaxWidth(0);
 			tableForm.setMaxHeight(0);
-			((HBox)btnRemover.getParent()).setMaxHeight(0);
-			((HBox)btnRemover.getParent()).setMaxWidth(0);
+			btnRemover.setMaxHeight(0);
+			btnRemover.setMaxWidth(0);
+			
 		}
 		
 	}
@@ -145,7 +179,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@Override
 	protected void showForm(int width, int height) {
 		if ( state.equals(State.INSERT_TO_SELECT) ){
-			super.showForm(500, 370);
+			super.showForm(500, 330);
 		}else{
 			super.showForm(500, 180);	
 		}
@@ -154,6 +188,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	@Override
 	protected boolean isInputValid() {
+		
 		return true;
 	}
 

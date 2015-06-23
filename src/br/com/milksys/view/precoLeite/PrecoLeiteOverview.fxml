@@ -13,44 +13,47 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Pesquisar:">
-               <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
-               <padding>
-                  <Insets right="5.0" top="5.0" />
-               </padding>
-            </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
-            <Pane />
-            <HBox alignment="CENTER_RIGHT">
+            <VBox alignment="CENTER">
                <children>
-                  <VBox alignment="CENTER" prefWidth="50.0">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
                      <children>
-                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+                        <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
                            <font>
                               <Font size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
                         </Label>
-                        <Label text="Registros">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
+                        <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
+                           <children>
+                              <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <Label text="Ano Referência">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </HBox>
+            </VBox>
          </children>
          <padding>
             <Insets right="5.0" />
          </padding>
       </HBox>
-      <TableView fx:id="table" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="55.0">
         <columns>
           <TableColumn fx:id="mesReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Mês" />
             <TableColumn fx:id="anoReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: center;" text="Ano" />

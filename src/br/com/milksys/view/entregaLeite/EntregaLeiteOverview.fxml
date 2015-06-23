@@ -82,7 +82,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <TableView fx:id="table" editable="true" VBox.vgrow="ALWAYS">
+            <TableView fx:id="table" editable="true" focusTraversable="false" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="mesReferenciaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Mês" />
                   <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Período Produção">

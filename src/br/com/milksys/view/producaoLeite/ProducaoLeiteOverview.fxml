@@ -130,7 +130,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </opaqueInsets>
             </GridPane>
-            <TableView fx:id="table" editable="true" VBox.vgrow="SOMETIMES">
+            <TableView fx:id="table" editable="true" focusTraversable="false" VBox.vgrow="SOMETIMES">
               <columns>
                 <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
                 <TableColumn fx:id="numeroVacasOrdenhadasColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Nº Vacas" />

@@ -50,6 +50,12 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 		list.addAll(dao.findAll(PrecoLeite.class));
 		return list;
 	}
+
+	public ObservableList<PrecoLeite> findAllByAnoAsObservableList(int anoReferencia) {
+		ObservableList<PrecoLeite> list = FXCollections.observableArrayList();
+		list.addAll(dao.findAllByAno(anoReferencia));
+		return list;
+	}
 	
 	
 }

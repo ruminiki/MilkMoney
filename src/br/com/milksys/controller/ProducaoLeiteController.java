@@ -269,7 +269,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 				lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
 			}
 			
-			if ( precoLeite != null ){
+			if ( precoLeite != null && precoLeite.getValor().compareTo(BigDecimal.ZERO) > 0 ){
 				lblValorEstimado.setText(NumberFormatUtil.decimalFormat(totalEntregue.multiply(precoLeite.getValor())));	
 			}else{
 				lblValorEstimado.setText("Cadastrar Preço");
@@ -303,28 +303,21 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleCadastrarPrecoLeite(){
 		
+		precoLeiteController.state = State.INSERT_TO_SELECT;
+		
 		if ( this.precoLeite == null ){ 
-			precoLeiteController.state = State.INSERT_TO_SELECT;
-			
-			PrecoLeite p = new PrecoLeite();
-			p.setMesReferencia(meses.get(selectedMesReferencia-1));
-			p.setAnoReferencia(selectedAnoReferencia);
-			precoLeiteController.object = p;
-			precoLeiteController.showForm(0,0);
-			if ( precoLeiteController.getObject() != null ){
-				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
-				atualizaValorEstimado();
-				resume();
-			}
-		}else{
-			precoLeiteController.state = State.INSERT_TO_SELECT;
-			precoLeiteController.object = precoLeite;
-			precoLeiteController.showForm(0,0);
-			if ( precoLeiteController.getObject() != null ){
-				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
-				atualizaValorEstimado();
-				resume();
-			}
+			precoLeite = new PrecoLeite();
+			precoLeite.setMesReferencia(meses.get(selectedMesReferencia-1));
+			precoLeite.setAnoReferencia(selectedAnoReferencia);
+			precoLeite.setCodigoMes(selectedMesReferencia);
+		}
+		
+		precoLeiteController.setObject(precoLeite);
+		precoLeiteController.showForm(0,0);
+		if ( precoLeiteController.getObject() != null ){
+			this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
+			atualizaValorEstimado();
+			resume();
 		}
 		
 	}

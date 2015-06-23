@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="370.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
+<AnchorPane prefHeight="329.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -36,6 +36,16 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </GridPane>
+            <TableView fx:id="tableForm" focusTraversable="false" prefHeight="160.0">
+              <columns>
+                <TableColumn fx:id="dataColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                <TableColumn fx:id="animalColumnTableForm" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Animal" />
+                  <TableColumn fx:id="volumeColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Quantidade" />
+              </columns>
+               <VBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </VBox.margin>
+            </TableView>
             <HBox alignment="BOTTOM_RIGHT" prefWidth="442.0" spacing="5.0">
                <children>
                   <Button fx:id="btnOk" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleOk" text="Ok">
@@ -43,6 +53,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnRemover" mnemonicParsing="false" text="Remover" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>
@@ -54,27 +65,6 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-            </HBox>
-            <TableView fx:id="tableForm" prefHeight="160.0">
-              <columns>
-                <TableColumn fx:id="dataColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                <TableColumn fx:id="animalColumnTableForm" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Animal" />
-                  <TableColumn fx:id="volumeColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Quantidade" />
-              </columns>
-               <VBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </VBox.margin>
-            </TableView>
-            <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="447.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Button fx:id="btnRemover" mnemonicParsing="false" text="Remover" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
             </HBox>
          </children>
       </VBox>
