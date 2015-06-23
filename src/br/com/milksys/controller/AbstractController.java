@@ -38,6 +38,7 @@ public abstract class AbstractController<K, E> {
 	@FXML protected TableView<E> table;
 	@FXML protected Label lblNumRegistros;
 	@FXML protected State state = State.LIST;
+	protected AnchorPane form;
 
 	public void initialize() {
 
@@ -68,7 +69,7 @@ public abstract class AbstractController<K, E> {
 				public void handle(KeyEvent event) {
 
 					if (event.getCode().equals(KeyCode.ENTER)) {
-						showForm();
+						showForm(0,0);
 					}
 
 					if (event.getCode().equals(KeyCode.DELETE)) {
@@ -109,10 +110,16 @@ public abstract class AbstractController<K, E> {
 		object = value;
 	}
 
-	protected void showForm() {
+	protected void showForm(int width, int height) {
 		
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-
+		form = (AnchorPane) MainApp.load(getFormName());
+		
+		if ( height > 0 )
+			form.setPrefHeight(height);
+		
+		if ( width > 0 )
+			form.setPrefWidth(width);
+		
 		dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
@@ -166,14 +173,14 @@ public abstract class AbstractController<K, E> {
 		object = ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
-		showForm();
+		showForm(0,0);
 	}
 
 	@FXML
 	protected void handleEdit() {
 		if (object != null) {
 			this.state = State.UPDATE;
-			showForm();
+			showForm(0,0);
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Nenhuma Seleção");

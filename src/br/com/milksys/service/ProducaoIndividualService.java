@@ -1,6 +1,10 @@
 package br.com.milksys.service;
 
+import java.util.Date;
 import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import javax.annotation.Resource;
 
@@ -8,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.ProducaoIndividualDao;
 import br.com.milksys.model.ProducaoIndividual;
-import br.com.milksys.model.ProducaoLeite;
 
 @Service
 public class ProducaoIndividualService implements IService<Integer, ProducaoIndividual>{
@@ -18,12 +21,6 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 
 	@Override
 	public void save(ProducaoIndividual entity) {
-		if ( entity.getId() <= 0 ){
-			ProducaoLeite p = dao.findByDate(entity.getData());
-			if ( p != null ){
-				return;
-			}
-		}
 		dao.persist(entity);	
 	}
 	
@@ -42,6 +39,12 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	@Override
 	public List<ProducaoIndividual> findAll() {
 		return dao.findAll(ProducaoIndividual.class);
+	}
+
+	public ObservableList<ProducaoIndividual> findByDate(Date data) {
+		ObservableList<ProducaoIndividual> list = FXCollections.observableArrayList();
+		list.addAll(dao.findByDate(data));
+		return list;
 	}
 	
 	

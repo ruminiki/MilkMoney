@@ -7,11 +7,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-public class CustomCellFactory<R, P> implements Callback<ListView<R>, ListCell<P>> {
+public class CustomComboBoxCellFactory<R, P> implements Callback<ListView<R>, ListCell<P>> {
 
 	String attrToGet;
 	
-	public CustomCellFactory(String attrToGet) {
+	public CustomComboBoxCellFactory(String attrToGet) {
 		this.attrToGet = attrToGet;
 	}
 

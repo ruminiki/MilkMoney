@@ -7,20 +7,24 @@ import java.util.Calendar;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.model.PrecoLeite;
+import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.ProducaoLeite;
 import br.com.milksys.model.State;
 import br.com.milksys.service.PrecoLeiteService;
@@ -58,12 +62,14 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML private Label lblAno;
 	@FXML private Hyperlink lblValorEstimado;
 	
-	@Resource(name="producaoLeiteService")
+	@Autowired
 	private ProducaoLeiteService service;
-	@Resource(name="precoLeiteService")
+	@Autowired
 	private PrecoLeiteService precoLeiteService;
-	@Resource(name="precoLeiteController")
+	@Autowired
 	private PrecoLeiteController precoLeiteController;
+	@Autowired
+	private ProducaoIndividualController producaoIndividualController;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
@@ -78,13 +84,38 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		if ( state.equals(State.LIST) ){
 			
 			dataColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getData())));
-			numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
 			volumeProduzidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeProduzido())));
 			volumeEntregueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeEntregue())));
 			mediaProducaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getMediaProducao())));
 			valorEstimadoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorEstimado())));
 			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
 			
+			numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
+			numeroVacasOrdenhadasColumn.setCellFactory(new Callback<TableColumn<ProducaoLeite,String>, TableCell<ProducaoLeite,String>>(){
+				@Override
+				public TableCell<ProducaoLeite, String> call(TableColumn<ProducaoLeite, String> param) {
+					TableCell<ProducaoLeite, String> cell = new TableCell<ProducaoLeite, String>(){
+						@Override
+						public void updateItem(String item, boolean empty) {
+							if(item!=null){
+								Hyperlink link = new Hyperlink();
+								link.setText(item);
+								link.setFocusTraversable(false);
+								link.setOnAction(new EventHandler<ActionEvent>() {
+								    @Override
+								    public void handle(ActionEvent e) {
+								    	object = data.get(getTableRow().getIndex());
+								    	handleCadastrarProducaoIndividual();
+								    }
+								});
+								setGraphic(link);
+							} 
+						}
+					};                           
+					return cell;
+				}
+			});
+
 			inputMesReferencia.setItems(meses);
 			inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
 			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
@@ -279,7 +310,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			p.setMesReferencia(meses.get(selectedMesReferencia-1));
 			p.setAnoReferencia(selectedAnoReferencia);
 			precoLeiteController.object = p;
-			precoLeiteController.showForm();
+			precoLeiteController.showForm(0,0);
 			if ( precoLeiteController.getObject() != null ){
 				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
 				atualizaValorEstimado();
@@ -288,13 +319,27 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		}else{
 			precoLeiteController.state = State.INSERT_TO_SELECT;
 			precoLeiteController.object = precoLeite;
-			precoLeiteController.showForm();
+			precoLeiteController.showForm(0,0);
 			if ( precoLeiteController.getObject() != null ){
 				this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
 				atualizaValorEstimado();
 				resume();
 			}
 		}
+		
+	}
+	
+	/**
+	 * Abre formulário para cadastrar a produção individual de um animal
+	 */
+	protected void handleCadastrarProducaoIndividual() {
+		producaoIndividualController.state = State.INSERT_TO_SELECT;
+		
+		ProducaoIndividual pi = new ProducaoIndividual();
+		pi.setData(((ProducaoLeite)object).getData());
+		producaoIndividualController.object = pi;
+		
+		producaoIndividualController.showForm(0,0);
 		
 	}
 

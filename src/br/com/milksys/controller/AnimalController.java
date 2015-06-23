@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomCellFactory;
+import br.com.milksys.components.CustomComboBoxCellFactory;
 import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
@@ -55,7 +55,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputDataNascimento.valueProperty().bindBidirectional(((Animal)object).dataNascimentoProperty());
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
-			inputRaca.setCellFactory(new CustomCellFactory<>("descricao"));
+			inputRaca.setCellFactory(new CustomComboBoxCellFactory<>("descricao"));
 			inputRaca.setConverter(new CustomStringConverter("descricao"));
 			inputRaca.valueProperty().bindBidirectional(((Animal)object).racaProperty());
 		}
@@ -89,7 +89,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	protected void openFormRacaToInsertAndSelect() {
 		racaController.state = State.INSERT_TO_SELECT;
 		racaController.object = new Raca();
-		racaController.showForm();
+		racaController.showForm(0,0);
 		if ( racaController.getObject() != null ){
 			inputRaca.getItems().add((Raca)racaController.getObject());
 			inputRaca.getSelectionModel().select((Raca)racaController.getObject());
