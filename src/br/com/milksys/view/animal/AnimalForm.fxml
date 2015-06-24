@@ -11,10 +11,10 @@
    <children>
       <VBox layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="137.0" prefWidth="410.0">
               <columnConstraints>
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="100.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="302.0" minWidth="10.0" prefWidth="291.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints maxWidth="302.0" minWidth="10.0" prefWidth="291.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -23,13 +23,13 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nome" GridPane.rowIndex="1" />
-                  <Label text="Raça" GridPane.rowIndex="2" />
-                  <Label graphicTextGap="10.0" text="Data Nascimento" GridPane.rowIndex="3" />
-                  <Label text="Número" />
-                  <UCTextField fx:id="inputNumero" prefWidth="100.0" GridPane.columnIndex="1" />
+                  <Label text="Nome: " GridPane.rowIndex="1" />
+                  <Label text="Raça: " GridPane.rowIndex="2" />
+                  <Label graphicTextGap="10.0" text="Data Nascimento: " GridPane.rowIndex="3" />
+                  <Label text="Número: " />
+                  <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="100.0" GridPane.columnIndex="1" />
                   <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
                         <ComboBox fx:id="inputRaca" prefWidth="250.0" promptText="Selecione..." />
                         <Button mnemonicParsing="false" onAction="#openFormRacaToInsertAndSelect" text="Novo" />

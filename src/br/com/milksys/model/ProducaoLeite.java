@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -39,22 +45,22 @@ public class ProducaoLeite implements Serializable {
 	private StringProperty numeroVacasOrdenhadas = new SimpleStringProperty();
 	private StringProperty volumeProduzido = new SimpleStringProperty();
 	private StringProperty volumeEntregue = new SimpleStringProperty();
-	private StringProperty valorEstimado = new SimpleStringProperty();
 	private StringProperty mediaProducao = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
+	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
 
 	public ProducaoLeite() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public ProducaoLeite(Date data, int numeroVacasOrdenhadas, BigDecimal volumeProduzido, 
-			BigDecimal volumeEntregue, BigDecimal valorEstimado, BigDecimal mediaProducao) {
+			BigDecimal volumeEntregue, BigDecimal mediaProducao, PrecoLeite precoLeite) {
 		this.data.set(DateUtil.format(data));
 		this.numeroVacasOrdenhadas.set(String.valueOf(numeroVacasOrdenhadas));
 		this.volumeProduzido.set(NumberFormatUtil.decimalFormat(volumeProduzido));
 		this.volumeEntregue.set(NumberFormatUtil.decimalFormat(volumeEntregue));
-		this.valorEstimado.set(NumberFormatUtil.decimalFormat(valorEstimado));
 		this.mediaProducao.set(NumberFormatUtil.decimalFormat(mediaProducao));
+		this.precoLeite.set(precoLeite);
 	}
 	
 	@Temporal(TemporalType.DATE)
@@ -106,19 +112,6 @@ public class ProducaoLeite implements Serializable {
 	}
 
 	@Access(AccessType.PROPERTY)
-	public BigDecimal getValorEstimado() {
-		return NumberFormatUtil.fromString(this.valorEstimado.get());
-	}
-
-	public void setValorEstimado(BigDecimal valorEstimado) {
-		this.valorEstimado.set(NumberFormatUtil.decimalFormat(valorEstimado));
-	}
-
-	public StringProperty ValorEstimadoProperty(){
-		return valorEstimado;
-	}
-
-	@Access(AccessType.PROPERTY)
 	public int getNumeroVacasOrdenhadas() {
 		return Integer.parseInt(numeroVacasOrdenhadas.getValue());
 	}
@@ -155,6 +148,38 @@ public class ProducaoLeite implements Serializable {
 	
 	public StringProperty mediaProducaoProperty(){
 		return mediaProducao;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="precoLeite")
+	public PrecoLeite getPrecoLeite() {
+		return precoLeite.get();
+	}
+	
+	public void setPrecoLeite(PrecoLeite precoLeite) {
+		this.precoLeite.set(precoLeite);
+	}
+	
+	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
+		return precoLeite;
+	}
+	
+	@Transient
+	public BigDecimal getValor() {
+		
+		if ( getPrecoLeite() != null ){
+			
+			if ( getPrecoLeite().getValorRecebido().compareTo(BigDecimal.ZERO) > 0 ){
+				return 	getPrecoLeite().getValorRecebido().multiply(getVolumeEntregue());
+			}else{
+				return 	getPrecoLeite().getValorMaximoPraticado().multiply(getVolumeEntregue());
+			}
+			 
+		}
+		
+		return BigDecimal.ZERO;
+		
 	}
 	
 }

@@ -5,23 +5,25 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -41,14 +43,12 @@ public class EntregaLeite implements Serializable {
 	private int id;
 	
 	private StringProperty mesReferencia = new SimpleStringProperty();
-	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
+	private StringProperty anoReferencia = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataInicio = new SimpleObjectProperty<LocalDate>();  
 	private ObjectProperty<LocalDate> dataFim = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty volume = new SimpleStringProperty();
-	private StringProperty valorRecebido = new SimpleStringProperty();
-	private StringProperty valorMaximoPraticado = new SimpleStringProperty();
-	private StringProperty valorTotal = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
+	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
 	
 
 	public EntregaLeite() {
@@ -56,13 +56,11 @@ public class EntregaLeite implements Serializable {
 	}
 	
 	public EntregaLeite(String mesReferencia, int anoReferencia, 
-			BigDecimal volume, BigDecimal valorRecebido, BigDecimal valorMaximoPraticado, BigDecimal valorTotal) {
+			BigDecimal volume, PrecoLeite precoLeite) {
 		this.mesReferencia.set(mesReferencia);
-		this.anoReferencia.set(anoReferencia);
+		this.anoReferencia.set(String.valueOf(anoReferencia));
 		this.volume.set(String.valueOf(volume));
-		this.valorRecebido.set(String.valueOf(valorRecebido));
-		this.valorMaximoPraticado.set(String.valueOf(valorMaximoPraticado));
-		this.valorTotal.set(String.valueOf(valorTotal));
+		this.precoLeite.set(precoLeite);
 		
 	}
 	
@@ -134,14 +132,14 @@ public class EntregaLeite implements Serializable {
 
 	@Access(AccessType.PROPERTY)
 	public int getAnoReferencia() {
-		return this.anoReferencia.get();
+		return Integer.parseInt(this.anoReferencia.get());
 	}
 
 	public void setAnoReferencia(int value) {
-		this.anoReferencia.set(value);
+		this.anoReferencia.set(String.valueOf(value));
 	}
 	
-	public IntegerProperty anoReferenciaProperty(){
+	public StringProperty anoReferenciaProperty(){
 		return anoReferencia;
 	}
 	
@@ -157,44 +155,29 @@ public class EntregaLeite implements Serializable {
 	public StringProperty observacaoProperty(){
 		return observacao;
 	}
-	
-	@Access(AccessType.PROPERTY)
-	public BigDecimal getValorRecebido() {
-		return NumberFormatUtil.fromString(this.valorRecebido.get());
-	}
 
-	public void setValorRecebido(BigDecimal valorRecebido) {
-		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido));
-	}
-	
-	public StringProperty valorRecebidoProperty(){
-		return valorRecebido;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	public BigDecimal getValorMaximoPraticado() {
-		return NumberFormatUtil.fromString(this.valorMaximoPraticado.get());
-	}
-
-	public void setValorMaximoPraticado(BigDecimal valorMaximoPraticado) {
-		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado));
-	}
-	
-	public StringProperty valorMaximoPraticadoProperty(){
-		return valorMaximoPraticado;
-	}
-	
-	@Access(AccessType.PROPERTY)
+	@Transient
 	public BigDecimal getValorTotal() {
-		return NumberFormatUtil.fromString(this.valorTotal.get());
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal.set(NumberFormatUtil.decimalFormat(valorTotal));
+		if ( getPrecoLeite() != null ){
+			return getPrecoLeite().getValorRecebido().multiply(getVolume());
+		}
+		return BigDecimal.ZERO;
 	}
 	
-	public StringProperty valorTotalProperty(){
-		return valorTotal;
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="precoLeite")
+	public PrecoLeite getPrecoLeite() {
+		return precoLeite.get();
 	}
+	
+	public void setPrecoLeite(PrecoLeite precoLeite) {
+		this.precoLeite.set(precoLeite);
+	}
+	
+	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
+		return precoLeite;
+	}
+	
 	
 }

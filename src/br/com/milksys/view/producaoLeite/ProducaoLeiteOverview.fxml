@@ -130,7 +130,7 @@
                   <Insets bottom="5.0" top="5.0" />
                </opaqueInsets>
             </GridPane>
-            <TableView fx:id="table" editable="true" focusTraversable="false" VBox.vgrow="SOMETIMES">
+            <TableView fx:id="table" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" scaleShape="false" VBox.vgrow="SOMETIMES">
               <columns>
                 <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
                 <TableColumn fx:id="numeroVacasOrdenhadasColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Nº Vacas" />
@@ -141,7 +141,7 @@
                         <TableColumn fx:id="mediaProducaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Média" />
                      </columns>
                   </TableColumn>
-                  <TableColumn fx:id="valorEstimadoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Valor Estimado" />
+                  <TableColumn fx:id="valorColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Valor" />
                   <TableColumn fx:id="observacaoColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="1.0" text="Observaçao" />
               </columns>
                <columnResizePolicy>

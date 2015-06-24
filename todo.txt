@@ -1,6 +1,7 @@
 - nao alterar um calendario de recolha que já tenha entregas (reformular)
 - carregar o número de vacas em lactação no lançamento de entrega de leite
 - fazer gráfico preço leite
-- não permitir salvar dois preços mesmo mês
-- navegação por ano preço leite (mesmo sistema da entrega do leite)
 - fazer gráfico medição leite por animal
+- não permitir quantidade entregue maior que quantidade produzida
+- no form de producao individual quando dá um enter ele chama o handle ok.
+- quando carregar os registros de produção individual atualizar o preço. Ou associar com a tabela de preço.

@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.ProducaoLeiteDao;
+import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
 
 @Service
@@ -51,6 +52,10 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		ObservableList<ProducaoLeite> list = FXCollections.observableArrayList();
 		list.addAll(dao.findAllByPeriodo(inicio, fim));
 		return list;
+	}
+
+	public void updatePrecoLeitePeriodo(PrecoLeite precoLeite, Date dataInicio, Date dataFim) {
+		dao.updatePrecoLeitePeriodo(precoLeite, dataInicio, dataFim);
 	}
 	
 	

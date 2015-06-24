@@ -47,7 +47,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML private TableColumn<ProducaoLeite, String> volumeProduzidoColumn;
 	@FXML private TableColumn<ProducaoLeite, String> volumeEntregueColumn;
 	@FXML private TableColumn<ProducaoLeite, String> mediaProducaoColumn;
-	@FXML private TableColumn<ProducaoLeite, String> valorEstimadoColumn;
+	@FXML private TableColumn<ProducaoLeite, String> valorColumn;
 	@FXML private TableColumn<ProducaoLeite, String> observacaoColumn;
 	
 	@FXML private ComboBox<String> inputMesReferencia;
@@ -62,14 +62,10 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML private Label lblAno;
 	@FXML private Hyperlink lblValorEstimado;
 	
-	@Autowired
-	private ProducaoLeiteService service;
-	@Autowired
-	private PrecoLeiteService precoLeiteService;
-	@Autowired
-	private PrecoLeiteController precoLeiteController;
-	@Autowired
-	private ProducaoIndividualController producaoIndividualController;
+	@Autowired private ProducaoLeiteService service;
+	@Autowired private PrecoLeiteService precoLeiteService;
+	@Autowired private PrecoLeiteController precoLeiteController;
+	@Autowired private ProducaoIndividualController producaoIndividualController;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
@@ -87,7 +83,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			volumeProduzidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeProduzido())));
 			volumeEntregueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeEntregue())));
 			mediaProducaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getMediaProducao())));
-			valorEstimadoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorEstimado())));
+			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
 			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
 			
 			numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
@@ -121,10 +117,10 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
 			
 			super.service = this.service;
-			this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
 			configuraTabelaDiasMesSelecionado();
 			super.initialize();
-			
+			this.resume();
+
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
@@ -165,9 +161,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	 */
 	private void changeMesReferenciaListener(String newValue) {
 		selectedMesReferencia = meses.indexOf(newValue) + 1;
-		this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
 		configuraTabelaDiasMesSelecionado();
-		atualizaValorEstimado();
 	}    
 	
 	@Override
@@ -183,9 +177,6 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		if ( vacasOrdenhadas > 0 && volumeProduzido.compareTo(BigDecimal.ZERO) > 0 ){
 			((ProducaoLeite)object).setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
-			if(precoLeite != null){
-				((ProducaoLeite)object).setValorEstimado(precoLeite.getValor().multiply(((ProducaoLeite)object).getVolumeEntregue()));
-			}
 		}
 		
 		super.handleOk();
@@ -201,16 +192,26 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		Calendar cDataFim = Calendar.getInstance();
 		cDataFim.setTimeInMillis(DateUtil.asDate(dataFimMes()).getTime());
 		
+		//localiza o preço do leite para o mês
+		registraPrecoProducaoLeite();
+		
 		while ( cDataInicio.before(cDataFim) || cDataInicio.equals(cDataFim) ){
-			ProducaoLeite producaoLeite = new ProducaoLeite(cDataInicio.getTime(), 0, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
+			ProducaoLeite producaoLeite = new ProducaoLeite(cDataInicio.getTime(), 0, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, precoLeite);
 			service.save(producaoLeite);
 			cDataInicio.add(Calendar.DAY_OF_MONTH, 1);
 		}
 		
-		atualizaValorEstimado();
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
 		resume();
 		
+	}
+	
+	/**
+	 * Atualiza o preço do leite na produção de cada dia do mês
+	 */
+	private void registraPrecoProducaoLeite(){
+		this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
+		service.updatePrecoLeitePeriodo(precoLeite, DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 	}
 	
 	/**
@@ -242,6 +243,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			int dias = 0;
 			BigDecimal totalEntregue = new BigDecimal(0);
 			BigDecimal totalProduzido = new BigDecimal(0);
+			BigDecimal valor = new BigDecimal(0);
 			int totalVacasOrdenhadas = 0;
 			
 			for (int i = 0; i < data.size(); i++){
@@ -255,6 +257,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 				}
 				
 				totalEntregue = totalEntregue.add(e.getVolumeEntregue());
+				valor = valor.add(e.getValor());
 				
 			}
 			
@@ -269,31 +272,13 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 				lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
 			}
 			
-			if ( precoLeite != null && precoLeite.getValor().compareTo(BigDecimal.ZERO) > 0 ){
-				lblValorEstimado.setText(NumberFormatUtil.decimalFormat(totalEntregue.multiply(precoLeite.getValor())));	
+			if ( precoLeite != null ){
+				lblValorEstimado.setText(NumberFormatUtil.decimalFormat(valor));
 			}else{
 				lblValorEstimado.setText("Cadastrar Preço");
 			}
 			
 		}
-	}
-	
-	/**
-	 * Quando o preço do leite é cadastrado ou o mês é alterado
-	 * atualiza o valor estimado
-	 */
-	private void atualizaValorEstimado(){
-		this.initializeTableOverview();
-		
-		if ( precoLeite != null ){
-			for (int i = 0; i < data.size(); i++) {
-				ProducaoLeite producaoLeite = data.get(i);
-				producaoLeite.setValorEstimado(precoLeite.getValor().multiply(producaoLeite.getVolumeEntregue()));
-			}
-		}
-		
-		table.setItems(data);
-
 	}
 	
 	/**
@@ -315,8 +300,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		precoLeiteController.setObject(precoLeite);
 		precoLeiteController.showForm(0,0);
 		if ( precoLeiteController.getObject() != null ){
-			this.precoLeite = (PrecoLeite) precoLeiteController.getObject();
-			atualizaValorEstimado();
+			registraPrecoProducaoLeite();
 			resume();
 		}
 		
@@ -330,7 +314,8 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		ProducaoIndividual pi = new ProducaoIndividual();
 		pi.setData(((ProducaoLeite)object).getData());
-		producaoIndividualController.object = pi;
+		producaoIndividualController.setPrecoLeite(this.precoLeite);
+		producaoIndividualController.setObject(pi);
 		
 		producaoIndividualController.showForm(0,0);
 		

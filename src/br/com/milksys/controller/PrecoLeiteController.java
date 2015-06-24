@@ -7,9 +7,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 import javax.annotation.Resource;
 
@@ -29,11 +29,13 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 
 	@FXML private TableColumn<PrecoLeite, String> mesReferenciaColumn;
 	@FXML private TableColumn<PrecoLeite, String> anoReferenciaColumn;
-	@FXML private TableColumn<PrecoLeite, String> valorColumn;
+	@FXML private TableColumn<PrecoLeite, String> valorMaximoPraticadoColumn;
+	@FXML private TableColumn<PrecoLeite, String> valorRecebidoColumn;
 	
-	@FXML private NumberTextField inputValor;
-	@FXML private ComboBox<String> inputMesReferencia;
-	@FXML private ComboBox<Number> inputAnoReferencia;
+	@FXML private NumberTextField inputValorMaximoPraticado;
+	@FXML private NumberTextField inputValorRecebido;
+	@FXML private TextField inputMesReferencia;
+	@FXML private TextField inputAnoReferencia;
 	
 	@FXML private Button btnIncrease;
 	@FXML private Button btnDecrease;
@@ -41,10 +43,8 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@FXML private Label lblAno;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
-	
 	private ObservableList<String> meses = Util.generateListMonths();
-	private ObservableList<Number> anos = Util.generateListNumbers(1980, LocalDate.now().getYear());
-
+	
 	@Autowired private PrecoLeiteService service;
 	
 	@FXML
@@ -54,7 +54,9 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			
 			mesReferenciaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesReferencia()));
 			anoReferenciaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAnoReferencia())));
-			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
+			valorMaximoPraticadoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorMaximoPraticado())));
+			valorRecebidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorRecebido())));
+			
 			super.service = this.service;
 			configuraMesesAnoReferencia();
 			super.initialize();
@@ -63,27 +65,11 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
-			if (state.equals(State.INSERT)){
-				((PrecoLeite)object).setAnoReferencia(LocalDate.now().getYear());
-				((PrecoLeite)object).setMesReferencia(meses.get(LocalDate.now().getMonthValue()-1));	
-			}
+			inputMesReferencia.textProperty().bindBidirectional(((PrecoLeite)object).mesReferenciaProperty());
+			inputAnoReferencia.textProperty().bindBidirectional(((PrecoLeite)object).anoReferenciaProperty());
+			inputValorMaximoPraticado.textProperty().bindBidirectional(((PrecoLeite)object).valorMaximoPraticadoProperty());
+			inputValorRecebido.textProperty().bindBidirectional(((PrecoLeite)object).valorRecebidoProperty());
 			
-			inputMesReferencia.setItems(meses);
-			inputMesReferencia.getSelectionModel().select(LocalDate.now().getMonthValue()-1);
-			inputMesReferencia.valueProperty().bindBidirectional(((PrecoLeite)object).mesReferenciaProperty());
-			
-			inputAnoReferencia.setItems(anos);
-			inputAnoReferencia.getSelectionModel().selectLast();
-			inputAnoReferencia.valueProperty().bindBidirectional(((PrecoLeite)object).anoReferenciaProperty());
-			
-			inputValor.textProperty().bindBidirectional(((PrecoLeite)object).valorProperty());
-			
-		}
-		
-		//permite cadastrar apenas para o mês especificado na tela que invoca o cadastro
-		if ( state.equals(State.INSERT_TO_SELECT) ){
-			inputMesReferencia.setDisable(true);
-			inputAnoReferencia.setDisable(true);
 		}
 		
 	}
@@ -123,7 +109,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			
 			PrecoLeite precoLeite = service.findByMesAno(meses.get(i), selectedAnoReferencia);
 			if ( precoLeite == null ){
-				precoLeite = new PrecoLeite(meses.get(i), i+1, selectedAnoReferencia, BigDecimal.ZERO);
+				precoLeite = new PrecoLeite(meses.get(i), i+1, selectedAnoReferencia, BigDecimal.ZERO, BigDecimal.ZERO);
 				service.save(precoLeite);
 			}
 			

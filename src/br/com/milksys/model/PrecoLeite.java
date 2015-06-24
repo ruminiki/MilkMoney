@@ -3,8 +3,6 @@ package br.com.milksys.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -32,19 +30,21 @@ public class PrecoLeite implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private StringProperty valor = new SimpleStringProperty();
+	private StringProperty valorMaximoPraticado = new SimpleStringProperty();
+	private StringProperty valorRecebido = new SimpleStringProperty();
 	private StringProperty mesReferencia = new SimpleStringProperty();
-	private IntegerProperty anoReferencia = new SimpleIntegerProperty();
+	private StringProperty anoReferencia = new SimpleStringProperty();
 	private int codigoMes;
 
 	public PrecoLeite() {
 	}
 
-	public PrecoLeite(String mesReferencia, int codigoMes, int anoReferencia, BigDecimal valor) {
+	public PrecoLeite(String mesReferencia, int codigoMes, int anoReferencia, BigDecimal valorMaximoPraticado, BigDecimal valorRecebido) {
 		this.mesReferencia.set(mesReferencia);
 		this.codigoMes = codigoMes;
-		this.anoReferencia.set(anoReferencia);
-		this.valor.set(NumberFormatUtil.decimalFormat(valor));
+		this.anoReferencia.set(String.valueOf(anoReferencia));
+		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado));
+		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido));
 	}
 
 	public int getId() {
@@ -56,16 +56,29 @@ public class PrecoLeite implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public BigDecimal getValor() {
-		return NumberFormatUtil.fromString(this.valor.get());
+	public BigDecimal getValorMaximoPraticado() {
+		return NumberFormatUtil.fromString(this.valorMaximoPraticado.get());
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor.set(NumberFormatUtil.decimalFormat(valor));
+	public void setValorMaximoPraticado(BigDecimal valorMaximoPraticado) {
+		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado));
 	}
 	
-	public StringProperty valorProperty(){
-		return valor;
+	public StringProperty valorMaximoPraticadoProperty(){
+		return valorMaximoPraticado;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getValorRecebido() {
+		return NumberFormatUtil.fromString(this.valorRecebido.get());
+	}
+
+	public void setValorRecebido(BigDecimal valorRecebido) {
+		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido));
+	}
+	
+	public StringProperty valorRecebidoProperty(){
+		return valorRecebido;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -83,14 +96,14 @@ public class PrecoLeite implements Serializable {
 
 	@Access(AccessType.PROPERTY)
 	public int getAnoReferencia() {
-		return this.anoReferencia.get();
+		return Integer.parseInt(this.anoReferencia.get());
 	}
 
 	public void setAnoReferencia(int value) {
-		this.anoReferencia.set(value);
+		this.anoReferencia.set(String.valueOf(value));
 	}
 	
-	public IntegerProperty anoReferenciaProperty(){
+	public StringProperty anoReferenciaProperty(){
 		return anoReferencia;
 	}
 

@@ -88,7 +88,7 @@ public abstract class AbstractController<K, E> {
 
 	}
 
-	private void updateLabelNumRegistros(){
+	protected void updateLabelNumRegistros(){
 		if ( lblNumRegistros != null ){
 			lblNumRegistros.setText(String.valueOf(data.size()));
 		}
@@ -238,7 +238,8 @@ public abstract class AbstractController<K, E> {
 					data.add((E) object);
 					updateLabelNumRegistros();
 				} else {
-					data.set(table.getSelectionModel().getSelectedIndex(),(E) object);
+					if ( table != null )
+						data.set(table.getSelectionModel().getSelectedIndex(),(E) object);
 				}
 
 			} catch (NoSuchMethodException | SecurityException

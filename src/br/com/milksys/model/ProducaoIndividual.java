@@ -23,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -38,10 +39,13 @@ public class ProducaoIndividual implements Serializable {
 	private int id;
 	
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(DateUtil.asLocalDate(new Date()));  
-	private StringProperty volume = new SimpleStringProperty();
+	private StringProperty primeiraOrdenha = new SimpleStringProperty();
+	private StringProperty segundaOrdenha = new SimpleStringProperty();
+	private StringProperty terceiraOrdenha = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
-
+	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
+	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getData() {
@@ -65,16 +69,42 @@ public class ProducaoIndividual implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public BigDecimal getVolume() {
-		return NumberFormatUtil.fromString(this.volume.get());
+	public BigDecimal getPrimeiraOrdenha() {
+		return NumberFormatUtil.fromString(this.primeiraOrdenha.get());
 	}
 
-	public void setVolume(BigDecimal volume) {
-		this.volume.set(NumberFormatUtil.decimalFormat(volume));
+	public void setPrimeiraOrdenha(BigDecimal primeiraOrdenha) {
+		this.primeiraOrdenha.set(NumberFormatUtil.decimalFormat(primeiraOrdenha));
 	}
 
-	public StringProperty volumeProperty(){
-		return volume;
+	public StringProperty primeiraOrdenhaProperty(){
+		return primeiraOrdenha;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getSegundaOrdenha() {
+		return NumberFormatUtil.fromString(this.segundaOrdenha.get());
+	}
+
+	public void setSegundaOrdenha(BigDecimal segundaOrdenha) {
+		this.segundaOrdenha.set(NumberFormatUtil.decimalFormat(segundaOrdenha));
+	}
+
+	public StringProperty segundaOrdenhaProperty(){
+		return segundaOrdenha;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getTerceiraOrdenha() {
+		return NumberFormatUtil.fromString(this.terceiraOrdenha.get());
+	}
+
+	public void setTerceiraOrdenha(BigDecimal terceiraOrdenha) {
+		this.terceiraOrdenha.set(NumberFormatUtil.decimalFormat(terceiraOrdenha));
+	}
+
+	public StringProperty terceiraOrdenhaProperty(){
+		return terceiraOrdenha;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -105,4 +135,35 @@ public class ProducaoIndividual implements Serializable {
 		return animal;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="precoLeite")
+	public PrecoLeite getPrecoLeite() {
+		return precoLeite.get();
+	}
+	
+	public void setPrecoLeite(PrecoLeite precoLeite) {
+		this.precoLeite.set(precoLeite);
+	}
+	
+	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
+		return precoLeite;
+	}
+	
+	@Transient
+	public BigDecimal getValor() {
+		
+		if ( getPrecoLeite() != null ){
+			if ( getPrecoLeite().getValorRecebido().compareTo(BigDecimal.ZERO) > 0 ){
+				return 	getPrecoLeite().getValorRecebido().multiply(getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha()));
+			}else{
+				return 	getPrecoLeite().getValorMaximoPraticado().multiply(getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha()));
+			}
+			 
+		}
+		
+		return BigDecimal.ZERO;
+		
+	}
+
 }

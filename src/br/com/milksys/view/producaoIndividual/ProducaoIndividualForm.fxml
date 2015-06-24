@@ -7,14 +7,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="329.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
+<AnchorPane prefHeight="328.0" prefWidth="758.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.ProducaoIndividualController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane alignment="CENTER_LEFT" prefHeight="113.0" prefWidth="437.0">
               <columnConstraints>
-                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="150.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="369.0" />
+                <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="109.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="143.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="193.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="213.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
@@ -25,22 +27,35 @@
                <children>
                   <Label text="Data" />
                   <Label text="Animal" GridPane.rowIndex="1" />
-                  <Label text="Volume (litros)" GridPane.rowIndex="2" />
+                  <Label text="Quantidade (litros)" GridPane.rowIndex="2" />
                   <Label text="Observação" GridPane.rowIndex="3" />
                   <DatePicker fx:id="inputData" maxWidth="120.0" GridPane.columnIndex="1" />
-                  <ComboBox fx:id="inputAnimal" prefHeight="25.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <NumberTextField fx:id="inputVolume" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <UCTextField fx:id="inputObservacao" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="inputAnimal" minWidth="336.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
+                     <children>
+                        <TextField fx:id="inputPrimeiraOrdenha" alignment="CENTER" maxWidth="110.0" promptText="Primeira Ordenha" />
+                        <TextField fx:id="inputSegundaOrdenha" alignment="CENTER" maxWidth="110.0" promptText="Segunda Ordenha" />
+                        <TextField fx:id="inputTerceiraOrdenha" alignment="CENTER" maxWidth="110.0" promptText="Terceira Ordenha" />
+                     </children>
+                  </HBox>
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </GridPane>
-            <TableView fx:id="tableForm" focusTraversable="false" prefHeight="160.0">
+            <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="160.0" scaleShape="false">
               <columns>
-                <TableColumn fx:id="dataColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                <TableColumn fx:id="animalColumnTableForm" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Animal" />
-                  <TableColumn fx:id="volumeColumnTableForm" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Quantidade" />
+                <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                <TableColumn fx:id="animalColumn" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" text="Animal" />
+                  <TableColumn prefWidth="75.0" text="Ordenhas">
+                     <columns>
+                        <TableColumn fx:id="primeiraOrdenhaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Primeira" />
+                        <TableColumn fx:id="segundaOrdenhaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Segunda" />
+                        <TableColumn fx:id="terceiraOrdenhaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Terceira" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="valorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
               </columns>
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
@@ -57,11 +72,8 @@
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>
-                  <Insets right="5.0" />
+                  <Insets right="5.0" top="5.0" />
                </VBox.margin>
-               <padding>
-                  <Insets bottom="5.0" top="5.0" />
-               </padding>
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
