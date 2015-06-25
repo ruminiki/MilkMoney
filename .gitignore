@@ -1,5 +1,6 @@
-bin
-.classpath
-.settings
-logs
+MilkMoney\bin\**
+MilkMoney\.classpath
+MilkMoney\.settings
+MilkMoney\.project
+MilkMoney\logs\**
 *.class
