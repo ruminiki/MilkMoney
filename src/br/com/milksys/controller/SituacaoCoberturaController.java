@@ -10,16 +10,16 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.UCTextField;
-import br.com.milksys.model.Raca;
+import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
-public class RacaController extends AbstractController<Integer, Raca> {
+public class SituacaoCoberturaController extends AbstractController<Integer, SituacaoCobertura> {
 
-	@FXML private TableColumn<Raca, String> idColumn;
-	@FXML private TableColumn<Raca, String> descricaoColumn;
-	@FXML private TextField idField;
+	@FXML private TableColumn<SituacaoCobertura, String> idColumn;
+	@FXML private TableColumn<SituacaoCobertura, String> descricaoColumn;
+	@FXML private TextField inputId;
 	@FXML private UCTextField inputDescricao;
 
 	@FXML
@@ -32,7 +32,7 @@ public class RacaController extends AbstractController<Integer, Raca> {
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			inputDescricao.textProperty().bindBidirectional(((Raca)object).descricaoProperty());
+			inputDescricao.textProperty().bindBidirectional(((SituacaoCobertura)object).descricaoProperty());
 		}
 		
 	}
@@ -44,17 +44,17 @@ public class RacaController extends AbstractController<Integer, Raca> {
 
 	@Override
 	protected String getFormName() {
-		return "view/raca/RacaForm.fxml";
+		return "view/situacaoCobertura/SituacaoCoberturaForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Raça";
+		return "Situação Cobertura";
 	}
 
 	@Override
-	@Resource(name = "racaService")
-	protected void setService(IService<Integer, Raca> service) {
+	@Resource(name = "situacaoCoberturaService")
+	protected void setService(IService<Integer, SituacaoCobertura> service) {
 		super.setService(service);
 	}
 

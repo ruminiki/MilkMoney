@@ -23,6 +23,7 @@
 								<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
+                  <MenuItem fx:id="handleCadastrarSituacaoCobertura" mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
 						<MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
 					</items>
 				</Menu>

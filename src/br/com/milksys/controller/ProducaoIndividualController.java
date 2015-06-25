@@ -16,8 +16,6 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import br.com.milksys.components.CustomComboBoxCellFactory;
 import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.UCTextField;
@@ -79,6 +77,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
 			
 			super.initialize();
+			
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
@@ -95,13 +94,14 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		if ( state.equals(State.INSERT_TO_SELECT) ){
 			
 			dataColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getData())));
-			animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAnimal().getNumeroNome())));
+			animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroNomeAnimal())));
 			primeiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getPrimeiraOrdenha())));
 			segundaOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getSegundaOrdenha())));
 			terceiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getTerceiraOrdenha())));
 			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
 			
-			data = producaoIndividualService.findByDate(((ProducaoIndividual)object).getData());
+			data.clear();
+			data.addAll(producaoIndividualService.findByDate(((ProducaoIndividual)object).getData()));
 			table.setItems(data);
 			
 			inputData.setDisable(true);
@@ -145,63 +145,63 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@Override
 	protected void handleOk() {
 		
-		//atualiza o objeto com os dados da tela
-    	ProducaoIndividual pi = (ProducaoIndividual)object;
-    	/*pi.setAnimal(inputAnimal.getSelectionModel().getSelectedItem());
-    	pi.setData(DateUtil.asDate(inputData.getValue()));
-    	pi.setPrimeiraOrdenha(NumberFormatUtil.fromString(inputPrimeiraOrdenha.getText()));
-    	pi.setSegundaOrdenha(NumberFormatUtil.fromString(inputSegundaOrdenha.getText()));
-    	pi.setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
-    	pi.setObservacao(inputObservacao.getText());
-    	*/
+		//forÃ§a a atualizaÃ§Ã£o do objeto com os dados da tela
+    	ProducaoIndividual producaoIndividual = (ProducaoIndividual)object;
+    	producaoIndividual.setAnimal(inputAnimal.getSelectionModel().getSelectedItem());
+    	producaoIndividual.setData(DateUtil.asDate(inputData.getValue()));
+    	producaoIndividual.setPrimeiraOrdenha(NumberFormatUtil.fromString(inputPrimeiraOrdenha.getText()));
+    	producaoIndividual.setSegundaOrdenha(NumberFormatUtil.fromString(inputSegundaOrdenha.getText()));
+    	producaoIndividual.setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
+    	producaoIndividual.setObservacao(inputObservacao.getText());
+    	
     	if ( precoLeite == null ){
     		Calendar date = Calendar.getInstance();
-    		date.setTime(pi.getData());
+    		date.setTime(producaoIndividual.getData());
     		precoLeite = precoLeiteService.findByMesAno(meses.get(date.get(Calendar.MONTH)), date.get(Calendar.YEAR));
     	}
     	
-    	pi.setPrecoLeite(precoLeite);
+    	producaoIndividual.setPrecoLeite(precoLeite);
     	
-    	//verifica se já existe registro para o mesmo animal no mesmo dia
+    	//verifica se jÃ¡ existe registro para o mesmo animal no mesmo dia
     	for ( int index = 0; index < data.size(); index++ ){
     		ProducaoIndividual p = data.get(index);
     		
-			if ( p.getData().equals(((ProducaoIndividual)object).getData()) && 
-					p.getAnimal().getId() == pi.getAnimal().getId() ){
+			if ( p.getData().equals(producaoIndividual.getData()) && 
+					p.getAnimal().getId() == producaoIndividual.getAnimal().getId() ){
 				
 				//atualiza o volume para atualizar a table view
-				p.setPrimeiraOrdenha(((ProducaoIndividual)object).getPrimeiraOrdenha());
-				p.setSegundaOrdenha(((ProducaoIndividual)object).getSegundaOrdenha());
-				p.setTerceiraOrdenha(((ProducaoIndividual)object).getTerceiraOrdenha());
+				p.setPrimeiraOrdenha(producaoIndividual.getPrimeiraOrdenha());
+				p.setSegundaOrdenha(producaoIndividual.getSegundaOrdenha());
+				p.setTerceiraOrdenha(producaoIndividual.getTerceiraOrdenha());
 				
-				//seta o id para fazer update e não insert
-				object = p;
+				//seta o id para fazer update e nÃ£o insert
+				producaoIndividual = p;
 				data.set(index, p);
 				break;
 			}
 			
 		}
     	
-    	//adiciona na tabela somente novos registros
-    	if ( ((ProducaoIndividual)object).getId() <= 0 )
-    		data.add((ProducaoIndividual)object);
-    	
     	//salva o objeto
-    	service.save((ProducaoIndividual)object);
+    	service.save(producaoIndividual);
     	
-    	object = new ProducaoIndividual();
-    	/*inputAnimal.setValue(null);
-    	inputPrimeiraOrdenha.setText(null);
-    	inputSegundaOrdenha.setText(null);
-    	inputTerceiraOrdenha.setText(null);
-    	inputObservacao.setText(null);
-    	*/
+    	//adiciona na tabela somente novos registros
+    	if ( producaoIndividual.getId() <= 0 )
+    		data.add(producaoIndividual);
+    	
+		data.clear();
+		data.addAll(producaoIndividualService.findByDate(producaoIndividual.getData()));
+		table.setItems(data);
     	
     	if ( !state.equals(State.INSERT_TO_SELECT) ){
+    		object = new ProducaoIndividual();
     		super.dialogStage.close();
     		super.updateLabelNumRegistros();
     		super.state = State.LIST;
     	}else{
+        	producaoIndividual = new ProducaoIndividual();
+        	producaoIndividual.setData(((ProducaoIndividual)object).getData());
+        	object = producaoIndividual;
     		configureBinds();
     	}
     	
@@ -209,6 +209,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	
 	@Override
 	protected void showForm(int width, int height) {
+		
 		if ( state.equals(State.INSERT_TO_SELECT) ){
 			super.showForm(758, 328);
 		}else{
@@ -230,7 +231,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	@Override
 	protected String getFormTitle() {
-		return "Produção Individual";
+		return "ProduÃ§Ã£o Individual";
 	}
 
 	public void setPrecoLeite(PrecoLeite precoLeite) {

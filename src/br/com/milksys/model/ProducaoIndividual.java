@@ -135,6 +135,13 @@ public class ProducaoIndividual implements Serializable {
 		return animal;
 	}
 	
+	public String getNumeroNomeAnimal(){
+		if ( getAnimal() != null ){
+			return getAnimal().getNumeroNome();
+		}
+		return "";
+	}
+	
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="precoLeite")

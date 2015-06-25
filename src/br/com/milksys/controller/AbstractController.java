@@ -183,7 +183,7 @@ public abstract class AbstractController<K, E> {
 			showForm(0,0);
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma SeleÁ„o");
+			alert.setTitle("Nenhuma Sele√ß√£o");
 			alert.setHeaderText("Nenhum animal selecionado");
 			alert.setContentText("Selecione pelo menos um registro na tabela!");
 			alert.showAndWait();
@@ -195,8 +195,8 @@ public abstract class AbstractController<K, E> {
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("ConfirmaÁ„o");
-			alert.setHeaderText("Confirme a exclus„o do registro");
+			alert.setTitle("Confirma√ß√£o");
+			alert.setHeaderText("Confirme a exclus√£o do registro");
 			alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.OK) {
@@ -206,7 +206,7 @@ public abstract class AbstractController<K, E> {
 			}
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma SeleÁ„o");
+			alert.setTitle("Nenhuma Sele√ß√£o");
 			alert.setHeaderText("Nenhum registro selecionado");
 			alert.setContentText("Selecione pelo menos um registro na tabela!");
 			alert.showAndWait();

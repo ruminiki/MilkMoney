@@ -72,6 +72,15 @@ public class RootLayoutController {
     	MainApp.rootLayout.setCenter(form);
     	
     }
+    
+    @FXML
+    private void handleCadastrarSituacaoCobertura() {
+    	
+    	AnchorPane form = (AnchorPane) MainApp.load("view/situacaoCobertura/SituacaoCoberturaOverview.fxml");
+    	MainApp.rootLayout.setCenter(form);
+    	
+    }
+
 
     /**
      * Abre uma janela Sobre.
