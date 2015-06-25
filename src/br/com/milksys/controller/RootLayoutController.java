@@ -20,67 +20,71 @@ public class RootLayoutController {
     @FXML
     private void handleCadastroAnimal() throws IOException {
         
-    	AnchorPane animalOverview = (AnchorPane) MainApp.load("view/animal/AnimalOverview.fxml");
-    	MainApp.rootLayout.setCenter(animalOverview);
+    	openForm("view/animal/AnimalOverview.fxml");
     	
     }
 
     @FXML
     private void handleCadastroRaca() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/raca/RacaOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/raca/RacaOverview.fxml");
     	
     }
 
     @FXML
     private void handleCadastroFinalidadeLote() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/finalidadeLote/FinalidadeLoteOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/finalidadeLote/FinalidadeLoteOverview.fxml");
     	
     }
        
     @FXML
     private void handleCadastroPrecoLeite() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/precoLeite/PrecoLeiteOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/precoLeite/PrecoLeiteOverview.fxml");
     	
     }
     
     @FXML
     private void handleCadastroProducaoLeite() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/producaoLeite/ProducaoLeiteOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/producaoLeite/ProducaoLeiteOverview.fxml");
     	
     }
        
     @FXML
     private void handleCadastroEntregaLeite() {
         
-    	AnchorPane form = (AnchorPane) MainApp.load("view/entregaLeite/EntregaLeiteOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/entregaLeite/EntregaLeiteOverview.fxml");
     	
     }
 
     @FXML
     private void handleCadastrarProducaoIndividual() {
     	
-    	AnchorPane form = (AnchorPane) MainApp.load("view/producaoIndividual/ProducaoIndividualOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/producaoIndividual/ProducaoIndividualOverview.fxml");
     	
     }
     
     @FXML
     private void handleCadastrarSituacaoCobertura() {
     	
-    	AnchorPane form = (AnchorPane) MainApp.load("view/situacaoCobertura/SituacaoCoberturaOverview.fxml");
-    	MainApp.rootLayout.setCenter(form);
+    	openForm("view/situacaoCobertura/SituacaoCoberturaOverview.fxml");
+    	
+    }
+    
+    @FXML
+    private void handleCadastrarTipoCobertura() {
+    	
+    	openForm("view/tipoCobertura/TipoCoberturaOverview.fxml");
     	
     }
 
+    
+    private void openForm(String formPath){
+    	AnchorPane form = (AnchorPane) MainApp.load(formPath);
+    	MainApp.rootLayout.setCenter(form);
+    }
 
     /**
      * Abre uma janela Sobre.

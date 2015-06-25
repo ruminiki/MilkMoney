@@ -2,6 +2,7 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
@@ -27,7 +28,7 @@ public class TipoCobertura implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	private StringProperty descricao;
+	private StringProperty descricao = new SimpleStringProperty();
 
 	public TipoCobertura() {
 	}
