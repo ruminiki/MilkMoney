@@ -37,25 +37,25 @@
                   <Insets />
                </HBox.margin>
             </HBox>
-            <VBox alignment="CENTER" prefWidth="50.0">
-               <children>
-                  <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Registros">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
          </children>
          <padding>
             <Insets right="5.0" />
          </padding>
       </HBox>
+      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Registros">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="numeroColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Número" />
