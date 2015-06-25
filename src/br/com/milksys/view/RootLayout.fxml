@@ -37,6 +37,7 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastrarTipoCobertura" text="Tipo Cobertura" />
                   <MenuItem fx:id="handleCadastrarSituacaoCobertura" mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSemen" text="Semen" />
               </items>
             </Menu>
 				<Menu mnemonicParsing="false" text="Help">

@@ -5,8 +5,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.FinalidadeLoteDao;
@@ -15,8 +14,7 @@ import br.com.milksys.model.FinalidadeLote;
 @Service
 public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 
-	@Resource(name = "finalidadeLoteDao")
-	public FinalidadeLoteDao dao;
+	@Autowired public FinalidadeLoteDao dao;
 
 	@Override
 	public void save(FinalidadeLote entity) {

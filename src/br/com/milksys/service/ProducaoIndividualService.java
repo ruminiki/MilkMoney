@@ -6,8 +6,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.ProducaoIndividualDao;
@@ -16,8 +15,7 @@ import br.com.milksys.model.ProducaoIndividual;
 @Service
 public class ProducaoIndividualService implements IService<Integer, ProducaoIndividual>{
 
-	@Resource(name = "producaoIndividualDao")
-	public ProducaoIndividualDao dao;
+	@Autowired public ProducaoIndividualDao dao;
 
 	@Override
 	public void save(ProducaoIndividual entity) {

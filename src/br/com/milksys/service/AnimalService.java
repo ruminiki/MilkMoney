@@ -5,8 +5,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
@@ -15,18 +14,17 @@ import br.com.milksys.model.Animal;
 @Service
 public class AnimalService implements IService<Integer, Animal>{
 
-	@Resource(name = "animalDao")
-	public AnimalDao animalDao;
+	@Autowired public AnimalDao dao;
 
 	@Override
 	public void save(Animal entity) {
-		animalDao.persist(entity);
+		dao.persist(entity);
 		
 	}
 
 	@Override
 	public void remove(Animal entity) {
-		animalDao.remove(entity);
+		dao.remove(entity);
 		
 	}
 
@@ -38,12 +36,12 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	@Override
 	public List<Animal> findAll() {
-		return animalDao.findAll(Animal.class);
+		return dao.findAll(Animal.class);
 	}
 
 	public ObservableList<Animal> findAllAsObservableList() {
 		ObservableList<Animal> list = FXCollections.observableArrayList();
-		list.addAll(animalDao.findAll(Animal.class));
+		list.addAll(dao.findAll(Animal.class));
 		return list;
 	}
 	

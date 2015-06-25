@@ -5,8 +5,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.RacaDao;
@@ -15,8 +14,7 @@ import br.com.milksys.model.Raca;
 @Service
 public class RacaService implements IService<Integer, Raca>{
 
-	@Resource(name = "racaDao")
-	public RacaDao dao;
+	@Autowired public RacaDao dao;
 
 	@Override
 	public void save(Raca entity) {

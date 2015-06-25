@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="590.0" prefHeight="485.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.SemenController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="Pesquisar:">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <TextField maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="Descrição">
+               <padding>
+                  <Insets right="5.0" top="5.0" />
+               </padding>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
+               <children>
+                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+      </HBox>
+      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Registros">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+        <columns>
+          <TableColumn fx:id="descricaoColumn" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" sortable="false" text="Descrição" />
+            <TableColumn fx:id="touroColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" text="Touro" />
+          <TableColumn fx:id="dataCompraColumn" maxWidth="100.0" minWidth="100.0" prefWidth="97.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Data Compra" />
+            <TableColumn fx:id="quantidadeColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Quantidade" />
+            <TableColumn fx:id="loteColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Lote" />
+            <TableColumn prefWidth="75.0" sortable="false" text="Valor">
+               <columns>
+                  <TableColumn fx:id="valorUnitarioColumn" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Unitario" />
+                  <TableColumn fx:id="valorTotalColumn" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Total" />
+               </columns>
+            </TableColumn>
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>

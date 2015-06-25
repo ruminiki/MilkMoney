@@ -13,6 +13,7 @@
 		<class>br.com.milksys.model.EntregaLeite</class>
 		<class>br.com.milksys.model.ProducaoLeite</class>
 		<class>br.com.milksys.model.ProducaoIndividual</class>
+		<class>br.com.milksys.model.Semen</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

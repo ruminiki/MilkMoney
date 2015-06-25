@@ -79,7 +79,13 @@ public class RootLayoutController {
     	openForm("view/tipoCobertura/TipoCoberturaOverview.fxml");
     	
     }
-
+    
+    @FXML
+    private void handleCadastrarSemen() {
+    	
+    	openForm("view/semen/SemenOverview.fxml");
+    	
+    }
     
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);

@@ -2,6 +2,7 @@ package br.com.milksys;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -78,6 +79,10 @@ public class MainApp extends Application {
 	}
 
 	public static void main(String[] args) {
+		
+		Locale locale = new Locale("pt", "BR");
+		Locale.setDefault(locale);
+		
 		launch(args);
 	}
 }
