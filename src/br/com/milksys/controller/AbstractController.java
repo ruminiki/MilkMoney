@@ -10,8 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -25,6 +23,7 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
+import br.com.milksys.components.CustomAlert;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
@@ -165,7 +164,7 @@ public abstract class AbstractController<K, E> {
 	// ========= HANDLERS INTERFACE=============//
 
 	@FXML
-	private void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
+	protected void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
 		this.state = State.INSERT;
 		object = ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
@@ -179,11 +178,7 @@ public abstract class AbstractController<K, E> {
 			this.state = State.UPDATE;
 			showForm(0,0);
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleção");
-			alert.setHeaderText("Nenhum animal selecionado");
-			alert.setContentText("Selecione pelo menos um registro na tabela!");
-			alert.showAndWait();
+			CustomAlert.nenhumRegistroSelecionado();
 		}
 	}
 
@@ -191,22 +186,14 @@ public abstract class AbstractController<K, E> {
 	protected void handleDelete() {
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Confirmação");
-			alert.setHeaderText("Confirme a exclusão do registro");
-			alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
-			Optional<ButtonType> result = alert.showAndWait();
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
 			if (result.get() == ButtonType.OK) {
 				service.remove(table.getItems().get(selectedIndex));
 				table.getItems().remove(selectedIndex);
 				updateLabelNumRegistros();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Nenhuma Seleção");
-			alert.setHeaderText("Nenhum registro selecionado");
-			alert.setContentText("Selecione pelo menos um registro na tabela!");
-			alert.showAndWait();
+			CustomAlert.nenhumRegistroSelecionado();		
 		}
 	}
 
@@ -235,7 +222,7 @@ public abstract class AbstractController<K, E> {
 					data.add((E) object);
 					updateLabelNumRegistros();
 				} else {
-					if ( table != null )
+					if ( table != null && table.getSelectionModel().getSelectedIndex() >= 0 )
 						data.set(table.getSelectionModel().getSelectedIndex(),(E) object);
 				}
 

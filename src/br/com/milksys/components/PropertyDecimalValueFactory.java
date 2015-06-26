@@ -21,7 +21,7 @@ public class PropertyDecimalValueFactory<S, T> extends
 
 		ObservableValue<T> a = super.call(param);
 
-		if (a.getValue() instanceof BigDecimal) {
+		if (a != null && a.getValue() instanceof BigDecimal) {
 			
 			((ObjectProperty) a).setValue(NumberFormatUtil.decimalFormat((BigDecimal) a.getValue()));
 

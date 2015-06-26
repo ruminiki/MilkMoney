@@ -110,5 +110,10 @@ public class Animal implements Serializable {
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
 	}
+	
+	@Override
+	public String toString() {
+		return getNumeroNome();
+	}
 
 }

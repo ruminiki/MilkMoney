@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.com.milksys.components.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -51,13 +52,14 @@
       </VBox>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="55.0">
          <children>
-            <TableView fx:id="tableAnimal" focusTraversable="false" minWidth="250.0" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="tableAnimal" focusTraversable="false" minWidth="250.0">
               <columns>
-                <TableColumn fx:id="animalColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" resizable="false" text="Animal" />
+                <TableColumn fx:id="animalColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" resizable="false" text="Selecione um Animal" />
               </columns>
             </TableView>
             <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" scaleShape="false" HBox.hgrow="SOMETIMES">
               <columns>
+                  <TableColumn fx:id="animalListColumn" maxWidth="-1.0" minWidth="250.0" prefWidth="75.0" text="Animal" />
                 <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Data" />
                   <TableColumn prefWidth="75.0" text="Ordenhas">
                      <columns>

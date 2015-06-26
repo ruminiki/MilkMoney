@@ -23,7 +23,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -44,8 +45,9 @@ public class ProducaoIndividual implements Serializable {
 	private StringProperty terceiraOrdenha = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
-	
+	@Formula("(SELECT COALESCE(p.valorRecebido, p.valorMaximoPraticado) * (primeiraOrdenha + segundaOrdenha + terceiraOrdenha) "
+			+ "FROM PrecoLeite p WHERE p.codigoMes = month(data) AND p.anoReferencia = year(data))")
+	private BigDecimal valor;
 	
 	public ProducaoIndividual() {
 	}
@@ -143,42 +145,20 @@ public class ProducaoIndividual implements Serializable {
 		return animal;
 	}
 	
-	public String getNumeroNomeAnimal(){
+	public StringProperty numeroNomeAnimalProperty(){
 		if ( getAnimal() != null ){
-			return getAnimal().getNumeroNome();
+			return new SimpleStringProperty(getAnimal().getNumeroNome());
 		}
-		return "";
+		return new SimpleStringProperty();
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="precoLeite")
-	public PrecoLeite getPrecoLeite() {
-		return precoLeite.get();
-	}
-	
-	public void setPrecoLeite(PrecoLeite precoLeite) {
-		this.precoLeite.set(precoLeite);
-	}
-	
-	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
-		return precoLeite;
-	}
-	
-	@Transient
 	public BigDecimal getValor() {
-		
-		if ( getPrecoLeite() != null ){
-			if ( getPrecoLeite().getValorRecebido().compareTo(BigDecimal.ZERO) > 0 ){
-				return 	getPrecoLeite().getValorRecebido().multiply(getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha()));
-			}else{
-				return 	getPrecoLeite().getValorMaximoPraticado().multiply(getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha()));
-			}
-			 
-		}
-		
-		return BigDecimal.ZERO;
-		
+		return valor;
 	}
+	
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
 
 }

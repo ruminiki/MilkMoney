@@ -48,6 +48,10 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	public List<ProducaoIndividual> findByAnimal(Animal animal) {
 		return dao.findByAnimal(animal);
 	}
+
+	public ProducaoIndividual findByAnimalAndData(Animal animal, Date data) {
+		return dao.findByAnimalAndData(animal, data);
+	}
 	
 	
 }
