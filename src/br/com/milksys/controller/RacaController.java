@@ -1,9 +1,8 @@
 package br.com.milksys.controller;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
@@ -19,20 +18,19 @@ public class RacaController extends AbstractController<Integer, Raca> {
 
 	@FXML private TableColumn<Raca, String> idColumn;
 	@FXML private TableColumn<Raca, String> descricaoColumn;
-	@FXML private TextField idField;
 	@FXML private UCTextField inputDescricao;
 
 	@FXML
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
-			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+			idColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("id"));
+			descricaoColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("descricao"));
 			super.initialize();
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			inputDescricao.textProperty().bindBidirectional(((Raca)object).descricaoProperty());
+			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		}
 		
 	}
@@ -50,6 +48,11 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	@Override
 	protected String getFormTitle() {
 		return "Raça";
+	}
+	
+	@Override
+	public Raca getObject() {
+		return ((Raca)super.getObject());
 	}
 
 	@Override

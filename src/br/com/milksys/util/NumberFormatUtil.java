@@ -5,11 +5,12 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Locale;
 
 public class NumberFormatUtil {
 
 	public static String decimalFormat(BigDecimal number) {
-		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
 		df.applyPattern("###,##0.00");
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
@@ -17,9 +18,9 @@ public class NumberFormatUtil {
 		df.setDecimalFormatSymbols(symbols);
 		return df.format(number);
 	}
-
+	
 	public static BigDecimal fromString(String value) {
-		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
+		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
 		df.applyPattern("###,##0.00");
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');

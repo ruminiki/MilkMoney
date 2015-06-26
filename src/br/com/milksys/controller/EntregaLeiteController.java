@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,12 +16,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
+import br.com.milksys.components.PropertyDateValueFactory;
+import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.model.EntregaLeite;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
@@ -30,7 +32,6 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.EntregaLeiteService;
 import br.com.milksys.service.PrecoLeiteService;
 import br.com.milksys.service.ProducaoLeiteService;
-import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.util.Util;
 
@@ -77,15 +78,15 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		if ( state.equals(State.LIST) ){
 			
 			//DateUtil.format(
-			mesReferenciaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesReferencia()));
-			dataInicioColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDataInicio() != null ? DateUtil.format(cellData.getValue().getDataInicio()) : "--"));
-			dataFimColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDataFim() != null ? DateUtil.format(cellData.getValue().getDataFim()) : "--"));
-			volumeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolume())));
-			valorRecebidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorRecebido())));
-			valorTotalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorTotal())));
-			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
+			mesReferenciaColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("mesReferencia"));
+			dataInicioColumn.setCellValueFactory(new PropertyDateValueFactory<EntregaLeite, String>("dataInicio"));
+			dataFimColumn.setCellValueFactory(new PropertyDateValueFactory<EntregaLeite, String>("dataFim"));
+			volumeColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("volume"));
+			valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorRecebido"));
+			valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorTotal"));
+			observacaoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("observacao"));
 		
-			valorMaximoPraticadoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorMaximoPraticado())));
+			valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado"));
 			valorMaximoPraticadoColumn.setCellFactory(new Callback<TableColumn<EntregaLeite,String>, TableCell<EntregaLeite,String>>(){
 				@Override
 				public TableCell<EntregaLeite, String> call(TableColumn<EntregaLeite, String> param) {
@@ -119,25 +120,25 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
-			inputMesReferencia.textProperty().bindBidirectional(((EntregaLeite)object).mesReferenciaProperty());
-			inputAnoReferencia.textProperty().bindBidirectional(((EntregaLeite)object).anoReferenciaProperty());
+			inputMesReferencia.textProperty().bindBidirectional(getObject().mesReferenciaProperty());
+			inputAnoReferencia.textProperty().bindBidirectional(getObject().anoReferenciaProperty());
 			
-			inputDataInicio.valueProperty().bindBidirectional(((EntregaLeite)object).dataInicioProperty());
-			inputDataFim.valueProperty().bindBidirectional(((EntregaLeite)object).dataFimProperty());
+			inputDataInicio.valueProperty().bindBidirectional(getObject().dataInicioProperty());
+			inputDataFim.valueProperty().bindBidirectional(getObject().dataFimProperty());
 			
-			inputVolume.textProperty().bindBidirectional(((EntregaLeite)object).volumeProperty());
+			inputVolume.textProperty().bindBidirectional(getObject().volumeProperty());
 			
-			inputValorMaximoPraticado.setText(NumberFormatUtil.decimalFormat(((EntregaLeite)object).getPrecoLeite().getValorMaximoPraticado()));
-			inputValorRecebido.setText(NumberFormatUtil.decimalFormat(((EntregaLeite)object).getPrecoLeite().getValorRecebido()));
+			inputValorMaximoPraticado.setText(NumberFormatUtil.decimalFormat(getObject().getValorMaximoPraticado()));
+			inputValorRecebido.setText(NumberFormatUtil.decimalFormat(getObject().getValorRecebido()));
 			
-			inputObservacao.textProperty().bindBidirectional(((EntregaLeite)object).observacaoProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 			
 		}
 		
 	}
 	
 	/**
-	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
+	 * Ao alterar o ano de referï¿½ncia carrega o respectivo calendï¿½rio de entrega.
 	 * @param newValue
 	 */
 	@FXML
@@ -147,7 +148,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	/**
-	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
+	 * Ao alterar o ano de referï¿½ncia carrega o respectivo calendï¿½rio de entrega.
 	 * @param newValue
 	 */
 	@FXML
@@ -165,9 +166,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	@Override
 	protected void handleOk() {
 		
-		BigDecimal totalEntregue = loadTotalEntreguePeriodo(((EntregaLeite)object).getDataInicio(), ((EntregaLeite)object).getDataFim());
+		BigDecimal totalEntregue = loadTotalEntreguePeriodo(getObject().getDataInicio(), getObject().getDataFim());
 		
-		((EntregaLeite)object).setVolume(totalEntregue);
+		getObject().setVolume(totalEntregue);
 		
 		super.handleOk();
 		this.resume();
@@ -175,7 +176,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	/**
-	 * Carrega o total entregue no período selecionado.
+	 * Carrega o total entregue no perï¿½odo selecionado.
 	 * @param dataInicio
 	 * @param dataFim
 	 * @return
@@ -192,8 +193,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	
 	/**
 	 * Configura os meses para registro das entregas efetuadas.
-	 * Sempre que acessa o caso de uso é necessário atualizar o volume para recarregar a produção do período
-	 * pois podem ter havido atualizações na tabela de produção.
+	 * Sempre que acessa o caso de uso ï¿½ necessï¿½rio atualizar o volume para recarregar a produï¿½ï¿½o do perï¿½odo
+	 * pois podem ter havido atualizaï¿½ï¿½es na tabela de produï¿½ï¿½o.
 	 * 
 	 */
 	private void configuraMesesEntregaAnoReferencia(){
@@ -208,7 +209,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			}else{
 				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
 				entregaLeite.setVolume(totalEntregue);
-				//verifica se já existe preço associado ao mês de entrega, se não tiver atualiza o registro
+				//verifica se jï¿½ existe preï¿½o associado ao mï¿½s de entrega, se nï¿½o tiver atualiza o registro
 				if ( entregaLeite.getPrecoLeite() == null ){
 					entregaLeite.setPrecoLeite(precoLeite);
 				}
@@ -247,32 +248,37 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	/**
-	 * Quando não houver preço de leite informado para o mês selecionado, habilita o cadastro
+	 * Quando nï¿½o houver preï¿½o de leite informado para o mï¿½s selecionado, habilita o cadastro
 	 */
 	@FXML
 	private void handleCadastrarPrecoLeite(){
 		
 		precoLeiteController.state = State.INSERT_TO_SELECT;
-		//verifica se existe preço cadastrado
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(((EntregaLeite)object).getMesReferencia(), ((EntregaLeite)object).getAnoReferencia());
+		//verifica se existe preï¿½o cadastrado
+		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMesReferencia(), getObject().getAnoReferencia());
 		
 		if ( precoLeite == null ){
 			precoLeite = new PrecoLeite();
-			precoLeite.setMesReferencia(((EntregaLeite)object).getMesReferencia());
-			precoLeite.setAnoReferencia(((EntregaLeite)object).getAnoReferencia());
-			precoLeite.setCodigoMes(meses.indexOf(((EntregaLeite)object).getMesReferencia())+1);
+			precoLeite.setMesReferencia(getObject().getMesReferencia());
+			precoLeite.setAnoReferencia(getObject().getAnoReferencia());
+			precoLeite.setCodigoMes(meses.indexOf(getObject().getMesReferencia())+1);
 		}
 		
 		precoLeiteController.setObject(precoLeite);
 		precoLeiteController.showForm(0,0);
 		
 		if ( precoLeiteController.getObject() != null ){
-			((EntregaLeite)object).setPrecoLeite((PrecoLeite)precoLeiteController.getObject());
-			table.getItems().set(table.getItems().indexOf(((EntregaLeite)object)), ((EntregaLeite)object));
-			service.save((EntregaLeite)object);
+			getObject().setPrecoLeite((PrecoLeite)precoLeiteController.getObject());
+			table.getItems().set(table.getItems().indexOf(getObject()), getObject());
+			service.save(getObject());
 			resume();
 		}
 		
+	}
+	
+	@Override
+	public EntregaLeite getObject() {
+		return (EntregaLeite)super.getObject();
 	}
 	
 	protected boolean isInputValid() {

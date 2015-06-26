@@ -1,13 +1,14 @@
 package br.com.milksys.controller;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomComboBoxCellFactory;
@@ -18,7 +19,6 @@ import br.com.milksys.model.Raca;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
-import br.com.milksys.util.DateUtil;
 
 @Controller
 public class AnimalController extends AbstractController<Integer, Animal> {
@@ -26,15 +26,15 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	@FXML private TableColumn<Animal, String> dataNascimentoColumn;
-	@FXML private TableColumn<Animal, String> racaColumn;
+	@FXML private TableColumn<Raca, String> racaColumn;
+	
 	@FXML private UCTextField inputNumero;
 	@FXML private UCTextField inputNome;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
-	@Resource(name="racaService")
-	private RacaService racaService;
-	@Resource(name="racaController")
-	private RacaController racaController;
+	
+	@Autowired private RacaService racaService;
+	@Autowired private RacaController racaController;
 
 	@FXML
 	@SuppressWarnings("unchecked")
@@ -42,22 +42,24 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 		
 		if ( state.equals(State.LIST) ){
 			
-			nomeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
-			numeroColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumero()));
-			dataNascimentoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getDataNascimento())));
-			racaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getRaca().getDescricao()));
+			nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
+			numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+			dataNascimentoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("dataNascimento"));
+			racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			inputNumero.textProperty().bindBidirectional(((Animal)object).numeroProperty());
-			inputNome.textProperty().bindBidirectional(((Animal)object).nomeProperty());
-			inputDataNascimento.valueProperty().bindBidirectional(((Animal)object).dataNascimentoProperty());
+			
+			inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
+			inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
+			inputDataNascimento.valueProperty().bindBidirectional(getObject().dataNascimentoProperty());
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
 			inputRaca.setCellFactory(new CustomComboBoxCellFactory<>("descricao"));
 			inputRaca.setConverter(new CustomStringConverter("descricao"));
-			inputRaca.valueProperty().bindBidirectional(((Animal)object).racaProperty());
+			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
+			
 		}
 		
 		super.initialize();
@@ -77,6 +79,11 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@Override
 	protected String getFormTitle() {
 		return "Animal";
+	}
+	
+	@Override
+	public Animal getObject() {
+		return ((Animal)super.getObject());
 	}
 
 	@Override
