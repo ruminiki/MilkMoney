@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.ProducaoIndividualDao;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.ProducaoIndividual;
 
 @Service
@@ -39,10 +40,13 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		return dao.findAll(ProducaoIndividual.class);
 	}
 
-	public ObservableList<ProducaoIndividual> findByDate(Date data) {
-		ObservableList<ProducaoIndividual> list = FXCollections.observableArrayList();
-		list.addAll(dao.findByDate(data));
-		return list;
+	public List<ProducaoIndividual> findByDate(Date data) {
+		return dao.findByDate(data);
+		//return list;
+	}
+
+	public List<ProducaoIndividual> findByAnimal(Animal animal) {
+		return dao.findByAnimal(animal);
 	}
 	
 	

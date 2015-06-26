@@ -178,6 +178,20 @@ public class EntregaLeite implements Serializable {
 	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
 		return precoLeite;
 	}
+
+	public BigDecimal getValorMaximoPraticado() {
+		if ( getPrecoLeite() != null ){
+			return getPrecoLeite().getValorMaximoPraticado();
+		}
+		return BigDecimal.ZERO;
+	}
+
+	public BigDecimal getValorRecebido() {
+		if ( getPrecoLeite() != null ){
+			return getPrecoLeite().getValorRecebido();
+		}
+		return BigDecimal.ZERO;
+	}
 	
 	
 }

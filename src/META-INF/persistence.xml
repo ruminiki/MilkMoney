@@ -14,11 +14,12 @@
 		<class>br.com.milksys.model.ProducaoLeite</class>
 		<class>br.com.milksys.model.ProducaoIndividual</class>
 		<class>br.com.milksys.model.Semen</class>
+		<class>br.com.milksys.model.SituacaoCobertura</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="dust258" />
+			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
 			<!-- Hibernate properties -->

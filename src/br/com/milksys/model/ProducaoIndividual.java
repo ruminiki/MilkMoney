@@ -46,6 +46,14 @@ public class ProducaoIndividual implements Serializable {
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
 	
+	
+	public ProducaoIndividual() {
+	}
+	
+	public ProducaoIndividual(Date data) {
+		setData(data);
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getData() {
