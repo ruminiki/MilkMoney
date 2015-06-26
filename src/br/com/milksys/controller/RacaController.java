@@ -47,12 +47,12 @@ public class RacaController extends AbstractController<Integer, Raca> {
 
 	@Override
 	protected String getFormTitle() {
-		return "RaÃ§a";
+		return "Raça";
 	}
 	
 	@Override
-	public Raca getObject() {
-		return ((Raca)super.getObject());
+	protected Raca getObject() {
+		return (Raca)super.object;
 	}
 
 	@Override

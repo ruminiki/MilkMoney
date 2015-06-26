@@ -2,7 +2,6 @@ package br.com.milksys.controller;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,10 +9,13 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.PropertyDecimalValueFactory;
+import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.PrecoLeite;
@@ -22,7 +24,6 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.PrecoLeiteService;
 import br.com.milksys.service.ProducaoIndividualService;
-import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.util.Util;
 
 @Controller
@@ -67,25 +68,25 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			//@TODO filtrar apenas animais femeas 
 			tableAnimal.setItems(animalService.findAllAsObservableList());
 			tableAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> findByAnimal(newValue));
-			animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroNome())));
+			animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("nomeNumero"));
 			
-			dataColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
-			primeiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getPrimeiraOrdenha())));
-			segundaOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getSegundaOrdenha())));
-			terceiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getTerceiraOrdenha())));
-			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
-			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
+			dataColumn.setCellFactory(new TableCellDateFactory<ProducaoIndividual, LocalDate>("data"));
+			primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
+			segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
+			terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("terceiraOrdenha"));
+			valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
+			observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoIndividual, String>("observacao"));
 			
 			super.initialize();
 			
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			inputData.valueProperty().bindBidirectional(((ProducaoIndividual)object).dataProperty());
-			inputObservacao.textProperty().bindBidirectional(((ProducaoIndividual)object).observacaoProperty());
-			inputPrimeiraOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).primeiraOrdenhaProperty());
-			inputSegundaOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).segundaOrdenhaProperty());
-			inputTerceiraOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).terceiraOrdenhaProperty());
+			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+			inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
+			inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
+			inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
 		}
 		
 		/*if ( state.equals(State.INSERT_TO_SELECT) ){
@@ -98,7 +99,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
 			
 			data.clear();
-			data.addAll(producaoIndividualService.findByDate(((ProducaoIndividual)object).getData()));
+			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
 			table.setItems(data);
 			
 			super.initialize();
@@ -160,12 +161,12 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	}
 
 	private void configureBinds(){
-		//inputAnimal.valueProperty().bindBidirectional(((ProducaoIndividual)object).animalProperty());
-		inputData.valueProperty().bindBidirectional(((ProducaoIndividual)object).dataProperty());
-		inputObservacao.textProperty().bindBidirectional(((ProducaoIndividual)object).observacaoProperty());
-		inputPrimeiraOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).primeiraOrdenhaProperty());
-		inputSegundaOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).segundaOrdenhaProperty());
-		inputTerceiraOrdenha.textProperty().bindBidirectional(((ProducaoIndividual)object).terceiraOrdenhaProperty());
+		//inputAnimal.valueProperty().bindBidirectional(getObject().animalProperty());
+		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+		inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
+		inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
+		inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
 	}
 	
 	/*@Override
@@ -262,6 +263,11 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	public void setPrecoLeite(PrecoLeite precoLeite) {
 		this.precoLeite = precoLeite;
+	}
+
+	@Override
+	protected ProducaoIndividual getObject() {
+		return (ProducaoIndividual) super.object;
 	}
 
 }

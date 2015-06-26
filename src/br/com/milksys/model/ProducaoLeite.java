@@ -2,6 +2,7 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
@@ -41,7 +42,7 @@ public class ProducaoLeite implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private StringProperty data = new SimpleStringProperty();  
+	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 	private StringProperty numeroVacasOrdenhadas = new SimpleStringProperty();
 	private StringProperty volumeProduzido = new SimpleStringProperty();
 	private StringProperty volumeEntregue = new SimpleStringProperty();
@@ -53,9 +54,9 @@ public class ProducaoLeite implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ProducaoLeite(Date data, int numeroVacasOrdenhadas, BigDecimal volumeProduzido, 
+	public ProducaoLeite(LocalDate data, int numeroVacasOrdenhadas, BigDecimal volumeProduzido, 
 			BigDecimal volumeEntregue, BigDecimal mediaProducao, PrecoLeite precoLeite) {
-		this.data.set(DateUtil.format(data));
+		this.data.set(data);
 		this.numeroVacasOrdenhadas.set(String.valueOf(numeroVacasOrdenhadas));
 		this.volumeProduzido.set(NumberFormatUtil.decimalFormat(volumeProduzido));
 		this.volumeEntregue.set(NumberFormatUtil.decimalFormat(volumeEntregue));
@@ -66,14 +67,14 @@ public class ProducaoLeite implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getData() {
-		return DateUtil.asDate(DateUtil.parse(data.get()));
+		return DateUtil.asDate(data.get());
 	}
 
 	public void setData(Date data) {
-		this.data.set(DateUtil.format(data));
+		this.data.set(DateUtil.asLocalDate(data));
 	}
 	
-	public StringProperty dataProperty(){
+	public ObjectProperty<LocalDate> dataProperty(){
 		return data;
 	}
 

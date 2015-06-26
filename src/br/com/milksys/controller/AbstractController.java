@@ -152,10 +152,6 @@ public abstract class AbstractController<K, E> {
 		
 	}
 
-	public Object getObject() {
-		return object;
-	}
-
 	protected void initializeTableOverview(){
 		this.data.clear();
 		this.data.addAll(service.findAll());
@@ -164,6 +160,7 @@ public abstract class AbstractController<K, E> {
 	protected abstract String getFormName();
 	protected abstract String getFormTitle();
 	protected abstract boolean isInputValid();
+	protected abstract Object getObject();
 	
 	// ========= HANDLERS INTERFACE=============//
 

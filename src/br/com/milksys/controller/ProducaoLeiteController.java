@@ -5,7 +5,6 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Calendar;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,12 +16,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
+import br.com.milksys.components.PropertyDecimalValueFactory;
+import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.ProducaoLeite;
@@ -42,7 +44,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML private NumberTextField inputVolumeEntregue;
 	@FXML private TextField inputObservacao;
 
-	@FXML private TableColumn<ProducaoLeite, String> dataColumn;
+	@FXML private TableColumn<ProducaoLeite, LocalDate> dataColumn;
 	@FXML private TableColumn<ProducaoLeite, String> numeroVacasOrdenhadasColumn;
 	@FXML private TableColumn<ProducaoLeite, String> volumeProduzidoColumn;
 	@FXML private TableColumn<ProducaoLeite, String> volumeEntregueColumn;
@@ -79,14 +81,14 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		if ( state.equals(State.LIST) ){
 			
-			dataColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getData())));
-			volumeProduzidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeProduzido())));
-			volumeEntregueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getVolumeEntregue())));
-			mediaProducaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getMediaProducao())));
-			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
-			observacaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getObservacao()));
+			dataColumn.setCellFactory(new TableCellDateFactory<ProducaoLeite, LocalDate>("data"));
+			volumeProduzidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("volumeProduzido"));
+			volumeEntregueColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("volumeEntregue"));
+			mediaProducaoColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("mediaProducao"));
+			valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("valor"));
+			observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("observacao"));
 			
-			numeroVacasOrdenhadasColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumeroVacasOrdenhadas())));
+			numeroVacasOrdenhadasColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("numeroVacasOrdenhadas"));
 			numeroVacasOrdenhadasColumn.setCellFactory(new Callback<TableColumn<ProducaoLeite,String>, TableCell<ProducaoLeite,String>>(){
 				@Override
 				public TableCell<ProducaoLeite, String> call(TableColumn<ProducaoLeite, String> param) {
@@ -125,11 +127,11 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
 			
-			inputNumeroVacasOrdenhadas.textProperty().bindBidirectional(((ProducaoLeite)object).numeroVacasOrdenhadasProperty());
-			inputVolumeProduzido.textProperty().bindBidirectional(((ProducaoLeite)object).volumeProduzidoProperty());
-			inputVolumeEntregue.textProperty().bindBidirectional(((ProducaoLeite)object).volumeEntregueProperty());
-			inputObservacao.textProperty().bindBidirectional(((ProducaoLeite)object).observacaoProperty());
-			inputData.setText(((ProducaoLeite)object).dataProperty().get());
+			inputNumeroVacasOrdenhadas.textProperty().bindBidirectional(getObject().numeroVacasOrdenhadasProperty());
+			inputVolumeProduzido.textProperty().bindBidirectional(getObject().volumeProduzidoProperty());
+			inputVolumeEntregue.textProperty().bindBidirectional(getObject().volumeEntregueProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+			inputData.setText(DateUtil.format(getObject().dataProperty().get()));
 			
 		}
 		
@@ -172,11 +174,11 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	
 	@Override
 	protected void handleOk() {
-		int vacasOrdenhadas = ((ProducaoLeite)object).getNumeroVacasOrdenhadas();
-		BigDecimal volumeProduzido = ((ProducaoLeite)object).getVolumeProduzido();
+		int vacasOrdenhadas = getObject().getNumeroVacasOrdenhadas();
+		BigDecimal volumeProduzido = getObject().getVolumeProduzido();
 		
 		if ( vacasOrdenhadas > 0 && volumeProduzido.compareTo(BigDecimal.ZERO) > 0 ){
-			((ProducaoLeite)object).setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
+			getObject().setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
 		}
 		
 		super.handleOk();
@@ -196,7 +198,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		registraPrecoProducaoLeite();
 		
 		while ( cDataInicio.before(cDataFim) || cDataInicio.equals(cDataFim) ){
-			ProducaoLeite producaoLeite = new ProducaoLeite(cDataInicio.getTime(), 0, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, precoLeite);
+			ProducaoLeite producaoLeite = new ProducaoLeite(DateUtil.asLocalDate(cDataInicio.getTime()), 0, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, precoLeite);
 			service.save(producaoLeite);
 			cDataInicio.add(Calendar.DAY_OF_MONTH, 1);
 		}
@@ -313,7 +315,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		producaoIndividualController.state = State.INSERT_TO_SELECT;
 		
 		ProducaoIndividual pi = new ProducaoIndividual();
-		pi.setData(((ProducaoLeite)object).getData());
+		pi.setData(getObject().getData());
 		producaoIndividualController.setPrecoLeite(this.precoLeite);
 		producaoIndividualController.setObject(pi);
 		
@@ -333,6 +335,11 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@Override
 	protected String getFormTitle() {
 		return "Produção Leite";
+	}
+	
+	@Override
+	protected ProducaoLeite getObject() {
+		return (ProducaoLeite) super.object;
 	}
 	
 }

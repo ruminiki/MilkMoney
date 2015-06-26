@@ -1,9 +1,9 @@
 package br.com.milksys.controller;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
@@ -26,13 +26,13 @@ public class FinalidadeLoteController extends AbstractController<Integer, Finali
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
-			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+			idColumn.setCellValueFactory(new PropertyValueFactory<FinalidadeLote,String>("id"));
+			descricaoColumn.setCellValueFactory(new PropertyValueFactory<FinalidadeLote,String>("descricao"));
 			super.initialize();
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			descricaoField.textProperty().bindBidirectional(((FinalidadeLote)object).descricaoProperty());
+			descricaoField.textProperty().bindBidirectional(getObject().descricaoProperty());
 		}
 		
 	}
@@ -50,6 +50,11 @@ public class FinalidadeLoteController extends AbstractController<Integer, Finali
 	@Override
 	protected String getFormTitle() {
 		return "Finalidade Lote";
+	}
+	
+	@Override
+	protected FinalidadeLote getObject() {
+		return (FinalidadeLote) super.object;
 	}
 
 	@Override

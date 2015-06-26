@@ -2,21 +2,22 @@ package br.com.milksys.controller;
 
 import java.time.LocalDate;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
+import br.com.milksys.components.PropertyDecimalValueFactory;
+import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
-import br.com.milksys.util.NumberFormatUtil;
 
 @Controller
 public class SemenController extends AbstractController<Integer, Semen> {
@@ -41,19 +42,13 @@ public class SemenController extends AbstractController<Integer, Semen> {
 		
 		if ( state.equals(State.LIST) ){
 			
-			/*descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
-			dataCompraColumn.setCellValueFactory(cellData -> new SimpleStringProperty(DateUtil.format(cellData.getValue().getDataCompra())));
-			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
-			quantidadeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getQuantidade())));
-			loteColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLote()));*/
-			
-			descricaoColumn.setCellValueFactory(cellData -> cellData.getValue().descricaoProperty());
-			touroColumn.setCellValueFactory(cellData -> cellData.getValue().touroProperty());
-			dataCompraColumn.setCellValueFactory(cellData -> cellData.getValue().dataCompraProperty());
-			valorUnitarioColumn.setCellValueFactory(cellData -> cellData.getValue().valorUnitarioProperty());
-			valorTotalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorTotal())));
-			quantidadeColumn.setCellValueFactory(cellData -> cellData.getValue().quantidadeProperty());
-			loteColumn.setCellValueFactory(cellData -> cellData.getValue().loteProperty());
+			descricaoColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("descricao"));
+			touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
+			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
+			valorUnitarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorUnitario"));
+			valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorTotal"));
+			quantidadeColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
+			loteColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("lote"));
 			
 			super.initialize();
 			
@@ -61,12 +56,12 @@ public class SemenController extends AbstractController<Integer, Semen> {
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
-			inputDescricao.textProperty().bindBidirectional(((Semen)object).descricaoProperty());
-			inputTouro.textProperty().bindBidirectional(((Semen)object).touroProperty());
-			inputDataCompra.valueProperty().bindBidirectional(((Semen)object).dataCompraProperty());
-			inputValor.textProperty().bindBidirectional(((Semen)object).valorUnitarioProperty());
-			inputQuantidade.textProperty().bindBidirectional(((Semen)object).quantidadeProperty());
-			inputLote.textProperty().bindBidirectional(((Semen)object).loteProperty());
+			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
+			inputTouro.textProperty().bindBidirectional(getObject().touroProperty());
+			inputDataCompra.valueProperty().bindBidirectional(getObject().dataCompraProperty());
+			inputValor.textProperty().bindBidirectional(getObject().valorUnitarioProperty());
+			inputQuantidade.textProperty().bindBidirectional(getObject().quantidadeProperty());
+			inputLote.textProperty().bindBidirectional(getObject().loteProperty());
 			
 		}
 		
@@ -84,7 +79,12 @@ public class SemenController extends AbstractController<Integer, Semen> {
 
 	@Override
 	protected String getFormTitle() {
-		return "Sêmen";
+		return "Semen";
+	}
+	
+	@Override
+	protected Semen getObject() {
+		return (Semen) super.object;
 	}
 
 	@Override

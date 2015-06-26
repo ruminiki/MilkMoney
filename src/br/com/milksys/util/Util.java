@@ -24,7 +24,7 @@ public class Util {
 		ObservableList<String> optionsMesReferencia = FXCollections.observableArrayList();
 		optionsMesReferencia.add("JANEIRO");
 		optionsMesReferencia.add("FEVEREIRO");
-		optionsMesReferencia.add("MARÃ‡O");
+		optionsMesReferencia.add("MARÇO");
 		optionsMesReferencia.add("ABRIL");
 		optionsMesReferencia.add("MAIO");
 		optionsMesReferencia.add("JUNHO");

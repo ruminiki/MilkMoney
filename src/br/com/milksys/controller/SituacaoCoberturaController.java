@@ -1,9 +1,9 @@
 package br.com.milksys.controller;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
@@ -26,13 +26,13 @@ public class SituacaoCoberturaController extends AbstractController<Integer, Sit
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
-			descricaoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescricao()));
+			idColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura, String>("id"));
+			descricaoColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura, String>("descricao"));
 			super.initialize();
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			inputDescricao.textProperty().bindBidirectional(((SituacaoCobertura)object).descricaoProperty());
+			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		}
 		
 	}
@@ -49,7 +49,12 @@ public class SituacaoCoberturaController extends AbstractController<Integer, Sit
 
 	@Override
 	protected String getFormTitle() {
-		return "SituaÃ§Ã£o Cobertura";
+		return "Situação Cobertura";
+	}
+	
+	@Override
+	protected SituacaoCobertura getObject() {
+		return (SituacaoCobertura) super.object;
 	}
 
 	@Override

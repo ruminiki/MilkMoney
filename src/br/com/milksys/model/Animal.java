@@ -39,7 +39,7 @@ public class Animal implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(DateUtil.asLocalDate(new Date()));  
+	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty nome = new SimpleStringProperty();
 	private StringProperty numero = new SimpleStringProperty();
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();

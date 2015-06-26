@@ -3,13 +3,13 @@ package br.com.milksys.controller;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
@@ -17,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
+import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.PrecoLeiteService;
-import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.util.Util;
 
 @Controller
@@ -51,11 +51,11 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			
-			mesReferenciaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMesReferencia()));
-			anoReferenciaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getAnoReferencia())));
-			valorMaximoPraticadoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorMaximoPraticado())));
-			valorRecebidoColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValorRecebido())));
+
+			mesReferenciaColumn.setCellValueFactory(new PropertyValueFactory<PrecoLeite,String>("mesReferencia"));
+			anoReferenciaColumn.setCellValueFactory(new PropertyValueFactory<PrecoLeite,String>("anoReferencia"));
+			valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorMaximoPraticado"));
+			valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorRecebido"));
 			
 			super.service = this.service;
 			configuraMesesAnoReferencia();
@@ -65,10 +65,10 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
-			inputMesReferencia.textProperty().bindBidirectional(((PrecoLeite)object).mesReferenciaProperty());
-			inputAnoReferencia.textProperty().bindBidirectional(((PrecoLeite)object).anoReferenciaProperty());
-			inputValorMaximoPraticado.textProperty().bindBidirectional(((PrecoLeite)object).valorMaximoPraticadoProperty());
-			inputValorRecebido.textProperty().bindBidirectional(((PrecoLeite)object).valorRecebidoProperty());
+			inputMesReferencia.textProperty().bindBidirectional(getObject().mesReferenciaProperty());
+			inputAnoReferencia.textProperty().bindBidirectional(getObject().anoReferenciaProperty());
+			inputValorMaximoPraticado.textProperty().bindBidirectional(getObject().valorMaximoPraticadoProperty());
+			inputValorRecebido.textProperty().bindBidirectional(getObject().valorRecebidoProperty());
 			
 		}
 		
@@ -135,6 +135,11 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@Override
 	protected String getFormTitle() {
 		return "Preço Leite";
+	}
+	
+	@Override
+	protected PrecoLeite getObject() {
+		return (PrecoLeite)super.object;
 	}
 
 	@Override

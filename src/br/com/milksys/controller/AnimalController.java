@@ -1,5 +1,7 @@
 package br.com.milksys.controller;
 
+import java.util.Date;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomComboBoxCellFactory;
 import br.com.milksys.components.CustomStringConverter;
+import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
@@ -25,7 +28,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
-	@FXML private TableColumn<Animal, String> dataNascimentoColumn;
+	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
 	
 	@FXML private UCTextField inputNumero;
@@ -44,8 +47,10 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			
 			nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
 			numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-			dataNascimentoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("dataNascimento"));
+			dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 			racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
+			
+			super.initialize();
 
 		}
 		
@@ -62,8 +67,6 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			
 		}
 		
-		super.initialize();
-
 	}
 
 	@Override
@@ -82,8 +85,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	}
 	
 	@Override
-	public Animal getObject() {
-		return ((Animal)super.getObject());
+	protected Animal getObject() {
+		return (Animal) super.object;
 	}
 
 	@Override

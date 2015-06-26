@@ -23,8 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.NumberTextField;
-import br.com.milksys.components.PropertyDateValueFactory;
 import br.com.milksys.components.PropertyDecimalValueFactory;
+import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.model.EntregaLeite;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
@@ -40,8 +40,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 
 
 	@FXML private TableColumn<EntregaLeite, String> mesReferenciaColumn;
-	@FXML private TableColumn<EntregaLeite, String> dataInicioColumn;
-	@FXML private TableColumn<EntregaLeite, String> dataFimColumn;
+	@FXML private TableColumn<EntregaLeite, LocalDate> dataInicioColumn;
+	@FXML private TableColumn<EntregaLeite, LocalDate> dataFimColumn;
 	@FXML private TableColumn<EntregaLeite, String> volumeColumn;
 	@FXML private TableColumn<EntregaLeite, String> valorMaximoPraticadoColumn;
 	@FXML private TableColumn<EntregaLeite, String> valorRecebidoColumn;
@@ -79,12 +79,12 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			
 			//DateUtil.format(
 			mesReferenciaColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("mesReferencia"));
-			dataInicioColumn.setCellValueFactory(new PropertyDateValueFactory<EntregaLeite, String>("dataInicio"));
-			dataFimColumn.setCellValueFactory(new PropertyDateValueFactory<EntregaLeite, String>("dataFim"));
+			dataInicioColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataInicio"));
+			dataFimColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataFim"));
 			volumeColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("volume"));
 			valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorRecebido"));
 			valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorTotal"));
-			observacaoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("observacao"));
+			observacaoColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("observacao"));
 		
 			valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado"));
 			valorMaximoPraticadoColumn.setCellFactory(new Callback<TableColumn<EntregaLeite,String>, TableCell<EntregaLeite,String>>(){
@@ -122,15 +122,11 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			
 			inputMesReferencia.textProperty().bindBidirectional(getObject().mesReferenciaProperty());
 			inputAnoReferencia.textProperty().bindBidirectional(getObject().anoReferenciaProperty());
-			
 			inputDataInicio.valueProperty().bindBidirectional(getObject().dataInicioProperty());
 			inputDataFim.valueProperty().bindBidirectional(getObject().dataFimProperty());
-			
 			inputVolume.textProperty().bindBidirectional(getObject().volumeProperty());
-			
 			inputValorMaximoPraticado.setText(NumberFormatUtil.decimalFormat(getObject().getValorMaximoPraticado()));
 			inputValorRecebido.setText(NumberFormatUtil.decimalFormat(getObject().getValorRecebido()));
-			
 			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 			
 		}
@@ -209,7 +205,6 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			}else{
 				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
 				entregaLeite.setVolume(totalEntregue);
-				//verifica se j� existe pre�o associado ao m�s de entrega, se n�o tiver atualiza o registro
 				if ( entregaLeite.getPrecoLeite() == null ){
 					entregaLeite.setPrecoLeite(precoLeite);
 				}
@@ -268,7 +263,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		precoLeiteController.showForm(0,0);
 		
 		if ( precoLeiteController.getObject() != null ){
-			getObject().setPrecoLeite((PrecoLeite)precoLeiteController.getObject());
+			getObject().setPrecoLeite(precoLeiteController.getObject());
 			table.getItems().set(table.getItems().indexOf(getObject()), getObject());
 			service.save(getObject());
 			resume();
@@ -277,8 +272,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	@Override
-	public EntregaLeite getObject() {
-		return (EntregaLeite)super.getObject();
+	protected EntregaLeite getObject() {
+		return (EntregaLeite)super.object;
 	}
 	
 	protected boolean isInputValid() {

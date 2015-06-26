@@ -21,14 +21,14 @@ public class DateUtil {
 	 * Retorna os dados como String formatado. O 
 	 * {@link DateUtil#DATE_PATTERN}  (padrão de data) que é utilizado.
 	 * 
-	 * @param date A data a ser retornada como String
+	 * @param item A data a ser retornada como String
 	 * @return String formadado
 	 */
-	public static String format(LocalDate date) {
-	    if (date == null) {
+	public static String format(LocalDate item) {
+	    if (item == null) {
 	        return null;
 	    }
-	    return DATE_FORMATTER.format(date);
+	    return DATE_FORMATTER.format(item);
 	}
 	
 	/**
