@@ -3,6 +3,7 @@ package br.com.milksys.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
@@ -23,8 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Formula;
+import javax.persistence.Transient;
 
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -45,8 +45,9 @@ public class ProducaoIndividual implements Serializable {
 	private StringProperty terceiraOrdenha = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
-	@Formula("(SELECT COALESCE(p.valorRecebido, p.valorMaximoPraticado) * (primeiraOrdenha + segundaOrdenha + terceiraOrdenha) "
-			+ "FROM PrecoLeite p WHERE p.codigoMes = month(data) AND p.anoReferencia = year(data))")
+	/*@Formula("(SELECT COALESCE(p.valorRecebido, p.valorMaximoPraticado) * (primeiraOrdenha + segundaOrdenha + terceiraOrdenha) "
+			+ "FROM PrecoLeite p WHERE p.codigoMes = month(data) AND p.anoReferencia = year(data))")*/
+	@Transient
 	private BigDecimal valor;
 	
 	public ProducaoIndividual() {
@@ -152,13 +153,36 @@ public class ProducaoIndividual implements Serializable {
 		return new SimpleStringProperty();
 	}
 	
+	@Transient
 	public BigDecimal getValor() {
-		return valor;
+		return this.valor == null ? BigDecimal.ZERO : this.valor;
 	}
 	
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+	
+	/**
+	 * Retorna o codigo do mes sendo 1 - janeiro e 12 - dezembro
+	 * @return
+	 */
+	@Transient
+	public int getMes(){
+		Calendar data = Calendar.getInstance();
+		data.setTime(getData());
+		return data != null ? data.get(Calendar.MONTH) + 1 : 0;
+	}
 
+	@Transient
+	public int getAno(){
+		Calendar data = Calendar.getInstance();
+		data.setTime(getData());
+		return data != null ? data.get(Calendar.YEAR) : 0;
+	}
+	
+	@Transient
+	public BigDecimal getTotalProducaoDia(){
+		return getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha());
+	}
 
 }

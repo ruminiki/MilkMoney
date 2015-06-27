@@ -127,7 +127,7 @@ public abstract class AbstractController<K, E> {
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
 
-		scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		form.setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {

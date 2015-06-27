@@ -34,6 +34,14 @@ public class CustomAlert extends Alert {
 		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. É necessário informá-lo para prosseguir.");
 		alert.showAndWait();
 	}
+
+	public static void mensagemAlerta(String string) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Atenção");
+		alert.setHeaderText("Validação de Campo");
+		alert.setContentText(string);
+		alert.showAndWait();
+	}
 	
 	
 }

@@ -22,16 +22,18 @@ public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<
 		        @Override
 		        protected void updateItem(LocalDate item, boolean empty) {
 		            super.updateItem(item, empty);
-
-		            if ( (item == null || empty) ) {
-		            	if ( getTableRow().getItem() != null )
+		            if ( getTableRow().getItem() != null ){
+			            if ( (item == null || empty) ) {
 		            		setText("--");
-		            } else {
-		                try{
-		                	setText(DateUtil.format((java.time.LocalDate) item));
-		                }catch(Exception e){
-		                	
-		                }
+			            } else {
+			                try{
+			                	setText(DateUtil.format((java.time.LocalDate) item));
+			                }catch(Exception e){
+			                	
+			                }
+			            }
+		            }else{
+		            	setText(null);
 		            }
 		            setStyle("-fx-alignment: CENTER");
 		        }

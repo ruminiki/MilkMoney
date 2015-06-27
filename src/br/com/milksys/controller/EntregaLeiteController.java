@@ -141,6 +141,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
 		configuraMesesEntregaAnoReferencia();
+		initializeTableOverview();
+		resume();
 	}
 	
 	/**
@@ -151,6 +153,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
 		configuraMesesEntregaAnoReferencia();
+		initializeTableOverview();
+		resume();
 	}
 	
 	@Override
@@ -165,6 +169,11 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		BigDecimal totalEntregue = loadTotalEntreguePeriodo(getObject().getDataInicio(), getObject().getDataFim());
 		
 		getObject().setVolume(totalEntregue);
+		
+		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMesReferencia(), getObject().getAnoReferencia());
+		if ( precoLeite != null ){
+			getObject().setPrecoLeite(precoLeite);
+		}
 		
 		super.handleOk();
 		this.resume();
@@ -184,15 +193,11 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		for( ProducaoLeite p : producaoLeite ){
 			totalEntregue = totalEntregue.add(p.getVolumeEntregue());
 		}
+		
 		return totalEntregue;
 	}
 	
-	/**
-	 * Configura os meses para registro das entregas efetuadas.
-	 * Sempre que acessa o caso de uso ï¿½ necessï¿½rio atualizar o volume para recarregar a produï¿½ï¿½o do perï¿½odo
-	 * pois podem ter havido atualizaï¿½ï¿½es na tabela de produï¿½ï¿½o.
-	 * 
-	 */
+	
 	private void configuraMesesEntregaAnoReferencia(){
 		
 		for (int i = 0; i < meses.size(); i++) {
@@ -213,9 +218,6 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			service.save(entregaLeite);
 		}
 
-		this.initializeTableOverview();
-		table.setItems(data);
-		lblAno.setText(String.valueOf(selectedAnoReferencia));
 		this.resume();
 		
 	}
@@ -239,17 +241,15 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			
 			lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
 			lblTotalRecebido.setText(NumberFormatUtil.decimalFormat(valorRecebido));
+			lblAno.setText(String.valueOf(selectedAnoReferencia));
 		}
 	}
 	
-	/**
-	 * Quando nï¿½o houver preï¿½o de leite informado para o mï¿½s selecionado, habilita o cadastro
-	 */
 	@FXML
 	private void handleCadastrarPrecoLeite(){
 		
 		precoLeiteController.state = State.INSERT_TO_SELECT;
-		//verifica se existe preï¿½o cadastrado
+
 		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMesReferencia(), getObject().getAnoReferencia());
 		
 		if ( precoLeite == null ){
@@ -263,9 +263,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		precoLeiteController.showForm(0,0);
 		
 		if ( precoLeiteController.getObject() != null ){
+			//recupera o novo preço do leite e atualiza a linha referente ao mês selecionado
 			getObject().setPrecoLeite(precoLeiteController.getObject());
 			table.getItems().set(table.getItems().indexOf(getObject()), getObject());
-			service.save(getObject());
 			resume();
 		}
 		

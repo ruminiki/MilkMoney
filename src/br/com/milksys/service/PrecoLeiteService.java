@@ -1,5 +1,6 @@
 package br.com.milksys.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -43,6 +44,10 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 		return dao.findByMesAno(mesReferencia, anoReferencia);
 	}
 	
+	public PrecoLeite findByMesAno(int mesReferencia, int anoReferencia) {
+		return dao.findByMesAno(mesReferencia, anoReferencia);
+	}
+	
 	public ObservableList<PrecoLeite> findAllAsObservableList() {
 		ObservableList<PrecoLeite> list = FXCollections.observableArrayList();
 		list.addAll(dao.findAll(PrecoLeite.class));
@@ -54,6 +59,10 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 		list.addAll(dao.findAllByAno(anoReferencia));
 		return list;
 	}
-	
-	
+
+	public boolean isPrecoCadastrado(String mesReferencia, int anoReferencia) {
+		PrecoLeite precoLeite = dao.findByMesAno(mesReferencia, anoReferencia);
+		return precoLeite != null && precoLeite.getValor().compareTo(BigDecimal.ZERO) > 0;
+	}
+
 }

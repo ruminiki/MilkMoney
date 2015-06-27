@@ -12,13 +12,10 @@ import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -48,8 +45,8 @@ public class EntregaLeite implements Serializable {
 	private ObjectProperty<LocalDate> dataFim = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty volume = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
+	@Transient
 	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
-	
 
 	public EntregaLeite() {
 		
@@ -163,20 +160,14 @@ public class EntregaLeite implements Serializable {
 		}
 		return BigDecimal.ZERO;
 	}
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="precoLeite")
+		
+	@Transient
 	public PrecoLeite getPrecoLeite() {
 		return precoLeite.get();
 	}
 	
 	public void setPrecoLeite(PrecoLeite precoLeite) {
 		this.precoLeite.set(precoLeite);
-	}
-	
-	public ObjectProperty<PrecoLeite> precoLeiteProperty(){
-		return precoLeite;
 	}
 
 	public BigDecimal getValorMaximoPraticado() {
@@ -192,6 +183,5 @@ public class EntregaLeite implements Serializable {
 		}
 		return BigDecimal.ZERO;
 	}
-	
 	
 }

@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.milksys.util.NumberFormatUtil;
 
@@ -114,5 +115,16 @@ public class PrecoLeite implements Serializable {
 	public void setCodigoMes(int codigoMes) {
 		this.codigoMes = codigoMes;
 	}
-	
+
+	/**
+	 * Centraliza em um metodo a verificação dos valores do preco de leite.
+	 * a preferencia em considerar primeiro o valor recebido.
+	 * @return
+	 */
+	@Transient
+	public BigDecimal getValor(){
+		if ( getValorRecebido().compareTo(BigDecimal.ZERO) > 0 )
+			return getValorRecebido();
+		return getValorMaximoPraticado();
+	}
 }

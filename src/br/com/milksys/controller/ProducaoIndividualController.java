@@ -2,7 +2,6 @@ package br.com.milksys.controller;
 
 import java.time.LocalDate;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -25,7 +24,6 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.PrecoLeiteService;
 import br.com.milksys.service.ProducaoIndividualService;
-import br.com.milksys.util.Util;
 
 @Controller
 public class ProducaoIndividualController extends AbstractController<Integer, ProducaoIndividual> {
@@ -56,12 +54,9 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@Autowired private ProducaoIndividualService producaoIndividualService;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	
-	private PrecoLeite precoLeite;
 	private Animal selectedAnimal;
 	
-	private ObservableList<String> meses = Util.generateListMonths();
-	
-	@FXML@SuppressWarnings("unchecked")
+	@FXML
 	public void initialize() {
 		
 		super.service = producaoIndividualService;
@@ -152,30 +147,36 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			}	
 		}else{
 			data.addAll(producaoIndividualService.findByAnimal(selectedAnimal));
+			
 		}
-		
+		atualizaValorProducao();
 		updateLabelNumRegistros();
 		
 		//this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
 		//service.updatePrecoLeitePeriodo(precoLeite, DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		
 	}
+	
+	/**
+	 * Método que percorre lista de objetos atualizando o valor com base no preço do leite do mês
+	 */
+	private void atualizaValorProducao(){
+		
+		//varre a tabela atualizando os valores diários
+		for ( int index = 0; index < data.size(); index++ ){
+			ProducaoIndividual producaoIndividual = data.get(index);
+			PrecoLeite precoLeite = precoLeiteService.findByMesAno(producaoIndividual.getMes(), producaoIndividual.getAno());
+			producaoIndividual.setValor(precoLeite.getValor().multiply(producaoIndividual.getTotalProducaoDia()));
+			data.set(index, producaoIndividual);
+		}
+		
+	}
 
-	//sempre que seleciona um animal na tabela faz a busca 
 	private void findByAnimal(Animal animal) {
 		selectedAnimal = animal;
 		initializeTableOverview();
 	}
 
-	private void configureBinds(){
-		//inputAnimal.valueProperty().bindBidirectional(getObject().animalProperty());
-		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-		inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
-		inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
-		inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
-	}
-	
 	@Override
 	protected void handleOk() {
 		
@@ -185,6 +186,11 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			producaoIndividual.setSegundaOrdenha(getObject().getSegundaOrdenha());
 			producaoIndividual.setTerceiraOrdenha(getObject().getTerceiraOrdenha());
 			super.setObject(producaoIndividual);
+		}
+		
+		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMes(), getObject().getAno());
+		if ( precoLeite != null ){
+			getObject().setValor(precoLeite.getValor().multiply(getObject().getTotalProducaoDia()));
 		}
 		
 		super.handleOk();
@@ -281,11 +287,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	@Override
 	protected String getFormTitle() {
-		return "ProduÃ§Ã£o Individual";
-	}
-
-	public void setPrecoLeite(PrecoLeite precoLeite) {
-		this.precoLeite = precoLeite;
+		return "Produção Individual";
 	}
 
 	@Override
