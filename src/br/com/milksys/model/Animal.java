@@ -33,7 +33,7 @@ import br.com.milksys.util.DateUtil;
 @Entity
 @Table(name="animal")
 @NamedQuery(name="Animal.findAll", query="SELECT a FROM Animal a")
-public class Animal implements Serializable {
+public class Animal extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

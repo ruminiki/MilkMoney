@@ -26,7 +26,7 @@ import br.com.milksys.util.NumberFormatUtil;
 @Entity
 @Table(name="precoLeite")
 @NamedQuery(name="PrecoLeite.findAll", query="SELECT p FROM PrecoLeite p")
-public class PrecoLeite implements Serializable {
+public class PrecoLeite extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

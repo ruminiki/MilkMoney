@@ -21,7 +21,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="situacaoProcedimentoAgendado")
 @NamedQuery(name="SituacaoProcedimentoAgendado.findAll", query="SELECT s FROM SituacaoProcedimentoAgendado s")
-public class SituacaoProcedimentoAgendado implements Serializable {
+public class SituacaoProcedimentoAgendado extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

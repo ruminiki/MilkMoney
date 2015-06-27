@@ -1,5 +1,6 @@
 package br.com.milksys.controller;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
@@ -24,6 +25,8 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.PrecoLeiteService;
 import br.com.milksys.service.ProducaoIndividualService;
+import br.com.milksys.util.DateUtil;
+import br.com.milksys.util.NumberFormatUtil;
 
 @Controller
 public class ProducaoIndividualController extends AbstractController<Integer, ProducaoIndividual> {
@@ -100,60 +103,10 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
 
 			inputAnimalComboBox.setItems(animalService.findAllAsObservableList());
-			inputAnimalComboBox.valueProperty().bindBidirectional(getObject().animalProperty());
 			
-			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-			inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
-			inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
-			inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
+			initializeTableOverview();
 			
-			data.clear();
-			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
-			table.setItems(data);
 		}
-		
-		/*if ( state.equals(State.INSERT_TO_SELECT) ){
-			
-			dataColumn.setCellValueFactory(cellData -> cellData.getValue().dataProperty());
-			animalColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNumeroNomeAnimal()));
-			primeiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getPrimeiraOrdenha())));
-			segundaOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getSegundaOrdenha())));
-			terceiraOrdenhaColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getTerceiraOrdenha())));
-			valorColumn.setCellValueFactory(cellData -> new SimpleStringProperty(NumberFormatUtil.decimalFormat(cellData.getValue().getValor())));
-			
-			data.clear();
-			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
-			table.setItems(data);
-			
-			super.initialize();
-			
-			inputData.setDisable(true);
-			btnOk.setText("Adicionar");
-			btnOk.setOnAction(new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			    	handleOk();
-			    }
-			});			
-			
-			btnRemover.setOnAction(new EventHandler<ActionEvent>() {
-			    @Override public void handle(ActionEvent e) {
-			       handleDelete();
-			    }
-			});		
-			
-		}*/
-		
-		/*if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
-			
-			table.setVisible(false);
-			btnRemover.setVisible(false);
-			table.setMaxWidth(0);
-			table.setMaxHeight(0);
-			btnRemover.setMaxHeight(0);
-			btnRemover.setMaxWidth(0);
-			
-		}*/
 		
 	}
 	
@@ -162,18 +115,30 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	protected void initializeTableOverview() {
 		data.clear();
 		
-		if ( selectedAnimal == null || selectedAnimal.getId() <= 0 ){
-			if ( tableAnimal.getItems() != null && tableAnimal.getItems().size() > 0 ){
-				table.getSelectionModel().select(0);
-				selectedAnimal = tableAnimal.getItems().get(0);
-				initializeTableOverview();
-			}	
-		}else{
-			data.addAll(producaoIndividualService.findByAnimal(selectedAnimal));
+		if ( state.equals(State.LIST) ){
+			
+			if ( selectedAnimal == null || selectedAnimal.getId() <= 0 ){
+				if ( tableAnimal.getItems() != null && tableAnimal.getItems().size() > 0 ){
+					table.getSelectionModel().select(0);
+					selectedAnimal = tableAnimal.getItems().get(0);
+					initializeTableOverview();
+				}	
+			}else{
+				data.addAll(producaoIndividualService.findByAnimal(selectedAnimal));
+			}
+			updateLabelNumRegistros();
 			
 		}
+		
+		if ( state.equals(State.INSERT_TO_SELECT) ){
+			
+			data.clear();
+			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
+			table.setItems(data);
+			
+		}
+		
 		atualizaValorProducao();
-		updateLabelNumRegistros();
 		
 	}
 	
@@ -199,7 +164,38 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	@Override
 	protected void handleOk() {
+		closePopUpAfterSave = true;
+		beforeSave();
+		super.handleOk();
+    }
+	
+	/**
+	 * Chamado pelo form ProducaoIndividualExternalForm.fxml
+	 */
+	@FXML
+	private void handleAdicionar(){
 		
+		getObject().setAnimal(inputAnimalComboBox.getSelectionModel().getSelectedItem());
+		getObject().setPrimeiraOrdenha(NumberFormatUtil.fromString(inputPrimeiraOrdenha.getText()));
+		getObject().setSegundaOrdenha(NumberFormatUtil.fromString(inputSegundaOrdenha.getText()));
+		getObject().setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
+		getObject().setObservacao(inputObservacao.getText());
+		
+		closePopUpAfterSave = false;
+		beforeSave();
+		super.handleOk();
+		super.setObject(new ProducaoIndividual(getObject().getData()));
+
+		//limpa a tela
+		inputAnimalComboBox.getSelectionModel().select(null);
+		inputData.setValue(DateUtil.asLocalDate(getObject().getData()));
+		inputObservacao.setText(null);
+		inputPrimeiraOrdenha.setText(null);
+		inputSegundaOrdenha.setText(null);
+		inputTerceiraOrdenha.setText(null);
+	}
+	
+	private void beforeSave(){
 		ProducaoIndividual producaoIndividual = producaoIndividualService.findByAnimalAndData(getObject().getAnimal(), getObject().getData());
 		if ( producaoIndividual != null ){
 			producaoIndividual.setPrimeiraOrdenha(getObject().getPrimeiraOrdenha());
@@ -212,91 +208,20 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		if ( precoLeite != null ){
 			getObject().setValor(precoLeite.getValor().multiply(getObject().getTotalProducaoDia()));
 		}
-		
-		if ( state.equals(State.INSERT_TO_SELECT) )
-			closePopUpAfterSave = false;
-		
-		super.handleOk();
-		
-		/*
-		//força a atualização do objeto com os dados da tela
-    	ProducaoIndividual producaoIndividual = (ProducaoIndividual)object;
-    	producaoIndividual.setAnimal(inputAnimal.getSelectionModel().getSelectedItem());
-    	producaoIndividual.setData(DateUtil.asDate(inputData.getValue()));
-    	producaoIndividual.setPrimeiraOrdenha(NumberFormatUtil.fromString(inputPrimeiraOrdenha.getText()));
-    	producaoIndividual.setSegundaOrdenha(NumberFormatUtil.fromString(inputSegundaOrdenha.getText()));
-    	producaoIndividual.setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
-    	producaoIndividual.setObservacao(inputObservacao.getText());
-    	
-    	if ( precoLeite == null ){
-    		Calendar date = Calendar.getInstance();
-    		date.setTime(producaoIndividual.getData());
-    		precoLeite = precoLeiteService.findByMesAno(meses.get(date.get(Calendar.MONTH)), date.get(Calendar.YEAR));
-    	}
-    	
-    	producaoIndividual.setPrecoLeite(precoLeite);
-    	
-    	//verifica se já existe registro para o mesmo animal no mesmo dia
-    	for ( int index = 0; index < data.size(); index++ ){
-    		ProducaoIndividual p = data.get(index);
-    		
-			if ( p.getData().equals(producaoIndividual.getData()) && 
-					p.getAnimal().getId() == producaoIndividual.getAnimal().getId() ){
-				
-				//atualiza o volume para atualizar a table view
-				p.setPrimeiraOrdenha(producaoIndividual.getPrimeiraOrdenha());
-				p.setSegundaOrdenha(producaoIndividual.getSegundaOrdenha());
-				p.setTerceiraOrdenha(producaoIndividual.getTerceiraOrdenha());
-				
-				//seta o id para fazer update e não insert
-				producaoIndividual = p;
-				data.set(index, p);
-				break;
-			}
-			
-		}
-    	
-    	//adiciona na tabela somente novos registros
-    	if ( producaoIndividual.getId() <= 0 )
-    		data.add(producaoIndividual);
-    	
-    	//salva o objeto
-    	service.save(producaoIndividual);
-    	
-    	//data.clear();
-    	
-    	if ( !state.equals(State.INSERT_TO_SELECT) ){
-    		object = new ProducaoIndividual();
-    		super.dialogStage.close();
-    		super.updateLabelNumRegistros();
-    		super.state = State.LIST;
-    		//data.addAll(producaoIndividualService.findAll());
-    	}else{
-    		//data.addAll(producaoIndividualService.findByDate(producaoIndividual.getData()));
-        	object = new ProducaoIndividual(producaoIndividual.getData());
-    		configureBinds();
-    	}
-    	
-		//table.setItems(data);
-    */	
-    }
-	
-	/*@Override
-	protected void showForm(int width, int height) {
-		
-		if ( state.equals(State.INSERT_TO_SELECT) ){
-			super.showForm(758, 328);
-		}else{
-			super.showForm(668, 180);	
-		}
-		
-	}*/
+	}
 
 	@Override
 	protected boolean isInputValid() {
 		
 		if ( getObject().getAnimal() == null ){
 			CustomAlert.campoObrigatorio("animal");
+			return false;
+		}
+		
+		if ( getObject().getPrimeiraOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
+				getObject().getSegundaOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
+				getObject().getTerceiraOrdenha().compareTo(BigDecimal.ZERO) <= 0){
+			CustomAlert.campoObrigatorio("primeira ordenha, segunda ordenha ou terceira ordenha");
 			return false;
 		}
 		

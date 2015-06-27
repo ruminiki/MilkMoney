@@ -29,11 +29,10 @@ import javax.persistence.Transient;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
-
 @Entity
 @Table(name="producaoIndividual")
 @NamedQuery(name="ProducaoIndividual.findAll", query="SELECT e FROM ProducaoIndividual e")
-public class ProducaoIndividual implements Serializable {
+public class ProducaoIndividual extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +44,6 @@ public class ProducaoIndividual implements Serializable {
 	private StringProperty terceiraOrdenha = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
-	/*@Formula("(SELECT COALESCE(p.valorRecebido, p.valorMaximoPraticado) * (primeiraOrdenha + segundaOrdenha + terceiraOrdenha) "
-			+ "FROM PrecoLeite p WHERE p.codigoMes = month(data) AND p.anoReferencia = year(data))")*/
-	@Transient
 	private BigDecimal valor;
 	
 	public ProducaoIndividual() {

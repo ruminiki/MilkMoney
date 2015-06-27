@@ -34,7 +34,7 @@ import br.com.milksys.util.NumberFormatUtil;
 @Entity
 @Table(name="producaoLeite")
 @NamedQuery(name="ProducaoLeite.findAll", query="SELECT e FROM ProducaoLeite e")
-public class ProducaoLeite implements Serializable {
+public class ProducaoLeite extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)

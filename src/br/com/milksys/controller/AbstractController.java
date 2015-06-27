@@ -1,7 +1,5 @@
 package br.com.milksys.controller;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
@@ -24,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
+import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
@@ -31,7 +30,7 @@ import br.com.milksys.service.IService;
 public abstract class AbstractController<K, E> {
 	protected ObservableList<E> data = FXCollections.observableArrayList();
 	protected Stage dialogStage;
-	protected Object object;
+	protected AbstractEntity object;
 	protected IService<K, E> service;
 	protected boolean isInitialized = false;
 	protected AnchorPane form;
@@ -81,7 +80,7 @@ public abstract class AbstractController<K, E> {
 			});
 
 			table.getSelectionModel().selectedItemProperty()
-					.addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
+					.addListener((observable, oldValue, newValue) -> selectRowTableHandler((AbstractEntity) newValue));
 
 			isInitialized = true;
 		}
@@ -98,7 +97,7 @@ public abstract class AbstractController<K, E> {
 		this.dialogStage = dialogStage;
 	}
 
-	public void setObject(Object object) {
+	public void setObject(AbstractEntity object) {
 		this.object = object;
 	}
 
@@ -106,7 +105,7 @@ public abstract class AbstractController<K, E> {
 		this.service = service;
 	}
 
-	protected void selectRowTableHandler(Object value) {
+	protected void selectRowTableHandler(AbstractEntity value) {
 		object = value;
 	}
 
@@ -163,7 +162,7 @@ public abstract class AbstractController<K, E> {
 	@FXML
 	protected void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
 		this.state = State.INSERT;
-		object = ((Class<?>) ((ParameterizedType) this.getClass()
+		object = (AbstractEntity) ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
 		showForm(null);
@@ -205,34 +204,29 @@ public abstract class AbstractController<K, E> {
 	protected void handleOk() {
 		if (isInputValid()) {
 
-			if ( closePopUpAfterSave ) 
+			if (closePopUpAfterSave)
 				dialogStage.close();
-			
-			Method methodGetId;
 
-			try {
+			boolean isNew = object.getId() <= 0;
 
-				methodGetId = object.getClass().getMethod("getId");
-				boolean isNew = ((int) methodGetId.invoke(object)) <= 0;
+			service.save((E) object);
 
-				service.save((E) object);
-
-				if (isNew) {
-					data.add((E) object);
-					updateLabelNumRegistros();
-				} else {
-					if ( table != null && table.getSelectionModel().getSelectedIndex() >= 0 )
-						data.set(table.getSelectionModel().getSelectedIndex(),(E) object);
+			if (isNew) {
+				data.add((E) object);
+				updateLabelNumRegistros();
+			} else {
+				if (table != null && data != null) {
+					for (int index = 0; index < data.size(); index++) {
+						AbstractEntity o = (AbstractEntity) data.get(index);
+						if (o.getId() == object.getId()) {
+							data.set(index, (E) object);
+						}
+					}
 				}
-
-			} catch (NoSuchMethodException | SecurityException
-					| IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				e.printStackTrace();
 			}
 
+			this.state = State.LIST;
 		}
-		this.state = State.LIST;
 	}
 
 }

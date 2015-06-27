@@ -31,7 +31,7 @@ public class CustomAlert extends Alert {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Campo Requerido");
 		alert.setHeaderText("Campo obrigatório não informado");
-		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. É necessário informá-lo para prosseguir.");
+		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
 		alert.showAndWait();
 	}
 

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="situacaoCobertura")
 @NamedQuery(name="SituacaoCobertura.findAll", query="SELECT r FROM SituacaoCobertura r")
-public class SituacaoCobertura implements Serializable {
+public class SituacaoCobertura extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private StringProperty descricao = new SimpleStringProperty();
