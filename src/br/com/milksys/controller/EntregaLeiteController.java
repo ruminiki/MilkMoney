@@ -260,7 +260,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		}
 		
 		precoLeiteController.setObject(precoLeite);
-		precoLeiteController.showForm(0,0);
+		precoLeiteController.showForm(null);
 		
 		if ( precoLeiteController.getObject() != null ){
 			//recupera o novo preço do leite e atualiza a linha referente ao mês selecionado

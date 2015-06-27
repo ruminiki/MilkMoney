@@ -34,10 +34,11 @@ public abstract class AbstractController<K, E> {
 	protected Object object;
 	protected IService<K, E> service;
 	protected boolean isInitialized = false;
+	protected AnchorPane form;
+	protected boolean closePopUpAfterSave = true;
 	@FXML protected TableView<E> table;
 	@FXML protected Label lblNumRegistros;
 	@FXML protected State state = State.LIST;
-	protected AnchorPane form;
 
 	public void initialize() {
 
@@ -68,7 +69,7 @@ public abstract class AbstractController<K, E> {
 				public void handle(KeyEvent event) {
 
 					if (event.getCode().equals(KeyCode.ENTER)) {
-						showForm(0,0);
+						showForm(null);
 					}
 
 					if (event.getCode().equals(KeyCode.DELETE)) {
@@ -109,15 +110,11 @@ public abstract class AbstractController<K, E> {
 		object = value;
 	}
 
-	protected void showForm(int width, int height) {
+	protected void showForm(String formName) {
 		
-		form = (AnchorPane) MainApp.load(getFormName());
+		formName = (formName != null && !formName.isEmpty()) ? formName : getFormName();
 		
-		if ( height > 0 )
-			form.setPrefHeight(height);
-		
-		if ( width > 0 )
-			form.setPrefWidth(width);
+		form = (AnchorPane) MainApp.load(formName);
 		
 		dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
@@ -169,14 +166,14 @@ public abstract class AbstractController<K, E> {
 		object = ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
-		showForm(0,0);
+		showForm(null);
 	}
 
 	@FXML
 	protected void handleEdit() {
 		if (object != null) {
 			this.state = State.UPDATE;
-			showForm(0,0);
+			showForm(null);
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -208,7 +205,9 @@ public abstract class AbstractController<K, E> {
 	protected void handleOk() {
 		if (isInputValid()) {
 
-			dialogStage.close();
+			if ( closePopUpAfterSave ) 
+				dialogStage.close();
+			
 			Method methodGetId;
 
 			try {

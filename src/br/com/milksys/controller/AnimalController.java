@@ -99,7 +99,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	protected void openFormRacaToInsertAndSelect() {
 		racaController.state = State.INSERT_TO_SELECT;
 		racaController.object = new Raca();
-		racaController.showForm(0,0);
+		racaController.showForm(null);
 		if ( racaController.getObject() != null ){
 			inputRaca.getItems().add((Raca)racaController.getObject());
 			inputRaca.getSelectionModel().select((Raca)racaController.getObject());

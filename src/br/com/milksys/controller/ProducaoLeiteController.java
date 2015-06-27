@@ -299,7 +299,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		}
 		
 		precoLeiteController.setObject(precoLeite);
-		precoLeiteController.showForm(0,0);
+		precoLeiteController.showForm(null);
 		if ( precoLeiteController.getObject() != null ){
 			
 			recarregaPrecoLeite();
@@ -332,11 +332,11 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	protected void handleCadastrarProducaoIndividual() {
 		producaoIndividualController.state = State.INSERT_TO_SELECT;
 		
-		ProducaoIndividual pi = new ProducaoIndividual();
-		pi.setData(getObject().getData());
-		producaoIndividualController.setObject(pi);
+		ProducaoIndividual producaoIndividual = new ProducaoIndividual();
+		producaoIndividual.setData(getObject().getData());
 		
-		producaoIndividualController.showForm(0,0);
+		producaoIndividualController.setObject(producaoIndividual);
+		producaoIndividualController.showForm(producaoIndividualController.getExternalFormName());
 		
 	}
 

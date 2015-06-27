@@ -3,7 +3,7 @@ package br.com.milksys.controller;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -29,9 +29,9 @@ import br.com.milksys.service.ProducaoIndividualService;
 public class ProducaoIndividualController extends AbstractController<Integer, ProducaoIndividual> {
 
 	@FXML private TableView<Animal> tableAnimal; 
-	@FXML private TableColumn<Animal, String> animalColumn;
-	
 	@FXML private TableColumn<Animal, String> animalListColumn;
+	
+	@FXML private TableColumn<Animal, String> animalColumn;
 	@FXML private TableColumn<ProducaoIndividual, LocalDate> dataColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> primeiraOrdenhaColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> segundaOrdenhaColumn;
@@ -46,9 +46,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@FXML private TextField inputSegundaOrdenha;
 	@FXML private TextField inputTerceiraOrdenha;
 	
-	@FXML private Button btnOk;
-	@FXML private Button btnAdicionar;
-	@FXML private Button btnRemover;
+	@FXML private ComboBox<Animal> inputAnimalComboBox;
 	
 	@Autowired private AnimalService animalService;
 	@Autowired private ProducaoIndividualService producaoIndividualService;
@@ -66,9 +64,9 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			//@TODO filtrar apenas animais femeas 
 			tableAnimal.setItems(animalService.findAllAsObservableList());
 			tableAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> findByAnimal(newValue));
-			animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("numeroNome"));
+			animalListColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("numeroNome"));
 		
-			animalListColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("animal"));
+			animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("animal"));
 			dataColumn.setCellFactory(new TableCellDateFactory<ProducaoIndividual, LocalDate>("data"));
 			primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
 			segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
@@ -80,7 +78,8 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			
 		}
 		
-		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
+			
 			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 			inputAnimal.setText(selectedAnimal.getNumeroNome());
 			getObject().setAnimal(selectedAnimal);
@@ -88,6 +87,30 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
 			inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
 			inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
+			
+		}
+		
+		if ( state.equals(State.INSERT_TO_SELECT) ){
+			
+			animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("animal"));
+			dataColumn.setCellFactory(new TableCellDateFactory<ProducaoIndividual, LocalDate>("data"));
+			primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
+			segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
+			terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("terceiraOrdenha"));
+			valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
+
+			inputAnimalComboBox.setItems(animalService.findAllAsObservableList());
+			inputAnimalComboBox.valueProperty().bindBidirectional(getObject().animalProperty());
+			
+			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+			inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
+			inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
+			inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
+			
+			data.clear();
+			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
+			table.setItems(data);
 		}
 		
 		/*if ( state.equals(State.INSERT_TO_SELECT) ){
@@ -152,9 +175,6 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		atualizaValorProducao();
 		updateLabelNumRegistros();
 		
-		//this.precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
-		//service.updatePrecoLeitePeriodo(precoLeite, DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
-		
 	}
 	
 	/**
@@ -192,6 +212,9 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		if ( precoLeite != null ){
 			getObject().setValor(precoLeite.getValor().multiply(getObject().getTotalProducaoDia()));
 		}
+		
+		if ( state.equals(State.INSERT_TO_SELECT) )
+			closePopUpAfterSave = false;
 		
 		super.handleOk();
 		
@@ -283,6 +306,10 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@Override
 	protected String getFormName() {
 		return "view/producaoIndividual/ProducaoIndividualForm.fxml";
+	}
+	
+	public String getExternalFormName() {
+		return "view/producaoIndividual/ProducaoIndividualExternalForm.fxml";
 	}
 
 	@Override
