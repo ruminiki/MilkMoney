@@ -42,9 +42,18 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFuncionario" text="Funcionário" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarOcorrenciaFuncionario" text="Ocorrência" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
+                  <Menu mnemonicParsing="false" text="Mão de Obra">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFuncionario" text="Funcionário" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarOcorrenciaFuncionario" text="Ocorrência" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Prestadores de Serviço">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarPrestadorServico" text="Prestador Serviço" />
+                    </items>
+                  </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
               </items>
             </Menu>

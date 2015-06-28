@@ -177,7 +177,7 @@ public abstract class MaskFieldUtil {
      *
      * @param textField TextField
      */
-    public static void cpfCnpjField(final TextField textField) {
+    public static void cpfCnpj(final TextField textField) {
 
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -205,13 +205,37 @@ public abstract class MaskFieldUtil {
 
         maxField(textField, 18);
     }
+    
+    /**
+     * Máscara ###.###.###-##
+     * @param textField TextField
+     */
+    public static void cpf(final TextField textField) {
+    	  maxField(textField, 14);
+
+          textField.lengthProperty().addListener(new ChangeListener<Number>() {
+              @Override
+              public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                  if (newValue.intValue() < 15) {
+                      String value = textField.getText();
+                      value = value.replaceAll("[^0-9]", "");
+                      value = value.replaceFirst("(\\d{3})(\\d)", "$1.$2");
+                      value = value.replaceFirst("(\\d{3})(\\d)", "$1.$2");
+                      value = value.replaceFirst("(\\d{3})(\\d)", "$1-$2");
+                      value = value.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+                      textField.setText(value);
+                      positionCaret(textField);
+                  }
+              }
+          });
+    }
 
     /**
      * Monta a mascara para os campos CNPJ.
      *
      * @param textField TextField
      */
-    public static void cnpjField(final TextField textField) {
+    public static void cnpj(final TextField textField) {
         maxField(textField, 18);
 
         textField.lengthProperty().addListener(new ChangeListener<Number>() {

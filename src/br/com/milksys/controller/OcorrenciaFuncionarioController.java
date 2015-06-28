@@ -32,7 +32,6 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 	@FXML private TableColumn<MotivoOcorrenciaFuncionario, String> motivoColumn;
 	@FXML private TableColumn<OcorrenciaFuncionario, LocalDate> dataColumn;
 	@FXML private TableColumn<OcorrenciaFuncionario, String> descricaoColumn;
-	@FXML private TableColumn<OcorrenciaFuncionario, String> justificativaColumn;
 	
 	@FXML private DatePicker inputData;
 	@FXML private UCTextField inputDescricao;
@@ -65,7 +64,6 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 			motivoColumn.setCellValueFactory(new PropertyValueFactory<MotivoOcorrenciaFuncionario, String>("motivoOcorrenciaFuncionario"));
 			dataColumn.setCellFactory(new TableCellDateFactory<OcorrenciaFuncionario, LocalDate>("data"));
 			descricaoColumn.setCellValueFactory(new PropertyValueFactory<OcorrenciaFuncionario, String>("descricao"));
-			justificativaColumn.setCellValueFactory(new PropertyValueFactory<OcorrenciaFuncionario, String>("justificativa"));
 			
 			super.initialize();
 			

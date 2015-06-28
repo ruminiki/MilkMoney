@@ -108,6 +108,13 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastrarPrestadorServico() {
+    	
+    	openForm("view/prestadorServico/PrestadorServicoOverview.fxml");
+    	
+    }
+    
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);

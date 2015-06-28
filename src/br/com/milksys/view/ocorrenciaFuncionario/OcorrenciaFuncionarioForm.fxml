@@ -29,18 +29,18 @@
                <children>
                   <Label text="Data: " />
                   <Label text="Funcionário: " GridPane.rowIndex="1" />
-                  <Label text="Descrição: " GridPane.rowIndex="3" />
-                  <DatePicker fx:id="inputData" maxWidth="120.0" GridPane.columnIndex="1" />
-                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <UCTextField fx:id="inputFuncionario" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                  <Label text="Justificativa: " GridPane.rowIndex="4" />
-                  <ComboBox fx:id="inputMotivo" minWidth="290.0" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <Label text="Motivo: " GridPane.rowIndex="2" />
+                  <Label text="Descrição: " GridPane.rowIndex="3" />
+                  <Label text="Justificativa: " GridPane.rowIndex="4" />
+                  <DatePicker fx:id="inputData" maxWidth="120.0" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputFuncionario" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="inputMotivo" minWidth="290.0" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#openFormMotivoOcorrenciaFuncionarioToInsertAndSelect" text="Novo" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Button>
+                   <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputJustificativa" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
