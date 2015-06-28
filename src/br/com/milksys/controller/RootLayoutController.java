@@ -87,6 +87,14 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastrarMotivoOcorrenciaFuncionario() {
+    	
+    	openForm("view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioOverview.fxml");
+    	
+    }
+    
+    
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);

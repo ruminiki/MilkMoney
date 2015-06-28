@@ -42,7 +42,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty nome = new SimpleStringProperty();
 	private StringProperty numero = new SimpleStringProperty();
+	private StringProperty sexo = new SimpleStringProperty();
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
+	
 
 	public Animal() {
 	}
@@ -92,6 +94,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	public StringProperty numeroProperty(){
 		return numero;
 	}
+	
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="raca")
@@ -109,6 +112,19 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getSexo() {
+		return this.sexo.get();
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo.set(sexo);
+	}
+	
+	public StringProperty sexoProperty(){
+		return sexo;
 	}
 	
 	@Override

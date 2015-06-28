@@ -12,27 +12,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 
 /**
- * The persistent class for the SituacaoCobertura database table.
+ * The persistent class for the motivoocorrenciafuncionario database table.
  * 
  */
 @Entity
-@Table(name="situacaoCobertura")
-@NamedQuery(name="SituacaoCobertura.findAll", query="SELECT r FROM SituacaoCobertura r")
-public class SituacaoCobertura extends AbstractEntity implements Serializable {
+@NamedQuery(name="MotivoOcorrenciaFuncionario.findAll", query="SELECT m FROM MotivoOcorrenciaFuncionario m")
+public class MotivoOcorrenciaFuncionario extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private StringProperty descricao = new SimpleStringProperty();
-	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	public SituacaoCobertura() {
-	}
-	
+	private StringProperty descricao = new SimpleStringProperty();
+
 	@Access(AccessType.PROPERTY)
 	public String getDescricao() {
 		return this.descricao.get();
@@ -53,5 +48,5 @@ public class SituacaoCobertura extends AbstractEntity implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 }

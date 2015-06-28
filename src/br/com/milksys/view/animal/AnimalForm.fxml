@@ -7,20 +7,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="200.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.AnimalController">
+<AnchorPane prefHeight="290.0" prefWidth="502.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.AnimalController">
    <children>
       <VBox layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="137.0" prefWidth="410.0">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="233.0" prefWidth="492.0">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="100.0" prefWidth="100.0" />
-                <ColumnConstraints maxWidth="302.0" minWidth="10.0" prefWidth="291.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="80.0" prefWidth="104.0" />
+                <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="102.0" />
+                  <ColumnConstraints halignment="RIGHT" maxWidth="378.0" minWidth="0.0" prefWidth="35.0" />
+                  <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="252.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Nome: " GridPane.rowIndex="1" />
@@ -28,14 +31,16 @@
                   <Label graphicTextGap="10.0" text="Data Nascimento: " GridPane.rowIndex="3" />
                   <Label text="Número: " />
                   <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="100.0" GridPane.columnIndex="1" />
-                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
                         <ComboBox fx:id="inputRaca" prefWidth="250.0" promptText="Selecione..." />
                         <Button mnemonicParsing="false" onAction="#openFormRacaToInsertAndSelect" text="Novo" />
                      </children>
                   </HBox>
                   <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="Sexo: " GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <ComboBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

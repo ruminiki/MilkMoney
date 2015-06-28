@@ -115,6 +115,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			super.service = this.service;
 			configuraMesesEntregaAnoReferencia();
 			super.initialize();
+			resume();
 			
 		}
 		
@@ -240,9 +241,9 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			}
 			
 			lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
-			lblTotalRecebido.setText(NumberFormatUtil.decimalFormat(valorRecebido));
-			lblAno.setText(String.valueOf(selectedAnoReferencia));
+			lblTotalRecebido.setText("R$ " + NumberFormatUtil.decimalFormat(valorRecebido));
 		}
+		lblAno.setText(String.valueOf(selectedAnoReferencia));
 	}
 	
 	@FXML

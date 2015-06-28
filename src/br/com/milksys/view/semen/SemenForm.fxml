@@ -33,7 +33,7 @@
                   <DatePicker fx:id="inputDataCompra" prefWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Quantidade: " GridPane.rowIndex="3" />
                   <NumberTextField fx:id="inputQuantidade" maxWidth="110.0" prefWidth="50.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Label text="Valor: " GridPane.rowIndex="4" />
+                  <Label text="Valor Unitário: " GridPane.rowIndex="4" />
                   <NumberTextField fx:id="inputValor" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="Lote: " GridPane.rowIndex="5" />
                   <UCTextField fx:id="inputLote" maxWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />

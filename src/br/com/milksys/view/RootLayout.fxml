@@ -37,7 +37,15 @@
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastrarTipoCobertura" text="Tipo Cobertura" />
                   <MenuItem fx:id="handleCadastrarSituacaoCobertura" mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSemen" text="Semen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSemen" text="Sêmen" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Propriedade">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Funcionário" />
+                  <MenuItem mnemonicParsing="false" text="Ocorrência" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" text="Motivo Ocorrência Funcionário" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
               </items>
             </Menu>
 				<Menu mnemonicParsing="false" text="Help">

@@ -15,6 +15,9 @@
 		<class>br.com.milksys.model.ProducaoIndividual</class>
 		<class>br.com.milksys.model.Semen</class>
 		<class>br.com.milksys.model.SituacaoCobertura</class>
+		<class>br.com.milksys.model.Funcionario</class>
+		<class>br.com.milksys.model.MotivoOcorrenciaFuncionario</class>
+		<class>br.com.milksys.model.OcorrenciaFuncionario</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />
