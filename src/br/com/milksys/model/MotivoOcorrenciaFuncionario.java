@@ -48,5 +48,10 @@ public class MotivoOcorrenciaFuncionario extends AbstractEntity implements Seria
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	@Override
+	public String toString() {
+		return getDescricao();
+	}
 
 }

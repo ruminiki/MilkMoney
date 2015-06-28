@@ -42,17 +42,17 @@ public class MotivoOcorrenciaFuncionarioController extends AbstractController<In
 
 	@Override
 	protected String getFormName() {
-		return "d";
+		return "view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Raça";
+		return "Motivo Ocorrência Funcionário";
 	}
 	
 	@Override
 	protected MotivoOcorrenciaFuncionario getObject() {
-		return (MotivoOcorrenciaFuncionario)super.object;
+		return (MotivoOcorrenciaFuncionario) super.object;
 	}
 
 	@Override

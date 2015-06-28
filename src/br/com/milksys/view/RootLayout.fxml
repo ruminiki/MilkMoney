@@ -42,9 +42,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">
               <items>
-                <MenuItem mnemonicParsing="false" text="Funcionário" />
-                  <MenuItem mnemonicParsing="false" text="Ocorrência" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" text="Motivo Ocorrência Funcionário" />
+                <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFuncionario" text="Funcionário" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarOcorrenciaFuncionario" text="Ocorrência" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
                   <SeparatorMenuItem mnemonicParsing="false" />
               </items>
             </Menu>

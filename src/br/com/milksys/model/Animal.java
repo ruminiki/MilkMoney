@@ -70,6 +70,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	@Access(AccessType.PROPERTY)
 	public String getNome() {
 		return this.nome.get();
@@ -82,6 +83,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	public StringProperty nomeProperty(){
 		return nome;
 	}
+	
 	@Access(AccessType.PROPERTY)
 	public String getNumero() {
 		return this.numero.get();

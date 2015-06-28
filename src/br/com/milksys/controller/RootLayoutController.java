@@ -94,6 +94,19 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastrarFuncionario() {
+    	
+    	openForm("view/funcionario/FuncionarioOverview.fxml");
+    	
+    }
+    
+    @FXML
+    private void handleCadastrarOcorrenciaFuncionario() {
+    	
+    	openForm("view/ocorrenciaFuncionario/OcorrenciaFuncionarioOverview.fxml");
+    	
+    }
     
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
