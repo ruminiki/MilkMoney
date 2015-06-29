@@ -115,6 +115,13 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastrarServico() {
+    	
+    	openForm("view/servico/ServicoOverview.fxml");
+    	
+    }
+    
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);

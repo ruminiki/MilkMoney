@@ -136,8 +136,8 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 		motivoOcorrenciaFuncionarioController.object = new MotivoOcorrenciaFuncionario();
 		motivoOcorrenciaFuncionarioController.showForm(null);
 		if ( motivoOcorrenciaFuncionarioController.getObject() != null ){
-			inputMotivo.getItems().add((MotivoOcorrenciaFuncionario)motivoOcorrenciaFuncionarioController.getObject());
-			inputMotivo.getSelectionModel().select((MotivoOcorrenciaFuncionario)motivoOcorrenciaFuncionarioController.getObject());
+			inputMotivo.getItems().add(motivoOcorrenciaFuncionarioController.getObject());
+			inputMotivo.getSelectionModel().select(motivoOcorrenciaFuncionarioController.getObject());
 		}
 	}
 

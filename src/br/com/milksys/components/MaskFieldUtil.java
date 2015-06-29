@@ -163,10 +163,12 @@ public abstract class MaskFieldUtil {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean fieldChange) {
                 if (!fieldChange) {
-                    final int length = textField.getText().length();
-                    if (length > 0 && length < 3) {
-                        textField.setText(textField.getText() + "00");
-                    }
+                	if ( textField.getText() != null ){
+	                    final int length = textField.getText().length();
+	                    if (length > 0 && length < 3) {
+	                        textField.setText(textField.getText() + "00");
+	                    }
+                	}
                 }
             }
         });

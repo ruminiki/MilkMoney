@@ -110,7 +110,9 @@ public class Funcionario extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public int getDiaPagamento() {
-		return Integer.valueOf(this.diaPagamento.get());
+		if ( diaPagamento.get() != null )
+			return Integer.valueOf(this.diaPagamento.get());
+		return 0;
 	}
 	
 	public void setDiaPagamento(int diaPagamento) {
