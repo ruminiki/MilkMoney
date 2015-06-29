@@ -13,10 +13,13 @@ import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -45,6 +48,7 @@ public class Semen extends AbstractEntity implements Serializable {
 	private StringProperty valorUnitario = new SimpleStringProperty();
 	private StringProperty quantidade = new SimpleStringProperty();
 	private StringProperty lote = new SimpleStringProperty();
+	private ObjectProperty<Fornecedor> fornecedor = new SimpleObjectProperty<Fornecedor>();
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
@@ -137,4 +141,20 @@ public class Semen extends AbstractEntity implements Serializable {
 	public StringProperty loteProperty(){
 		return lote;
 	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="fornecedor")
+	public Fornecedor getFornecedor() {
+		return fornecedor.get();
+	}
+	
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor.set(fornecedor);
+	}
+	
+	public ObjectProperty<Fornecedor> fornecedorProperty(){
+		return fornecedor;
+	}
+	
 }

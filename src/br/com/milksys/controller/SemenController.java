@@ -3,20 +3,25 @@ package br.com.milksys.controller;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
+import br.com.milksys.model.Fornecedor;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.State;
+import br.com.milksys.service.FornecedorService;
 import br.com.milksys.service.IService;
 
 @Controller
@@ -36,6 +41,10 @@ public class SemenController extends AbstractController<Integer, Semen> {
 	@FXML private NumberTextField inputValor;
 	@FXML private NumberTextField inputQuantidade;
 	@FXML private UCTextField inputLote;
+	@FXML private ComboBox<Fornecedor> inputFornecedor;
+	
+	@Autowired private FornecedorService fornecedorService;
+	@Autowired private FornecedorController fornecedorController;
 
 	@FXML
 	public void initialize() {
@@ -63,6 +72,11 @@ public class SemenController extends AbstractController<Integer, Semen> {
 			inputQuantidade.textProperty().bindBidirectional(getObject().quantidadeProperty());
 			inputLote.textProperty().bindBidirectional(getObject().loteProperty());
 			
+			inputFornecedor.setItems(fornecedorService.findAllAsObservableList());
+			inputFornecedor.valueProperty().bindBidirectional(getObject().fornecedorProperty());
+			
+			MaskFieldUtil.numeroInteiro(inputQuantidade);
+			MaskFieldUtil.moeda(inputValor);
 		}
 		
 	}
@@ -92,5 +106,17 @@ public class SemenController extends AbstractController<Integer, Semen> {
 	protected void setService(IService<Integer, Semen> service) {
 		super.setService(service);
 	}
+	
+	@FXML
+	protected void openFormFornecedorToInsertAndSelect() {
+		fornecedorController.state = State.INSERT_TO_SELECT;
+		fornecedorController.object = new Fornecedor();
+		fornecedorController.showForm(null);
+		if ( fornecedorController.getObject() != null ){
+			inputFornecedor.getItems().add(fornecedorController.getObject());
+			inputFornecedor.getSelectionModel().select(fornecedorController.getObject());
+		}
+	}
+
 
 }

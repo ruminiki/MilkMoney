@@ -187,19 +187,24 @@ public abstract class MaskFieldUtil {
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean fieldChange) {
                 String value = textField.getText();
                 if (!fieldChange) {
-                    if (textField.getText().length() == 11) {
+                    if (textField.getText() != null && textField.getText().length() == 11) {
                         value = value.replaceAll("[^0-9]", "");
                         value = value.replaceFirst("([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})$", "$1.$2.$3-$4");
                     }
-                    if (textField.getText().length() == 14) {
+                    if (textField.getText() != null && textField.getText().length() == 14) {
                         value = value.replaceAll("[^0-9]", "");
                         value = value.replaceFirst("([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})([0-9]{2})$", "$1.$2.$3/$4-$5");
                     }
                 }
                 textField.setText(value);
                 if (textField.getText() != value) {
-                    textField.setText("");
-                    textField.insertText(0, value);
+                	if ( value.length() != 14 && value.length() != 18 ){
+                		textField.setText("");
+                	}
+                	else{
+                		value = value.replaceAll("[^0-9.\\-/]", "");
+                		textField.insertText(0, value);
+                	}
                 }
 
             }

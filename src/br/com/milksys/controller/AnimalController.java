@@ -113,8 +113,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 		racaController.object = new Raca();
 		racaController.showForm(null);
 		if ( racaController.getObject() != null ){
-			inputRaca.getItems().add((Raca)racaController.getObject());
-			inputRaca.getSelectionModel().select((Raca)racaController.getObject());
+			inputRaca.getItems().add(racaController.getObject());
+			inputRaca.getSelectionModel().select(racaController.getObject());
 		}
 	}
 

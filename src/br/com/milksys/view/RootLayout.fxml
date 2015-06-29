@@ -36,7 +36,7 @@
             <Menu mnemonicParsing="false" text="Reproduçao">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastrarTipoCobertura" text="Tipo Cobertura" />
-                  <MenuItem fx:id="handleCadastrarSituacaoCobertura" mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSemen" text="Sêmen" />
               </items>
             </Menu>
@@ -49,8 +49,9 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Prestadores de Serviço">
+                  <Menu mnemonicParsing="false" text="Fornecedores">
                     <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFornecedor" text="Fornecedor" />
                 	  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarServico" text="Serviço" />
                       <MenuItem mnemonicParsing="false" onAction="#handleCadastrarPrestadorServico" text="Prestador Serviço" />
                     </items>

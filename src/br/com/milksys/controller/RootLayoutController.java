@@ -122,6 +122,13 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastrarFornecedor() {
+    	
+    	openForm("view/fornecedor/FornecedorOverview.fxml");
+    	
+    }
+    
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);
