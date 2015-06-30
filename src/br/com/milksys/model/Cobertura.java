@@ -43,9 +43,9 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty descricao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
-	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty resultadoPrimeiroToque = new SimpleStringProperty();
-	private ObjectProperty<LocalDate> dataReconfirmacao = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private ObjectProperty<LocalDate> dataReconfirmacao = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty resultadoReconfirmacao = new SimpleStringProperty();
 	private StringProperty tipoCobertura = new SimpleStringProperty();
 	private ObjectProperty<Animal> femea = new SimpleObjectProperty<Animal>();
@@ -303,6 +303,18 @@ public class Cobertura extends AbstractEntity implements Serializable {
 			return this.getSemen().getDescricao();
 		
 		return null;
+	}
+	
+	public String getPrimeiroToque(){
+		if ( getResultadoPrimeiroToque() == null || getResultadoPrimeiroToque().isEmpty() )
+			return "--";
+		return DateUtil.format(getDataPrimeiroToque()) + " - " + getResultadoPrimeiroToque();
+	}
+	
+	public String getReconfirmacao(){
+		if ( getResultadoReconfirmacao() == null || getResultadoReconfirmacao().isEmpty() )
+			return "--";
+		return DateUtil.format(getDataReconfirmacao()) + " - " + getResultadoReconfirmacao();
 	}
 	
 }

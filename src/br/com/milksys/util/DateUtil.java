@@ -26,7 +26,7 @@ public class DateUtil {
 	 */
 	public static String format(LocalDate item) {
 	    if (item == null) {
-	        return null;
+	        return "";
 	    }
 	    return DATE_FORMATTER.format(item);
 	}
@@ -42,7 +42,7 @@ public class DateUtil {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 	    if (date == null) {
-	        return null;
+	        return "";
 	    }
 	    return sdf.format(date);
 	    

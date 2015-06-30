@@ -6,10 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 
 import javax.annotation.Resource;
 
@@ -43,14 +46,13 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
 	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> primeiroToqueColumn;
+	@FXML private TableColumn<Cobertura, String> reconfirmacaoColumn;
 	
 	@FXML private UCTextField inputDescricao;
 	@FXML private DatePicker inputData;
 	@FXML private DatePicker inputPrevisaoParto;
-	@FXML private DatePicker inputDataPrimeiroToque;
-	@FXML private UCTextField inputResultadoPrimeiroToque;
-	@FXML private DatePicker inputDataReconfirmacao;
-	@FXML private UCTextField inputResultadoReconfirmacao;
+	@FXML private ComboBox<String> inputResultadoToque;
 	@FXML private UCTextField inputFemea;
 	@FXML private UCTextField inputReprodutor;
 	@FXML private UCTextField inputSemen;
@@ -73,7 +75,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@Autowired private FuncionarioReducedController funcionarioReducedController;
 	@Autowired private AnimalReducedController animalReducedController;
 	@Autowired private ServicoController servicoController;
-
+	
 	@FXML
 	public void initialize() {
 		
@@ -85,6 +87,58 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 			tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 			situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
+			primeiroToqueColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("primeiroToque"));
+			primeiroToqueColumn.setCellFactory(new Callback<TableColumn<Cobertura,String>, TableCell<Cobertura,String>>(){
+				@Override
+				public TableCell<Cobertura, String> call(TableColumn<Cobertura, String> param) {
+					TableCell<Cobertura, String> cell = new TableCell<Cobertura, String>(){
+						@Override
+						public void updateItem(String item, boolean empty) {
+							if(item!=null){
+								Hyperlink link = new Hyperlink();
+								link.setText(item);
+								link.setFocusTraversable(false);
+								link.setOnAction(new EventHandler<ActionEvent>() {
+								    @Override
+								    public void handle(ActionEvent e) {
+								    	setObject(data.get(getTableRow().getIndex()));
+								    	state = State.PRIMEIRO_TOQUE;
+								    	showForm("view/cobertura/ResultadoToqueForm.fxml");
+								    }
+								});
+								setGraphic(link);
+							} 
+						}
+					};                           
+					return cell;
+				}
+			});
+			reconfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reconfirmacao"));
+			reconfirmacaoColumn.setCellFactory(new Callback<TableColumn<Cobertura,String>, TableCell<Cobertura,String>>(){
+				@Override
+				public TableCell<Cobertura, String> call(TableColumn<Cobertura, String> param) {
+					TableCell<Cobertura, String> cell = new TableCell<Cobertura, String>(){
+						@Override
+						public void updateItem(String item, boolean empty) {
+							if(item!=null){
+								Hyperlink link = new Hyperlink();
+								link.setText(item);
+								link.setFocusTraversable(false);
+								link.setOnAction(new EventHandler<ActionEvent>() {
+								    @Override
+								    public void handle(ActionEvent e) {
+								    	setObject(data.get(getTableRow().getIndex()));
+								    	state = State.RECONFIRMACAO;
+								    	showForm("view/cobertura/ResultadoToqueForm.fxml");
+								    }
+								});
+								setGraphic(link);
+							} 
+						}
+					};                           
+					return cell;
+				}
+			});
 			super.initialize();
 			
 		}
@@ -168,6 +222,18 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			
 		}
 		
+		if ( state.equals(State.PRIMEIRO_TOQUE) ){
+			inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
+			inputResultadoToque.setItems(SituacaoCobertura.getItems());
+			inputResultadoToque.valueProperty().bindBidirectional(getObject().resultadoPrimeiroToqueProperty());
+		}
+		
+		if ( state.equals(State.RECONFIRMACAO) ){
+			inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
+			inputResultadoToque.setItems(SituacaoCobertura.getItems());
+			inputResultadoToque.valueProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());
+		}
+		 
 	}
 	
 	/**
