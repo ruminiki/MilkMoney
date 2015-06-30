@@ -165,10 +165,14 @@ public abstract class AbstractController<K, E> {
 			FieldRequired annotation = method.getAnnotation(FieldRequired.class);
 			if ( annotation != null ){
 				try {
-					if ( method.invoke(getObject()) == null ){
+					
+					Object result = method.invoke(getObject());
+					
+					if ( result == null || (result instanceof String && ((String)result).isEmpty()) ){
 						CustomAlert.campoObrigatorio(annotation.nameToMessage());
 						return false;
 					}
+					
 				} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
 					e.printStackTrace();
 				}
