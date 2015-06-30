@@ -27,7 +27,6 @@ public class FinalidadeLote extends AbstractEntity implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	private StringProperty descricao = new SimpleStringProperty();
 
 	public FinalidadeLote() {

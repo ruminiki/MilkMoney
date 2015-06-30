@@ -7,20 +7,19 @@
 		<class>br.com.milksys.model.Animal</class>
 		<class>br.com.milksys.model.Raca</class>
 		<class>br.com.milksys.model.FinalidadeLote</class>
-		<class>br.com.milksys.model.TipoCobertura</class>
 		<class>br.com.milksys.model.PrecoLeite</class>
 		<class>br.com.milksys.model.SituacaoProcedimentoAgendado</class>
 		<class>br.com.milksys.model.EntregaLeite</class>
 		<class>br.com.milksys.model.ProducaoLeite</class>
 		<class>br.com.milksys.model.ProducaoIndividual</class>
 		<class>br.com.milksys.model.Semen</class>
-		<class>br.com.milksys.model.SituacaoCobertura</class>
 		<class>br.com.milksys.model.Funcionario</class>
 		<class>br.com.milksys.model.MotivoOcorrenciaFuncionario</class>
 		<class>br.com.milksys.model.OcorrenciaFuncionario</class>
 		<class>br.com.milksys.model.PrestadorServico</class>
 		<class>br.com.milksys.model.Servico</class>
 		<class>br.com.milksys.model.Fornecedor</class>
+		<class>br.com.milksys.model.Cobertura</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

@@ -163,10 +163,10 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	}
 
 	@Override
-	protected void handleOk() {
+	protected void handleSave() {
 		closePopUpAfterSave = true;
 		beforeSave();
-		super.handleOk();
+		super.handleSave();
     }
 	
 	/**
@@ -183,7 +183,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		
 		closePopUpAfterSave = false;
 		beforeSave();
-		super.handleOk();
+		super.handleSave();
 		super.setObject(new ProducaoIndividual(getObject().getData()));
 
 		//limpa a tela

@@ -129,7 +129,7 @@ public abstract class AbstractController<K, E> {
 			public void handle(KeyEvent event) {
 
 				if (event.getCode().equals(KeyCode.ENTER)) {
-					handleOk();
+					handleSave();
 				}
 
 				if (event.getCode().equals(KeyCode.ESCAPE)) {
@@ -201,7 +201,7 @@ public abstract class AbstractController<K, E> {
 
 	@FXML
 	@SuppressWarnings("unchecked")
-	protected void handleOk() {
+	protected void handleSave() {
 		if (isInputValid()) {
 
 			if (closePopUpAfterSave)

@@ -20,7 +20,9 @@ import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Raca;
+import br.com.milksys.model.Sexo;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
@@ -38,12 +40,16 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private UCTextField inputNome;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
-	@FXML private ComboBox<String> inputSexo;
+	@FXML protected ComboBox<String> inputFinalidadeAnimal;
+	@FXML protected ComboBox<String> inputSexo;
 	
+	//services
 	@Autowired private RacaService racaService;
+	
+	//controllers
 	@Autowired private RacaController racaController;
 	
-	private ObservableList<String> sexos = FXCollections.observableArrayList("FÊMEA", "MACHO");
+	private ObservableList<String> sexos = FXCollections.observableArrayList(Sexo.FEMEA, Sexo.MACHO);
 
 	@FXML
 	@SuppressWarnings("unchecked")
@@ -76,6 +82,9 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputSexo.setItems(sexos);
 			inputSexo.getSelectionModel().selectFirst();
 			inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());
+			
+			inputFinalidadeAnimal.setItems(FinalidadeAnimal.getItems());
+			inputFinalidadeAnimal.valueProperty().bindBidirectional(getObject().finalidadeAnimalProperty());
 			
 		}
 		
@@ -112,7 +121,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 		racaController.state = State.INSERT_TO_SELECT;
 		racaController.object = new Raca();
 		racaController.showForm(null);
-		if ( racaController.getObject() != null ){
+		if ( racaController.getObject() != null && racaController.getObject().getId() > 0 ){
 			inputRaca.getItems().add(racaController.getObject());
 			inputRaca.getSelectionModel().select(racaController.getObject());
 		}

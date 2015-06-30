@@ -29,7 +29,7 @@
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleOk" text="Ok">
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Ok">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

@@ -10,50 +10,49 @@
 		<MenuBar BorderPane.alignment="CENTER">
 			<menus>
 				<Menu mnemonicParsing="false" text="Cadastros">
-					<items>
-						<MenuItem mnemonicParsing="false" onAction="#handleCadastroAnimal" text="Animal">
-							<accelerator>
-								<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-							</accelerator>
-						</MenuItem>
+				 <items>
+				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroAnimal" text="Animal">
+					<accelerator>
+						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+					</accelerator>
+			 	  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
-						<MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça">
-							<accelerator>
-								<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-							</accelerator>
-						</MenuItem>
-						<MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-					</items>
+				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça">
+						<accelerator>
+							<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+						</accelerator>
+				  </MenuItem>
+				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+				</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="Produção">
 					<items>
 						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarProducaoIndividual" text="Produção Individual" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" />
 					</items>
 				</Menu>
             <Menu mnemonicParsing="false" text="Reproduçao">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarTipoCobertura" text="Tipo Cobertura" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSituacaoCobertura" text="Situaçao Cobertura" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarSemen" text="Sêmen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">
               <items>
                   <Menu mnemonicParsing="false" text="Mão de Obra">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFuncionario" text="Funcionário" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarOcorrenciaFuncionario" text="Ocorrência" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastrarMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroOcorrenciaFuncionario" text="Ocorrência" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Fornecedores">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarFornecedor" text="Fornecedor" />
-                	  <MenuItem mnemonicParsing="false" onAction="#handleCadastrarServico" text="Serviço" />
-                      <MenuItem mnemonicParsing="false" onAction="#handleCadastrarPrestadorServico" text="Prestador Serviço" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastroFornecedor" text="Fornecedor" />
+                	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrestadorServico" text="Prestador Serviço" />
                     </items>
                   </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />

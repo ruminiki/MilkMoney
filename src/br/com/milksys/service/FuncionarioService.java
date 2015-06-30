@@ -44,6 +44,11 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 		list.addAll(dao.findAll(Funcionario.class));
 		return list;
 	}
+
+	public ObservableList<Funcionario> findAllAtivosAsObservableList() {
+		// TODO Auto-generated method stub
+		return findAllAsObservableList();
+	}
 	
 	
 }

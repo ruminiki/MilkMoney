@@ -44,6 +44,11 @@ public class SemenService implements IService<Integer, Semen>{
 		list.addAll(dao.findAll(Semen.class));
 		return list;
 	}
+
+	public ObservableList<Semen> findAllComEstoqueAsObservableList() {
+		// TODO Auto-generated method stub
+		return findAllAsObservableList();
+	}
 	
 	
 }

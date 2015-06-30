@@ -44,7 +44,7 @@ public class Semen extends AbstractEntity implements Serializable {
 	
 	private StringProperty descricao = new SimpleStringProperty();
 	private StringProperty touro = new SimpleStringProperty();
-	private ObjectProperty<LocalDate> dataCompra = new SimpleObjectProperty<LocalDate>(DateUtil.asLocalDate(new Date()));  
+	private ObjectProperty<LocalDate> dataCompra = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty valorUnitario = new SimpleStringProperty();
 	private StringProperty quantidade = new SimpleStringProperty();
 	private StringProperty lote = new SimpleStringProperty();
@@ -155,6 +155,11 @@ public class Semen extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<Fornecedor> fornecedorProperty(){
 		return fornecedor;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getTouro();
 	}
 	
 }

@@ -44,6 +44,16 @@ public class AnimalService implements IService<Integer, Animal>{
 		list.addAll(dao.findAll(Animal.class));
 		return list;
 	}
+
+	public ObservableList<Animal> findAllFemeasAsObservableList() {
+		// TODO Auto-generated method stub
+		return findAllAsObservableList();
+	}
+
+	public ObservableList<Animal> findAllReprodutoresAsObservableList() {
+		// TODO Auto-generated method stub
+		return findAllAsObservableList();
+	}
 	
 	
 }

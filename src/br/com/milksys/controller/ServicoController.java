@@ -93,7 +93,7 @@ public class ServicoController extends AbstractController<Integer, Servico> {
 		prestadorServicoController.state = State.INSERT_TO_SELECT;
 		prestadorServicoController.object = new PrestadorServico();
 		prestadorServicoController.showForm(null);
-		if ( prestadorServicoController.getObject() != null ){
+		if ( prestadorServicoController.getObject() != null && prestadorServicoController.getObject().getId() > 0 ){
 			inputPrestadorServico.getItems().add(prestadorServicoController.getObject());
 			inputPrestadorServico.getSelectionModel().select(prestadorServicoController.getObject());
 		}

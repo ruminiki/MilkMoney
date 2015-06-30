@@ -60,70 +60,63 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleCadastrarProducaoIndividual() {
+    private void handleCadastroProducaoIndividual() {
     	
     	openForm("view/producaoIndividual/ProducaoIndividualOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarSituacaoCobertura() {
-    	
-    	openForm("view/situacaoCobertura/SituacaoCoberturaOverview.fxml");
-    	
-    }
-    
-    @FXML
-    private void handleCadastrarTipoCobertura() {
-    	
-    	openForm("view/tipoCobertura/TipoCoberturaOverview.fxml");
-    	
-    }
-    
-    @FXML
-    private void handleCadastrarSemen() {
+    private void handleCadastroSemen() {
     	
     	openForm("view/semen/SemenOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarMotivoOcorrenciaFuncionario() {
+    private void handleCadastroCobertura() {
+    	
+    	openForm("view/cobertura/CoberturaOverview.fxml");
+    	
+    }
+    
+    @FXML
+    private void handleCadastroMotivoOcorrenciaFuncionario() {
     	
     	openForm("view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarFuncionario() {
+    private void handleCadastroFuncionario() {
     	
     	openForm("view/funcionario/FuncionarioOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarOcorrenciaFuncionario() {
+    private void handleCadastroOcorrenciaFuncionario() {
     	
     	openForm("view/ocorrenciaFuncionario/OcorrenciaFuncionarioOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarPrestadorServico() {
+    private void handleCadastroPrestadorServico() {
     	
     	openForm("view/prestadorServico/PrestadorServicoOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarServico() {
+    private void handleCadastroServico() {
     	
     	openForm("view/servico/ServicoOverview.fxml");
     	
     }
     
     @FXML
-    private void handleCadastrarFornecedor() {
+    private void handleCadastroFornecedor() {
     	
     	openForm("view/fornecedor/FornecedorOverview.fxml");
     	

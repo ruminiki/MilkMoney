@@ -44,6 +44,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty numero = new SimpleStringProperty();
 	private StringProperty sexo = new SimpleStringProperty();
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
+	private StringProperty finalidadeAnimal = new SimpleStringProperty();
 	
 
 	public Animal() {
@@ -110,6 +111,19 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<Raca> racaProperty(){
 		return raca;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getFinalidadeAnimal() {
+		return finalidadeAnimal.get();
+	}
+	
+	public void setFinalidadeAnimal(String finalidadeAnimal) {
+		this.finalidadeAnimal.set(finalidadeAnimal);
+	}
+	
+	public StringProperty finalidadeAnimalProperty(){
+		return finalidadeAnimal;
 	}
 	
 	public String getNumeroNome(){

@@ -45,7 +45,7 @@
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" prefWidth="442.0" spacing="5.0">
                <children>
-                  <Button fx:id="btnOk" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleOk" text="Ok">
+                  <Button fx:id="btnOk" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Ok">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

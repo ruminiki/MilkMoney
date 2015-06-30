@@ -38,9 +38,18 @@ public class CustomAlert extends Alert {
 	public static void mensagemAlerta(String string) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Atenção");
-		alert.setHeaderText("Validação de Campo");
+		alert.setHeaderText("Alerta");
 		alert.setContentText(string);
 		alert.showAndWait();
+	}
+
+	public static void mensagemInfo(String string) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Atenção");
+		alert.setHeaderText("Informação");
+		alert.setContentText(string);
+		alert.showAndWait();
+		
 	}
 	
 	

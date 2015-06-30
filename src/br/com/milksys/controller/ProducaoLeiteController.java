@@ -176,7 +176,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	}
 	
 	@Override
-	protected void handleOk() {
+	protected void handleSave() {
 		int vacasOrdenhadas = getObject().getNumeroVacasOrdenhadas();
 		BigDecimal volumeProduzido = getObject().getVolumeProduzido();
 		
@@ -189,7 +189,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			getObject().setValor(precoLeite.getValor().multiply(getObject().getVolumeEntregue()));
 		}
 		
-		super.handleOk();
+		super.handleSave();
 		this.resume();
 	}
 	
@@ -300,7 +300,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 		precoLeiteController.setObject(precoLeite);
 		precoLeiteController.showForm(null);
-		if ( precoLeiteController.getObject() != null ){
+		if ( precoLeiteController.getObject() != null && precoLeiteController.getObject().getId() > 0 ){
 			
 			recarregaPrecoLeite();
 			resume();

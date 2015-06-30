@@ -2,7 +2,6 @@ package br.com.milksys.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
@@ -19,8 +18,7 @@ public class FinalidadeLoteController extends AbstractController<Integer, Finali
 
 	@FXML private TableColumn<FinalidadeLote, String> idColumn;
 	@FXML private TableColumn<FinalidadeLote, String> descricaoColumn;
-	@FXML private TextField idField;
-	@FXML private UCTextField descricaoField;
+	@FXML private UCTextField inputDescricao;
 
 	@FXML
 	public void initialize() {
@@ -32,7 +30,7 @@ public class FinalidadeLoteController extends AbstractController<Integer, Finali
 		}
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
-			descricaoField.textProperty().bindBidirectional(getObject().descricaoProperty());
+			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		}
 		
 	}

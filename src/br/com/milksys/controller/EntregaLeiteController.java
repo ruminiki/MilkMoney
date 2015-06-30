@@ -165,7 +165,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	@Override
-	protected void handleOk() {
+	protected void handleSave() {
 		
 		BigDecimal totalEntregue = loadTotalEntreguePeriodo(getObject().getDataInicio(), getObject().getDataFim());
 		
@@ -176,7 +176,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			getObject().setPrecoLeite(precoLeite);
 		}
 		
-		super.handleOk();
+		super.handleSave();
 		this.resume();
 		
 	}
