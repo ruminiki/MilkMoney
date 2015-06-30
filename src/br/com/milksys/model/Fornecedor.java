@@ -28,7 +28,8 @@ public class Fornecedor extends AbstractEntity implements Serializable {
 	
 	private StringProperty nome = new SimpleStringProperty();
 	private StringProperty cpfCnpj = new SimpleStringProperty();
-	private StringProperty telefone = new SimpleStringProperty();
+	private StringProperty telefonePrincipal = new SimpleStringProperty();
+	private StringProperty telefoneSecundario = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
 	private StringProperty endereco = new SimpleStringProperty();
 	private StringProperty site = new SimpleStringProperty();
@@ -84,16 +85,29 @@ public class Fornecedor extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getTelefone() {
-		return this.telefone.get();
+	public String getTelefonePrincipal() {
+		return this.telefonePrincipal.get();
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone.set(telefone);
+	public void setTelefonePrincipal(String telefonePrincipal) {
+		this.telefonePrincipal.set(telefonePrincipal);
 	}
 
-	public StringProperty telefoneProperty(){
-		return telefone;
+	public StringProperty telefonePrincipalProperty(){
+		return telefonePrincipal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getTelefoneSecundario() {
+		return this.telefoneSecundario.get();
+	}
+
+	public void setTelefoneSecundario(String telefoneSecundario) {
+		this.telefonePrincipal.set(telefoneSecundario);
+	}
+
+	public StringProperty telefoneSecundarioProperty(){
+		return telefoneSecundario;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -102,7 +116,7 @@ public class Fornecedor extends AbstractEntity implements Serializable {
 	}
 
 	public void setCpfCnpj(String cpfCnpf) {
-		this.telefone.set(cpfCnpf);
+		this.cpfCnpj.set(cpfCnpf);
 	}
 
 	public StringProperty cpfCnpfProperty(){

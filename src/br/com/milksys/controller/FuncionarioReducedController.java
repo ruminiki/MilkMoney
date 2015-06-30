@@ -35,8 +35,8 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 			funcionarioController.data.addListener(new ListChangeListener<Funcionario>(){
 				@Override
 				public void onChanged(ListChangeListener.Change<? extends Funcionario> c) {
-					data.clear();
-					data.addAll(funcionarioController.data);
+						data.clear();
+						data.addAll(funcionarioController.data);
 				}
 			});
 			
@@ -70,6 +70,14 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 	@Override
 	protected void handleEdit() {
 		funcionarioController.handleEdit();
+	}
+	
+	@Override
+	protected void handleDelete() {
+		int index = table.getSelectionModel().getSelectedIndex();
+		super.handleDelete();
+		if ( funcionarioController.data.size() >= index )
+			funcionarioController.data.remove(index);
 	}
 	
 	@Override

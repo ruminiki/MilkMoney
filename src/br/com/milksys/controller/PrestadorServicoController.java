@@ -18,14 +18,14 @@ import br.com.milksys.service.IService;
 public class PrestadorServicoController extends AbstractController<Integer, PrestadorServico> {
 
 	@FXML private TableColumn<PrestadorServico, String> nomeColumn;
-	@FXML private TableColumn<PrestadorServico, String> telefone1Column;
-	@FXML private TableColumn<PrestadorServico, String> telefone2Column;
+	@FXML private TableColumn<PrestadorServico, String> telefonePrincipalColumn;
+	@FXML private TableColumn<PrestadorServico, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<PrestadorServico, String> emailColumn;
 	@FXML private TableColumn<PrestadorServico, String> enderecoColumn;
 	
 	@FXML private UCTextField inputNome;
-	@FXML private UCTextField inputTelefone1;
-	@FXML private UCTextField inputTelefone2;
+	@FXML private UCTextField inputTelefonePrincipal;
+	@FXML private UCTextField inputTelefoneSecundario;
 	@FXML private UCTextField inputEmail;
 	@FXML private UCTextField inputCpf;
 	@FXML private UCTextField inputEndereco;
@@ -35,8 +35,8 @@ public class PrestadorServicoController extends AbstractController<Integer, Pres
 		
 		if ( state.equals(State.LIST) ){
 			nomeColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("nome"));
-			telefone1Column.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefone1"));
-			telefone2Column.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefone2"));
+			telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefonePrincipal"));
+			telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefoneSecundario"));
 			emailColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("email"));
 			enderecoColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("endereco"));
 			super.initialize();
@@ -44,14 +44,14 @@ public class PrestadorServicoController extends AbstractController<Integer, Pres
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
-			inputTelefone1.textProperty().bindBidirectional(getObject().telefone1Property());
-			inputTelefone2.textProperty().bindBidirectional(getObject().telefone2Property());
+			inputTelefonePrincipal.textProperty().bindBidirectional(getObject().telefonePrincipalProperty());
+			inputTelefoneSecundario.textProperty().bindBidirectional(getObject().telefoneSecundarioProperty());
 			inputEmail.textProperty().bindBidirectional(getObject().emailProperty());
 			inputCpf.textProperty().bindBidirectional(getObject().cpfProperty());
 			inputEndereco.textProperty().bindBidirectional(getObject().enderecoProperty());
 			
-			MaskFieldUtil.telefone(inputTelefone1);
-			MaskFieldUtil.telefone(inputTelefone2);
+			MaskFieldUtil.telefone(inputTelefonePrincipal);
+			MaskFieldUtil.telefone(inputTelefoneSecundario);
 			MaskFieldUtil.cpf(inputCpf);
 		}
 		

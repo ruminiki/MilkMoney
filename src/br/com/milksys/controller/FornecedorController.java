@@ -18,7 +18,8 @@ import br.com.milksys.service.IService;
 public class FornecedorController extends AbstractController<Integer, Fornecedor> {
 
 	@FXML private TableColumn<Fornecedor, String> nomeColumn;
-	@FXML private TableColumn<Fornecedor, String> telefoneColumn;
+	@FXML private TableColumn<Fornecedor, String> telefonePrincipalColumn;
+	@FXML private TableColumn<Fornecedor, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<Fornecedor, String> emailColumn;
 	@FXML private TableColumn<Fornecedor, String> cpfCnpjColumn;
 	@FXML private TableColumn<Fornecedor, String> enderecoColumn;
@@ -26,7 +27,8 @@ public class FornecedorController extends AbstractController<Integer, Fornecedor
 	
 	@FXML private UCTextField inputNome;
 	@FXML private UCTextField inputEmail;
-	@FXML private UCTextField inputTelefone;
+	@FXML private UCTextField inputTelefonePrincipal;
+	@FXML private UCTextField inputTelefoneSecundario;
 	@FXML private UCTextField inputCpfCnpj;
 	@FXML private UCTextField inputEndereco;
 	@FXML private UCTextField inputSite;
@@ -38,7 +40,8 @@ public class FornecedorController extends AbstractController<Integer, Fornecedor
 			
 			nomeColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("nome"));
 			emailColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("email"));
-			telefoneColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("telefone"));
+			telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("telefonePrincipal"));
+			telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("telefoneSecundario"));
 			cpfCnpjColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("cpfCnpf"));
 			enderecoColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("endereco"));
 			siteColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("site"));
@@ -48,12 +51,15 @@ public class FornecedorController extends AbstractController<Integer, Fornecedor
 		
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
-			inputTelefone.textProperty().bindBidirectional(getObject().telefoneProperty());
+			inputTelefonePrincipal.textProperty().bindBidirectional(getObject().telefonePrincipalProperty());
+			inputTelefoneSecundario.textProperty().bindBidirectional(getObject().telefoneSecundarioProperty());
 			inputEmail.textProperty().bindBidirectional(getObject().emailProperty());
 			inputCpfCnpj.textProperty().bindBidirectional(getObject().cpfCnpfProperty());
 			inputEndereco.textProperty().bindBidirectional(getObject().enderecoProperty());
 			inputSite.textProperty().bindBidirectional(getObject().siteProperty());
 			
+			MaskFieldUtil.telefone(inputTelefonePrincipal);
+			MaskFieldUtil.telefone(inputTelefoneSecundario);
 			MaskFieldUtil.cpfCnpj(inputCpfCnpj);
 		}
 		

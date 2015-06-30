@@ -33,7 +33,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" />
 					</items>
 				</Menu>
-            <Menu mnemonicParsing="false" text="Reproduçao">
+            <Menu mnemonicParsing="false" text="Reprodução">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />

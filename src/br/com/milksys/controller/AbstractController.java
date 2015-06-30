@@ -184,8 +184,8 @@ public abstract class AbstractController<K, E> {
 		if (selectedIndex >= 0) {
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
 			if (result.get() == ButtonType.OK) {
-				service.remove(table.getItems().get(selectedIndex));
-				table.getItems().remove(selectedIndex);
+				service.remove(data.get(selectedIndex));
+				data.remove(selectedIndex);
 				updateLabelNumRegistros();
 			}
 		} else {
@@ -224,8 +224,9 @@ public abstract class AbstractController<K, E> {
 					}
 				}
 			}
-
+			
 			this.state = State.LIST;
+			
 		}
 	}
 

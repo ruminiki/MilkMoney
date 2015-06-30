@@ -29,8 +29,8 @@ public class PrestadorServico extends AbstractEntity implements Serializable {
 	private StringProperty nome = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
 	private StringProperty cpf = new SimpleStringProperty();
-	private StringProperty telefone1 = new SimpleStringProperty();
-	private StringProperty telefone2 = new SimpleStringProperty();
+	private StringProperty telefonePrincipal = new SimpleStringProperty();
+	private StringProperty telefoneSecundario = new SimpleStringProperty();
 	private StringProperty endereco = new SimpleStringProperty();
 
 	public PrestadorServico() {
@@ -71,29 +71,29 @@ public class PrestadorServico extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getTelefone1() {
-		return this.telefone1.get();
+	public String getTelefonePrincipal() {
+		return this.telefonePrincipal.get();
 	}
 
-	public void setTelefone1(String telefone1) {
-		this.telefone1.set(telefone1);
+	public void setTelefonePrincipal(String telefonePrincipal) {
+		this.telefonePrincipal.set(telefonePrincipal);
 	}
 
-	public StringProperty telefone1Property(){
-		return telefone1;
+	public StringProperty telefonePrincipalProperty(){
+		return telefonePrincipal;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getTelefone2() {
-		return this.telefone2.get();
+	public String getTelefoneSecundario() {
+		return this.telefoneSecundario.get();
 	}
 
-	public void setTelefone2(String telefone2) {
-		this.telefone2.set(telefone2);
+	public void setTelefoneSecundario(String telefoneSecundario) {
+		this.telefonePrincipal.set(telefoneSecundario);
 	}
 
-	public StringProperty telefone2Property(){
-		return telefone2;
+	public StringProperty telefoneSecundarioProperty(){
+		return telefoneSecundario;
 	}
 	
 	@Access(AccessType.PROPERTY)

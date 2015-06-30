@@ -23,6 +23,7 @@
                </padding>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
@@ -49,7 +50,7 @@
             </Label>
          </children>
       </VBox>
-      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="descricaoColumn" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" sortable="false" text="Descrição" />
             <TableColumn fx:id="touroColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" text="Touro" />

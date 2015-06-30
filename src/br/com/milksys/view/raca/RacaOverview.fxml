@@ -23,6 +23,7 @@
                </padding>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />

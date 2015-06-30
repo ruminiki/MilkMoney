@@ -23,6 +23,7 @@
                </padding>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
@@ -52,9 +53,14 @@
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="nomeColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="97.0" resizable="false" text="Nome" />
-          <TableColumn fx:id="telefoneColumn" maxWidth="120.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Telefone" />
+            <TableColumn prefWidth="75.0" text="Telefone">
+               <columns>
+                <TableColumn fx:id="telefonePrincipalColumn" maxWidth="120.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Principal" />
+                  <TableColumn fx:id="telefoneSecundarioColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Secundário" />
+               </columns>
+            </TableColumn>
             <TableColumn fx:id="emailColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Email" />
-            <TableColumn fx:id="cpfCnpjColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Cpf Cnpj" />
+            <TableColumn fx:id="cpfCnpjColumn" maxWidth="130" minWidth="130" prefWidth="75.0" style="-fx-alignment: CENTER;" text="CPF/CNPJ" />
             <TableColumn fx:id="enderecoColumn" maxWidth="100.0" minWidth="200.0" prefWidth="75.0" text="Endereço" />
             <TableColumn fx:id="siteColumn" maxWidth="150.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Site" />
         </columns>

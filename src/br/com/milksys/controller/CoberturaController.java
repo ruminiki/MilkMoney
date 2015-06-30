@@ -224,13 +224,17 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML
 	private void changeResponsavelServico(){
 		switch (inputResponsavelServico.getSelectionModel().getSelectedIndex()) {
-		case 0:
+		case 0:{
+			
+			inputNomeResponsavel.setText("");
 			inputNomeResponsavel.requestFocus();
 			inputNomeResponsavel.setDisable(false);
 			getObject().setFuncionarioResponsavel(null);
 			removerServico();
+			
 			break;
-		case 1:
+		}case 1:{
+			
 			removerServico(); 	
 			//abre uma tela reduzida para seleção do funcionario
 			funcionarioReducedController.showForm(funcionarioReducedController.getFormName());
@@ -242,8 +246,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			}else{
 				inputNomeResponsavel.setText("");
 			}
+			
 			break;
-		case 2:
+		}case 2:{
+			
 			if ( getObject().getFemea() != null ){
 				servicoController.state = State.INSERT_TO_SELECT;
 				Servico servico = new Servico();
@@ -260,11 +266,14 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			}
 			inputNomeResponsavel.setDisable(true);
 			getObject().setFuncionarioResponsavel(null);
+			
 			break;
-		default:
+		}default:{
+			
 			getObject().setFuncionarioResponsavel(null);
 			getObject().setServico(null);
 			break;
+		}
 		}
 	}
 	

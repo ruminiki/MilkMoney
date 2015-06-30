@@ -15,8 +15,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomComboBoxCellFactory;
-import br.com.milksys.components.CustomStringConverter;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
@@ -52,7 +50,6 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	private ObservableList<String> sexos = FXCollections.observableArrayList(Sexo.FEMEA, Sexo.MACHO);
 
 	@FXML
-	@SuppressWarnings("unchecked")
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
@@ -75,8 +72,6 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
-			inputRaca.setCellFactory(new CustomComboBoxCellFactory<>("descricao"));
-			inputRaca.setConverter(new CustomStringConverter("descricao"));
 			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 			
 			inputSexo.setItems(sexos);
