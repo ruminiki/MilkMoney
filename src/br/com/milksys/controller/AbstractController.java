@@ -1,5 +1,7 @@
 package br.com.milksys.controller;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
+import br.com.milksys.components.FieldRequired;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
@@ -154,8 +157,27 @@ public abstract class AbstractController<K, E> {
 	
 	protected abstract String getFormName();
 	protected abstract String getFormTitle();
-	protected abstract boolean isInputValid();
 	protected abstract Object getObject();
+	
+	protected boolean isInputValid(){
+	
+		for ( Method method : this.getObject().getClass().getDeclaredMethods() ){
+			FieldRequired annotation = method.getAnnotation(FieldRequired.class);
+			if ( annotation != null ){
+				try {
+					if ( method.invoke(getObject()) == null ){
+						CustomAlert.campoObrigatorio(annotation.nameToMessage());
+						return false;
+					}
+				} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return true;
+		
+	}
 	
 	// ========= HANDLERS INTERFACE=============//
 
