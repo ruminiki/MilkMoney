@@ -49,7 +49,7 @@ public class ServicoController extends AbstractController<Integer, Servico> {
 			super.initialize();
 		}
 		
-		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
+		if ( !state.equals(State.LIST) ){
 			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 			
@@ -61,12 +61,7 @@ public class ServicoController extends AbstractController<Integer, Servico> {
 		}
 		
 	}
-
-	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
+	
 	@Override
 	protected String getFormName() {
 		return "view/servico/ServicoForm.fxml";

@@ -31,6 +31,11 @@ import br.com.milksys.service.IService;
 
 @Controller
 public abstract class AbstractController<K, E> {
+	
+	@FXML protected TableView<E> table;
+	@FXML protected Label lblNumRegistros;
+	@FXML protected State state = State.LIST;
+	
 	protected ObservableList<E> data = FXCollections.observableArrayList();
 	protected Stage dialogStage;
 	protected AbstractEntity object;
@@ -38,31 +43,20 @@ public abstract class AbstractController<K, E> {
 	protected boolean isInitialized = false;
 	protected AnchorPane form;
 	protected boolean closePopUpAfterSave = true;
-	@FXML protected TableView<E> table;
-	@FXML protected Label lblNumRegistros;
-	@FXML protected State state = State.LIST;
+	
+	//identifica a classe que fez a chamada ao controller
+	//utilizado para o estado INSERT_TO_SELECT para a necessidade de alguma validação específica
+	private Class<?> controllerOrigin;
 
 	public void initialize() {
 
 		if (!state.equals(State.INSERT_TO_SELECT)) {
 
 			this.initializeTableOverview();
-			
 			table.setItems(data);
-			
 			updateLabelNumRegistros();
 			
-			// captura o evento de double click da table
-			table.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-				@Override
-				public void handle(MouseEvent event) {
-					if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-						handleEdit();
-					}
-				}
-
-			});
+			configureDoubleClickTable();
 
 			// captura o evento de ENTER de DELETE na tabela
 			table.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -88,6 +82,20 @@ public abstract class AbstractController<K, E> {
 			isInitialized = true;
 		}
 
+	}
+	
+	protected void configureDoubleClickTable(){
+		// captura o evento de double click da table
+		table.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
+					handleEdit();
+				}
+			}
+
+		});
 	}
 
 	protected void updateLabelNumRegistros(){
@@ -169,7 +177,7 @@ public abstract class AbstractController<K, E> {
 					Object result = method.invoke(getObject());
 					
 					if ( result == null || (result instanceof String && ((String)result).isEmpty()) ){
-						CustomAlert.campoObrigatorio(annotation.nameToMessage());
+						CustomAlert.campoObrigatorio(annotation.message());
 						return false;
 					}
 					
@@ -223,37 +231,59 @@ public abstract class AbstractController<K, E> {
 	private void handleCancel() {
 		dialogStage.close();
 		this.state = State.LIST;
+		setObject(null);
 	}
 
 	@FXML
 	@SuppressWarnings("unchecked")
 	protected void handleSave() {
-		if (isInputValid()) {
+		
+		if ( isInputValid() ) {
 
-			if (closePopUpAfterSave)
-				dialogStage.close();
-
-			boolean isNew = object.getId() <= 0;
-
-			service.save((E) object);
-
-			if (isNew) {
-				data.add((E) object);
-				updateLabelNumRegistros();
-			} else {
-				if (table != null && data != null) {
-					for (int index = 0; index < data.size(); index++) {
-						AbstractEntity o = (AbstractEntity) data.get(index);
-						if (o.getId() == object.getId()) {
-							data.set(index, (E) object);
+			if ( !state.equals(State.CREATE_TO_SELECT) ){
+				boolean isNew = object.getId() <= 0;
+	
+				service.save((E) object);
+	
+				if (isNew) {
+					data.add((E) object);
+					updateLabelNumRegistros();
+				} else {
+					if (table != null && data != null) {
+						for (int index = 0; index < data.size(); index++) {
+							AbstractEntity o = (AbstractEntity) data.get(index);
+							if (o.getId() == object.getId()) {
+								data.set(index, (E) object);
+							}
 						}
 					}
 				}
 			}
 			
+			if (closePopUpAfterSave)
+				dialogStage.close();
+
 			this.state = State.LIST;
 			
 		}
 	}
 
+	//==========getters e setters
+	
+	public Class<?> getControllerOrigin() {
+		return controllerOrigin;
+	}
+
+	public void setControllerOrigin(Class<?> controller) {
+		this.controllerOrigin = controller;
+	}
+
+	public State getState() {
+		return state;
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+	
 }

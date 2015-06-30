@@ -38,8 +38,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private UCTextField inputNome;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
-	@FXML protected ComboBox<String> inputFinalidadeAnimal;
-	@FXML protected ComboBox<String> inputSexo;
+	@FXML private ComboBox<String> inputFinalidadeAnimal;
+	@FXML private ComboBox<String> inputSexo;
 	
 	//services
 	@Autowired private RacaService racaService;
@@ -83,11 +83,15 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			
 		}
 		
-	}
-
-	@Override
-	protected boolean isInputValid() {
-		return true;
+		if (  state.equals(State.INSERT_TO_SELECT) ){
+			if ( getControllerOrigin().equals(CoberturaController.class) ){
+				inputSexo.setDisable(true);
+				if ( getObject() != null && getObject().getSexo() != null && getObject().getSexo().equals(Sexo.MACHO) ){
+					inputFinalidadeAnimal.setDisable(true);
+				}
+			}
+		}
+		
 	}
 
 	@Override

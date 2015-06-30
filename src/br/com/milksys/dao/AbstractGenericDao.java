@@ -18,7 +18,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 		this.entityManager = Persistence.createEntityManagerFactory("MilkSys").createEntityManager();
 	}
-
+	
 	public void persist(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -29,7 +29,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	public void remove(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
-		entityManager.remove(entity);
+        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 		entityTransaction.commit();
 	}
 

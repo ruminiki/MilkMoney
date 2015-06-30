@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
@@ -48,8 +49,17 @@ public class Servico extends AbstractEntity implements Serializable {
 	private ObjectProperty<PrestadorServico> prestadorServico = new SimpleObjectProperty<PrestadorServico>();
 	//private ObjectProperty<Despesa> despesa = new SimpleObjectProperty<Despesa>();
 
+	public Servico() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Servico(String descricao) {
+		this.descricao.set(descricao);
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data")
 	public Date getData() {
 		return DateUtil.asDate(this.data.get());
 	}
@@ -71,6 +81,7 @@ public class Servico extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="descrição")
 	public String getDescricao() {
 		return this.descricao.get();
 	}
@@ -99,6 +110,7 @@ public class Servico extends AbstractEntity implements Serializable {
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="prestadorServico")
+	@FieldRequired(message="prestador de serviço")
 	public PrestadorServico getPrestadorServico() {
 		return prestadorServico.get();
 	}

@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import br.com.milksys.components.FieldRequired;
+
 
 /**
  * The persistent class for the RACA database table.
@@ -23,16 +25,14 @@ import javax.persistence.Table;
 @Table(name="raca")
 @NamedQuery(name="Raca.findAll", query="SELECT r FROM Raca r")
 public class Raca extends AbstractEntity implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	private StringProperty descricao = new SimpleStringProperty();
 	
+	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	public Raca() {
-	}
+	private StringProperty descricao = new SimpleStringProperty();
+	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="descrição")
 	public String getDescricao() {
 		return this.descricao.get();
 	}

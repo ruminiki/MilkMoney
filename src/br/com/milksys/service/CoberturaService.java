@@ -44,6 +44,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		list.addAll(dao.findAll(Cobertura.class));
 		return list;
 	}
+
+	public void removeServicoFromCobertura(Cobertura cobertura) {
+		dao.removeServicoFromCobertura(cobertura);
+	}
 	
 	
 }

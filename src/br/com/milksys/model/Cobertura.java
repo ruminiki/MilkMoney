@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 
 
@@ -52,7 +53,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty situacaoCobertura = new SimpleStringProperty();
 	private ObjectProperty<Semen> semen = new SimpleObjectProperty<Semen>();
 	private StringProperty quantidadeDosesSemen = new SimpleStringProperty();
-	private StringProperty responsavel = new SimpleStringProperty();
+	private StringProperty nomeResponsavel = new SimpleStringProperty();
 	private ObjectProperty<Funcionario> funcionarioResponsavel = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico> servico = new SimpleObjectProperty<Servico>();
 	
@@ -66,6 +67,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data")
 	public Date getData() {
 		return DateUtil.asDate(this.data.get());
 	}
@@ -79,6 +81,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="descrição")
 	public String getDescricao() {
 		return this.descricao.get();
 	}
@@ -93,6 +96,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="previsão do parto")
 	public Date getPrevisaoParto() {
 		return DateUtil.asDate(this.previsaoParto.get());
 	}
@@ -160,6 +164,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="tipo de cobertura")
 	public String getTipoCobertura() {
 		return tipoCobertura.get();
 	}
@@ -175,6 +180,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="femea")
+	@FieldRequired(message="fêmea")
 	public Animal getFemea() {
 		return femea.get();
 	}
@@ -203,6 +209,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="situação cobertura")
 	public String getSituacaoCobertura() {
 		return situacaoCobertura.get();
 	}
@@ -246,16 +253,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getResponsavel() {
-		return this.responsavel.get();
+	public String getNomeResponsavel() {
+		return this.nomeResponsavel.get();
 	}
 
-	public void setResponsavel(String responsavel) {
-		this.responsavel.set(responsavel);
+	public void setNomeResponsavel(String nomeResponsavel) {
+		this.nomeResponsavel.set(nomeResponsavel);
 	}
 
-	public StringProperty responsavelProperty(){
-		return responsavel;
+	public StringProperty nomeResponsavelProperty(){
+		return nomeResponsavel;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -274,7 +281,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="servico")
 	public Servico getServico() {
 		return servico.get();

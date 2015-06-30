@@ -7,17 +7,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="273.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.CoberturaController">
+<AnchorPane prefHeight="255.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.CoberturaController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane fx:id="gridPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="236.0" prefWidth="542.0">
+            <GridPane fx:id="gridPane" alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="213.0" prefWidth="556.0">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="124.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="134.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="105.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="87.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="129.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="97.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="88.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="108.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="66.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="47.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="38.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -27,37 +29,37 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
+               	  <Label text="Data: " />
                   <Label text="Descrição: " GridPane.rowIndex="1" />
+                  <Label text="Previsão Parto: " GridPane.columnIndex="2" />
                   <Label text="Fêmea: " GridPane.rowIndex="2" />
                   <Label text="Tipo Cobertura: " GridPane.rowIndex="3" />
                   <Label fx:id="lblReprodutor" text="Reprodutor: " GridPane.rowIndex="4" />
-                  <Label text="Doses Utilizadas: " GridPane.rowIndex="5" />
-                  <Label text="Responsável Serviço: " GridPane.rowIndex="6" />
-                   <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="inputQuantidadeDosesSemen" alignment="CENTER" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <ComboBox fx:id="inputFemea" prefWidth="320.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#handleNovaFemea" text="Novo" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets left="5.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Label text="Data: " />
+                  <Label fx:id="lblQuantidadeDosesSemen" prefHeight="58.0" prefWidth="54.0" text="Doses Utilizadas: " textOverrun="WORD_ELLIPSIS" visible="false" wrapText="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                  <Label text="Responsável Serviço: " GridPane.rowIndex="5" />
+                  <Label text="Responsável: " GridPane.rowIndex="6" />
+                  
                   <DatePicker fx:id="inputData" maxWidth="100.0" onAction="#updateDataPrevisaoParto" GridPane.columnIndex="1" />
-                  <Label text="Previsão Parto: " GridPane.columnIndex="2" />
                   <DatePicker fx:id="inputPrevisaoParto" disable="true" maxWidth="100.0" GridPane.columnIndex="3" />
-                  <ComboBox fx:id="inputTipoCobertura" onAction="#changeTipoCobertura" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="inputReprodutor" prefWidth="320.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  <Button fx:id="btnNovoReprodutor" mnemonicParsing="false" text="Novo" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputFemea" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                  <Button mnemonicParsing="false" onAction="#handleNovaFemea" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets left="5.0" />
+                        <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <ComboBox fx:id="inputResponsavelServico" onAction="#changeResponsavelServico" prefWidth="200" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <Label text="Responsável: " GridPane.rowIndex="7" />
-                  <UCTextField fx:id="inputNomeResponsavel" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="7" />
+                  <ComboBox fx:id="inputTipoCobertura" onAction="#changeTipoCobertura" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputReprodutor" disable="true" editable="false" maxWidth="320.0" prefWidth="320.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                  <Button fx:id="btnNovoReprodutor" disable="true" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <UCTextField fx:id="inputQuantidadeDosesSemen" alignment="CENTER" maxWidth="50.0" visible="false" GridPane.columnIndex="6" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="inputResponsavelServico" onAction="#changeResponsavelServico" prefWidth="200" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                  <UCTextField fx:id="inputNomeResponsavel" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="6" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

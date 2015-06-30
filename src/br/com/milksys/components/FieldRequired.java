@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD) 
 public @interface FieldRequired {
 	
-	public String nameToMessage();
+	public String message();
 	
 }

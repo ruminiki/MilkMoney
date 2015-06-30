@@ -1,5 +1,7 @@
 package br.com.milksys.controller;
 
+import java.util.Date;
+
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,36 +15,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomAlert;
-import br.com.milksys.model.Funcionario;
+import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.model.Animal;
+import br.com.milksys.model.Raca;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
-public class FuncionarioReducedController extends AbstractController<Integer, Funcionario> {
+public class AnimalReducedController extends AbstractController<Integer, Animal> {
 
-	@FXML private TableColumn<Funcionario, String> nomeColumn;
-	@FXML private TableColumn<Funcionario, String> telefoneColumn;
-	@FXML private TableColumn<Funcionario, String> emailColumn;
+	@FXML private TableColumn<Animal, String> nomeColumn;
+	@FXML private TableColumn<Animal, String> numeroColumn;
+	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
+	@FXML private TableColumn<Raca, String> racaColumn;
+	@FXML private TableColumn<String, String> sexoColumn;
 	
-	@Autowired private FuncionarioController funcionarioController;
+	@Autowired private AnimalController animalController;
 	
 	@FXML
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
-			telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefone"));
-			emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
 			
-			funcionarioController.data.addListener(new ListChangeListener<Funcionario>(){
+			nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
+			numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+			dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
+			racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
+			sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
+			
+			animalController.data.addListener(new ListChangeListener<Animal>(){
 				@Override
-				public void onChanged(ListChangeListener.Change<? extends Funcionario> c) {
+				public void onChanged(ListChangeListener.Change<? extends Animal> c) {
 						data.clear();
-						data.addAll(funcionarioController.data);
+						data.addAll(animalController.data);
 				}
 			});
-			
+
 			super.initialize();
+
+		}
+		
+		if (  state.equals(State.INSERT_TO_SELECT) ){
+			if ( getControllerOrigin().equals(CoberturaController.class) ){
+				
+			}
 		}
 		
 	}
@@ -53,11 +69,11 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
 			super.dialogStage.close();
 		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um funcionário na tabela.");
+			CustomAlert.mensagemInfo("Por favor, selecione um animal na tabela.");
 		}
 		
 	}
-	
+
 	@FXML
 	private void fechar(){
 		this.setObject(null);
@@ -81,40 +97,40 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 	
 	@Override
 	protected void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		funcionarioController.handleNew();
+		animalController.handleNew();
 	}
 	
 	@Override
 	protected void handleEdit() {
-		funcionarioController.handleEdit();
+		animalController.handleEdit();
 	}
 	
 	@Override
 	protected void handleDelete() {
 		int index = table.getSelectionModel().getSelectedIndex();
 		super.handleDelete();
-		if ( funcionarioController.data.size() >= index )
-			funcionarioController.data.remove(index);
+		if ( animalController.data.size() >= index )
+			animalController.data.remove(index);
 	}
 	
 	@Override
 	protected String getFormName() {
-		return "view/funcionario/FuncionarioReducedOverview.fxml";
+		return "view/animal/AnimalReducedOverview.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Funcionário";
+		return "Animal";
 	}
 	
 	@Override
-	protected Funcionario getObject() {
-		return (Funcionario)super.object;
+	protected Animal getObject() {
+		return (Animal) super.object;
 	}
 
 	@Override
-	@Resource(name = "funcionarioService")
-	protected void setService(IService<Integer, Funcionario> service) {
+	@Resource(name = "animalService")
+	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
 	}
 

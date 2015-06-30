@@ -36,11 +36,6 @@ public class RacaController extends AbstractController<Integer, Raca> {
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/raca/RacaForm.fxml";
 	}

@@ -1,5 +1,7 @@
 package br.com.milksys.controller;
 
+import java.time.LocalDate;
+
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -13,51 +15,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomAlert;
-import br.com.milksys.model.Funcionario;
+import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.model.Semen;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
-public class FuncionarioReducedController extends AbstractController<Integer, Funcionario> {
+public class SemenReducedController extends AbstractController<Integer, Semen> {
 
-	@FXML private TableColumn<Funcionario, String> nomeColumn;
-	@FXML private TableColumn<Funcionario, String> telefoneColumn;
-	@FXML private TableColumn<Funcionario, String> emailColumn;
+	@FXML private TableColumn<Semen, String> descricaoColumn;
+	@FXML private TableColumn<Semen, String> touroColumn;
+	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
+	@FXML private TableColumn<Semen, String> quantidadeColumn;
 	
-	@Autowired private FuncionarioController funcionarioController;
+	@Autowired private SemenController semenController;
 	
 	@FXML
 	public void initialize() {
 		
 		if ( state.equals(State.LIST) ){
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
-			telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefone"));
-			emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
 			
-			funcionarioController.data.addListener(new ListChangeListener<Funcionario>(){
+			descricaoColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("descricao"));
+			touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
+			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
+			quantidadeColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
+			
+			semenController.data.addListener(new ListChangeListener<Semen>(){
 				@Override
-				public void onChanged(ListChangeListener.Change<? extends Funcionario> c) {
+				public void onChanged(ListChangeListener.Change<? extends Semen> c) {
 						data.clear();
-						data.addAll(funcionarioController.data);
+						data.addAll(semenController.data);
 				}
 			});
 			
 			super.initialize();
+			
 		}
 		
 	}
-	
+
 	@FXML
 	private void selecionar(){
 		
 		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
 			super.dialogStage.close();
 		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um funcionário na tabela.");
+			CustomAlert.mensagemInfo("Por favor, selecione um sêmen na tabela.");
 		}
 		
 	}
-	
+
 	@FXML
 	private void fechar(){
 		this.setObject(null);
@@ -81,41 +88,41 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 	
 	@Override
 	protected void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		funcionarioController.handleNew();
+		semenController.handleNew();
 	}
 	
 	@Override
 	protected void handleEdit() {
-		funcionarioController.handleEdit();
+		semenController.handleEdit();
 	}
 	
 	@Override
 	protected void handleDelete() {
 		int index = table.getSelectionModel().getSelectedIndex();
 		super.handleDelete();
-		if ( funcionarioController.data.size() >= index )
-			funcionarioController.data.remove(index);
+		if ( semenController.data.size() >= index )
+			semenController.data.remove(index);
 	}
 	
 	@Override
 	protected String getFormName() {
-		return "view/funcionario/FuncionarioReducedOverview.fxml";
-	}
-
-	@Override
-	protected String getFormTitle() {
-		return "Funcionário";
+		return "view/semen/SemenReducedOverview.fxml";
 	}
 	
 	@Override
-	protected Funcionario getObject() {
-		return (Funcionario)super.object;
+	protected String getFormTitle() {
+		return "Semen";
+	}
+	
+	@Override
+	protected Semen getObject() {
+		return (Semen) super.object;
 	}
 
 	@Override
-	@Resource(name = "funcionarioService")
-	protected void setService(IService<Integer, Funcionario> service) {
+	@Resource(name = "semenService")
+	protected void setService(IService<Integer, Semen> service) {
 		super.setService(service);
 	}
-
+	
 }

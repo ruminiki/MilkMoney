@@ -23,6 +23,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 
 
@@ -50,8 +51,18 @@ public class Animal extends AbstractEntity implements Serializable {
 	public Animal() {
 	}
 
+	public Animal(String sexo) {
+		this.sexo.set(sexo);
+	}
+
+	public Animal(String sexo, String finalidadeAnimal) {
+		this.sexo.set(sexo);
+		this.finalidadeAnimal.set(finalidadeAnimal);
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data de nascimento")
 	public Date getDataNascimento() {
 		return DateUtil.asDate(this.dataNascimento.get());
 	}
@@ -73,6 +84,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="nome")
 	public String getNome() {
 		return this.nome.get();
 	}
@@ -86,6 +98,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="número")
 	public String getNumero() {
 		return this.numero.get();
 	}
@@ -101,6 +114,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="raca")
+	@FieldRequired(message="raça")
 	public Raca getRaca() {
 		return raca.get();
 	}
@@ -114,6 +128,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="finalidade do animal")
 	public String getFinalidadeAnimal() {
 		return finalidadeAnimal.get();
 	}
@@ -130,7 +145,12 @@ public class Animal extends AbstractEntity implements Serializable {
 		return this.numero.get() + "-" + this.nome.get();
 	}
 	
+	public StringProperty numeroNomeProperty(){
+		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
+	}
+	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="sexo")
 	public String getSexo() {
 		return this.sexo.get();
 	}

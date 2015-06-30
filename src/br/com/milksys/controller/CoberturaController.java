@@ -1,6 +1,5 @@
 package br.com.milksys.controller;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -9,7 +8,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 
@@ -18,13 +16,13 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.FinalidadeAnimal;
-import br.com.milksys.model.Funcionario;
 import br.com.milksys.model.ResponsavelServico;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.Servico;
@@ -32,10 +30,8 @@ import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
-import br.com.milksys.service.AnimalService;
-import br.com.milksys.service.FuncionarioService;
+import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
-import br.com.milksys.service.SemenService;
 import br.com.milksys.service.ServicoService;
 
 @Controller
@@ -55,31 +51,27 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private UCTextField inputResultadoPrimeiroToque;
 	@FXML private DatePicker inputDataReconfirmacao;
 	@FXML private UCTextField inputResultadoReconfirmacao;
-	@FXML private ComboBox<String> inputTipoCobertura;
-	@FXML private ComboBox<Animal> inputFemea;
-	@FXML private ComboBox<Animal> inputReprodutor;
-	@FXML private ComboBox<Semen> inputSemen;
-	@FXML private TextField inputQuantidadeDosesSemen;
-	@FXML private ComboBox<Funcionario> inputFuncionarioResponsavel;
-	@FXML private ComboBox<String> inputResponsavelServico;
+	@FXML private UCTextField inputFemea;
+	@FXML private UCTextField inputReprodutor;
+	@FXML private UCTextField inputSemen;
+	@FXML private UCTextField inputQuantidadeDosesSemen;
 	@FXML private UCTextField inputNomeResponsavel;
+	@FXML private ComboBox<String> inputResponsavelServico;
+	@FXML private ComboBox<String> inputTipoCobertura;
 	
 	@FXML private Button btnNovoReprodutor;
 	@FXML private Label lblReprodutor;
+	@FXML private Label lblQuantidadeDosesSemen;
 	
 	@FXML private GridPane gridPane;
 	
 	//services
-	@Autowired private AnimalService animalService;
-	@Autowired private SemenService semenService;
-	@Autowired private FuncionarioService funcionarioService;
 	@Autowired private ServicoService servicoService;
 	
 	//controllers
-	@Autowired private AnimalController animalController;
-	@Autowired private SemenController semenController;
-	@Autowired private FuncionarioController funcionarioController;
+	@Autowired private SemenReducedController semenReducedController;
 	@Autowired private FuncionarioReducedController funcionarioReducedController;
+	@Autowired private AnimalReducedController animalReducedController;
 	@Autowired private ServicoController servicoController;
 
 	@FXML
@@ -108,28 +100,71 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			inputDataReconfirmacao.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
 			inputResultadoReconfirmacao.textProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());*/
 			
-			inputTipoCobertura.setItems(FXCollections.observableArrayList(TipoCobertura.MONTA_NATURAL, TipoCobertura.ENSEMINACAO_ARTIFICIAL));
+			inputTipoCobertura.setItems(TipoCobertura.getItems());
 			inputTipoCobertura.valueProperty().bindBidirectional(getObject().tipoCoberturaProperty());
-			
-			inputFemea.setItems(animalService.findAllFemeasAsObservableList());
-			inputFemea.valueProperty().bindBidirectional(getObject().femeaProperty());
-			
 			inputResponsavelServico.setItems(ResponsavelServico.getItems());
+			inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
+			inputFemea.setEditable(false);
 			
-			getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
+			inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesSemenProperty());
+			
+			if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
+				getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			}
+			
+		}
+		
+		if ( state.equals(State.UPDATE)  ){
+			
+			if ( getObject().getFemea() != null ){
+				inputFemea.textProperty().bindBidirectional(getObject().getFemea().numeroNomeProperty());
+			}
+			
+			if ( getObject().getTouro() != null ){
+				if ( inputReprodutor == null ){
+					inputReprodutor = new UCTextField();
+					inputReprodutor.prefWidthProperty().set(320);
+				}
+				gridPane.getChildren().remove(inputSemen);
+				gridPane.getChildren().remove(inputReprodutor);
+				gridPane.getChildren().add(inputReprodutor);
+				GridPane.setConstraints(inputReprodutor, 1, 4, 3, 1);
+				
+				inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
+				inputReprodutor.setDisable(true);
+			}
+			
+			if ( getObject().getSemen() != null ){
+				if ( inputSemen == null ){
+					inputSemen = new UCTextField();
+					inputSemen.prefWidthProperty().set(320);
+				}
+				
+				gridPane.getChildren().remove(inputReprodutor);
+				gridPane.getChildren().remove(inputSemen);
+				gridPane.getChildren().add(inputSemen);
+				GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
+				
+				inputSemen.setDisable(true);
+				inputSemen.textProperty().bindBidirectional(getObject().getSemen().touroProperty());
+				
+				lblQuantidadeDosesSemen.setVisible(true);
+				inputQuantidadeDosesSemen.setVisible(true);
+				
+			}
 			
 			if ( getObject().getFuncionarioResponsavel() != null ){
 				inputResponsavelServico.getSelectionModel().select(1);
+				inputNomeResponsavel.setDisable(true);
 			}else{
 				if ( getObject().getServico() != null ){
-					inputResponsavelServico.setDisable(getObject().getServico() != null);
-					inputResponsavelServico.getSelectionModel().select(3);
+					inputResponsavelServico.getSelectionModel().select(2);
+					inputNomeResponsavel.setDisable(true);
 				}else{
-					
+					inputResponsavelServico.getSelectionModel().select(0);
 				}
 			}
-			
-			MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
 			
 		}
 		
@@ -155,70 +190,101 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			
 			if ( inputTipoCobertura.getValue().equals(TipoCobertura.MONTA_NATURAL) ){
 				
-				lblReprodutor.setText("Reprodutor: ");
+				configuraTelaMontaNatural();
 				
-				if ( inputReprodutor == null ){
-					inputReprodutor = new ComboBox<Animal>();
-					inputReprodutor.prefWidthProperty().set(320);
-				}
-				inputReprodutor.setItems(animalService.findAllReprodutoresAsObservableList());
-
-				gridPane.getChildren().set(15, inputReprodutor);
-				GridPane.setConstraints(inputReprodutor, 1, 4, 3, 1);
-				dialogStage.show();
-				
-				btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
-				    @Override public void handle(ActionEvent e) {
-				    	animalController.state = State.INSERT_TO_SELECT;
-						
-						Animal touro = new Animal();
-						touro.setSexo(Sexo.MACHO);
-						touro.setFinalidadeAnimal(FinalidadeAnimal.REPRODUCAO);
-						
-						animalController.object = touro;
-						
-						//animalController.inputSexo.setDisable(true);
-						//animalController.inputFinalidadeAnimal.setDisable(true);
-						
-						animalController.showForm(null);
-						if ( animalController.getObject() != null && animalController.getObject().getId() > 0 ){
-							inputReprodutor.getItems().add(animalController.getObject());
-							inputReprodutor.getSelectionModel().select(animalController.getObject());
-						}
-				    }
-				    
-				});
 			}else{
 				
-				if ( inputSemen == null ){
-					inputSemen = new ComboBox<Semen>();
-					inputSemen.prefWidthProperty().set(320);
-				}
-				inputSemen.setItems(semenService.findAllAsObservableList());
-
-				gridPane.getChildren().set(15, inputSemen);
-				GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
-				dialogStage.show();
-
-				lblReprodutor.setText("Sêmen: ");
-				
-				inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesSemenProperty());
-				inputQuantidadeDosesSemen.setText("1");
-				
-				btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
-				    @Override public void handle(ActionEvent e) {
-				    	semenController.state = State.INSERT_TO_SELECT;
-						semenController.object = new Semen();
-						semenController.showForm(null);
-						if ( semenController.getObject() != null && semenController.getObject().getId() > 0 ){
-							inputSemen.getItems().add(semenController.getObject());
-							inputSemen.getSelectionModel().select(semenController.getObject());
-						}
-				    }
-				});
+				configuraTelaEnseminacaoArtificial();
 				
 			}
 		}
+	}
+	
+	/*
+	 * Quando for monta natural configura tela para na tabela de animal touro reprodutor
+	 */
+	private void configuraTelaMontaNatural(){
+		
+		if ( inputReprodutor == null ){
+			inputReprodutor = new UCTextField();
+			inputReprodutor.prefWidthProperty().set(320);
+			inputReprodutor.setDisable(true);
+		}
+
+		lblReprodutor.setText("Reprodutor: ");
+		lblQuantidadeDosesSemen.setVisible(false);
+		inputQuantidadeDosesSemen.setVisible(false);
+		btnNovoReprodutor.setDisable(false);
+		inputReprodutor.setText("");
+		getObject().setTouro(null);
+		
+		gridPane.getChildren().remove(inputSemen);
+		gridPane.getChildren().remove(inputReprodutor);
+		gridPane.getChildren().add(inputReprodutor);
+		GridPane.setConstraints(inputReprodutor, 1, 4, 3, 1);
+		
+		dialogStage.show();
+		
+		btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+				
+				animalReducedController.object = new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO);;
+				animalReducedController.setControllerOrigin(CoberturaController.class);
+				
+				animalReducedController.showForm(null);
+				if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
+					getObject().setTouro(animalReducedController.getObject());
+					inputReprodutor.setText(animalReducedController.getObject().getNumeroNome());
+				}else{
+					inputReprodutor.setText("");
+				}
+		    }
+		    
+		});
+	}
+	
+	/*
+	 * Quando for enseminação artificial habilita busca de semen
+	 * e do campo para informar a quantidade de doses utilizadas
+	 */
+	private void configuraTelaEnseminacaoArtificial(){
+		
+		if ( inputSemen == null ){
+			inputSemen = new UCTextField();
+			inputSemen.prefWidthProperty().set(320);
+			inputSemen.setDisable(true);
+		}
+		
+		lblReprodutor.setText("Sêmen: ");
+		lblQuantidadeDosesSemen.setVisible(true);
+		inputQuantidadeDosesSemen.setVisible(true);
+		inputSemen.setText("");
+		btnNovoReprodutor.setDisable(false);
+		getObject().setSemen(null);
+
+		gridPane.getChildren().remove(inputReprodutor);
+		gridPane.getChildren().remove(inputSemen);
+		gridPane.getChildren().add(inputSemen);
+		GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
+		
+		dialogStage.show();
+		
+		btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		    	
+				semenReducedController.object = new Semen();
+				semenReducedController.showForm(null);
+				
+				if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
+					getObject().setSemen(semenReducedController.getObject());
+					inputSemen.setText(semenReducedController.getObject().getDescricao());
+				}else{
+					inputSemen.setText("");
+				}
+				
+		    }
+		});
+		
 	}
 	
 	@FXML
@@ -236,13 +302,14 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		}case 1:{
 			
 			removerServico(); 	
-			//abre uma tela reduzida para seleção do funcionario
 			funcionarioReducedController.showForm(funcionarioReducedController.getFormName());
 			
 			if ( funcionarioReducedController.getObject() != null && funcionarioReducedController.getObject().getId() > 0 ){
+				
 				getObject().setFuncionarioResponsavel(funcionarioReducedController.getObject());
 				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
 				inputNomeResponsavel.setDisable(true);
+				
 			}else{
 				inputNomeResponsavel.setText("");
 			}
@@ -251,19 +318,22 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		}case 2:{
 			
 			if ( getObject().getFemea() != null ){
-				servicoController.state = State.INSERT_TO_SELECT;
-				Servico servico = new Servico();
-				servico.setDescricao("COBERTURA " + getObject().getFemea().getNumeroNome());
-				servicoController.object = servico;
+				
+				servicoController.setState(State.CREATE_TO_SELECT);
+				servicoController.object = new Servico("COBERTURA " + getObject().getFemea().getNumeroNome());
 				servicoController.showForm(null);
-				if ( servicoController.getObject() != null && servicoController.getObject().getId() > 0 ){
+				
+				if ( servicoController.getObject() != null ){
 					getObject().setServico(servicoController.getObject());
 					inputNomeResponsavel.setText(servicoController.getObject().getPrestadorServico().getNome() 
 							+ " [R$ " + servicoController.getObject().getValor() + "]");
 				}else{
+					getObject().setServico(null); 	
 					inputNomeResponsavel.setText("");
 				}
+				
 			}
+			
 			inputNomeResponsavel.setDisable(true);
 			getObject().setFuncionarioResponsavel(null);
 			
@@ -277,22 +347,65 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		}
 	}
 	
-	/**
-	 * Caso o usuário deseje remover o serviço associado
-	 */
 	@FXML
-	private void removerServico(){
-		if ( getObject().getServico() != null ){
-			servicoService.remove(getObject().getServico());
-			getObject().setServico(null);
+	protected void handleNovaFemea() {
+		
+		animalReducedController.object = new Animal(Sexo.FEMEA);
+		animalReducedController.setControllerOrigin(CoberturaController.class);
+		animalReducedController.showForm(animalReducedController.getFormName());
+		
+		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
+			getObject().setFemea(animalReducedController.getObject());
+			inputFemea.setText(animalReducedController.getObject().getNumeroNome());
+		}else{
+			inputFemea.setText("");
 		}
+		
 	}
 	
 	@Override
 	protected boolean isInputValid() {
+		
+		if ( !super.isInputValid() ){
+			return false;
+		}
+		
+		if ( getObject().getTipoCobertura() == null ){
+			CustomAlert.campoObrigatorio("tipo de cobertura");
+			return false;
+		}
+		
+		if ( getObject().getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
+			if ( getObject().getTouro() == null ){
+				CustomAlert.campoObrigatorio("reprodutor");
+				return false;
+			}
+		}
+		
+		if ( getObject().getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
+			if ( getObject().getSemen() == null ){
+				CustomAlert.campoObrigatorio("sêmen");
+				return false;
+			}
+			
+			if ( getObject().getQuantidadeDosesSemen() <= 0 ){
+				CustomAlert.campoObrigatorio("doses de sêmen utilizadas");
+				return false;
+			}
+		}
+		
+		if ( getObject().getNomeResponsavel() == null || getObject().getNomeResponsavel().isEmpty() ){
+			CustomAlert.campoObrigatorio("responsável pela enseminação");
+			return false;
+		}
+		
 		return true;
 	}
-
+	
+	private void removerServico(){
+		((CoberturaService)service).removeServicoFromCobertura(getObject());
+	}
+	
 	@Override
 	protected String getFormName() {
 		return "view/cobertura/CoberturaForm.fxml";
@@ -314,29 +427,4 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		super.setService(service);
 	}
 	
-	@FXML
-	protected void handleNovaFemea() {
-		animalController.state = State.INSERT_TO_SELECT;
-		Animal femea = new Animal();
-		femea.setSexo(Sexo.FEMEA);
-		animalController.object = femea;
-		//animalController.inputSexo.setDisable(true);
-		animalController.showForm(null);
-		if ( animalController.getObject() != null && animalController.getObject().getId() > 0 ){
-			inputFemea.getItems().add(animalController.getObject());
-			inputFemea.getSelectionModel().select(animalController.getObject());
-		}
-	}
-	
-	@FXML
-	protected void handleNovoFuncionario() {
-		funcionarioController.state = State.INSERT_TO_SELECT;
-		funcionarioController.object = new Funcionario();
-		funcionarioController.showForm(null);
-		if ( funcionarioController.getObject() != null && funcionarioController.getObject().getId() > 0 ){
-			inputFuncionarioResponsavel.getItems().add(funcionarioController.getObject());
-			inputFuncionarioResponsavel.getSelectionModel().select(funcionarioController.getObject());
-		}
-	}
-
 }
