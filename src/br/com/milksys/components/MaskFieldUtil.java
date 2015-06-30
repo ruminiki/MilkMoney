@@ -176,41 +176,38 @@ public abstract class MaskFieldUtil {
 
     /**
      * Monta as mascara para CPF/CNPJ. A mascara eh exibida somente apos o campo perder o foco.
-     *
+     * CPF  (###.###.###-##)
+     * CNPJ (##.###.###/####-##)
      * @param textField TextField
      */
     public static void cpfCnpj(final TextField textField) {
+    	
+    	 maxField(textField, 18);
 
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean fieldChange) {
-                String value = textField.getText();
-                if (!fieldChange) {
-                    if (textField.getText() != null && textField.getText().length() == 11) {
-                        value = value.replaceAll("[^0-9]", "");
-                        value = value.replaceFirst("([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})$", "$1.$2.$3-$4");
-                    }
-                    if (textField.getText() != null && textField.getText().length() == 14) {
-                        value = value.replaceAll("[^0-9]", "");
-                        value = value.replaceFirst("([0-9]{2})([0-9]{3})([0-9]{3})([0-9]{4})([0-9]{2})$", "$1.$2.$3/$4-$5");
-                    }
-                }
-                textField.setText(value);
-                if (textField.getText() != value) {
-                	if ( value.length() != 14 && value.length() != 18 ){
-                		textField.setText("");
-                	}
-                	else{
-                		value = value.replaceAll("[^0-9.\\-/]", "");
-                		textField.insertText(0, value);
-                	}
-                }
-
-            }
-        });
-
-        maxField(textField, 18);
+         textField.lengthProperty().addListener(new ChangeListener<Number>() {
+             @Override
+             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            	 if (newValue.intValue() < 15) {
+                     String value = textField.getText();
+                     value = value.replaceAll("[^0-9]", "");
+                     value = value.replaceFirst("(\\d{3})(\\d)", "$1.$2");
+                     value = value.replaceFirst("(\\d{3})(\\d)", "$1.$2");
+                     value = value.replaceFirst("(\\d{3})(\\d)", "$1-$2");
+                     value = value.replaceFirst("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+                     textField.setText(value);
+                     positionCaret(textField);
+                 }else{
+                	 String value = textField.getText();
+                     value = value.replaceAll("[^0-9]", "");
+                     value = value.replaceFirst("(\\d{2})(\\d)", "$1.$2");
+                     value = value.replaceFirst("(\\d{2})\\.(\\d{3})(\\d)", "$1.$2.$3");
+                     value = value.replaceFirst("\\.(\\d{3})(\\d)", ".$1/$2");
+                     value = value.replaceFirst("(\\d{4})(\\d)", "$1-$2");
+                     textField.setText(value);
+                     positionCaret(textField);
+                 }
+             }
+         });
     }
     
     /**
