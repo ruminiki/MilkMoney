@@ -36,11 +36,6 @@ public class MotivoOcorrenciaFuncionarioController extends AbstractController<In
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioForm.fxml";
 	}

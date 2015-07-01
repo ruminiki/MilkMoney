@@ -1,7 +1,5 @@
 package br.com.milksys.controller;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Optional;
 
@@ -24,7 +22,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
-import br.com.milksys.components.FieldRequired;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
@@ -167,30 +164,6 @@ public abstract class AbstractController<K, E> {
 	protected abstract String getFormTitle();
 	protected abstract Object getObject();
 	
-	protected boolean isInputValid(){
-	
-		for ( Method method : this.getObject().getClass().getDeclaredMethods() ){
-			FieldRequired annotation = method.getAnnotation(FieldRequired.class);
-			if ( annotation != null ){
-				try {
-					
-					Object result = method.invoke(getObject());
-					
-					if ( result == null || (result instanceof String && ((String)result).isEmpty()) ){
-						CustomAlert.campoObrigatorio(annotation.message());
-						return false;
-					}
-					
-				} catch (IllegalAccessException | IllegalArgumentException	| InvocationTargetException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return true;
-		
-	}
-	
 	// ========= HANDLERS INTERFACE=============//
 
 	@FXML
@@ -218,7 +191,13 @@ public abstract class AbstractController<K, E> {
 		if (selectedIndex >= 0) {
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
 			if (result.get() == ButtonType.OK) {
-				service.remove(data.get(selectedIndex));
+				
+				if ( !service.remove(data.get(selectedIndex)) ){
+					CustomAlert.mensagemAlerta("Erro ao remover o registro. Por favor, tente novamente ou então verifique se ele "
+							+ "está sendo referenciado em outro cadastro.");
+					return;
+				}
+				
 				data.remove(selectedIndex);
 				updateLabelNumRegistros();
 			}
@@ -238,34 +217,34 @@ public abstract class AbstractController<K, E> {
 	@SuppressWarnings("unchecked")
 	protected void handleSave() {
 		
-		if ( isInputValid() ) {
+		if ( !state.equals(State.CREATE_TO_SELECT) ){
+			
+			boolean isNew = object.getId() <= 0;
 
-			if ( !state.equals(State.CREATE_TO_SELECT) ){
-				boolean isNew = object.getId() <= 0;
-	
-				service.save((E) object);
-	
-				if (isNew) {
-					data.add((E) object);
-					updateLabelNumRegistros();
-				} else {
-					if (table != null && data != null) {
-						for (int index = 0; index < data.size(); index++) {
-							AbstractEntity o = (AbstractEntity) data.get(index);
-							if (o.getId() == object.getId()) {
-								data.set(index, (E) object);
-							}
+			if ( !service.save((E) object) ){
+				return;
+			}
+						
+			if (isNew) {
+				data.add((E) object);
+				updateLabelNumRegistros();
+			} else {
+				if (table != null && data != null) {
+					for (int index = 0; index < data.size(); index++) {
+						AbstractEntity o = (AbstractEntity) data.get(index);
+						if (o.getId() == object.getId()) {
+							data.set(index, (E) object);
 						}
 					}
 				}
 			}
-			
-			if (closePopUpAfterSave)
-				dialogStage.close();
-
-			this.state = State.LIST;
-			
 		}
+		
+		if (closePopUpAfterSave)
+			dialogStage.close();
+
+		this.state = State.LIST;
+			
 	}
 
 	//==========getters e setters

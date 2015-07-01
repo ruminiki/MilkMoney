@@ -16,20 +16,18 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	@Autowired public ProducaoIndividualDao dao;
 
 	@Override
-	public void save(ProducaoIndividual entity) {
-		dao.persist(entity);	
+	public boolean save(ProducaoIndividual entity) {
+		return dao.persist(entity);	
 	}
 	
 	@Override
-	public void remove(ProducaoIndividual entity) {
-		dao.remove(entity);
-		
+	public boolean remove(ProducaoIndividual entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public ProducaoIndividual findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

@@ -36,11 +36,6 @@ public class FinalidadeLoteController extends AbstractController<Integer, Finali
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/finalidadeLote/FinalidadeLoteForm.fxml";
 	}

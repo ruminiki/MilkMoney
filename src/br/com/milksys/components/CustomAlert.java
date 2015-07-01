@@ -1,5 +1,8 @@
 package br.com.milksys.components;
 
+
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Optional;
 
 import javafx.scene.control.Alert;
@@ -30,7 +33,7 @@ public class CustomAlert extends Alert {
 	public static void campoObrigatorio(String field) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Campo Requerido");
-		alert.setHeaderText("Campo obrigatório não informado");
+		alert.setHeaderText("Validação de Formulário");
 		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
 		alert.showAndWait();
 	}
@@ -49,6 +52,21 @@ public class CustomAlert extends Alert {
 		alert.setHeaderText("Informação");
 		alert.setContentText(string);
 		alert.showAndWait();
+		
+	}
+
+	public static void showMessage(Hashtable<String, String> erros) {
+		
+		//o hastable só terá um item a cada validação para não encher de mensagem de 
+		//uma única vez
+		for ( Map.Entry<String, String> entry : erros.entrySet() ) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Atenção");
+			alert.setHeaderText(entry.getKey());
+			alert.setContentText(entry.getValue());
+			alert.showAndWait();
+			return;
+		}
 		
 	}
 	

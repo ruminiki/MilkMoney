@@ -66,11 +66,6 @@ public class FornecedorController extends AbstractController<Integer, Fornecedor
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/fornecedor/FornecedorForm.fxml";
 	}

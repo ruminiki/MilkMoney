@@ -23,7 +23,7 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public MainApp() {
-		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml"});
+		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml", "aspects.xml"});
 	}
 
 	@Override

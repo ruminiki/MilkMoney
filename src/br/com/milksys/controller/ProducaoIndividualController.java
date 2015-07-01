@@ -1,6 +1,5 @@
 package br.com.milksys.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
@@ -208,24 +206,6 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		if ( precoLeite != null ){
 			getObject().setValor(precoLeite.getValor().multiply(getObject().getTotalProducaoDia()));
 		}
-	}
-
-	@Override
-	protected boolean isInputValid() {
-		
-		if ( getObject().getAnimal() == null ){
-			CustomAlert.campoObrigatorio("animal");
-			return false;
-		}
-		
-		if ( getObject().getPrimeiraOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
-				getObject().getSegundaOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
-				getObject().getTerceiraOrdenha().compareTo(BigDecimal.ZERO) <= 0){
-			CustomAlert.campoObrigatorio("primeira ordenha, segunda ordenha ou terceira ordenha");
-			return false;
-		}
-		
-		return true;
 	}
 
 	@Override

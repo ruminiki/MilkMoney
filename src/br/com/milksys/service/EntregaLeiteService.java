@@ -17,19 +17,18 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	@Autowired public EntregaLeiteDao dao;
 
 	@Override
-	public void save(EntregaLeite entity) {
-		dao.persist(entity);	
+	public boolean save(EntregaLeite entity) {
+		return dao.persist(entity);	
 	}
 	
 	@Override
-	public void remove(EntregaLeite entity) {
-		dao.remove(entity);
-		
+	public boolean remove(EntregaLeite entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public EntregaLeite findById(Integer id) {
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

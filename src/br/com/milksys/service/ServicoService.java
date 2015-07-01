@@ -17,21 +17,18 @@ public class ServicoService implements IService<Integer, Servico>{
 	@Autowired public ServicoDao dao;
 
 	@Override
-	public void save(Servico entity) {
-		dao.persist(entity);
-		
+	public boolean save(Servico entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Servico entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Servico entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Servico findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

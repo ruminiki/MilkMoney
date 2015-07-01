@@ -17,21 +17,18 @@ public class PrestadorServicoService implements IService<Integer, PrestadorServi
 	@Autowired public PrestadorServicoDao dao;
 
 	@Override
-	public void save(PrestadorServico entity) {
-		dao.persist(entity);
-		
+	public boolean save(PrestadorServico entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(PrestadorServico entity) {
-		dao.remove(entity);
-		
+	public boolean remove(PrestadorServico entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public PrestadorServico findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.PropertyDecimalValueFactory;
@@ -80,16 +79,6 @@ public class SemenController extends AbstractController<Integer, Semen> {
 			MaskFieldUtil.moeda(inputValor);
 		}
 		
-	}
-
-	@Override
-	protected boolean isInputValid() {
-		
-		if ( getObject().getQuantidade() <= 0 ){
-			CustomAlert.mensagemAlerta("Por favor informe uma quantidade maior que zero para continuar.");
-		}
-		
-		return true;
 	}
 
 	@Override

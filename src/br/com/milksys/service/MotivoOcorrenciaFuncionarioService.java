@@ -17,21 +17,19 @@ public class MotivoOcorrenciaFuncionarioService implements IService<Integer, Mot
 	@Autowired public MotivoOcorrenciaFuncionarioDao dao;
 
 	@Override
-	public void save(MotivoOcorrenciaFuncionario entity) {
-		dao.persist(entity);
+	public boolean save(MotivoOcorrenciaFuncionario entity) {
+		return dao.persist(entity);
 		
 	}
 
 	@Override
-	public void remove(MotivoOcorrenciaFuncionario entity) {
-		dao.remove(entity);
-		
+	public boolean remove(MotivoOcorrenciaFuncionario entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public MotivoOcorrenciaFuncionario findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

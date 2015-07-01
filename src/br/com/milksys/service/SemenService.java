@@ -17,21 +17,18 @@ public class SemenService implements IService<Integer, Semen>{
 	@Autowired public SemenDao dao;
 
 	@Override
-	public void save(Semen entity) {
-		dao.persist(entity);
-		
+	public boolean save(Semen entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Semen entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Semen entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Semen findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

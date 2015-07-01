@@ -58,11 +58,6 @@ public class PrestadorServicoController extends AbstractController<Integer, Pres
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/prestadorServico/PrestadorServicoForm.fxml";
 	}

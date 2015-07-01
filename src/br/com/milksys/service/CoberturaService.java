@@ -17,21 +17,22 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired public CoberturaDao dao;
 
 	@Override
-	public void save(Cobertura entity) {
-		dao.persist(entity);
+	public boolean save(Cobertura entity) {
+		
+		//if ( entity.isValid() )
+			return dao.persist(entity);
+		//return false;
 		
 	}
 
 	@Override
-	public void remove(Cobertura entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Cobertura entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Cobertura findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

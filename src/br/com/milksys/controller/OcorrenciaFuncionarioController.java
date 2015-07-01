@@ -110,12 +110,6 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/ocorrenciaFuncionario/ocorrenciaFuncionarioForm.fxml";
 	}

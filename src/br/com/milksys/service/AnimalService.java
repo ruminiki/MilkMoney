@@ -17,21 +17,18 @@ public class AnimalService implements IService<Integer, Animal>{
 	@Autowired public AnimalDao dao;
 
 	@Override
-	public void save(Animal entity) {
-		dao.persist(entity);
-		
+	public boolean save(Animal entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Animal entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Animal entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Animal findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override
@@ -46,12 +43,10 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public ObservableList<Animal> findAllFemeasAsObservableList() {
-		// TODO Auto-generated method stub
 		return findAllAsObservableList();
 	}
 
 	public ObservableList<Animal> findAllReprodutoresAsObservableList() {
-		// TODO Auto-generated method stub
 		return findAllAsObservableList();
 	}
 	

@@ -19,7 +19,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
@@ -427,45 +426,6 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			inputFemea.setText("");
 		}
 		
-	}
-	
-	@Override
-	protected boolean isInputValid() {
-		
-		if ( !super.isInputValid() ){
-			return false;
-		}
-		
-		if ( getObject().getTipoCobertura() == null ){
-			CustomAlert.campoObrigatorio("tipo de cobertura");
-			return false;
-		}
-		
-		if ( getObject().getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
-			if ( getObject().getTouro() == null ){
-				CustomAlert.campoObrigatorio("reprodutor");
-				return false;
-			}
-		}
-		
-		if ( getObject().getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
-			if ( getObject().getSemen() == null ){
-				CustomAlert.campoObrigatorio("sêmen");
-				return false;
-			}
-			
-			if ( getObject().getQuantidadeDosesSemen() <= 0 ){
-				CustomAlert.campoObrigatorio("doses de sêmen utilizadas");
-				return false;
-			}
-		}
-		
-		if ( getObject().getNomeResponsavel() == null || getObject().getNomeResponsavel().isEmpty() ){
-			CustomAlert.campoObrigatorio("responsável pela enseminação");
-			return false;
-		}
-		
-		return true;
 	}
 	
 	private void removerServico(){

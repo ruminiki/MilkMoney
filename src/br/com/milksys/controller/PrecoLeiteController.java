@@ -121,12 +121,6 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 		
 	}
 	
-	
-	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
 	@Override
 	protected String getFormName() {
 		return "view/precoLeite/PrecoLeiteForm.fxml";

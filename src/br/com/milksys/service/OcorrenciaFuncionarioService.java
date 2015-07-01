@@ -18,21 +18,19 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 	@Autowired public OcorrenciaFuncionarioDao dao;
 
 	@Override
-	public void save(OcorrenciaFuncionario entity) {
-		dao.persist(entity);
+	public boolean save(OcorrenciaFuncionario entity) {
+		return dao.persist(entity);
 		
 	}
 
 	@Override
-	public void remove(OcorrenciaFuncionario entity) {
-		dao.remove(entity);
-		
+	public boolean remove(OcorrenciaFuncionario entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public OcorrenciaFuncionario findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

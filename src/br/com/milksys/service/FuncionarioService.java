@@ -17,21 +17,18 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 	@Autowired public FuncionarioDao dao;
 
 	@Override
-	public void save(Funcionario entity) {
-		dao.persist(entity);
-		
+	public boolean save(Funcionario entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Funcionario entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Funcionario entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Funcionario findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

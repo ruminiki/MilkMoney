@@ -18,21 +18,19 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	@Autowired public PrecoLeiteDao dao;
 
 	@Override
-	public void save(PrecoLeite entity) {
-		dao.persist(entity);
+	public boolean save(PrecoLeite entity) {
+		return dao.persist(entity);
 		
 	}
 
 	@Override
-	public void remove(PrecoLeite entity) {
-		dao.remove(entity);
-		
+	public boolean remove(PrecoLeite entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public PrecoLeite findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

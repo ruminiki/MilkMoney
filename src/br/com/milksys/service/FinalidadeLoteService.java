@@ -17,21 +17,18 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 	@Autowired public FinalidadeLoteDao dao;
 
 	@Override
-	public void save(FinalidadeLote entity) {
-		dao.persist(entity);
-		
+	public boolean save(FinalidadeLote entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(FinalidadeLote entity) {
-		dao.remove(entity);
-		
+	public boolean remove(FinalidadeLote entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public FinalidadeLote findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

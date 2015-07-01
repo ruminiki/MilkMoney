@@ -161,5 +161,17 @@ public class Semen extends AbstractEntity implements Serializable {
 	public String toString() {
 		return this.getTouro();
 	}
+	/*@Override
+	public boolean isValid() {
+		
+		if ( !super.isValid() )
+			return false;
+		
+		if ( getQuantidade() <= 0 ){
+			CustomAlert.mensagemAlerta("Por favor informe uma quantidade maior que zero para continuar.");
+		}
+		
+		return true;
+	}*/
 	
 }

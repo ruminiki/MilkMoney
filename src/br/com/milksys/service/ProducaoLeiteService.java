@@ -19,26 +19,24 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	@Autowired public ProducaoLeiteDao dao;
 
 	@Override
-	public void save(ProducaoLeite entity) {
+	public boolean save(ProducaoLeite entity) {
 		if ( entity.getId() <= 0 ){
 			ProducaoLeite p = dao.findByDate(entity.getData());
 			if ( p != null ){
-				return;
+				return true;
 			}
 		}
-		dao.persist(entity);	
+		return dao.persist(entity);	
 	}
 	
 	@Override
-	public void remove(ProducaoLeite entity) {
-		dao.remove(entity);
-		
+	public boolean remove(ProducaoLeite entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public ProducaoLeite findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

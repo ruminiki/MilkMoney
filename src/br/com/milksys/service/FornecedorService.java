@@ -17,21 +17,19 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 	@Autowired public FornecedorDao dao;
 
 	@Override
-	public void save(Fornecedor entity) {
-		dao.persist(entity);
-		
+	public boolean save(Fornecedor entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Fornecedor entity) {
-		dao.remove(entity);
+	public boolean remove(Fornecedor entity) {
+		return dao.remove(entity);
 		
 	}
 
 	@Override
 	public Fornecedor findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

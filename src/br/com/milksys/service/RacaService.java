@@ -17,21 +17,18 @@ public class RacaService implements IService<Integer, Raca>{
 	@Autowired public RacaDao dao;
 
 	@Override
-	public void save(Raca entity) {
-		dao.persist(entity);
-		
+	public boolean save(Raca entity) {
+		return dao.persist(entity);
 	}
 
 	@Override
-	public void remove(Raca entity) {
-		dao.remove(entity);
-		
+	public boolean remove(Raca entity) {
+		return dao.remove(entity);
 	}
 
 	@Override
 	public Raca findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.findById(id);
 	}
 
 	@Override

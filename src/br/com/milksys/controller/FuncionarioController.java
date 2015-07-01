@@ -68,11 +68,6 @@ public class FuncionarioController extends AbstractController<Integer, Funcionar
 	}
 
 	@Override
-	protected boolean isInputValid() {
-		return true;
-	}
-
-	@Override
 	protected String getFormName() {
 		return "view/funcionario/FuncionarioForm.fxml";
 	}
