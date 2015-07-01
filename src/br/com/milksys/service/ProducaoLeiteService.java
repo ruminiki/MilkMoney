@@ -16,6 +16,7 @@ import br.com.milksys.dao.ProducaoLeiteDao;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
 import br.com.milksys.util.DateUtil;
+import br.com.milksys.validation.ProducaoLeiteValidation;
 
 @Service
 public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
@@ -44,6 +45,8 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		if ( precoLeite != null ){
 			entity.setValor(precoLeite.getValor().multiply(entity.getVolumeEntregue()));
 		}
+		
+		ProducaoLeiteValidation.validate(entity);
 		
 		return dao.persist(entity);	
 	}

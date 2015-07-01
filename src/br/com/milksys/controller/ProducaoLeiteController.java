@@ -298,14 +298,6 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		
 	}
 
-	protected boolean isInputValid() {
-		if ( getObject().getVolumeEntregue().compareTo(getObject().getVolumeProduzido()) > 0 ){
-			//CustomAlert.mensagemAlerta("O volume entregue não pode ser maior que o volume produzido.");
-			return false;
-		}
-		return true;
-	}
-
 	@Override
 	protected String getFormName() {
 		return "view/producaoLeite/ProducaoLeiteForm.fxml";

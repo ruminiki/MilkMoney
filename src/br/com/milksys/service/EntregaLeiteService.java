@@ -15,6 +15,7 @@ import br.com.milksys.model.EntregaLeite;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
 import br.com.milksys.util.Util;
+import br.com.milksys.validation.EntregaLeiteValidation;
 
 @Service
 public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
@@ -36,6 +37,8 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 			entity.setPrecoLeite(precoLeite);
 		}
 
+		EntregaLeiteValidation.validate(entity);
+		
 		return dao.persist(entity);	
 	}
 	

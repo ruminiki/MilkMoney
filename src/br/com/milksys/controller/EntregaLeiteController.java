@@ -219,10 +219,6 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 		return (EntregaLeite)super.object;
 	}
 	
-	protected boolean isInputValid() {
-		return true;
-	}
-
 	@Override
 	protected String getFormName() {
 		return "view/entregaLeite/EntregaLeiteForm.fxml";
