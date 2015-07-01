@@ -222,6 +222,7 @@ public abstract class AbstractController<K, E> {
 			boolean isNew = object.getId() <= 0;
 
 			if ( !service.save((E) object) ){
+				CustomAlert.mensagemAlerta("Ocorreu um erro ao salvar o objeto. Por favor, tente novamente.");
 				return;
 			}
 						

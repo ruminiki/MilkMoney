@@ -21,17 +21,40 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	
 	public boolean persist(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-		entityManager.persist(entity);
-		entityTransaction.commit();
+		//entityManager.setFlushMode(FlushModeType.AUTO);
+		
+		entityTransaction.begin();
+        
+        try{
+        	
+        	entityManager.persist(entity);
+        	entityTransaction.commit();
+        	
+        }catch(Exception e){
+        	throw e;
+        }finally{
+        	if ( entityTransaction.isActive() )
+        		entityTransaction.rollback();
+		}
+        
 		return true;
 	}
 
 	public boolean remove(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
-		entityTransaction.commit();
+		
+		if ( !entityTransaction.isActive() )
+			entityTransaction.begin();
+		
+        try{
+	        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+		}catch (Exception e) {
+			throw e;
+		}finally{
+			if ( entityTransaction.isActive() )
+        		entityTransaction.rollback();
+		}
+        
 		return true;
 	}
 

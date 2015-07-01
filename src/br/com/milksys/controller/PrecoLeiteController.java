@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.model.PrecoLeite;
@@ -70,6 +71,8 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			inputValorMaximoPraticado.textProperty().bindBidirectional(getObject().valorMaximoPraticadoProperty());
 			inputValorRecebido.textProperty().bindBidirectional(getObject().valorRecebidoProperty());
 			
+			MaskFieldUtil.moeda(inputValorMaximoPraticado);
+			MaskFieldUtil.moeda(inputValorRecebido);
 		}
 		
 	}

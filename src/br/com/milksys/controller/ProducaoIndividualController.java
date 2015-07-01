@@ -10,18 +10,20 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
-import br.com.milksys.service.PrecoLeiteService;
+import br.com.milksys.service.IService;
 import br.com.milksys.service.ProducaoIndividualService;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
@@ -50,15 +52,11 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@FXML private ComboBox<Animal> inputAnimalComboBox;
 	
 	@Autowired private AnimalService animalService;
-	@Autowired private ProducaoIndividualService producaoIndividualService;
-	@Autowired private PrecoLeiteService precoLeiteService;
 	
 	private Animal selectedAnimal;
 	
 	@FXML
 	public void initialize() {
-		
-		super.service = producaoIndividualService;
 		
 		if ( state.equals(State.LIST) ){
 			
@@ -79,15 +77,20 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 			
 		}
 		
-		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) ){
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
 			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-			inputAnimal.setText(selectedAnimal.getNumeroNome());
+			if ( selectedAnimal != null && inputAnimal != null )
+				inputAnimal.setText(selectedAnimal.getNumeroNome());
 			getObject().setAnimal(selectedAnimal);
 			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 			inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
 			inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
 			inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
+			
+			MaskFieldUtil.numeroInteiro(inputPrimeiraOrdenha);
+			MaskFieldUtil.numeroInteiro(inputSegundaOrdenha);
+			MaskFieldUtil.numeroInteiro(inputTerceiraOrdenha);
 			
 		}
 		
@@ -122,8 +125,9 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 					initializeTableOverview();
 				}	
 			}else{
-				data.addAll(producaoIndividualService.findByAnimal(selectedAnimal));
+				data.addAll(((ProducaoIndividualService)service).findByAnimal(selectedAnimal));
 			}
+			
 			updateLabelNumRegistros();
 			
 		}
@@ -131,30 +135,15 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		if ( state.equals(State.INSERT_TO_SELECT) ){
 			
 			data.clear();
-			data.addAll(producaoIndividualService.findByDate(getObject().getData()));
+			data.addAll(((ProducaoIndividualService)service).findByDate(getObject().getData()));
 			table.setItems(data);
 			
 		}
 		
-		atualizaValorProducao();
+		((ProducaoIndividualService)service).atualizaValorProducao(data);
 		
 	}
 	
-	/**
-	 * Método que percorre lista de objetos atualizando o valor com base no preço do leite do mês
-	 */
-	private void atualizaValorProducao(){
-		
-		//varre a tabela atualizando os valores diários
-		for ( int index = 0; index < data.size(); index++ ){
-			ProducaoIndividual producaoIndividual = data.get(index);
-			PrecoLeite precoLeite = precoLeiteService.findByMesAno(producaoIndividual.getMes(), producaoIndividual.getAno());
-			producaoIndividual.setValor(precoLeite.getValor().multiply(producaoIndividual.getTotalProducaoDia()));
-			data.set(index, producaoIndividual);
-		}
-		
-	}
-
 	private void findByAnimal(Animal animal) {
 		selectedAnimal = animal;
 		initializeTableOverview();
@@ -162,8 +151,10 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 	@Override
 	protected void handleSave() {
-		closePopUpAfterSave = true;
-		beforeSave();
+		if ( state.equals(State.INSERT_TO_SELECT) ){
+			closePopUpAfterSave = false;
+		}
+		setObject(((ProducaoIndividualService)service).beforeSave(getObject()));
 		super.handleSave();
     }
 	
@@ -179,10 +170,9 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		getObject().setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
 		getObject().setObservacao(inputObservacao.getText());
 		
-		closePopUpAfterSave = false;
-		beforeSave();
-		super.handleSave();
-		super.setObject(new ProducaoIndividual(getObject().getData()));
+		handleSave();
+		
+		setObject(new ProducaoIndividual(getObject().getData()));
 
 		//limpa a tela
 		inputAnimalComboBox.getSelectionModel().select(null);
@@ -193,21 +183,6 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 		inputTerceiraOrdenha.setText(null);
 	}
 	
-	private void beforeSave(){
-		ProducaoIndividual producaoIndividual = producaoIndividualService.findByAnimalAndData(getObject().getAnimal(), getObject().getData());
-		if ( producaoIndividual != null ){
-			producaoIndividual.setPrimeiraOrdenha(getObject().getPrimeiraOrdenha());
-			producaoIndividual.setSegundaOrdenha(getObject().getSegundaOrdenha());
-			producaoIndividual.setTerceiraOrdenha(getObject().getTerceiraOrdenha());
-			super.setObject(producaoIndividual);
-		}
-		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMes(), getObject().getAno());
-		if ( precoLeite != null ){
-			getObject().setValor(precoLeite.getValor().multiply(getObject().getTotalProducaoDia()));
-		}
-	}
-
 	@Override
 	protected String getFormName() {
 		return "view/producaoIndividual/ProducaoIndividualForm.fxml";
@@ -225,6 +200,12 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	@Override
 	protected ProducaoIndividual getObject() {
 		return (ProducaoIndividual) super.object;
+	}
+	
+	@Override
+	@Resource(name = "producaoIndividualService")
+	protected void setService(IService<Integer, ProducaoIndividual> service) {
+		super.setService(service);
 	}
 
 }
