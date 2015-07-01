@@ -13,9 +13,7 @@ import javafx.util.Callback;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 
-@Component
 public class MainApp extends Application {
 
 	public static Stage primaryStage;
@@ -23,7 +21,7 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public MainApp() {
-		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml", "aspects.xml"});
+		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml"});
 	}
 
 	@Override

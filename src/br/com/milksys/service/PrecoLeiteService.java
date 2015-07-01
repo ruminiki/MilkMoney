@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.milksys.dao.PrecoLeiteDao;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.util.Util;
+import br.com.milksys.validation.PrecoLeiteValidation;
 
 @Service
 public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
@@ -21,8 +22,8 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 
 	@Override
 	public boolean save(PrecoLeite entity) {
+		PrecoLeiteValidation.validate(entity);
 		return dao.persist(entity);
-		
 	}
 
 	@Override
