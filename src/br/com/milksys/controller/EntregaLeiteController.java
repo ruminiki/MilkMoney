@@ -2,8 +2,6 @@ package br.com.milksys.controller;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,11 +25,9 @@ import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.model.EntregaLeite;
 import br.com.milksys.model.PrecoLeite;
-import br.com.milksys.model.ProducaoLeite;
 import br.com.milksys.model.State;
 import br.com.milksys.service.EntregaLeiteService;
 import br.com.milksys.service.PrecoLeiteService;
-import br.com.milksys.service.ProducaoLeiteService;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.util.Util;
 
@@ -65,7 +61,6 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	@FXML private Label lblTotalRecebido;
 	
 	@Autowired private EntregaLeiteService service;
-	@Autowired private ProducaoLeiteService producaoLeiteService;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	@Autowired private PrecoLeiteController precoLeiteController;
 	
@@ -113,7 +108,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 			});
 			
 			super.service = this.service;
-			configuraMesesEntregaAnoReferencia();
+			service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
 			super.initialize();
 			resume();
 			
@@ -135,25 +130,25 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	}
 	
 	/**
-	 * Ao alterar o ano de referï¿½ncia carrega o respectivo calendï¿½rio de entrega.
+	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
 	 * @param newValue
 	 */
 	@FXML
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
-		configuraMesesEntregaAnoReferencia();
+		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
 		initializeTableOverview();
 		resume();
 	}
 	
 	/**
-	 * Ao alterar o ano de referï¿½ncia carrega o respectivo calendï¿½rio de entrega.
+	 * Ao alterar o ano de referência carrega o respectivo calendário de entrega.
 	 * @param newValue
 	 */
 	@FXML
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
-		configuraMesesEntregaAnoReferencia();
+		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
 		initializeTableOverview();
 		resume();
 	}
@@ -166,61 +161,8 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	
 	@Override
 	protected void handleSave() {
-		
-		BigDecimal totalEntregue = loadTotalEntreguePeriodo(getObject().getDataInicio(), getObject().getDataFim());
-		
-		getObject().setVolume(totalEntregue);
-		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMesReferencia(), getObject().getAnoReferencia());
-		if ( precoLeite != null ){
-			getObject().setPrecoLeite(precoLeite);
-		}
-		
 		super.handleSave();
 		this.resume();
-		
-	}
-	
-	/**
-	 * Carrega o total entregue no perï¿½odo selecionado.
-	 * @param dataInicio
-	 * @param dataFim
-	 * @return
-	 */
-	private BigDecimal loadTotalEntreguePeriodo(Date dataInicio, Date dataFim){
-		BigDecimal totalEntregue = BigDecimal.ZERO;
-		List<ProducaoLeite> producaoLeite = producaoLeiteService.findAllByPeriodoAsObservableList(dataInicio, dataFim);
-		
-		for( ProducaoLeite p : producaoLeite ){
-			totalEntregue = totalEntregue.add(p.getVolumeEntregue());
-		}
-		
-		return totalEntregue;
-	}
-	
-	
-	private void configuraMesesEntregaAnoReferencia(){
-		
-		for (int i = 0; i < meses.size(); i++) {
-			
-			PrecoLeite precoLeite = precoLeiteService.findByMesAno(meses.get(i), selectedAnoReferencia);
-			EntregaLeite entregaLeite = service.findByMesAno(meses.get(i), selectedAnoReferencia);
-			
-			if ( entregaLeite == null ){
-				entregaLeite = new EntregaLeite(meses.get(i), selectedAnoReferencia, BigDecimal.ZERO, precoLeite);
-			}else{
-				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
-				entregaLeite.setVolume(totalEntregue);
-				if ( entregaLeite.getPrecoLeite() == null ){
-					entregaLeite.setPrecoLeite(precoLeite);
-				}
-			}
-			
-			service.save(entregaLeite);
-		}
-
-		this.resume();
-		
 	}
 	
 	/**

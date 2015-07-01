@@ -1,5 +1,7 @@
 package br.com.milksys.service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -10,14 +12,30 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.EntregaLeiteDao;
 import br.com.milksys.model.EntregaLeite;
+import br.com.milksys.model.PrecoLeite;
+import br.com.milksys.model.ProducaoLeite;
+import br.com.milksys.util.Util;
 
 @Service
 public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
 	@Autowired public EntregaLeiteDao dao;
+	@Autowired private PrecoLeiteService precoLeiteService;
+	@Autowired private ProducaoLeiteService producaoLeiteService;
+	private ObservableList<String> meses = Util.generateListMonths();
 
 	@Override
 	public boolean save(EntregaLeite entity) {
+		
+		BigDecimal totalEntregue = loadTotalEntreguePeriodo(entity.getDataInicio(), entity.getDataFim());
+		
+		entity.setVolume(totalEntregue);
+		
+		PrecoLeite precoLeite = precoLeiteService.findByMesAno(entity.getMesReferencia(), entity.getAnoReferencia());
+		if ( precoLeite != null ){
+			entity.setPrecoLeite(precoLeite);
+		}
+
 		return dao.persist(entity);	
 	}
 	
@@ -45,6 +63,55 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		list.addAll(dao.findAllByAno(anoReferencia));
 		return list;
 	}
+	
+	/**
+	 * Para cada ano selecionado, configura os meses para registro das entregas realizadas.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 */
+
+	public void configuraMesesEntregaAnoReferencia(int ano){
+		
+		for (int i = 0; i < meses.size(); i++) {
+			
+			PrecoLeite precoLeite = precoLeiteService.findByMesAno(meses.get(i), ano);
+			EntregaLeite entregaLeite = findByMesAno(meses.get(i), ano);
+			
+			if ( entregaLeite == null ){
+				entregaLeite = new EntregaLeite(meses.get(i), ano, BigDecimal.ZERO, precoLeite);
+			}else{
+				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
+				entregaLeite.setVolume(totalEntregue);
+				if ( entregaLeite.getPrecoLeite() == null ){
+					entregaLeite.setPrecoLeite(precoLeite);
+				}
+			}
+			
+			save(entregaLeite);
+		}
+
+	}
+	
+	
+	/**
+	 * Carrega o total entregue no período selecionado.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return
+	 */
+	private BigDecimal loadTotalEntreguePeriodo(Date dataInicio, Date dataFim){
+		BigDecimal totalEntregue = BigDecimal.ZERO;
+		List<ProducaoLeite> producaoLeite = producaoLeiteService.findAllByPeriodoAsObservableList(dataInicio, dataFim);
+		
+		for( ProducaoLeite p : producaoLeite ){
+			totalEntregue = totalEntregue.add(p.getVolumeEntregue());
+		}
+		
+		return totalEntregue;
+	}
+
 	
 	
 }
