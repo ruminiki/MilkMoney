@@ -1,9 +1,7 @@
 package br.com.milksys.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +21,6 @@ import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.PrecoLeiteService;
-import br.com.milksys.util.Util;
 
 @Controller
 public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite> {
@@ -44,7 +41,6 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@FXML private Label lblAno;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
-	private ObservableList<String> meses = Util.generateListMonths();
 	
 	@Autowired private PrecoLeiteService service;
 	
@@ -59,7 +55,10 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorRecebido"));
 			
 			super.service = this.service;
-			configuraMesesAnoReferencia();
+			((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
+			this.initializeTableOverview();
+			table.setItems(data);
+			lblAno.setText(String.valueOf(selectedAnoReferencia));
 			super.initialize();
 			
 		}
@@ -90,7 +89,9 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@FXML
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
-		configuraMesesAnoReferencia();
+		((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
+		this.initializeTableOverview();
+		lblAno.setText(String.valueOf(selectedAnoReferencia));
 	}
 	
 	/**
@@ -100,28 +101,9 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	@FXML
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
-		configuraMesesAnoReferencia();
-	}
-	
-	/**
-	 * Configura os meses para registro dos preços.
-	 */
-	private void configuraMesesAnoReferencia(){
-		
-		for (int i = 0; i < meses.size(); i++) {
-			
-			PrecoLeite precoLeite = service.findByMesAno(meses.get(i), selectedAnoReferencia);
-			if ( precoLeite == null ){
-				precoLeite = new PrecoLeite(meses.get(i), i+1, selectedAnoReferencia, BigDecimal.ZERO, BigDecimal.ZERO);
-				service.save(precoLeite);
-			}
-			
-		}
-
+		((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
 		this.initializeTableOverview();
-		table.setItems(data);
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
-		
 	}
 	
 	@Override

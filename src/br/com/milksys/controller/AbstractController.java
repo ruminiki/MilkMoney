@@ -90,6 +90,10 @@ public abstract class AbstractController<K, E> {
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
 					handleEdit();
 				}
+				
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 1) {
+					setObject((AbstractEntity) table.getSelectionModel().getSelectedItem());
+				}
 			}
 
 		});

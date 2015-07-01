@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.PrecoLeiteDao;
 import br.com.milksys.model.PrecoLeite;
+import br.com.milksys.util.Util;
 
 @Service
 public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 
 	@Autowired public PrecoLeiteDao dao;
+	private ObservableList<String> meses = Util.generateListMonths();
 
 	@Override
 	public boolean save(PrecoLeite entity) {
@@ -61,6 +63,23 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	public boolean isPrecoCadastrado(String mesReferencia, int anoReferencia) {
 		PrecoLeite precoLeite = dao.findByMesAno(mesReferencia, anoReferencia);
 		return precoLeite != null && precoLeite.getValor().compareTo(BigDecimal.ZERO) > 0;
+	}
+	
+	/**
+	 * Configura os meses para registro dos preços.
+	 */
+	public void configuraMesesAnoReferencia(int ano){
+		
+		for (int i = 0; i < meses.size(); i++) {
+			
+			PrecoLeite precoLeite = findByMesAno(meses.get(i), ano);
+			if ( precoLeite == null ){
+				precoLeite = new PrecoLeite(meses.get(i), i+1, ano, BigDecimal.ZERO, BigDecimal.ZERO);
+				save(precoLeite);
+			}
+			
+		}
+		
 	}
 
 }

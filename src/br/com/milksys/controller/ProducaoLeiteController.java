@@ -3,7 +3,6 @@ package br.com.milksys.controller;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.Calendar;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomAlert;
+import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
@@ -118,7 +118,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
 			
 			super.service = this.service;
-			configuraTabelaDiasMesSelecionado();
+			service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 			super.initialize();
 			this.resume();
 
@@ -132,6 +132,10 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 			inputData.setText(DateUtil.format(getObject().dataProperty().get()));
 			
+			MaskFieldUtil.numeroInteiro(inputNumeroVacasOrdenhadas);
+			MaskFieldUtil.numeroInteiro(inputVolumeProduzido);
+			MaskFieldUtil.numeroInteiro(inputVolumeEntregue);
+			
 		}
 		
 	}
@@ -143,8 +147,9 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
-		configuraTabelaDiasMesSelecionado();
+		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		initializeTableOverview();
+		this.resume();
 	}
 	
 	/**
@@ -154,8 +159,9 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	@FXML
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
-		configuraTabelaDiasMesSelecionado();
+		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		initializeTableOverview();
+		this.resume();
 	}
 	
 	/**
@@ -164,52 +170,24 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	 */
 	private void changeMesReferenciaListener(String newValue) {
 		selectedMesReferencia = meses.indexOf(newValue) + 1;
-		configuraTabelaDiasMesSelecionado();
+		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		initializeTableOverview();
+		this.resume();
 	}    
 	
 	@Override
 	protected void initializeTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByPeriodoAsObservableList(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
-		recarregaPrecoLeite();
+		service.recarregaPrecoLeite(data, meses.get(selectedMesReferencia-1), selectedAnoReferencia);
 	}
 	
 	@Override
 	protected void handleSave() {
-		int vacasOrdenhadas = getObject().getNumeroVacasOrdenhadas();
-		BigDecimal volumeProduzido = getObject().getVolumeProduzido();
-		
-		if ( vacasOrdenhadas > 0 && volumeProduzido.compareTo(BigDecimal.ZERO) > 0 ){
-			getObject().setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
-		}
-		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(getObject().getMes(), getObject().getAno());
-		if ( precoLeite != null ){
-			getObject().setValor(precoLeite.getValor().multiply(getObject().getVolumeEntregue()));
-		}
-		
 		super.handleSave();
 		this.resume();
 	}
 	
-	private void configuraTabelaDiasMesSelecionado(){
-		
-		Calendar cDataInicio = Calendar.getInstance();
-		cDataInicio.setTimeInMillis(DateUtil.asDate(dataInicioMes()).getTime());
-		
-		Calendar cDataFim = Calendar.getInstance();
-		cDataFim.setTimeInMillis(DateUtil.asDate(dataFimMes()).getTime());
-		
-		while ( cDataInicio.before(cDataFim) || cDataInicio.equals(cDataFim) ){
-			ProducaoLeite producaoLeite = new ProducaoLeite(DateUtil.asLocalDate(cDataInicio.getTime()), 0, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO);
-			service.save(producaoLeite);
-			cDataInicio.add(Calendar.DAY_OF_MONTH, 1);
-		}
-		
-		resume();
-		
-	}
 	
 	/**
 	 * Retorna a data do primeiro dia do mês selecionado
@@ -301,27 +279,8 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 		precoLeiteController.setObject(precoLeite);
 		precoLeiteController.showForm(null);
 		if ( precoLeiteController.getObject() != null && precoLeiteController.getObject().getId() > 0 ){
-			
-			recarregaPrecoLeite();
-			resume();
-			
-		}
-		
-	}
-	
-	/**
-	 * Método que percorre lista de objetos atualizando o valor com base no preço do leite do mês
-	 */
-	private void recarregaPrecoLeite(){
-		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(meses.get(selectedMesReferencia-1), selectedAnoReferencia);
-		if ( precoLeite != null ){
-			//varre a tabela atualizando os valores diários
-			for ( int index = 0; index < data.size(); index++ ){
-				ProducaoLeite producaoLeite = data.get(index);
-				producaoLeite.setValor(precoLeite.getValor().multiply(producaoLeite.getVolumeEntregue()));
-				data.set(index, producaoLeite);
-			}
+			service.recarregaPrecoLeite(data, meses.get(selectedMesReferencia-1), selectedAnoReferencia);
+			this.resume();
 		}
 		
 	}

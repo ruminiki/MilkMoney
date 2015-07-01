@@ -21,7 +21,6 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	
 	public boolean persist(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
-		//entityManager.setFlushMode(FlushModeType.AUTO);
 		
 		entityTransaction.begin();
         
