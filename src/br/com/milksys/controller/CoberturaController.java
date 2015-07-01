@@ -73,6 +73,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@Autowired private SemenReducedController semenReducedController;
 	@Autowired private FuncionarioReducedController funcionarioReducedController;
 	@Autowired private AnimalReducedController animalReducedController;
+	@Autowired private AnimalController animalController;
 	@Autowired private ServicoController servicoController;
 	
 	@FXML
@@ -148,16 +149,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 			inputPrevisaoParto.valueProperty().bindBidirectional(getObject().previsaoPartoProperty());
 			
-			/*inputDataPrimeiroToque.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
-			inputResultadoPrimeiroToque.textProperty().bindBidirectional(getObject().resultadoPrimeiroToqueProperty());
-			inputDataReconfirmacao.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
-			inputResultadoReconfirmacao.textProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());*/
-			
 			inputTipoCobertura.setItems(TipoCobertura.getItems());
 			inputTipoCobertura.valueProperty().bindBidirectional(getObject().tipoCoberturaProperty());
 			inputResponsavelServico.setItems(ResponsavelServico.getItems());
 			inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
-			inputFemea.setEditable(false);
 			
 			MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
 			inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesSemenProperty());
@@ -176,8 +171,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			
 			if ( getObject().getTouro() != null ){
 				if ( inputReprodutor == null ){
+					
 					inputReprodutor = new UCTextField();
 					inputReprodutor.prefWidthProperty().set(320);
+					
 				}
 				gridPane.getChildren().remove(inputSemen);
 				gridPane.getChildren().remove(inputReprodutor);
@@ -271,9 +268,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	private void configuraTelaMontaNatural(){
 		
 		if ( inputReprodutor == null ){
+			
 			inputReprodutor = new UCTextField();
 			inputReprodutor.prefWidthProperty().set(320);
-			inputReprodutor.setDisable(true);
+			
 		}
 
 		lblReprodutor.setText("Reprodutor: ");

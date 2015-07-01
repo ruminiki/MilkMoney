@@ -2,7 +2,9 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,12 +15,14 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +52,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty finalidadeAnimal = new SimpleStringProperty();
 	
 
+	@OneToMany(mappedBy="femea", fetch=FetchType.LAZY)
+	private List<Cobertura> coberturas;
+	
 	public Animal() {
 	}
 
@@ -141,14 +148,6 @@ public class Animal extends AbstractEntity implements Serializable {
 		return finalidadeAnimal;
 	}
 	
-	public String getNumeroNome(){
-		return this.numero.get() + "-" + this.nome.get();
-	}
-	
-	public StringProperty numeroNomeProperty(){
-		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
-	}
-	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="sexo")
 	public String getSexo() {
@@ -161,6 +160,32 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public StringProperty sexoProperty(){
 		return sexo;
+	}
+	
+	public List<Cobertura> getCoberturas() {
+		return coberturas;
+	}
+
+	public void setCoberturas(List<Cobertura> coberturas) {
+		this.coberturas = coberturas;
+	}
+	
+	//==========================
+	
+	public String getNumeroNome(){
+		return this.numero.get() + "-" + this.nome.get();
+	}
+	
+	public StringProperty numeroNomeProperty(){
+		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
+	}
+	
+	public long getIdade() {
+		
+		if ( this.dataNascimento != null && this.dataNascimento.get() != null )
+			return ChronoUnit.MONTHS.between(this.dataNascimento.get(), LocalDate.now());
+		return 0;
+		
 	}
 	
 	@Override

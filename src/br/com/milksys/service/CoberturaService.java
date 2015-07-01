@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.validation.CoberturaValidation;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
@@ -19,9 +20,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Override
 	public boolean save(Cobertura entity) {
 		
-		//if ( entity.isValid() )
-			return dao.persist(entity);
-		//return false;
+		CoberturaValidation.validate(entity);
+		return dao.persist(entity);
 		
 	}
 

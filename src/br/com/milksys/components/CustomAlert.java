@@ -38,11 +38,11 @@ public class CustomAlert extends Alert {
 		alert.showAndWait();
 	}
 
-	public static void mensagemAlerta(String string) {
+	public static void mensagemAlerta(String tipo, String mensagem) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Atenção");
-		alert.setHeaderText("Alerta");
-		alert.setContentText(string);
+		alert.setHeaderText(tipo);
+		alert.setContentText(mensagem);
 		alert.showAndWait();
 	}
 

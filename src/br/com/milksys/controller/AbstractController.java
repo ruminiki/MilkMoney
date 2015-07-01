@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
+import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
@@ -197,8 +198,8 @@ public abstract class AbstractController<K, E> {
 			if (result.get() == ButtonType.OK) {
 				
 				if ( !service.remove(data.get(selectedIndex)) ){
-					CustomAlert.mensagemAlerta("Erro ao remover o registro. Por favor, tente novamente ou então verifique se ele "
-							+ "está sendo referenciado em outro cadastro.");
+					//CustomAlert.mensagemAlerta("Erro ao remover o registro. Por favor, tente novamente ou então verifique se ele "
+					//		+ "está sendo referenciado em outro cadastro.");
 					return;
 				}
 				
@@ -225,11 +226,13 @@ public abstract class AbstractController<K, E> {
 			
 			boolean isNew = object.getId() <= 0;
 
-			if ( !service.save((E) object) ){
-				CustomAlert.mensagemAlerta("Ocorreu um erro ao salvar o objeto. Por favor, tente novamente.");
+			try {
+				service.save((E) object);
+			} catch (ValidationException e) {
+				CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 				return;
 			}
-						
+			
 			if (isNew) {
 				data.add((E) object);
 				updateLabelNumRegistros();

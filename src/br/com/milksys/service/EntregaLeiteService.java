@@ -19,7 +19,7 @@ import br.com.milksys.util.Util;
 @Service
 public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
-	@Autowired public EntregaLeiteDao dao;
+	@Autowired private EntregaLeiteDao dao;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	@Autowired private ProducaoLeiteService producaoLeiteService;
 	private ObservableList<String> meses = Util.generateListMonths();

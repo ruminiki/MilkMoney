@@ -21,7 +21,6 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.PropertyDecimalValueFactory;
@@ -301,7 +300,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 
 	protected boolean isInputValid() {
 		if ( getObject().getVolumeEntregue().compareTo(getObject().getVolumeProduzido()) > 0 ){
-			CustomAlert.mensagemAlerta("O volume entregue não pode ser maior que o volume produzido.");
+			//CustomAlert.mensagemAlerta("O volume entregue não pode ser maior que o volume produzido.");
 			return false;
 		}
 		return true;
