@@ -69,10 +69,6 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		return list;
 	}
 
-	public void updatePrecoLeitePeriodo(PrecoLeite precoLeite, Date dataInicio, Date dataFim) {
-		dao.updatePrecoLeitePeriodo(precoLeite, dataInicio, dataFim);
-	}
-	
 	/**
 	 * Método que percorre lista de objetos atualizando o valor com base no preço do leite do mês
 	 * @param data
