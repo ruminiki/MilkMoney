@@ -45,8 +45,12 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
 	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty resultadoPrimeiroToque = new SimpleStringProperty();
+	private StringProperty observacaoPrimeiroToque = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataReconfirmacao = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty resultadoReconfirmacao = new SimpleStringProperty();
+	private StringProperty observacaoReconfirmacao = new SimpleStringProperty();
+	private ObjectProperty<LocalDate> dataRepeticaoCio = new SimpleObjectProperty<LocalDate>();  
+	private StringProperty observacaoRepeticaoCio = new SimpleStringProperty();
 	private StringProperty tipoCobertura = new SimpleStringProperty();
 	private ObjectProperty<Animal> femea = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Animal> touro = new SimpleObjectProperty<Animal>();
@@ -136,6 +140,19 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return resultadoPrimeiroToque;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoPrimeiroToque() {
+		return this.observacaoPrimeiroToque.get();
+	}
+
+	public void setObservacaoPrimeiroToque(String observacaoPrimeiroToque) {
+		this.resultadoPrimeiroToque.set(observacaoPrimeiroToque);
+	}
+
+	public StringProperty observacaoPrimeiroToqueProperty(){
+		return observacaoPrimeiroToque;
+	}
+	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getDataReconfirmacao() {
@@ -161,6 +178,46 @@ public class Cobertura extends AbstractEntity implements Serializable {
 
 	public StringProperty resultadoReconfirmacaoProperty(){
 		return resultadoReconfirmacao;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoReconfirmacao() {
+		return this.observacaoReconfirmacao.get();
+	}
+
+	public void setObservacaoReconfirmacao(String observacaoReconfirmacao) {
+		this.observacaoReconfirmacao.set(observacaoReconfirmacao);
+	}
+
+	public StringProperty observacaoReconfirmacaoProperty(){
+		return observacaoReconfirmacao;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	public Date getDataRepeticaoCio() {
+		return DateUtil.asDate(this.dataRepeticaoCio.get());
+	}
+	
+	public void setDataRepeticaoCio(Date dataRepeticaoCio) {
+		this.dataRepeticaoCio.set(DateUtil.asLocalDate(dataRepeticaoCio));
+	}
+	
+	public ObjectProperty<LocalDate> dataRepeticaoCioProperty(){
+		return dataRepeticaoCio;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoRepeticaoCio() {
+		return this.observacaoRepeticaoCio.get();
+	}
+
+	public void setObservacaoRepeticaoCio(String observacaoRepeticaoCio) {
+		this.observacaoRepeticaoCio.set(observacaoRepeticaoCio);
+	}
+
+	public StringProperty observacaoRepeticaoCioProperty(){
+		return observacaoRepeticaoCio;
 	}
 	
 	@Access(AccessType.PROPERTY)

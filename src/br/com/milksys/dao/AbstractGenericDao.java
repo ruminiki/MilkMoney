@@ -47,6 +47,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		
         try{
 	        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+	        entityTransaction.commit();
 		}catch (Exception e) {
 			throw e;
 		}finally{
@@ -58,10 +59,26 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	}
 
 	public E findById(K id) {
-		return entityManager.find(entityClass, id);
+		
+		E e = entityManager.find(entityClass, id);
+		if ( entityManager.contains(e) ){
+			entityManager.refresh(e);
+		}
+		return e;
+		
 	}
 	
 	public List<E> findAll(Class<E> clazz) {
+		//entityManager.flush();
+		/*List<E> list = entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
+		
+		for (Iterator<E> iterator = list.iterator(); iterator.hasNext();) {
+			E e = (E) iterator.next();
+			if ( entityManager.contains(e) ){
+				entityManager.refresh(e);
+			}
+		}*/
+		
 		return entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
 	}
 }

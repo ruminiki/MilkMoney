@@ -1,5 +1,7 @@
 package br.com.milksys.controller;
 
+import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +21,12 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
+import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.FinalidadeAnimal;
@@ -32,12 +37,12 @@ import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
-import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
 import br.com.milksys.service.searchers.SearchFemeasAtivas;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
+import br.com.milksys.util.DateUtil;
 
 @Controller
 public class CoberturaController extends AbstractController<Integer, Cobertura> {
@@ -48,13 +53,14 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
 	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, LocalDate> repeticaoCioColumn;
 	@FXML private TableColumn<Cobertura, String> primeiroToqueColumn;
 	@FXML private TableColumn<Cobertura, String> reconfirmacaoColumn;
 	
 	@FXML private UCTextField inputDescricao;
 	@FXML private DatePicker inputData;
 	@FXML private DatePicker inputPrevisaoParto;
-	@FXML private ComboBox<String> inputResultadoToque;
+	@FXML private ComboBox<String> inputSituacaoCobertura;
 	@FXML private UCTextField inputFemea;
 	@FXML private UCTextField inputReprodutor;
 	@FXML private UCTextField inputSemen;
@@ -62,6 +68,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private UCTextField inputNomeResponsavel;
 	@FXML private ComboBox<String> inputResponsavelServico;
 	@FXML private ComboBox<String> inputTipoCobertura;
+	@FXML private UCTextField inputObservacao;
 	
 	@FXML private Button btnNovoReprodutor;
 	@FXML private Label lblReprodutor;
@@ -71,7 +78,6 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	
 	//services
 	@Autowired private ServicoService servicoService;
-	@Autowired private AnimalService animalService;
 	
 	//controllers
 	@Autowired private SemenReducedController semenReducedController;
@@ -95,6 +101,45 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 			tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 			situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
+			
+			repeticaoCioColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,LocalDate>("dataRepeticaoCio"));
+			repeticaoCioColumn.setCellFactory(new Callback<TableColumn<Cobertura,LocalDate>, TableCell<Cobertura,LocalDate>>(){
+				@Override
+				public TableCell<Cobertura, LocalDate> call(TableColumn<Cobertura, LocalDate> param) {
+					TableCell<Cobertura, LocalDate> cell = new TableCell<Cobertura, LocalDate>(){
+						@Override
+						public void updateItem(LocalDate item, boolean empty) {
+							Hyperlink link = new Hyperlink();
+							if ( getTableRow().getIndex() < data.size() ){
+								/*Cobertura c = data.get(getTableRow().getIndex());
+								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) )
+									getTableRow().setStyle("-fx-background-color: #99FF00;");
+								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA)  )
+									getTableRow().setStyle("-fx-background-color: #FF3300;");
+								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) )
+									getTableRow().setStyle("-fx-background-color: #FF3300;");*/
+								if(item!=null){
+									link.setText(DateUtil.format(item));
+								}else{
+									link.setText("--");
+								}
+							}
+							link.setFocusTraversable(false);
+							link.setOnAction(new EventHandler<ActionEvent>() {
+							    @Override
+							    public void handle(ActionEvent e) {
+							    	setObject(data.get(getTableRow().getIndex()));
+							    	state = State.REPETICAO;
+							    	showForm("view/cobertura/RegistrarRepeticaoCioForm.fxml");
+							    }
+							});
+							setGraphic(link);
+						} 
+					};                           
+					return cell;
+				}
+			});
+			
 			primeiroToqueColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("primeiroToque"));
 			primeiroToqueColumn.setCellFactory(new Callback<TableColumn<Cobertura,String>, TableCell<Cobertura,String>>(){
 				@Override
@@ -104,14 +149,17 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 						public void updateItem(String item, boolean empty) {
 							if(item!=null){
 								Hyperlink link = new Hyperlink();
-								link.setText(item);
+								if ( getTableRow().getIndex() < data.size() )
+									link.setText(item);
+								else
+									link.setText("--");
 								link.setFocusTraversable(false);
 								link.setOnAction(new EventHandler<ActionEvent>() {
 								    @Override
 								    public void handle(ActionEvent e) {
 								    	setObject(data.get(getTableRow().getIndex()));
 								    	state = State.PRIMEIRO_TOQUE;
-								    	showForm("view/cobertura/ResultadoToqueForm.fxml");
+								    	showForm("view/cobertura/RegistrarPrimeiroToqueForm.fxml");
 								    }
 								});
 								setGraphic(link);
@@ -130,14 +178,17 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 						public void updateItem(String item, boolean empty) {
 							if(item!=null){
 								Hyperlink link = new Hyperlink();
-								link.setText(item);
+								if ( getTableRow().getIndex() < data.size() )
+									link.setText(item);
+								else
+									link.setText("--");
 								link.setFocusTraversable(false);
 								link.setOnAction(new EventHandler<ActionEvent>() {
 								    @Override
 								    public void handle(ActionEvent e) {
 								    	setObject(data.get(getTableRow().getIndex()));
 								    	state = State.RECONFIRMACAO;
-								    	showForm("view/cobertura/ResultadoToqueForm.fxml");
+								    	showForm("view/cobertura/RegistrarReconfirmacaoForm.fxml");
 								    }
 								});
 								setGraphic(link);
@@ -228,14 +279,25 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		
 		if ( state.equals(State.PRIMEIRO_TOQUE) ){
 			inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
-			inputResultadoToque.setItems(SituacaoCobertura.getItems());
-			inputResultadoToque.valueProperty().bindBidirectional(getObject().resultadoPrimeiroToqueProperty());
+			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
+			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().resultadoPrimeiroToqueProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
 		}
 		
 		if ( state.equals(State.RECONFIRMACAO) ){
 			inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
-			inputResultadoToque.setItems(SituacaoCobertura.getItems());
-			inputResultadoToque.valueProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());
+			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
+			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoProperty());
+		}
+		
+		if ( state.equals(State.REPETICAO) ){
+			getObject().setSituacaoCobertura(SituacaoCobertura.REPETIDA);
+			inputData.valueProperty().bindBidirectional(getObject().dataRepeticaoCioProperty());
+			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
+			inputSituacaoCobertura.getSelectionModel().select(SituacaoCobertura.REPETIDA);
+			inputSituacaoCobertura.setDisable(true);
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoRepeticaoCioProperty());
 		}
 		 
 	}
@@ -262,6 +324,53 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 				configuraTelaMontaNatural();
 			}else{
 				configuraTelaEnseminacaoArtificial();
+			}
+		}
+	}
+	
+	@FXML
+	private void handleSavePrimeiroToque(){
+		try {
+			((CoberturaService)service).registrarPrimeiroToque(getObject());
+			super.dialogStage.close();
+			refreshRegistroTabela(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleSaveReconfirmacao(){
+		try {
+			((CoberturaService)service).registrarReconfirmacao(getObject());
+			super.dialogStage.close();
+			refreshRegistroTabela(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleSaveRepeticaoCio(){
+		try {
+			((CoberturaService)service).registrarRepeticaoCio(getObject());
+			super.dialogStage.close();
+			refreshRegistroTabela(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	private void refreshRegistroTabela(Cobertura cobertura){
+		if (table != null && data != null) {
+			for (int index = 0; index < data.size(); index++) {
+				AbstractEntity o = (AbstractEntity) data.get(index);
+				if (o.getId() == cobertura.getId()) {
+					data.set(index, cobertura);
+				}
 			}
 		}
 	}

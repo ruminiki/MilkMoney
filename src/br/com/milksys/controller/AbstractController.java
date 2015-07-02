@@ -168,6 +168,7 @@ public abstract class AbstractController<K, E> {
 		}else{
 			this.data.addAll(service.findAll());
 		}
+		table.layout();
 		
 	}
 	
@@ -203,9 +204,10 @@ public abstract class AbstractController<K, E> {
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
 			if (result.get() == ButtonType.OK) {
 				
-				if ( !service.remove(data.get(selectedIndex)) ){
-					//CustomAlert.mensagemAlerta("Erro ao remover o registro. Por favor, tente novamente ou então verifique se ele "
-					//		+ "está sendo referenciado em outro cadastro.");
+				try {
+					service.remove(data.get(selectedIndex));
+				} catch (Exception e) {
+					CustomAlert.mensagemAlerta("", e.getMessage());
 					return;
 				}
 				
@@ -217,11 +219,12 @@ public abstract class AbstractController<K, E> {
 		}
 	}
 
-	@FXML
-	private void handleCancel() {
+	@FXML@SuppressWarnings("unchecked")
+	protected void handleCancel() {
 		dialogStage.close();
 		this.state = State.LIST;
-		setObject(null);
+		refreshObjectInTableView((AbstractEntity)service.findById( (K) new Integer(object.getId())) );
+		setObject(null); 
 	}
 
 	@FXML
@@ -244,12 +247,7 @@ public abstract class AbstractController<K, E> {
 				updateLabelNumRegistros();
 			} else {
 				if (table != null && data != null) {
-					for (int index = 0; index < data.size(); index++) {
-						AbstractEntity o = (AbstractEntity) data.get(index);
-						if (o.getId() == object.getId()) {
-							data.set(index, (E) object);
-						}
-					}
+					refreshObjectInTableView(object);
 				}
 			}
 		}
@@ -259,6 +257,16 @@ public abstract class AbstractController<K, E> {
 
 		this.state = State.LIST;
 			
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void refreshObjectInTableView(AbstractEntity object){
+		for (int index = 0; index < data.size(); index++) {
+			AbstractEntity o = (AbstractEntity) data.get(index);
+			if (o.getId() == object.getId()) {
+				data.set(index, (E) object);
+			}
+		}
 	}
 
 	//==========getters e setters

@@ -94,5 +94,20 @@ public class DateUtil {
 	    // Tenta converter o String.
 	    return DateUtil.parse(dateString) != null;
 	}
+
+	/**
+	 * Checa se as datas são o mesmo dia, sem considerar as horas.
+	 * @param data1
+	 * @param data2
+	 * @return
+	 */
+	public static boolean isSameDate(Date data1, Date data2) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMYYYY");
+		if ( sdf.format(data1).equals(sdf.format(data2)) )
+			return true;
+		return false;
+		
+	}
 }
 

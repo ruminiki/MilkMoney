@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.validation.CoberturaValidation;
 
 @Service
@@ -22,7 +23,28 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validate(entity);
 		return dao.persist(entity);
 	}
+	
+	public boolean registrarPrimeiroToque(Cobertura entity){
+		CoberturaValidation.validateRegistroPrimeiroToque(entity);
+		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
+			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+		return dao.persist(entity);
+	}
+	
+	
+	public boolean registrarReconfirmacao(Cobertura entity){
+		CoberturaValidation.validateRegistroReconfirmacao(entity);
+		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
+			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
+		return dao.persist(entity);
+	}
 
+	public boolean registrarRepeticaoCio(Cobertura entity){
+		entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
+		CoberturaValidation.validateRegistroRepeticaoCio(entity);
+		return dao.persist(entity);
+	}
+	
 	@Override
 	public boolean remove(Cobertura entity) {
 		return dao.remove(entity);
