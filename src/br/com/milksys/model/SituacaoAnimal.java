@@ -72,4 +72,9 @@ public class SituacaoAnimal extends AbstractEntity implements Serializable {
 	public String getAnimalAtivoText(){
 		return getAnimalAtivo() ? "ATIVO" : "INATIVO";
 	}
+	
+	@Override
+	public String toString() {
+		return getDescricao();
+	}
 }

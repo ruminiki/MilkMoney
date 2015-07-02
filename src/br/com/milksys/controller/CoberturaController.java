@@ -32,9 +32,12 @@ import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
+import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
+import br.com.milksys.service.searchers.SearchFemeasAtivas;
+import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
 public class CoberturaController extends AbstractController<Integer, Cobertura> {
@@ -68,6 +71,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	
 	//services
 	@Autowired private ServicoService servicoService;
+	@Autowired private AnimalService animalService;
 	
 	//controllers
 	@Autowired private SemenReducedController semenReducedController;
@@ -75,6 +79,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@Autowired private AnimalReducedController animalReducedController;
 	@Autowired private AnimalController animalController;
 	@Autowired private ServicoController servicoController;
+	
+	//searchers
+	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
+	@Autowired private SearchReprodutoresAtivos searchReprodutoresAtivos;
 	
 	@FXML
 	public void initialize() {
@@ -251,13 +259,9 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		if ( inputTipoCobertura.getValue() != null ){
 			
 			if ( inputTipoCobertura.getValue().equals(TipoCobertura.MONTA_NATURAL) ){
-				
 				configuraTelaMontaNatural();
-				
 			}else{
-				
 				configuraTelaEnseminacaoArtificial();
-				
 			}
 		}
 	}
@@ -291,8 +295,8 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 				
-				animalReducedController.object = new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO);;
-				animalReducedController.setControllerOrigin(CoberturaController.class);
+				animalReducedController.object = new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO);
+				animalReducedController.setSearch(searchReprodutoresAtivos);
 				
 				animalReducedController.showForm(null);
 				if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
@@ -351,7 +355,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	}
 	
 	@FXML
-	private void changeResponsavelServico(){
+	private void alterarResponsavelServico(){
 		switch (inputResponsavelServico.getSelectionModel().getSelectedIndex()) {
 		case 0:{
 			
@@ -411,10 +415,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	}
 	
 	@FXML
-	protected void handleNovaFemea() {
+	protected void handleSelecionarFemea() {
 		
 		animalReducedController.object = new Animal(Sexo.FEMEA);
-		animalReducedController.setControllerOrigin(CoberturaController.class);
+		animalReducedController.setSearch(searchFemeasAtivas);
 		animalReducedController.showForm(animalReducedController.getFormName());
 		
 		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){

@@ -87,14 +87,14 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 	
 	
 	@Override
-	protected void initializeTableOverview() {
+	protected void refreshTableOverview() {
 		data.clear();
 		
 		if (selectedFuncionario == null || selectedFuncionario.getId() <= 0) {
 			if (tableFuncionario.getItems() != null	&& tableFuncionario.getItems().size() > 0) {
 				table.getSelectionModel().select(0);
 				selectedFuncionario = tableFuncionario.getItems().get(0);
-				initializeTableOverview();
+				refreshTableOverview();
 			}
 		} else {
 			data.addAll(ocorrenciaFuncionarioService.findByFuncionario(selectedFuncionario));
@@ -106,7 +106,7 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 
 	private void findByFuncionario(Funcionario funcionario) {
 		selectedFuncionario = funcionario;
-		initializeTableOverview();
+		refreshTableOverview();
 	}
 
 	@Override

@@ -30,6 +30,13 @@ public class RootLayoutController {
     	openForm("view/raca/RacaOverview.fxml");
     	
     }
+    
+    @FXML
+    private void handleCadastroSituacaoAnimal() {
+        
+    	openForm("view/situacaoAnimal/SituacaoAnimalOverview.fxml");
+    	
+    }
 
     @FXML
     private void handleCadastroFinalidadeLote() {

@@ -56,7 +56,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 			
 			super.service = this.service;
 			((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
-			this.initializeTableOverview();
+			this.refreshTableOverview();
 			table.setItems(data);
 			lblAno.setText(String.valueOf(selectedAnoReferencia));
 			super.initialize();
@@ -77,7 +77,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	}
 	
 	@Override
-	protected void initializeTableOverview() {
+	protected void refreshTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByAnoAsObservableList(selectedAnoReferencia));
 	}
@@ -90,7 +90,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
 		((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
-		this.initializeTableOverview();
+		this.refreshTableOverview();
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
 	}
 	
@@ -102,7 +102,7 @@ public class PrecoLeiteController extends AbstractController<Integer, PrecoLeite
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
 		((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);
-		this.initializeTableOverview();
+		this.refreshTableOverview();
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
 	}
 	

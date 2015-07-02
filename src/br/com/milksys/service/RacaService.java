@@ -14,7 +14,7 @@ import br.com.milksys.model.Raca;
 @Service
 public class RacaService implements IService<Integer, Raca>{
 
-	@Autowired public RacaDao dao;
+	@Autowired private RacaDao dao;
 
 	@Override
 	public boolean save(Raca entity) {

@@ -55,12 +55,6 @@ public class AnimalReducedController extends AbstractController<Integer, Animal>
 
 		}
 		
-		if (  state.equals(State.INSERT_TO_SELECT) ){
-			if ( getControllerOrigin().equals(CoberturaController.class) ){
-				
-			}
-		}
-		
 	}
 	
 	@FXML
@@ -102,7 +96,12 @@ public class AnimalReducedController extends AbstractController<Integer, Animal>
 	
 	@Override
 	protected void handleEdit() {
-		animalController.handleEdit();
+		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
+			animalController.setObject(table.getSelectionModel().getSelectedItem());
+			animalController.handleEdit();
+		}else{
+			CustomAlert.mensagemInfo("Por favor, selecione um animal na tabela.");
+		}
 	}
 	
 	@Override

@@ -137,7 +137,7 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
 		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
-		initializeTableOverview();
+		refreshTableOverview();
 		resume();
 	}
 	
@@ -149,12 +149,12 @@ public class EntregaLeiteController extends AbstractController<Integer, EntregaL
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
 		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
-		initializeTableOverview();
+		refreshTableOverview();
 		resume();
 	}
 	
 	@Override
-	protected void initializeTableOverview() {
+	protected void refreshTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByAnoAsObservableList(selectedAnoReferencia));
 	}

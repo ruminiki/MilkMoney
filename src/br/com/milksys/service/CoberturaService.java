@@ -15,14 +15,12 @@ import br.com.milksys.validation.CoberturaValidation;
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
 
-	@Autowired public CoberturaDao dao;
+	@Autowired private CoberturaDao dao;
 
 	@Override
 	public boolean save(Cobertura entity) {
-		
 		CoberturaValidation.validate(entity);
 		return dao.persist(entity);
-		
 	}
 
 	@Override
@@ -49,6 +47,5 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public void removeServicoFromCobertura(Cobertura cobertura) {
 		dao.removeServicoFromCobertura(cobertura);
 	}
-	
-	
+
 }

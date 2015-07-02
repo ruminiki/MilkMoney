@@ -147,7 +147,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	private void handleIncreaseAnoReferencia() {
 		selectedAnoReferencia++;
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
-		initializeTableOverview();
+		refreshTableOverview();
 		this.resume();
 	}
 	
@@ -159,7 +159,7 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	private void handleDecreaseAnoReferencia() {
 		selectedAnoReferencia--;
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
-		initializeTableOverview();
+		refreshTableOverview();
 		this.resume();
 	}
 	
@@ -170,12 +170,12 @@ public class ProducaoLeiteController extends AbstractController<Integer, Produca
 	private void changeMesReferenciaListener(String newValue) {
 		selectedMesReferencia = meses.indexOf(newValue) + 1;
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
-		initializeTableOverview();
+		refreshTableOverview();
 		this.resume();
 	}    
 	
 	@Override
-	protected void initializeTableOverview() {
+	protected void refreshTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByPeriodoAsObservableList(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
 		service.recarregaPrecoLeite(data, meses.get(selectedMesReferencia-1), selectedAnoReferencia);

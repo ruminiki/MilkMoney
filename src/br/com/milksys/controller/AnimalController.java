@@ -21,9 +21,11 @@ import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
+import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
+import br.com.milksys.service.SituacaoAnimalService;
 
 @Controller
 public class AnimalController extends AbstractController<Integer, Animal> {
@@ -33,19 +35,23 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
 	@FXML private TableColumn<String, String> sexoColumn;
+	@FXML private TableColumn<SituacaoAnimal, String> situacaoAnimalColumn;
 	
 	@FXML private UCTextField inputNumero;
 	@FXML private UCTextField inputNome;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
+	@FXML private ComboBox<SituacaoAnimal> inputSituacaoAnimal;
 	@FXML private ComboBox<String> inputFinalidadeAnimal;
 	@FXML private ComboBox<String> inputSexo;
 	
 	//services
 	@Autowired private RacaService racaService;
+	@Autowired private SituacaoAnimalService situacaoAnimalService;
 	
 	//controllers
 	@Autowired private RacaController racaController;
+	@Autowired private SituacaoAnimalController situacaoAnimalController;
 	
 	private ObservableList<String> sexos = FXCollections.observableArrayList(Sexo.FEMEA, Sexo.MACHO);
 
@@ -59,6 +65,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 			racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 			sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
+			situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<SituacaoAnimal,String>("situacaoAnimal"));
 			
 			super.initialize();
 
@@ -73,6 +80,10 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
 			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
+			
+			inputSituacaoAnimal.setItems(situacaoAnimalService.findAllAsObservableList());
+			inputSituacaoAnimal.getSelectionModel().selectFirst();
+			inputSituacaoAnimal.valueProperty().bindBidirectional(getObject().situacaoAnimalProperty());
 			
 			inputSexo.setItems(sexos);
 			inputSexo.getSelectionModel().selectFirst();
@@ -116,13 +127,24 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	}
 
 	@FXML
-	protected void openFormRacaToInsertAndSelect() {
+	protected void cadastrarNovaRaca() {
 		racaController.state = State.INSERT_TO_SELECT;
 		racaController.object = new Raca();
 		racaController.showForm(null);
 		if ( racaController.getObject() != null && racaController.getObject().getId() > 0 ){
 			inputRaca.getItems().add(racaController.getObject());
 			inputRaca.getSelectionModel().select(racaController.getObject());
+		}
+	}
+	
+	@FXML
+	protected void cadastrarNovaSituacaoAnimal() {
+		situacaoAnimalController.state = State.INSERT_TO_SELECT;
+		situacaoAnimalController.object = new SituacaoAnimal();
+		situacaoAnimalController.showForm(null);
+		if ( situacaoAnimalController.getObject() != null && situacaoAnimalController.getObject().getId() > 0 ){
+			inputSituacaoAnimal.getItems().add(situacaoAnimalController.getObject());
+			inputSituacaoAnimal.getSelectionModel().select(situacaoAnimalController.getObject());
 		}
 	}
 

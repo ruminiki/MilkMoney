@@ -10,14 +10,18 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.model.Animal;
+import br.com.milksys.validation.AnimalValidation;
 
 @Service
 public class AnimalService implements IService<Integer, Animal>{
 
-	@Autowired public AnimalDao dao;
+	@Autowired private AnimalDao dao;
 
 	@Override
 	public boolean save(Animal entity) {
+		
+		AnimalValidation.validate(entity);
+		
 		return dao.persist(entity);
 	}
 
@@ -49,6 +53,5 @@ public class AnimalService implements IService<Integer, Animal>{
 	public ObservableList<Animal> findAllReprodutoresAsObservableList() {
 		return findAllAsObservableList();
 	}
-	
-	
+
 }

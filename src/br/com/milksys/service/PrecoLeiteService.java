@@ -17,7 +17,7 @@ import br.com.milksys.validation.PrecoLeiteValidation;
 @Service
 public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 
-	@Autowired public PrecoLeiteDao dao;
+	@Autowired private PrecoLeiteDao dao;
 	private ObservableList<String> meses = Util.generateListMonths();
 
 	@Override

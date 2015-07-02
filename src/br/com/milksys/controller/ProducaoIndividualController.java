@@ -105,7 +105,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 
 			inputAnimalComboBox.setItems(animalService.findAllAsObservableList());
 			
-			initializeTableOverview();
+			refreshTableOverview();
 			
 		}
 		
@@ -113,7 +113,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	
 	
 	@Override
-	protected void initializeTableOverview() {
+	protected void refreshTableOverview() {
 		data.clear();
 		
 		if ( state.equals(State.LIST) ){
@@ -122,7 +122,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 				if ( tableAnimal.getItems() != null && tableAnimal.getItems().size() > 0 ){
 					table.getSelectionModel().select(0);
 					selectedAnimal = tableAnimal.getItems().get(0);
-					initializeTableOverview();
+					refreshTableOverview();
 				}	
 			}else{
 				data.addAll(((ProducaoIndividualService)service).findByAnimal(selectedAnimal));
@@ -146,7 +146,7 @@ public class ProducaoIndividualController extends AbstractController<Integer, Pr
 	
 	private void findByAnimal(Animal animal) {
 		selectedAnimal = animal;
-		initializeTableOverview();
+		refreshTableOverview();
 	}
 
 	@Override

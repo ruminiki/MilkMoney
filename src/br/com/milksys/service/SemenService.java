@@ -14,7 +14,7 @@ import br.com.milksys.model.Semen;
 @Service
 public class SemenService implements IService<Integer, Semen>{
 
-	@Autowired public SemenDao dao;
+	@Autowired private SemenDao dao;
 
 	@Override
 	public boolean save(Semen entity) {

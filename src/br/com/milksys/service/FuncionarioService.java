@@ -14,7 +14,7 @@ import br.com.milksys.model.Funcionario;
 @Service
 public class FuncionarioService implements IService<Integer, Funcionario>{
 
-	@Autowired public FuncionarioDao dao;
+	@Autowired private FuncionarioDao dao;
 
 	@Override
 	public boolean save(Funcionario entity) {

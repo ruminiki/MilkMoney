@@ -14,7 +14,7 @@ import br.com.milksys.model.FinalidadeLote;
 @Service
 public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 
-	@Autowired public FinalidadeLoteDao dao;
+	@Autowired private FinalidadeLoteDao dao;
 
 	@Override
 	public boolean save(FinalidadeLote entity) {

@@ -93,7 +93,12 @@ public class SemenReducedController extends AbstractController<Integer, Semen> {
 	
 	@Override
 	protected void handleEdit() {
-		semenController.handleEdit();
+		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
+			semenController.setObject(table.getSelectionModel().getSelectedItem());
+			semenController.handleEdit();
+		}else{
+			CustomAlert.mensagemInfo("Por favor, selecione um sêmen na tabela.");
+		}
 	}
 	
 	@Override

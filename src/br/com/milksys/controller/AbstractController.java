@@ -26,6 +26,7 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.searchers.Search;
 
 @Controller
 public abstract class AbstractController<K, E> {
@@ -42,15 +43,14 @@ public abstract class AbstractController<K, E> {
 	protected AnchorPane form;
 	protected boolean closePopUpAfterSave = true;
 	
-	//identifica a classe que fez a chamada ao controller
-	//utilizado para o estado INSERT_TO_SELECT para a necessidade de alguma validação específica
+	private Search<K,E> search;
 	private Class<?> controllerOrigin;
 
 	public void initialize() {
 
 		if (!state.equals(State.INSERT_TO_SELECT)) {
 
-			this.initializeTableOverview();
+			this.refreshTableOverview();
 			table.setItems(data);
 			updateLabelNumRegistros();
 			
@@ -160,9 +160,15 @@ public abstract class AbstractController<K, E> {
 		
 	}
 
-	protected void initializeTableOverview(){
+	protected void refreshTableOverview(){
+		
 		this.data.clear();
-		this.data.addAll(service.findAll());
+		if ( search != null ){
+			data.addAll(search.doSearch());
+		}else{
+			this.data.addAll(service.findAll());
+		}
+		
 	}
 	
 	protected abstract String getFormName();
@@ -271,6 +277,22 @@ public abstract class AbstractController<K, E> {
 
 	public void setState(State state) {
 		this.state = state;
+	}
+
+	public Search<K,E> getSearch() {
+		return search;
+	}
+
+	public void setSearch(Search<K,E> search) {
+		this.search = search;
+	}
+
+	public ObservableList<E> getData() {
+		return data;
+	}
+
+	public void setData(ObservableList<E> data) {
+		this.data = data;
 	}
 	
 }

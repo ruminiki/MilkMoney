@@ -21,7 +21,7 @@ import br.com.milksys.validation.ProducaoLeiteValidation;
 @Service
 public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 
-	@Autowired public ProducaoLeiteDao dao;
+	@Autowired private ProducaoLeiteDao dao;
 	@Autowired private PrecoLeiteService precoLeiteService;
 
 	@Override

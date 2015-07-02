@@ -86,7 +86,12 @@ public class FuncionarioReducedController extends AbstractController<Integer, Fu
 	
 	@Override
 	protected void handleEdit() {
-		funcionarioController.handleEdit();
+		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
+			funcionarioController.setObject(table.getSelectionModel().getSelectedItem());
+			funcionarioController.handleEdit();
+		}else{
+			CustomAlert.mensagemInfo("Por favor, selecione um funcionário na tabela.");
+		}
 	}
 	
 	@Override

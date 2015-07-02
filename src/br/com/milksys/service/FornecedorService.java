@@ -14,7 +14,7 @@ import br.com.milksys.model.Fornecedor;
 @Service
 public class FornecedorService implements IService<Integer, Fornecedor>{
 
-	@Autowired public FornecedorDao dao;
+	@Autowired private FornecedorDao dao;
 
 	@Override
 	public boolean save(Fornecedor entity) {

@@ -50,6 +50,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty sexo = new SimpleStringProperty();
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
 	private StringProperty finalidadeAnimal = new SimpleStringProperty();
+	private ObjectProperty<SituacaoAnimal> situacaoAnimal = new SimpleObjectProperty<SituacaoAnimal>();
 	
 
 	@OneToMany(mappedBy="femea", fetch=FetchType.LAZY)
@@ -119,22 +120,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="raca")
-	@FieldRequired(message="raça")
-	public Raca getRaca() {
-		return raca.get();
-	}
-	
-	public void setRaca(Raca raca) {
-		this.raca.set(raca);
-	}
-	
-	public ObjectProperty<Raca> racaProperty(){
-		return raca;
-	}
-	
-	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="finalidade do animal")
 	public String getFinalidadeAnimal() {
 		return finalidadeAnimal.get();
@@ -162,6 +147,41 @@ public class Animal extends AbstractEntity implements Serializable {
 		return sexo;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="raca")
+	@FieldRequired(message="raça")
+	public Raca getRaca() {
+		return raca.get();
+	}
+	
+	public void setRaca(Raca raca) {
+		this.raca.set(raca);
+	}
+	
+	public ObjectProperty<Raca> racaProperty(){
+		return raca;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="situacaoAnimal")
+	@FieldRequired(message="situação do animal")
+	public SituacaoAnimal getSituacaoAnimal() {
+		return situacaoAnimal.get();
+	}
+	
+	public void setSituacaoAnimal(SituacaoAnimal situacaoAnimal) {
+		this.situacaoAnimal.set(situacaoAnimal);
+	}
+	
+	public ObjectProperty<SituacaoAnimal> situacaoAnimalProperty(){
+		return situacaoAnimal;
+	}
+
+	
+	//==========================
+	
 	public List<Cobertura> getCoberturas() {
 		return coberturas;
 	}
@@ -169,8 +189,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	public void setCoberturas(List<Cobertura> coberturas) {
 		this.coberturas = coberturas;
 	}
-	
-	//==========================
 	
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();

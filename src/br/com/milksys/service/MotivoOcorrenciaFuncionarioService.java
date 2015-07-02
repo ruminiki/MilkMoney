@@ -14,7 +14,7 @@ import br.com.milksys.model.MotivoOcorrenciaFuncionario;
 @Service
 public class MotivoOcorrenciaFuncionarioService implements IService<Integer, MotivoOcorrenciaFuncionario>{
 
-	@Autowired public MotivoOcorrenciaFuncionarioDao dao;
+	@Autowired private MotivoOcorrenciaFuncionarioDao dao;
 
 	@Override
 	public boolean save(MotivoOcorrenciaFuncionario entity) {

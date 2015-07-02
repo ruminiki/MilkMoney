@@ -15,7 +15,7 @@ import br.com.milksys.model.OcorrenciaFuncionario;
 @Service
 public class OcorrenciaFuncionarioService implements IService<Integer, OcorrenciaFuncionario>{
 
-	@Autowired public OcorrenciaFuncionarioDao dao;
+	@Autowired private OcorrenciaFuncionarioDao dao;
 
 	@Override
 	public boolean save(OcorrenciaFuncionario entity) {
