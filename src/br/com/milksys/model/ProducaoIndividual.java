@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
@@ -55,6 +56,7 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data")
 	public Date getData() {
 		return DateUtil.asDate(data.get());
 	}
@@ -130,6 +132,7 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="animal")
+	@FieldRequired(message="animal")
 	public Animal getAnimal() {
 		return animal.get();
 	}
@@ -181,26 +184,4 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 		return getPrimeiraOrdenha().add(getSegundaOrdenha()).add(getTerceiraOrdenha());
 	}
 	
-	/*@Override
-	public boolean isValid() {
-		
-		if ( !super.isValid() )
-			return false;
-			
-		if ( getAnimal() == null ){
-			getErros().put(KMV_CAMPO_OBRIGATORIO, "animal");
-			return false;
-		}
-		
-		if ( getPrimeiraOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
-				getSegundaOrdenha().compareTo(BigDecimal.ZERO) <= 0 &&
-				getTerceiraOrdenha().compareTo(BigDecimal.ZERO) <= 0){
-			getErros().put(KMV_CAMPO_OBRIGATORIO, "primeira ordenha, segunda ordenha ou terceira ordenha");
-			return false;
-		}
-		
-		return true;
-			
-	}*/
-
 }

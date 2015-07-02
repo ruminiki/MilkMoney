@@ -13,6 +13,7 @@ import br.com.milksys.dao.ProducaoIndividualDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoIndividual;
+import br.com.milksys.validation.ProducaoIndividualValidation;
 
 @Service
 public class ProducaoIndividualService implements IService<Integer, ProducaoIndividual>{
@@ -31,9 +32,15 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 			producaoIndividual.setSegundaOrdenha(entity.getSegundaOrdenha());
 			producaoIndividual.setTerceiraOrdenha(entity.getTerceiraOrdenha());
 			entity.setId(producaoIndividual.getId());
+			
+			ProducaoIndividualValidation.validate(entity);
+			
 			return dao.persist(atualizaValor(producaoIndividual));	
 		}else{
+			
+			ProducaoIndividualValidation.validate(entity);
 			return dao.persist(entity);
+			
 		}
 		
 	}
