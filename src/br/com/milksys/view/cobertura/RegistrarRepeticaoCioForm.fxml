@@ -46,6 +46,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#handleRemoverRegistroRepeticaoCio" text="Remover" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>

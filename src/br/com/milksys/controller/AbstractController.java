@@ -261,10 +261,12 @@ public abstract class AbstractController<K, E> {
 	
 	@SuppressWarnings("unchecked")
 	protected void refreshObjectInTableView(AbstractEntity object){
-		for (int index = 0; index < data.size(); index++) {
-			AbstractEntity o = (AbstractEntity) data.get(index);
-			if (o.getId() == object.getId()) {
-				data.set(index, (E) object);
+		if ( object != null ){
+			for (int index = 0; index < data.size(); index++) {
+				AbstractEntity o = (AbstractEntity) data.get(index);
+				if (o.getId() == object.getId()) {
+					data.set(index, (E) object);
+				}
 			}
 		}
 	}

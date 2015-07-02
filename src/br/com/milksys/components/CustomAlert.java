@@ -29,6 +29,14 @@ public class CustomAlert extends Alert {
 		alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 		return alert.showAndWait();
 	}
+	
+	public static Optional<ButtonType> confirmarExclusao(String header, String text) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmação");
+		alert.setHeaderText(header);
+		alert.setContentText(text);
+		return alert.showAndWait();
+	}
 
 	public static void campoObrigatorio(String field) {
 		Alert alert = new Alert(AlertType.WARNING);

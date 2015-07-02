@@ -1,11 +1,13 @@
 package br.com.milksys.controller;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Hyperlink;
@@ -26,7 +28,6 @@ import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.exception.ValidationException;
-import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.FinalidadeAnimal;
@@ -333,7 +334,22 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		try {
 			((CoberturaService)service).registrarPrimeiroToque(getObject());
 			super.dialogStage.close();
-			refreshRegistroTabela(getObject());
+			refreshObjectInTableView(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleRemoverRegistroPrimeiroToque(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro do primeiro toque?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroPrimeiroToque(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
+			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -345,7 +361,22 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		try {
 			((CoberturaService)service).registrarReconfirmacao(getObject());
 			super.dialogStage.close();
-			refreshRegistroTabela(getObject());
+			refreshObjectInTableView(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleRemoverRegistroReconfirmacao(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da reconfirmação?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroReconfirmacao(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
+			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -357,21 +388,25 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		try {
 			((CoberturaService)service).registrarRepeticaoCio(getObject());
 			super.dialogStage.close();
-			refreshRegistroTabela(getObject());
+			refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
 		}
 	}
 	
-	private void refreshRegistroTabela(Cobertura cobertura){
-		if (table != null && data != null) {
-			for (int index = 0; index < data.size(); index++) {
-				AbstractEntity o = (AbstractEntity) data.get(index);
-				if (o.getId() == cobertura.getId()) {
-					data.set(index, cobertura);
-				}
+	@FXML
+	private void handleRemoverRegistroRepeticaoCio(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da repetição de cio?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
 			}
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
 		}
 	}
 	

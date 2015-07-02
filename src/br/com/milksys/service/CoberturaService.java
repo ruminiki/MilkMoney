@@ -24,26 +24,88 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return dao.persist(entity);
 	}
 	
-	public boolean registrarPrimeiroToque(Cobertura entity){
+	public void registrarPrimeiroToque(Cobertura entity){
 		CoberturaValidation.validateRegistroPrimeiroToque(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
 			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
-		return dao.persist(entity);
+		dao.persist(entity);
+	}
+	
+
+	public void removerRegistroPrimeiroToque(Cobertura entity) {
+		
+		entity.setDataPrimeiroToque(null);
+		entity.setObservacaoPrimeiroToque(null);
+		entity.setResultadoPrimeiroToque(null);
+		
+		if ( entity.getSituacaoCobertura() != null && !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) &&
+				!entity.getSituacaoCobertura().equals(entity.getResultadoReconfirmacao()))
+			entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+		
+		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		
+		dao.persist(entity);
+		
 	}
 	
 	
-	public boolean registrarReconfirmacao(Cobertura entity){
+	public void registrarReconfirmacao(Cobertura entity){
 		CoberturaValidation.validateRegistroReconfirmacao(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
 			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
-		return dao.persist(entity);
+		dao.persist(entity);
+	}
+	
+	public void removerRegistroReconfirmacao(Cobertura entity) {
+		
+		entity.setDataReconfirmacao(null);
+		entity.setObservacaoReconfirmacao(null);
+		entity.setResultadoReconfirmacao(null);
+		
+		if ( entity.getSituacaoCobertura() != null && !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) ){
+			if ( entity.getResultadoPrimeiroToque() != null && !entity.getResultadoPrimeiroToque().isEmpty() ){
+				entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+			}else{
+				entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			}
+		}
+		
+		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		
+		dao.persist(entity);
+		
 	}
 
-	public boolean registrarRepeticaoCio(Cobertura entity){
+	public void registrarRepeticaoCio(Cobertura entity){
 		entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
 		CoberturaValidation.validateRegistroRepeticaoCio(entity);
-		return dao.persist(entity);
+		dao.persist(entity);
 	}
+	
+	public void removerRegistroRepeticaoCio(Cobertura entity) {
+		
+		entity.setDataRepeticaoCio(null);
+		entity.setObservacaoRepeticaoCio(null);
+		
+		if ( entity.getResultadoReconfirmacao() != null && !entity.getResultadoReconfirmacao().isEmpty() ){
+			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
+		}else{
+			if ( entity.getResultadoPrimeiroToque() != null &&  !entity.getResultadoPrimeiroToque().isEmpty() ){
+				entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+			}else{
+				entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			}
+		}
+		
+		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		
+		dao.persist(entity);
+		
+	}
+	
 	
 	@Override
 	public boolean remove(Cobertura entity) {

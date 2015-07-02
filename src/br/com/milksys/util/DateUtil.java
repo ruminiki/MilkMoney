@@ -109,5 +109,26 @@ public class DateUtil {
 		return false;
 		
 	}
+
+	/**
+	 * Verifica se a primeira data é maior que a segunda, sem considerar hora.
+	 * @param data
+	 * @param date
+	 * @return
+	 */
+	public static boolean after(Date data1, Date data2) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
+		
+		try{
+			if ( Integer.parseInt(sdf.format(data1)) > Integer.parseInt(sdf.format(data2)) )
+				return true;
+		}catch(Exception e){
+			return false;
+		}
+		
+		return false;
+		
+	}
 }
 

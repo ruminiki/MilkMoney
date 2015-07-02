@@ -1,5 +1,8 @@
 package br.com.milksys.validation;
 
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.Sexo;
@@ -9,11 +12,17 @@ import br.com.milksys.util.DateUtil;
 
 public class CoberturaValidation extends Validator {
 	
+	
+	
 	public static void validate(Cobertura cobertura) {
 	
 		Validator.validate(cobertura);
 		
-		//===============FÊMEA========================
+		if ( DateUtil.after(cobertura.getData(), new Date()) ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"A data da cobertura não pode ser maior que a data atual.");
+		}
+		
 		if ( !cobertura.getFemea().getSexo().equals(Sexo.FEMEA) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"O animal selecionado para a cobertura deve ser uma fêmea.");
@@ -26,35 +35,12 @@ public class CoberturaValidation extends Validator {
 					"Verifique se existe um erro no cadastro do animal.");
 		}
 		
-		if ( cobertura.getFemea().getCoberturas() != null && cobertura.getFemea().getCoberturas().size() > 0 ){
-			/*
-			* Uma vaca não pode ter a cobertura cadastrada se:
-			* 1. Foi coberta a menos de 30 dias;
-			* 2. Tiver uma cobertura com situação: PRENHA, ou INDEFINIDA; 
-			* Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA;
-			* No caso de registro de parto a situação muda para PARIDA.
-			*/
-			for ( Cobertura c : cobertura.getFemea().getCoberturas() ){
-				if ( c.getId() != cobertura.getId() && 
-						(c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
-						c.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) ){
-					
-					throw new ValidationException(CAMPO_OBRIGATORIO,
-							"A fêmea [" + c.getFemea().getNumeroNome()+"] possui uma cobertura registrada no dia " + 
-							DateUtil.format(c.getData()) +	" com situação " + c.getSituacaoCobertura() + ". " +
-							"É necessário finalizar aquela cobertura, indicando se houve repetição de cio ou parto, para então registrar uma nova cobertura.");
-					
-				}
-			}
-			
-		}
-		//===============TIPO COBERTURA===============
+		
 		if ( cobertura.getTipoCobertura() == null ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [tipo de cobertura] para continuar.");
 		}
 		
-		//===============MONTA NATURAL===============
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
 			//TOURO NÃO PODE SER NULO
 			if ( cobertura.getTouro() == null ){
@@ -73,8 +59,7 @@ public class CoberturaValidation extends Validator {
 						"Verifique se existe um erro no cadastro do animal.");
 			}
 		}
-		
-		//===============ENSEMINAÇÃO ARTIFICIAL========
+
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
 			//SEMEN NÃO PODE SER NULO
 			if ( cobertura.getSemen() == null ){
@@ -88,12 +73,71 @@ public class CoberturaValidation extends Validator {
 			}
 		}
 		
-		//===============RESPONSÁVEL COBERTURA===========
 		if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
 		}
 		
+		/*
+		 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
+		 * 1. Foi coberta a menos de 21 dias;
+		 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
+		 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
+		 * No caso de registro de parto a situação muda para PARIDA.
+		 * @param cobertura
+		 */
+		if ( cobertura.getFemea().getCoberturas() != null && cobertura.getFemea().getCoberturas().size() > 0 ){
+			
+			for ( Cobertura c : cobertura.getFemea().getCoberturas() ){
+				//se não for a mesma cobertura
+				if ( c.getId() != cobertura.getId() ){
+					
+					long diasEntreCoberturas = ChronoUnit.DAYS.between(DateUtil.asLocalDate(c.getData()), DateUtil.asLocalDate(cobertura.getData()));
+					
+					if ( diasEntreCoberturas < 21 ){
+						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
+								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
+								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
+					}
+					
+					validaSituacoesCoberturasDoAnimal(cobertura);
+					
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * Não deve ser permitido que seja mantido duas coberturas com status PRENHA ou INDEFINIDA.
+	 * 
+	 * Toda cobertura precisa ser finalizada de alguma forma, ou indicando a repetição, o vazio ou o parto
+	 * as situações que indicam que a cobertura está finalizada são
+	 * PARIDA, VAZIA e REPETIDA.
+	 * 
+	 * @param cobertura
+	 */
+	public static void validaSituacoesCoberturasDoAnimal(Cobertura cobertura){
+		
+		if ( cobertura.getFemea().getCoberturas() != null && cobertura.getFemea().getCoberturas().size() > 0 ){
+			
+			for ( Cobertura c : cobertura.getFemea().getCoberturas() ){
+				//se não for a mesma cobertura
+				if ( c.getId() != cobertura.getId() ){
+					
+					if ( (c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || c.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) &&
+						 (cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) ){
+						
+						throw new ValidationException(CAMPO_OBRIGATORIO,
+								"A fêmea [" + c.getFemea().getNumeroNome()+"] possui uma cobertura registrada no dia " + 
+								DateUtil.format(c.getData()) +	" com situação " + c.getSituacaoCobertura() + ". " +
+								"É necessário finalizar aquela cobertura, indicando se houve repetição de cio ou parto, para então registrar/alterar essa cobertura. " +
+								"Não é possível haver duas coberturas com situações PRENHA ou INDEFINIDA ao mesmo tempo para um mesmo animal.");
+					}
+					
+				}
+			}
+		}
 	}
 	
 	
