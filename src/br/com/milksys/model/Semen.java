@@ -25,6 +25,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Formula;
+
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
@@ -49,6 +51,9 @@ public class Semen extends AbstractEntity implements Serializable {
 	private StringProperty quantidade = new SimpleStringProperty();
 	private StringProperty lote = new SimpleStringProperty();
 	private ObjectProperty<Fornecedor> fornecedor = new SimpleObjectProperty<Fornecedor>();
+	
+	@Formula("(quantidade - (select sum(c.quantidadeDosesUtilizadas) from Cobertura c where c.semen = id))")
+	private BigDecimal quantidadeDisponivel;
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
@@ -157,6 +162,16 @@ public class Semen extends AbstractEntity implements Serializable {
 		return fornecedor;
 	}
 	
+	
+	@Transient
+	public BigDecimal getQuantidadeDisponivel() {
+		return quantidadeDisponivel;
+	}
+
+	public void setQuantidadeDisponivel(BigDecimal quantidadeDisponivel) {
+		this.quantidadeDisponivel = quantidadeDisponivel;
+	}
+
 	@Override
 	public String toString() {
 		return this.getTouro();

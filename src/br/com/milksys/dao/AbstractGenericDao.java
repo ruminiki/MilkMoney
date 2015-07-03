@@ -34,8 +34,8 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
         try{
         	entityManager.unwrap(Session.class).setFlushMode(FlushMode.COMMIT);
         	entityManager.persist(entity);
-        	entityManager.merge(entity);
         	entityTransaction.commit();
+        	entityManager.refresh(entity);
         	
         }catch(Exception e){
         	throw e;

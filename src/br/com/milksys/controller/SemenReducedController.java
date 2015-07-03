@@ -26,7 +26,7 @@ public class SemenReducedController extends AbstractController<Integer, Semen> {
 	@FXML private TableColumn<Semen, String> descricaoColumn;
 	@FXML private TableColumn<Semen, String> touroColumn;
 	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
-	@FXML private TableColumn<Semen, String> quantidadeColumn;
+	@FXML private TableColumn<Semen, String> quantidadeDisponivelColumn;
 	
 	@Autowired private SemenController semenController;
 	
@@ -38,7 +38,7 @@ public class SemenReducedController extends AbstractController<Integer, Semen> {
 			descricaoColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("descricao"));
 			touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
 			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
-			quantidadeColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
+			quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
 			
 			semenController.data.addListener(new ListChangeListener<Semen>(){
 				@Override

@@ -55,7 +55,11 @@
           <TableColumn fx:id="descricaoColumn" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" sortable="false" text="Descrição" />
             <TableColumn fx:id="touroColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" text="Touro" />
           <TableColumn fx:id="dataCompraColumn" maxWidth="100.0" minWidth="100.0" prefWidth="97.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Data Compra" />
-            <TableColumn fx:id="quantidadeColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Quantidade" />
+            <TableColumn maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Quantidade">
+               <columns>
+                  <TableColumn fx:id="quantidadeAdquiridaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Adquirida" />
+                  <TableColumn fx:id="quantidadeDisponivelColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Disponível" />
+               </columns></TableColumn>
             <TableColumn fx:id="loteColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Lote" />
             <TableColumn prefWidth="75.0" sortable="false" text="Valor">
                <columns>

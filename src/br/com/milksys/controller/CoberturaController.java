@@ -95,6 +95,38 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
 	@Autowired private SearchReprodutoresAtivos searchReprodutoresAtivos;
 	
+	EventHandler<ActionEvent> selectSemenEventHandler = new EventHandler<ActionEvent>() {
+	    @Override public void handle(ActionEvent e) {
+	    	
+			semenReducedController.object = new Semen();
+			semenReducedController.showForm(null);
+			
+			if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
+				getObject().setSemen(semenReducedController.getObject());
+				inputSemen.setText(semenReducedController.getObject().getDescricao());
+			}else{
+				inputSemen.setText("");
+			}
+			
+	    }
+	};
+	
+	EventHandler<ActionEvent> selectReprodutorEventHandler = new EventHandler<ActionEvent>() {
+	    @Override public void handle(ActionEvent e) {
+			
+			animalReducedController.object = new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO);
+			//animalReducedController.setSearch(searchReprodutoresAtivos);
+			
+			animalReducedController.showForm(null);
+			if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
+				getObject().setTouro(animalReducedController.getObject());
+				inputReprodutor.setText(animalReducedController.getObject().getNumeroNome());
+			}else{
+				inputReprodutor.setText("");
+			}
+	    }
+	};
+	
 	@FXML
 	public void initialize() {
 		
@@ -161,7 +193,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
 			
 			MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
-			inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesSemenProperty());
+			inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesUtilizadasProperty());
 			
 			if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
 				getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
@@ -191,6 +223,8 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 				
 				inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
 				inputReprodutor.setDisable(true);
+				btnNovoReprodutor.setDisable(false);
+				btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
 			}
 			
 			if ( getObject().getSemen() != null ){
@@ -203,6 +237,9 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 				gridPane.getChildren().remove(inputSemen);
 				gridPane.getChildren().add(inputSemen);
 				GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
+				
+				btnNovoReprodutor.setDisable(false);
+				btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 				
 				inputSemen.setDisable(true);
 				inputSemen.textProperty().bindBidirectional(getObject().getSemen().touroProperty());
@@ -229,14 +266,14 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		if ( state.equals(State.PRIMEIRO_TOQUE) ){
 			inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
 			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().resultadoPrimeiroToqueProperty());
+			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoPrimeiroToqueToqueProperty());
 			inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
 		}
 		
 		if ( state.equals(State.RECONFIRMACAO) ){
 			inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
 			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().resultadoReconfirmacaoProperty());
+			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoReconfirmacaoProperty());
 			inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoProperty());
 		}
 		
@@ -303,22 +340,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		
 		dialogStage.show();
 		
-		btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-				
-				animalReducedController.object = new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO);
-				animalReducedController.setSearch(searchReprodutoresAtivos);
-				
-				animalReducedController.showForm(null);
-				if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
-					getObject().setTouro(animalReducedController.getObject());
-					inputReprodutor.setText(animalReducedController.getObject().getNumeroNome());
-				}else{
-					inputReprodutor.setText("");
-				}
-		    }
-		    
-		});
+		btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
 	}
 	
 	/*
@@ -347,22 +369,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		
 		dialogStage.show();
 		
-		btnNovoReprodutor.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	
-				semenReducedController.object = new Semen();
-				semenReducedController.showForm(null);
-				
-				if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
-					getObject().setSemen(semenReducedController.getObject());
-					inputSemen.setText(semenReducedController.getObject().getDescricao());
-				}else{
-					inputSemen.setText("");
-				}
-				
-		    }
-		});
-		
+		btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 	}
 	
 	@FXML
@@ -429,7 +436,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	protected void handleSelecionarFemea() {
 		
 		animalReducedController.object = new Animal(Sexo.FEMEA);
-		animalReducedController.setSearch(searchFemeasAtivas);
+		//animalReducedController.setSearch(searchFemeasAtivas);
 		animalReducedController.showForm(animalReducedController.getFormName());
 		
 		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){

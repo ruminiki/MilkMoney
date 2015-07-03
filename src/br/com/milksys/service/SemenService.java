@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.SemenDao;
 import br.com.milksys.model.Semen;
+import br.com.milksys.validation.SemenValidation;
 
 @Service
 public class SemenService implements IService<Integer, Semen>{
@@ -18,6 +19,10 @@ public class SemenService implements IService<Integer, Semen>{
 
 	@Override
 	public boolean save(Semen entity) {
+		
+		SemenValidation.validate(entity);
+		SemenValidation.validadeQuantidadeUtilizada(entity, dao.findQuantidadeUtilizada(entity));
+		
 		return dao.persist(entity);
 	}
 

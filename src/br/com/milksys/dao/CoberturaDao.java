@@ -3,6 +3,7 @@ package br.com.milksys.dao;
 import java.util.List;
 
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
@@ -60,6 +61,19 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		query.setParameter("femea", femea);
 		
 		return query.getResultList();
+	}
+
+	public int findQuantidadeDosesSemenUtilizadasNaCobertura(Cobertura entity) {
+		
+		Query query = entityManager.createQuery("SELECT quantidadeDosesUtilizadas from Cobertura c where c.id =:id ");
+		query.setParameter("id", entity.getId());
+		
+		try{
+			return ((Integer)query.getSingleResult()).intValue();
+		}catch(NoResultException e){
+			return 0;
+		}
+		
 	}
 
 }

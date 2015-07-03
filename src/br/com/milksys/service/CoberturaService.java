@@ -30,6 +30,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		CoberturaValidation.validate(entity);
 		CoberturaValidation.validaCoberturasAnimal(entity, findByAnimal(entity.getFemea()));
+		CoberturaValidation.validaEnseminacaoArtificial(entity, (entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity)));
 		
 		return dao.persist(entity);
 	}
@@ -42,7 +43,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		CoberturaValidation.validateRegistroPrimeiroToque(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
-			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+			entity.setSituacaoCobertura(entity.getSituacaoPrimeiroToque());
 		
 		dao.persist(entity);
 	}
@@ -56,7 +57,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		entity.setDataPrimeiroToque(null);
 		entity.setObservacaoPrimeiroToque(null);
-		entity.setResultadoPrimeiroToque(null);
+		entity.setSituacaoPrimeiroToque(null);
 		
 		configureSituacaoCobertura(entity);
 		
@@ -76,7 +77,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		CoberturaValidation.validateRegistroReconfirmacao(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
-			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
+			entity.setSituacaoCobertura(entity.getSituacaoReconfirmacao());
 		dao.persist(entity);
 	}
 	
@@ -88,7 +89,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		entity.setDataReconfirmacao(null);
 		entity.setObservacaoReconfirmacao(null);
-		entity.setResultadoReconfirmacao(null);
+		entity.setSituacaoReconfirmacao(null);
 		
 		configureSituacaoCobertura(entity);
 		
@@ -136,12 +137,12 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		}
 		
 		if ( entity.getDataReconfirmacao() != null ){
-			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
+			entity.setSituacaoCobertura(entity.getSituacaoReconfirmacao());
 			return;
 		}
 		
 		if ( entity.getDataPrimeiroToque() != null ){
-			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+			entity.setSituacaoCobertura(entity.getSituacaoPrimeiroToque());
 			return;
 		}
 		

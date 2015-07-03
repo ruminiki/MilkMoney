@@ -45,10 +45,10 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
 	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty resultadoPrimeiroToque = new SimpleStringProperty();
+	private StringProperty situacaoPrimeiroToque = new SimpleStringProperty();
 	private StringProperty observacaoPrimeiroToque = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataReconfirmacao = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty resultadoReconfirmacao = new SimpleStringProperty();
+	private StringProperty situacaoReconfirmacao = new SimpleStringProperty();
 	private StringProperty observacaoReconfirmacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataRepeticaoCio = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty observacaoRepeticaoCio = new SimpleStringProperty();
@@ -57,7 +57,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<Animal> touro = new SimpleObjectProperty<Animal>();
 	private StringProperty situacaoCobertura = new SimpleStringProperty();
 	private ObjectProperty<Semen> semen = new SimpleObjectProperty<Semen>();
-	private StringProperty quantidadeDosesSemen = new SimpleStringProperty();
+	private StringProperty quantidadeDosesUtilizadas = new SimpleStringProperty();
 	private StringProperty nomeResponsavel = new SimpleStringProperty();
 	private ObjectProperty<Funcionario> funcionarioResponsavel = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico> servico = new SimpleObjectProperty<Servico>();
@@ -130,16 +130,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getResultadoPrimeiroToque() {
-		return this.resultadoPrimeiroToque.get();
+	public String getSituacaoPrimeiroToque() {
+		return this.situacaoPrimeiroToque.get();
 	}
 
-	public void setResultadoPrimeiroToque(String resultadoPrimeiroToque) {
-		this.resultadoPrimeiroToque.set(resultadoPrimeiroToque);
+	public void setSituacaoPrimeiroToque(String situacaoPrimeiroToque) {
+		this.situacaoPrimeiroToque.set(situacaoPrimeiroToque);
 	}
 
-	public StringProperty resultadoPrimeiroToqueProperty(){
-		return resultadoPrimeiroToque;
+	public StringProperty situacaoPrimeiroToqueToqueProperty(){
+		return situacaoPrimeiroToque;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -148,7 +148,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 
 	public void setObservacaoPrimeiroToque(String observacaoPrimeiroToque) {
-		this.resultadoPrimeiroToque.set(observacaoPrimeiroToque);
+		this.situacaoPrimeiroToque.set(observacaoPrimeiroToque);
 	}
 
 	public StringProperty observacaoPrimeiroToqueProperty(){
@@ -170,16 +170,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getResultadoReconfirmacao() {
-		return this.resultadoReconfirmacao.get();
+	public String getSituacaoReconfirmacao() {
+		return this.situacaoReconfirmacao.get();
 	}
 
-	public void setResultadoReconfirmacao(String resultadoReconfirmacao) {
-		this.resultadoReconfirmacao.set(resultadoReconfirmacao);
+	public void setSituacaoReconfirmacao(String situacaoReconfirmacao) {
+		this.situacaoReconfirmacao.set(situacaoReconfirmacao);
 	}
 
-	public StringProperty resultadoReconfirmacaoProperty(){
-		return resultadoReconfirmacao;
+	public StringProperty situacaoReconfirmacaoProperty(){
+		return situacaoReconfirmacao;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -297,18 +297,18 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public int getQuantidadeDosesSemen() {
-		if ( quantidadeDosesSemen.get() != null )
-			return Integer.valueOf(this.quantidadeDosesSemen.get());
+	public int getQuantidadeDosesUtilizadas() {
+		if ( quantidadeDosesUtilizadas.get() != null )
+			return Integer.valueOf(this.quantidadeDosesUtilizadas.get());
 		return 0;
 	}
 	
-	public void setQuantidadeDosesSemen(int quantidadeDosesSemen) {
-		this.quantidadeDosesSemen.set(String.valueOf(quantidadeDosesSemen));
+	public void setQuantidadeDosesUtilizadas(int quantidadeDosesUtilizadas) {
+		this.quantidadeDosesUtilizadas.set(String.valueOf(quantidadeDosesUtilizadas));
 	}
 	
-	public StringProperty quantidadeDosesSemenProperty(){
-		return quantidadeDosesSemen;
+	public StringProperty quantidadeDosesUtilizadasProperty(){
+		return quantidadeDosesUtilizadas;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -376,15 +376,15 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	public String getPrimeiroToque(){
-		if ( getResultadoPrimeiroToque() == null || getResultadoPrimeiroToque().isEmpty() )
+		if ( getSituacaoPrimeiroToque() == null || getSituacaoPrimeiroToque().isEmpty() )
 			return "--";
-		return DateUtil.format(getDataPrimeiroToque()) + " - " + getResultadoPrimeiroToque();
+		return DateUtil.format(getDataPrimeiroToque()) + " - " + getSituacaoPrimeiroToque();
 	}
 	
 	public String getReconfirmacao(){
-		if ( getResultadoReconfirmacao() == null || getResultadoReconfirmacao().isEmpty() )
+		if ( getSituacaoReconfirmacao() == null || getSituacaoReconfirmacao().isEmpty() )
 			return "--";
-		return DateUtil.format(getDataReconfirmacao()) + " - " + getResultadoReconfirmacao();
+		return DateUtil.format(getDataReconfirmacao()) + " - " + getSituacaoReconfirmacao();
 	}
 	
 	@Override

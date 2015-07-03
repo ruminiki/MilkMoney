@@ -32,7 +32,8 @@ public class SemenController extends AbstractController<Integer, Semen> {
 	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
 	@FXML private TableColumn<Semen, String> valorUnitarioColumn;
 	@FXML private TableColumn<Semen, String> valorTotalColumn;
-	@FXML private TableColumn<Semen, String> quantidadeColumn;
+	@FXML private TableColumn<Semen, String> quantidadeAdquiridaColumn;
+	@FXML private TableColumn<Semen, String> quantidadeDisponivelColumn;
 	@FXML private TableColumn<Semen, String> loteColumn;
 	
 	@FXML private UCTextField inputDescricao;
@@ -56,7 +57,8 @@ public class SemenController extends AbstractController<Integer, Semen> {
 			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
 			valorUnitarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorUnitario"));
 			valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorTotal"));
-			quantidadeColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
+			quantidadeAdquiridaColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
+			quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
 			loteColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("lote"));
 			
 			super.initialize();

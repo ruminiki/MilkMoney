@@ -59,14 +59,36 @@ public class CoberturaValidation extends Validator {
 			}
 		}
 
+	}
+	
+	/**
+	 * Valida o registro de enseminação na cobertura.
+	 * 
+	 * @param cobertura
+	 * @param aumentouQuantidadeDosesUtilizadas
+	 */
+	public static void validaEnseminacaoArtificial(Cobertura cobertura, boolean aumentouQuantidadeDosesUtilizadas){
+		
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
 			//SEMEN NÃO PODE SER NULO
 			if ( cobertura.getSemen() == null ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"Por favor, infome o campo [sêmen] para continuar.");
 			}
+			
+			//se for novo registro ou 
+			//se durante a ateração de um registro o usuário aumentar a quantidade de doses
+			//sendo que não há doses suficientes disponíveis
+			if ( cobertura.getId() <= 0 || aumentouQuantidadeDosesUtilizadas ){
+				if ( cobertura.getQuantidadeDosesUtilizadas() > cobertura.getSemen().getQuantidadeDisponivel().intValue() ){
+					throw new ValidationException(CAMPO_OBRIGATORIO, 
+							"O sêmen selecionado não possui quantidade suficiente disponível. "
+							+ "Por favor, verifique se a quantidade de doses informada está correta ou então selecione outro sêmen ou verifique se há um erro no cadastro do sêmen.");
+				}
+			}
+			
 			//DEVE SER INFORMADA A QUANTIDADE DE DOSES PARA FAZER O CONTROLE SOBRE O ESTOQUE
-			if ( cobertura.getQuantidadeDosesSemen() <= 0 ){
+			if ( cobertura.getQuantidadeDosesUtilizadas() <= 0 ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"Por favor, infome o campo [quantidade doses utilizadas] para continuar.");
 			}
@@ -76,7 +98,6 @@ public class CoberturaValidation extends Validator {
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
 		}
-		
 	}
 	
 	
@@ -145,7 +166,7 @@ public class CoberturaValidation extends Validator {
 	
 	public static void validateRegistroPrimeiroToque(Cobertura cobertura){
 		//===============PREENCHIMENTO DOS CAMPOS===========
-		if ( cobertura.getResultadoPrimeiroToque() == null || cobertura.getResultadoPrimeiroToque().isEmpty() ){
+		if ( cobertura.getSituacaoPrimeiroToque() == null || cobertura.getSituacaoPrimeiroToque().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome a situação da cobertura para continuar.");
 		}
@@ -161,7 +182,7 @@ public class CoberturaValidation extends Validator {
 					"A data do primeiro toque não pode ser menor ou igual a data da cobertura.");
 		}
 		
-		if ( cobertura.getDataReconfirmacao() != null && !cobertura.getResultadoReconfirmacao().isEmpty() &&
+		if ( cobertura.getDataReconfirmacao() != null && !cobertura.getSituacaoReconfirmacao().isEmpty() &&
 				(cobertura.getDataPrimeiroToque().after(cobertura.getDataReconfirmacao()) || DateUtil.isSameDate(cobertura.getDataPrimeiroToque(), cobertura.getDataReconfirmacao())) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"A data do primeiro toque não pode ser maior ou igual a data da reconfirmação.");
@@ -177,7 +198,7 @@ public class CoberturaValidation extends Validator {
 	
 	public static void validateRegistroReconfirmacao(Cobertura cobertura){
 		//===============PREENCHIMENTO DOS CAMPOS===========
-		if ( cobertura.getResultadoReconfirmacao() == null || cobertura.getResultadoReconfirmacao().isEmpty() ){
+		if ( cobertura.getSituacaoReconfirmacao() == null || cobertura.getSituacaoReconfirmacao().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome a situação da cobertura para continuar.");
 		}
@@ -194,12 +215,12 @@ public class CoberturaValidation extends Validator {
 		}
 		
 		if ( cobertura.getDataPrimeiroToque() == null || 
-				cobertura.getResultadoPrimeiroToque() == null || cobertura.getResultadoPrimeiroToque().isEmpty() ){ 
+				cobertura.getSituacaoPrimeiroToque() == null || cobertura.getSituacaoPrimeiroToque().isEmpty() ){ 
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, registre o primeiro toque antes de registrar a reconfirmação.");
 		}
 		
-		if ( cobertura.getDataPrimeiroToque() != null && !cobertura.getResultadoPrimeiroToque().isEmpty() &&
+		if ( cobertura.getDataPrimeiroToque() != null && !cobertura.getSituacaoPrimeiroToque().isEmpty() &&
 				(cobertura.getDataPrimeiroToque().after(cobertura.getDataReconfirmacao()) || DateUtil.isSameDate(cobertura.getDataPrimeiroToque(), cobertura.getDataReconfirmacao())) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"A data da reconfirmação não pode ser menor ou igual a data do primeiro toque.");
