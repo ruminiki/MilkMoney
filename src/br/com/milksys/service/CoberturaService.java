@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.CoberturaDao;
+import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.validation.CoberturaValidation;
+import br.com.milksys.validation.Validator;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
@@ -20,27 +22,41 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Override
 	public boolean save(Cobertura entity) {
+		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		CoberturaValidation.validate(entity);
+		
 		return dao.persist(entity);
 	}
 	
 	public void registrarPrimeiroToque(Cobertura entity){
+		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		CoberturaValidation.validateRegistroPrimeiroToque(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
 			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+		
 		dao.persist(entity);
 	}
 	
 
 	public void removerRegistroPrimeiroToque(Cobertura entity) {
 		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		entity.setDataPrimeiroToque(null);
 		entity.setObservacaoPrimeiroToque(null);
 		entity.setResultadoPrimeiroToque(null);
 		
-		if ( entity.getSituacaoCobertura() != null && !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) &&
-				!entity.getSituacaoCobertura().equals(entity.getResultadoReconfirmacao()))
-			entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
@@ -51,6 +67,11 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	
 	public void registrarReconfirmacao(Cobertura entity){
+		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		CoberturaValidation.validateRegistroReconfirmacao(entity);
 		if ( !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
 			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
@@ -59,17 +80,15 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	public void removerRegistroReconfirmacao(Cobertura entity) {
 		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		entity.setDataReconfirmacao(null);
 		entity.setObservacaoReconfirmacao(null);
 		entity.setResultadoReconfirmacao(null);
 		
-		if ( entity.getSituacaoCobertura() != null && !entity.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) ){
-			if ( entity.getResultadoPrimeiroToque() != null && !entity.getResultadoPrimeiroToque().isEmpty() ){
-				entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
-			}else{
-				entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
-			}
-		}
+		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
@@ -79,6 +98,11 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 
 	public void registrarRepeticaoCio(Cobertura entity){
+		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
 		CoberturaValidation.validateRegistroRepeticaoCio(entity);
 		dao.persist(entity);
@@ -86,23 +110,40 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	public void removerRegistroRepeticaoCio(Cobertura entity) {
 		
+		if ( entity.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		entity.setDataRepeticaoCio(null);
 		entity.setObservacaoRepeticaoCio(null);
 		
-		if ( entity.getResultadoReconfirmacao() != null && !entity.getResultadoReconfirmacao().isEmpty() ){
-			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
-		}else{
-			if ( entity.getResultadoPrimeiroToque() != null &&  !entity.getResultadoPrimeiroToque().isEmpty() ){
-				entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
-			}else{
-				entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
-			}
-		}
+		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
 		
 		dao.persist(entity);
+		
+	}
+	
+	private void configureSituacaoCobertura(Cobertura entity){
+		
+		if ( entity.getDataRepeticaoCio() != null ){
+			entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
+			return;
+		}
+		
+		if ( entity.getDataReconfirmacao() != null ){
+			entity.setSituacaoCobertura(entity.getResultadoReconfirmacao());
+			return;
+		}
+		
+		if ( entity.getDataPrimeiroToque() != null ){
+			entity.setSituacaoCobertura(entity.getResultadoPrimeiroToque());
+			return;
+		}
+		
+		entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
 		
 	}
 	
@@ -132,4 +173,20 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		dao.removeServicoFromCobertura(cobertura);
 	}
 
+	@Override
+	public void validate(Cobertura entity) {
+		CoberturaValidation.validate(entity);
+	}
+
+	public void registrarParto(Cobertura entity) {
+		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
+		dao.persist(entity);
+		
+	}
+
+	public void removerParto(Cobertura entity) {
+		configureSituacaoCobertura(entity);
+		dao.removerParto(entity);
+	}
+	
 }

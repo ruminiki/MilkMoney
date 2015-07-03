@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import org.springframework.stereotype.Component;
 
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.model.Parto;
 import br.com.milksys.model.Servico;
 
 @Component
@@ -27,6 +28,26 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
         entityTransaction.commit();
 		
 		
+	}
+
+	public void removerParto(Cobertura cobertura) {
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+		
+        Parto parto = cobertura.getParto();
+		if ( parto != null && parto.getId() > 0 ){
+			
+			cobertura.setParto(null);
+			
+			if ( cobertura.getId() > 0 ){
+				entityManager.persist(cobertura);
+			}
+			
+			entityManager.remove(parto);
+			
+		}
+        
+        entityTransaction.commit();
 	}
 
 }

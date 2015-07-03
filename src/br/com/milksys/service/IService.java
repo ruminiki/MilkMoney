@@ -8,4 +8,6 @@ public interface IService<K, E> {
     boolean remove(E entity);
     E findById(K id);
     List<E> findAll();
+    void validate(E entity);
+   
 }

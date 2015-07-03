@@ -71,7 +71,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 
 		}
 		
-		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
+		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || 
+				state.equals(State.INSERT_TO_SELECT) || state.equals(State.CREATE_TO_SELECT) ){
 			
 			inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
 			inputNome.textProperty().bindBidirectional(getObject().nomeProperty());

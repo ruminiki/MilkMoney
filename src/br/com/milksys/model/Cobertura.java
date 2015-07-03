@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -60,6 +61,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty nomeResponsavel = new SimpleStringProperty();
 	private ObjectProperty<Funcionario> funcionarioResponsavel = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico> servico = new SimpleObjectProperty<Servico>();
+	private Parto parto;
 	
 	public int getId() {
 		return this.id;
@@ -352,12 +354,23 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return servico;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@OneToOne(targetEntity=Parto.class, cascade=CascadeType.ALL)
+	@JoinColumn(name="parto")
+	public Parto getParto() {
+		return parto;
+	}
+
+	public void setParto(Parto parto) {
+		this.parto = parto;
+	}
+
 	public String getReprodutor(){
 		if ( this.getTouro() != null )
 			return this.getTouro().getNumeroNome();
 		
 		if ( this.getSemen() != null )
-			return this.getSemen().getDescricao();
+			return this.getSemen().getTouro();
 		
 		return null;
 	}
@@ -372,6 +385,11 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		if ( getResultadoReconfirmacao() == null || getResultadoReconfirmacao().isEmpty() )
 			return "--";
 		return DateUtil.format(getDataReconfirmacao()) + " - " + getResultadoReconfirmacao();
+	}
+	
+	@Override
+	public String toString() {
+		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + " PREVISÃO PARTO: " + DateUtil.format(getPrevisaoParto()); 
 	}
 	
 }

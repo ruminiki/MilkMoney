@@ -41,6 +41,12 @@ public class RacaService implements IService<Integer, Raca>{
 		list.addAll(dao.findAll(Raca.class));
 		return list;
 	}
+
+	@Override
+	public void validate(Raca entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

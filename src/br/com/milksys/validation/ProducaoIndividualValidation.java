@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.ProducaoIndividual;
+import br.com.milksys.model.Sexo;
 
 public class ProducaoIndividualValidation extends Validator {
 	
@@ -17,6 +18,10 @@ public class ProducaoIndividualValidation extends Validator {
 			
 			throw new ValidationException(CAMPO_OBRIGATORIO, "É necessário informar pelo menos um valor para primeira ordenha, segunda ordenha ou terceira ordenha.");
 			
+		}
+		
+		if ( !producaoIndividual.getAnimal().getSexo().equals(Sexo.FEMEA) ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, "Somente pode ser registrada a produção de animais fêmeas.");
 		}
 		
 	}

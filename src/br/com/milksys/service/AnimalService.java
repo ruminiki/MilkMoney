@@ -54,4 +54,9 @@ public class AnimalService implements IService<Integer, Animal>{
 		return findAllAsObservableList();
 	}
 
+	@Override
+	public void validate(Animal entity) {
+		AnimalValidation.validate(entity);
+	}
+
 }

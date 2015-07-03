@@ -53,7 +53,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<SituacaoAnimal> situacaoAnimal = new SimpleObjectProperty<SituacaoAnimal>();
 	
 
-	@OneToMany(mappedBy="femea", fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="femea")
 	private List<Cobertura> coberturas;
 	
 	public Animal() {

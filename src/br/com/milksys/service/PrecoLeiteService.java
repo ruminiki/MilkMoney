@@ -83,4 +83,10 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 		
 	}
 
+	@Override
+	public void validate(PrecoLeite entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

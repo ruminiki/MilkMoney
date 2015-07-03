@@ -10,13 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
 
 import javax.annotation.Resource;
 
@@ -31,6 +28,7 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.FinalidadeAnimal;
+import br.com.milksys.model.Parto;
 import br.com.milksys.model.ResponsavelServico;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.Servico;
@@ -43,7 +41,6 @@ import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
 import br.com.milksys.service.searchers.SearchFemeasAtivas;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
-import br.com.milksys.util.DateUtil;
 
 @Controller
 public class CoberturaController extends AbstractController<Integer, Cobertura> {
@@ -72,6 +69,8 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private UCTextField inputObservacao;
 	
 	@FXML private Button btnNovoReprodutor;
+	@FXML private Button btnSalvar;
+	
 	@FXML private Label lblReprodutor;
 	@FXML private Label lblQuantidadeDosesSemen;
 	
@@ -86,6 +85,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@Autowired private AnimalReducedController animalReducedController;
 	@Autowired private AnimalController animalController;
 	@Autowired private ServicoController servicoController;
+	@Autowired private PartoController partoController;
 	
 	//searchers
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
@@ -102,103 +102,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 			tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 			situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
-			
-			repeticaoCioColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,LocalDate>("dataRepeticaoCio"));
-			repeticaoCioColumn.setCellFactory(new Callback<TableColumn<Cobertura,LocalDate>, TableCell<Cobertura,LocalDate>>(){
-				@Override
-				public TableCell<Cobertura, LocalDate> call(TableColumn<Cobertura, LocalDate> param) {
-					TableCell<Cobertura, LocalDate> cell = new TableCell<Cobertura, LocalDate>(){
-						@Override
-						public void updateItem(LocalDate item, boolean empty) {
-							Hyperlink link = new Hyperlink();
-							if ( getTableRow().getIndex() < data.size() ){
-								/*Cobertura c = data.get(getTableRow().getIndex());
-								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) )
-									getTableRow().setStyle("-fx-background-color: #99FF00;");
-								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA)  )
-									getTableRow().setStyle("-fx-background-color: #FF3300;");
-								if ( c.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) )
-									getTableRow().setStyle("-fx-background-color: #FF3300;");*/
-								if(item!=null){
-									link.setText(DateUtil.format(item));
-								}else{
-									link.setText("--");
-								}
-							}
-							link.setFocusTraversable(false);
-							link.setOnAction(new EventHandler<ActionEvent>() {
-							    @Override
-							    public void handle(ActionEvent e) {
-							    	setObject(data.get(getTableRow().getIndex()));
-							    	state = State.REPETICAO;
-							    	showForm("view/cobertura/RegistrarRepeticaoCioForm.fxml");
-							    }
-							});
-							setGraphic(link);
-						} 
-					};                           
-					return cell;
-				}
-			});
-			
+			repeticaoCioColumn.setCellFactory(new TableCellDateFactory<Cobertura,LocalDate>("dataRepeticaoCio"));
 			primeiroToqueColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("primeiroToque"));
-			primeiroToqueColumn.setCellFactory(new Callback<TableColumn<Cobertura,String>, TableCell<Cobertura,String>>(){
-				@Override
-				public TableCell<Cobertura, String> call(TableColumn<Cobertura, String> param) {
-					TableCell<Cobertura, String> cell = new TableCell<Cobertura, String>(){
-						@Override
-						public void updateItem(String item, boolean empty) {
-							if(item!=null){
-								Hyperlink link = new Hyperlink();
-								if ( getTableRow().getIndex() < data.size() )
-									link.setText(item);
-								else
-									link.setText("--");
-								link.setFocusTraversable(false);
-								link.setOnAction(new EventHandler<ActionEvent>() {
-								    @Override
-								    public void handle(ActionEvent e) {
-								    	setObject(data.get(getTableRow().getIndex()));
-								    	state = State.PRIMEIRO_TOQUE;
-								    	showForm("view/cobertura/RegistrarPrimeiroToqueForm.fxml");
-								    }
-								});
-								setGraphic(link);
-							} 
-						}
-					};                           
-					return cell;
-				}
-			});
 			reconfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reconfirmacao"));
-			reconfirmacaoColumn.setCellFactory(new Callback<TableColumn<Cobertura,String>, TableCell<Cobertura,String>>(){
-				@Override
-				public TableCell<Cobertura, String> call(TableColumn<Cobertura, String> param) {
-					TableCell<Cobertura, String> cell = new TableCell<Cobertura, String>(){
-						@Override
-						public void updateItem(String item, boolean empty) {
-							if(item!=null){
-								Hyperlink link = new Hyperlink();
-								if ( getTableRow().getIndex() < data.size() )
-									link.setText(item);
-								else
-									link.setText("--");
-								link.setFocusTraversable(false);
-								link.setOnAction(new EventHandler<ActionEvent>() {
-								    @Override
-								    public void handle(ActionEvent e) {
-								    	setObject(data.get(getTableRow().getIndex()));
-								    	state = State.RECONFIRMACAO;
-								    	showForm("view/cobertura/RegistrarReconfirmacaoForm.fxml");
-								    }
-								});
-								setGraphic(link);
-							} 
-						}
-					};                           
-					return cell;
-				}
-			});
+
 			super.initialize();
 			
 		}
@@ -220,6 +127,8 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
 				getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
 			}
+			
+			btnSalvar.setDisable(getObject().getParto() != null);
 			
 		}
 		
@@ -326,87 +235,6 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			}else{
 				configuraTelaEnseminacaoArtificial();
 			}
-		}
-	}
-	
-	@FXML
-	private void handleSavePrimeiroToque(){
-		try {
-			((CoberturaService)service).registrarPrimeiroToque(getObject());
-			super.dialogStage.close();
-			refreshObjectInTableView(getObject());
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
-		}
-	}
-	
-	@FXML
-	private void handleRemoverRegistroPrimeiroToque(){
-		try {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro do primeiro toque?");
-			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerRegistroPrimeiroToque(getObject());
-				super.dialogStage.close();
-				refreshObjectInTableView(getObject());
-			}
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
-		}
-	}
-	
-	@FXML
-	private void handleSaveReconfirmacao(){
-		try {
-			((CoberturaService)service).registrarReconfirmacao(getObject());
-			super.dialogStage.close();
-			refreshObjectInTableView(getObject());
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
-		}
-	}
-	
-	@FXML
-	private void handleRemoverRegistroReconfirmacao(){
-		try {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da reconfirmação?");
-			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerRegistroReconfirmacao(getObject());
-				super.dialogStage.close();
-				refreshObjectInTableView(getObject());
-			}
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
-		}
-	}
-	
-	@FXML
-	private void handleSaveRepeticaoCio(){
-		try {
-			((CoberturaService)service).registrarRepeticaoCio(getObject());
-			super.dialogStage.close();
-			refreshObjectInTableView(getObject());
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
-		}
-	}
-	
-	@FXML
-	private void handleRemoverRegistroRepeticaoCio(){
-		try {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da repetição de cio?");
-			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
-				super.dialogStage.close();
-				refreshObjectInTableView(getObject());
-			}
-		} catch (ValidationException e) {
-			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
-			return;
 		}
 	}
 	
@@ -576,6 +404,182 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	
 	private void removerServico(){
 		((CoberturaService)service).removeServicoFromCobertura(getObject());
+	}
+	
+	//==========BOTÕES BARRA SUPERIORA
+	
+	@FXML
+	private void handleRegistrarParto(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
+				getObject().getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ||
+						getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			
+			partoController.setState(State.CREATE_TO_SELECT);
+			
+			if ( getObject().getParto() != null && getObject().getParto().getId() > 0 ){
+				partoController.object = getObject().getParto();
+			}else{
+				partoController.object = new Parto(getObject());
+			}
+			
+			partoController.showForm(partoController.getFormName());
+			
+			if ( partoController.getObject() != null ){
+				getObject().setParto(partoController.getObject());
+				((CoberturaService)service).registrarParto(getObject());
+			}	
+		}else{
+			CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada tem situação igual a " + getObject().getSituacaoCobertura() + 
+					" não sendo possível registrar o parto.");
+		}
+		
+	}
+	
+	@FXML
+	private void handleRemoverParto(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+		if ( getObject().getParto() != null && getObject().getParto().getId() > 0 ){
+			
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o parto registrado?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerParto(getObject());
+			}
+			
+		}else{
+			CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada não tem parto registrado.");
+		}
+		
+	}
+	
+	@FXML
+	private void openRegistroPrimeiroToqueForm(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+    	state = State.PRIMEIRO_TOQUE;
+    	showForm("view/cobertura/RegistrarPrimeiroToqueForm.fxml");
+    	
+	}
+	
+	@FXML
+	private void openRegistroReconfirmacaoForm(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+    	state = State.RECONFIRMACAO;
+    	showForm("view/cobertura/RegistrarReconfirmacaoForm.fxml");
+    	
+	}
+	
+	@FXML
+	private void openRegistroRepeticaoCioForm(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+    	state = State.REPETICAO;
+    	showForm("view/cobertura/RegistrarRepeticaoCioForm.fxml");
+    	
+	}
+	
+	@FXML
+	private void handleSavePrimeiroToque(){
+		try {
+			((CoberturaService)service).registrarPrimeiroToque(getObject());
+			super.dialogStage.close();
+			refreshObjectInTableView(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleRemoverRegistroPrimeiroToque(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro do primeiro toque?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroPrimeiroToque(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
+			}
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleSaveReconfirmacao(){
+		try {
+			((CoberturaService)service).registrarReconfirmacao(getObject());
+			super.dialogStage.close();
+			refreshObjectInTableView(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleRemoverRegistroReconfirmacao(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da reconfirmação?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroReconfirmacao(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
+			}
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleSaveRepeticaoCio(){
+		try {
+			((CoberturaService)service).registrarRepeticaoCio(getObject());
+			super.dialogStage.close();
+			refreshObjectInTableView(getObject());
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
+	}
+	
+	@FXML
+	private void handleRemoverRegistroRepeticaoCio(){
+		try {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da repetição de cio?");
+			if (result.get() == ButtonType.OK) {
+				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
+				super.dialogStage.close();
+				refreshObjectInTableView(getObject());
+			}
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+			return;
+		}
 	}
 	
 	@Override

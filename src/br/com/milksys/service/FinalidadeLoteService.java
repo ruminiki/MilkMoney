@@ -41,6 +41,12 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 		list.addAll(dao.findAll(FinalidadeLote.class));
 		return list;
 	}
+
+	@Override
+	public void validate(FinalidadeLote entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

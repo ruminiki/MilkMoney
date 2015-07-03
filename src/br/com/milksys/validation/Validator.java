@@ -11,6 +11,7 @@ public class Validator {
 
 	public static final String VALIDACAO_FORMULARIO = "Validação de formulário";
 	public static final String CAMPO_OBRIGATORIO = "Campo Obrigatório";
+	public static final String REGRA_NEGOCIO = "Regra Negócio";
 	
 	public static void validate(AbstractEntity entity) {
 		for (Method method : entity.getClass().getDeclaredMethods()) {

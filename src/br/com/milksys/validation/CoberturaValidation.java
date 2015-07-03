@@ -94,7 +94,7 @@ public class CoberturaValidation extends Validator {
 					
 					long diasEntreCoberturas = ChronoUnit.DAYS.between(DateUtil.asLocalDate(c.getData()), DateUtil.asLocalDate(cobertura.getData()));
 					
-					if ( diasEntreCoberturas < 21 ){
+					if ( Math.abs(diasEntreCoberturas) < 21 ){
 						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
 								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
 								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");

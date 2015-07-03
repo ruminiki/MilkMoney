@@ -115,6 +115,12 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		return totalEntregue;
 	}
 
+	@Override
+	public void validate(EntregaLeite entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

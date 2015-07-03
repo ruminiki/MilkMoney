@@ -46,6 +46,12 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 		// TODO Auto-generated method stub
 		return findAllAsObservableList();
 	}
+
+	@Override
+	public void validate(Funcionario entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

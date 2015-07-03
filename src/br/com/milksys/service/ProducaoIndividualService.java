@@ -122,6 +122,12 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	public ProducaoIndividual findByAnimalAndData(Animal animal, Date data) {
 		return dao.findByAnimalAndData(animal, data);
 	}
+
+	@Override
+	public void validate(ProducaoIndividual entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

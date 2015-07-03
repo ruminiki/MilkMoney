@@ -225,6 +225,7 @@ public abstract class AbstractController<K, E> {
 		this.state = State.LIST;
 		refreshObjectInTableView((AbstractEntity)service.findById( (K) new Integer(object.getId())) );
 		setObject(null); 
+		table.getSelectionModel().clearSelection();
 	}
 
 	@FXML
@@ -249,6 +250,13 @@ public abstract class AbstractController<K, E> {
 				if (table != null && data != null) {
 					refreshObjectInTableView(object);
 				}
+			}
+		}else{
+			try {
+				service.validate((E) object);
+			} catch (ValidationException e) {
+				CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+				return;
 			}
 		}
 		

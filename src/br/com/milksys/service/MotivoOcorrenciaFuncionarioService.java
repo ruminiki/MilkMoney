@@ -42,6 +42,12 @@ public class MotivoOcorrenciaFuncionarioService implements IService<Integer, Mot
 		list.addAll(dao.findAll(MotivoOcorrenciaFuncionario.class));
 		return list;
 	}
+
+	@Override
+	public void validate(MotivoOcorrenciaFuncionario entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

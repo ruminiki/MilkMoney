@@ -41,6 +41,12 @@ public class ServicoService implements IService<Integer, Servico>{
 		list.addAll(dao.findAll(Servico.class));
 		return list;
 	}
+
+	@Override
+	public void validate(Servico entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

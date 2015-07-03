@@ -48,4 +48,10 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 		return dao.findByFuncionario(funcionario);
 	}
 
+	@Override
+	public void validate(OcorrenciaFuncionario entity) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -115,6 +115,12 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		}
 		
 	}
+
+	@Override
+	public void validate(ProducaoLeite entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

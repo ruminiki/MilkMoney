@@ -46,6 +46,12 @@ public class SemenService implements IService<Integer, Semen>{
 		// TODO Auto-generated method stub
 		return findAllAsObservableList();
 	}
+
+	@Override
+	public void validate(Semen entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

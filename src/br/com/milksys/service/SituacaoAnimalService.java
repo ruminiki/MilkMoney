@@ -41,6 +41,12 @@ public class SituacaoAnimalService implements IService<Integer, SituacaoAnimal>{
 		list.addAll(dao.findAll(SituacaoAnimal.class));
 		return list;
 	}
+
+	@Override
+	public void validate(SituacaoAnimal entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }

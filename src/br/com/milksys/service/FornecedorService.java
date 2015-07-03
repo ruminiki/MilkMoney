@@ -42,6 +42,12 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 		list.addAll(dao.findAll(Fornecedor.class));
 		return list;
 	}
+
+	@Override
+	public void validate(Fornecedor entity) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 }
