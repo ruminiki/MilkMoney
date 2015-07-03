@@ -1,9 +1,13 @@
 package br.com.milksys.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
 
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.Servico;
@@ -48,6 +52,14 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		}
         
         entityTransaction.commit();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findByAnimal(Animal femea) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea");
+		query.setParameter("femea", femea);
+		
+		return query.getResultList();
 	}
 
 }

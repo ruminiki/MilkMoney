@@ -82,10 +82,10 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputRaca.getSelectionModel().selectFirst();
 			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 			
-			inputSituacaoAnimal.setItems(SituacaoAnimal.getItems());
+			/*inputSituacaoAnimal.setItems(SituacaoAnimal.getItems());
 			inputSituacaoAnimal.getSelectionModel().selectFirst();
 			inputSituacaoAnimal.valueProperty().bindBidirectional(getObject().situacaoAnimalProperty());
-			
+			*/
 			inputSexo.setItems(sexos);
 			inputSexo.getSelectionModel().selectFirst();
 			inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());

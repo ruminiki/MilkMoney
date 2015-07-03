@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 import org.hibernate.CacheMode;
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 
 public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
@@ -31,8 +32,9 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		entityTransaction.begin();
         
         try{
-        	
+        	entityManager.unwrap(Session.class).setFlushMode(FlushMode.COMMIT);
         	entityManager.persist(entity);
+        	entityManager.merge(entity);
         	entityTransaction.commit();
         	
         }catch(Exception e){
@@ -47,11 +49,11 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 
 	public boolean remove(E entity) {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
-		
 		if ( !entityTransaction.isActive() )
 			entityTransaction.begin();
 		
         try{
+        	entityManager.unwrap(Session.class).setFlushMode(FlushMode.COMMIT);
 	        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	        entityTransaction.commit();
 		}catch (Exception e) {
@@ -66,13 +68,12 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 
 	public E findById(K id) {
 		
-		//Session session = entityManager.unwrap(Session.class);
-		//session.setCacheMode(CacheMode.IGNORE);
-		//entityManager.flush();
 		E e = entityManager.find(entityClass, id);
+		
 		if ( entityManager.contains(e) ){
 			entityManager.refresh(e);
 		}
+		
 		return e;
 		
 	}
@@ -88,6 +89,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 			}
 		}*/
 		//entityManager.flush();
+		entityManager.unwrap(Session.class).flush();
 		return entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
 	}
 }

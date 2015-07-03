@@ -45,7 +45,6 @@
                   <Menu mnemonicParsing="false" text="Mão de Obra">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroOcorrenciaFuncionario" text="Ocorrência" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroMotivoOcorrenciaFuncionario" style="-fx-color: CCC;" text="Motivo Ocorrência" />
                     </items>
                   </Menu>

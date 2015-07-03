@@ -2,6 +2,7 @@ package br.com.milksys.validation;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
 
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Cobertura;
@@ -11,8 +12,6 @@ import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.util.DateUtil;
 
 public class CoberturaValidation extends Validator {
-	
-	
 	
 	public static void validate(Cobertura cobertura) {
 	
@@ -78,17 +77,21 @@ public class CoberturaValidation extends Validator {
 					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
 		}
 		
-		/*
-		 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
-		 * 1. Foi coberta a menos de 21 dias;
-		 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
-		 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
-		 * No caso de registro de parto a situação muda para PARIDA.
-		 * @param cobertura
-		 */
-		if ( cobertura.getFemea().getCoberturas() != null && cobertura.getFemea().getCoberturas().size() > 0 ){
+	}
+	
+	
+	/*
+	 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
+	 * 1. Foi coberta a menos de 21 dias;
+	 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
+	 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
+	 * No caso de registro de parto a situação muda para PARIDA.
+	 * @param cobertura
+	 */
+	public static void validaCoberturasAnimal(Cobertura cobertura, List<Cobertura> coberturasAnimal){
+		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
 			
-			for ( Cobertura c : cobertura.getFemea().getCoberturas() ){
+			for ( Cobertura c : coberturasAnimal ){
 				//se não for a mesma cobertura
 				if ( c.getId() != cobertura.getId() ){
 					
@@ -100,12 +103,11 @@ public class CoberturaValidation extends Validator {
 								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
 					}
 					
-					validaSituacoesCoberturasDoAnimal(cobertura);
+					validaSituacoesCoberturasDoAnimal(cobertura, coberturasAnimal);
 					
 				}
 			}
 		}
-		
 	}
 	
 	/**
@@ -117,11 +119,11 @@ public class CoberturaValidation extends Validator {
 	 * 
 	 * @param cobertura
 	 */
-	public static void validaSituacoesCoberturasDoAnimal(Cobertura cobertura){
+	public static void validaSituacoesCoberturasDoAnimal(Cobertura cobertura, List<Cobertura> coberturasAnimal){
 		
-		if ( cobertura.getFemea().getCoberturas() != null && cobertura.getFemea().getCoberturas().size() > 0 ){
+		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
 			
-			for ( Cobertura c : cobertura.getFemea().getCoberturas() ){
+			for ( Cobertura c : coberturasAnimal ){
 				//se não for a mesma cobertura
 				if ( c.getId() != cobertura.getId() ){
 					

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -15,14 +14,12 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,11 +48,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
 	private StringProperty finalidadeAnimal = new SimpleStringProperty();
 	private StringProperty situacaoAnimal = new SimpleStringProperty();
-	
-
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="femea")
-	private List<Cobertura> coberturas;
 	
 	public Animal() {
 	}
@@ -165,7 +157,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="situação do animal")
 	public String getSituacaoAnimal() {
 		return situacaoAnimal.get();
 	}
@@ -179,15 +170,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	//==========================
-	
-	public List<Cobertura> getCoberturas() {
-		return coberturas;
-	}
-
-	public void setCoberturas(List<Cobertura> coberturas) {
-		this.coberturas = coberturas;
-	}
-	
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
 	}

@@ -232,6 +232,8 @@ public abstract class AbstractController<K, E> {
 	@SuppressWarnings("unchecked")
 	protected void handleSave() {
 		
+		beforeSave();
+		
 		if ( !state.equals(State.CREATE_TO_SELECT) ){
 			
 			boolean isNew = object.getId() <= 0;
@@ -264,8 +266,13 @@ public abstract class AbstractController<K, E> {
 			dialogStage.close();
 
 		this.state = State.LIST;
+		
+		afterSave();
 			
 	}
+	
+	protected void beforeSave(){}
+	protected void afterSave(){}
 	
 	@SuppressWarnings("unchecked")
 	protected void refreshObjectInTableView(AbstractEntity object){

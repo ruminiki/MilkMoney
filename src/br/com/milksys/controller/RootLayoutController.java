@@ -102,13 +102,6 @@ public class RootLayoutController {
     }
     
     @FXML
-    private void handleCadastroOcorrenciaFuncionario() {
-    	
-    	openForm("view/ocorrenciaFuncionario/OcorrenciaFuncionarioOverview.fxml");
-    	
-    }
-    
-    @FXML
     private void handleCadastroPrestadorServico() {
     	
     	openForm("view/prestadorServico/PrestadorServicoOverview.fxml");

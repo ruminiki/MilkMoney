@@ -27,21 +27,21 @@
               </rowConstraints>
                <children>
                   <Label text="Nome: " GridPane.rowIndex="1" />
+                  <Label text="Sexo: " GridPane.rowIndex="2" />
                   <Label text="Raça: " GridPane.rowIndex="3" />
+                   <Label text="Finalidade Animal: " GridPane.rowIndex="4" />
                   <Label graphicTextGap="10.0" text="Data Nasc.: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   <Label text="Número: " />
                   <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="100.0" GridPane.columnIndex="1" />
                   <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="inputSexo" prefWidth="124.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER_LEFT" minWidth="250.0" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <children>
                         <ComboBox fx:id="inputRaca" prefWidth="260.0" promptText="Selecione..." />
                         <Button mnemonicParsing="false" onAction="#cadastrarNovaRaca" text="Novo" />
                      </children>
                   </HBox>
-                  <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <Label text="Sexo: " GridPane.rowIndex="2" />
-                  <ComboBox fx:id="inputSexo" prefWidth="124.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Finalidade Animal: " GridPane.rowIndex="4" />
                   <ComboBox fx:id="inputFinalidadeAnimal" prefWidth="260.0" promptText="Selecione..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>

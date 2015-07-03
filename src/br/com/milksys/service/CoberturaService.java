@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.validation.CoberturaValidation;
@@ -28,6 +29,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		}
 		
 		CoberturaValidation.validate(entity);
+		CoberturaValidation.validaCoberturasAnimal(entity, findByAnimal(entity.getFemea()));
 		
 		return dao.persist(entity);
 	}
@@ -59,7 +61,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
 		dao.persist(entity);
 		
@@ -91,7 +93,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
 		dao.persist(entity);
 		
@@ -120,7 +122,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		configureSituacaoCobertura(entity);
 		
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity);
+		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
 		dao.persist(entity);
 		
@@ -145,6 +147,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
 		
+	}
+	
+	public List<Cobertura> findByAnimal(Animal animal){
+		return dao.findByAnimal(animal);
 	}
 	
 	

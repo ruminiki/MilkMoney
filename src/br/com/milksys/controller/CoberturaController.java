@@ -6,14 +6,18 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
 import javax.annotation.Resource;
 
@@ -102,6 +106,41 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 			tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 			situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
+			situacaoCoberturaColumn.setCellFactory(new Callback<TableColumn<SituacaoCobertura,String>, TableCell<SituacaoCobertura,String>>(){
+				@Override
+				public TableCell<SituacaoCobertura, String> call(TableColumn<SituacaoCobertura, String> param) {
+					TableCell<SituacaoCobertura, String> cell = new TableCell<SituacaoCobertura, String>(){
+						@Override
+						public void updateItem(String item, boolean empty) {
+							if ( table.getItems().size() > tableRowProperty().get().getIndex() ){
+								if(item!=null){
+									HBox cell = new HBox();
+									cell.setAlignment(Pos.CENTER_LEFT);
+									cell.setSpacing(2);
+									
+									HBox color= new HBox();
+									color.setMinWidth(10);
+									color.setMaxWidth(10);
+									if ( item.equals(SituacaoCobertura.PARIDA) )
+										color.setStyle("-fx-background-color: #CCFF99");
+									if ( item.equals(SituacaoCobertura.VAZIA) || item.equals(SituacaoCobertura.REPETIDA) )
+										color.setStyle("-fx-background-color: #FF6600");
+									if ( item.equals(SituacaoCobertura.PRENHA) )
+										color.setStyle("-fx-background-color: #FFCC00");
+									if ( item.equals(SituacaoCobertura.INDEFINIDA) )
+										color.setStyle("-fx-background-color: #7C867C");
+									//color.setMinHeight(tableRowProperty().get().getHeight());
+									cell.getChildren().add(color);
+									cell.getChildren().add(new Label(item));
+									
+									setGraphic(cell);
+								} 
+							}
+						}
+					};                           
+					return cell;
+				}
+			});
 			repeticaoCioColumn.setCellFactory(new TableCellDateFactory<Cobertura,LocalDate>("dataRepeticaoCio"));
 			primeiroToqueColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("primeiroToque"));
 			reconfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reconfirmacao"));
