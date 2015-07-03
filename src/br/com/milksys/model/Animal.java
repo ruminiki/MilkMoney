@@ -50,7 +50,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty sexo = new SimpleStringProperty();
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
 	private StringProperty finalidadeAnimal = new SimpleStringProperty();
-	private ObjectProperty<SituacaoAnimal> situacaoAnimal = new SimpleObjectProperty<SituacaoAnimal>();
+	private StringProperty situacaoAnimal = new SimpleStringProperty();
 	
 
 	@OneToMany(fetch=FetchType.LAZY)
@@ -165,21 +165,18 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="situacaoAnimal")
 	@FieldRequired(message="situação do animal")
-	public SituacaoAnimal getSituacaoAnimal() {
+	public String getSituacaoAnimal() {
 		return situacaoAnimal.get();
 	}
 	
-	public void setSituacaoAnimal(SituacaoAnimal situacaoAnimal) {
+	public void setSituacaoAnimal(String situacaoAnimal) {
 		this.situacaoAnimal.set(situacaoAnimal);
 	}
 	
-	public ObjectProperty<SituacaoAnimal> situacaoAnimalProperty(){
+	public StringProperty situacaoAnimalProperty(){
 		return situacaoAnimal;
 	}
-
 	
 	//==========================
 	

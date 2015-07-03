@@ -1,7 +1,5 @@
 package br.com.milksys.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.ToggleButton;
@@ -35,7 +33,7 @@ public class SituacaoAnimalController extends AbstractController<Integer, Situac
 			super.initialize();
 		}
 		
-		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
+		/*if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 			inputAnimalAtivo.selectedProperty().bindBidirectional(getObject().animalAtivoProperty());
 			inputAnimalAtivo.selectedProperty().addListener(new ChangeListener<Boolean>() {
@@ -49,16 +47,16 @@ public class SituacaoAnimalController extends AbstractController<Integer, Situac
 			
 			updateLabelAtivoInativo(getObject().getAnimalAtivo());
 		}
-		
+		*/
 	}
 
-	private void updateLabelAtivoInativo(Boolean value) {
+	/*private void updateLabelAtivoInativo(Boolean value) {
 		if ( value ){
 			inputAnimalAtivo.setText("Ativo");
 		}else{
 			inputAnimalAtivo.setText("Inativo");
 		}
-	}
+	}*/
 	
 	@Override
 	protected String getFormName() {
@@ -72,7 +70,8 @@ public class SituacaoAnimalController extends AbstractController<Integer, Situac
 	
 	@Override
 	protected SituacaoAnimal getObject() {
-		return (SituacaoAnimal)super.object;
+		return null;
+		//return (SituacaoAnimal)super.object;
 	}
 
 	@Override

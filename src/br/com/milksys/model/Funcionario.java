@@ -39,7 +39,8 @@ public class Funcionario extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> dataContratacao = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty nome = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
-	private StringProperty telefone = new SimpleStringProperty();
+	private StringProperty telefonePrincipal = new SimpleStringProperty();
+	private StringProperty telefoneSecundario = new SimpleStringProperty();
 	private StringProperty diaPagamento = new SimpleStringProperty();
 	private StringProperty jornadaTrabalho = new SimpleStringProperty();
 	private StringProperty salario = new SimpleStringProperty();
@@ -96,17 +97,31 @@ public class Funcionario extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getTelefone() {
-		return this.telefone.get();
+	public String getTelefonePrincipal() {
+		return this.telefonePrincipal.get();
 	}
 
-	public void setTelefone(String telefone) {
-		this.telefone.set(telefone);
+	public void setTelefonePrincipal(String telefonePrincipal) {
+		this.telefonePrincipal.set(telefonePrincipal);
 	}
 
-	public StringProperty telefoneProperty(){
-		return telefone;
+	public StringProperty telefonePrincipalProperty(){
+		return telefonePrincipal;
 	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getTelefoneSecundario() {
+		return this.telefoneSecundario.get();
+	}
+
+	public void setTelefoneSecundario(String telefoneSecundario) {
+		this.telefoneSecundario.set(telefoneSecundario);
+	}
+
+	public StringProperty telefoneSecundarioProperty(){
+		return telefoneSecundario;
+	}
+	
 	
 	@Access(AccessType.PROPERTY)
 	public int getDiaPagamento() {

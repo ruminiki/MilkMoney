@@ -38,6 +38,14 @@ public class OcorrenciaFuncionario extends AbstractEntity implements Serializabl
 	private ObjectProperty<Funcionario> funcionario = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<MotivoOcorrenciaFuncionario> motivoOcorrenciaFuncionario = new SimpleObjectProperty<MotivoOcorrenciaFuncionario>();
 
+	public OcorrenciaFuncionario() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public OcorrenciaFuncionario(Funcionario funcionario) {
+		this.funcionario.set(funcionario);
+	}
+
 	public int getId() {
 		return this.id;
 	}

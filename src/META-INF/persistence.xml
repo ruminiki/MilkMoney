@@ -20,7 +20,6 @@
 		<class>br.com.milksys.model.Servico</class>
 		<class>br.com.milksys.model.Fornecedor</class>
 		<class>br.com.milksys.model.Cobertura</class>
-		<class>br.com.milksys.model.SituacaoAnimal</class>
 		<class>br.com.milksys.model.Parto</class>
 		<properties>
 			<!-- Configuring JDBC properties -->

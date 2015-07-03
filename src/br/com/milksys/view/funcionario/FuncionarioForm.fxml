@@ -11,10 +11,12 @@
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="205.0" prefWidth="358.0">
+            <GridPane alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="194.0" prefWidth="500.0">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="108.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="392.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="111.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="157.0" />
+                  <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="72.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="164.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -23,23 +25,27 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Nome: " />
-                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="3" />
                   <Label text="E-mail: " GridPane.rowIndex="1" />
                   <Label text="Telefone: " GridPane.rowIndex="2" />
                   <Label text="Jornada Trabalho: " GridPane.rowIndex="3" />
                   <Label text="Data Contratação: " GridPane.rowIndex="4" />
-                  <Label text="Dia Pagamento: " GridPane.rowIndex="5" />
-                  <Label text="Salário: " GridPane.rowIndex="6" />
-                  <UCTextField fx:id="inputEmail" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputTelefone" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Salário: " GridPane.rowIndex="5" />
+                  <UCTextField fx:id="inputEmail" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputTelefonePrincipal" maxWidth="150.0" promptText="telefone principal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <UCTextField fx:id="inputJornadaTrabalho" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="inputDiaPagamento" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                  <TextField fx:id="inputSalario" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <DatePicker fx:id="inputDataContratacao" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <UCTextField fx:id="inputTelefoneSecundario" maxWidth="150.0" promptText="telefone secundário" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                     <children>
+                        <UCTextField fx:id="inputSalario" maxWidth="100.0" />
+                        <Label text="Dia Pgto: " />
+                        <UCTextField fx:id="inputDiaPagamento" alignment="CENTER" maxWidth="50.0" />
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

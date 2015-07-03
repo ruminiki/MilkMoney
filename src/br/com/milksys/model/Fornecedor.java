@@ -103,7 +103,7 @@ public class Fornecedor extends AbstractEntity implements Serializable {
 	}
 
 	public void setTelefoneSecundario(String telefoneSecundario) {
-		this.telefonePrincipal.set(telefoneSecundario);
+		this.telefoneSecundario.set(telefoneSecundario);
 	}
 
 	public StringProperty telefoneSecundarioProperty(){

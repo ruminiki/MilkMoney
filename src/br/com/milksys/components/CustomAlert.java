@@ -18,7 +18,7 @@ public class CustomAlert extends Alert {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Nenhuma Seleção");
 		alert.setHeaderText("Nenhum registro selecionado");
-		alert.setContentText("Selecione pelo menos um registro na tabela!");
+		alert.setContentText("Por favor, selecione um registro na tabela para continuar.");
 		alert.showAndWait();
 	}
 

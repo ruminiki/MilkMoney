@@ -41,7 +41,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private UCTextField inputNome;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
-	@FXML private ComboBox<SituacaoAnimal> inputSituacaoAnimal;
+	@FXML private ComboBox<String> inputSituacaoAnimal;
 	@FXML private ComboBox<String> inputFinalidadeAnimal;
 	@FXML private ComboBox<String> inputSexo;
 	
@@ -82,7 +82,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputRaca.getSelectionModel().selectFirst();
 			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 			
-			inputSituacaoAnimal.setItems(situacaoAnimalService.findAllAsObservableList());
+			inputSituacaoAnimal.setItems(SituacaoAnimal.getItems());
 			inputSituacaoAnimal.getSelectionModel().selectFirst();
 			inputSituacaoAnimal.valueProperty().bindBidirectional(getObject().situacaoAnimalProperty());
 			
@@ -138,15 +138,4 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 		}
 	}
 	
-	@FXML
-	protected void cadastrarNovaSituacaoAnimal() {
-		situacaoAnimalController.state = State.INSERT_TO_SELECT;
-		situacaoAnimalController.object = new SituacaoAnimal();
-		situacaoAnimalController.showForm(null);
-		if ( situacaoAnimalController.getObject() != null && situacaoAnimalController.getObject().getId() > 0 ){
-			inputSituacaoAnimal.getItems().add(situacaoAnimalController.getObject());
-			inputSituacaoAnimal.getSelectionModel().select(situacaoAnimalController.getObject());
-		}
-	}
-
 }

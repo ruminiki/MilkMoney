@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ import br.com.milksys.service.OcorrenciaFuncionarioService;
 @Controller
 public class OcorrenciaFuncionarioController extends AbstractController<Integer, OcorrenciaFuncionario> {
 
-	@FXML private TableView<Funcionario> tableFuncionario; 
-	@FXML private TableColumn<Funcionario, String> funcionarioListColumn;
-	
 	@FXML private TableColumn<Funcionario, String> funcionarioColumn;
 	@FXML private TableColumn<MotivoOcorrenciaFuncionario, String> motivoColumn;
 	@FXML private TableColumn<OcorrenciaFuncionario, LocalDate> dataColumn;
@@ -55,11 +51,6 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 		
 		if ( state.equals(State.LIST) ){
 			
-			//@TODO filtrar apenas animais femeas 
-			tableFuncionario.setItems(funcionarioService.findAllAsObservableList());
-			tableFuncionario.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> findByFuncionario(newValue));
-			funcionarioListColumn.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("nome"));
-		
 			funcionarioColumn.setCellValueFactory(new PropertyValueFactory<Funcionario, String>("funcionario"));
 			motivoColumn.setCellValueFactory(new PropertyValueFactory<MotivoOcorrenciaFuncionario, String>("motivoOcorrenciaFuncionario"));
 			dataColumn.setCellFactory(new TableCellDateFactory<OcorrenciaFuncionario, LocalDate>("data"));
@@ -85,38 +76,31 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 		
 	}
 	
+	@Override
+	protected void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+		super.handleNew();
+		getObject().setFuncionario(selectedFuncionario);
+	}
 	
 	@Override
 	protected void refreshTableOverview() {
 		data.clear();
-		
-		if (selectedFuncionario == null || selectedFuncionario.getId() <= 0) {
-			if (tableFuncionario.getItems() != null	&& tableFuncionario.getItems().size() > 0) {
-				table.getSelectionModel().select(0);
-				selectedFuncionario = tableFuncionario.getItems().get(0);
-				refreshTableOverview();
-			}
-		} else {
-			data.addAll(ocorrenciaFuncionarioService.findByFuncionario(selectedFuncionario));
-		}
-
+		data.addAll(ocorrenciaFuncionarioService.findByFuncionario(selectedFuncionario));
 		updateLabelNumRegistros();
-			
-	}
-
-	private void findByFuncionario(Funcionario funcionario) {
-		selectedFuncionario = funcionario;
-		refreshTableOverview();
 	}
 
 	@Override
 	protected String getFormName() {
-		return "view/ocorrenciaFuncionario/ocorrenciaFuncionarioForm.fxml";
+		return "view/ocorrenciaFuncionario/OcorrenciaFuncionarioForm.fxml";
+	}
+	
+	protected String getFormOverviewName() {
+		return "view/ocorrenciaFuncionario/OcorrenciaFuncionarioOverview.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Produção Individual";
+		return "Ocorrências Funcionário";
 	}
 
 	@Override
@@ -135,4 +119,12 @@ public class OcorrenciaFuncionarioController extends AbstractController<Integer,
 		}
 	}
 
+	public Funcionario getSelectedFuncionario() {
+		return selectedFuncionario;
+	}
+
+	public void setSelectedFuncionario(Funcionario selectedFuncionario) {
+		this.selectedFuncionario = selectedFuncionario;
+	}
+	
 }

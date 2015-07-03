@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Component;
 
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.FinalidadeAnimal;
 
 @Component
 public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
@@ -15,7 +16,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasAtivas() {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a join a.situacaoAnimal s WHERE a.sexo = 'FÊMEA' and s.animalAtivo = true");
+				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA'");
 		
 		return query.getResultList();
 
@@ -25,7 +26,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllReprodutoresAtivos() {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a join a.situacaoAnimal s WHERE a.sexo = 'MACHO' and s.animalAtivo = true and a.finalidadeAnimal = 'REPRODUÇÃO'");
+				"SELECT a FROM Animal a WHERE a.sexo = 'MACHO' and a.finalidadeAnimal = '" + FinalidadeAnimal.REPRODUCAO + "'");
 		
 		return query.getResultList();
 		

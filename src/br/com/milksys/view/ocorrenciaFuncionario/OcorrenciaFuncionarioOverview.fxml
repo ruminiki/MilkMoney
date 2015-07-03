@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="521.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.OcorrenciaFuncionarioController">
+<AnchorPane minWidth="590.0" prefHeight="415.0" prefWidth="883.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.OcorrenciaFuncionarioController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,6 +24,7 @@
                </padding>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER" spacing="5.0">
                <children>
                   <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
@@ -52,11 +53,6 @@
       </VBox>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="55.0">
          <children>
-            <TableView fx:id="tableFuncionario" focusTraversable="false" minWidth="250.0">
-              <columns>
-                <TableColumn fx:id="funcionarioListColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" resizable="false" text="Selecione um Funcionário" />
-              </columns>
-            </TableView>
             <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" scaleShape="false" HBox.hgrow="SOMETIMES">
               <columns>
                   <TableColumn fx:id="funcionarioColumn" maxWidth="-1.0" minWidth="250.0" prefWidth="75.0" text="Funcionário" />
