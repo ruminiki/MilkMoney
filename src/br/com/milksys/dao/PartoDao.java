@@ -6,5 +6,5 @@ import br.com.milksys.model.Parto;
 
 @Component
 public class PartoDao extends AbstractGenericDao<Integer, Parto> {
-
+	
 }

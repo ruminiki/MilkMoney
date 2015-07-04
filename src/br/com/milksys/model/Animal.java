@@ -20,9 +20,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
@@ -48,8 +50,12 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
 	private StringProperty finalidadeAnimal = new SimpleStringProperty();
 	private StringProperty situacaoAnimal = new SimpleStringProperty();
+	private ObjectProperty<LocalDate> dataUltimoParto = new SimpleObjectProperty<LocalDate>(null);  
+	@Transient
+	private long diasUltimoParto;
 	
 	public Animal() {
+		dataUltimoParto.set(null);
 	}
 
 	public Animal(String sexo) {
@@ -169,6 +175,20 @@ public class Animal extends AbstractEntity implements Serializable {
 		return situacaoAnimal;
 	}
 	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	public Date getDataUltimoParto() {
+		return DateUtil.asDate(this.dataUltimoParto.get());
+	}
+
+	public void setDataUltimoParto(Date dataUltimoParto) {
+		this.dataUltimoParto.set(DateUtil.asLocalDate(dataUltimoParto));
+	}
+	
+	public ObjectProperty<LocalDate> dataUltimoPartoProperty(){
+		return dataUltimoParto;
+	}
+	
 	//==========================
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
@@ -186,6 +206,16 @@ public class Animal extends AbstractEntity implements Serializable {
 		
 	}
 	
+	public long getDiasUltimoParto() {
+		return diasUltimoParto;
+	}
+
+	@PostLoad
+	public void setDiasUltimoParto() {
+		if ( getDataUltimoParto() != null )
+			this.diasUltimoParto = ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now());
+	}
+
 	@Override
 	public String toString() {
 		return getNumeroNome();

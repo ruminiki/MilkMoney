@@ -11,7 +11,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.AnimalController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label text="Pesquisar:">
                <padding>
@@ -23,6 +23,7 @@
                </padding>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_RIGHT">
                <children>
                   <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="5.0">
@@ -37,6 +38,11 @@
                   <Insets />
                </HBox.margin>
             </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Registrar Venda" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Registrar Morte" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Secar" />
          </children>
          <padding>
             <Insets right="5.0" />
@@ -56,11 +62,83 @@
             </Label>
          </children>
       </VBox>
-      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+      <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" spacing="3.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+         <children>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" style="-fx-background-color: #B8FF94;" text="Fêmeas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" prefHeight="30.0" style="-fx-background-color: #B9D4F0;" text="Machos">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindReprodutores" prefHeight="30.0" style="-fx-background-color: #99CCFF;" text="Reprodutores">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #91FF6C;" text="Em Lactação">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas30DiasLactacao" prefHeight="30.0" style="-fx-background-color: #FFD175;" text="Até 30 dias">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFFF99;" text="Até 60 dias">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFC2A3;" text="+ 60 dias">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasCobertas" style="-fx-background-color: #91FF6C;" text="Cobertas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" style="-fx-background-color: #C2E066;" text="Não Cobertas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" style="-fx-background-color: #FF9933;" text="A Secar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleLimpar" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="100.0">
         <columns>
           <TableColumn fx:id="numeroColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Número" />
             <TableColumn fx:id="nomeColumn" minWidth="300.0" prefWidth="75.0" text="Nome" />
             <TableColumn fx:id="dataNascimentoColumn" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
+            <TableColumn prefWidth="75.0" text="Último Parto">
+               <columns>
+                  <TableColumn fx:id="dataUltimoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                  <TableColumn fx:id="diasUltimoPartoColumn" maxWidth="70.0" minWidth="70.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Dias" />
+               </columns>
+            </TableColumn>
             <TableColumn fx:id="racaColumn" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
             <TableColumn fx:id="sexoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
             <TableColumn fx:id="situacaoAnimalColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />

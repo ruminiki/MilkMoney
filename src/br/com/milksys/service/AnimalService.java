@@ -19,9 +19,7 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	@Override
 	public boolean save(Animal entity) {
-		
 		AnimalValidation.validate(entity);
-		
 		return dao.persist(entity);
 	}
 

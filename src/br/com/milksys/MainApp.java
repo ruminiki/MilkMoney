@@ -49,10 +49,11 @@ public class MainApp extends Application {
 	    }
 
 	}
+
 	/**
 	 * Retorna um objeto controller instanciado pelo spring
 	 */
-	public static Object getController(Class<?> clazz){
+	public static Object getBean(Class<?> clazz){
 		return context.getBean(clazz);
 	}
 	/**

@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.model.Animal;
@@ -26,6 +27,12 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
 import br.com.milksys.service.SituacaoAnimalService;
+import br.com.milksys.service.searchers.SearchFemeasAtivas;
+import br.com.milksys.service.searchers.SearchFemeasCobertas;
+import br.com.milksys.service.searchers.SearchFemeas30DiasLactacao;
+import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
+import br.com.milksys.service.searchers.SearchMachosAtivos;
+import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
 public class AnimalController extends AbstractController<Integer, Animal> {
@@ -33,6 +40,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
+	@FXML private TableColumn<Animal, Date> dataUltimoPartoColumn;
+	@FXML private TableColumn<Animal, Long> diasUltimoPartoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
 	@FXML private TableColumn<String, String> sexoColumn;
 	@FXML private TableColumn<SituacaoAnimal, String> situacaoAnimalColumn;
@@ -44,6 +53,7 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	@FXML private ComboBox<String> inputSituacaoAnimal;
 	@FXML private ComboBox<String> inputFinalidadeAnimal;
 	@FXML private ComboBox<String> inputSexo;
+	@FXML private DatePicker inputDataUltimoParto;
 	
 	//services
 	@Autowired private RacaService racaService;
@@ -63,6 +73,8 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
 			numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 			dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
+			dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
+			diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("diasUltimoParto"));
 			racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 			sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
 			situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<SituacaoAnimal,String>("situacaoAnimal"));
@@ -77,15 +89,12 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 			inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
 			inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
 			inputDataNascimento.valueProperty().bindBidirectional(getObject().dataNascimentoProperty());
+			inputDataUltimoParto.valueProperty().bindBidirectional(getObject().dataUltimoPartoProperty());
 			
 			inputRaca.setItems(racaService.findAllAsObservableList());
 			inputRaca.getSelectionModel().selectFirst();
 			inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 			
-			/*inputSituacaoAnimal.setItems(SituacaoAnimal.getItems());
-			inputSituacaoAnimal.getSelectionModel().selectFirst();
-			inputSituacaoAnimal.valueProperty().bindBidirectional(getObject().situacaoAnimalProperty());
-			*/
 			inputSexo.setItems(sexos);
 			inputSexo.getSelectionModel().selectFirst();
 			inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());
@@ -126,7 +135,53 @@ public class AnimalController extends AbstractController<Integer, Animal> {
 	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
 	}
+	
+	//-------------FILTRO RÁPIDO----------------------------------
+	
+	@FXML
+	private void handleFindFemeas(){
+		setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindMachos(){
+		setSearch((SearchMachosAtivos)MainApp.getBean(SearchMachosAtivos.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindReprodutores(){
+		setSearch((SearchReprodutoresAtivos)MainApp.getBean(SearchReprodutoresAtivos.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeasCobertas(){
+		setSearch((SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeasNaoCobertas(){
+		setSearch((SearchFemeasNaoCobertas)MainApp.getBean(SearchFemeasNaoCobertas.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeas30DiasLactacao(){
+		setSearch((SearchFemeas30DiasLactacao)MainApp.getBean(SearchFemeas30DiasLactacao.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleLimpar(){
+		setSearch(null);
+		refreshTableOverview();
+	}
 
+	//-----------------------------------------------------
+	
 	@FXML
 	protected void cadastrarNovaRaca() {
 		racaController.state = State.INSERT_TO_SELECT;

@@ -36,9 +36,9 @@
                   <Label text="Salário: " GridPane.rowIndex="5" />
                   <UCTextField fx:id="inputEmail" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputTelefonePrincipal" maxWidth="150.0" promptText="telefone principal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputTelefoneSecundario" maxWidth="150.0" promptText="telefone secundário" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <UCTextField fx:id="inputJornadaTrabalho" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="inputDataContratacao" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputTelefoneSecundario" maxWidth="150.0" promptText="telefone secundário" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                      <children>
                         <UCTextField fx:id="inputSalario" maxWidth="100.0" />

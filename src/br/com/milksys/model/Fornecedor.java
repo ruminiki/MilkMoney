@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
+import br.com.milksys.components.FieldRequired;
+
 
 /**
  * The persistent class for the funcionario database table.
@@ -46,6 +48,7 @@ public class Fornecedor extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="nome")
 	public String getNome() {
 		return this.nome.get();
 	}

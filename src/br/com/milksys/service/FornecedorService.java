@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.FornecedorDao;
 import br.com.milksys.model.Fornecedor;
+import br.com.milksys.validation.FornecedorValidation;
 
 @Service
 public class FornecedorService implements IService<Integer, Fornecedor>{
@@ -18,6 +19,8 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 
 	@Override
 	public boolean save(Fornecedor entity) {
+		
+		FornecedorValidation.validate(entity);
 		return dao.persist(entity);
 	}
 

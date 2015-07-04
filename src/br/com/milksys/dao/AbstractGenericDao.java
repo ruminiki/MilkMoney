@@ -92,4 +92,8 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		entityManager.unwrap(Session.class).flush();
 		return entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
 	}
+	
+	public EntityManager getEntityManager(){
+		return this.entityManager;
+	}
 }

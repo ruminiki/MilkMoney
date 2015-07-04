@@ -16,9 +16,7 @@ public class SearchReprodutoresAtivos extends Search<Integer, Animal> {
 	
 	@Override
 	public ObservableList<Animal> doSearch() {
-		ObservableList<Animal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAllReprodutoresAtivos());
-		return list;
+		return FXCollections.observableArrayList(dao.findAllReprodutoresAtivos());
 	}
 	
 }

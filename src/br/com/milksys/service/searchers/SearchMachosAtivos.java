@@ -10,13 +10,13 @@ import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.model.Animal;
 
 @Service
-public class SearchFemeasAtivas extends Search<Integer, Animal> {
+public class SearchMachosAtivos extends Search<Integer, Animal> {
 	
 	@Autowired AnimalDao dao;
 	
 	@Override
 	public ObservableList<Animal> doSearch() {
-		return FXCollections.observableArrayList(dao.findAllFemeasAtivas());
+		return FXCollections.observableArrayList(dao.findAllMachosAtivos());
 	}
 	
 }

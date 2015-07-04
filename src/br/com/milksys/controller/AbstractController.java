@@ -170,6 +170,8 @@ public abstract class AbstractController<K, E> {
 		}
 		table.layout();
 		
+		updateLabelNumRegistros();
+		
 	}
 	
 	protected abstract String getFormName();
@@ -281,6 +283,7 @@ public abstract class AbstractController<K, E> {
 				AbstractEntity o = (AbstractEntity) data.get(index);
 				if (o.getId() == object.getId()) {
 					data.set(index, (E) object);
+					table.layout();
 				}
 			}
 		}

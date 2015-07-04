@@ -28,11 +28,11 @@
                   <Label text="Descrição: " GridPane.rowIndex="1" />
                   <Label text="Prestador Serviço: " GridPane.rowIndex="2" />
                   <Label text="Valor: " GridPane.rowIndex="3" />
-                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputValor" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <DatePicker fx:id="inputData" maxWidth="100.0" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                   <ComboBox fx:id="inputPrestadorServico" prefHeight="25.0" prefWidth="275.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Button mnemonicParsing="false" onAction="#openFormPrestadorServicoToInsertAndSelect" text="Novo" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputValor" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

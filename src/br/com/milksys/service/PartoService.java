@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.dao.PartoDao;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Parto;
 import br.com.milksys.validation.PartoValidation;
 
@@ -16,13 +18,19 @@ import br.com.milksys.validation.PartoValidation;
 public class PartoService implements IService<Integer, Parto>{
 
 	@Autowired private PartoDao dao;
+	@Autowired private AnimalDao animalDao;
 
 	@Override
 	public boolean save(Parto entity) {
 		
 		PartoValidation.validate(entity);
+    	
+		Animal femea = entity.getCobertura().getFemea();
+    	femea.setDataUltimoParto(entity.getData());
+    	animalDao.persist(femea);
+
+    	return dao.persist(entity);
 		
-		return dao.persist(entity);
 	}
 
 	@Override

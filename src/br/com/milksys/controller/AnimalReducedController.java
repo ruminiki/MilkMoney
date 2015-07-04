@@ -14,12 +14,16 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.searchers.SearchFemeasAtivas;
+import br.com.milksys.service.searchers.SearchMachosAtivos;
+import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
 public class AnimalReducedController extends AbstractController<Integer, Animal> {
@@ -110,6 +114,24 @@ public class AnimalReducedController extends AbstractController<Integer, Animal>
 		super.handleDelete();
 		if ( animalController.data.size() >= index )
 			animalController.data.remove(index);
+	}
+	
+	@FXML
+	private void handleFindFemeas(){
+		setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindMachos(){
+		setSearch((SearchMachosAtivos)MainApp.getBean(SearchMachosAtivos.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindReprodutores(){
+		setSearch((SearchReprodutoresAtivos)MainApp.getBean(SearchReprodutoresAtivos.class));
+		refreshTableOverview();
 	}
 	
 	@Override
