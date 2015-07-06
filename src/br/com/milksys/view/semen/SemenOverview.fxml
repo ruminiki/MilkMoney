@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="485.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.SemenController">
+<AnchorPane minWidth="590.0" prefHeight="485.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.semen.SemenOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

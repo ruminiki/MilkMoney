@@ -162,7 +162,7 @@ public abstract class AbstractController<K, E> {
 		object = value;
 	}
 
-	protected void showForm(String formName) {
+	public void showForm(String formName) {
 		
 		formName = (formName != null && !formName.isEmpty()) ? formName : getFormName();
 		
@@ -196,7 +196,7 @@ public abstract class AbstractController<K, E> {
 		dialogStage.setResizable(false);
 		dialogStage.showAndWait();
 		
-		this.state = State.LIST;
+		this.setState(State.LIST);
 		
 	}
 
@@ -214,15 +214,19 @@ public abstract class AbstractController<K, E> {
 		
 	}
 	
-	protected abstract String getFormName();
-	protected abstract String getFormTitle();
+	protected String getFormName(){
+		return "";
+	}
+	protected String getFormTitle(){
+		return "";
+	}
 	protected abstract Object getObject();
 	
 	// ========= HANDLERS INTERFACE=============//
 
 	@FXML
-	protected void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
-		this.state = State.INSERT;
+	public void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
+		this.setState(State.INSERT);
 		object = (AbstractEntity) ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
@@ -230,9 +234,9 @@ public abstract class AbstractController<K, E> {
 	}
 
 	@FXML
-	protected void handleEdit() {
+	public void handleEdit() {
 		if (object != null) {
-			this.state = State.UPDATE;
+			this.setState(State.UPDATE);
 			showForm(null);
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();
@@ -264,7 +268,7 @@ public abstract class AbstractController<K, E> {
 	@FXML@SuppressWarnings("unchecked")
 	protected void handleCancel() {
 		dialogStage.close();
-		this.state = State.LIST;
+		this.setState(State.LIST);
 		refreshObjectInTableView((AbstractEntity)service.findById( (K) new Integer(object.getId())) );
 		setObject(null); 
 		table.getSelectionModel().clearSelection();
@@ -307,7 +311,7 @@ public abstract class AbstractController<K, E> {
 		if (closePopUpAfterSave)
 			dialogStage.close();
 
-		this.state = State.LIST;
+		this.setState(State.LIST);
 		
 		afterSave();
 		

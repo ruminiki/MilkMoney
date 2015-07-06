@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="276.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.PartoController">
+<AnchorPane prefHeight="276.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.parto.PartoFormController">
    <children>
       <VBox layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -38,7 +38,7 @@
             </GridPane>
             <VBox alignment="TOP_CENTER" maxHeight="130.0" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                <children>
-                  <Hyperlink fx:id="btnAdicionarCria" onAction="#handleSelecionarCadastrarAnimal" text="Selecionar/Cadastrar Cria">
+                  <Hyperlink fx:id="btnAdicionarCria" onAction="#handleCadastrarCria" text="Selecionar/Cadastrar Cria">
                      <font>
                         <Font size="14.0" />
                      </font>

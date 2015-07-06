@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="233.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.EntregaLeiteController">
+<AnchorPane prefHeight="233.0" prefWidth="491.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.entregaLeite.EntregaLeiteFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutY="-6.0" prefHeight="259.0" prefWidth="447.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-6.0">
          <children>

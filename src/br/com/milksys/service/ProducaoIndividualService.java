@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,8 +112,8 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		return dao.findAll(ProducaoIndividual.class);
 	}
 
-	public List<ProducaoIndividual> findByDate(Date data) {
-		return dao.findByDate(data);
+	public ObservableList<ProducaoIndividual> findByDate(Date data) {
+		return FXCollections.observableArrayList(dao.findByDate(data));
 	}
 
 	public List<ProducaoIndividual> findByAnimal(Animal animal) {

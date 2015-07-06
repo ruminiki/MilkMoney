@@ -10,7 +10,7 @@ public class SelectAfterInsertEvent extends Event {
     
     public SelectAfterInsertEvent(Object arg0, EventType<? extends Event> arg2) {
         super(arg2);
-        this.object = arg0;
+        this.setObject(arg0);
     }
 
 	public Object getObject() {
