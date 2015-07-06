@@ -6,7 +6,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import br.com.milksys.util.DateUtil;
 
-public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
+public class TableCellDateFactory<S, Date> implements Callback<TableColumn<S ,Date>, TableCell<S, Date>>{
 	
 	String property;
 	
@@ -15,21 +15,20 @@ public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<
 	}
 
 	@Override
-	public TableCell<S, LocalDate> call(TableColumn<S, LocalDate> param) {
+	public TableCell<S, Date> call(TableColumn<S, Date> param) {
 		
-		  TableCell<S, LocalDate> cell = new TableCell<S, LocalDate>() {
+		  TableCell<S, Date> cell = new TableCell<S, Date>() {
 			  
 		        @Override
-		        protected void updateItem(LocalDate item, boolean empty) {
+		        protected void updateItem(Date item, boolean empty) {
 		            super.updateItem(item, empty);
 		            if ( getTableRow().getItem() != null ){
 			            if ( (item == null || empty) ) {
 		            		setText("--");
 			            } else {
 			                try{
-			                	setText(DateUtil.format((java.time.LocalDate) item));
+			                	setText(DateUtil.format((java.util.Date)item));
 			                }catch(Exception e){
-			                	
 			                }
 			            }
 		            }else{
@@ -39,7 +38,7 @@ public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<
 		        }
 		    };
 		    
-		    param.setCellValueFactory(new PropertyValueFactory<S, LocalDate>(property));
+		    param.setCellValueFactory(new PropertyValueFactory<S, Date>(property));
 		    
 		    return cell;
 	}

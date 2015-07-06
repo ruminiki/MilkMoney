@@ -52,7 +52,7 @@ public class Semen extends AbstractEntity implements Serializable {
 	private StringProperty lote = new SimpleStringProperty();
 	private ObjectProperty<Fornecedor> fornecedor = new SimpleObjectProperty<Fornecedor>();
 	
-	@Formula("(quantidade - (select sum(c.quantidadeDosesUtilizadas) from Cobertura c where c.semen = id))")
+	@Formula("(quantidade - coalesce((select sum(c.quantidadeDosesUtilizadas) from Cobertura c where c.semen = id),0))")
 	private BigDecimal quantidadeDisponivel;
 	
 	@Temporal(TemporalType.DATE)

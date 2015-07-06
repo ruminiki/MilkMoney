@@ -187,15 +187,12 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	public void registrarParto(Cobertura entity) {
 		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
-		entity.getFemea().setDataUltimoParto(entity.getParto().getData());
 		dao.persist(entity);
 		
 	}
 
 	public void removerParto(Cobertura entity) {
 		configureSituacaoCobertura(entity);
-		//TODO caso a vaca tivesse uma data anterior, como recuperar?
-		entity.getFemea().setDataUltimoParto(null);
 		dao.removerParto(entity);
 	}
 	

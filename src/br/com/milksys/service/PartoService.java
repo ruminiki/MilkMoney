@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.dao.PartoDao;
-import br.com.milksys.model.Animal;
 import br.com.milksys.model.Parto;
 import br.com.milksys.validation.PartoValidation;
 
@@ -24,11 +23,6 @@ public class PartoService implements IService<Integer, Parto>{
 	public boolean save(Parto entity) {
 		
 		PartoValidation.validate(entity);
-    	
-		Animal femea = entity.getCobertura().getFemea();
-    	femea.setDataUltimoParto(entity.getData());
-    	animalDao.persist(femea);
-
     	return dao.persist(entity);
 		
 	}

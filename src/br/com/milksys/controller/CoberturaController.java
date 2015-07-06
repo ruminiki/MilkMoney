@@ -59,7 +59,6 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	@FXML private TableColumn<Cobertura, String> primeiroToqueColumn;
 	@FXML private TableColumn<Cobertura, String> reconfirmacaoColumn;
 	
-	@FXML private UCTextField inputDescricao;
 	@FXML private DatePicker inputData;
 	@FXML private DatePicker inputPrevisaoParto;
 	@FXML private ComboBox<String> inputSituacaoCobertura;
@@ -103,7 +102,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			
 			if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
 				getObject().setSemen(semenReducedController.getObject());
-				inputSemen.setText(semenReducedController.getObject().getDescricao());
+			}
+			
+			if ( getObject().getSemen() != null ){
+				inputSemen.setText(getObject().getSemen().getDescricao());	
 			}else{
 				inputSemen.setText("");
 			}
@@ -120,7 +122,10 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			animalReducedController.showForm(null);
 			if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
 				getObject().setTouro(animalReducedController.getObject());
-				inputReprodutor.setText(animalReducedController.getObject().getNumeroNome());
+			}
+			
+			if ( getObject().getTouro() != null ) {
+				inputReprodutor.setText(getObject().getTouro().getNumeroNome());
 			}else{
 				inputReprodutor.setText("");
 			}
@@ -184,7 +189,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		if ( state.equals(State.INSERT) || state.equals(State.UPDATE) || state.equals(State.INSERT_TO_SELECT) ){
 			
 			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-			inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
+			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 			inputPrevisaoParto.valueProperty().bindBidirectional(getObject().previsaoPartoProperty());
 			
 			inputTipoCobertura.setItems(TipoCobertura.getItems());
@@ -211,15 +216,13 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			
 			if ( getObject().getTouro() != null ){
 				if ( inputReprodutor == null ){
-					
 					inputReprodutor = new UCTextField();
-					inputReprodutor.prefWidthProperty().set(320);
-					
+					inputReprodutor.setDisable(true);
 				}
 				gridPane.getChildren().remove(inputSemen);
 				gridPane.getChildren().remove(inputReprodutor);
 				gridPane.getChildren().add(inputReprodutor);
-				GridPane.setConstraints(inputReprodutor, 1, 4, 3, 1);
+				GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
 				
 				inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
 				inputReprodutor.setDisable(true);
@@ -230,13 +233,13 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			if ( getObject().getSemen() != null ){
 				if ( inputSemen == null ){
 					inputSemen = new UCTextField();
-					inputSemen.prefWidthProperty().set(320);
+					inputSemen.setDisable(true);
 				}
 				
 				gridPane.getChildren().remove(inputReprodutor);
 				gridPane.getChildren().remove(inputSemen);
 				gridPane.getChildren().add(inputSemen);
-				GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
+				GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
 				
 				btnNovoReprodutor.setDisable(false);
 				btnNovoReprodutor.setOnAction(selectSemenEventHandler);
@@ -320,10 +323,8 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 	private void configuraTelaMontaNatural(){
 		
 		if ( inputReprodutor == null ){
-			
 			inputReprodutor = new UCTextField();
-			inputReprodutor.prefWidthProperty().set(320);
-			
+			inputReprodutor.setDisable(true);
 		}
 
 		lblReprodutor.setText("Reprodutor: ");
@@ -336,7 +337,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().remove(inputReprodutor);
 		gridPane.getChildren().add(inputReprodutor);
-		GridPane.setConstraints(inputReprodutor, 1, 4, 3, 1);
+		GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
 		
 		dialogStage.show();
 		
@@ -351,7 +352,6 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		
 		if ( inputSemen == null ){
 			inputSemen = new UCTextField();
-			inputSemen.prefWidthProperty().set(320);
 			inputSemen.setDisable(true);
 		}
 		
@@ -365,7 +365,7 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		gridPane.getChildren().remove(inputReprodutor);
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().add(inputSemen);
-		GridPane.setConstraints(inputSemen, 1, 4, 3, 1);
+		GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
 		
 		dialogStage.show();
 		
@@ -390,14 +390,18 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 			funcionarioReducedController.showForm(funcionarioReducedController.getFormName());
 			
 			if ( funcionarioReducedController.getObject() != null && funcionarioReducedController.getObject().getId() > 0 ){
-				
 				getObject().setFuncionarioResponsavel(funcionarioReducedController.getObject());
 				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
 				inputNomeResponsavel.setDisable(true);
 				
+			}
+			
+			if ( getObject().getFuncionarioResponsavel() != null ){
+				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
 			}else{
 				inputNomeResponsavel.setText("");
 			}
+			
 			
 			break;
 		}case 2:{
@@ -441,10 +445,14 @@ public class CoberturaController extends AbstractController<Integer, Cobertura> 
 		
 		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
 			getObject().setFemea(animalReducedController.getObject());
-			inputFemea.setText(animalReducedController.getObject().getNumeroNome());
+		}
+		
+		if ( getObject().getFemea() != null ){
+			inputFemea.setText(getObject().getFemea().getNumeroNome());
 		}else{
 			inputFemea.setText("");
 		}
+		
 		
 	}
 	

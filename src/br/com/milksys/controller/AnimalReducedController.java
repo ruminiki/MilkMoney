@@ -3,7 +3,9 @@ package br.com.milksys.controller;
 import java.util.Date;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,7 +28,7 @@ import br.com.milksys.service.searchers.SearchMachosAtivos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
-public class AnimalReducedController extends AbstractController<Integer, Animal> {
+public class AnimalReducedController extends AbstractController<Integer, Animal> implements EventTarget {
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
@@ -56,6 +58,8 @@ public class AnimalReducedController extends AbstractController<Integer, Animal>
 			});
 
 			super.initialize();
+			
+			animalController.setControllerOrigin(AnimalReducedController.class);
 
 		}
 		
@@ -153,6 +157,16 @@ public class AnimalReducedController extends AbstractController<Integer, Animal>
 	@Resource(name = "animalService")
 	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
+	}
+
+	@Override
+	public EventDispatchChain buildEventDispatchChain(EventDispatchChain arg0) {
+		//Optional<ButtonType> result = CustomAlert.confirmar("Confirmar seleção", "Deseja selecionar o objeto inserido?");
+		//if (result.get() == ButtonType.OK) {
+		this.setObject(animalController.getObject());
+		super.dialogStage.close();
+		//}
+		return arg0;
 	}
 
 }

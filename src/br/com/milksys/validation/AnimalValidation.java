@@ -4,6 +4,7 @@ import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Sexo;
 
 public class AnimalValidation extends Validator {
@@ -17,8 +18,31 @@ public class AnimalValidation extends Validator {
 		}
 		
 		if ( animal.getSexo().equals(Sexo.MACHO) && animal.getDataUltimoParto() != null ){
-			throw new ValidationException(VALIDACAO_FORMULARIO, "Animais machos não podem ter registrada a data do último parto.");
+			throw new ValidationException(VALIDACAO_FORMULARIO, "Animais machos não podem ter registrado a data de parto.");
 		}
 		
+		if ( animal.getPaiMontaNatural() != null && animal.getPaiEnseminacaoArtificial() != null ){
+			throw new ValidationException("PAI", "Não é possível registrar o pai como monta natural e enseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
+		}
+		
+		if ( animal.getPaiMontaNatural() != null && 
+				(!animal.getPaiMontaNatural().getSexo().equals(Sexo.MACHO) || !animal.getPaiMontaNatural().getFinalidadeAnimal().equals(FinalidadeAnimal.REPRODUCAO)) ){
+			throw new ValidationException("PAI MONTA NATURAL", "Deve ser selecionado um animal macho com finalidade reprodução para o campo pai monta natural.");
+		}
+		
+		if ( animal.getMae() != null && animal.getMae().getId() == animal.getId() ){
+			throw new ValidationException("MÃE", "O animal que está sendo cadastrado não pode ser mãe dele mesmo. Por favor selecione outro animal.");
+		}
+		
+		if ( animal.getPaiMontaNatural() != null && animal.getPaiMontaNatural().getId() == animal.getId() ){
+			throw new ValidationException("PAI", "O animal que está sendo cadastrado não pode ser pai dele mesmo. Por favor selecione outro animal.");
+		}
+		
+		if ( animal.getSexo().equals(Sexo.MACHO) && animal.getFinalidadeAnimal().equals(FinalidadeAnimal.PRODUCAO_LEITE) ){
+			throw new ValidationException(VALIDACAO_FORMULARIO, "Animais machos não podem ter finalidade para a " + FinalidadeAnimal.PRODUCAO_LEITE + ". "
+					+ "Por favor, corrija e tente novamente.");
+		}
+		
+		//se o animal tiver nascido de um parto cadastrado, não pode alterar pai e mãe nem data de nascimento
 	}
 }

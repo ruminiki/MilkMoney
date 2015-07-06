@@ -13,7 +13,6 @@ import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -130,8 +129,7 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="animal")
+	@ManyToOne@JoinColumn(name="animal")
 	@FieldRequired(message="animal")
 	public Animal getAnimal() {
 		return animal.get();

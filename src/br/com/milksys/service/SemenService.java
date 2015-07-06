@@ -21,7 +21,9 @@ public class SemenService implements IService<Integer, Semen>{
 	public boolean save(Semen entity) {
 		
 		SemenValidation.validate(entity);
-		SemenValidation.validadeQuantidadeUtilizada(entity, dao.findQuantidadeUtilizada(entity));
+		
+		if ( entity.getId() > 0 )
+			SemenValidation.validadeQuantidadeUtilizada(entity, dao.findQuantidadeUtilizada(entity));
 		
 		return dao.persist(entity);
 	}

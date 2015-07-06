@@ -77,6 +77,14 @@ public class CustomAlert extends Alert {
 		}
 		
 	}
+
+	public static Optional<ButtonType> confirmar(String header, String message) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirmação");
+		alert.setHeaderText(header);
+		alert.setContentText(message);
+		return alert.showAndWait();
+	}
 	
 	
 }

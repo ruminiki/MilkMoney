@@ -26,9 +26,9 @@
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                  <Button fx:id="btnNew" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button fx:id="btnEdit" layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                  <Button fx:id="btnRemove" layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button minHeight="30.0" mnemonicParsing="false" onAction="#fechar" text="Fechar" />
                   <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />

@@ -26,6 +26,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
+
 import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 
@@ -44,19 +46,41 @@ public class Animal extends AbstractEntity implements Serializable {
 	private int id;
 	
 	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty nome = new SimpleStringProperty();
-	private StringProperty numero = new SimpleStringProperty();
-	private StringProperty sexo = new SimpleStringProperty();
-	private ObjectProperty<Raca> raca = new SimpleObjectProperty<Raca>();
-	private StringProperty finalidadeAnimal = new SimpleStringProperty();
-	private StringProperty situacaoAnimal = new SimpleStringProperty();
-	private ObjectProperty<LocalDate> dataUltimoParto = new SimpleObjectProperty<LocalDate>(null);  
+	private StringProperty            nome = new SimpleStringProperty();
+	private StringProperty            numero = new SimpleStringProperty();
+	private StringProperty            sexo = new SimpleStringProperty();
+	private StringProperty            finalidadeAnimal = new SimpleStringProperty();
+	
+	private ObjectProperty<Raca>      raca = new SimpleObjectProperty<Raca>();
+	
+	private ObjectProperty<Animal>    mae = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Animal>    paiMontaNatural = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Semen>     paiEnseminacaoArtificial = new SimpleObjectProperty<Semen>();
+	
+	@Transient
+	//@Formula(verificar se está se não estiver morta, vendida, seca e tiver parto estará em lactação )
+	private String situacaoAnimal;
+	
 	@Transient
 	private long diasUltimoParto;
 	
-	public Animal() {
-		dataUltimoParto.set(null);
-	}
+	@Formula("(select max(p.data) from parto p inner join cobertura c on (c.parto = p.id) "
+			+ "inner join animal a on (a.id = c.femea) where a.id = id)")
+	private Date dataUltimoParto;
+
+	@Formula("(select max(c.data) from cobertura c where c.femea = id)")
+	private Date dataUltimaCobertura;
+	
+	@Formula("(select max(c.previsaoParto) from cobertura c where c.femea = id)")
+	private Date dataPrevisaoProximoParto;
+
+	@Formula("(select c.situacaoCobertura from Cobertura c where c.femea = id order by c.data desc limit 1)")
+	private String situacaoUltimaCobertura;
+	
+	@Transient
+	private long diasUltimaCobertura;
+
+	public Animal() {}
 
 	public Animal(String sexo) {
 		this.sexo.set(sexo);
@@ -147,7 +171,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(targetEntity=Raca.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="raca")
 	@FieldRequired(message="raça")
 	public Raca getRaca() {
@@ -163,30 +187,48 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getSituacaoAnimal() {
-		return situacaoAnimal.get();
+	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="mae")
+	public Animal getMae() {
+		return mae.get();
 	}
 	
-	public void setSituacaoAnimal(String situacaoAnimal) {
-		this.situacaoAnimal.set(situacaoAnimal);
+	public void setMae(Animal mae) {
+		this.mae.set(mae);
 	}
 	
-	public StringProperty situacaoAnimalProperty(){
-		return situacaoAnimal;
+	public ObjectProperty<Animal> maeProperty(){
+		return mae;
 	}
 	
-	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	public Date getDataUltimoParto() {
-		return DateUtil.asDate(this.dataUltimoParto.get());
+	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="paiMontaNatural")
+	public Animal getPaiMontaNatural() {
+		return paiMontaNatural.get();
+	}
+	
+	public void setPaiMontaNatural(Animal paiMontaNatural) {
+		this.paiMontaNatural.set(paiMontaNatural);
+	}
+	
+	public ObjectProperty<Animal> paiMontaNaturalProperty(){
+		return paiMontaNatural;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(targetEntity=Semen.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="paiEnseminacaoArtificial")
+	public Semen getPaiEnseminacaoArtificial() {
+		return this.paiEnseminacaoArtificial.get();
 	}
 
-	public void setDataUltimoParto(Date dataUltimoParto) {
-		this.dataUltimoParto.set(DateUtil.asLocalDate(dataUltimoParto));
+	public void setPaiEnseminacaoArtificial(Semen paiEnseminacaoArtificial) {
+		this.paiEnseminacaoArtificial.set(paiEnseminacaoArtificial);
 	}
 	
-	public ObjectProperty<LocalDate> dataUltimoPartoProperty(){
-		return dataUltimoParto;
+	public ObjectProperty<Semen> paiEnseminacaoArtificialProperty(){
+		return paiEnseminacaoArtificial;
 	}
 	
 	//==========================
@@ -206,16 +248,67 @@ public class Animal extends AbstractEntity implements Serializable {
 		
 	}
 	
-	public long getDiasUltimoParto() {
-		return diasUltimoParto;
+	@Transient
+	public String getDiasUltimoParto() {
+		if ( diasUltimoParto <= 0 )
+			return "-";
+		return String.valueOf(diasUltimoParto);
+	}
+
+	@Transient
+	public Date getDataUltimoParto() {
+		return dataUltimoParto;
+	}
+
+	public void setDataUltimoParto(Date dataUltimoParto) {
+		this.dataUltimoParto = dataUltimoParto;
+	}
+
+	@Transient
+	public Date getDataUltimaCobertura() {
+		return dataUltimaCobertura;
+	}
+
+	public void setDataUltimaCobertura(Date dataUltimaCobertura) {
+		this.dataUltimaCobertura = dataUltimaCobertura;
+	}
+
+	@Transient
+	public Date getDataPrevisaoProximoParto() {
+		return dataPrevisaoProximoParto;
+	}
+
+	public void setDataPrevisaoProximoParto(Date dataPrevisaoProximoParto) {
+		this.dataPrevisaoProximoParto = dataPrevisaoProximoParto;
+	}
+
+	@Transient
+	public String getSituacaoUltimaCobertura() {
+		if ( situacaoUltimaCobertura == null || situacaoUltimaCobertura.isEmpty() )
+			return "--";
+		return situacaoUltimaCobertura;
+	}
+
+	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
+		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
+	}
+
+	@Transient
+	public String getDiasUltimaCobertura() {
+		if ( diasUltimaCobertura <= 0 )
+			return "-";
+		return String.valueOf(diasUltimaCobertura);
 	}
 
 	@PostLoad
-	public void setDiasUltimoParto() {
+	public void postLoadAnimal() {
 		if ( getDataUltimoParto() != null )
 			this.diasUltimoParto = ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now());
+		
+		if ( getDataUltimaCobertura() != null )
+			this.diasUltimaCobertura = ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now());
 	}
-
+	
 	@Override
 	public String toString() {
 		return getNumeroNome();

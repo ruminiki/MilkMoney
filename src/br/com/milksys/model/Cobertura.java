@@ -41,7 +41,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private StringProperty descricao = new SimpleStringProperty();
+	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
 	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
@@ -87,17 +87,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="descrição")
-	public String getDescricao() {
-		return this.descricao.get();
+	public String getObservacao() {
+		return this.observacao.get();
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao.set(descricao);
+	public void setObservacao(String descricao) {
+		this.observacao.set(descricao);
 	}
 
-	public StringProperty descricaoProperty(){
-		return descricao;
+	public StringProperty observacaoProperty(){
+		return observacao;
 	}
 
 	@Temporal(TemporalType.DATE)

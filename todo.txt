@@ -1,5 +1,6 @@
-- nao alterar um calendario de recolha que já tenha entregas (reformular)
 - carregar o número de vacas em lactação no lançamento de entrega de leite
 - fazer gráfico preço leite
 - fazer gráfico medição leite por animal
-- corrigir mascara cpf cnpj
+- Data ultimo parto, quando remover o parto, como retornar para data anteriora?
+- Animal com pai e mae vindos do parto, não podem ter eles alterados na tela de cadastro
+- a data de nascimento do animal que tem parto cadastrado tbem não pode ser alterado na tela de cadastro
