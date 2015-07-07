@@ -83,6 +83,7 @@
           <TableColumn fx:id="reprodutorColumn" minWidth="120" prefWidth="75.0" text="Reprodutor" />
           <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100" prefWidth="100" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
           <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
+            <TableColumn fx:id="previsaoSecagemColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Secagem" />
           <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo Cobertura" />
           <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação Cobertura" />
             <TableColumn prefWidth="75.0" text="Resultado Toque">

@@ -44,6 +44,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
+	private ObjectProperty<LocalDate> previsaoSecagem = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(7));  
 	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty situacaoPrimeiroToque = new SimpleStringProperty();
 	private StringProperty observacaoPrimeiroToque = new SimpleStringProperty();
@@ -112,6 +113,21 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<LocalDate> previsaoPartoProperty(){
 		return previsaoParto;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="previsão de secagem")
+	public Date getPrevisaoSecagem() {
+		return DateUtil.asDate(this.previsaoSecagem.get());
+	}
+	
+	public void setPrevisaoSecagem(Date previsaoSecagem) {
+		this.previsaoSecagem.set(DateUtil.asLocalDate(previsaoSecagem));
+	}
+	
+	public ObjectProperty<LocalDate> previsaoSecagemProperty(){
+		return previsaoSecagem;
 	}
 	
 	@Temporal(TemporalType.DATE)

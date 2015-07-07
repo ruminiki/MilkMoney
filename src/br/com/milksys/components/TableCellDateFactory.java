@@ -24,7 +24,7 @@ public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<
 		        @Override
 		        protected void updateItem(LocalDate item, boolean empty) {
 		            super.updateItem(item, empty);
-		            if ( getTableRow().getItem() != null ){
+		            if ( getTableRow()!= null && getTableRow().getItem() != null ){
 			            if ( (item == null || empty) ) {
 		            		setText("--");
 			            } else {

@@ -40,6 +40,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML private TableColumn<Animal, Date> dataUltimaCoberturaColumn;
 	@FXML private TableColumn<Animal, String> diasUltimaCoberturaColumn;
+	@FXML private TableColumn<Animal, Date> dataPrevisaoSecagemColumn;
 	@FXML private TableColumn<Animal, Date> dataPrevisaoProximoPartoColumn;
 	@FXML private TableColumn<Animal, String> situacaoUltimaCoberturaColumn;
 	
@@ -67,6 +68,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
 		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
+		dataPrevisaoSecagemColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoSecagem"));
 		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 

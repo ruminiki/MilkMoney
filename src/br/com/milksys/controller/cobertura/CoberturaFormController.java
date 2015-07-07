@@ -34,12 +34,13 @@ import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
+import br.com.milksys.util.DateUtil;
 
 @Controller
 public class CoberturaFormController extends AbstractFormController<Integer, Cobertura> {
 
 	@FXML private DatePicker inputData;
-	@FXML private DatePicker inputPrevisaoParto;
+	@FXML private Label lblPrevisaoParto;
 	@FXML private ComboBox<String> inputSituacaoCobertura;
 	@FXML private UCTextField inputFemea;
 	@FXML private UCTextField inputReprodutor;
@@ -114,7 +115,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-		inputPrevisaoParto.valueProperty().bindBidirectional(getObject().previsaoPartoProperty());
+		lblPrevisaoParto.textProperty().set(DateUtil.format(getObject().getPrevisaoParto()));
 		
 		inputTipoCobertura.setItems(TipoCobertura.getItems());
 		inputTipoCobertura.getSelectionModel().select(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
@@ -201,7 +202,9 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML
 	private void updateDataPrevisaoParto(){
 		if ( inputData.getValue() != null ){
-			inputPrevisaoParto.setValue(inputData.getValue().plusMonths(9));
+			getObject().setPrevisaoParto(DateUtil.asDate(inputData.getValue().plusMonths(9)));
+			getObject().setPrevisaoSecagem(DateUtil.asDate(inputData.getValue().plusMonths(7)));
+			lblPrevisaoParto.setText(DateUtil.format(getObject().getPrevisaoParto()));
 		}
 	}
 

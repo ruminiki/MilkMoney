@@ -38,6 +38,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Animal, String> femeaColumn;
 	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
+	@FXML private TableColumn<Cobertura, String> previsaoSecagemColumn;
 	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, LocalDate> repeticaoCioColumn;
@@ -58,6 +59,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		femeaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("femea"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
+		previsaoSecagemColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoSecagem"));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
 		situacaoCoberturaColumn.setCellFactory(new Callback<TableColumn<SituacaoCobertura,String>, TableCell<SituacaoCobertura,String>>(){
