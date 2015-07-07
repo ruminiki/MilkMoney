@@ -192,7 +192,7 @@ public abstract class AbstractOverviewController<K, E>{
 		this.setState(State.INSERT);
 		formController.setOverviewController(this);
 		formController.setState(State.INSERT);
-		formController.setObject((AbstractEntity) getObject());
+		formController.setObject(this.getObject());
 		formController.showForm();
 	}
 
@@ -201,7 +201,7 @@ public abstract class AbstractOverviewController<K, E>{
 		if (object != null) {
 			formController.setOverviewController(this);
 			formController.setState(State.UPDATE);
-			formController.setObject((AbstractEntity) getObject());
+			formController.setObject(getObject());
 			formController.showForm();
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();
@@ -230,12 +230,11 @@ public abstract class AbstractOverviewController<K, E>{
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public void refreshObjectInTableView(AbstractEntity object){
+	public void refreshObjectInTableView(E object){
 		if ( object != null ){
 			for (int index = 0; index < data.size(); index++) {
 				AbstractEntity o = (AbstractEntity) data.get(index);
-				if (o.getId() == object.getId()) {
+				if (o.getId() == ((AbstractEntity) object).getId()) {
 					data.set(index, (E) object);
 					table.layout();
 				}

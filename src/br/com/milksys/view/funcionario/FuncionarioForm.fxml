@@ -28,12 +28,12 @@
               </rowConstraints>
                <children>
                   <Label text="Nome: " />
-                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="3" />
                   <Label text="E-mail: " GridPane.rowIndex="1" />
                   <Label text="Telefone: " GridPane.rowIndex="2" />
                   <Label text="Jornada Trabalho: " GridPane.rowIndex="3" />
                   <Label text="Data Contratação: " GridPane.rowIndex="4" />
                   <Label text="Salário: " GridPane.rowIndex="5" />
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="3" />
                   <UCTextField fx:id="inputEmail" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputTelefonePrincipal" maxWidth="150.0" promptText="telefone principal" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <UCTextField fx:id="inputTelefoneSecundario" maxWidth="150.0" promptText="telefone secundário" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />

@@ -167,6 +167,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			CustomAlert.nenhumRegistroSelecionado();
 			return;
 		}
+		
+		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
+			return;
+		}
+		
 		primeiroToqueFormController.setObject(getObject());
     	primeiroToqueFormController.showForm();
     	
@@ -179,6 +185,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			CustomAlert.nenhumRegistroSelecionado();
 			return;
 		}
+		
+		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
+			return;
+		}
+
 		reconfirmacaoFormController.setObject(getObject());
     	reconfirmacaoFormController.showForm();
     	
@@ -191,6 +203,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			CustomAlert.nenhumRegistroSelecionado();
 			return;
 		}
+		
+		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
+			return;
+		}
+
 		repeticaoCioFormController.setObject(getObject());
     	repeticaoCioFormController.showForm();
     	

@@ -10,58 +10,60 @@ import org.springframework.stereotype.Component;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
-import br.com.milksys.model.Parto;
-import br.com.milksys.model.Servico;
 
 @Component
 public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	public void removeServicoFromCobertura(Cobertura cobertura) {
 		
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
-		
-        Servico servico = cobertura.getServico();
-		if ( servico != null && servico.getId() > 0 ){
-			cobertura.setServico(null);
-			if ( cobertura.getId() > 0 ){
-				entityManager.persist(cobertura);
-			}
-			entityManager.remove(servico);
+		try{
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+	        entityTransaction.begin();
+			
+	        cobertura.setServico(null);
+	        entityManager.persist(cobertura);
+	       
+	        /*Servico servico = cobertura.getServico();
+			if ( servico != null && servico.getId() > 0 ){
+				
+				cobertura.setServico(null);
+				entityManager.remove(servico);
+				
+				if ( cobertura.getId() > 0 ){
+					entityManager.persist(cobertura);
+				}
+				
+			}*/
+	        
+	        entityTransaction.commit();
+		}catch(Exception e){
+			entityManager.refresh(cobertura);
+			throw e;
 		}
-        
-        entityTransaction.commit();
-		
 		
 	}
 
 	public void removerParto(Cobertura cobertura) {
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
 		
-		if ( cobertura.getId() > 0 && cobertura.getParto() != null && cobertura.getParto().getId() > 0 ){
+		try{
+			EntityTransaction entityTransaction = entityManager.getTransaction();
+	        entityTransaction.begin();
 			
-				/*for ( Cria c : cobertura.getParto().getCrias() ){
-					if ( c.getAnimal() != null && c.getAnimal().getId() > 0)
-						entityManager.remove(c.getAnimal());
-					entityManager.remove(c);
-				}
-				//cobertura.getParto().setCrias(null);
-				entityManager.remove(cobertura.getParto());
-				//cobertura.setParto(null);*/
+			if ( cobertura.getId() > 0 && cobertura.getParto() != null && cobertura.getParto().getId() > 0 ){
 				
-				//Parto p = cobertura.getParto();
+					cobertura.setParto(null);
+					entityManager.persist(cobertura);
 				
+			}else{
 				cobertura.setParto(null);
-				entityManager.persist(cobertura);
-				//entityManager.refresh(p);
-				//entityManager.remove(p);
-			
-		}else{
-			cobertura.setParto(null);
+			}
+	        
+	        entityTransaction.commit();
+		}catch(Exception e ){
+			entityManager.refresh(cobertura);
+			throw e;
 		}
-        
-        entityTransaction.commit();
+		
 	}
 
 	@SuppressWarnings("unchecked")

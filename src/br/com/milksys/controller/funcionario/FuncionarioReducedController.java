@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Funcionario;
-import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
@@ -24,19 +23,16 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 	@FXML private TableColumn<Funcionario, String> telefoneColumn;
 	@FXML private TableColumn<Funcionario, String> emailColumn;
 	
-	@Autowired private FuncionarioOverviewController funcionarioOverviewController;
 	@Autowired private FuncionarioFormController funcionarioFormController;
 	
 	@FXML
 	public void initialize() {
 		
-		if ( state.equals(State.LIST) ){
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
-			telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefone"));
-			emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
-			
-			super.initialize(funcionarioFormController);
-		}
+		nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
+		telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefone"));
+		emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
+		
+		super.initialize(funcionarioFormController);
 		
 	}
 	
@@ -82,11 +78,6 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 		return "Funcionário";
 	}
 	
-	@Override
-	public Funcionario getObject() {
-		return (Funcionario)super.object;
-	}
-
 	@Override
 	@Resource(name = "funcionarioService")
 	protected void setService(IService<Integer, Funcionario> service) {

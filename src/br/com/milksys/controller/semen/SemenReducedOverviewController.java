@@ -28,7 +28,6 @@ public class SemenReducedOverviewController extends AbstractReducedOverviewContr
 	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
 	@FXML private TableColumn<Semen, String> quantidadeDisponivelColumn;
 	
-	@Autowired private SemenOverviewController semenOverviewController;
 	@Autowired private SemenFormController semenFormController;
 	
 	@FXML

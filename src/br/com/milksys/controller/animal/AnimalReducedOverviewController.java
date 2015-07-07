@@ -34,7 +34,6 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 	@FXML private TableColumn<String, String> sexoColumn;
 	
 	@Autowired private AnimalFormController animalFormController;
-	@Autowired private AnimalOverviewController animalOverviewController;
 	
 	@FXML
 	public void initialize() {

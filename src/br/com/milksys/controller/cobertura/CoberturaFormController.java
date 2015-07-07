@@ -34,6 +34,7 @@ import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.ServicoService;
 import br.com.milksys.util.DateUtil;
 
 @Controller
@@ -57,12 +58,18 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML private GridPane gridPane;
 	
 	@Autowired private CoberturaService service;
+	@Autowired private ServicoService servicoService;
 	
 	//controllers
 	@Autowired private SemenReducedOverviewController semenReducedOverviewController;
 	@Autowired private FuncionarioReducedController funcionarioReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private ServicoFormController servicoFormController;
+	/**
+	 * Faz o controle caso o usuário altere a cobertura, mude o responsável e caso exista o serviço associado,
+	 * faz o controle para caso o usuário cancele a alteração o serviço não seja removido
+	 */
+	private Servico servicoRemovido;
 	
 	EventHandler<ActionEvent> selectSemenEventHandler = new EventHandler<ActionEvent>() {
 	    @Override public void handle(ActionEvent e) {
@@ -195,6 +202,8 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 		}
 		
+		servicoRemovido = null;
+		
 	}
 	
 	/**
@@ -236,8 +245,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}
 
 		lblReprodutor.setText("Reprodutor: ");
-		lblQuantidadeDosesSemen.setVisible(false);
-		inputQuantidadeDosesSemen.setVisible(false);
+		inputQuantidadeDosesSemen.setDisable(true);
 		btnNovoReprodutor.setDisable(false);
 		inputReprodutor.setText("");
 		getObject().setTouro(null);
@@ -264,8 +272,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}
 		
 		lblReprodutor.setText("Sêmen: ");
-		lblQuantidadeDosesSemen.setVisible(true);
-		inputQuantidadeDosesSemen.setVisible(true);
+		inputQuantidadeDosesSemen.setDisable(false);
 		inputSemen.setText("");
 		btnNovoReprodutor.setDisable(false);
 		getObject().setSemen(null);
@@ -283,38 +290,41 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML
 	private void alterarResponsavelServico(){
 		switch (inputResponsavelServico.getSelectionModel().getSelectedIndex()) {
-		case 0:{
-			
-			inputNomeResponsavel.setText("");
-			inputNomeResponsavel.requestFocus();
-			inputNomeResponsavel.setDisable(false);
-			getObject().setFuncionarioResponsavel(null);
-			removerServico();
-			
-			break;
-		}case 1:{
-			
-			removerServico(); 	
-			funcionarioReducedOverviewController.showForm();
-			
-			if ( funcionarioReducedOverviewController.getObject() != null && funcionarioReducedOverviewController.getObject().getId() > 0 ){
-				getObject().setFuncionarioResponsavel(funcionarioReducedOverviewController.getObject());
-				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
-				inputNomeResponsavel.setDisable(true);
+			case 0:{
 				
-			}
-			
-			if ( getObject().getFuncionarioResponsavel() != null ){
-				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
-			}else{
 				inputNomeResponsavel.setText("");
-			}
-			
-			
-			break;
-		}case 2:{
-			
-			if ( getObject().getFemea() != null ){
+				inputNomeResponsavel.requestFocus();
+				inputNomeResponsavel.setDisable(false);
+				getObject().setFuncionarioResponsavel(null);
+				
+				if ( getObject().getServico() != null ){
+					removerServico();
+				}
+				
+				break;
+			}case 1:{
+				
+				if ( getObject().getServico() != null ){
+					removerServico();
+				}
+				
+				funcionarioReducedOverviewController.showForm();
+				
+				if ( funcionarioReducedOverviewController.getObject() != null && funcionarioReducedOverviewController.getObject().getId() > 0 ){
+					getObject().setFuncionarioResponsavel(funcionarioReducedOverviewController.getObject());
+					inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
+					inputNomeResponsavel.setDisable(true);
+				}
+				
+				if ( getObject().getFuncionarioResponsavel() != null ){
+					inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
+				}else{
+					inputNomeResponsavel.setText("");
+				}
+				
+				
+				break;
+			}case 2:{
 				
 				servicoFormController.setState(State.CREATE_TO_SELECT);
 				servicoFormController.setObject(new Servico("COBERTURA " + getObject().getFemea().getNumeroNome()));
@@ -329,18 +339,16 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 					inputNomeResponsavel.setText("");
 				}
 				
+				inputNomeResponsavel.setDisable(true);
+				getObject().setFuncionarioResponsavel(null);
+				
+				break;
+			}default:{
+				
+				getObject().setFuncionarioResponsavel(null);
+				getObject().setServico(null);
+				break;
 			}
-			
-			inputNomeResponsavel.setDisable(true);
-			getObject().setFuncionarioResponsavel(null);
-			
-			break;
-		}default:{
-			
-			getObject().setFuncionarioResponsavel(null);
-			getObject().setServico(null);
-			break;
-		}
 		}
 	}
 	
@@ -367,11 +375,44 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			inputFemea.setText("");
 		}
 		
+	}
+	
+	@Override
+	public void handleCancel() {
+		
+		
+		if ( servicoRemovido != null && servicoRemovido.getId() > 0 ){
+			//recupera o registro do banco de dados para o caso de o usuário ter alterado algum valor em tela
+			setObject(service.findById(getObject().getId()));
+			getObject().setServico(servicoRemovido);
+			service.save(getObject());
+		}else{
+			getObject().setServico(null);
+		}
+		
+		super.handleCancel();
 		
 	}
 	
+	@Override
+	protected void handleSave() {
+		
+		if ( servicoRemovido != null ){
+			servicoService.remove(servicoRemovido);
+		}
+		
+		super.handleSave();
+	}
+	
 	private void removerServico(){
+		
+		if ( servicoRemovido == null ){
+			servicoRemovido = getObject().getServico();	
+		}
+		
+		getObject().setServico(null);
 		((CoberturaService)service).removeServicoFromCobertura(getObject());
+		
 	}
 	
 	@Override

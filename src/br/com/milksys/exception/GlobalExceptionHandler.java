@@ -14,7 +14,10 @@ public class GlobalExceptionHandler implements UncaughtExceptionHandler
 			InvocationTargetException exception = (InvocationTargetException) e.getCause();
 			
 			if ( exception.getTargetException() instanceof ValidationException ){
-				CustomAlert.mensagemAlerta(((ValidationException)e).getTipo(), ((ValidationException)e).getMessage());	
+				
+				ValidationException ve = (ValidationException) exception.getTargetException();
+				CustomAlert.mensagemAlerta(ve.getTipo(), ve.getMessage());	
+				
 			}else{
 				e.printStackTrace();
 			}

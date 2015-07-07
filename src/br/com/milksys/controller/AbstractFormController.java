@@ -37,7 +37,7 @@ public abstract class AbstractFormController<K, E> {
 	@FXML private AnchorPane form;
 	
 	private Stage dialogStage;
-	private AbstractEntity object;
+	private E object;
 	private IService<K, E> service;
 	
 	private boolean closePopUpAfterSave = true;
@@ -67,7 +67,7 @@ public abstract class AbstractFormController<K, E> {
 		this.dialogStage = dialogStage;
 	}
 
-	public void setObject(AbstractEntity object) {
+	public void setObject(E object) {
 		this.object = object;
 	}
 
@@ -75,7 +75,7 @@ public abstract class AbstractFormController<K, E> {
 		this.service = service;
 	}
 
-	protected void selectRowTableHandler(AbstractEntity value) {
+	protected void selectRowTableHandler(E value) {
 		object = value;
 	}
 
@@ -120,19 +120,21 @@ public abstract class AbstractFormController<K, E> {
 
 	// ========= HANDLERS INTERFACE=============//
 
-	@FXML
+	
+	@FXML @SuppressWarnings("unchecked")
 	public void handleCancel() {
 		dialogStage.close();
+		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+		getOverviewController().refreshObjectInTableView(getObject());
 		setObject(null); 
 	}
 
 	@FXML
-	@SuppressWarnings("unchecked")
 	protected void handleSave() {
 		
 		beforeSave();
 		
-		boolean isNew =  object.getId() <= 0;
+		boolean isNew =  ((AbstractEntity)object).getId() <= 0;
 		
 		if ( !state.equals(State.CREATE_TO_SELECT) ){
 			
@@ -192,7 +194,6 @@ public abstract class AbstractFormController<K, E> {
 		this.controllerOrigin = controller;
 	}
 
-	@SuppressWarnings("unchecked")
 	public E getObject(){
 		return (E) object;
 	}
