@@ -14,6 +14,8 @@ import javafx.util.Callback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import br.com.milksys.exception.GlobalExceptionHandler;
+
 public class MainApp extends Application {
 
 	public static Stage primaryStage;
@@ -28,14 +30,9 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) {
 		MainApp.primaryStage = primaryStage;
 		MainApp.primaryStage.setTitle("Milk Money");
-		//MainApp.primaryStage.setMaximized(true);
 		initRootLayout();
 	}
 
-	/**
-	 * Inicializa o root layout e tenta carregar o ï¿½ltimo arquivo
-	 * de pessoa aberto.
-	 */
 	public void initRootLayout() {
 	    try {
 	    	FXMLLoader loader = new FXMLLoader();
@@ -57,7 +54,7 @@ public class MainApp extends Application {
 		return context.getBean(clazz);
 	}
 	/**
-	 * Neste mï¿½todo ï¿½ feita a substituiï¿½ï¿½o do objeto controller da interface
+	 * Neste método é feita a substituição do objeto controller da interface
 	 * pelo controller instanciado pelo Spring.
 	 * @param url
 	 * @return
@@ -81,6 +78,8 @@ public class MainApp extends Application {
 		
 		Locale locale = new Locale("pt", "BR");
 		Locale.setDefault(locale);
+		
+		Thread.setDefaultUncaughtExceptionHandler(new GlobalExceptionHandler());  
 		
 		launch(args);
 	}

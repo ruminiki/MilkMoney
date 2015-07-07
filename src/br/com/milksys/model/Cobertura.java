@@ -370,7 +370,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=Parto.class, cascade=CascadeType.ALL)
+	@OneToOne(orphanRemoval=true, targetEntity=Parto.class, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name="parto")
 	public Parto getParto() {
 		return parto;

@@ -39,17 +39,26 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 		
-        Parto parto = cobertura.getParto();
-		if ( parto != null && parto.getId() > 0 ){
+		if ( cobertura.getId() > 0 && cobertura.getParto() != null && cobertura.getParto().getId() > 0 ){
 			
-			cobertura.setParto(null);
-			
-			if ( cobertura.getId() > 0 ){
+				/*for ( Cria c : cobertura.getParto().getCrias() ){
+					if ( c.getAnimal() != null && c.getAnimal().getId() > 0)
+						entityManager.remove(c.getAnimal());
+					entityManager.remove(c);
+				}
+				//cobertura.getParto().setCrias(null);
+				entityManager.remove(cobertura.getParto());
+				//cobertura.setParto(null);*/
+				
+				//Parto p = cobertura.getParto();
+				
+				cobertura.setParto(null);
 				entityManager.persist(cobertura);
-			}
+				//entityManager.refresh(p);
+				//entityManager.remove(p);
 			
-			entityManager.remove(parto);
-			
+		}else{
+			cobertura.setParto(null);
 		}
         
         entityTransaction.commit();

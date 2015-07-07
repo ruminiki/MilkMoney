@@ -144,6 +144,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 					inputReprodutor = new UCTextField();
 					inputReprodutor.setDisable(true);
 				}
+				
 				gridPane.getChildren().remove(inputSemen);
 				gridPane.getChildren().remove(inputReprodutor);
 				gridPane.getChildren().add(inputReprodutor);

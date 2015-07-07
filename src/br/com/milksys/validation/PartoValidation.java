@@ -3,7 +3,7 @@ package br.com.milksys.validation;
 import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
-import br.com.milksys.model.Animal;
+import br.com.milksys.model.Cria;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.util.DateUtil;
@@ -37,11 +37,12 @@ public class PartoValidation extends Validator {
 			}
 		}
 		
-		for ( Animal a : parto.getCrias() ){
+		for ( Cria a : parto.getCrias() ){
 			
-			if ( !DateUtil.isSameDate(a.getDataNascimento(), parto.getData()) ){
+			if ( a.getAnimal() != null &&
+					!DateUtil.isSameDate(a.getAnimal().getDataNascimento(), parto.getData()) ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
-						"A data de nascimento do animal [" + a.getNumeroNome() + "] deve ser igual a data do parto.");
+						"A data de nascimento do animal [" + a.getAnimal().getNumeroNome() + "] deve ser igual a data do parto.");
 			}
 			
 		}

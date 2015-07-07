@@ -1,6 +1,7 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -30,6 +31,7 @@ import org.hibernate.annotations.Formula;
 
 import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
+import br.com.milksys.util.NumberFormatUtil;
 
 
 /**
@@ -56,6 +58,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<Animal>    mae = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Animal>    paiMontaNatural = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Semen>     paiEnseminacaoArtificial = new SimpleObjectProperty<Semen>();
+	
+	private StringProperty            peso = new SimpleStringProperty();
 	
 	@Transient
 	//@Formula(verificar se está se não estiver morta, vendida, seca e tiver parto estará em lactação )
@@ -232,6 +236,19 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<Semen> paiEnseminacaoArtificialProperty(){
 		return paiEnseminacaoArtificial;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getPeso() {
+		return NumberFormatUtil.fromString(this.peso.get());
+	}
+
+	public void setPeso(BigDecimal peso) {
+		this.peso.set(NumberFormatUtil.decimalFormat(peso));
+	}
+
+	public StringProperty pesoProperty(){
+		return peso;
 	}
 	
 	//==========================

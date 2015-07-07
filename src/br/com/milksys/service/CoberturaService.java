@@ -187,13 +187,25 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	public void registrarParto(Cobertura entity) {
 		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
-		dao.persist(entity);
-		
+		try{
+			dao.persist(entity);
+		}catch(Exception e){
+			configureSituacaoCobertura(entity);
+			entity.setParto(null);
+			throw new RuntimeException(e);
+		}
 	}
 
 	public void removerParto(Cobertura entity) {
+		
 		configureSituacaoCobertura(entity);
-		dao.removerParto(entity);
+		try{
+			dao.removerParto(entity);
+		}catch(Exception e){
+			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
+			throw new RuntimeException(e);
+		}
+		
 	}
 	
 }

@@ -1,36 +1,31 @@
 package br.com.milksys.exception;
 
-import javax.transaction.RollbackException;
-
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.transaction.TransactionSystemException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.lang.reflect.InvocationTargetException;
 
 import br.com.milksys.components.CustomAlert;
 
-@ControllerAdvice
-class GlobalExceptionHandler
+public class GlobalExceptionHandler implements UncaughtExceptionHandler  
 {
-    @ExceptionHandler(TransactionSystemException.class)
-    public void handleError(final TransactionSystemException tse){       
-    	if(tse.getCause() != null && tse.getCause() instanceof RollbackException){
-            final RollbackException re = (RollbackException) tse.getCause();
-
-            if(re.getCause() != null && re.getCause() instanceof ConstraintViolationException)
-            {
-            	CustomAlert.mensagemAlerta("ERRO BANCO DE DADOS", re.getMessage());
-            }
-        }
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public void handleError(final ConstraintViolationException cve){
-    	CustomAlert.mensagemAlerta("RESTRIÇÃO CHAVE", cve.getMessage());
-    }
-    
-    @ExceptionHandler(ValidationException.class)
-    public void handleError(final ValidationException vld){
-    	CustomAlert.mensagemAlerta(vld.getTipo(), vld.getMessage());
-    }
+	@Override
+	public void uncaughtException(Thread t, Throwable e) {
+		
+		if ( e.getCause() instanceof InvocationTargetException  ){
+			InvocationTargetException exception = (InvocationTargetException) e.getCause();
+			
+			if ( exception.getTargetException() instanceof ValidationException ){
+				CustomAlert.mensagemAlerta(((ValidationException)e).getTipo(), ((ValidationException)e).getMessage());	
+			}else{
+				e.printStackTrace();
+			}
+			
+			//....
+			
+		}else{
+			//CustomAlert.mensagemAlerta("ERRO INESPERADO", e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+	
 }

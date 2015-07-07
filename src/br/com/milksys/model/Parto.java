@@ -19,9 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -46,11 +45,11 @@ public class Parto extends AbstractEntity implements Serializable {
 	
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty observacao = new SimpleStringProperty();
+	private StringProperty tipoParto = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
 	private ObjectProperty<Cobertura> cobertura = new SimpleObjectProperty<Cobertura>();
-	private List<Animal> crias = new ArrayList<Animal>();
+	private List<Cria> crias = new ArrayList<Cria>();
 	
 	public Parto() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Parto(Cobertura cobertura) {
@@ -63,6 +62,19 @@ public class Parto extends AbstractEntity implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getTipoParto() {
+		return this.tipoParto.get();
+	}
+
+	public void setTipoParto(String tipoParto) {
+		this.tipoParto.set(tipoParto);
+	}
+
+	public StringProperty tipoPartoProperty(){
+		return tipoParto;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -109,15 +121,15 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToMany(targetEntity=Animal.class, cascade=CascadeType.ALL)
-    @JoinTable(name="cria", joinColumns={@JoinColumn(name="parto")}, inverseJoinColumns={@JoinColumn(name="animal")})
-	public List<Animal> getCrias() {
+	@OneToMany(orphanRemoval=true,  targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@JoinColumn(name="parto")
+	public List<Cria> getCrias() {
 		if ( crias == null )
-			return new ArrayList<Animal>();
+			return new ArrayList<Cria>();
 		return crias;
 	}
 	
-	public void setCrias(List<Animal> crias) {
+	public void setCrias(List<Cria> crias) {
 		this.crias = crias;
 	}
 	
