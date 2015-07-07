@@ -1,9 +1,12 @@
 package br.com.milksys.controller.producaoIndividual;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -16,11 +19,13 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
+import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.service.AnimalService;
@@ -35,10 +40,10 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	@FXML private TableView<ProducaoIndividual> table;
 	@FXML private TableColumn<Animal, String> animalColumn;
 	@FXML private TableColumn<ProducaoIndividual, LocalDate> dataColumn;
-	@FXML private TableColumn<ProducaoIndividual, String> primeiraOrdenhaColumn;
-	@FXML private TableColumn<ProducaoIndividual, String> segundaOrdenhaColumn;
-	@FXML private TableColumn<ProducaoIndividual, String> terceiraOrdenhaColumn;
-	@FXML private TableColumn<ProducaoIndividual, String> valorColumn;
+	@FXML private TableColumn<ProducaoIndividual, BigDecimal> primeiraOrdenhaColumn;
+	@FXML private TableColumn<ProducaoIndividual, BigDecimal> segundaOrdenhaColumn;
+	@FXML private TableColumn<ProducaoIndividual, BigDecimal> terceiraOrdenhaColumn;
+	@FXML private TableColumn<ProducaoIndividual, BigDecimal> valorColumn;
 	
 	@FXML private DatePicker inputData;
 	@FXML private UCTextField inputObservacao;
@@ -55,11 +60,7 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	@FXML
 	public void initialize() {
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-		inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
-		inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());
-		inputTerceiraOrdenha.textProperty().bindBidirectional(getObject().terceiraOrdenhaProperty());
+		inputData.valueProperty().set(DateUtil.asLocalDate(getObject().getData()));
 		
 		MaskFieldUtil.numeroInteiro(inputPrimeiraOrdenha);
 		MaskFieldUtil.numeroInteiro(inputSegundaOrdenha);
@@ -67,10 +68,10 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 		
 		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("animal"));
 		dataColumn.setCellFactory(new TableCellDateFactory<ProducaoIndividual, LocalDate>("data"));
-		primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
-		segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
-		terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("terceiraOrdenha"));
-		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
+		primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("primeiraOrdenha"));
+		segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("segundaOrdenha"));
+		terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("terceiraOrdenha"));
+		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("valor"));
 
 		inputAnimal.setItems(animalService.findAllAsObservableList());
 		table.setItems(((ProducaoIndividualService)service).findByDate(selectedDate));
@@ -89,8 +90,36 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	protected void handleSave() {
 		super.setClosePopUpAfterSave(false);
 		super.setObject(((ProducaoIndividualService)service).beforeSave(getObject()));
-		super.handleSave();
+		
+		try {
+			service.save(getObject());
+			refreshTableOverview();
+		} catch (ValidationException e) {
+			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
+		}
+		
     }
+	
+	@FXML
+	private void handleDelete(){
+		int selectedIndex = table.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
+			if (result.get() == ButtonType.OK) {
+				
+				try {
+					service.remove(table.getSelectionModel().getSelectedItem());
+				} catch (Exception e) {
+					CustomAlert.mensagemAlerta("", e.getMessage());
+					return;
+				}
+				
+				table.getItems().remove(selectedIndex);
+			}
+		} else {
+			CustomAlert.nenhumRegistroSelecionado();		
+		}
+	}
 	
 	/**
 	 * Chamado pelo form ProducaoIndividualExternalForm.fxml

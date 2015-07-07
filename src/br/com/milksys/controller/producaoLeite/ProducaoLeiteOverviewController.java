@@ -208,10 +208,10 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 			lblTotalProduzido.setText(NumberFormatUtil.decimalFormat(totalProduzido));
 			lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
 			lblTotalVacasOrdenhadas.setText(String.valueOf(totalVacasOrdenhadas));
-			if ( totalEntregue.compareTo(BigDecimal.ZERO) > 0 && dias > 0 ){
-				lblMediaMes.setText(NumberFormatUtil.decimalFormat(totalEntregue.divide(new BigDecimal(dias), 2, RoundingMode.HALF_UP)));
+			if ( totalProduzido.compareTo(BigDecimal.ZERO) > 0 && dias > 0 ){
+				lblMediaMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(dias), 2, RoundingMode.HALF_UP)));
 				if ( totalVacasOrdenhadas > 0 )  
-					lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(totalEntregue.divide(new BigDecimal(totalVacasOrdenhadas), 2, RoundingMode.HALF_UP)));
+					lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(totalVacasOrdenhadas), 2, RoundingMode.HALF_UP)));
 				else
 					lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
 			}else{

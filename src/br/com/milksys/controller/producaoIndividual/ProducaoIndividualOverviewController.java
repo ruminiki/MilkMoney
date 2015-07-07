@@ -12,15 +12,16 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.MainApp;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.ProducaoIndividual;
+import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ProducaoIndividualService;
+import br.com.milksys.service.searchers.SearchFemeasAtivas;
 
 @Controller
 public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual> {
@@ -37,13 +38,15 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private TableColumn<ProducaoIndividual, String> valorColumn;
 	
 	@Autowired private AnimalService animalService;
+	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
+	@Autowired private ProducaoIndividualFormController producaoIndividualFormController;
+	
 	private Animal selectedAnimal;
 	
 	@FXML
 	public void initialize() {
 		
-		//@TODO filtrar apenas animais femeas 
-		tableAnimal.setItems(animalService.findAllAsObservableList());
+		tableAnimal.setItems(searchFemeasAtivas.doSearch());
 		tableAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> findByAnimal(newValue));
 		animalListColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("numeroNome"));
 	
@@ -55,8 +58,27 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoIndividual, String>("observacao"));
 		
-		super.initialize((ProducaoIndividualFormController) MainApp.getBean(ProducaoIndividualFormController.class));
+		super.initialize(producaoIndividualFormController);
 		
+	}
+	
+	@Override
+	public void handleNew() {
+		setObject(new ProducaoIndividual(selectedAnimal));
+		producaoIndividualFormController.setOverviewController(this);
+		producaoIndividualFormController.setState(State.INSERT);
+		producaoIndividualFormController.setObject(getObject());
+		producaoIndividualFormController.showForm();
+	}
+	
+	@Override
+	public void handleEdit() {
+		if ( getObject() != null ){
+			producaoIndividualFormController.setOverviewController(this);
+			producaoIndividualFormController.setState(State.INSERT);
+			producaoIndividualFormController.setObject(getObject());
+			producaoIndividualFormController.showForm();
+		}
 	}
 	
 	@Override

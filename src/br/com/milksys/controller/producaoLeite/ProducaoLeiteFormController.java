@@ -3,6 +3,8 @@ package br.com.milksys.controller.producaoLeite;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -10,6 +12,7 @@ import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.model.ProducaoLeite;
+import br.com.milksys.service.IService;
 import br.com.milksys.util.DateUtil;
 
 @Controller
@@ -51,6 +54,12 @@ public class ProducaoLeiteFormController extends AbstractFormController<Integer,
 	@Override
 	protected String getFormTitle() {
 		return "Produção Leite";
+	}
+	
+	@Override
+	@Resource(name = "producaoLeiteService")
+	protected void setService(IService<Integer, ProducaoLeite> service) {
+		super.setService(service);
 	}
 	
 }

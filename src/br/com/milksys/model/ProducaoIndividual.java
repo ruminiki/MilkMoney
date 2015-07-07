@@ -53,6 +53,10 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 		setData(data);
 	}
 
+	public ProducaoIndividual(Animal animal) {
+		this.animal.set(animal);
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="data")

@@ -156,11 +156,15 @@ public abstract class AbstractFormController<K, E> {
 			dialogStage.close();
 
 		if ( isNew ){
-			overviewController.getData().add((E) object);
-			overviewController.updateLabelNumRegistros();
+			if ( overviewController != null ){
+				overviewController.getData().add((E) object);
+				overviewController.updateLabelNumRegistros();
+			}
 			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
 		}else{
-			overviewController.refreshObjectInTableView(object);
+			if ( overviewController != null ){
+				overviewController.refreshObjectInTableView(object);
+			}
 			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
 		}
 		

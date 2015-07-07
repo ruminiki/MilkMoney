@@ -34,13 +34,11 @@ public class ProducaoIndividualFormController extends AbstractFormController<Int
 	@Autowired private AnimalService animalService;
 	@Autowired private ProducaoIndividualService service;
 	
-	private Animal selectedAnimal;
-	
 	@FXML
 	public void initialize() {
 		
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-		inputAnimal.setText(selectedAnimal.getNumeroNome());
+		inputAnimal.setText(getObject().getAnimal().getNumeroNome());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		inputPrimeiraOrdenha.textProperty().bindBidirectional(getObject().primeiraOrdenhaProperty());
 		inputSegundaOrdenha.textProperty().bindBidirectional(getObject().segundaOrdenhaProperty());

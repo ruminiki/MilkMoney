@@ -151,6 +151,8 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 			lblTotalRecebido.setText("R$ " + NumberFormatUtil.decimalFormat(valorRecebido));
 		}
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
+		table.getSelectionModel().clearSelection();
+		table.setFocusTraversable(false);
 	}
 	
 	@FXML
