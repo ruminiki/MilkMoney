@@ -18,7 +18,7 @@ public class SemenDao extends AbstractGenericDao<Integer, Semen> {
 
 			return ((Long)query.getSingleResult()).intValue();
 			
-		}catch(NoResultException e){
+		}catch(NoResultException | NullPointerException e){
 			return 0;
 		}
 		

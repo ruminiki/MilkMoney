@@ -68,6 +68,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 					public void updateItem(String item, boolean empty) {
 						if ( table.getItems().size() > tableRowProperty().get().getIndex() ){
 							if(item!=null){
+								
 								HBox cell = new HBox();
 								cell.setAlignment(Pos.CENTER_LEFT);
 								cell.setSpacing(2);
@@ -87,6 +88,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 								cell.getChildren().add(new Label(item));
 								
 								setGraphic(cell);
+								
 							} 
 						}
 					}

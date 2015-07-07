@@ -48,8 +48,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty            nome = new SimpleStringProperty();
 	private StringProperty            numero = new SimpleStringProperty();
-	private StringProperty            sexo = new SimpleStringProperty();
-	private StringProperty            finalidadeAnimal = new SimpleStringProperty();
+	private StringProperty            sexo = new SimpleStringProperty(Sexo.FEMEA);
+	private StringProperty            finalidadeAnimal = new SimpleStringProperty(FinalidadeAnimal.PRODUCAO_LEITE);
 	
 	private ObjectProperty<Raca>      raca = new SimpleObjectProperty<Raca>();
 	

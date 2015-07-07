@@ -3,9 +3,7 @@ package br.com.milksys.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,11 +13,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
-import br.com.milksys.components.events.SelectAfterInsertEvent;
+import br.com.milksys.components.events.ActionEvent;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
@@ -28,7 +28,7 @@ import br.com.milksys.service.searchers.Search;
 
 @Controller
 public abstract class AbstractFormController<K, E> {
-	
+
 	@FXML private State state = State.LIST;
 	@FXML private Button btnSave;
 	@FXML private Button btnNew;
@@ -44,29 +44,22 @@ public abstract class AbstractFormController<K, E> {
 	private Search<K,E> search;
 	private Class<?> controllerOrigin;
 	
-	public static final String NEW_DISABLED = "NEW_DISABLED";
 	public static final String SAVE_DISABLED = "SAVE_DISABLED";
-	public static final String EDIT_DISABLED = "EDIT_DISABLED";
-	public static final String REMOVE_DISABLED = "REMOVE_DISABLED";
 	/**
 	 * Armazena a configuração para deixar disabled os botões do formulário
 	 */
 	@SuppressWarnings("serial")
-	private Map<String, Boolean> formConfig = new HashMap<String, Boolean>()
-	{{put(NEW_DISABLED, false);put(SAVE_DISABLED, false);put(EDIT_DISABLED, false);put(REMOVE_DISABLED, false);}};
+	private Map<String, Boolean> formConfig = new HashMap<String, Boolean>(){{put(SAVE_DISABLED, false);}};
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	/**
 	 * Configura os botões disableds
 	 */
 	protected void configureForm(){
-		if ( btnNew != null )
-			btnNew.setDisable(formConfig.get(NEW_DISABLED));
 		if ( btnSave != null )
 			btnSave.setDisable(formConfig.get(SAVE_DISABLED));
-		if ( btnEdit != null )
-			btnEdit.setDisable(formConfig.get(EDIT_DISABLED));
-		if ( btnRemove != null )
-			btnRemove.setDisable(formConfig.get(REMOVE_DISABLED));
 	}
 
 	public void setDialogStage(Stage dialogStage) {
@@ -138,6 +131,8 @@ public abstract class AbstractFormController<K, E> {
 		
 		beforeSave();
 		
+		boolean isNew =  object.getId() <= 0;
+		
 		if ( !state.equals(State.CREATE_TO_SELECT) ){
 			
 			try {
@@ -163,11 +158,12 @@ public abstract class AbstractFormController<K, E> {
 		
 		afterSave();
 		
-		if ( getControllerOrigin() != null && MainApp.getBean(getControllerOrigin()) != null &&
-				MainApp.getBean(getControllerOrigin()) instanceof EventTarget ) {
-			Event.fireEvent((EventTarget)MainApp.getBean(getControllerOrigin()), new SelectAfterInsertEvent(getObject(), Event.ANY));
+		if ( isNew ){
+			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_INSERT));	
+		}else{
+			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_UPDATE));
 		}
-			
+		
 	}
 	
 	protected void beforeSave(){}
@@ -225,4 +221,8 @@ public abstract class AbstractFormController<K, E> {
 		this.closePopUpAfterSave = closePopUpAfterSave;
 	}
 	
+	public Stage getDialogStage() {
+		return dialogStage;
+	}
+
 }

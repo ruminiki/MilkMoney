@@ -21,17 +21,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
+import br.com.milksys.components.events.ActionEvent;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.searchers.Search;
 
 @Controller
-public abstract class AbstractOverviewController<K, E> {
+public abstract class AbstractOverviewController<K, E> implements ApplicationListener<ActionEvent> {
 	
 	@FXML protected TableView<E> table;
 	@FXML protected Label lblNumRegistros;
@@ -193,6 +195,7 @@ public abstract class AbstractOverviewController<K, E> {
 		object = (AbstractEntity) ((Class<?>) ((ParameterizedType) this.getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[1])
 				.newInstance();
+		formController.setState(State.INSERT);
 		formController.setObject((AbstractEntity) getObject());
 		formController.showForm();
 	}
@@ -200,7 +203,7 @@ public abstract class AbstractOverviewController<K, E> {
 	@FXML
 	public void handleEdit() {
 		if (object != null) {
-			this.setState(State.UPDATE);
+			formController.setState(State.UPDATE);
 			formController.setObject((AbstractEntity) getObject());
 			formController.showForm();
 		} else {
@@ -231,13 +234,35 @@ public abstract class AbstractOverviewController<K, E> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void refreshObjectInTableView(AbstractEntity object){
+	public void refreshObjectInTableView(AbstractEntity object){
 		if ( object != null ){
 			for (int index = 0; index < data.size(); index++) {
 				AbstractEntity o = (AbstractEntity) data.get(index);
 				if (o.getId() == object.getId()) {
 					data.set(index, (E) object);
 					table.layout();
+				}
+			}
+		}
+	}
+	
+	@Override@SuppressWarnings("unchecked")
+	public void onApplicationEvent(ActionEvent event) {
+		if ( event != null ){
+			if ( event.getSource().equals(getObject()) ){
+			
+				switch (event.getEventType()) {
+				
+				case ActionEvent.EVENT_NEW:
+					this.getData().add((E) event.getSource());
+					break;
+					
+				case ActionEvent.EVENT_UPDATE:
+					this.refreshObjectInTableView((AbstractEntity) event.getSource());
+					break;
+					
+				default:
+					break;
 				}
 			}
 		}

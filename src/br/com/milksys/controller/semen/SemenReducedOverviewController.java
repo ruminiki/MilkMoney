@@ -15,13 +15,13 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
-import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
-public class SemenReducedOverviewController extends AbstractOverviewController<Integer, Semen> {
+public class SemenReducedOverviewController extends AbstractReducedOverviewController<Integer, Semen> {
 
 	@FXML private TableColumn<Semen, String> descricaoColumn;
 	@FXML private TableColumn<Semen, String> touroColumn;
@@ -40,14 +40,6 @@ public class SemenReducedOverviewController extends AbstractOverviewController<I
 			touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
 			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
 			quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
-			
-		/*	semenOverviewController.getData().addListener(new ListChangeListener<Semen>(){
-				@Override
-				public void onChanged(ListChangeListener.Change<? extends Semen> c) {
-						data.clear();
-						data.addAll(semenOverviewController.getData());
-				}
-			});*/
 			
 			super.initialize(semenFormController);
 			
@@ -85,29 +77,6 @@ public class SemenReducedOverviewController extends AbstractOverviewController<I
 			}
 
 		});
-	}
-	
-	@Override
-	public void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		semenOverviewController.handleNew();
-	}
-	
-	@Override
-	public void handleEdit() {
-		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
-			semenOverviewController.setObject(table.getSelectionModel().getSelectedItem());
-			semenOverviewController.handleEdit();
-		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um sêmen na tabela.");
-		}
-	}
-	
-	@Override
-	public void handleDelete() {
-		int index = table.getSelectionModel().getSelectedIndex();
-		super.handleDelete();
-		if ( semenOverviewController.getData().size() >= index )
-			semenOverviewController.getData().remove(index);
 	}
 	
 	@Override

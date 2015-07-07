@@ -29,14 +29,15 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
+	@Autowired CoberturaOverviewController coberturaOverviewController;
 
 	@FXML
 	public void initialize() {
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
+		inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoPrimeiroToqueToqueProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoReconfirmacaoProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoProperty());
 	
 	}
 	
@@ -45,7 +46,7 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 		try {
 			((CoberturaService)service).registrarReconfirmacao(getObject());
 			super.closeForm();
-			//refreshObjectInTableView(getObject());
+			coberturaOverviewController.refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -59,7 +60,7 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroReconfirmacao(getObject());
 				super.closeForm();
-				//refreshObjectInTableView(getObject());
+				coberturaOverviewController.refreshObjectInTableView(getObject());
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
@@ -69,12 +70,12 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 	
 	@Override
 	protected String getFormName() {
-		return "view/cobertura/RegistrarReconfirmacaoForm.fxml";
+		return "view/cobertura/ReconfirmacaoForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Primeiro Toque";
+		return "Reconfirmação";
 	}
 
 	@Override

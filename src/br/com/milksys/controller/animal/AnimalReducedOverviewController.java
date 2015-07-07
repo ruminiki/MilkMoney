@@ -2,9 +2,7 @@ package br.com.milksys.controller.animal;
 
 import java.util.Date;
 
-import javafx.event.EventDispatchChain;
 import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
-import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.service.IService;
@@ -27,7 +25,7 @@ import br.com.milksys.service.searchers.SearchMachosAtivos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
-public class AnimalReducedOverviewController extends AbstractOverviewController<Integer, Animal> implements EventTarget {
+public class AnimalReducedOverviewController extends AbstractReducedOverviewController<Integer, Animal> {
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
@@ -47,14 +45,6 @@ public class AnimalReducedOverviewController extends AbstractOverviewController<
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
 		
-	/*	animalFormController.getData().addListener(new ListChangeListener<Animal>(){
-			@Override
-			public void onChanged(ListChangeListener.Change<? extends Animal> c) {
-					data.clear();
-					data.addAll(animalFormController.getData());
-			}
-		});*/
-
 		super.initialize(animalFormController);
 
 	}
@@ -91,29 +81,6 @@ public class AnimalReducedOverviewController extends AbstractOverviewController<
 		});
 	}
 	
-	@Override
-	public void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		animalOverviewController.handleNew();
-	}
-	
-	@Override
-	public void handleEdit() {
-		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
-			animalOverviewController.setObject(table.getSelectionModel().getSelectedItem());
-			animalOverviewController.handleEdit();
-		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um animal na tabela.");
-		}
-	}
-	
-	@Override
-	public void handleDelete() {
-		int index = table.getSelectionModel().getSelectedIndex();
-		super.handleDelete();
-		if ( animalOverviewController.getData().size() >= index )
-			animalOverviewController.getData().remove(index);
-	}
-	
 	@FXML
 	private void handleFindFemeas(){
 		setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
@@ -146,16 +113,6 @@ public class AnimalReducedOverviewController extends AbstractOverviewController<
 	@Resource(name = "animalService")
 	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
-	}
-
-	@Override
-	public EventDispatchChain buildEventDispatchChain(EventDispatchChain arg0) {
-		//Optional<ButtonType> result = CustomAlert.confirmar("Confirmar seleção", "Deseja selecionar o objeto inserido?");
-		//if (result.get() == ButtonType.OK) {
-		this.setObject(animalFormController.getObject());
-		super.closeForm();
-		//}
-		return arg0;
 	}
 
 }

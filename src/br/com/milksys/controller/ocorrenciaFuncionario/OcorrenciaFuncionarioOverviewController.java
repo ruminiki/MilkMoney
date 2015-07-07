@@ -80,7 +80,7 @@ public class OcorrenciaFuncionarioOverviewController extends AbstractOverviewCon
 	}
 	
 	@Override
-	@Resource(name = "ocorrenciaFuncnionarioService")
+	@Resource(name = "ocorrenciaFuncionarioService")
 	protected void setService(IService<Integer, OcorrenciaFuncionario> service) {
 		super.setService(service);
 	}

@@ -52,7 +52,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty observacaoReconfirmacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataRepeticaoCio = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty observacaoRepeticaoCio = new SimpleStringProperty();
-	private StringProperty tipoCobertura = new SimpleStringProperty();
+	private StringProperty tipoCobertura = new SimpleStringProperty(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
 	private ObjectProperty<Animal> femea = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Animal> touro = new SimpleObjectProperty<Animal>();
 	private StringProperty situacaoCobertura = new SimpleStringProperty();

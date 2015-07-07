@@ -102,30 +102,28 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	
 	@FXML
 	public void initialize() {
+	
+		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+		inputPrevisaoParto.valueProperty().bindBidirectional(getObject().previsaoPartoProperty());
 		
-		if ( getState().equals(State.INSERT) || getState().equals(State.UPDATE) || getState().equals(State.INSERT_TO_SELECT) ){
-			
-			inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-			inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-			inputPrevisaoParto.valueProperty().bindBidirectional(getObject().previsaoPartoProperty());
-			
-			inputTipoCobertura.setItems(TipoCobertura.getItems());
-			inputTipoCobertura.valueProperty().bindBidirectional(getObject().tipoCoberturaProperty());
-			inputResponsavelServico.setItems(ResponsavelServico.getItems());
-			inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
-			
-			MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
-			inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesUtilizadasProperty());
-			
-			if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
-				getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
-			}
-			
-			btnSalvar.setDisable(getObject().getParto() != null);
-			
+		inputTipoCobertura.setItems(TipoCobertura.getItems());
+		inputTipoCobertura.getSelectionModel().select(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
+		inputTipoCobertura.valueProperty().bindBidirectional(getObject().tipoCoberturaProperty());
+		
+		inputResponsavelServico.setItems(ResponsavelServico.getItems());
+		inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
+		
+		MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
+		inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesUtilizadasProperty());
+		
+		if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
+			getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
 		}
 		
-		if ( getState().equals(State.UPDATE)  ){
+		btnSalvar.setDisable(getObject().getParto() != null);
+		
+		if ( getObject().getId() > 0 ){
 			
 			if ( getObject().getFemea() != null ){
 				inputFemea.textProperty().bindBidirectional(getObject().getFemea().numeroNomeProperty());
@@ -181,31 +179,11 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				}
 			}
 			
+		}else{
+			btnNovoReprodutor.setDisable(false);
+			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 		}
 		
-		if ( getState().equals(State.PRIMEIRO_TOQUE) ){
-			inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
-			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoPrimeiroToqueToqueProperty());
-			inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
-		}
-		
-		if ( getState().equals(State.RECONFIRMACAO) ){
-			inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
-			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-			inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoReconfirmacaoProperty());
-			inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoProperty());
-		}
-		
-		if ( getState().equals(State.REPETICAO) ){
-			getObject().setSituacaoCobertura(SituacaoCobertura.REPETIDA);
-			inputData.valueProperty().bindBidirectional(getObject().dataRepeticaoCioProperty());
-			inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-			inputSituacaoCobertura.getSelectionModel().select(SituacaoCobertura.REPETIDA);
-			inputSituacaoCobertura.setDisable(true);
-			inputObservacao.textProperty().bindBidirectional(getObject().observacaoRepeticaoCioProperty());
-		}
-		 
 	}
 	
 	/**
@@ -256,7 +234,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		gridPane.getChildren().add(inputReprodutor);
 		GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
 		
-		this.closeForm();
+		super.getDialogStage().show();
 		
 		btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
 	}
@@ -283,6 +261,8 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().add(inputSemen);
 		GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
+		
+		super.getDialogStage().show();
 		
 		btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 	}

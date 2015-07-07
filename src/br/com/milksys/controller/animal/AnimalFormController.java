@@ -11,16 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.UCTextField;
-import br.com.milksys.controller.AbstractController;
 import br.com.milksys.controller.AbstractFormController;
-import br.com.milksys.controller.raca.RacaOverviewController;
+import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.raca.RacaFormController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.Semen;
 import br.com.milksys.model.Sexo;
-import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
 
@@ -37,9 +36,9 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@Autowired private RacaService racaService;
 	
 	//controllers
-	@Autowired private RacaOverviewController racaController;
-	@Autowired private AnimalReducedOverviewController animalReducedController;
-	@Autowired private SemenReducedOverviewController semenReducedController;
+	@Autowired private RacaFormController racaFormController;
+	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
+	@Autowired private SemenReducedOverviewController semenReducedOverviewController;
 	
 	@FXML
 	public void initialize() {
@@ -53,11 +52,9 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 		
 		inputSexo.setItems(Sexo.getItems());
-		inputSexo.getSelectionModel().select(0);
 		inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());
 		
 		inputFinalidadeAnimal.setItems(FinalidadeAnimal.getItems());
-		inputFinalidadeAnimal.getSelectionModel().select(0);
 		inputFinalidadeAnimal.valueProperty().bindBidirectional(getObject().finalidadeAnimalProperty());
 		
 		if ( getObject().getMae() != null ){
@@ -87,17 +84,17 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarMae() {
 		
-		animalReducedController.setObject(new Animal(Sexo.FEMEA));
+		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
 		//animalReducedController.setSearch(searchFemeasAtivas);
 		
-		animalReducedController.getFormConfig().put(AbstractController.NEW_DISABLED, true);
-		animalReducedController.getFormConfig().put(AbstractController.EDIT_DISABLED, true);
-		animalReducedController.getFormConfig().put(AbstractController.REMOVE_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
 
-		animalReducedController.showForm();
+		animalReducedOverviewController.showForm();
 		
-		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
-			getObject().setMae(animalReducedController.getObject());
+		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setMae(animalReducedOverviewController.getObject());
 		}
 		
 		if ( getObject().getMae() != null ){
@@ -115,18 +112,18 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		
 		Animal animalAux = getObject();
 		
-		animalReducedController.setObject(new Animal(Sexo.MACHO));
+		animalReducedOverviewController.setObject(new Animal(Sexo.MACHO));
 		//animalReducedController.setSearch(searchFemeasAtivas);
-		animalReducedController.getFormConfig().put(AbstractController.NEW_DISABLED, true);
-		animalReducedController.getFormConfig().put(AbstractController.EDIT_DISABLED, true);
-		animalReducedController.getFormConfig().put(AbstractController.REMOVE_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
 
-		animalReducedController.showForm();
+		animalReducedOverviewController.showForm();
 		
 		setObject(animalAux);
 		
-		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
-			getObject().setPaiMontaNatural(animalReducedController.getObject());
+		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setPaiMontaNatural(animalReducedOverviewController.getObject());
 		}
 		
 		if ( getObject().getPaiMontaNatural() != null ){
@@ -140,11 +137,11 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarPaiEnseminacaoArtificial() {
 		
-		semenReducedController.setObject(new Semen());
-		semenReducedController.showForm();
+		semenReducedOverviewController.setObject(new Semen());
+		semenReducedOverviewController.showForm();
 		
-		if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
-			getObject().setPaiEnseminacaoArtificial(semenReducedController.getObject());
+		if ( semenReducedOverviewController.getObject() != null && semenReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setPaiEnseminacaoArtificial(semenReducedOverviewController.getObject());
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
@@ -179,12 +176,11 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	
 	@FXML
 	private void cadastrarNovaRaca() {
-		racaController.setState(State.INSERT_TO_SELECT);
-		racaController.setObject(new Raca());
-		//racaController.showForm(null);
-		if ( racaController.getObject() != null && racaController.getObject().getId() > 0 ){
-			inputRaca.getItems().add(racaController.getObject());
-			inputRaca.getSelectionModel().select(racaController.getObject());
+		racaFormController.setObject(new Raca());
+		racaFormController.showForm();
+		if ( racaFormController.getObject() != null && racaFormController.getObject().getId() > 0 ){
+			inputRaca.getItems().add(racaFormController.getObject());
+			inputRaca.getSelectionModel().select(racaFormController.getObject());
 		}
 	}
 	

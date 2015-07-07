@@ -1,12 +1,14 @@
 package br.com.milksys.components;
 
+import java.sql.Timestamp;
+
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import br.com.milksys.util.DateUtil;
 
-public class TableCellDateFactory<S, Date> implements Callback<TableColumn<S ,Date>, TableCell<S, Date>>{
+public class TableCellDateFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
 	
 	String property;
 	
@@ -15,20 +17,30 @@ public class TableCellDateFactory<S, Date> implements Callback<TableColumn<S ,Da
 	}
 
 	@Override
-	public TableCell<S, Date> call(TableColumn<S, Date> param) {
+	public TableCell<S, LocalDate> call(TableColumn<S, LocalDate> param) {
 		
-		  TableCell<S, Date> cell = new TableCell<S, Date>() {
+		  TableCell<S, LocalDate> cell = new TableCell<S, LocalDate>() {
 			  
 		        @Override
-		        protected void updateItem(Date item, boolean empty) {
+		        protected void updateItem(LocalDate item, boolean empty) {
 		            super.updateItem(item, empty);
 		            if ( getTableRow().getItem() != null ){
 			            if ( (item == null || empty) ) {
 		            		setText("--");
 			            } else {
 			                try{
-			                	setText(DateUtil.format((java.util.Date)item));
+			                	
+			                	if ( item instanceof java.sql.Timestamp )
+			                		setText( DateUtil.format(((Timestamp)item).toLocalDateTime().toLocalDate()) );
+			                	
+			                	if ( item instanceof java.util.Date )
+			                	   	setText(DateUtil.format((java.util.Date)item));
+			                	
+			                	if ( item instanceof java.time.LocalDate )
+			                	   	setText(DateUtil.format((java.time.LocalDate)item));
+			                	
 			                }catch(Exception e){
+			                	System.out.println(e);
 			                }
 			            }
 		            }else{
@@ -38,7 +50,7 @@ public class TableCellDateFactory<S, Date> implements Callback<TableColumn<S ,Da
 		        }
 		    };
 		    
-		    param.setCellValueFactory(new PropertyValueFactory<S, Date>(property));
+		    param.setCellValueFactory(new PropertyValueFactory<S, LocalDate>(property));
 		    
 		    return cell;
 	}

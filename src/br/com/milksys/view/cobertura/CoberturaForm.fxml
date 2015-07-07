@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="265.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.CoberturaController">
+<AnchorPane prefHeight="265.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.cobertura.CoberturaFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -49,8 +49,8 @@
                      </GridPane.margin>
                   </Button>
                   <ComboBox fx:id="inputTipoCobertura" onAction="#changeTipoCobertura" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <UCTextField fx:id="inputReprodutor" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <Button fx:id="btnNovoReprodutor" disable="true" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <UCTextField fx:id="inputSemen" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <Button fx:id="btnNovoReprodutor" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin>

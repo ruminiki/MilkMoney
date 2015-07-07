@@ -29,14 +29,17 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
+	@Autowired CoberturaOverviewController coberturaOverviewController;
 
 	@FXML
 	public void initialize() {
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
+		getObject().setSituacaoCobertura(SituacaoCobertura.REPETIDA);
+		inputData.valueProperty().bindBidirectional(getObject().dataRepeticaoCioProperty());
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoPrimeiroToqueToqueProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoCoberturaProperty());
+		inputSituacaoCobertura.setDisable(true);
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoRepeticaoCioProperty());
 	
 	}
 	
@@ -45,6 +48,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 		try {
 			((CoberturaService)service).registrarRepeticaoCio(getObject());
 			super.closeForm();
+			
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -58,6 +62,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
 				super.closeForm();
+				
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
@@ -67,12 +72,12 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 	
 	@Override
 	protected String getFormName() {
-		return "view/cobertura/RegistrarRepeticaoCioForm.fxml";
+		return "view/cobertura/RepeticaoCioForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Primeiro Toque";
+		return "Repetição de Cio";
 	}
 
 	@Override

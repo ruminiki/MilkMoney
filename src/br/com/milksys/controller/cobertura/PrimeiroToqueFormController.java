@@ -29,6 +29,8 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
+	@Autowired CoberturaOverviewController coberturaOverviewController;
+	
 	
 	@FXML
 	public void initialize() {
@@ -45,7 +47,7 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 		try {
 			((CoberturaService)service).registrarPrimeiroToque(getObject());
 			super.closeForm();
-			//refreshObjectInTableView(getObject());
+			coberturaOverviewController.refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -59,7 +61,7 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroPrimeiroToque(getObject());
 				super.closeForm();
-				//refreshObjectInTableView(getObject());
+				coberturaOverviewController.refreshObjectInTableView(getObject());
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
@@ -69,7 +71,7 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 	
 	@Override
 	protected String getFormName() {
-		return "view/cobertura/RegistrarPrimeiroToqueForm.fxml";
+		return "view/cobertura/PrimeiroToqueForm.fxml";
 	}
 
 	@Override
