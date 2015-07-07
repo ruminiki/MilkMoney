@@ -35,9 +35,8 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
         	entityManager.unwrap(Session.class).setFlushMode(FlushMode.COMMIT);
         	entityManager.persist(entity);
         	entityTransaction.commit();
-        	entityManager.clear();
-        	//entityManager.refresh(entity);
-        	
+        	//entityManager.clear();
+        	entityManager.refresh(entity);
         }catch(Exception e){
         	throw e;
         }finally{
@@ -93,8 +92,6 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 			}
 		}*/
 		//entityManager.flush();
-		entityManager.clear();
-		entityManager.unwrap(Session.class).flush();
 		return entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
 	}
 	

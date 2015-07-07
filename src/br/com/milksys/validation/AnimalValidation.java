@@ -34,6 +34,11 @@ public class AnimalValidation extends Validator {
 			throw new ValidationException("MÃE", "O animal que está sendo cadastrado não pode ser mãe dele mesmo. Por favor selecione outro animal.");
 		}
 		
+		if ( animal.getMae() != null && animal.getMae().getMae() != null &&
+				animal.getId() == animal.getMae().getMae().getId() ){
+			throw new ValidationException("MÃE", "O animal não pode ser mãe de sua própria mãe. Por favor, corrija e tente novamente.");
+		}
+		
 		if ( animal.getPaiMontaNatural() != null && animal.getPaiMontaNatural().getId() == animal.getId() ){
 			throw new ValidationException("PAI", "O animal que está sendo cadastrado não pode ser pai dele mesmo. Por favor selecione outro animal.");
 		}

@@ -43,6 +43,9 @@ public abstract class AbstractFormController<K, E> {
 	private boolean closePopUpAfterSave = true;
 	private Search<K,E> search;
 	private Class<?> controllerOrigin;
+	private AbstractOverviewController<K, E> overviewController;
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	public static final String SAVE_DISABLED = "SAVE_DISABLED";
 	/**
@@ -51,8 +54,6 @@ public abstract class AbstractFormController<K, E> {
 	@SuppressWarnings("serial")
 	private Map<String, Boolean> formConfig = new HashMap<String, Boolean>(){{put(SAVE_DISABLED, false);}};
 	
-	@Autowired
-	private ApplicationEventPublisher publisher;
 	
 	/**
 	 * Configura os botões disableds
@@ -154,15 +155,18 @@ public abstract class AbstractFormController<K, E> {
 		if (closePopUpAfterSave)
 			dialogStage.close();
 
+		if ( isNew ){
+			overviewController.getData().add((E) object);
+			overviewController.updateLabelNumRegistros();
+			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
+		}else{
+			overviewController.refreshObjectInTableView(object);
+			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
+		}
+		
 		this.setState(State.LIST);
 		
 		afterSave();
-		
-		if ( isNew ){
-			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_INSERT));	
-		}else{
-			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_UPDATE));
-		}
 		
 	}
 	
@@ -225,4 +229,13 @@ public abstract class AbstractFormController<K, E> {
 		return dialogStage;
 	}
 
+	public AbstractOverviewController<K, E> getOverviewController() {
+		return overviewController;
+	}
+
+	public void setOverviewController(
+			AbstractOverviewController<K, E> overviewController) {
+		this.overviewController = overviewController;
+	}
+	
 }

@@ -21,19 +21,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
-import br.com.milksys.components.events.ActionEvent;
 import br.com.milksys.model.AbstractEntity;
 import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.searchers.Search;
 
 @Controller
-public abstract class AbstractOverviewController<K, E> implements ApplicationListener<ActionEvent> {
+public abstract class AbstractOverviewController<K, E>{
 	
 	@FXML protected TableView<E> table;
 	@FXML protected Label lblNumRegistros;
@@ -190,11 +188,9 @@ public abstract class AbstractOverviewController<K, E> implements ApplicationLis
 	// ========= HANDLERS INTERFACE=============//
 
 	@FXML
-	public void handleNew() throws InstantiationException,	IllegalAccessException, ClassNotFoundException {
+	public void handleNew() {
 		this.setState(State.INSERT);
-		object = (AbstractEntity) ((Class<?>) ((ParameterizedType) this.getClass()
-				.getGenericSuperclass()).getActualTypeArguments()[1])
-				.newInstance();
+		formController.setOverviewController(this);
 		formController.setState(State.INSERT);
 		formController.setObject((AbstractEntity) getObject());
 		formController.showForm();
@@ -203,6 +199,7 @@ public abstract class AbstractOverviewController<K, E> implements ApplicationLis
 	@FXML
 	public void handleEdit() {
 		if (object != null) {
+			formController.setOverviewController(this);
 			formController.setState(State.UPDATE);
 			formController.setObject((AbstractEntity) getObject());
 			formController.showForm();
@@ -246,28 +243,6 @@ public abstract class AbstractOverviewController<K, E> implements ApplicationLis
 		}
 	}
 	
-	@Override@SuppressWarnings("unchecked")
-	public void onApplicationEvent(ActionEvent event) {
-		if ( event != null ){
-			if ( event.getSource().equals(getObject()) ){
-			
-				switch (event.getEventType()) {
-				
-				case ActionEvent.EVENT_NEW:
-					this.getData().add((E) event.getSource());
-					break;
-					
-				case ActionEvent.EVENT_UPDATE:
-					this.refreshObjectInTableView((AbstractEntity) event.getSource());
-					break;
-					
-				default:
-					break;
-				}
-			}
-		}
-	}
-
 	//==========getters e setters
 	
 	public Class<?> getControllerOrigin() {
@@ -280,7 +255,18 @@ public abstract class AbstractOverviewController<K, E> implements ApplicationLis
 	
 	@SuppressWarnings("unchecked")
 	public E getObject(){
+		
+		if ( object == null ){
+			try {
+				return (E) ((Class<?>) ((ParameterizedType) this.getClass()
+						.getGenericSuperclass()).getActualTypeArguments()[1])
+						.newInstance();
+			} catch (InstantiationException | IllegalAccessException e) {
+				return null;
+			}
+		}
 		return (E) object;
+		
 	}
 
 	public State getState() {

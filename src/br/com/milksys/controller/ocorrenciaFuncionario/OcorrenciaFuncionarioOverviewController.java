@@ -58,11 +58,6 @@ public class OcorrenciaFuncionarioOverviewController extends AbstractOverviewCon
 	}
 	
 	@Override
-	public void handleNew() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		super.handleNew();
-	}
-	
-	@Override
 	public void refreshTableOverview() {
 		data.clear();
 		data.addAll(ocorrenciaFuncionarioService.findByFuncionario(getSelectedFuncionario()));

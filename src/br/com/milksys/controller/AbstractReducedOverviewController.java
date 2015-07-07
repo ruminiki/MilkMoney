@@ -10,12 +10,11 @@ public abstract class AbstractReducedOverviewController<K, E> extends AbstractOv
 	@Override
 	public void onApplicationEvent(ActionEvent event) {
 		if ( event != null ){
-			
-			if ( event.getSource().equals(getObject()) ){
+			if ( ( event.getEventType().equals(ActionEvent.EVENT_INSERT) || event.getEventType().equals(ActionEvent.EVENT_UPDATE)) ){
 				
-				if ( ( event.getEventType().equals(ActionEvent.EVENT_INSERT) || event.getEventType().equals(ActionEvent.EVENT_UPDATE)) ){
+				if ( event.getSource().getClass().isInstance(getObject()) ){
 					this.setObject((AbstractEntity) event.getSource());
-					this.closeForm();
+					this.closeForm();	
 				}
 				
 			}

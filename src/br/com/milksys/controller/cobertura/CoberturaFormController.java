@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
+import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.animal.AnimalReducedOverviewController;
 import br.com.milksys.controller.funcionario.FuncionarioReducedController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
@@ -57,19 +58,22 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@Autowired private CoberturaService service;
 	
 	//controllers
-	@Autowired private SemenReducedOverviewController semenReducedController;
-	@Autowired private FuncionarioReducedController funcionarioReducedController;
-	@Autowired private AnimalReducedOverviewController animalReducedController;
+	@Autowired private SemenReducedOverviewController semenReducedOverviewController;
+	@Autowired private FuncionarioReducedController funcionarioReducedOverviewController;
+	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private ServicoFormController servicoFormController;
 	
 	EventHandler<ActionEvent> selectSemenEventHandler = new EventHandler<ActionEvent>() {
 	    @Override public void handle(ActionEvent e) {
 	    	
-			semenReducedController.setObject(new Semen());
-			semenReducedController.showForm();
+			semenReducedOverviewController.setObject(new Semen());
+			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
+			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
+			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
+			semenReducedOverviewController.showForm();
 			
-			if ( semenReducedController.getObject() != null && semenReducedController.getObject().getId() > 0 ){
-				getObject().setSemen(semenReducedController.getObject());
+			if ( semenReducedOverviewController.getObject() != null && semenReducedOverviewController.getObject().getId() > 0 ){
+				getObject().setSemen(semenReducedOverviewController.getObject());
 			}
 			
 			if ( getObject().getSemen() != null ){
@@ -84,12 +88,17 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	EventHandler<ActionEvent> selectReprodutorEventHandler = new EventHandler<ActionEvent>() {
 	    @Override public void handle(ActionEvent e) {
 			
-			animalReducedController.setObject(new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO));
+			animalReducedOverviewController.setObject(new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO));
 			//animalReducedController.setSearch(searchReprodutoresAtivos);
 			
-			animalReducedController.showForm();
-			if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
-				getObject().setTouro(animalReducedController.getObject());
+			animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
+			animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
+			animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
+			
+			animalReducedOverviewController.showForm();
+			
+			if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
+				getObject().setTouro(animalReducedOverviewController.getObject());
 			}
 			
 			if ( getObject().getTouro() != null ) {
@@ -282,10 +291,10 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}case 1:{
 			
 			removerServico(); 	
-			funcionarioReducedController.showForm();
+			funcionarioReducedOverviewController.showForm();
 			
-			if ( funcionarioReducedController.getObject() != null && funcionarioReducedController.getObject().getId() > 0 ){
-				getObject().setFuncionarioResponsavel(funcionarioReducedController.getObject());
+			if ( funcionarioReducedOverviewController.getObject() != null && funcionarioReducedOverviewController.getObject().getId() > 0 ){
+				getObject().setFuncionarioResponsavel(funcionarioReducedOverviewController.getObject());
 				inputNomeResponsavel.setText(getObject().getFuncionarioResponsavel().getNome());
 				inputNomeResponsavel.setDisable(true);
 				
@@ -334,12 +343,18 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML
 	protected void handleSelecionarFemea() {
 		
-		animalReducedController.setObject(new Animal(Sexo.FEMEA));
+		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
 		//animalReducedController.setSearch(searchFemeasAtivas);
-		animalReducedController.showForm();
 		
-		if ( animalReducedController.getObject() != null && animalReducedController.getObject().getId() > 0 ){
-			getObject().setFemea(animalReducedController.getObject());
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
+		
+		animalReducedOverviewController.showForm();
+		
+		
+		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setFemea(animalReducedOverviewController.getObject());
 		}
 		
 		if ( getObject().getFemea() != null ){
