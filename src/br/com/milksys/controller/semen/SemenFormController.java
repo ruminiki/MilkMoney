@@ -48,7 +48,7 @@ public class SemenFormController extends AbstractFormController<Integer, Semen> 
 		inputFornecedor.valueProperty().bindBidirectional(getObject().fornecedorProperty());
 		
 		MaskFieldUtil.numeroInteiro(inputQuantidade);
-		MaskFieldUtil.moeda(inputValor);
+		MaskFieldUtil.decimal(inputValor);
 		
 	}
 

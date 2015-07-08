@@ -24,6 +24,7 @@
 		<class>br.com.milksys.model.Cria</class>
 		<class>br.com.milksys.model.Comprador</class>
 		<class>br.com.milksys.model.VendaAnimal</class>
+		<class>br.com.milksys.model.MotivoVendaAnimal</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

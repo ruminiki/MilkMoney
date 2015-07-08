@@ -134,7 +134,7 @@ public abstract class MaskFieldUtil {
      *
      * @param textField TextField
      */
-    public static void moeda(final TextField textField) {
+    public static void decimal(final TextField textField) {
         //textField.setAlignment(Pos.CENTER_RIGHT);
         textField.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override

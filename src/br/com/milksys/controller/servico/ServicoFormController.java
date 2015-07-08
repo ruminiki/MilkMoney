@@ -40,7 +40,7 @@ public class ServicoFormController extends AbstractFormController<Integer, Servi
 		inputPrestadorServico.valueProperty().bindBidirectional(getObject().prestadorServicoProperty());
 		
 		inputValor.textProperty().bindBidirectional(getObject().valorProperty());
-		MaskFieldUtil.moeda(inputValor);
+		MaskFieldUtil.decimal(inputValor);
 		
 	}
 	

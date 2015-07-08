@@ -40,14 +40,14 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataVenda         = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate> dataRecebimento   = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private ObjectProperty<Animal>    animal            = new SimpleObjectProperty<Animal>();
-	private StringProperty            destinacaoAnimal  = new SimpleStringProperty();
-	private StringProperty            valor             = new SimpleStringProperty();
-	private ObjectProperty<Comprador> comprador         = new SimpleObjectProperty<Comprador>();
-	private StringProperty            observacao        = new SimpleStringProperty();
-	private StringProperty            motivoVendaAnimal = new SimpleStringProperty();
+	private ObjectProperty<LocalDate>         dataVenda               = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>         dataPrevisaoRecebimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private ObjectProperty<Animal>            animal                  = new SimpleObjectProperty<Animal>();
+	private StringProperty                    destinacaoAnimal        = new SimpleStringProperty(DestinacaoAnimal.ABATE);
+	private StringProperty                    valor                   = new SimpleStringProperty();
+	private ObjectProperty<Comprador>         comprador               = new SimpleObjectProperty<Comprador>();
+	private StringProperty                    observacao              = new SimpleStringProperty();
+	private ObjectProperty<MotivoVendaAnimal> motivoVendaAnimal       = new SimpleObjectProperty<MotivoVendaAnimal>();
 
 	public int getId() {
 		return this.id;
@@ -75,21 +75,21 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="data recebimento previsto")
-	public Date getDataRecebimento() {
-		return DateUtil.asDate(this.dataRecebimento.get());
+	public Date getDataPrevisaoRecebimento() {
+		return DateUtil.asDate(this.dataPrevisaoRecebimento.get());
 	}
 
-	public void setDataRecebimento(Date dataRecebimento) {
-		this.dataRecebimento.set(DateUtil.asLocalDate(dataRecebimento));
+	public void setDataPrevisaoRecebimento(Date dataPrevisaoRecebimento) {
+		this.dataPrevisaoRecebimento.set(DateUtil.asLocalDate(dataPrevisaoRecebimento));
 	}
 	
 	public ObjectProperty<LocalDate> dataRecebimentoProperty(){
-		return dataRecebimento;
+		return dataPrevisaoRecebimento;
 	}
 	
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
-	@JoinColumn(name="mae")
+	@JoinColumn(name="animal")
 	@FieldRequired(message="animal vendido")
 	public Animal getAnimal() {
 		return animal.get();
@@ -160,15 +160,18 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getMotivoVendaAnimal() {
+	@ManyToOne(targetEntity=MotivoVendaAnimal.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="motivoVendaAnimal")
+	@FieldRequired(message="motivo venda animal")
+	public MotivoVendaAnimal getMotivoVendaAnimal() {
 		return this.motivoVendaAnimal.get();
 	}
 
-	public void setMotivoVendaAnimal(String motivoVendaAnimal) {
+	public void setMotivoVendaAnimal(MotivoVendaAnimal motivoVendaAnimal) {
 		this.motivoVendaAnimal.set(motivoVendaAnimal);
 	}
 	
-	public StringProperty motivoVendaAnimalProperty(){
+	public ObjectProperty<MotivoVendaAnimal> motivoVendaAnimalProperty(){
 		return motivoVendaAnimal;
 	}
 }

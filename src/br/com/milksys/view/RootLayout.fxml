@@ -9,26 +9,28 @@
 	<top>
 		<MenuBar BorderPane.alignment="CENTER">
 			<menus>
-				<Menu mnemonicParsing="false" text="Cadastros">
-				 <items>
+            <Menu mnemonicParsing="false" text="Rebanho">
+              <items>
 				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroAnimal" text="Animal">
 					<accelerator>
 						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 					</accelerator>
 			 	  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote"/>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroComprador" text="Comprador" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animal" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça">
 						<accelerator>
 							<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 						</accelerator>
 				  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroComprador" text="Comprador" />
+			 	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroMotivoVendaAnimal" text="Motivo Venda Animal" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-				</items>
-				</Menu>
+              </items>
+            </Menu>
 				<Menu mnemonicParsing="false" text="Produção">
 					<items>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
 						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" />
