@@ -83,7 +83,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		MaskFieldUtil.numeroInteiro(inputPeso);
 
 		//table crias
-		animalColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("animal"));
+		animalColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("animalFormatado"));
 		sexoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("sexo"));
 		incorporadoAoRebanhoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("incorporadoAoRebanho"));
 		situacaoNascimentoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("situacaoNascimento"));
@@ -122,6 +122,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		inputData.setDisable(getObject().getId() > 0 );
 		inputObservacao.setDisable(getObject().getId() > 0);
 		
+		data.clear();
 		data.addAll(getObject().getCrias());
 		table.setItems(data);
 		
@@ -159,9 +160,18 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	protected void handleAdicionarCria() {
 		
 		if ( inputIncorporadoAoRebanho.getValue() != null && 
-				inputIncorporadoAoRebanho.getValue().equals(SimNao.SIM) &&
-				cria.getAnimal() == null ){
-			cadastrarAnimal();
+				inputIncorporadoAoRebanho.getValue().equals(SimNao.SIM) ){
+			
+			if ( inputSituacaoNascimento.getValue() != null &&
+					inputSituacaoNascimento.getValue().equals(SituacaoNascimento.NASCIDO_VIVO) ){
+				
+				if ( cria.getAnimal() == null ){
+					cadastrarAnimal();
+					return;
+				}
+				
+			}
+			
 		}
 		
 		cria.setIncorporadoAoRebanho(inputIncorporadoAoRebanho.getValue());
@@ -177,10 +187,9 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		data.addAll(getObject().getCrias());
 		
 		inputPeso.setText("");
-		inputIncorporadoAoRebanho.setItems(SimNao.getItems());
 		inputIncorporadoAoRebanho.getSelectionModel().clearSelection();
-		inputSexo.setItems(Sexo.getItems());
-		inputSituacaoNascimento.setItems(SituacaoNascimento.getItems());
+		inputSexo.getSelectionModel().clearSelection();
+		inputSituacaoNascimento.getSelectionModel().clearSelection();
 		
 		cria = new Cria(getObject());
 		

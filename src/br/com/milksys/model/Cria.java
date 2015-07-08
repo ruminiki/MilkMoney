@@ -131,6 +131,14 @@ public class Cria extends AbstractEntity implements Serializable {
 		return animal;
 	}
 	
+	public String getAnimalFormatado(){
+		if ( getAnimal() != null ){
+			return getAnimal().getNumeroNome();
+		}else{
+			return "Animal não incorporado";
+		}
+	}
+	
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getPeso() {
 		return NumberFormatUtil.fromString(this.peso.get());

@@ -22,7 +22,7 @@ import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 
 @Controller
-public class ReconfirmacaoFormController extends AbstractFormController<Integer, Cobertura> {
+public class ReconfirmacaoPrenhezFormController extends AbstractFormController<Integer, Cobertura> {
 
 	@FXML private DatePicker inputData;
 	@FXML private ComboBox<String> inputSituacaoCobertura;
@@ -34,17 +34,17 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 	@FXML
 	public void initialize() {
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoProperty());
+		inputData.valueProperty().bindBidirectional(getObject().dataReconfirmacaoPrenhezProperty());
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoReconfirmacaoProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoReconfirmacaoPrenhezProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoReconfirmacaoPrenhezProperty());
 	
 	}
 	
 	@FXML
-	private void handleSaveReconfirmacao(){
+	private void handleSaveReconfirmacaoPrenhez(){
 		try {
-			((CoberturaService)service).registrarReconfirmacao(getObject());
+			((CoberturaService)service).registrarReconfirmacaoPrenhez(getObject());
 			super.closeForm();
 			coberturaOverviewController.refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
@@ -54,11 +54,11 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 	}
 	
 	@FXML
-	private void handleRemoverRegistroReconfirmacao(){
+	private void handleRemoverRegistroReconfirmacaoPrenhez(){
 		try {
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da reconfirmação?");
 			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerRegistroReconfirmacao(getObject());
+				((CoberturaService)service).removerRegistroReconfirmacaoPrenhez(getObject());
 				super.closeForm();
 				coberturaOverviewController.refreshObjectInTableView(getObject());
 			}
@@ -70,7 +70,7 @@ public class ReconfirmacaoFormController extends AbstractFormController<Integer,
 	
 	@Override
 	protected String getFormName() {
-		return "view/cobertura/ReconfirmacaoForm.fxml";
+		return "view/cobertura/ReconfirmacaoPrenhezForm.fxml";
 	}
 
 	@Override

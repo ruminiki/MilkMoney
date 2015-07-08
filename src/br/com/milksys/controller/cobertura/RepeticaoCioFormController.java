@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -17,7 +16,6 @@ import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Cobertura;
-import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 
@@ -25,7 +23,6 @@ import br.com.milksys.service.IService;
 public class RepeticaoCioFormController extends AbstractFormController<Integer, Cobertura> {
 
 	@FXML private DatePicker inputData;
-	@FXML private ComboBox<String> inputSituacaoCobertura;
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
@@ -34,11 +31,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 	@FXML
 	public void initialize() {
 		
-		getObject().setSituacaoCobertura(SituacaoCobertura.REPETIDA);
 		inputData.valueProperty().bindBidirectional(getObject().dataRepeticaoCioProperty());
-		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoCoberturaProperty());
-		inputSituacaoCobertura.setDisable(true);
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoRepeticaoCioProperty());
 	
 	}
@@ -48,7 +41,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 		try {
 			((CoberturaService)service).registrarRepeticaoCio(getObject());
 			super.closeForm();
-			
+			coberturaOverviewController.refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -62,7 +55,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
 				super.closeForm();
-				
+				coberturaOverviewController.refreshObjectInTableView(getObject());
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());

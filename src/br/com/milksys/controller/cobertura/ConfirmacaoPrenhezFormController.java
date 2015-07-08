@@ -22,7 +22,7 @@ import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 
 @Controller
-public class PrimeiroToqueFormController extends AbstractFormController<Integer, Cobertura> {
+public class ConfirmacaoPrenhezFormController extends AbstractFormController<Integer, Cobertura> {
 
 	@FXML private DatePicker inputData;
 	@FXML private ComboBox<String> inputSituacaoCobertura;
@@ -35,17 +35,17 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 	@FXML
 	public void initialize() {
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataPrimeiroToqueProperty());
+		inputData.valueProperty().bindBidirectional(getObject().dataConfirmacaoPrenhezProperty());
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoPrimeiroToqueToqueProperty());
-		inputObservacao.textProperty().bindBidirectional(getObject().observacaoPrimeiroToqueProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhezToqueProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoConfirmacaoPrenhezProperty());
 	
 	}
 	
 	@FXML
-	private void handleSavePrimeiroToque(){
+	private void handleSaveConfirmacaoPrenhez(){
 		try {
-			((CoberturaService)service).registrarPrimeiroToque(getObject());
+			((CoberturaService)service).registrarConfirmacaoPrenhez(getObject());
 			super.closeForm();
 			coberturaOverviewController.refreshObjectInTableView(getObject());
 		} catch (ValidationException e) {
@@ -55,11 +55,11 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 	}
 	
 	@FXML
-	private void handleRemoverRegistroPrimeiroToque(){
+	private void handleRemoverRegistroConfirmacaoPrenhez(){
 		try {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro do primeiro toque?");
+			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o registro da primeira confirmação?");
 			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerRegistroPrimeiroToque(getObject());
+				((CoberturaService)service).removerRegistroConfirmacaoPrenhez(getObject());
 				super.closeForm();
 				coberturaOverviewController.refreshObjectInTableView(getObject());
 			}
@@ -71,12 +71,12 @@ public class PrimeiroToqueFormController extends AbstractFormController<Integer,
 	
 	@Override
 	protected String getFormName() {
-		return "view/cobertura/PrimeiroToqueForm.fxml";
+		return "view/cobertura/ConfirmacaoPrenhezForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Primeiro Toque";
+		return "Confirmação Prenhez";
 	}
 
 	@Override

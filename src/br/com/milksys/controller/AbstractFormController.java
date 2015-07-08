@@ -124,8 +124,10 @@ public abstract class AbstractFormController<K, E> {
 	@FXML @SuppressWarnings("unchecked")
 	public void handleCancel() {
 		dialogStage.close();
-		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
-		getOverviewController().refreshObjectInTableView(getObject());
+		if ( overviewController != null ){
+			setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+			overviewController.refreshObjectInTableView(getObject());
+		}
 		setObject(null); 
 	}
 

@@ -45,12 +45,12 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
 	private ObjectProperty<LocalDate> previsaoSecagem = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(7));  
-	private ObjectProperty<LocalDate> dataPrimeiroToque = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty situacaoPrimeiroToque = new SimpleStringProperty();
-	private StringProperty observacaoPrimeiroToque = new SimpleStringProperty();
-	private ObjectProperty<LocalDate> dataReconfirmacao = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty situacaoReconfirmacao = new SimpleStringProperty();
-	private StringProperty observacaoReconfirmacao = new SimpleStringProperty();
+	private ObjectProperty<LocalDate> dataConfirmacaoPrenhez = new SimpleObjectProperty<LocalDate>();  
+	private StringProperty situacaoConfirmacaoPrenhez = new SimpleStringProperty();
+	private StringProperty observacaoConfirmacaoPrenhez = new SimpleStringProperty();
+	private ObjectProperty<LocalDate> dataReconfirmacaoPrenhez = new SimpleObjectProperty<LocalDate>();  
+	private StringProperty situacaoReconfirmacaoPrenhez = new SimpleStringProperty();
+	private StringProperty observacaoReconfirmacaoPrenhez = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> dataRepeticaoCio = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty observacaoRepeticaoCio = new SimpleStringProperty();
 	private StringProperty tipoCobertura = new SimpleStringProperty(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
@@ -132,82 +132,82 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	public Date getDataPrimeiroToque() {
-		return DateUtil.asDate(this.dataPrimeiroToque.get());
+	public Date getDataConfirmacaoPrenhez() {
+		return DateUtil.asDate(this.dataConfirmacaoPrenhez.get());
 	}
 	
-	public void setDataPrimeiroToque(Date dataPrimeiroToque) {
-		this.dataPrimeiroToque.set(DateUtil.asLocalDate(dataPrimeiroToque));
+	public void setDataConfirmacaoPrenhez(Date dataConfirmacaoPrenhez) {
+		this.dataConfirmacaoPrenhez.set(DateUtil.asLocalDate(dataConfirmacaoPrenhez));
 	}
 	
-	public ObjectProperty<LocalDate> dataPrimeiroToqueProperty(){
-		return dataPrimeiroToque;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	public String getSituacaoPrimeiroToque() {
-		return this.situacaoPrimeiroToque.get();
-	}
-
-	public void setSituacaoPrimeiroToque(String situacaoPrimeiroToque) {
-		this.situacaoPrimeiroToque.set(situacaoPrimeiroToque);
-	}
-
-	public StringProperty situacaoPrimeiroToqueToqueProperty(){
-		return situacaoPrimeiroToque;
+	public ObjectProperty<LocalDate> dataConfirmacaoPrenhezProperty(){
+		return dataConfirmacaoPrenhez;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getObservacaoPrimeiroToque() {
-		return this.observacaoPrimeiroToque.get();
+	public String getSituacaoConfirmacaoPrenhez() {
+		return this.situacaoConfirmacaoPrenhez.get();
 	}
 
-	public void setObservacaoPrimeiroToque(String observacaoPrimeiroToque) {
-		this.situacaoPrimeiroToque.set(observacaoPrimeiroToque);
+	public void setSituacaoConfirmacaoPrenhez(String situacaoConfirmacaoPrenhez) {
+		this.situacaoConfirmacaoPrenhez.set(situacaoConfirmacaoPrenhez);
 	}
 
-	public StringProperty observacaoPrimeiroToqueProperty(){
-		return observacaoPrimeiroToque;
+	public StringProperty situacaoConfirmacaoPrenhezToqueProperty(){
+		return situacaoConfirmacaoPrenhez;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoConfirmacaoPrenhez() {
+		return this.observacaoConfirmacaoPrenhez.get();
+	}
+
+	public void setObservacaoConfirmacaoPrenhez(String observacaoConfirmacaoPrenhez) {
+		this.situacaoConfirmacaoPrenhez.set(observacaoConfirmacaoPrenhez);
+	}
+
+	public StringProperty observacaoConfirmacaoPrenhezProperty(){
+		return observacaoConfirmacaoPrenhez;
 	}
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	public Date getDataReconfirmacao() {
-		return DateUtil.asDate(this.dataReconfirmacao.get());
+	public Date getDataReconfirmacaoPrenhez() {
+		return DateUtil.asDate(this.dataReconfirmacaoPrenhez.get());
 	}
 	
-	public void setDataReconfirmacao(Date dataReconfirmacao) {
-		this.dataReconfirmacao.set(DateUtil.asLocalDate(dataReconfirmacao));
+	public void setDataReconfirmacaoPrenhez(Date dataReconfirmacaoPrenhez) {
+		this.dataReconfirmacaoPrenhez.set(DateUtil.asLocalDate(dataReconfirmacaoPrenhez));
 	}
 	
-	public ObjectProperty<LocalDate> dataReconfirmacaoProperty(){
-		return dataReconfirmacao;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	public String getSituacaoReconfirmacao() {
-		return this.situacaoReconfirmacao.get();
-	}
-
-	public void setSituacaoReconfirmacao(String situacaoReconfirmacao) {
-		this.situacaoReconfirmacao.set(situacaoReconfirmacao);
-	}
-
-	public StringProperty situacaoReconfirmacaoProperty(){
-		return situacaoReconfirmacao;
+	public ObjectProperty<LocalDate> dataReconfirmacaoPrenhezProperty(){
+		return dataReconfirmacaoPrenhez;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getObservacaoReconfirmacao() {
-		return this.observacaoReconfirmacao.get();
+	public String getSituacaoReconfirmacaoPrenhez() {
+		return this.situacaoReconfirmacaoPrenhez.get();
 	}
 
-	public void setObservacaoReconfirmacao(String observacaoReconfirmacao) {
-		this.observacaoReconfirmacao.set(observacaoReconfirmacao);
+	public void setSituacaoReconfirmacaoPrenhez(String situacaoReconfirmacaoPrenhez) {
+		this.situacaoReconfirmacaoPrenhez.set(situacaoReconfirmacaoPrenhez);
 	}
 
-	public StringProperty observacaoReconfirmacaoProperty(){
-		return observacaoReconfirmacao;
+	public StringProperty situacaoReconfirmacaoPrenhezProperty(){
+		return situacaoReconfirmacaoPrenhez;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoReconfirmacaoPrenhez() {
+		return this.observacaoReconfirmacaoPrenhez.get();
+	}
+
+	public void setObservacaoReconfirmacaoPrenhez(String observacaoReconfirmacaoPrenhez) {
+		this.observacaoReconfirmacaoPrenhez.set(observacaoReconfirmacaoPrenhez);
+	}
+
+	public StringProperty observacaoReconfirmacaoPrenhezProperty(){
+		return observacaoReconfirmacaoPrenhez;
 	}
 	
 	@Temporal(TemporalType.DATE)
@@ -390,16 +390,22 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return null;
 	}
 	
-	public String getPrimeiroToque(){
-		if ( getSituacaoPrimeiroToque() == null || getSituacaoPrimeiroToque().isEmpty() )
-			return "--";
-		return DateUtil.format(getDataPrimeiroToque()) + " - " + getSituacaoPrimeiroToque();
+	public String getConfirmacaoPrenhez(){
+		if ( getSituacaoConfirmacaoPrenhez() == null || getSituacaoConfirmacaoPrenhez().isEmpty() )
+			return "Registrar";
+		return DateUtil.format(getDataConfirmacaoPrenhez()) + " - " + getSituacaoConfirmacaoPrenhez();
 	}
 	
-	public String getReconfirmacao(){
-		if ( getSituacaoReconfirmacao() == null || getSituacaoReconfirmacao().isEmpty() )
-			return "--";
-		return DateUtil.format(getDataReconfirmacao()) + " - " + getSituacaoReconfirmacao();
+	public String getReconfirmacaoPrenhez(){
+		if ( getSituacaoReconfirmacaoPrenhez() == null || getSituacaoReconfirmacaoPrenhez().isEmpty() )
+			return "Registrar";
+		return DateUtil.format(getDataReconfirmacaoPrenhez()) + " - " + getSituacaoReconfirmacaoPrenhez();
+	}
+	
+	public String getRepeticao(){
+		if ( getDataRepeticaoCio() == null || !getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) )
+			return "Registrar";
+		return DateUtil.format(getDataRepeticaoCio());
 	}
 	
 	@Override

@@ -32,22 +32,6 @@
                </children>
             </HBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#openRegistroPrimeiroToqueForm" style="-fx-background-color: #A3DAFF;" text="Primeiro Toque">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#openRegistroReconfirmacaoForm" style="-fx-background-color: #93C4E6;" text="Confirmação">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#openRegistroRepeticaoCioForm" style="-fx-background-color: #ADB6BB;" text="Repetição">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleRegistrarParto" style="-fx-background-color: #CCFF99;" text="Registrar Parto">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -86,10 +70,10 @@
             <TableColumn fx:id="previsaoSecagemColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Secagem" />
           <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo Cobertura" />
           <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação Cobertura" />
-            <TableColumn prefWidth="75.0" text="Resultado Toque">
+            <TableColumn prefWidth="75.0" text="Confirmação Prenhez">
                <columns>
-                  <TableColumn fx:id="primeiroToqueColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Primeiro" />
-                  <TableColumn fx:id="reconfirmacaoColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reconfirmação" />
+                  <TableColumn fx:id="confirmacaoPrenhezColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
+                  <TableColumn fx:id="reconfirmacaoPrenhezColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reconfirmação" />
                </columns>
             </TableColumn>
             <TableColumn fx:id="repeticaoCioColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Repetição" />
