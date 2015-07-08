@@ -51,17 +51,17 @@
                   <Label text="Mãe: " GridPane.rowIndex="3" />
                   <Label text="Pai (Monta Natural): " GridPane.rowIndex="4" />
                   <Label text="Pai (Ensem. Artificial): " GridPane.rowIndex="5" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarMae" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Button fx:id="btnBuscarMae" mnemonicParsing="false" onAction="#handleSelecionarMae" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                  <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                  <Button fx:id="btnBuscarPaiEnseminacaoArtificial" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

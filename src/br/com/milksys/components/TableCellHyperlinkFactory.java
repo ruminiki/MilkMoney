@@ -1,5 +1,7 @@
 package br.com.milksys.components;
 
+import java.util.function.Function;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
@@ -10,10 +12,10 @@ import javafx.util.Callback;
 @SuppressWarnings("hiding")
 public class TableCellHyperlinkFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
-	private EventHandler<ActionEvent> handler;
+	private Function<Integer, String> function;
 	
-	public TableCellHyperlinkFactory(EventHandler<ActionEvent> handler) {
-		this.handler = handler;
+	public TableCellHyperlinkFactory(Function<Integer, String> function) {
+		this.function = function;
 	}
 
 	@Override
@@ -27,7 +29,12 @@ public class TableCellHyperlinkFactory<S, String> implements Callback<TableColum
 						if(item!=null){
 							Hyperlink hp = new Hyperlink();
 							hp.setText((java.lang.String)item);
-							hp.setOnAction(handler);
+							hp.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									function.apply(tableRowProperty().get().getIndex());
+								}
+							});
 							setGraphic(hp);
 						} 
 					}

@@ -29,7 +29,6 @@ public class ReconfirmacaoPrenhezFormController extends AbstractFormController<I
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
-	@Autowired CoberturaOverviewController coberturaOverviewController;
 
 	@FXML
 	public void initialize() {
@@ -46,7 +45,7 @@ public class ReconfirmacaoPrenhezFormController extends AbstractFormController<I
 		try {
 			((CoberturaService)service).registrarReconfirmacaoPrenhez(getObject());
 			super.closeForm();
-			coberturaOverviewController.refreshObjectInTableView(getObject());
+			getRefreshObjectInTableView().apply(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -60,7 +59,7 @@ public class ReconfirmacaoPrenhezFormController extends AbstractFormController<I
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroReconfirmacaoPrenhez(getObject());
 				super.closeForm();
-				coberturaOverviewController.refreshObjectInTableView(getObject());
+				getRefreshObjectInTableView().apply(getObject());
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());

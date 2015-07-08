@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -158,6 +159,28 @@ public abstract class AbstractOverviewController<K, E>{
 		
 	}
 	
+	public Function<E, Boolean> refreshObjectInTableView = (object) -> {
+		if ( object != null ){
+			for (int index = 0; index < data.size(); index++) {
+				AbstractEntity o = (AbstractEntity) data.get(index);
+				if (o.getId() == ((AbstractEntity) object).getId()) {
+					data.set(index, (E) object);
+					table.layout();
+					return true;
+				}
+			}
+		}
+		return false;
+	};
+	
+	public Function<E, Boolean> addObjectInTableView = (object) -> {
+		if ( object != null ){
+			getData().add((E) object);
+			updateLabelNumRegistros();
+		}
+		return false;
+	};
+	
 	protected abstract String getFormTitle();
 	protected abstract String getFormName();
 	
@@ -190,7 +213,8 @@ public abstract class AbstractOverviewController<K, E>{
 	@FXML
 	public void handleNew() {
 		this.setState(State.INSERT);
-		formController.setOverviewController(this);
+		formController.setRefreshObjectInTableView(refreshObjectInTableView);
+		formController.setAddObjectInTableView(addObjectInTableView);
 		formController.setState(State.INSERT);
 		formController.setObject(this.getObject());
 		formController.showForm();
@@ -199,7 +223,8 @@ public abstract class AbstractOverviewController<K, E>{
 	@FXML
 	public void handleEdit() {
 		if (object != null) {
-			formController.setOverviewController(this);
+			formController.setRefreshObjectInTableView(refreshObjectInTableView);
+			formController.setAddObjectInTableView(addObjectInTableView);
 			formController.setState(State.UPDATE);
 			formController.setObject(getObject());
 			formController.showForm();
@@ -230,18 +255,6 @@ public abstract class AbstractOverviewController<K, E>{
 		}
 	}
 
-	public void refreshObjectInTableView(E object){
-		if ( object != null ){
-			for (int index = 0; index < data.size(); index++) {
-				AbstractEntity o = (AbstractEntity) data.get(index);
-				if (o.getId() == ((AbstractEntity) object).getId()) {
-					data.set(index, (E) object);
-					table.layout();
-				}
-			}
-		}
-	}
-	
 	//==========getters e setters
 	
 	public Class<?> getControllerOrigin() {

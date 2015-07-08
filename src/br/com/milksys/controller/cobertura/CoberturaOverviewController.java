@@ -1,9 +1,8 @@
 package br.com.milksys.controller.cobertura;
 
 import java.util.Optional;
+import java.util.function.Function;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
@@ -70,7 +69,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		confirmacaoPrenhezColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(confirmacaoPrenhezHandler));
 		
 		reconfirmacaoPrenhezColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reconfirmacaoPrenhez"));
-		reconfirmacaoPrenhezColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(reconfirmacaoPrenhezPrenhezHandler));
+		reconfirmacaoPrenhezColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(reconfirmacaoPrenhezHandler));
 		
 		super.initialize(coberturaFormController);
 			
@@ -148,55 +147,59 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
-	EventHandler<ActionEvent> confirmacaoPrenhezHandler = new EventHandler<ActionEvent>() {
-	    @Override public void handle(ActionEvent e) {
-	    	if ( table.getSelectionModel().getSelectedItem() == null ){
-				CustomAlert.nenhumRegistroSelecionado();
-				return;
-			}
-			
-			if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-				CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
-				return;
-			}
-			
+	//====FUNCTIONS
+	
+	Function<Integer, Boolean> permiteEditar = index -> {
+		
+		if ( index >= 0 ){
+			setObject(data.get(index));
+		}
+		
+		if ( getObject() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+		
+		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
+			return false;
+		}
+		
+		return true;
+		
+	};
+	
+	Function<Integer, String> confirmacaoPrenhezHandler = selectedIndex -> {
+		
+		if ( permiteEditar.apply(selectedIndex) ){
+			confirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
 			confirmacaoPrenhezFormController.setObject(getObject());
 	    	confirmacaoPrenhezFormController.showForm();
-	    }
+		}
+    	return null;
 	};
 	
-	EventHandler<ActionEvent> reconfirmacaoPrenhezPrenhezHandler = new EventHandler<ActionEvent>() {
-	    @Override public void handle(ActionEvent e) {
-	    	if ( table.getSelectionModel().getSelectedItem() == null ){
-				CustomAlert.nenhumRegistroSelecionado();
-				return;
-			}
-			
-			if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-				CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
-				return;
-			}
-
+	Function<Integer, String> reconfirmacaoPrenhezHandler = selectedIndex -> {
+		
+		if ( permiteEditar.apply(selectedIndex) ){
+			reconfirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
 			reconfirmacaoPrenhezFormController.setObject(getObject());
 	    	reconfirmacaoPrenhezFormController.showForm();
-	    }
+		}
+	    return null;
+	    
 	};
 	
-	EventHandler<ActionEvent> repeticaoCioHandler = new EventHandler<ActionEvent>() {
-	    @Override public void handle(ActionEvent e) {
-	    	if ( table.getSelectionModel().getSelectedItem() == null ){
-				CustomAlert.nenhumRegistroSelecionado();
-				return;
-			}
-			
-			if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-				CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
-				return;
-			}
-
+	Function<Integer, String> repeticaoCioHandler = selectedIndex -> {
+		
+		if ( permiteEditar.apply(selectedIndex) ){
+			repeticaoCioFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
 			repeticaoCioFormController.setObject(getObject());
 	    	repeticaoCioFormController.showForm();
-	    }
+		}
+		
+	    return null;
+		
 	};
 	
 }

@@ -65,7 +65,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@Override
 	public void handleNew() {
 		setObject(new ProducaoIndividual(selectedAnimal));
-		producaoIndividualFormController.setOverviewController(this);
+		producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
 		producaoIndividualFormController.setState(State.INSERT);
 		producaoIndividualFormController.setObject(getObject());
 		producaoIndividualFormController.showForm();
@@ -74,7 +74,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@Override
 	public void handleEdit() {
 		if ( getObject() != null ){
-			producaoIndividualFormController.setOverviewController(this);
+			producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
 			producaoIndividualFormController.setState(State.INSERT);
 			producaoIndividualFormController.setObject(getObject());
 			producaoIndividualFormController.showForm();

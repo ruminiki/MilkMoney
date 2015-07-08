@@ -57,6 +57,11 @@ public class CoberturaValidation extends Validator {
 						"No entanto é necessário que tenha pelo menos 18 meses. " +
 						"Verifique se existe um erro no cadastro do animal.");
 			}
+			/*if ( cobertura.getFemea().getPaiMontaNatural() != null &&
+					cobertura.getFemea().getPaiMontaNatural().getId() == cobertura.getTouro().getId() ){
+				throw new ValidationException(CAMPO_OBRIGATORIO, 
+						"O reprodutor selecionado é o pai da fêmea " + cobertura.getFemea().getNumeroNome() + " não sendo possível registrar a cobertura.");
+			}*/
 		}
 
 	}

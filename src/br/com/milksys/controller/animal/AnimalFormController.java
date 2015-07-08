@@ -31,7 +31,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML private ComboBox<Raca> inputRaca;
 	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnRemoverMae, btnRemoverPaiMontaNatural, btnRemoverPaiEnseminacaoArtificial;
-	
+	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
 	//services
 	@Autowired private RacaService racaService;
 	
@@ -72,12 +72,20 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			btnRemoverPaiEnseminacaoArtificial.setVisible(true);
 		}
 		
-		/*if ( getControllerOrigin().equals(CoberturaOverviewController.class) ){
+		// impede que sejam alteradas informações cadastradas pela cobertura e parto
+		if ( getObject().isNascimentoCadastrado() ){
+			inputMae.setDisable(true);
+			inputPaiEnseminacaoArtificial.setDisable(true);
+			inputPaiMontaNatural.setDisable(true);
+			btnBuscarMae.setDisable(true);
+			btnBuscarPaiEnseminacaoArtificial.setDisable(true);
+			btnBuscarPaiMontaNatural.setDisable(true);
+			btnRemoverMae.setDisable(true);
+			btnRemoverPaiEnseminacaoArtificial.setDisable(true);
+			btnRemoverPaiMontaNatural.setDisable(true);
+			inputDataNascimento.setDisable(true);
 			inputSexo.setDisable(true);
-			if ( getObject() != null && getObject().getSexo() != null && getObject().getSexo().equals(Sexo.MACHO) ){
-				inputFinalidadeAnimal.setDisable(true);
-			}
-		}*/
+		}
 		
 	}
 

@@ -107,6 +107,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
 		CoberturaValidation.validateRegistroRepeticaoCio(entity);
+		
 		dao.persist(entity);
 	}
 	

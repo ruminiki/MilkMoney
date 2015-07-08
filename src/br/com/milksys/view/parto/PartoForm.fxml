@@ -91,10 +91,10 @@
             </GridPane>
                   <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="120.0" prefHeight="90.0" prefWidth="592.0" scaleShape="false">
                     <columns>
-                      <TableColumn fx:id="animalColumn" maxWidth="230.0" minWidth="230.0" prefWidth="75.0" text="Animal" />
+                      <TableColumn fx:id="animalColumn" maxWidth="210.0" minWidth="210.0" prefWidth="75.0" text="Animal" />
                       <TableColumn fx:id="sexoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Sexo" />
                         <TableColumn fx:id="incorporadoAoRebanhoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Incorporado" />
-                        <TableColumn fx:id="situacaoNascimentoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                        <TableColumn fx:id="situacaoNascimentoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                         <TableColumn fx:id="removerColumn" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Remover" />
                     </columns>
                      <VBox.margin>

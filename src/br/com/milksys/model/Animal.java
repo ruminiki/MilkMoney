@@ -81,11 +81,14 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(select max(c.previsaoSecagem) from cobertura c where c.femea = id)")
 	private Date dataPrevisaoSecagem;
 
-	@Formula("(select c.situacaoCobertura from Cobertura c where c.femea = id order by c.data desc limit 1)")
+	@Formula("(select c.situacaoCobertura from cobertura c where c.femea = id order by c.data desc limit 1)")
 	private String situacaoUltimaCobertura;
 	
 	@Transient
 	private long diasUltimaCobertura;
+	
+	@Formula("(select (c.id > 0) from cria c where c.animal = id limit 1)")
+	private Boolean nascimentoCadastrado = false;
 
 	public Animal() {}
 
@@ -327,6 +330,15 @@ public class Animal extends AbstractEntity implements Serializable {
 		if ( diasUltimaCobertura <= 0 )
 			return "-";
 		return String.valueOf(diasUltimaCobertura);
+	}
+	
+	@Transient
+	public Boolean isNascimentoCadastrado() {
+		return nascimentoCadastrado != null ? nascimentoCadastrado : false;
+	}
+
+	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
+		this.nascimentoCadastrado = nascimentoCadastrado;
 	}
 
 	@PostLoad

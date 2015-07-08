@@ -2,6 +2,7 @@ package br.com.milksys.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -43,17 +44,19 @@ public abstract class AbstractFormController<K, E> {
 	private boolean closePopUpAfterSave = true;
 	private Search<K,E> search;
 	private Class<?> controllerOrigin;
-	private AbstractOverviewController<K, E> overviewController;
+
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
-	public static final String SAVE_DISABLED = "SAVE_DISABLED";
+	private Function<E, Boolean> refreshObjectInTableView;
+	private Function<E, Boolean> addObjectInTableView;
+	
 	/**
 	 * Armazena a configuração para deixar disabled os botões do formulário
 	 */
+	public static final String SAVE_DISABLED = "SAVE_DISABLED";
 	@SuppressWarnings("serial")
 	private Map<String, Boolean> formConfig = new HashMap<String, Boolean>(){{put(SAVE_DISABLED, false);}};
-	
 	
 	/**
 	 * Configura os botões disableds
@@ -124,10 +127,11 @@ public abstract class AbstractFormController<K, E> {
 	@FXML @SuppressWarnings("unchecked")
 	public void handleCancel() {
 		dialogStage.close();
-		if ( overviewController != null ){
-			setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
-			overviewController.refreshObjectInTableView(getObject());
-		}
+		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+		
+		if ( refreshObjectInTableView != null )
+			refreshObjectInTableView.apply(getObject());
+		
 		setObject(null); 
 	}
 
@@ -160,16 +164,15 @@ public abstract class AbstractFormController<K, E> {
 			dialogStage.close();
 
 		if ( isNew ){
-			if ( overviewController != null ){
-				overviewController.getData().add((E) object);
-				overviewController.updateLabelNumRegistros();
+			if ( addObjectInTableView != null ){
+				addObjectInTableView.apply(object);
 			}
-			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
+			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_INSERT));
 		}else{
-			if ( overviewController != null ){
-				overviewController.refreshObjectInTableView(object);
+			if ( refreshObjectInTableView != null ){
+				refreshObjectInTableView.apply(object);
 			}
-			publisher.publishEvent(new ActionEvent(getObject(),ActionEvent.EVENT_INSERT));
+			publisher.publishEvent(new ActionEvent(getObject(), ActionEvent.EVENT_INSERT));
 		}
 		
 		this.setState(State.LIST);
@@ -188,6 +191,22 @@ public abstract class AbstractFormController<K, E> {
 	
 	//==========getters e setters
 	
+	public Function<E, Boolean> getAddObjectInTableView() {
+		return addObjectInTableView;
+	}
+
+	public void setAddObjectInTableView(Function<E, Boolean> addObjectInTableView) {
+		this.addObjectInTableView = addObjectInTableView;
+	}
+	
+	public Function<E, Boolean> getRefreshObjectInTableView() {
+		return refreshObjectInTableView;
+	}
+
+	public void setRefreshObjectInTableView(Function<E, Boolean> refreshObjectInTableView) {
+		this.refreshObjectInTableView = refreshObjectInTableView;
+	}
+
 	public Class<?> getControllerOrigin() {
 		return controllerOrigin;
 	}
@@ -236,13 +255,4 @@ public abstract class AbstractFormController<K, E> {
 		return dialogStage;
 	}
 
-	public AbstractOverviewController<K, E> getOverviewController() {
-		return overviewController;
-	}
-
-	public void setOverviewController(
-			AbstractOverviewController<K, E> overviewController) {
-		this.overviewController = overviewController;
-	}
-	
 }

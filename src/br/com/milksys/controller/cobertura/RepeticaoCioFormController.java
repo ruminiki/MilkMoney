@@ -26,7 +26,6 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 	@FXML private UCTextField inputObservacao;
 	
 	@Autowired CoberturaService service;
-	@Autowired CoberturaOverviewController coberturaOverviewController;
 
 	@FXML
 	public void initialize() {
@@ -41,7 +40,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 		try {
 			((CoberturaService)service).registrarRepeticaoCio(getObject());
 			super.closeForm();
-			coberturaOverviewController.refreshObjectInTableView(getObject());
+			getRefreshObjectInTableView().apply(getObject());
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
 			return;
@@ -55,7 +54,7 @@ public class RepeticaoCioFormController extends AbstractFormController<Integer, 
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerRegistroRepeticaoCio(getObject());
 				super.closeForm();
-				coberturaOverviewController.refreshObjectInTableView(getObject());
+				getRefreshObjectInTableView().apply(getObject());
 			}
 		} catch (ValidationException e) {
 			CustomAlert.mensagemAlerta(e.getTipo(), e.getMessage());
