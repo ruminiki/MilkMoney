@@ -32,6 +32,13 @@ public class RootLayoutController {
     }
     
     @FXML
+    private void handleCadastroComprador() {
+        
+    	openForm("view/comprador/CompradorOverview.fxml");
+    	
+    }
+    
+    @FXML
     private void handleCadastroSituacaoAnimal() {
         
     	openForm("view/situacaoAnimal/SituacaoAnimalOverview.fxml");

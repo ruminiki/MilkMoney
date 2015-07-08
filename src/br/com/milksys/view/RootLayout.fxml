@@ -17,6 +17,7 @@
 					</accelerator>
 			 	  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote"/>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroComprador" text="Comprador" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça">
 						<accelerator>
