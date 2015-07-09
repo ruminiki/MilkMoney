@@ -52,7 +52,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML private TableColumn<Raca, String> racaColumn;
 	@FXML private TableColumn<String, String> sexoColumn;
-	@FXML private TableColumn<SituacaoAnimal, String> situacaoAnimalColumn;
+	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
+	@FXML private TableColumn<Animal, Long> idadeColumn;
 	
 	//services
 	@Autowired private RacaService racaService;
@@ -67,10 +68,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML
 	public void initialize() {
 		
+		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
 		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-		
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
+		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
+		
 		dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
 		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
 		

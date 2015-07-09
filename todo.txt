@@ -2,9 +2,10 @@
 - fazer gráfico preço leite
 - fazer gráfico medição leite por animal
 
-- fazer registro de morte e venda;
-- registro de secagem
 
+- Identificar situacao do Animao (seco, morto, vendido, em lactação, em criação).
+- Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
+- Não está removendo o animal da tabela de vendas;
 
 - na venda fazer a somatória de animais vendidos e do valor total
 - na tela de registro de morte, fazer um gráfico com as principais causas;
@@ -18,3 +19,54 @@
 	- taxa de prenhez;
 	- idade primeiro parto;
 	- % vacas primeira cria;
+	
+	
+	
+CREATE OR REPLACE VIEW viewSituacaoAnimal AS
+SELECT 'VENDIDO' as situacao, v.animal FROM animalVendido v
+
+UNION ALL 
+
+SELECT 'MORTO' as situacao, m.animal FROM morteAnimal m
+
+UNION ALL 
+
+SELECT 'SECO' as situacao, e.animal FROM encerramentoLactacao e 
+WHERE NOT EXISTS( SELECT 1 FROM parto p INNER JOIN cobertura c ON (c.id = p.cobertura) 
+WHERE p.data >= e.data and c.femea = e.animal) LIMIT 1 
+
+UNION ALL 
+
+SELECT 'EM LACTAÇÃO' as situacao, a.id FROM animal a 
+INNER JOIN cobertura c on (c.femea = a.id) INNER JOIN parto p on (p.cobertura = c.id)
+WHERE NOT EXISTS( SELECT 1 FROM encerramentoLactacao e WHERE e.data > p.data and e.animal = a.id) 
+LIMIT 1
+
+
+
+
+@Formula(
+	"(SELECT CASE SIT.SITUACAO WHEN NULL THEN 'NÃO DEFINIDA' ELSE SIT.SITUACAO FROM ( " +
+
+	"SELECT 'VENDIDO' AS V.SITUACAO FROM vendaAnimal v " +
+	"WHERE EXISTS( SELECT animal FROM animalVendido a WHERE a.animal = id) AS V " + 
+	
+	"UNION ALL " +
+	
+	"SELECT 'MORTO' AS M.SITUACAO FROM morteAnimal m " +
+	"WHERE m.animal = id LIMIT 1 AS M" +
+	
+	"UNION ALL " +
+	
+	"SELECT 'SECO' AS S.SITUACAO FROM encerramentoLactacao e " +
+	"WHERE e.animal = id AND NOT EXISTS( SELECT 1 FROM parto p INNER JOIN cobertura c ON (c.id = p.cobertura AND c.femea = id) " +
+	"WHERE p.data >= e.data) LIMIT 1 AS S" +
+	
+	"UNION ALL " +
+	
+	"SELECT 'EM LACTAÇÃO' AS L.SITUACAO FROM animal a " +
+	"INNER JOIN cobertura c on (c.femea = a.id) INNER JOIN parto p on (p.cobertura = c.id) " +
+	"WHERE NOT EXISTS( SELECT 1 FROM encerramentoLactacao e WHERE e.data > p.data and e.animal = a.id) " +
+	"AND a.id = id LIMIT 1 AS L) SIT)")
+
+	

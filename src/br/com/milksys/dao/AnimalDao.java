@@ -2,7 +2,6 @@ package br.com.milksys.dao;
 
 import java.util.List;
 
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Sexo;
-import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.SituacaoCobertura;
 
 @Component
@@ -82,60 +80,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "WHERE (p.data - current_date()) <= 30 ");
 		
 		return query.getResultList();
-		
-	}
-	
-	public String getSituacaoAnimal(Animal animal) {
-		
-		//verifica se o animal está vendido
-		Query query = entityManager.createQuery("SELECT v FROM VendaAnimal v inner join v.animaisVendidos a WHERE a = :animal limit 1");
-		query.setParameter("animal", animal);
-		
-		try{
-			if ( query.getSingleResult() != null ){
-				return SituacaoAnimal.VENDIDO;
-			}
-		}catch(NoResultException e){
-			
-		}
-		
-		//verifica se o animal está morto
-		query = entityManager.createQuery("SELECT m FROM MorteAnimal m WHERE m.animal = :animal limit 1");
-		query.setParameter("animal", animal);
-		
-		try{
-			if ( query.getSingleResult() != null ){
-				return SituacaoAnimal.MORTO;
-			}
-		}catch(NoResultException e){
-			
-		}
-		
-		//verifica se o animal está seco
-		/*query = entityManager.createQuery("SELECT m FROM MorteAnimal m WHERE m.animal = :animal limit 1");
-		query.setParameter("animal", animal);
-		
-		try{
-			if ( query.getSingleResult() != null ){
-				return SituacaoAnimal.MORTO;
-			}
-		}catch(NoResultException e){
-			
-		}*/
-		
-		//verifica se o animal está em lactação
-		/*query = entityManager.createQuery("SELECT m FROM MorteAnimal m WHERE m.animal = :animal limit 1");
-		query.setParameter("animal", animal);
-		
-		try{
-			if ( query.getSingleResult() != null ){
-				return SituacaoAnimal.MORTO;
-			}
-		}catch(NoResultException e){
-			
-		}*/
-		
-		return SituacaoAnimal.EM_CRIACAO;
 		
 	}
 	

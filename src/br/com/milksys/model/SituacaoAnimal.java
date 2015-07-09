@@ -8,12 +8,12 @@ public class SituacaoAnimal{
 	
 	public static final String EM_LACTACAO = "EM LACTAÇÃO";
 	public static final String SECO = "SECO";
-	public static final String EM_CRIACAO = "EM CRIAÇÃO";
 	public static final String VENDIDO = "VENDIDO";
 	public static final String MORTO = "MORTO";
+	public static final String NAO_DEFINIDA = "NÃO DEFINIDA";
 	
 	public static ObservableList<String> getItems(){
-		return FXCollections.observableArrayList(EM_LACTACAO, VENDIDO, MORTO);
+		return FXCollections.observableArrayList(EM_LACTACAO, SECO, VENDIDO, MORTO, NAO_DEFINIDA);
 	}
 	
 	

@@ -21,7 +21,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -62,33 +61,26 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
 	
-	@Transient
-	//@Formula(verificar se está se não estiver morta, vendida, seca e tiver parto estará em lactação )
+	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id)")
 	private String situacaoAnimal;
 	
-	@Transient
-	private long diasUltimoParto;
-	
-	@Formula("(select max(p.data) from parto p inner join cobertura c on (c.parto = p.id) "
-			+ "inner join animal a on (a.id = c.femea) where a.id = id)")
+	@Formula("(SELECT MAX(p.data) FROM parto p inner join cobertura c ON (c.parto = p.id) "
+			+ "INNER JOIN animal a on (a.id = c.femea) WHERE a.id = id)")
 	private Date dataUltimoParto;
 
-	@Formula("(select max(c.data) from cobertura c where c.femea = id)")
+	@Formula("(SELECT MAX(c.data) FROM cobertura c WHERE c.femea = id)")
 	private Date dataUltimaCobertura;
 	
-	@Formula("(select max(c.previsaoParto) from cobertura c where c.femea = id)")
+	@Formula("(SELECT MAX(c.previsaoParto) FROM cobertura c WHERE c.femea = id)")
 	private Date dataPrevisaoProximoParto;
 	
-	@Formula("(select max(c.previsaoSecagem) from cobertura c where c.femea = id)")
+	@Formula("(SELECT MAX(c.previsaoSecagem) FROM cobertura c WHERE c.femea = id)")
 	private Date dataPrevisaoSecagem;
 
-	@Formula("(select c.situacaoCobertura from cobertura c where c.femea = id order by c.data desc limit 1)")
+	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id ORDER BY c.data desc LIMIT 1)")
 	private String situacaoUltimaCobertura;
 	
-	@Transient
-	private long diasUltimaCobertura;
-	
-	@Formula("(select (c.id > 0) from cria c where c.animal = id limit 1)")
+	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 
 	public Animal() {}
@@ -268,6 +260,19 @@ public class Animal extends AbstractEntity implements Serializable {
 		return valor;
 	}
 	
+	@Transient
+	public String getSituacaoAnimal() {
+		
+		if ( situacaoAnimal == null || situacaoAnimal.isEmpty() ){
+			return SituacaoAnimal.NAO_DEFINIDA;
+		}
+		return this.situacaoAnimal;
+	}
+
+	public void setSituacaoAnimal(String situacaoAnimal) {
+		this.situacaoAnimal = situacaoAnimal;
+	}
+	
 	//==========================
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
@@ -287,9 +292,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Transient
 	public String getDiasUltimoParto() {
-		if ( diasUltimoParto <= 0 )
-			return "-";
-		return String.valueOf(diasUltimoParto);
+		if ( getDataUltimoParto() != null )
+			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now()));
+		return "--";
 	}
 
 	@Transient
@@ -341,9 +346,9 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	@Transient
 	public String getDiasUltimaCobertura() {
-		if ( diasUltimaCobertura <= 0 )
-			return "-";
-		return String.valueOf(diasUltimaCobertura);
+		if ( getDataUltimaCobertura() != null )
+			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now()));
+		return "--";
 	}
 	
 	@Transient
@@ -353,29 +358,6 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
 		this.nascimentoCadastrado = nascimentoCadastrado;
-	}
-	
-	@Transient
-	public String getSituacaoAnimal() {
-		
-		if ( situacaoAnimal == null ){
-			return "";
-		}
-		return situacaoAnimal;
-		
-	}
-
-	public void setSituacaoAnimal(String situacaoAnimal) {
-		this.situacaoAnimal = situacaoAnimal;
-	}
-
-	@PostLoad
-	public void postLoadAnimal() {
-		if ( getDataUltimoParto() != null )
-			this.diasUltimoParto = ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now());
-		
-		if ( getDataUltimaCobertura() != null )
-			this.diasUltimaCobertura = ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now());
 	}
 	
 	@Override
