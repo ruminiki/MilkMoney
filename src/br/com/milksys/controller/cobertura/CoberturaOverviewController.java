@@ -169,28 +169,28 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	};
 	
-	Function<Integer, String> confirmacaoPrenhezHandler = selectedIndex -> {
+	Function<Integer, Boolean> confirmacaoPrenhezHandler = selectedIndex -> {
 		
 		if ( permiteEditar.apply(selectedIndex) ){
 			confirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
 			confirmacaoPrenhezFormController.setObject(getObject());
 	    	confirmacaoPrenhezFormController.showForm();
 		}
-    	return null;
+    	return true;
 	};
 	
-	Function<Integer, String> reconfirmacaoPrenhezHandler = selectedIndex -> {
+	Function<Integer, Boolean> reconfirmacaoPrenhezHandler = selectedIndex -> {
 		
 		if ( permiteEditar.apply(selectedIndex) ){
 			reconfirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
 			reconfirmacaoPrenhezFormController.setObject(getObject());
 	    	reconfirmacaoPrenhezFormController.showForm();
 		}
-	    return null;
+	    return true;
 	    
 	};
 	
-	Function<Integer, String> repeticaoCioHandler = selectedIndex -> {
+	Function<Integer, Boolean> repeticaoCioHandler = selectedIndex -> {
 		
 		if ( permiteEditar.apply(selectedIndex) ){
 			repeticaoCioFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
@@ -198,7 +198,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	    	repeticaoCioFormController.showForm();
 		}
 		
-	    return null;
+	    return true;
 		
 	};
 	

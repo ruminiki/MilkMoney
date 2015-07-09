@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 public class SituacaoAnimal{
 	
 	public static final String EM_LACTACAO = "EM LACTAÇÃO";
+	public static final String SECO = "SECO";
+	public static final String EM_CRIACAO = "EM CRIAÇÃO";
 	public static final String VENDIDO = "VENDIDO";
 	public static final String MORTO = "MORTO";
 	

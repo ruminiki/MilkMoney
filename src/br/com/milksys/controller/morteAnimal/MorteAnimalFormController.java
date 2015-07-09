@@ -1,6 +1,7 @@
 package br.com.milksys.controller.morteAnimal;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
@@ -28,11 +29,14 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	@FXML private UCTextField inputAnimal, inputObservacao, inputValorAnimal;
 	@FXML private DatePicker inputDataMorte;
 	@FXML private ComboBox<CausaMorteAnimal> inputCausaMorteAnimal;
+	@FXML private Button btnBuscarAnimal;
 	
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private CausaMorteAnimalService causaMorteAnimalService;
 	@Autowired private CausaMorteAnimalFormController causaMorteFormController;
 
+	private boolean permiteAlterarAnimal = true;
+	
 	@FXML
 	public void initialize() {
 		
@@ -49,6 +53,8 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		}
 		
 		MaskFieldUtil.decimal(inputValorAnimal);
+		
+		btnBuscarAnimal.setDisable(!permiteAlterarAnimal);
 		
 	}
 
@@ -85,6 +91,14 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		}
 	}
 	
+	public boolean isPermiteAlterarAnimal() {
+		return permiteAlterarAnimal;
+	}
+
+	public void setPermiteAlterarAnimal(boolean permiteAlterarAnimal) {
+		this.permiteAlterarAnimal = permiteAlterarAnimal;
+	}
+
 	@Override
 	public String getFormName() {
 		return "view/morteAnimal/MorteAnimalForm.fxml";

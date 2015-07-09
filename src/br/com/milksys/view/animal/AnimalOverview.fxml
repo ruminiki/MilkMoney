@@ -39,8 +39,8 @@
                </HBox.margin>
             </HBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Registrar Venda" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Registrar Morte" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#registrarVendaAnimal" text="Registrar Venda" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#registrarMorteAnimal" text="Registrar Morte" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Secar" />
          </children>

@@ -12,13 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
+import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milksys.controller.raca.RacaOverviewController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
+import br.com.milksys.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.SituacaoAnimal;
+import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
 import br.com.milksys.service.searchers.SearchFemeas30DiasLactacao;
@@ -55,6 +60,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private RacaOverviewController racaController;
 	@Autowired private AnimalReducedOverviewController animalReducedController;
 	@Autowired private SemenReducedOverviewController semenReducedController;
+	@Autowired private MorteAnimalFormController morteAnimalFormController;
+	@Autowired private VendaAnimalFormController vendaAnimalFormController;
 	
 	@FXML
 	public void initialize() {
@@ -94,6 +101,57 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	protected void setService(IService<Integer, Animal> service) {
 		super.setService(service);
 	}
+	
+	@FXML
+	private void registrarMorteAnimal() {
+		
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				CustomAlert.mensagemInfo("O animal selecionado já teve a morte registrada.");
+			}
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				CustomAlert.mensagemInfo("O animal selecionado já teve a venda registrada.");
+			}
+			
+			morteAnimalFormController.setPermiteAlterarAnimal(false);
+			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
+			morteAnimalFormController.showForm();
+			if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
+				getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
+				morteAnimalFormController.setPermiteAlterarAnimal(true);
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		
+	}
+	
+	@FXML
+	private void registrarVendaAnimal() {
+		
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				CustomAlert.mensagemInfo("O animal selecionado já teve a morte registrada.");
+			}
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				CustomAlert.mensagemInfo("O animal selecionado já teve a venda registrada.");
+			}
+			
+			//vendaAnimalFormController.setPermiteAlterarAnimal(false);
+			//vendaAnimalFormController.setObject(new VendaAnimal(getObject()));
+			//vendaAnimalFormController.showForm();
+			if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
+				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
+				//vendaAnimalFormController.setPermiteAlterarAnimal(true);
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		
+	}
+	
 	
 	//-------------FILTRO RÁPIDO----------------------------------
 	

@@ -19,6 +19,10 @@ public class NumberFormatUtil {
 		return df.format(number);
 	}
 	
+	public static BigDecimal intFormat(BigDecimal number) {
+		return number.setScale(0, BigDecimal.ROUND_HALF_EVEN);
+	}
+	
 	public static BigDecimal fromString(String value) {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
 		df.applyPattern("###,##0.00");

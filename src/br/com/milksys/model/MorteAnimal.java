@@ -42,6 +42,14 @@ public class MorteAnimal extends AbstractEntity implements Serializable {
 	private StringProperty                   observacao       = new SimpleStringProperty();
 	private ObjectProperty<CausaMorteAnimal> causaMorteAnimal = new SimpleObjectProperty<CausaMorteAnimal>();
 
+	public MorteAnimal() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public MorteAnimal(Animal animal) {
+		this.animal.set(animal);
+	}
+
 	public int getId() {
 		return this.id;
 	}

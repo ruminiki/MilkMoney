@@ -216,7 +216,7 @@ public abstract class AbstractOverviewController<K, E>{
 		formController.setRefreshObjectInTableView(refreshObjectInTableView);
 		formController.setAddObjectInTableView(addObjectInTableView);
 		formController.setState(State.INSERT);
-		formController.setObject(this.getObject());
+		formController.setObject(newObject());
 		formController.showForm();
 	}
 
@@ -269,15 +269,22 @@ public abstract class AbstractOverviewController<K, E>{
 	public E getObject(){
 		
 		if ( object == null ){
-			try {
-				return (E) ((Class<?>) ((ParameterizedType) this.getClass()
-						.getGenericSuperclass()).getActualTypeArguments()[1])
-						.newInstance();
-			} catch (InstantiationException | IllegalAccessException e) {
-				return null;
-			}
+			newObject();
 		}
 		return (E) object;
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public E newObject(){
+		
+		try {
+			return (E) ((Class<?>) ((ParameterizedType) this.getClass()
+					.getGenericSuperclass()).getActualTypeArguments()[1])
+					.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			return null;
+		}
 		
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.VendaAnimalDao;
 import br.com.milksys.model.VendaAnimal;
+import br.com.milksys.validation.VendaAnimalValidation;
 
 @Service
 public class VendaAnimalService implements IService<Integer, VendaAnimal>{
@@ -18,9 +19,12 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 
 	@Override
 	public boolean save(VendaAnimal entity) {
+		
+		VendaAnimalValidation.validate(entity);
 		return dao.persist(entity);
+		
 	}
-
+	
 	@Override
 	public boolean remove(VendaAnimal entity) {
 		return dao.remove(entity);

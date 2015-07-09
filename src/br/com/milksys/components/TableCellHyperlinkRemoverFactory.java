@@ -10,12 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
 
 @SuppressWarnings("hiding")
-public class TableCellHyperlinkFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
+public class TableCellHyperlinkRemoverFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
 	private Function<Integer, Boolean> function;
 	
-	public TableCellHyperlinkFactory(Function<Integer, Boolean> showAnimaisVenda) {
-		this.function = showAnimaisVenda;
+	public TableCellHyperlinkRemoverFactory(Function<Integer, Boolean> function) {
+		this.function = function;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class TableCellHyperlinkFactory<S, String> implements Callback<TableColum
 		        	if ( tableRowProperty().getValue().getItem() != null ){
 						if(item!=null){
 							Hyperlink hp = new Hyperlink();
-							hp.setText((java.lang.String)item);
+							hp.setText("Remover");
 							hp.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {

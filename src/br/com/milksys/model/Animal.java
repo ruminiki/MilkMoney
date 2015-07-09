@@ -354,6 +354,20 @@ public class Animal extends AbstractEntity implements Serializable {
 	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
 		this.nascimentoCadastrado = nascimentoCadastrado;
 	}
+	
+	@Transient
+	public String getSituacaoAnimal() {
+		
+		if ( situacaoAnimal == null ){
+			return "";
+		}
+		return situacaoAnimal;
+		
+	}
+
+	public void setSituacaoAnimal(String situacaoAnimal) {
+		this.situacaoAnimal = situacaoAnimal;
+	}
 
 	@PostLoad
 	public void postLoadAnimal() {

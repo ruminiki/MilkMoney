@@ -15,11 +15,6 @@ import javax.persistence.NamedQuery;
 
 import br.com.milksys.components.FieldRequired;
 
-
-/**
- * The persistent class for the funcionario database table.
- * 
- */
 @Entity
 @NamedQuery(name="Comprador.findAll", query="SELECT f FROM Comprador f")
 public class Comprador extends AbstractEntity implements Serializable {
