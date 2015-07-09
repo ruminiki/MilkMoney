@@ -28,6 +28,7 @@
 		<class>br.com.milksys.model.CausaMorteAnimal</class>
 		<class>br.com.milksys.model.MorteAnimal</class>
 		<class>br.com.milksys.model.AnimalVendido</class>
+		<class>br.com.milksys.model.EncerramentoLactacao</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

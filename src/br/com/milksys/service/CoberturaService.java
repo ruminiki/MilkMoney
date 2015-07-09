@@ -208,4 +208,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
+	public Cobertura findCoberturaAtivaByAnimal(Animal animal){
+		return dao.findCoberturaAtivaByAnimal(animal);
+	}
+	
 }

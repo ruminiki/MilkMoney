@@ -97,6 +97,14 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		
 		atualizaTotalVenda();
 		
+		//para o caso de o form ter sido chamado a partir da tela de animais
+		//nesse caso ele já terá o animal informado
+		if ( animalVendido != null && animalVendido.getAnimal() != null &&
+				getObject().getId() <= 0 ){
+			inputAnimal.setText(animalVendido.getAnimal().toString());
+			inputValorAnimal.setText(NumberFormatUtil.decimalFormat(animalVendido.getAnimal().getValor()));
+		}
+		
 	}
 
 	@FXML
@@ -199,6 +207,14 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		
 	};
 	
+	public AnimalVendido getAnimalVendido() {
+		return animalVendido;
+	}
+
+	public void setAnimalVendido(AnimalVendido animalVendido) {
+		this.animalVendido = animalVendido;
+	}
+
 	@Override
 	public String getFormName() {
 		return "view/vendaAnimal/VendaAnimalForm.fxml";

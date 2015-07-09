@@ -32,6 +32,7 @@ import br.com.milksys.service.searchers.SearchFemeasCobertas;
 import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milksys.service.searchers.SearchMachosAtivos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
+import br.com.milksys.validation.VendaAnimalValidation;
 
 @Controller
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
@@ -107,19 +108,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				CustomAlert.mensagemInfo("O animal selecionado já teve a morte registrada.");
-			}
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				CustomAlert.mensagemInfo("O animal selecionado já teve a venda registrada.");
-			}
+			VendaAnimalValidation.validaSituacaoAnimal(getObject());
 			
-			morteAnimalFormController.setPermiteAlterarAnimal(false);
 			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
 			morteAnimalFormController.showForm();
 			if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
 				getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
-				morteAnimalFormController.setPermiteAlterarAnimal(true);
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -132,19 +126,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				CustomAlert.mensagemInfo("O animal selecionado já teve a morte registrada.");
-			}
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				CustomAlert.mensagemInfo("O animal selecionado já teve a venda registrada.");
-			}
-			
-			//vendaAnimalFormController.setPermiteAlterarAnimal(false);
-			//vendaAnimalFormController.setObject(new VendaAnimal(getObject()));
-			//vendaAnimalFormController.showForm();
+			vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
+			vendaAnimalFormController.setObject(new VendaAnimal());
+			vendaAnimalFormController.showForm();
 			if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
 				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-				//vendaAnimalFormController.setPermiteAlterarAnimal(true);
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

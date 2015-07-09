@@ -1,6 +1,7 @@
 package br.com.milksys.validation;
 
 import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.AnimalVendido;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
@@ -23,20 +24,15 @@ public class VendaAnimalValidation extends Validator {
 		
 	}
 	
+	
+	
 	public static void validateAddAnimal(VendaAnimal vendaAnimal, AnimalVendido animalAdicionado) {
 
 		if ( animalAdicionado == null ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado é inválido. Por favor, selecione o animal novamente.");
 		}
 		
-		if ( animalAdicionado.getAnimal().getSituacaoAnimal() != null ){
-			if ( animalAdicionado.getAnimal().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado já teve a morte registrada. Por favor, selecione outro animal para continuar.");
-			}
-			if ( animalAdicionado.getAnimal().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado já teve a venda registrada. Por favor, selecione outro animal para continuar.");
-			}
-		}
+		validaSituacaoAnimal(animalAdicionado.getAnimal());
 		
 		for (AnimalVendido a : vendaAnimal.getAnimaisVendidos()){
 			
@@ -47,5 +43,17 @@ public class VendaAnimalValidation extends Validator {
 		}
 		
 	}
+	
+	public static void validaSituacaoAnimal(Animal animal){
+		if ( animal.getSituacaoAnimal() != null ){
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado já teve a morte registrada. Por favor, selecione outro animal para continuar.");
+			}
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado já teve a venda registrada. Por favor, selecione outro animal para continuar.");
+			}
+		}
+	}
+	
 
 }

@@ -48,6 +48,11 @@ public class AnimalVendido extends AbstractEntity implements Serializable {
 	public AnimalVendido(VendaAnimal vendaAnimal) {
 		this.vendaAnimal.set(vendaAnimal);
 	}
+	
+	public AnimalVendido(VendaAnimal vendaAnimal, Animal animal) {
+		this.vendaAnimal.set(vendaAnimal);
+		this.animal.set(animal);
+	}
 
 	public int getId() {
 		return this.id;

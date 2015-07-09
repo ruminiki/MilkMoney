@@ -35,8 +35,6 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	@Autowired private CausaMorteAnimalService causaMorteAnimalService;
 	@Autowired private CausaMorteAnimalFormController causaMorteFormController;
 
-	private boolean permiteAlterarAnimal = true;
-	
 	@FXML
 	public void initialize() {
 		
@@ -53,8 +51,6 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		}
 		
 		MaskFieldUtil.decimal(inputValorAnimal);
-		
-		btnBuscarAnimal.setDisable(!permiteAlterarAnimal);
 		
 	}
 
@@ -91,14 +87,6 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		}
 	}
 	
-	public boolean isPermiteAlterarAnimal() {
-		return permiteAlterarAnimal;
-	}
-
-	public void setPermiteAlterarAnimal(boolean permiteAlterarAnimal) {
-		this.permiteAlterarAnimal = permiteAlterarAnimal;
-	}
-
 	@Override
 	public String getFormName() {
 		return "view/morteAnimal/MorteAnimalForm.fxml";

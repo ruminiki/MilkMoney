@@ -32,10 +32,6 @@ import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
 
-/**
- * The persistent class for the funcionario database table.
- * 
- */
 @Entity
 @NamedQuery(name="VendaAnimal.findAll", query="SELECT f FROM VendaAnimal f")
 public class VendaAnimal extends AbstractEntity implements Serializable {

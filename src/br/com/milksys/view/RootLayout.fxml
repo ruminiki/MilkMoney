@@ -43,8 +43,9 @@
 				</Menu>
             <Menu mnemonicParsing="false" text="Reprodução">
               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">
