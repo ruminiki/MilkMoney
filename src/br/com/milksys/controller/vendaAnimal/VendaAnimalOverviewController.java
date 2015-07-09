@@ -45,7 +45,7 @@ public class VendaAnimalOverviewController extends AbstractOverviewController<In
 
 	@Override
 	protected String getFormTitle() {
-		return "VendaAnimal";
+		return "Venda Animal";
 	}
 	
 	@Override

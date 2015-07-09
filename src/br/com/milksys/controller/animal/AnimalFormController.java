@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
@@ -26,7 +27,7 @@ import br.com.milksys.service.RacaService;
 @Controller
 public class AnimalFormController extends AbstractFormController<Integer, Animal> {
 
-	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPaiMontaNatural, inputPaiEnseminacaoArtificial;
+	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPaiMontaNatural, inputPaiEnseminacaoArtificial, inputValor;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<Raca> inputRaca;
 	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
@@ -46,6 +47,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
 		inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
 		inputDataNascimento.valueProperty().bindBidirectional(getObject().dataNascimentoProperty());
+		inputValor.textProperty().bindBidirectional(getObject().valorProperty());
 		
 		inputRaca.setItems(racaService.findAllAsObservableList());
 		inputRaca.getSelectionModel().selectFirst();
@@ -86,6 +88,8 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			inputDataNascimento.setDisable(true);
 			inputSexo.setDisable(true);
 		}
+		
+		MaskFieldUtil.decimal(inputValor);
 		
 	}
 

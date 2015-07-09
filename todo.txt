@@ -7,7 +7,11 @@
 - registro de secagem
 
 - indicadores:
-	- Dias secas;
+	- Dias secas (em aberto);
 	- Dias em lactação;
 	- Intervalo entre partos;
 	- % de vacas rebanho;
+	- % de vacas em lactação;
+	- taxa de prenhez;
+	- idade primeiro parto;
+	- % vacas primeira cria;

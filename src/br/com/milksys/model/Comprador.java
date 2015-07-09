@@ -153,10 +153,9 @@ public class Comprador extends AbstractEntity implements Serializable {
 		return observacao;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return getNome() + " Tel: " + getTelefonePrincipal();
+		return getNome();
 	}
 	
 }

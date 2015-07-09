@@ -39,6 +39,20 @@ public class RootLayoutController {
     }
     
     @FXML
+    private void handleCadastroCausaMorteAnimal() {
+        
+    	openForm("view/causaMorteAnimal/CausaMorteAnimalOverview.fxml");
+    	
+    }
+    
+    @FXML
+    private void handleCadastroMorteAnimal() {
+        
+    	openForm("view/morteAnimal/MorteAnimalOverview.fxml");
+    	
+    }
+    
+    @FXML
     private void handleCadastroVendaAnimal() {
         
     	openForm("view/vendaAnimal/VendaAnimalOverview.fxml");

@@ -121,7 +121,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 
 	@Override
 	protected String getFormTitle() {
-		return "VendaAnimal";
+		return "Venda Animal";
 	}
 	
 	@Override

@@ -118,6 +118,7 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="valor do animal")
 	public BigDecimal getValor() {
 		return NumberFormatUtil.fromString(this.valor.get());
 	}

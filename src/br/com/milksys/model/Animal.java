@@ -47,19 +47,20 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataNascimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty            nome = new SimpleStringProperty();
-	private StringProperty            numero = new SimpleStringProperty();
-	private StringProperty            sexo = new SimpleStringProperty(Sexo.FEMEA);
-	private StringProperty            finalidadeAnimal = new SimpleStringProperty(FinalidadeAnimal.PRODUCAO_LEITE);
+	private ObjectProperty<LocalDate> dataNascimento           = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private StringProperty            nome                     = new SimpleStringProperty();
+	private StringProperty            numero                   = new SimpleStringProperty();
+	private StringProperty            sexo                     = new SimpleStringProperty(Sexo.FEMEA);
+	private StringProperty            finalidadeAnimal         = new SimpleStringProperty(FinalidadeAnimal.PRODUCAO_LEITE);
 	
-	private ObjectProperty<Raca>      raca = new SimpleObjectProperty<Raca>();
+	private ObjectProperty<Raca>      raca                     = new SimpleObjectProperty<Raca>();
 	
-	private ObjectProperty<Animal>    mae = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Animal>    paiMontaNatural = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Animal>    mae                      = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Animal>    paiMontaNatural          = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Semen>     paiEnseminacaoArtificial = new SimpleObjectProperty<Semen>();
 	
-	private StringProperty            peso = new SimpleStringProperty();
+	private StringProperty            peso                     = new SimpleStringProperty();
+	private StringProperty            valor                    = new SimpleStringProperty();
 	
 	@Transient
 	//@Formula(verificar se está se não estiver morta, vendida, seca e tiver parto estará em lactação )
@@ -252,6 +253,19 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public StringProperty pesoProperty(){
 		return peso;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getValor() {
+		return NumberFormatUtil.fromString(this.valor.get());
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor.set(NumberFormatUtil.decimalFormat(valor));
+	}
+
+	public StringProperty valorProperty(){
+		return valor;
 	}
 	
 	//==========================
