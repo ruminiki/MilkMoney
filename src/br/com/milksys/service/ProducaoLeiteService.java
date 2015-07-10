@@ -66,6 +66,16 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		return dao.findAll(ProducaoLeite.class);
 	}
 	
+	@Override
+	public ObservableList<ProducaoLeite> findAllAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAll(ProducaoLeite.class));
+	}
+	
+	@Override
+	public ObservableList<ProducaoLeite> defaultSearch(String param) {
+		return null;
+	}
+	
 	public ObservableList<ProducaoLeite> findAllByPeriodoAsObservableList(Date inicio, Date fim) {
 		ObservableList<ProducaoLeite> list = FXCollections.observableArrayList();
 		list.addAll(dao.findAllByPeriodo(inicio, fim));

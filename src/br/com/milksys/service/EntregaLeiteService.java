@@ -57,6 +57,16 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		return dao.findAll(EntregaLeite.class);
 	}
 	
+	@Override
+	public ObservableList<EntregaLeite> findAllAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAll(EntregaLeite.class));
+	}
+	
+	@Override
+	public ObservableList<EntregaLeite> defaultSearch(String param) {
+		return null;
+	}
+	
 	public EntregaLeite findByMesAno(String mes, int ano){
 		return dao.findByMesAno(mes, ano);
 	}
@@ -121,6 +131,4 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		
 	}
 
-	
-	
 }

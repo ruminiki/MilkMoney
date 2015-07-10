@@ -43,6 +43,11 @@ public class AnimalService implements IService<Integer, Animal>{
 		list.addAll(dao.findAll(Animal.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Animal> defaultSearch(String param) {
+		return FXCollections.observableArrayList(dao.findAllByNumeroNome(param));
+	}
 
 	public ObservableList<Animal> findAllFemeasAsObservableList() {
 		return findAllAsObservableList();

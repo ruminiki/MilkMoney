@@ -41,6 +41,11 @@ public class RacaService implements IService<Integer, Raca>{
 		list.addAll(dao.findAll(Raca.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Raca> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(Raca entity) {

@@ -44,6 +44,11 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 		return list;
 	}
 
+	@Override
+	public ObservableList<OcorrenciaFuncionario> defaultSearch(String param) {
+		return null;
+	}
+	
 	public List<OcorrenciaFuncionario> findByFuncionario(Funcionario funcionario) {
 		return dao.findByFuncionario(funcionario);
 	}

@@ -28,10 +28,17 @@ import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
+import br.com.milksys.service.searchers.SearchAnimaisMortos;
+import br.com.milksys.service.searchers.SearchAnimaisVendidos;
 import br.com.milksys.service.searchers.SearchFemeas30DiasLactacao;
+import br.com.milksys.service.searchers.SearchFemeas60DiasLactacao;
+import br.com.milksys.service.searchers.SearchFemeasASecar;
 import br.com.milksys.service.searchers.SearchFemeasAtivas;
 import br.com.milksys.service.searchers.SearchFemeasCobertas;
+import br.com.milksys.service.searchers.SearchFemeasEmLactacao;
+import br.com.milksys.service.searchers.SearchFemeasMais60DiasLactacao;
 import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
+import br.com.milksys.service.searchers.SearchFemeasSecas;
 import br.com.milksys.service.searchers.SearchMachosAtivos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.validation.EncerramentoLactacaoValidation;
@@ -189,6 +196,13 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	}
 	
 	@FXML
+	private void handleFindFemeasEmLactacao(){
+		setSearch((SearchFemeasEmLactacao)MainApp.getBean(SearchFemeasEmLactacao.class));
+		refreshTableOverview();
+	}
+	
+	
+	@FXML
 	private void handleFindFemeasCobertas(){
 		setSearch((SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class));
 		refreshTableOverview();
@@ -203,6 +217,42 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML
 	private void handleFindFemeas30DiasLactacao(){
 		setSearch((SearchFemeas30DiasLactacao)MainApp.getBean(SearchFemeas30DiasLactacao.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeas60DiasLactacao(){
+		setSearch((SearchFemeas60DiasLactacao)MainApp.getBean(SearchFemeas60DiasLactacao.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeasMais60DiasLactacao(){
+		setSearch((SearchFemeasMais60DiasLactacao)MainApp.getBean(SearchFemeasMais60DiasLactacao.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeasASecar(){
+		setSearch((SearchFemeasASecar)MainApp.getBean(SearchFemeasASecar.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindFemeasSecas(){
+		setSearch((SearchFemeasSecas)MainApp.getBean(SearchFemeasSecas.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindAnimaisVendidos(){
+		setSearch((SearchAnimaisVendidos)MainApp.getBean(SearchAnimaisVendidos.class));
+		refreshTableOverview();
+	}
+	
+	@FXML
+	private void handleFindAnimaisMortos(){
+		setSearch((SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class));
 		refreshTableOverview();
 	}
 	

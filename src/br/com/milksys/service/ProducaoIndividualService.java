@@ -112,6 +112,16 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		return dao.findAll(ProducaoIndividual.class);
 	}
 
+	@Override
+	public ObservableList<ProducaoIndividual> findAllAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAll(ProducaoIndividual.class));
+	}
+	
+	@Override
+	public ObservableList<ProducaoIndividual> defaultSearch(String param) {
+		return null;
+	}
+	
 	public ObservableList<ProducaoIndividual> findByDate(Date data) {
 		return FXCollections.observableArrayList(dao.findByDate(data));
 	}

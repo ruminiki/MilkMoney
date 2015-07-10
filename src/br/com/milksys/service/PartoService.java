@@ -47,6 +47,11 @@ public class PartoService implements IService<Integer, Parto>{
 		list.addAll(dao.findAll(Parto.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Parto> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(Parto entity) {

@@ -42,6 +42,11 @@ public class MotivoOcorrenciaFuncionarioService implements IService<Integer, Mot
 		list.addAll(dao.findAll(MotivoOcorrenciaFuncionario.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<MotivoOcorrenciaFuncionario> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(MotivoOcorrenciaFuncionario entity) {

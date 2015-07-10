@@ -59,6 +59,11 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 		list.addAll(dao.findAll(EncerramentoLactacao.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<EncerramentoLactacao> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(EncerramentoLactacao entity) {

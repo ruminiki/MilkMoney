@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -40,6 +41,7 @@ public abstract class AbstractOverviewController<K, E>{
 	@FXML protected Button btnEdit;
 	@FXML protected Button btnRemove;
 	@FXML protected AnchorPane form;
+	@FXML protected TextField inputPesquisa;
 	
 	private Stage dialogStage;
 	protected State state = State.LIST;
@@ -96,7 +98,20 @@ public abstract class AbstractOverviewController<K, E>{
 		//configura os botões do formulário
 		configureForm();
 		
+		if ( inputPesquisa != null ){
+			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> refreshTableOverview());
+			/*inputPesquisa.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					if (event.getCode().equals(KeyCode.ENTER)) {
+						handleDefaultSearch();
+					}
+				}
+			});*/
+		}
+		
 	}
+	
 	/**
 	 * Configura os botões disableds
 	 */
@@ -148,15 +163,25 @@ public abstract class AbstractOverviewController<K, E>{
 	protected void refreshTableOverview(){
 		
 		this.data.clear();
-		if ( search != null ){
-			data.addAll(search.doSearch());
-		}else{
-			this.data.addAll(service.findAll());
-		}
-		table.layout();
 		
+		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+				inputPesquisa.getText().length() > 0){
+			data.addAll(handleDefaultSearch());
+		}else{
+			if ( search != null ){
+				data.addAll(search.doSearch());
+			}else{
+				this.data.addAll(service.findAll());
+			}
+		}
+		
+		table.layout();
 		updateLabelNumRegistros();
 		
+	}
+	
+	public ObservableList<E> handleDefaultSearch() {
+		return service.defaultSearch(inputPesquisa.getText());
 	}
 	
 	public Function<E, Boolean> refreshObjectInTableView = (object) -> {

@@ -42,6 +42,11 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 		return list;
 	}
 
+	@Override
+	public ObservableList<Funcionario> defaultSearch(String param) {
+		return null;
+	}
+	
 	public ObservableList<Funcionario> findAllAtivosAsObservableList() {
 		// TODO Auto-generated method stub
 		return findAllAsObservableList();

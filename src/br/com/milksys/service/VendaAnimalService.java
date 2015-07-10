@@ -47,6 +47,11 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	}
 
 	@Override
+	public ObservableList<VendaAnimal> defaultSearch(String param) {
+		return null;
+	}
+	
+	@Override
 	public void validate(VendaAnimal entity) {
 		// TODO Auto-generated method stub
 		

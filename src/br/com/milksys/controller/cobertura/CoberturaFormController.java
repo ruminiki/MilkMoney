@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
@@ -35,6 +36,7 @@ import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
+import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.util.DateUtil;
 
 @Controller
@@ -97,7 +99,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	    @Override public void handle(ActionEvent e) {
 			
 			animalReducedOverviewController.setObject(new Animal(Sexo.MACHO, FinalidadeAnimal.REPRODUCAO));
-			//animalReducedController.setSearch(searchReprodutoresAtivos);
+			animalReducedOverviewController.setSearch((SearchReprodutoresAtivos)MainApp.getBean(SearchReprodutoresAtivos.class));
 			
 			animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
 			animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);

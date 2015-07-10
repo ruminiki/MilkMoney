@@ -41,6 +41,11 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 		list.addAll(dao.findAll(MorteAnimal.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<MorteAnimal> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(MorteAnimal entity) {

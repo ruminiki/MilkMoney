@@ -45,6 +45,11 @@ public class CompradorService implements IService<Integer, Comprador>{
 		list.addAll(dao.findAll(Comprador.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Comprador> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(Comprador entity) {

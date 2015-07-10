@@ -45,6 +45,11 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 		list.addAll(dao.findAll(Fornecedor.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Fornecedor> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(Fornecedor entity) {

@@ -9,11 +9,11 @@ UNION ALL
 
 SELECT 'SECO' as situacao, e.animal FROM encerramentoLactacao e 
 WHERE NOT EXISTS( SELECT 1 FROM parto p INNER JOIN cobertura c ON (c.id = p.cobertura) 
-WHERE p.data >= e.data and c.femea = e.animal) LIMIT 1 
+WHERE p.data >= e.data and c.femea = e.animal) ORDER BY e.data DESC LIMIT 1 
 
 UNION ALL 
 
 SELECT 'EM LACTAÇÃO' as situacao, a.id FROM animal a 
 INNER JOIN cobertura c on (c.femea = a.id) INNER JOIN parto p on (p.cobertura = c.id)
-WHERE NOT EXISTS( SELECT 1 FROM encerramentoLactacao e WHERE e.data > p.data and e.animal = a.id) 
+WHERE NOT EXISTS( SELECT 1 FROM encerramentoLactacao e WHERE e.data > p.data and e.animal = a.id) ORDER BY p.data DESC
 LIMIT 1

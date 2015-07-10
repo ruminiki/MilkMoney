@@ -41,6 +41,11 @@ public class MotivoVendaAnimalService implements IService<Integer, MotivoVendaAn
 		list.addAll(dao.findAll(MotivoVendaAnimal.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<MotivoVendaAnimal> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(MotivoVendaAnimal entity) {

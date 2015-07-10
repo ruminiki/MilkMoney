@@ -4,6 +4,13 @@
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 
+- filtro animais a secar;
+- forçar reload dados atualizados em outras telas;
+
+- ao abrir o animal reduced form, configurar pesquisa;
+- filtros tela cobertura;
+- testes carga de dados;
+
 - na venda fazer a somatória de animais vendidos e do valor total
 - na tela de registro de morte, fazer um gráfico com as principais causas;
 

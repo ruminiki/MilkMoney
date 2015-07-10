@@ -13,14 +13,13 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Pesquisar:">
-               <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
+            <TextField fx:id="inputPesquisa" minWidth="200.0" prefHeight="30.0" promptText="nome ou número">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -64,7 +63,7 @@
       </VBox>
       <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" spacing="3.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
          <children>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" style="-fx-background-color: #B8FF94;" text="Fêmeas">
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" style="-fx-background-color: #B8E6B8;" text="Fêmeas">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -72,50 +71,65 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" prefHeight="30.0" style="-fx-background-color: #B9D4F0;" text="Machos">
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" prefHeight="30.0" style="-fx-background-color: #81A181;" text="Machos">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindReprodutores" prefHeight="30.0" style="-fx-background-color: #99CCFF;" text="Reprodutores">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #91FF6C;" text="Em Lactação">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas30DiasLactacao" prefHeight="30.0" style="-fx-background-color: #FFD175;" text="Até 30 dias">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFFF99;" text="Até 60 dias">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFC2A3;" text="+ 60 dias">
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindReprodutores" prefHeight="30.0" style="-fx-background-color: #678167;" text="Reprodutores">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasCobertas" style="-fx-background-color: #91FF6C;" text="Cobertas">
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasEmLactacao" prefHeight="30.0" style="-fx-background-color: #CFE68A;" text="Em Lactação">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" style="-fx-background-color: #C2E066;" text="Não Cobertas">
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas30DiasLactacao" prefHeight="30.0" style="-fx-background-color: #A7B875;" text="Até 30 dias">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas60DiasLactacao" prefHeight="30.0" style="-fx-background-color: #96A669;" text="Até 60 dias">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasMais60DiasLactacao" prefHeight="30.0" style="-fx-background-color: #86935E;" text="+ 60 dias">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" style="-fx-background-color: #FF9933;" text="A Secar">
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" style="-fx-background-color: #94B84D;" text="Não Cobertas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasCobertas" style="-fx-background-color: #78953E;" text="Cobertas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasASecar" style="-fx-background-color: #E0A366;" text="A Secar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasSecas" style="-fx-background-color: #CA935C;" text="Secas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindAnimaisVendidos" style="-fx-background-color: #A2764A;" text="Vendidos">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindAnimaisMortos" style="-fx-background-color: #825E3B;" text="Mortos">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

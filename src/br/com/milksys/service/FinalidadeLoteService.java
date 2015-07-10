@@ -43,6 +43,11 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 	}
 
 	@Override
+	public ObservableList<FinalidadeLote> defaultSearch(String param) {
+		return null;
+	}
+	
+	@Override
 	public void validate(FinalidadeLote entity) {
 		// TODO Auto-generated method stub
 		

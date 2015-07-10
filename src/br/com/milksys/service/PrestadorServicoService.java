@@ -41,6 +41,11 @@ public class PrestadorServicoService implements IService<Integer, PrestadorServi
 		list.addAll(dao.findAll(PrestadorServico.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<PrestadorServico> defaultSearch(String param) {
+		return null;
+	}
 
 	@Override
 	public void validate(PrestadorServico entity) {

@@ -176,6 +176,11 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		list.addAll(dao.findAll(Cobertura.class));
 		return list;
 	}
+	
+	@Override
+	public ObservableList<Cobertura> defaultSearch(String param) {
+		return null;
+	}
 
 	public void removeServicoFromCobertura(Cobertura cobertura) {
 		dao.removeServicoFromCobertura(cobertura);
