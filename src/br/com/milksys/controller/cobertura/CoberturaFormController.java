@@ -364,7 +364,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		
 		animalReducedOverviewController.showForm();
 		
-		
 		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
 			getObject().setFemea(animalReducedOverviewController.getObject());
 		}

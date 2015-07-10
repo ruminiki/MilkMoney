@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.Sexo;
+import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.util.DateUtil;
@@ -275,6 +277,19 @@ public class CoberturaValidation extends Validator {
 					"A data da repetição do cio não pode ser menor que a data da reconfirmação.");
 		}
 
+	}
+	
+	public static void validaSituacaoAnimal(Animal animal){
+		
+		if ( animal.getSituacaoAnimal() != null ){
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado teve a morte registrada. Por favor, selecione outro animal para continuar.");
+			}
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado teve a venda registrada. Por favor, selecione outro animal para continuar.");
+			}
+		}
+		
 	}
 	
 	

@@ -42,7 +42,7 @@
             <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#registrarVendaAnimal" text="Registrar Venda" />
             <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#registrarMorteAnimal" text="Registrar Morte" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" text="Secar" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#encerrarLactacao" text="Secar" />
          </children>
          <padding>
             <Insets right="5.0" />

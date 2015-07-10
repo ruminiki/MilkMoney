@@ -27,8 +27,9 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		if ( entity.getParto() != null ){
 			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
 		}
-		
+
 		CoberturaValidation.validate(entity);
+		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
 		CoberturaValidation.validaCoberturasAnimal(entity, findByAnimal(entity.getFemea()));
 		CoberturaValidation.validaEnseminacaoArtificial(entity, (entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity)));
 		

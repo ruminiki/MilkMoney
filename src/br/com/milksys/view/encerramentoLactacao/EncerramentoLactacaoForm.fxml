@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="207.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController">
+<AnchorPane prefHeight="184.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -24,7 +24,6 @@
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
@@ -36,19 +35,13 @@
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <Label text="Motivo Encerramento: " GridPane.rowIndex="3" />
-                  <ComboBox fx:id="inputMotivoEncerramento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <Label text="Previsão Parto: " GridPane.rowIndex="2" />
-                  <Label fx:id="lblPrevisaoParto" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
+                  <Label text="Motivo Encerramento: " GridPane.rowIndex="2" />
+                  <ComboBox fx:id="inputMotivoEncerramento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                   <Label text="Data: " />
                   
                         <DatePicker fx:id="inputData" prefWidth="120.0" GridPane.columnIndex="1" />
-                  <Label text="Observação: " GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+                  <Label text="Observação: " GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">

@@ -15,11 +15,13 @@ import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController;
 import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milksys.controller.raca.RacaOverviewController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
 import br.com.milksys.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.SituacaoAnimal;
@@ -32,6 +34,8 @@ import br.com.milksys.service.searchers.SearchFemeasCobertas;
 import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milksys.service.searchers.SearchMachosAtivos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
+import br.com.milksys.validation.EncerramentoLactacaoValidation;
+import br.com.milksys.validation.MorteAnimalValidation;
 import br.com.milksys.validation.VendaAnimalValidation;
 
 @Controller
@@ -64,6 +68,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private SemenReducedOverviewController semenReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
+	@Autowired private EncerramentoLactacaoFormController encerramentoLactacaoFormController;
 	
 	@FXML
 	public void initialize() {
@@ -111,11 +116,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
-			VendaAnimalValidation.validaSituacaoAnimal(getObject());
+			MorteAnimalValidation.validaSituacaoAnimal(getObject());
 			
 			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
 			morteAnimalFormController.showForm();
 			if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
+				//getObject().setSituacaoAnimal(new SituacaoAnimal(SituacaoAnimal.MORTO));
 				getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
 			}
 		}else{
@@ -129,10 +135,30 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
+			VendaAnimalValidation.validaSituacaoAnimal(getObject());
+			
 			vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
 			vendaAnimalFormController.setObject(new VendaAnimal());
 			vendaAnimalFormController.showForm();
 			if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
+				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		
+	}
+	
+	@FXML
+	private void encerrarLactacao() {
+		
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
+			
+			encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
+			encerramentoLactacaoFormController.showForm();
+			if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
 				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
 			}
 		}else{

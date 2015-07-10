@@ -45,6 +45,10 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 	public EncerramentoLactacao() {
 	}
 	
+	public EncerramentoLactacao(Animal animal) {
+		this.animal.set(animal);
+	}
+
 	public int getId() {
 		return this.id;
 	}

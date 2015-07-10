@@ -195,9 +195,14 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	Function<Integer, Boolean> removerAnimalDaVenda = index -> {
 		
 		if ( index <= table.getItems().size() ){
-		
-			getObject().getAnimaisVendidos().remove(index);
-			table.getItems().remove(index);
+			
+			if ( !getObject().getAnimaisVendidos().remove(index) ){
+				getObject().getAnimaisVendidos().remove(table.getItems().get(index));
+			}
+			table.getItems().clear();
+			table.getItems().addAll(getObject().getAnimaisVendidos());
+			
+			atualizaTotalVenda();
 			
 			return true;
 			

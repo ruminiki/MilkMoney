@@ -29,10 +29,11 @@ public class TableCellHyperlinkRemoverFactory<S, String> implements Callback<Tab
 						if(item!=null){
 							Hyperlink hp = new Hyperlink();
 							hp.setText("Remover");
+							hp.setFocusTraversable(false);
 							hp.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {
-									function.apply(tableRowProperty().get().getIndex());
+									function.apply(getTableRow().getIndex());
 								}
 							});
 							setGraphic(hp);

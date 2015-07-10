@@ -38,8 +38,9 @@ public class EncerramentoLactacaoValidation extends Validator {
 		//verificar se femea possui cobertura cadastrada
 		if ( encerramentoLactacao.getMotivoEncerramentoLactacao().equals(MotivoEncerramentoLactacao.PREPARACAO_PARTO) ){
 			if ( isFemeaCoberta != null && !isFemeaCoberta.apply(encerramentoLactacao.getAnimal()) ){
-				throw new ValidationException(REGRA_NEGOCIO, "A fêmea selecionada não possui cobertura em aberto (situação INDEFINIDA ou PRENHA). "
-						+ "Por favor, cadastre a cobertura para então, ser possível fazer o encerramento da lactação.");
+				throw new ValidationException(REGRA_NEGOCIO, "Quando o motivo do encerramento for, previsão para o parto é necessário "
+						+ "que a fêmea selecionada possua cobertura cadastrada em aberto (INDEFINIDA ou PRENHA). "
+						+ "Por favor, primeiro cadastre a cobertura para então, ser possível fazer o encerramento da lactação.");
 			}	
 		}
 		

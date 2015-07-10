@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 
 import javax.annotation.Resource;
 
@@ -20,14 +19,12 @@ import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MotivoEncerramentoLactacao;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.service.IService;
-import br.com.milksys.util.DateUtil;
 
 @Controller
 public class EncerramentoLactacaoFormController extends AbstractFormController<Integer, EncerramentoLactacao> {
 
 	@FXML private UCTextField inputObservacao, inputAnimal;
 	@FXML private DatePicker inputData;
-	@FXML private Label lblPrevisaoParto;
 	@FXML private ComboBox<String> inputMotivoEncerramento;
 	@FXML private Button btnBuscarAnimal;
 	
@@ -43,7 +40,6 @@ public class EncerramentoLactacaoFormController extends AbstractFormController<I
 		
 		if ( getObject().getAnimal() != null ){
 			inputAnimal.setText(getObject().getAnimal().toString());
-			lblPrevisaoParto.setText(DateUtil.format(getObject().getAnimal().getDataPrevisaoProximoParto()));
 		}
 		
 	}
@@ -66,7 +62,6 @@ public class EncerramentoLactacaoFormController extends AbstractFormController<I
 		
 		if ( getObject().getAnimal() != null ){
 			inputAnimal.textProperty().set(getObject().getAnimal().getNumeroNome());	
-			lblPrevisaoParto.setText(DateUtil.format(getObject().getAnimal().getDataPrevisaoProximoParto()));
 		}else{
 			inputAnimal.textProperty().set("");
 		}
