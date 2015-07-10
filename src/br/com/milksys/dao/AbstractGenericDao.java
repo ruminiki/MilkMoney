@@ -98,4 +98,5 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	public EntityManager getEntityManager(){
 		return this.entityManager;
 	}
+	
 }

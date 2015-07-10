@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import br.com.milksys.exception.GlobalExceptionHandler;
+import br.com.milksys.service.ApplicationService;
 
 public class MainApp extends Application {
 
@@ -76,11 +77,15 @@ public class MainApp extends Application {
 
 	public static void main(String[] args) {
 		
+		new ApplicationService().initilizeDatabase();
+		
 		Locale locale = new Locale("pt", "BR");
 		Locale.setDefault(locale);
+		
 		
 		Thread.setDefaultUncaughtExceptionHandler(new GlobalExceptionHandler());  
 		
 		launch(args);
+		
 	}
 }
