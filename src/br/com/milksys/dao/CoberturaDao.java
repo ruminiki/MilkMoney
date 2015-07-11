@@ -15,6 +15,14 @@ import br.com.milksys.model.SituacaoCobertura;
 @Component
 public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findAllByNumeroNomeAnimal(String param) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c inner join c.femea a WHERE a.nome like :param or a.numero like :param");
+		query.setParameter("param", '%' + param + '%');
+		
+		return query.getResultList();
+	}
+	
 	public void removeServicoFromCobertura(Cobertura cobertura) {
 		
 		try{

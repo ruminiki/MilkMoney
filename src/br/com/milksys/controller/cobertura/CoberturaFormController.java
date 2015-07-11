@@ -38,6 +38,7 @@ import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.util.DateUtil;
+import br.com.milksys.validation.CoberturaValidation;
 
 @Controller
 public class CoberturaFormController extends AbstractFormController<Integer, Cobertura> {
@@ -368,6 +369,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		
 		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
 			getObject().setFemea(animalReducedOverviewController.getObject());
+			CoberturaValidation.validaFemeaSelecionada(getObject(), service.findByAnimal(getObject().getFemea()));
 		}
 		
 		if ( getObject().getFemea() != null ){

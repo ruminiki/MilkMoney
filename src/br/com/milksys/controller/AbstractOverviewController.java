@@ -100,14 +100,6 @@ public abstract class AbstractOverviewController<K, E>{
 		
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> refreshTableOverview());
-			/*inputPesquisa.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent event) {
-					if (event.getCode().equals(KeyCode.ENTER)) {
-						handleDefaultSearch();
-					}
-				}
-			});*/
 		}
 		
 	}
@@ -182,6 +174,15 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	public ObservableList<E> handleDefaultSearch() {
 		return service.defaultSearch(inputPesquisa.getText());
+	}
+	
+	@FXML
+	public void clearFilter(){
+		if ( inputPesquisa != null ){
+			inputPesquisa.clear();
+		}
+		setSearch(null);
+		refreshTableOverview();
 	}
 	
 	public Function<E, Boolean> refreshObjectInTableView = (object) -> {

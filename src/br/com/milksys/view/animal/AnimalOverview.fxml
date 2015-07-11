@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="inputPesquisa" minWidth="200.0" prefHeight="30.0" promptText="nome ou número">
+            <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="nome ou número">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
@@ -21,7 +21,11 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_RIGHT">
                <children>
@@ -130,12 +134,6 @@
                </cursor>
             </Button>
             <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindAnimaisMortos" style="-fx-background-color: #825E3B;" text="Mortos">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleLimpar" style="-fx-background-color: #FFF;" text="Limpar Filtro">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

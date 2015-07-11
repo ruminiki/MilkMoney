@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -55,11 +54,7 @@ public class MorteAnimalOverviewController extends AbstractOverviewController<In
         barChart.setPrefWidth(200);
         
         barChart.setTitle("Principais Causas Mortes");
-        
         barChart.setLegendVisible(false);
-        
-        //XYChart.Series<String, Number> serie = ((MorteAnimalService)service).getDataChart();
-        
         barChart.getData().addAll(((MorteAnimalService)service).getDataChart());
 
         hbox.getChildren().addAll(barChart);

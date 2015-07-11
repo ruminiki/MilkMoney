@@ -27,6 +27,7 @@ import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 @Controller
 public class AnimalReducedOverviewController extends AbstractReducedOverviewController<Integer, Animal> {
 
+	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
@@ -38,6 +39,7 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 	@FXML
 	public void initialize() {
 		
+		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
 		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));

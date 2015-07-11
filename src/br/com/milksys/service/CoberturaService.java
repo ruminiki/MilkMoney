@@ -30,7 +30,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 		CoberturaValidation.validate(entity);
 		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
-		CoberturaValidation.validaCoberturasAnimal(entity, findByAnimal(entity.getFemea()));
+		CoberturaValidation.validaFemeaSelecionada(entity, findByAnimal(entity.getFemea()));
 		CoberturaValidation.validaEnseminacaoArtificial(entity, (entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity)));
 		
 		return dao.persist(entity);
@@ -172,14 +172,12 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	public ObservableList<Cobertura> findAllAsObservableList() {
-		ObservableList<Cobertura> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Cobertura.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Cobertura.class));
 	}
 	
 	@Override
 	public ObservableList<Cobertura> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findAllByNumeroNomeAnimal(param));
 	}
 
 	public void removeServicoFromCobertura(Cobertura cobertura) {

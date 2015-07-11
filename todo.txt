@@ -1,13 +1,14 @@
 - carregar o número de vacas em lactação no lançamento de entrega de leite
 - fazer gráfico preço leite
-- fazer gráfico medição leite por animal
+- fazer gráfico produção de leite por animal
+- fazer gráfico produção de leite por meses
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 
 - forçar reload dados atualizados em outras telas;
+- filtro tela semen reduced (apenas com estoque disponível)
 
-- filtros tela cobertura;
-
+- melhorar cadastro pai e mae tela de animal
 
 - na venda fazer a somatória de animais vendidos e do valor total
 - na tela de registro de morte, fazer um gráfico com as principais causas;

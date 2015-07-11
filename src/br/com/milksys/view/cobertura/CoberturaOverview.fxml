@@ -13,16 +13,19 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Pesquisar:">
-               <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
+            <TextField fx:id="inputPesquisa" alignment="CENTER" prefHeight="30.0" prefWidth="250.0" promptText="número ou nome animal">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -64,7 +67,7 @@
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="femeaColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Fêmea" />
-          <TableColumn fx:id="reprodutorColumn" minWidth="120" prefWidth="75.0" text="Reprodutor" />
+          <TableColumn fx:id="reprodutorColumn" minWidth="200.0" prefWidth="75.0" text="Reprodutor" />
           <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100" prefWidth="100" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
           <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
             <TableColumn fx:id="previsaoSecagemColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Enc. Lact." />

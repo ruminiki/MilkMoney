@@ -256,10 +256,4 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		refreshTableOverview();
 	}
 	
-	@FXML
-	private void handleLimpar(){
-		setSearch(null);
-		refreshTableOverview();
-	}
-
 }

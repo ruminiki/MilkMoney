@@ -24,19 +24,6 @@ public class CoberturaValidation extends Validator {
 					"A data da cobertura não pode ser maior que a data atual.");
 		}
 		
-		if ( !cobertura.getFemea().getSexo().equals(Sexo.FEMEA) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"O animal selecionado para a cobertura deve ser uma fêmea.");
-		}
-		
-		if ( cobertura.getFemea().getIdade() < 18 ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A fêmea selecionada possui apenas " + cobertura.getFemea().getIdade() + " meses de idade. " +
-					"No entanto é necessário que tenha pelo menos 18 meses. " +
-					"Verifique se existe um erro no cadastro do animal.");
-		}
-		
-		
 		if ( cobertura.getTipoCobertura() == null ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [tipo de cobertura] para continuar.");
@@ -53,12 +40,12 @@ public class CoberturaValidation extends Validator {
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"O reprodutor selecionado para a cobertura deve ser um macho.");
 			}
-			if ( cobertura.getTouro().getIdade() < 18 ){
+			/*if ( cobertura.getTouro().getIdade() < 18 ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"O reprodutor selecionado possui apenas " + cobertura.getTouro().getIdade() + " meses de idade. " +
 						"No entanto é necessário que tenha pelo menos 18 meses. " +
 						"Verifique se existe um erro no cadastro do animal.");
-			}
+			}*/
 			/*if ( cobertura.getFemea().getPaiMontaNatural() != null &&
 					cobertura.getFemea().getPaiMontaNatural().getId() == cobertura.getTouro().getId() ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
@@ -66,6 +53,49 @@ public class CoberturaValidation extends Validator {
 			}*/
 		}
 
+	}
+	
+	/*
+	 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
+	 * 1. Foi coberta a menos de 21 dias;
+	 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
+	 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
+	 * No caso de registro de parto a situação muda para PARIDA.
+	 * @param cobertura
+	 */
+	public static void validaFemeaSelecionada(Cobertura cobertura, List<Cobertura> coberturasAnimal){
+		
+		if ( cobertura.getFemea() != null && !cobertura.getFemea().getSexo().equals(Sexo.FEMEA) ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"O animal selecionado para a cobertura deve ser uma fêmea.");
+		}
+		
+		/*if ( cobertura.getFemea().getIdade() < 18 ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"A fêmea selecionada possui apenas " + cobertura.getFemea().getIdade() + " meses de idade. " +
+					"No entanto é necessário que tenha pelo menos 18 meses. " +
+					"Verifique se existe um erro no cadastro do animal.");
+		}*/
+		
+		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
+			
+			for ( Cobertura c : coberturasAnimal ){
+				//se não for a mesma cobertura
+				if ( c.getId() != cobertura.getId() ){
+					
+					long diasEntreCoberturas = ChronoUnit.DAYS.between(DateUtil.asLocalDate(c.getData()), DateUtil.asLocalDate(cobertura.getData()));
+					
+					if ( Math.abs(diasEntreCoberturas) < 21 ){
+						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
+								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
+								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
+					}
+					
+					validaSituacoesCoberturasDoAnimal(cobertura, coberturasAnimal);
+					
+				}
+			}
+		}
 	}
 	
 	/**
@@ -107,37 +137,6 @@ public class CoberturaValidation extends Validator {
 		}
 	}
 	
-	
-	/*
-	 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
-	 * 1. Foi coberta a menos de 21 dias;
-	 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
-	 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
-	 * No caso de registro de parto a situação muda para PARIDA.
-	 * @param cobertura
-	 */
-	public static void validaCoberturasAnimal(Cobertura cobertura, List<Cobertura> coberturasAnimal){
-		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
-			
-			for ( Cobertura c : coberturasAnimal ){
-				//se não for a mesma cobertura
-				if ( c.getId() != cobertura.getId() ){
-					
-					long diasEntreCoberturas = ChronoUnit.DAYS.between(DateUtil.asLocalDate(c.getData()), DateUtil.asLocalDate(cobertura.getData()));
-					
-					if ( Math.abs(diasEntreCoberturas) < 21 ){
-						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
-								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
-								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
-					}
-					
-					validaSituacoesCoberturasDoAnimal(cobertura, coberturasAnimal);
-					
-				}
-			}
-		}
-	}
-	
 	/**
 	 * Não deve ser permitido que seja mantido duas coberturas com status PRENHA ou INDEFINIDA.
 	 * 
@@ -157,7 +156,6 @@ public class CoberturaValidation extends Validator {
 					
 					if ( (c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || c.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) &&
 						 (cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) ){
-						
 						throw new ValidationException(CAMPO_OBRIGATORIO,
 								"A fêmea [" + c.getFemea().getNumeroNome()+"] possui uma cobertura registrada no dia " + 
 								DateUtil.format(c.getData()) +	" com situação " + c.getSituacaoCobertura() + ". " +
