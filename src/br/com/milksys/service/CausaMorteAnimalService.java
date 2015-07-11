@@ -52,6 +52,5 @@ public class CausaMorteAnimalService implements IService<Integer, CausaMorteAnim
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
 }

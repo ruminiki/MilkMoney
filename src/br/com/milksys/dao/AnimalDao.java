@@ -165,7 +165,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisVendidos() {
-		Query query = entityManager.createQuery("SELECT a FROM AnimaisVendidos av inner join av.animal a");
+		Query query = entityManager.createQuery("SELECT a FROM AnimalVendido av inner join av.animal a");
 
 		return query.getResultList();
 	}

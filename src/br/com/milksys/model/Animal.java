@@ -61,7 +61,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
 	
-	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id)")
+	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
 	
 	@Formula("(SELECT MAX(p.data) FROM parto p inner join cobertura c ON (c.parto = p.id) "
