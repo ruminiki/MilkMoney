@@ -110,7 +110,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasASecar() {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Cobertura c inner join c.femea a "
-				+ "WHERE DATEDIFF(c.previsaoParto, current_date()) between 0 and 70 "
+				+ "WHERE DATEDIFF(c.previsaoParto, current_date()) <= 70 "
+				+ "and not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.animal = a.id and e.data > c.data) "
 				+ "and c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");

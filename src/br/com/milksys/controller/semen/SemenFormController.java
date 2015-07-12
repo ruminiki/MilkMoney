@@ -13,39 +13,47 @@ import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.NumberTextField;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
-import br.com.milksys.controller.fornecedor.FornecedorFormController;
+import br.com.milksys.controller.fornecedor.FornecedorReducedOverviewController;
+import br.com.milksys.controller.touro.TouroReducedOverviewController;
 import br.com.milksys.model.Fornecedor;
 import br.com.milksys.model.Semen;
-import br.com.milksys.model.State;
-import br.com.milksys.service.FornecedorService;
+import br.com.milksys.model.SimNao;
+import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
 
 @Controller
 public class SemenFormController extends AbstractFormController<Integer, Semen> {
 
-	@FXML private UCTextField inputDescricao;
+	@FXML private UCTextField inputCodigoPalheta;
 	@FXML private UCTextField inputTouro;
 	@FXML private DatePicker inputDataCompra;
 	@FXML private NumberTextField inputValor;
 	@FXML private NumberTextField inputQuantidade;
-	@FXML private UCTextField inputLote;
-	@FXML private ComboBox<Fornecedor> inputFornecedor;
+	@FXML private ComboBox<String> inputSexado;
+	@FXML private UCTextField inputFornecedor;
 	
-	@Autowired private FornecedorService fornecedorService;
-	@Autowired private FornecedorFormController fornecedorFormController;
+	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
+	@Autowired private FornecedorReducedOverviewController fornecedorReducedOverviewController;
 
 	@FXML
 	public void initialize() {
 		
-		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
-		inputTouro.textProperty().bindBidirectional(getObject().touroProperty());
+		inputCodigoPalheta.textProperty().bindBidirectional(getObject().codigoPalhetaProperty());
+		
 		inputDataCompra.valueProperty().bindBidirectional(getObject().dataCompraProperty());
 		inputValor.textProperty().bindBidirectional(getObject().valorUnitarioProperty());
 		inputQuantidade.textProperty().bindBidirectional(getObject().quantidadeProperty());
-		inputLote.textProperty().bindBidirectional(getObject().loteProperty());
 		
-		inputFornecedor.setItems(fornecedorService.findAllAsObservableList());
-		inputFornecedor.valueProperty().bindBidirectional(getObject().fornecedorProperty());
+		inputSexado.setItems(SimNao.getItems());
+		inputSexado.valueProperty().bindBidirectional(getObject().sexadoProperty());
+		
+		if ( getObject() != null && getObject().getFornecedor() != null ){
+			inputFornecedor.setText(getObject().getFornecedor().toString());
+		}
+		
+		if ( getObject() != null && getObject().getTouro() != null ){
+			inputTouro.setText(getObject().getTouro().toString());
+		}
 		
 		MaskFieldUtil.numeroInteiro(inputQuantidade);
 		MaskFieldUtil.decimal(inputValor);
@@ -53,14 +61,39 @@ public class SemenFormController extends AbstractFormController<Integer, Semen> 
 	}
 
 	@FXML
-	protected void openFormFornecedorToInsertAndSelect() {
-		fornecedorFormController.setState(State.INSERT_TO_SELECT);
-		fornecedorFormController.setObject(new Fornecedor());
-		fornecedorFormController.showForm();
-		if ( fornecedorFormController.getObject() != null ){
-			inputFornecedor.getItems().add(fornecedorFormController.getObject());
-			inputFornecedor.getSelectionModel().select(fornecedorFormController.getObject());
+	protected void selecionarFornecedor() {
+		
+		fornecedorReducedOverviewController.setObject(new Fornecedor());
+		fornecedorReducedOverviewController.showForm();
+		
+		if ( fornecedorReducedOverviewController.getObject() != null && fornecedorReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setFornecedor(fornecedorReducedOverviewController.getObject());
 		}
+		
+		if ( getObject().getFornecedor() != null ){
+			inputFornecedor.textProperty().set(getObject().getFornecedor().toString());	
+		}else{
+			inputFornecedor.textProperty().set("");
+		}
+		
+	}
+	
+	@FXML
+	protected void selecionarTouro() {
+		
+		touroReducedOverviewController.setObject(new Touro());
+		touroReducedOverviewController.showForm();
+		
+		if ( touroReducedOverviewController.getObject() != null && touroReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setTouro(touroReducedOverviewController.getObject());
+		}
+		
+		if ( getObject().getTouro() != null ){
+			inputTouro.textProperty().set(getObject().getTouro().toString());	
+		}else{
+			inputTouro.textProperty().set("");
+		}
+		
 	}
 	
 	@Override

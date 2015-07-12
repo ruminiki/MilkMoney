@@ -88,7 +88,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			}
 			
 			if ( getObject().getSemen() != null ){
-				inputSemen.setText(getObject().getSemen().getDescricao());	
+				inputSemen.setText(getObject().getSemen().getTouro().toString());	
 			}else{
 				inputSemen.setText("");
 			}
@@ -181,7 +181,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 				
 				inputSemen.setDisable(true);
-				inputSemen.textProperty().bindBidirectional(getObject().getSemen().touroProperty());
+				inputSemen.setText(getObject().getSemen().getTouro().toString());
 				
 				lblQuantidadeDosesSemen.setVisible(true);
 				inputQuantidadeDosesSemen.setVisible(true);

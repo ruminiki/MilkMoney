@@ -17,16 +17,14 @@
 					</accelerator>
 			 	  </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Registro Venda Animal" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Registro Morte Animal" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animal" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça">
 						<accelerator>
 							<KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 						</accelerator>
 				  </MenuItem>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroComprador" text="Comprador" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroCausaMorteAnimal" text="Causa Morte" />
 			 	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroMotivoVendaAnimal" text="Motivo Venda Animal" />
@@ -46,6 +44,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">

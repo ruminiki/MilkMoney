@@ -44,12 +44,12 @@ public class Semen extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private StringProperty descricao = new SimpleStringProperty();
-	private StringProperty touro = new SimpleStringProperty();
+	private StringProperty sexado = new SimpleStringProperty(SimNao.SIM);
+	private ObjectProperty<Touro> touro = new SimpleObjectProperty<Touro>();
 	private ObjectProperty<LocalDate> dataCompra = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty valorUnitario = new SimpleStringProperty();
 	private StringProperty quantidade = new SimpleStringProperty();
-	private StringProperty lote = new SimpleStringProperty();
+	private StringProperty codigoPalheta = new SimpleStringProperty();
 	private ObjectProperty<Fornecedor> fornecedor = new SimpleObjectProperty<Fornecedor>();
 	
 	@Formula("(quantidade - coalesce((select sum(c.quantidadeDosesUtilizadas) from Cobertura c where c.semen = id),0))")
@@ -78,28 +78,30 @@ public class Semen extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getDescricao() {
-		return this.descricao.get();
+	public String getSexado() {
+		return this.sexado.get();
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao.set(descricao);
+	public void setSexado(String sexado) {
+		this.sexado.set(sexado);
 	}
 
-	public StringProperty descricaoProperty(){
-		return descricao;
+	public StringProperty sexadoProperty(){
+		return sexado;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getTouro() {
-		return this.touro.get();
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="touro")
+	public Touro getTouro() {
+		return touro.get();
 	}
-
-	public void setTouro(String touro) {
+	
+	public void setTouro(Touro touro) {
 		this.touro.set(touro);
 	}
-
-	public StringProperty touroProperty(){
+	
+	public ObjectProperty<Touro> touroProperty(){
 		return touro;
 	}
 	
@@ -135,16 +137,16 @@ public class Semen extends AbstractEntity implements Serializable {
 	}
 
 	@Access(AccessType.PROPERTY)
-	public String getLote() {
-		return this.lote.get();
+	public String getCodigoPalheta() {
+		return this.codigoPalheta.get();
 	}
 
-	public void setLote(String lote) {
-		this.lote.set(lote);
+	public void setCodigoPalheta(String codigoPalheta) {
+		this.codigoPalheta.set(codigoPalheta);
 	}
 
-	public StringProperty loteProperty(){
-		return lote;
+	public StringProperty codigoPalhetaProperty(){
+		return codigoPalheta;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -174,19 +176,7 @@ public class Semen extends AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.getTouro();
+		return this.getTouro().toString();
 	}
-	/*@Override
-	public boolean isValid() {
-		
-		if ( !super.isValid() )
-			return false;
-		
-		if ( getQuantidade() <= 0 ){
-			CustomAlert.mensagemAlerta("Por favor informe uma quantidade maior que zero para continuar.");
-		}
-		
-		return true;
-	}*/
 	
 }

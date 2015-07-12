@@ -4,17 +4,17 @@
 - fazer gráfico produção de leite por meses
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
-
-- forçar reload dados atualizados em outras telas;
+- forçar reload dados atualizados em outras telas (atualizar os mapeamentos);
 
 - Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
 - três casas decimais valor do leite
 
+- Quando a vaca repetir de cio estiver vazia ou parir, limpar previsao parto e prev. secar
 - melhorar cadastro pai e mae tela de animal
-- Criar tabela de touros
+
+- ERRO - cria cadastrada está com situacao EM LACTACAO.
 
 - na venda fazer a somatória de animais vendidos e do valor total
-- na tela de registro de morte, fazer um gráfico com as principais causas;
 
 - indicadores:
 	- Dias secas (em aberto);

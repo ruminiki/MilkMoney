@@ -141,7 +141,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
 			animal.setPaiMontaNatural(cobertura.getTouro());
 		}else{
-			animal.setPaiEnseminacaoArtificial(cobertura.getSemen());
+			animal.setPaiEnseminacaoArtificial(cobertura.getSemen().getTouro());
 		}
 		
 		animalCriaFormController.setObject(animal);

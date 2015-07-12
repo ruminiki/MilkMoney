@@ -15,31 +15,28 @@ import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Semen;
+import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
 
 @Controller
 public class SemenOverviewController extends AbstractOverviewController<Integer, Semen> {
 
-	@FXML private TableColumn<Semen, String> descricaoColumn;
-	@FXML private TableColumn<Semen, String> touroColumn;
+	@FXML private TableColumn<Touro, String> touroColumn;
 	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
 	@FXML private TableColumn<Semen, String> valorUnitarioColumn;
 	@FXML private TableColumn<Semen, String> valorTotalColumn;
 	@FXML private TableColumn<Semen, String> quantidadeAdquiridaColumn;
 	@FXML private TableColumn<Semen, String> quantidadeDisponivelColumn;
-	@FXML private TableColumn<Semen, String> loteColumn;
 	
 	@FXML
 	public void initialize() {
 		
-		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("descricao"));
-		touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
+		touroColumn.setCellValueFactory(new PropertyValueFactory<Touro,String>("touro"));
 		dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
 		valorUnitarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorUnitario"));
 		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<Semen,String>("valorTotal"));
 		quantidadeAdquiridaColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidade"));
 		quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
-		loteColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("lote"));
 		
 		super.initialize((SemenFormController)MainApp.getBean(SemenFormController.class));
 		

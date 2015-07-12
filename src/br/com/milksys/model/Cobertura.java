@@ -385,7 +385,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 			return this.getTouro().getNumeroNome();
 		
 		if ( this.getSemen() != null )
-			return this.getSemen().getTouro();
+			return this.getSemen().getTouro().toString();
 		
 		return null;
 	}

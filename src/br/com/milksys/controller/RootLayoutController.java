@@ -117,6 +117,13 @@ public class RootLayoutController {
     }
     
     @FXML
+    private void handleCadastroTouro() {
+    	
+    	openForm("view/touro/TouroOverview.fxml");
+    	
+    }
+    
+    @FXML
     private void handleCadastroEncerramentoLactacao() {
     	
     	openForm("view/encerramentoLactacao/EncerramentoLactacaoOverview.fxml");

@@ -30,7 +30,7 @@ public class SemenDao extends AbstractGenericDao<Integer, Semen> {
 	public List<Semen> findAllComEstoque() {
 		
 		Query query = entityManager.createQuery("SELECT s FROM Semen s "
-				+ "WHERE (SELECT sum(quantidadeDosesUtilizadas) from Cobertura c where c.semen.id = s.id) > 0 ");
+				+ "WHERE (s.quantidade - coalesce((SELECT sum(quantidadeDosesUtilizadas) from Cobertura c where c.semen.id = s.id), 0)) > 0 ");
 
 		return query.getResultList();
 		

@@ -56,7 +56,7 @@ public class AnimalCriaFormController extends AbstractFormController<Integer, An
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
-			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().getTouro());
+			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
 		}
 		
 	}

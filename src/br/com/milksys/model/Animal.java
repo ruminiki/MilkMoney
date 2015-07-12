@@ -56,7 +56,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	private ObjectProperty<Animal>    mae                      = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Animal>    paiMontaNatural          = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Semen>     paiEnseminacaoArtificial = new SimpleObjectProperty<Semen>();
+	private ObjectProperty<Touro>     paiEnseminacaoArtificial = new SimpleObjectProperty<Touro>();
 	
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
@@ -220,17 +220,17 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Semen.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(targetEntity=Touro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="paiEnseminacaoArtificial")
-	public Semen getPaiEnseminacaoArtificial() {
+	public Touro getPaiEnseminacaoArtificial() {
 		return this.paiEnseminacaoArtificial.get();
 	}
 
-	public void setPaiEnseminacaoArtificial(Semen paiEnseminacaoArtificial) {
+	public void setPaiEnseminacaoArtificial(Touro paiEnseminacaoArtificial) {
 		this.paiEnseminacaoArtificial.set(paiEnseminacaoArtificial);
 	}
 	
-	public ObjectProperty<Semen> paiEnseminacaoArtificialProperty(){
+	public ObjectProperty<Touro> paiEnseminacaoArtificialProperty(){
 		return paiEnseminacaoArtificial;
 	}
 	

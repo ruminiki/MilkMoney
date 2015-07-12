@@ -22,8 +22,8 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 		this.entityManager = Persistence.createEntityManagerFactory("MilkSys").createEntityManager();
 		Session session = entityManager.unwrap(Session.class);
-		session.setCacheMode(CacheMode.IGNORE);
-		this.entityManager.getEntityManagerFactory().getCache().evictAll();
+		session.setCacheMode(CacheMode.REFRESH);
+		//this.entityManager.getEntityManagerFactory().getCache().evictAll();
 	}
 	
 	public boolean persist(E entity) {

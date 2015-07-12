@@ -15,12 +15,12 @@ import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.raca.RacaFormController;
-import br.com.milksys.controller.semen.SemenReducedOverviewController;
+import br.com.milksys.controller.touro.TouroReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Raca;
-import br.com.milksys.model.Semen;
 import br.com.milksys.model.Sexo;
+import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.RacaService;
 
@@ -39,7 +39,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	//controllers
 	@Autowired private RacaFormController racaFormController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
-	@Autowired private SemenReducedOverviewController semenReducedOverviewController;
+	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	
 	@FXML
 	public void initialize() {
@@ -70,7 +70,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
-			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().getTouro());
+			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
 			btnRemoverPaiEnseminacaoArtificial.setVisible(true);
 		}
 		
@@ -149,15 +149,15 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarPaiEnseminacaoArtificial() {
 		
-		semenReducedOverviewController.setObject(new Semen());
-		semenReducedOverviewController.showForm();
+		touroReducedOverviewController.setObject(new Touro());
+		touroReducedOverviewController.showForm();
 		
-		if ( semenReducedOverviewController.getObject() != null && semenReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setPaiEnseminacaoArtificial(semenReducedOverviewController.getObject());
+		if ( touroReducedOverviewController.getObject() != null && touroReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setPaiEnseminacaoArtificial(touroReducedOverviewController.getObject());
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
-			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().getTouro());	
+			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());	
 		}else{
 			inputPaiEnseminacaoArtificial.textProperty().set("");
 		}
