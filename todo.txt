@@ -6,9 +6,12 @@
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 
 - forçar reload dados atualizados em outras telas;
-- filtro tela semen reduced (apenas com estoque disponível)
+
+- Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
+- três casas decimais valor do leite
 
 - melhorar cadastro pai e mae tela de animal
+- Criar tabela de touros
 
 - na venda fazer a somatória de animais vendidos e do valor total
 - na tela de registro de morte, fazer um gráfico com as principais causas;

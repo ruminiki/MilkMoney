@@ -13,17 +13,17 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Semen;
-import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.searchers.SearchSemenComEstoque;
 
 @Controller
 public class SemenReducedOverviewController extends AbstractReducedOverviewController<Integer, Semen> {
 
-	@FXML private TableColumn<Semen, String> descricaoColumn;
 	@FXML private TableColumn<Semen, String> touroColumn;
 	@FXML private TableColumn<Semen, LocalDate> dataCompraColumn;
 	@FXML private TableColumn<Semen, String> quantidadeDisponivelColumn;
@@ -33,16 +33,11 @@ public class SemenReducedOverviewController extends AbstractReducedOverviewContr
 	@FXML
 	public void initialize() {
 		
-		if ( state.equals(State.LIST) ){
-			
-			descricaoColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("descricao"));
-			touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
-			dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
-			quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
-			
-			super.initialize(semenFormController);
-			
-		}
+		touroColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("touro"));
+		dataCompraColumn.setCellFactory(new TableCellDateFactory<Semen, LocalDate>("dataCompra"));
+		quantidadeDisponivelColumn.setCellValueFactory(new PropertyValueFactory<Semen,String>("quantidadeDisponivel"));
+		
+		super.initialize(semenFormController);
 		
 	}
 
@@ -61,6 +56,12 @@ public class SemenReducedOverviewController extends AbstractReducedOverviewContr
 	private void fechar(){
 		this.setObject(null);
 		super.closeForm();
+	}
+	
+	@FXML
+	private void handleBuscarSemenComoEstoque(){
+		setSearch((SearchSemenComEstoque)MainApp.getBean(SearchSemenComEstoque.class));
+		refreshTableOverview();
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package br.com.milksys.dao;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -21,6 +23,16 @@ public class SemenDao extends AbstractGenericDao<Integer, Semen> {
 		}catch(NoResultException | NullPointerException e){
 			return 0;
 		}
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Semen> findAllComEstoque() {
+		
+		Query query = entityManager.createQuery("SELECT s FROM Semen s "
+				+ "WHERE (SELECT sum(quantidadeDosesUtilizadas) from Cobertura c where c.semen.id = s.id) > 0 ");
+
+		return query.getResultList();
 		
 	}
 

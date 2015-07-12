@@ -159,6 +159,7 @@ public abstract class AbstractOverviewController<K, E>{
 		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
 				inputPesquisa.getText().length() > 0){
 			data.addAll(handleDefaultSearch());
+			setSearch(null);
 		}else{
 			if ( search != null ){
 				data.addAll(search.doSearch());

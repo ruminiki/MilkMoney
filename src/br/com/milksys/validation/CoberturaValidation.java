@@ -120,7 +120,7 @@ public class CoberturaValidation extends Validator {
 				if ( cobertura.getQuantidadeDosesUtilizadas() > cobertura.getSemen().getQuantidadeDisponivel().intValue() ){
 					throw new ValidationException(CAMPO_OBRIGATORIO, 
 							"O sêmen selecionado não possui quantidade suficiente disponível. "
-							+ "Por favor, verifique se a quantidade de doses informada está correta ou então selecione outro sêmen ou verifique se há um erro no cadastro do sêmen.");
+							+ "Por favor, verifique se a quantidade de doses informada está correta ou selecione outro sêmen.");
 				}
 			}
 			

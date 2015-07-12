@@ -57,12 +57,12 @@
       </VBox>
       <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #CCFF99;" text="Com Estoque">
+            <Button mnemonicParsing="false" onAction="#handleBuscarSemenComoEstoque" style="-fx-background-color: #CCFF99;" text="Com Estoque">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #FFCC66;" text="Todos">
+            <Button mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFCC66;" text="Todos">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
