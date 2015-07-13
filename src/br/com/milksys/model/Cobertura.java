@@ -102,7 +102,6 @@ public class Cobertura extends AbstractEntity implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="previsão do parto")
 	public Date getPrevisaoParto() {
 		return DateUtil.asDate(this.previsaoParto.get());
 	}
@@ -117,7 +116,6 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="previsão de secagem")
 	public Date getPrevisaoSecagem() {
 		return DateUtil.asDate(this.previsaoSecagem.get());
 	}

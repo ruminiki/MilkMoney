@@ -260,8 +260,7 @@ public class Animal extends AbstractEntity implements Serializable {
 		return valor;
 	}
 	
-	//@ManyToOne(targetEntity=SituacaoAnimal.class)
-	//@JoinColumn(name="animal")
+	@Transient
 	public String getSituacaoAnimal() {
 		
 		if ( situacaoAnimal == null ){

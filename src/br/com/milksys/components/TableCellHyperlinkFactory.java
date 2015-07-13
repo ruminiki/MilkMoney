@@ -29,6 +29,7 @@ public class TableCellHyperlinkFactory<S, String> implements Callback<TableColum
 						if(item!=null){
 							Hyperlink hp = new Hyperlink();
 							hp.setText((java.lang.String)item);
+							hp.setFocusTraversable(false);
 							hp.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {

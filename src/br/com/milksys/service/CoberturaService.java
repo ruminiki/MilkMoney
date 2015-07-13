@@ -13,6 +13,7 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
+import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
 import br.com.milksys.validation.Validator;
 
@@ -38,22 +39,14 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	public void registrarConfirmacaoPrenhez(Cobertura entity){
 		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
-		
 		CoberturaValidation.validateRegistroConfirmacaoPrenhez(entity);
 		configureSituacaoCobertura(entity);
 		
-		dao.persist(entity);
+		save(entity);
 	}
 	
 
 	public void removerRegistroConfirmacaoPrenhez(Cobertura entity) {
-		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
 		
 		entity.setDataConfirmacaoPrenhez(null);
 		entity.setObservacaoConfirmacaoPrenhez(null);
@@ -64,28 +57,20 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
-		dao.persist(entity);
+		save(entity);
 		
 	}
 	
 	
 	public void registrarReconfirmacaoPrenhez(Cobertura entity){
 		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
-		
 		CoberturaValidation.validateRegistroReconfirmacaoPrenhez(entity);
 		configureSituacaoCobertura(entity);
 		
-		dao.persist(entity);
+		save(entity);
 	}
 	
 	public void removerRegistroReconfirmacaoPrenhez(Cobertura entity) {
-		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
 		
 		entity.setDataReconfirmacaoPrenhez(null);
 		entity.setObservacaoReconfirmacaoPrenhez(null);
@@ -96,27 +81,19 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
-		dao.persist(entity);
+		save(entity);
 		
 	}
 
 	public void registrarRepeticaoCio(Cobertura entity){
 		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
-		
-		entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
+		configureSituacaoCobertura(entity);
 		CoberturaValidation.validateRegistroRepeticaoCio(entity);
+		save(entity);
 		
-		dao.persist(entity);
 	}
 	
 	public void removerRegistroRepeticaoCio(Cobertura entity) {
-		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
 		
 		entity.setDataRepeticaoCio(null);
 		entity.setObservacaoRepeticaoCio(null);
@@ -126,7 +103,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
 		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
 		
-		dao.persist(entity);
+		save(entity);
 		
 	}
 	
@@ -134,20 +111,32 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		if ( entity.getDataRepeticaoCio() != null ){
 			entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
-			return;
+		}else{
+			if ( entity.getDataReconfirmacaoPrenhez() != null ){
+				entity.setSituacaoCobertura(entity.getSituacaoReconfirmacaoPrenhez());
+			}else{
+				if ( entity.getDataConfirmacaoPrenhez() != null ){
+					entity.setSituacaoCobertura(entity.getSituacaoConfirmacaoPrenhez());
+				}else{
+					entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+				}
+			}
 		}
+
+		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
 		
-		if ( entity.getDataReconfirmacaoPrenhez() != null ){
-			entity.setSituacaoCobertura(entity.getSituacaoReconfirmacaoPrenhez());
-			return;
+	}
+	
+	private void configuraDataPrevisaoPartoEEncerramentoLactacao(Cobertura entity){
+		
+		if ( entity.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
+				entity.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
+			entity.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(9)));
+			entity.setPrevisaoSecagem(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(7)));
+		}else{
+			entity.setPrevisaoParto(null);
+			entity.setPrevisaoSecagem(null);
 		}
-		
-		if ( entity.getDataConfirmacaoPrenhez() != null ){
-			entity.setSituacaoCobertura(entity.getSituacaoConfirmacaoPrenhez());
-			return;
-		}
-		
-		entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
 		
 	}
 	

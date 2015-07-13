@@ -9,10 +9,15 @@
 - Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
 - três casas decimais valor do leite
 
-- Quando a vaca repetir de cio estiver vazia ou parir, limpar previsao parto e prev. secar
 - melhorar cadastro pai e mae tela de animal
 
 - ERRO - cria cadastrada está com situacao EM LACTACAO.
+
+- pequenos cadastros mantê-los apenas com reduced form;
+- configurar as pesquisas em todos os cadastros;
+
+- nos gráficos, criar arquivos e controllers separados e adicioná-los ao componente para que uma mesma tela
+possa exibir vários gráficos.
 
 - na venda fazer a somatória de animais vendidos e do valor total
 
