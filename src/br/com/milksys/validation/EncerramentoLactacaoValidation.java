@@ -48,13 +48,9 @@ public class EncerramentoLactacaoValidation extends Validator {
 
 	public static void validaSituacaoAnimal(Animal animal){
 		
-		if ( animal.getSituacaoAnimal() != null ){
-			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado teve a morte registrada. Por favor, selecione outro animal para continuar.");
-			}
-			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				throw new ValidationException(VALIDACAO_FORMULARIO, "O animal selecionado teve a venda registrada. Por favor, selecione outro animal para continuar.");
-			}
+		if ( animal.getSituacaoAnimal() != null && !animal.getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
+			throw new ValidationException(VALIDACAO_FORMULARIO, "Para secar a vaca é necessário que ela esteja em lactação, no entanto a situação atual "
+					+ "é " + animal.getSituacaoAnimal());
 		}
 		
 	}

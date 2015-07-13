@@ -37,14 +37,12 @@ public class CausaMorteAnimalService implements IService<Integer, CausaMorteAnim
 	}
 	
 	public ObservableList<CausaMorteAnimal> findAllAsObservableList() {
-		ObservableList<CausaMorteAnimal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(CausaMorteAnimal.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(CausaMorteAnimal.class));
 	}
 	
 	@Override
 	public ObservableList<CausaMorteAnimal> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 
 	@Override

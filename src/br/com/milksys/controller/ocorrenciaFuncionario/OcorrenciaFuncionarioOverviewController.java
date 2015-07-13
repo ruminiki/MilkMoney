@@ -49,6 +49,11 @@ public class OcorrenciaFuncionarioOverviewController extends AbstractOverviewCon
 	
 	}
 	
+	@Override
+	public OcorrenciaFuncionario newObject() {
+		return new OcorrenciaFuncionario(selectedFuncionario);
+	}
+	
 	public Funcionario getSelectedFuncionario() {
 		return selectedFuncionario;
 	}

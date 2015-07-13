@@ -9,8 +9,6 @@
 - Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
 - três casas decimais valor do leite
 
-- melhorar cadastro pai e mae tela de animal
-
 - configurar as pesquisas em todos os cadastros;
 
 - nos gráficos, criar arquivos e controllers separados e adicioná-los ao componente para que uma mesma tela
@@ -20,10 +18,11 @@ possa exibir vários gráficos.
 
 - ao cadastrar morte, refresh chart
 
-- trazer os botões de secar, registrar venda e morte dentro da tabela de animal
-
 - fazer cadastro de procedimento
 
+- numero de partos animal
+
+- como resolver: Após o parto a vaca só pode ter um encerramento lactação.
 
 - indicadores:
 	- Dias secas (em aberto);
@@ -34,6 +33,7 @@ possa exibir vários gráficos.
 	- taxa de prenhez;
 	- idade primeiro parto;
 	- % vacas primeira cria;
+	- animais até determinada idade
 	
 	
 	

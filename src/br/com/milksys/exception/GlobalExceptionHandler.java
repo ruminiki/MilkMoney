@@ -25,8 +25,15 @@ public class GlobalExceptionHandler implements UncaughtExceptionHandler
 			//....
 			
 		}else{
-			//CustomAlert.mensagemAlerta("ERRO INESPERADO", e.getMessage());
-			e.printStackTrace();
+			if ( e instanceof ValidationException ){
+				ValidationException ve = (ValidationException) e;
+				CustomAlert.mensagemAlerta(ve.getTipo(), ve.getMessage());	
+			}else{
+				CustomAlert.mensagemAlerta("ERRO INESPERADO", e.getMessage());
+				e.printStackTrace();
+			}
+			
+			
 		}
 		
 	}

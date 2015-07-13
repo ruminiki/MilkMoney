@@ -41,14 +41,12 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 	}
 	
 	public ObservableList<Fornecedor> findAllAsObservableList() {
-		ObservableList<Fornecedor> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Fornecedor.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Fornecedor.class));
 	}
-	
+
 	@Override
 	public ObservableList<Fornecedor> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByNome(param));
 	}
 
 	@Override

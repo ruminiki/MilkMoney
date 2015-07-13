@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
@@ -21,15 +22,16 @@ import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.searchers.SearchFemeas;
+import br.com.milksys.service.searchers.SearchMachos;
 
 @Controller
 public class AnimalFormController extends AbstractFormController<Integer, Animal> {
 
-	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPaiMontaNatural, inputPaiEnseminacaoArtificial, inputValor, inputRaca;
+	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai, inputValor, inputRaca;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
-	@FXML private Button btnRemoverMae, btnRemoverPaiMontaNatural, btnRemoverPaiEnseminacaoArtificial;
-	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
+	@FXML private Button btnRemoverMae, btnRemoverPai, btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
 
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -56,13 +58,13 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}
 		
 		if ( getObject().getPaiMontaNatural() != null ){
-			inputPaiMontaNatural.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());
-			btnRemoverPaiMontaNatural.setVisible(true);
+			inputPai.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());
+			btnRemoverPai.setVisible(true);
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
-			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
-			btnRemoverPaiEnseminacaoArtificial.setVisible(true);
+			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
+			btnRemoverPai.setVisible(true);
 		}
 		
 		if ( getObject().getRaca() != null ){
@@ -71,15 +73,11 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		
 		// impede que sejam alteradas informações cadastradas pela cobertura e parto
 		if ( getObject().isNascimentoCadastrado() ){
-			inputMae.setDisable(true);
-			inputPaiEnseminacaoArtificial.setDisable(true);
-			inputPaiMontaNatural.setDisable(true);
 			btnBuscarMae.setDisable(true);
 			btnBuscarPaiEnseminacaoArtificial.setDisable(true);
 			btnBuscarPaiMontaNatural.setDisable(true);
 			btnRemoverMae.setDisable(true);
-			btnRemoverPaiEnseminacaoArtificial.setDisable(true);
-			btnRemoverPaiMontaNatural.setDisable(true);
+			btnRemoverPai.setDisable(true);
 			inputDataNascimento.setDisable(true);
 			inputSexo.setDisable(true);
 		}
@@ -92,8 +90,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	private void handleSelecionarMae() {
 		
 		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
-		//animalReducedController.setSearch(searchFemeasAtivas);
-		
+		animalReducedOverviewController.setSearch((SearchFemeas) MainApp.getBean(SearchFemeas.class));
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
@@ -120,7 +117,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		Animal animalAux = getObject();
 		
 		animalReducedOverviewController.setObject(new Animal(Sexo.MACHO));
-		//animalReducedController.setSearch(searchFemeasAtivas);
+		animalReducedOverviewController.setSearch((SearchMachos) MainApp.getBean(SearchMachos.class));
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
@@ -134,11 +131,11 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}
 		
 		if ( getObject().getPaiMontaNatural() != null ){
-			inputPaiMontaNatural.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());	
+			inputPai.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());	
 		}else{
-			inputPaiMontaNatural.textProperty().set("");
+			inputPai.textProperty().set("");
 		}
-		btnRemoverPaiMontaNatural.setVisible(getObject().getPaiMontaNatural() != null);
+		btnRemoverPai.setVisible(getObject().getPaiMontaNatural() != null || getObject().getPaiEnseminacaoArtificial() != null);
 	}
 	
 	@FXML
@@ -152,33 +149,29 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
-			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());	
+			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());	
 		}else{
-			inputPaiEnseminacaoArtificial.textProperty().set("");
+			inputPai.textProperty().set("");
 		}
-		btnRemoverPaiEnseminacaoArtificial.setVisible(getObject().getPaiEnseminacaoArtificial() != null);
+		btnRemoverPai.setVisible(getObject().getPaiMontaNatural() != null || getObject().getPaiEnseminacaoArtificial() != null);
 		
 	}
 	
 	@FXML
-	private void removerMae(){
+	private void handleRemoverMae(){
 		getObject().setMae(null);
 		inputMae.setText("");
 		btnRemoverMae.setVisible(false);
+		btnBuscarMae.requestFocus();
 	}
 	
 	@FXML
-	private void removerPaiMontaNatural(){
+	private void handleRemoverPai(){
 		getObject().setPaiMontaNatural(null);
-		inputPaiMontaNatural.setText("");
-		btnRemoverPaiMontaNatural.setVisible(false);
-	}
-	
-	@FXML
-	private void removerPaiEnseminacaoArtificial(){
 		getObject().setPaiEnseminacaoArtificial(null);
-		inputPaiEnseminacaoArtificial.setText("");
-		btnRemoverPaiEnseminacaoArtificial.setVisible(false);
+		inputPai.setText("");
+		btnRemoverPai.setVisible(false);
+		btnBuscarPaiEnseminacaoArtificial.requestFocus();
 	}
 	
 	@FXML

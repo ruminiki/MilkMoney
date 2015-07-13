@@ -44,14 +44,12 @@ public class SemenService implements IService<Integer, Semen>{
 	}
 	
 	public ObservableList<Semen> findAllAsObservableList() {
-		ObservableList<Semen> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Semen.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Semen.class));
 	}
-	
+
 	@Override
 	public ObservableList<Semen> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findDefault(param));
 	}
 
 	@Override

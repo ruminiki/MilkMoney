@@ -18,7 +18,7 @@ import br.com.milksys.model.Animal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.searchers.SearchFemeasAtivas;
-import br.com.milksys.service.searchers.SearchMachosAtivos;
+import br.com.milksys.service.searchers.SearchMachos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
@@ -55,7 +55,7 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 	
 	@FXML
 	private void handleFindMachos(){
-		setSearch((SearchMachosAtivos)MainApp.getBean(SearchMachosAtivos.class));
+		setSearch((SearchMachos)MainApp.getBean(SearchMachos.class));
 		refreshTableOverview();
 	}
 	

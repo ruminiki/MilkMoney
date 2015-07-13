@@ -37,14 +37,12 @@ public class MotivoVendaAnimalService implements IService<Integer, MotivoVendaAn
 	}
 	
 	public ObservableList<MotivoVendaAnimal> findAllAsObservableList() {
-		ObservableList<MotivoVendaAnimal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(MotivoVendaAnimal.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(MotivoVendaAnimal.class));
 	}
 	
 	@Override
 	public ObservableList<MotivoVendaAnimal> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 
 	@Override

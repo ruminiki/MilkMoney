@@ -40,7 +40,7 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 	private ObjectProperty<LocalDate> dataPrevisaoParto          = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 	private StringProperty            observacao                 = new SimpleStringProperty();
 	private ObjectProperty<Animal>    animal                     = new SimpleObjectProperty<Animal>();
-	private StringProperty            motivoEncerramentoLactacao = new SimpleStringProperty();
+	private StringProperty            motivoEncerramentoLactacao = new SimpleStringProperty(MotivoEncerramentoLactacao.PREPARACAO_PARTO);
 
 	public EncerramentoLactacao() {
 	}

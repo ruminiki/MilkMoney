@@ -38,14 +38,12 @@ public class MotivoOcorrenciaFuncionarioService implements IService<Integer, Mot
 	}
 	
 	public ObservableList<MotivoOcorrenciaFuncionario> findAllAsObservableList() {
-		ObservableList<MotivoOcorrenciaFuncionario> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(MotivoOcorrenciaFuncionario.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(MotivoOcorrenciaFuncionario.class));
 	}
 	
 	@Override
 	public ObservableList<MotivoOcorrenciaFuncionario> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 
 	@Override

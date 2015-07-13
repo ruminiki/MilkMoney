@@ -1,6 +1,7 @@
 package br.com.milksys.controller.animal;
 
 import java.util.Date;
+import java.util.function.Function;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.components.TableCellOpcoesHyperlinkFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController;
 import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
@@ -39,7 +41,7 @@ import br.com.milksys.service.searchers.SearchFemeasEmLactacao;
 import br.com.milksys.service.searchers.SearchFemeasMais60DiasLactacao;
 import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milksys.service.searchers.SearchFemeasSecas;
-import br.com.milksys.service.searchers.SearchMachosAtivos;
+import br.com.milksys.service.searchers.SearchMachos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.validation.EncerramentoLactacaoValidation;
 import br.com.milksys.validation.MorteAnimalValidation;
@@ -48,6 +50,7 @@ import br.com.milksys.validation.VendaAnimalValidation;
 @Controller
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
 
+	@FXML private TableColumn<Animal, String> opcoesColumn;
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	
@@ -79,6 +82,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML
 	public void initialize() {
+		
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
+		opcoesColumn.setCellFactory(new TableCellOpcoesHyperlinkFactory<Animal, String>(encerrarLactacaoFunction, registrarMorteFunction, registrarVendaFunction));
 		
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
@@ -118,62 +124,70 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		super.setService(service);
 	}
 	
-	@FXML
-	private void registrarMorteAnimal() {
+	//--------------FUNCTIONS-------------------------------------
+	Function<Integer, Boolean> encerrarLactacaoFunction = selectedIndex -> {
 		
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			MorteAnimalValidation.validaSituacaoAnimal(getObject());
-			
-			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
-			morteAnimalFormController.showForm();
-			if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
-				//getObject().setSituacaoAnimal(new SituacaoAnimal(SituacaoAnimal.MORTO));
-				getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
-			}
+		if ( selectedIndex >= 0 ){
+			setObject(table.getItems().get(selectedIndex));
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+			
+		EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
+		
+		encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
+		encerramentoLactacaoFormController.showForm();
+		if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
+			getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
 		}
 		
-	}
-	
-	@FXML
-	private void registrarVendaAnimal() {
+		return true;
 		
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			VendaAnimalValidation.validaSituacaoAnimal(getObject());
-			
-			vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
-			vendaAnimalFormController.setObject(new VendaAnimal());
-			vendaAnimalFormController.showForm();
-			if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
-				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-			}
+	};
+	
+	Function<Integer, Boolean> registrarMorteFunction = selectedIndex -> {
+		
+		if ( selectedIndex >= 0 ){
+			setObject(table.getItems().get(selectedIndex));
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
+			return false;
 		}
 		
-	}
-	
-	@FXML
-	private void encerrarLactacao() {
+		MorteAnimalValidation.validaSituacaoAnimal(getObject());
 		
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
-			
-			encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
-			encerramentoLactacaoFormController.showForm();
-			if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
-				getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-			}
+		morteAnimalFormController.setObject(new MorteAnimal(getObject()));
+		morteAnimalFormController.showForm();
+		if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
+			getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
+		}
+		
+		return true;
+		
+	};
+	
+	Function<Integer, Boolean> registrarVendaFunction = selectedIndex -> {
+		
+		if ( selectedIndex >= 0 ){
+			setObject(table.getItems().get(selectedIndex));
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+			
+		VendaAnimalValidation.validaSituacaoAnimal(getObject());
+		
+		vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
+		vendaAnimalFormController.setObject(new VendaAnimal());
+		vendaAnimalFormController.showForm();
+		if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
+			getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
 		}
 		
-	}
-	
+		return true;
+		
+	};
 	
 	//-------------FILTRO RÁPIDO----------------------------------
 	
@@ -185,7 +199,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML
 	private void handleFindMachos(){
-		setSearch((SearchMachosAtivos)MainApp.getBean(SearchMachosAtivos.class));
+		setSearch((SearchMachos)MainApp.getBean(SearchMachos.class));
 		refreshTableOverview();
 	}
 	

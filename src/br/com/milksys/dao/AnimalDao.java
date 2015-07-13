@@ -33,6 +33,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAllFemeas() {
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' ");
+		
+		return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllReprodutoresAtivos() {
@@ -47,12 +55,10 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllMachosAtivos() {
+	public List<Animal> findAllMachos() {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a WHERE a.sexo = 'MACHO' "
-						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
-						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+				"SELECT a FROM Animal a WHERE a.sexo = 'MACHO' ");
 		
 		return query.getResultList();
 		
@@ -148,7 +154,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasSecas() {
 		
-		Query query = entityManager.createQuery("SELECT a FROM EncerramentoLactacao e inner join e.animal a "
+		Query query = entityManager.createQuery("SELECT distinct a FROM EncerramentoLactacao e inner join e.animal a "
 				+ "WHERE not exists (SELECT 1 FROM Parto p inner join p.cobertura c WHERE p.data > e.data and c.femea = a.id) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
@@ -170,5 +176,5 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 		return query.getResultList();
 	}
-	
+
 }

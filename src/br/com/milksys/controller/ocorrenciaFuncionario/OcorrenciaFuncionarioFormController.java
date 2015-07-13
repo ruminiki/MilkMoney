@@ -1,5 +1,7 @@
 package br.com.milksys.controller.ocorrenciaFuncionario;
 
+import javax.annotation.Resource;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 
@@ -9,9 +11,9 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.motivoOcorrenciaFuncionario.MotivoOcorrenciaFuncionarioReducedOverviewController;
-import br.com.milksys.model.Funcionario;
 import br.com.milksys.model.MotivoOcorrenciaFuncionario;
 import br.com.milksys.model.OcorrenciaFuncionario;
+import br.com.milksys.service.IService;
 
 @Controller
 public class OcorrenciaFuncionarioFormController extends AbstractFormController<Integer, OcorrenciaFuncionario> {
@@ -22,14 +24,14 @@ public class OcorrenciaFuncionarioFormController extends AbstractFormController<
 	
 	@Autowired private MotivoOcorrenciaFuncionarioReducedOverviewController motivoOcorrenciaFuncionarioReducedOverviewController;
 	
-	private Funcionario selectedFuncionario;
-	
 	@FXML
 	public void initialize() {
 		
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
-		inputFuncionario.setText(selectedFuncionario.getNome());
-		getObject().setFuncionario(selectedFuncionario);
+		
+		if ( getObject().getFuncionario() != null ){
+			inputFuncionario.setText(getObject().getFuncionario().toString());
+		}
 		
 		if ( getObject().getMotivoOcorrenciaFuncionario() != null ){
 			inputMotivo.setText(getObject().getMotivoOcorrenciaFuncionario().toString());
@@ -68,6 +70,13 @@ public class OcorrenciaFuncionarioFormController extends AbstractFormController<
 	@Override
 	protected String getFormTitle() {
 		return "Ocorrências Funcionário";
+	}
+	
+	
+	@Override
+	@Resource(name = "ocorrenciaFuncionarioService")
+	protected void setService(IService<Integer, OcorrenciaFuncionario> service) {
+		super.setService(service);
 	}
 
 }

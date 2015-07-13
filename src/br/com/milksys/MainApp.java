@@ -83,7 +83,6 @@ public class MainApp extends Application {
 		Locale locale = new Locale("pt", "BR");
 		Locale.setDefault(locale);
 		
-		
 		Thread.setDefaultUncaughtExceptionHandler(new GlobalExceptionHandler());  
 		
 		launch(args);

@@ -37,14 +37,12 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 	}
 	
 	public ObservableList<Funcionario> findAllAsObservableList() {
-		ObservableList<Funcionario> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Funcionario.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Funcionario.class));
 	}
 
 	@Override
 	public ObservableList<Funcionario> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByNome(param));
 	}
 	
 	public ObservableList<Funcionario> findAllAtivosAsObservableList() {
