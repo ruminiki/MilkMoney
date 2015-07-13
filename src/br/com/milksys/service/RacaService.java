@@ -37,14 +37,12 @@ public class RacaService implements IService<Integer, Raca>{
 	}
 	
 	public ObservableList<Raca> findAllAsObservableList() {
-		ObservableList<Raca> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Raca.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Raca.class));
 	}
 	
 	@Override
 	public ObservableList<Raca> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 
 	@Override

@@ -74,8 +74,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT MAX(c.previsaoParto) FROM cobertura c WHERE c.femea = id)")
 	private Date dataPrevisaoProximoParto;
 	
-	@Formula("(SELECT MAX(c.previsaoSecagem) FROM cobertura c WHERE c.femea = id)")
-	private Date dataPrevisaoSecagem;
+	@Formula("(SELECT MAX(c.previsaoEncerramentoLactacao) FROM cobertura c WHERE c.femea = id)")
+	private Date dataPrevisaoEncerramentoLactacao;
 
 	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id ORDER BY c.data desc LIMIT 1)")
 	private String situacaoUltimaCobertura;
@@ -325,12 +325,12 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Transient
-	public Date getDataPrevisaoSecagem() {
-		return dataPrevisaoSecagem;
+	public Date getDataPrevisaoEncerramentoLactacao() {
+		return dataPrevisaoEncerramentoLactacao;
 	}
 
-	public void setDataPrevisaoSecagem(Date dataPrevisaoSecagem) {
-		this.dataPrevisaoSecagem = dataPrevisaoSecagem;
+	public void setDataPrevisaoEncerramentoLactacao(Date dataPrevisaoEncerramentoLactacao) {
+		this.dataPrevisaoEncerramentoLactacao = dataPrevisaoEncerramentoLactacao;
 	}
 
 	@Transient

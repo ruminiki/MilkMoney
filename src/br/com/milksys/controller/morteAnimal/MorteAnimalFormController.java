@@ -2,7 +2,6 @@ package br.com.milksys.controller.morteAnimal;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -15,25 +14,21 @@ import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.animal.AnimalReducedOverviewController;
-import br.com.milksys.controller.causaMorteAnimal.CausaMorteAnimalFormController;
+import br.com.milksys.controller.causaMorteAnimal.CausaMorteAnimalReducedOverviewController;
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.CausaMorteAnimal;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Sexo;
-import br.com.milksys.service.CausaMorteAnimalService;
 import br.com.milksys.service.IService;
 
 @Controller
 public class MorteAnimalFormController extends AbstractFormController<Integer, MorteAnimal> {
 
-	@FXML private UCTextField inputAnimal, inputObservacao, inputValorAnimal;
+	@FXML private UCTextField inputAnimal, inputObservacao, inputValorAnimal, inputCausaMorteAnimal;
 	@FXML private DatePicker inputDataMorte;
-	@FXML private ComboBox<CausaMorteAnimal> inputCausaMorteAnimal;
 	@FXML private Button btnBuscarAnimal;
 	
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
-	@Autowired private CausaMorteAnimalService causaMorteAnimalService;
-	@Autowired private CausaMorteAnimalFormController causaMorteFormController;
+	@Autowired private CausaMorteAnimalReducedOverviewController causaMorteReducedOverviewController;
 
 	@FXML
 	public void initialize() {
@@ -43,11 +38,12 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		
 		inputDataMorte.valueProperty().bindBidirectional(getObject().dataMorteProperty());
 		
-		inputCausaMorteAnimal.setItems(causaMorteAnimalService.findAllAsObservableList());
-		inputCausaMorteAnimal.valueProperty().bindBidirectional(getObject().causaMorteAnimalProperty());
-		
 		if ( getObject().getAnimal() != null ){
 			inputAnimal.textProperty().set(getObject().getAnimal().getNumeroNome());
+		}
+		
+		if ( getObject().getCausaMorteAnimal() != null ){
+			inputAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());
 		}
 		
 		MaskFieldUtil.decimal(inputValorAnimal);
@@ -78,13 +74,22 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	}
 	
 	@FXML
-	private void handleNovaCausaMorteAnimal(){
-		causaMorteFormController.setObject(new CausaMorteAnimal());
-		causaMorteFormController.showForm();
-		if ( causaMorteFormController.getObject() != null && causaMorteFormController.getObject().getId() > 0 ){
-			inputCausaMorteAnimal.getItems().add(causaMorteFormController.getObject());
-			inputCausaMorteAnimal.getSelectionModel().select(causaMorteFormController.getObject());
+	private void handleSelecionarCausaMorteAnimal() {
+		
+		causaMorteReducedOverviewController.setObject(new Animal());
+		
+		causaMorteReducedOverviewController.showForm();
+		
+		if ( causaMorteReducedOverviewController.getObject() != null && causaMorteReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setCausaMorteAnimal(causaMorteReducedOverviewController.getObject());
 		}
+		
+		if ( getObject().getCausaMorteAnimal() != null ){
+			inputCausaMorteAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());	
+		}else{
+			inputCausaMorteAnimal.textProperty().set("");
+		}
+		
 	}
 	
 	@Override

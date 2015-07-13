@@ -1,17 +1,14 @@
 package br.com.milksys.controller.funcionario;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Funcionario;
 import br.com.milksys.service.IService;
@@ -35,39 +32,7 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 		super.initialize(funcionarioFormController);
 		
 	}
-	
-	@FXML
-	private void selecionar(){
-		
-		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
-			super.closeForm();
-		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um funcionário na tabela.");
-		}
-		
-	}
-	
-	@FXML
-	private void fechar(){
-		this.setObject(null);
-		super.closeForm();
-	}
-	
-	@Override
-	protected void configureDoubleClickTable(){
-		// captura o evento de double click da table
-		table.setOnMousePressed(new EventHandler<MouseEvent>() {
 
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					selecionar();
-				}
-			}
-
-		});
-	}
-	
 	@Override
 	public String getFormName() {
 		return "view/funcionario/FuncionarioReducedOverview.fxml";

@@ -11,15 +11,19 @@
 
 - melhorar cadastro pai e mae tela de animal
 
-- ERRO - cria cadastrada está com situacao EM LACTACAO.
-
-- pequenos cadastros mantê-los apenas com reduced form;
 - configurar as pesquisas em todos os cadastros;
 
 - nos gráficos, criar arquivos e controllers separados e adicioná-los ao componente para que uma mesma tela
 possa exibir vários gráficos.
 
 - na venda fazer a somatória de animais vendidos e do valor total
+
+- ao cadastrar morte, refresh chart
+
+- trazer os botões de secar, registrar venda e morte dentro da tabela de animal
+
+- fazer cadastro de procedimento
+
 
 - indicadores:
 	- Dias secas (em aberto);

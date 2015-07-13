@@ -132,10 +132,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		if ( entity.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
 				entity.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
 			entity.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(9)));
-			entity.setPrevisaoSecagem(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(7)));
+			entity.setPrevisaoEncerramentoLactacao(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(7)));
 		}else{
 			entity.setPrevisaoParto(null);
-			entity.setPrevisaoSecagem(null);
+			entity.setPrevisaoEncerramentoLactacao(null);
 		}
 		
 	}

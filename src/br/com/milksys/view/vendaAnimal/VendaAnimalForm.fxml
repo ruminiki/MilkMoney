@@ -95,13 +95,7 @@
                               <Insets left="3.0" />
                            </GridPane.margin>
                         </Button>
-                        <Label text="Motivo: " GridPane.rowIndex="1" />
-                        <ComboBox fx:id="inputMotivoVenda" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" onAction="#handleNovoMotivoVenda" text="Novo" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="3.0" />
-                           </GridPane.margin>
-                        </Button>
+                        <Label text="Motivo Venda: " GridPane.rowIndex="1" />
                         <Label text="Destinação Animal: " GridPane.rowIndex="2" />
                         <ComboBox fx:id="inputDestinacaoAnimal" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                         <Label text="Valor: " GridPane.rowIndex="3" />
@@ -113,6 +107,12 @@
                            <cursor>
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
+                        </Button>
+                        <UCTextField fx:id="inputMotivoVendaAnimal" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                        <Button mnemonicParsing="false" onAction="#handleSelecionarMotivoVenda" text="Button" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
                         </Button>
                      </children>
                   </GridPane>

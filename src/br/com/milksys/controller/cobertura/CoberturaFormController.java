@@ -216,7 +216,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	private void updateDataPrevisaoParto(){
 		if ( inputData.getValue() != null ){
 			getObject().setPrevisaoParto(DateUtil.asDate(inputData.getValue().plusMonths(9)));
-			getObject().setPrevisaoSecagem(DateUtil.asDate(inputData.getValue().plusMonths(7)));
+			getObject().setPrevisaoEncerramentoLactacao(DateUtil.asDate(inputData.getValue().plusMonths(7)));
 			lblPrevisaoParto.setText(DateUtil.format(getObject().getPrevisaoParto()));
 		}
 	}

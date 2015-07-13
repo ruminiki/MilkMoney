@@ -1,17 +1,14 @@
 package br.com.milksys.controller.comprador;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
-import br.com.milksys.components.CustomAlert;
 import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.Comprador;
 import br.com.milksys.service.IService;
@@ -36,38 +33,6 @@ public class CompradorReducedOverviewController extends AbstractReducedOverviewC
 		
 		super.initialize((CompradorFormController) MainApp.getBean(CompradorFormController.class));
 		
-	}
-	
-	@FXML
-	private void selecionar(){
-		
-		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
-			super.closeForm();
-		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um comprador na tabela.");
-		}
-		
-	}
-
-	@FXML
-	private void fechar(){
-		this.setObject(null);
-		super.closeForm();
-	}
-	
-	@Override
-	protected void configureDoubleClickTable(){
-		// captura o evento de double click da table
-		table.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					selecionar();
-				}
-			}
-
-		});
 	}
 	
 	@Override

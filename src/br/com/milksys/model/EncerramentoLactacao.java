@@ -135,7 +135,7 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 		if ( this.dataPrevisaoParto != null && dataPrevisaoParto.get() != null ){
 			dias = ChronoUnit.DAYS.between(LocalDate.now(), this.dataPrevisaoParto.get());
 		}
-		return dias < 0 ? "--" : String.valueOf(dias);
+		return dias <= 0 ? "--" : String.valueOf(dias);
 	}
 	
 }

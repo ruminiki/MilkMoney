@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.raca.RacaOverviewController">
+<AnchorPane minWidth="581.0" prefHeight="311.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.prestadorServico.PrestadorServicoReducedOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -20,14 +20,20 @@
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#fechar" text="Fechar" />
+                  <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
                </children>
             </HBox>
          </children>
@@ -49,10 +55,16 @@
             </Label>
          </children>
       </VBox>
-      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+      <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
-          <TableColumn fx:id="idColumn" maxWidth="50.0" prefWidth="97.0" resizable="false" style="-fx-alignment: CENTER;" text="ID" />
-          <TableColumn fx:id="descricaoColumn" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Descrição" />
+          <TableColumn fx:id="nomeColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="97.0" resizable="false" text="Nome" />
+            <TableColumn prefWidth="75.0" text="Telefone">
+               <columns>
+                <TableColumn fx:id="telefonePrincipalColumn" maxWidth="120.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Principal" />
+                <TableColumn fx:id="telefoneSecundarioColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Secundário" />
+               </columns>
+            </TableColumn>
+          <TableColumn fx:id="emailColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Email" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

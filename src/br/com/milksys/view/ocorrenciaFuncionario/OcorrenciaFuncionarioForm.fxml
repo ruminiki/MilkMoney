@@ -15,8 +15,8 @@
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="109.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="143.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="157.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="56.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="142.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="59.0" />
                   <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
@@ -34,14 +34,14 @@
                   <Label text="Justificativa: " GridPane.rowIndex="4" />
                   <DatePicker fx:id="inputData" maxWidth="120.0" GridPane.columnIndex="1" />
                   <UCTextField fx:id="inputFuncionario" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="inputMotivo" minWidth="290.0" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" onAction="#openFormMotivoOcorrenciaFuncionarioToInsertAndSelect" text="Novo" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarMotivoOcorrencia" text="Buscar" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin>
                   </Button>
                    <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputJustificativa" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                  <UCTextField fx:id="inputMotivo" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

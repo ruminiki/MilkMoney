@@ -24,7 +24,7 @@ import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.animal.AnimalReducedOverviewController;
 import br.com.milksys.controller.comprador.CompradorReducedOverviewController;
-import br.com.milksys.controller.motivoVendaAnimal.MotivoVendaAnimalFormController;
+import br.com.milksys.controller.motivoVendaAnimal.MotivoVendaAnimalReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.AnimalVendido;
 import br.com.milksys.model.Comprador;
@@ -33,7 +33,6 @@ import br.com.milksys.model.MotivoVendaAnimal;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.service.IService;
-import br.com.milksys.service.MotivoVendaAnimalService;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.validation.AnimalVendidoValidation;
 import br.com.milksys.validation.VendaAnimalValidation;
@@ -48,7 +47,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	//dados do animal
 	@FXML private UCTextField inputAnimal, inputValorAnimal; 
 	@FXML private ComboBox<String> inputDestinacaoAnimal;
-	@FXML private ComboBox<MotivoVendaAnimal> inputMotivoVenda;
+	@FXML private UCTextField inputMotivoVendaAnimal;
 	@FXML private Button btnBuscarAnimal;
 	
 	@FXML private TableView<AnimalVendido> table;
@@ -62,8 +61,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	
 	@Autowired private CompradorReducedOverviewController compradorReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
-	@Autowired private MotivoVendaAnimalService motivoVendaAnimalService;
-	@Autowired private MotivoVendaAnimalFormController motivoVendaAnimalFormController;
+	@Autowired private MotivoVendaAnimalReducedOverviewController motivoVendaAnimalReducedOverviewController;
 
 	private AnimalVendido animalVendido = new AnimalVendido(getObject());
 	
@@ -80,7 +78,6 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		
 		//dados dos animais vendidos
 		inputDestinacaoAnimal.setItems(DestinacaoAnimal.getItems());
-		inputMotivoVenda.setItems(motivoVendaAnimalService.findAllAsObservableList());
 		
 		MaskFieldUtil.decimal(inputValorAnimal);
 		
@@ -130,7 +127,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);	
 
 		animalReducedOverviewController.showForm();
 		
@@ -147,20 +144,26 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	}
 	
 	@FXML
-	private void handleNovoMotivoVenda(){
-		motivoVendaAnimalFormController.setObject(new MotivoVendaAnimal());
-		motivoVendaAnimalFormController.showForm();
-		if ( motivoVendaAnimalFormController.getObject() != null && motivoVendaAnimalFormController.getObject().getId() > 0 ){
-			inputMotivoVenda.getItems().add(motivoVendaAnimalFormController.getObject());
-			inputMotivoVenda.getSelectionModel().select(motivoVendaAnimalFormController.getObject());
+	private void handleSelecionarMotivoVenda(){
+		
+		motivoVendaAnimalReducedOverviewController.setObject(new MotivoVendaAnimal());
+		motivoVendaAnimalReducedOverviewController.showForm();
+		if ( motivoVendaAnimalReducedOverviewController.getObject() != null && motivoVendaAnimalReducedOverviewController.getObject().getId() > 0 ){
+			animalVendido.setMotivoVendaAnimal(motivoVendaAnimalReducedOverviewController.getObject());
 		}
+		
+		if ( animalVendido.getMotivoVendaAnimal() != null ){
+			inputMotivoVendaAnimal.textProperty().set(animalVendido.getMotivoVendaAnimal().toString());	
+		}else{
+			inputMotivoVendaAnimal.textProperty().set("");
+		}
+		
 	}
 	
 	@FXML 
 	private void adicionarAnimalVenda(){
 		
 		animalVendido.setDestinacaoAnimal(inputDestinacaoAnimal.getSelectionModel().getSelectedItem());
-		animalVendido.setMotivoVendaAnimal(inputMotivoVenda.getSelectionModel().getSelectedItem());
 		animalVendido.setValorAnimal(NumberFormatUtil.fromString(inputValorAnimal.getText()));
 		animalVendido.setVendaAnimal(getObject());
 		
@@ -175,7 +178,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		animalVendido = new AnimalVendido(getObject());
 		
 		inputDestinacaoAnimal.getSelectionModel().clearSelection();
-		inputMotivoVenda.getSelectionModel().clearSelection();
+		inputMotivoVendaAnimal.clear();
 		inputValorAnimal.clear();
 		inputAnimal.clear();
 		

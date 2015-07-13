@@ -14,32 +14,27 @@ import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
-import br.com.milksys.controller.raca.RacaFormController;
+import br.com.milksys.controller.raca.RacaReducedOverviewController;
 import br.com.milksys.controller.touro.TouroReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
-import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
-import br.com.milksys.service.RacaService;
 
 @Controller
 public class AnimalFormController extends AbstractFormController<Integer, Animal> {
 
-	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPaiMontaNatural, inputPaiEnseminacaoArtificial, inputValor;
+	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPaiMontaNatural, inputPaiEnseminacaoArtificial, inputValor, inputRaca;
 	@FXML private DatePicker inputDataNascimento;
-	@FXML private ComboBox<Raca> inputRaca;
 	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnRemoverMae, btnRemoverPaiMontaNatural, btnRemoverPaiEnseminacaoArtificial;
 	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
-	//services
-	@Autowired private RacaService racaService;
-	
+
 	//controllers
-	@Autowired private RacaFormController racaFormController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
+	@Autowired private RacaReducedOverviewController racaReducedOverviewController;
 	
 	@FXML
 	public void initialize() {
@@ -48,10 +43,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
 		inputDataNascimento.valueProperty().bindBidirectional(getObject().dataNascimentoProperty());
 		inputValor.textProperty().bindBidirectional(getObject().valorProperty());
-		
-		inputRaca.setItems(racaService.findAllAsObservableList());
-		inputRaca.getSelectionModel().selectFirst();
-		inputRaca.valueProperty().bindBidirectional(getObject().racaProperty());
 		
 		inputSexo.setItems(Sexo.getItems());
 		inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());
@@ -72,6 +63,10 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
 			inputPaiEnseminacaoArtificial.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
 			btnRemoverPaiEnseminacaoArtificial.setVisible(true);
+		}
+		
+		if ( getObject().getRaca() != null ){
+			inputRaca.textProperty().set(getObject().getRaca().toString());
 		}
 		
 		// impede que sejam alteradas informações cadastradas pela cobertura e parto
@@ -187,13 +182,21 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	}
 	
 	@FXML
-	private void cadastrarNovaRaca() {
-		racaFormController.setObject(new Raca());
-		racaFormController.showForm();
-		if ( racaFormController.getObject() != null && racaFormController.getObject().getId() > 0 ){
-			inputRaca.getItems().add(racaFormController.getObject());
-			inputRaca.getSelectionModel().select(racaFormController.getObject());
+	private void handleSelecionarRaca() {
+		
+		racaReducedOverviewController.setObject(new Touro());
+		racaReducedOverviewController.showForm();
+		
+		if ( racaReducedOverviewController.getObject() != null && racaReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setRaca(racaReducedOverviewController.getObject());
 		}
+		
+		if ( getObject().getRaca() != null ){
+			inputRaca.textProperty().set(getObject().getRaca().toString());	
+		}else{
+			inputRaca.textProperty().set("");
+		}
+		
 	}
 	
 	@Override

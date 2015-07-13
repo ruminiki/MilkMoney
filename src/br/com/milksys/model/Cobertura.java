@@ -44,7 +44,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
-	private ObjectProperty<LocalDate> previsaoSecagem = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(7));  
+	private ObjectProperty<LocalDate> previsaoEncerramentoLactacao = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(7));  
 	private ObjectProperty<LocalDate> dataConfirmacaoPrenhez = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty situacaoConfirmacaoPrenhez = new SimpleStringProperty();
 	private StringProperty observacaoConfirmacaoPrenhez = new SimpleStringProperty();
@@ -116,16 +116,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	public Date getPrevisaoSecagem() {
-		return DateUtil.asDate(this.previsaoSecagem.get());
+	public Date getPrevisaoEncerramentoLactacao() {
+		return DateUtil.asDate(this.previsaoEncerramentoLactacao.get());
 	}
 	
-	public void setPrevisaoSecagem(Date previsaoSecagem) {
-		this.previsaoSecagem.set(DateUtil.asLocalDate(previsaoSecagem));
+	public void setPrevisaoEncerramentoLactacao(Date previsaoEncerramentoLactacao) {
+		this.previsaoEncerramentoLactacao.set(DateUtil.asLocalDate(previsaoEncerramentoLactacao));
 	}
 	
-	public ObjectProperty<LocalDate> previsaoSecagemProperty(){
-		return previsaoSecagem;
+	public ObjectProperty<LocalDate> previsaoEncerramentoLactacaoProperty(){
+		return previsaoEncerramentoLactacao;
 	}
 	
 	@Temporal(TemporalType.DATE)
