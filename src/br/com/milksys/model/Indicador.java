@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 
 @Entity
 @Table(name="indicador")
@@ -21,6 +23,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private String descricao;
 	private String sigla;
 	private String valorReferencia;
+	@Type(type="text")
 	private String query;
 	private String valorApurado;
 	private int ordem;

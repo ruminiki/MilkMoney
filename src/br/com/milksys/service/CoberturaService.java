@@ -180,6 +180,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	public void registrarParto(Cobertura entity) {
 		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
+		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
 		try{
 			dao.persist(entity);
 		}catch(Exception e){

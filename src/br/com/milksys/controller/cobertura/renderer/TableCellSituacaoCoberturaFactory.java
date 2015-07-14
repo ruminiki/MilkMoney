@@ -1,4 +1,4 @@
-package br.com.milksys.components;
+package br.com.milksys.controller.cobertura.renderer;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

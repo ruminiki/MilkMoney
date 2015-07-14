@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.controller.painel.renderer.TableCellValueColorFactory;
 import br.com.milksys.model.Comprador;
 import br.com.milksys.model.Indicador;
 import br.com.milksys.service.IndicadorService;
@@ -29,7 +30,7 @@ public class IndicadorOverviewController {
 		indicadorColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("descricao"));
 		siglaColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("sigla"));
 		valorReferenciaColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("valorReferencia"));
-		valorApuradoColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("valorApurado"));
+		valorApuradoColumn.setCellFactory(new TableCellValueColorFactory<Comprador,String>("valorApurado"));
 		
 		table.setItems(service.findAllAsObservableList());
 		

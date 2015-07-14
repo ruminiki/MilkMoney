@@ -22,8 +22,10 @@ possa exibir vários gráficos.
 
 - numero de partos animal
 
-- como resolver: Após o parto a vaca só pode ter um encerramento lactação.
-
+- como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
+	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existe um parto;
+	- uma vez seco o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado
+	
 - indicadores:
 	- Dias secas (em aberto);
 	- Dias em lactação;
@@ -34,5 +36,8 @@ possa exibir vários gráficos.
 	- idade primeiro parto;
 	- animais até determinada idade
 	
+	
+Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
+cobertura -> encerramento -> parto -> cobertura...
 	
 	

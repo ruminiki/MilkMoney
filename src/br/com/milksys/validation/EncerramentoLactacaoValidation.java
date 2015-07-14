@@ -40,7 +40,7 @@ public class EncerramentoLactacaoValidation extends Validator {
 			if ( isFemeaCoberta != null && !isFemeaCoberta.apply(encerramentoLactacao.getAnimal()) ){
 				throw new ValidationException(REGRA_NEGOCIO, "Quando o motivo do encerramento for, previsão para o parto é necessário "
 						+ "que a fêmea selecionada possua cobertura cadastrada em aberto (INDEFINIDA ou PRENHA). "
-						+ "Por favor, primeiro cadastre a cobertura para então, ser possível fazer o encerramento da lactação.");
+						+ "Por favor, cadastre a cobertura para então ser possível fazer o encerramento da lactação.");
 			}	
 		}
 		
@@ -49,8 +49,7 @@ public class EncerramentoLactacaoValidation extends Validator {
 	public static void validaSituacaoAnimal(Animal animal){
 		
 		if ( animal.getSituacaoAnimal() != null && !animal.getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
-			throw new ValidationException(VALIDACAO_FORMULARIO, "Para secar a vaca é necessário que ela esteja em lactação, no entanto a situação atual "
-					+ "é " + animal.getSituacaoAnimal());
+			throw new ValidationException(VALIDACAO_FORMULARIO, "Para secar a vaca é necessário que ela esteja em lactação.");
 		}
 		
 	}

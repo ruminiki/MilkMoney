@@ -1,4 +1,4 @@
-package br.com.milksys.components;
+package br.com.milksys.controller.animal.renderer;
 
 import java.util.function.Function;
 

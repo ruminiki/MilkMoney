@@ -20,8 +20,13 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 			
 			if ( indicador.getQuery() != null && !indicador.getQuery().isEmpty()){
 				Query query = entityManager.createNativeQuery(indicador.getQuery());
-				String valor = query.getSingleResult().toString();
-				indicador.setValorApurado( valor );
+				
+				if ( query.getSingleResult() != null ){
+					indicador.setValorApurado( query.getSingleResult().toString() );
+				}else{
+					indicador.setValorApurado("--");
+				}
+				
 			}else{
 				indicador.setValorApurado("fórmula não cadastrada");
 			}
