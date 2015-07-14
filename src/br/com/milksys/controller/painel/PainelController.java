@@ -18,12 +18,23 @@ public class PainelController {
 	@FXML private VBox group;
 	@Autowired IndicadorOverviewController indicadorOverviewController;
 	@Autowired PrecoLeiteChartController precoLeiteChartController;
+	@Autowired ProducaoLeiteChartController producaoLeiteChartController;
+	@Autowired EntregaLeiteChartController entregaLeiteChartController;
+	@Autowired CausaMorteAnimalChartController causaMorteAnimalChartController;
 	
 	@FXML
 	public void initialize() {
 		handleIndicadores();
 	}
 	
+	private void changeItem(AnchorPane node){
+		
+		group.getChildren().clear();
+		VBox.setVgrow(node, Priority.SOMETIMES);
+        HBox.setHgrow(node, Priority.SOMETIMES);
+		group.getChildren().add(node);
+		
+	}
 	
 	//handlers
 	@FXML
@@ -37,19 +48,25 @@ public class PainelController {
 	}
 	
 	
-	//handlers
-		@FXML
-		private void handlePrecoLeiteChart(){
-			group.getChildren().clear();
-			
-			AnchorPane node = (AnchorPane) MainApp.load(precoLeiteChartController.getFormName());
-			
-			VBox.setVgrow(node, Priority.SOMETIMES);
-	        HBox.setHgrow(node, Priority.SOMETIMES);
-	        
-			group.getChildren().add(node);
-			
-		}
+	@FXML
+	private void handlePrecoLeiteChart(){
+		changeItem((AnchorPane) MainApp.load(precoLeiteChartController.getFormName()));
+	}
+	
+	@FXML
+	private void handleProducaoLeiteChart(){
+		changeItem((AnchorPane) MainApp.load(producaoLeiteChartController.getFormName()));
+	}
+	
+	@FXML
+	private void handleEntregaLeiteChart(){
+		changeItem((AnchorPane) MainApp.load(entregaLeiteChartController.getFormName()));
+	}
+	
+	@FXML
+	private void handleCausaMorteAnimalChart(){
+		changeItem((AnchorPane) MainApp.load(causaMorteAnimalChartController.getFormName()));
+	}
 	
 	//....
 	

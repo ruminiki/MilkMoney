@@ -8,6 +8,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,6 +133,22 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public ObservableList<Series<String, Number>> getDataChart(Date inicio, Date fim){
+
+    	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+    	XYChart.Series<String, Number> serieVolumeProduzido = new XYChart.Series<String, Number>();
+    	serieVolumeProduzido.setName("Volume Produzido");
+    	
+    	for ( ProducaoLeite producaoLeite : dao.findAllByPeriodo(inicio, fim) ){
+    		serieVolumeProduzido.getData().add(new XYChart.Data<String, Number>(DateUtil.format(producaoLeite.getData()), producaoLeite.getVolumeProduzido()));
+    	}
+    	
+    	series.add(serieVolumeProduzido);
+    	
+    	return series;
+    	
+    }
 	
 	
 }

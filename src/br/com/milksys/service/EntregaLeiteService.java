@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -129,6 +131,29 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	public void validate(EntregaLeite entity) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public ObservableList<Series<String, Number>> getDataChart(int ano) {
+		
+		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+    	XYChart.Series<String, Number> serieVolumeEntregue = new XYChart.Series<String, Number>();
+    	XYChart.Series<String, Number> serieValorTotal = new XYChart.Series<String, Number>();
+    	
+    	serieVolumeEntregue.setName("Volume Entregue");
+    	serieValorTotal.setName("Valor Recebido");
+    	
+    	for ( EntregaLeite entregaLeite : dao.findAllByAno(ano) ){
+    		
+    		serieVolumeEntregue.getData().add(new XYChart.Data<String, Number>(entregaLeite.getMesReferencia(), entregaLeite.getVolume() ));
+    		serieValorTotal.getData().add(new XYChart.Data<String, Number>(entregaLeite.getMesReferencia(), entregaLeite.getValorTotal() ));
+    		
+    	}
+    	
+    	series.addAll(serieVolumeEntregue, serieValorTotal);
+    	
+    	return series;
+    	
 	}
 
 }

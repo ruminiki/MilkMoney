@@ -11,9 +11,6 @@
 
 - configurar as pesquisas em todos os cadastros;
 
-- nos gráficos, criar arquivos e controllers separados e adicioná-los ao componente para que uma mesma tela
-possa exibir vários gráficos.
-
 - na venda fazer a somatória de animais vendidos e do valor total
 
 - ao cadastrar morte, refresh chart

@@ -52,21 +52,20 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	}
 
 	public boolean remove(E entity) {
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		if ( !entityTransaction.isActive() )
-			entityTransaction.begin();
+		
+		entityManager.getTransaction().begin();
 		
         try{
         	entityManager.unwrap(Session.class).setFlushMode(FlushMode.COMMIT);
 	        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
-	        entityTransaction.commit();
+	        entityManager.getTransaction().commit();
 	        entityManager.clear();
 		}catch (Exception e) {
 			entityManager.clear();
 			throw e;
 		}finally{
-			if ( entityTransaction.isActive() ){
-        		entityTransaction.rollback();
+			if ( entityManager.getTransaction().isActive() ){
+				entityManager.getTransaction().rollback();
 			}
 		}
         
@@ -88,9 +87,11 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	
 	@SuppressWarnings("unchecked")
 	public List<E> findAll(Class<E> clazz) {
+		
 		entityManager.unwrap(Session.class).setFlushMode(FlushMode.ALWAYS);
 		getSession().getSessionFactory().getCache().evictAllRegions();
 		getSession().getSessionFactory().getCache().evictCollectionRegions();
+		
 		Query query = entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz));
 		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();

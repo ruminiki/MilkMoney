@@ -13,25 +13,27 @@
    <children>
       <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" maxWidth="100.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+            <VBox alignment="TOP_CENTER" maxWidth="105.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleIndicadores" text="Indicadores">
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleIndicadores" text="Indicadores">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
                   <Separator prefWidth="200.0" />
                   <Label text="Gráficos" />
-                  <Button minWidth="80.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button minWidth="80.0" mnemonicParsing="false" text="Produção">
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleProducaoLeiteChart" text="Produção Leite">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleEntregaLeiteChart" text="Entrega Leite" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleCausaMorteAnimalChart" text="Causa Morte" />
                   <Separator prefWidth="200.0" />
                   <Hyperlink text="Notificações" />
                   <Separator prefWidth="200.0" />

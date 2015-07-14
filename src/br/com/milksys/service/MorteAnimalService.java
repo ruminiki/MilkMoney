@@ -64,7 +64,6 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
     	
     	for ( CausaMorteAnimal c : causaMorteAnimalService.findAll() ){
     		serie = new XYChart.Series<String, Number>();
-    		//serie.setName(c.getDescricao());
             serie.getData().add(new XYChart.Data<String, Number>(c.getDescricao(), dao.countByCausa(c.getDescricao())));
             series.add(serie);
     	}
