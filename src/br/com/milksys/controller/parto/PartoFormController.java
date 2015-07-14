@@ -1,19 +1,16 @@
 package br.com.milksys.controller.parto;
 
+import java.util.function.Function;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import javax.annotation.Resource;
 
@@ -21,11 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.MaskFieldUtil;
+import br.com.milksys.components.TableCellHyperlinkRemoverFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.animal.AnimalCriaFormController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.model.ComplicacaoParto;
 import br.com.milksys.model.Cria;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.Sexo;
@@ -33,6 +32,7 @@ import br.com.milksys.model.SimNao;
 import br.com.milksys.model.SituacaoNascimento;
 import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
+import br.com.milksys.model.TipoParto;
 import br.com.milksys.service.IService;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.validation.CriaValidation;
@@ -53,6 +53,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private ComboBox<String> inputSituacaoNascimento;
 	@FXML private ComboBox<String> inputSexo;
 	@FXML private ComboBox<String> inputIncorporadoAoRebanho;
+	@FXML private ComboBox<String> inputTipoParto;
+	@FXML private ComboBox<String> inputComplicacaoParto;
 	@FXML private UCTextField inputPeso;
 	
 	@FXML private Button btnSalvar, btnAdicionarCria;
@@ -66,10 +68,15 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML
 	public void initialize() {
 		
-		//cobertura
+		//parto
 		inputCobertura.setText(getObject().getCobertura().toString());
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
+		inputTipoParto.setItems(TipoParto.getItems());
+		inputTipoParto.valueProperty().bindBidirectional(getObject().tipoPartoProperty());
+		inputComplicacaoParto.setItems(ComplicacaoParto.getItems());
+		inputComplicacaoParto.valueProperty().bindBidirectional(getObject().complicacaoPartoProperty());
+		
 		
 		if ( getObject().getId() <= 0 ){
 			cria = new Cria(getObject());
@@ -88,34 +95,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		incorporadoAoRebanhoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("incorporadoAoRebanho"));
 		situacaoNascimentoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("situacaoNascimento"));
 		removerColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("situacaoNascimento"));
-		removerColumn.setCellFactory(new Callback<TableColumn<Cria,String>, TableCell<Cria,String>>(){
-			@Override
-			public TableCell<Cria, String> call(TableColumn<Cria, String> param) {
-				TableCell<Cria, String> cell = new TableCell<Cria, String>(){
-					@Override
-					public void updateItem(String item, boolean empty) {
-						if(item!=null){
-							Hyperlink link = new Hyperlink();
-							
-							link.setDisable(getObject().getId() > 0 );
-							
-							if ( getTableRow().getItem() != null )
-								link.setText("Remover");
-							link.setFocusTraversable(false);
-							link.setOnAction(new EventHandler<ActionEvent>() {
-							    @Override
-							    public void handle(ActionEvent e) {
-							    	getObject().getCrias().remove(getTableRow().getIndex());
-							    	table.getItems().remove(getTableRow().getIndex());								
-							    }
-							});
-							setGraphic(link);
-						} 
-					}
-				};                           
-				return cell;
-			}
-		});
+		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<Cria, String>(removerCriaParto));
 		
 		btnAdicionarCria.setDisable(getObject().getId() > 0 );
 		btnSalvar.setDisable(getObject().getId() > 0 );
@@ -194,6 +174,21 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		cria = new Cria(getObject());
 		
 	}
+	
+	Function<Integer, Boolean> removerCriaParto = index -> {
+		
+		if ( index <= table.getItems().size() ){
+			
+			if ( !getObject().getCrias().remove(index) ){
+				getObject().getCrias().remove(table.getItems().get(index));
+			}
+			table.getItems().remove(index);
+			//table.getItems().addAll(getObject().getAnimaisVendidos());
+			
+			return true;
+		}
+		return false;
+	};
 	
 	@Override
 	public String getFormName() {

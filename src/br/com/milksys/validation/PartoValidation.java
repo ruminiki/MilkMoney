@@ -6,6 +6,8 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Cria;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
+import br.com.milksys.model.SituacaoNascimento;
+import br.com.milksys.model.TipoParto;
 import br.com.milksys.util.DateUtil;
 
 public class PartoValidation extends Validator {
@@ -34,6 +36,18 @@ public class PartoValidation extends Validator {
 					!parto.getCobertura().getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
 				throw new ValidationException(REGRA_NEGOCIO, "A cobertura selecionada tem situação igual a " + parto.getCobertura().getSituacaoCobertura() + 
 						" não sendo possível o registro do parto.");
+			}
+		}
+		
+		if ( parto.getTipoParto().equals(TipoParto.ABORTO) ){
+			for ( Cria a : parto.getCrias() ){
+				
+				if ( a.getSituacaoNascimento().equals(SituacaoNascimento.NASCIDO_VIVO) ){
+					throw new ValidationException(REGRA_NEGOCIO, 
+							"Quando ocorre aborto, não podem ter animais nascidos vivos. Por favor, corrija a situação do nascimento "
+							+ "da cria e tente novamente.");
+				}
+				
 			}
 		}
 		

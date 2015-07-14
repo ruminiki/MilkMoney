@@ -46,6 +46,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty observacao = new SimpleStringProperty();
 	private StringProperty tipoParto = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
+	private StringProperty complicacaoParto = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
 	private ObjectProperty<Cobertura> cobertura = new SimpleObjectProperty<Cobertura>();
 	private List<Cria> crias = new ArrayList<Cria>();
 	
@@ -65,6 +66,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="tipo do parto")
 	public String getTipoParto() {
 		return this.tipoParto.get();
 	}
@@ -75,6 +77,20 @@ public class Parto extends AbstractEntity implements Serializable {
 
 	public StringProperty tipoPartoProperty(){
 		return tipoParto;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="complicação do parto")
+	public String getComplicacaoParto() {
+		return this.complicacaoParto.get();
+	}
+
+	public void setComplicacaoParto(String complicacaoParto) {
+		this.complicacaoParto.set(complicacaoParto);
+	}
+
+	public StringProperty complicacaoPartoProperty(){
+		return complicacaoParto;
 	}
 	
 	@Access(AccessType.PROPERTY)
