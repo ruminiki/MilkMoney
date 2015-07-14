@@ -21,7 +21,6 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 
 			while(scanner.hasNext()) {
 			    String sql = scanner.next();
-			    System.out.println("SQL Statement: " + sql);
 		    	Query query = entityManager.createNativeQuery(sql);
 		    	
 		    	EntityTransaction entityTransaction = entityManager.getTransaction();

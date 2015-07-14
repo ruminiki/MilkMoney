@@ -2,19 +2,16 @@ package br.com.milksys.controller;
 
 import java.io.IOException;
 
+import org.springframework.stereotype.Controller;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import br.com.milksys.MainApp;
 
-/**
- * O controlador para o root layout. O root layout prov� um layout b�sico
- * para a aplica��o contendo uma barra de menu e um espa�o onde outros elementos
- * JavaFX podem ser colocados.
- * 
- * @author Marco Jakob
- */
+
+@Controller
 public class RootLayoutController {
 
     @FXML
@@ -172,6 +169,13 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handlePainel() {
+    	
+    	openForm("view/painel/PainelOverview.fxml");
+    	
+    }
+    
     private void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);
@@ -191,9 +195,6 @@ public class RootLayoutController {
 		
     }
 
-    /**
-     * Fecha a aplica��o.
-     */
     @FXML
     private void handleExit() {
         System.exit(0);

@@ -32,6 +32,7 @@
 		<class>br.com.milksys.model.SituacaoAnimal</class>
 		<class>br.com.milksys.model.SituacaoAnimalPK</class>
 		<class>br.com.milksys.model.Touro</class>
+		<class>br.com.milksys.model.Indicador</class>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />

@@ -39,6 +39,16 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Nutrição">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Financeiro">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Propriedade">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
@@ -46,11 +56,15 @@
                	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
               </items>
             </Menu>
-				<Menu mnemonicParsing="false" text="Help">
-					<items>
-						<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
-					</items>
-				</Menu>
+            <Menu mnemonicParsing="false" text="Estatísticas">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Painel" />
+               </items></Menu>
+			<Menu mnemonicParsing="false" text="Help">
+				<items>
+					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+				</items>
+			</Menu>
 			</menus>
 		</MenuBar>
 	</top>

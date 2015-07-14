@@ -32,7 +32,6 @@ possa exibir vários gráficos.
 	- % de vacas em lactação;
 	- taxa de prenhez;
 	- idade primeiro parto;
-	- % vacas primeira cria;
 	- animais até determinada idade
 	
 	

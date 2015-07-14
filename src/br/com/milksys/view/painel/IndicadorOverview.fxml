@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxWidth="510.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.painel.IndicadorOverviewController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" style="-fx-background-color: #FFF;" VBox.vgrow="SOMETIMES">
+              <columns>
+                  <TableColumn editable="false" prefWidth="75.0" resizable="false" sortable="false" style="-fx-background-color: #FFF;" text="Indicadores Zootécnicos">
+                     <columns>
+                      <TableColumn fx:id="indicadorColumn" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="75.0" sortable="false" style="-fx-background-color: #FFF;" text="Indicador" />
+                        <TableColumn fx:id="siglaColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
+                      <TableColumn fx:id="valorReferenciaColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
+                        <TableColumn fx:id="valorApuradoColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
+                     </columns>
+                  </TableColumn>
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

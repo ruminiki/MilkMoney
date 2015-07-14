@@ -12,6 +12,16 @@ public class ApplicationService{
 	public void initilizeDatabase(){
 		File file = null;
 		
+		//indicadores
+		file = getFile(ClassLoader.getSystemResource("sql/INDICADOR.SQL"));
+		if ( file != null )
+			dao.executeSqlFile(file);
+		
+		//view_animais_ativos
+		file = getFile(ClassLoader.getSystemResource("sql/ANIMAIS_ATIVOS_VIEW.SQL"));
+		if ( file != null )
+			dao.executeSqlFile(file);
+		
 		//raca
 		file = getFile(ClassLoader.getSystemResource("sql/RACA.SQL"));
 		if ( file != null )
