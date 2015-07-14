@@ -5,6 +5,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,5 +95,26 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@SuppressWarnings("unchecked")
+	public ObservableList<Series<String, Number>> getDataChart(int ano){
+
+    	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+    	XYChart.Series<String, Number> serieValorPraticado = new XYChart.Series<String, Number>();
+    	XYChart.Series<String, Number> serieValorRecebido = new XYChart.Series<String, Number>();
+    	
+    	serieValorPraticado.setName("Valor Máximo Praticado");
+    	serieValorRecebido.setName("Valor Máximo Recebido");
+    	
+    	for ( PrecoLeite precoLeite : dao.findAllByAno(ano) ){
+    		serieValorPraticado.getData().add(new XYChart.Data<String, Number>(precoLeite.getMesReferencia(), precoLeite.getValorMaximoPraticado()));
+    		serieValorRecebido.getData().add(new XYChart.Data<String, Number>(precoLeite.getMesReferencia(), precoLeite.getValorRecebido()));
+    	}
+    	
+    	series.addAll(serieValorPraticado, serieValorRecebido);
+    	
+    	return series;
+    	
+    }
 
 }

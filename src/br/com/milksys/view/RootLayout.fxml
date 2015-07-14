@@ -18,7 +18,7 @@
 			 	  </MenuItem>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animal" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" />
+                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
               </items>
@@ -34,7 +34,7 @@
             <Menu mnemonicParsing="false" text="Reprodução">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" />
+                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" /> -->
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
               </items>

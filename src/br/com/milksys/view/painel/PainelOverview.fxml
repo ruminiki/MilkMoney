@@ -15,30 +15,33 @@
          <children>
             <VBox alignment="TOP_CENTER" maxWidth="100.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleIndicadores" style="-fx-background-color: #A8DDA8;" text="Indicadores">
+                  <Button minWidth="80.0" mnemonicParsing="false" onAction="#handleIndicadores" text="Indicadores">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Separator prefWidth="200.0" />
                   <Label text="Gráficos" />
-                  <Button minWidth="80.0" mnemonicParsing="false" style="-fx-background-color: #94B8FF;" text="Preço Leite">
+                  <Button minWidth="80.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button minWidth="80.0" mnemonicParsing="false" style="-fx-background-color: #C2FF85;" text="Produção">
+                  <Button minWidth="80.0" mnemonicParsing="false" text="Produção">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Separator prefWidth="200.0" />
                   <Hyperlink text="Notificações" />
+                  <Separator prefWidth="200.0" />
                </children>
                <padding>
                   <Insets top="5.0" />
                </padding>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <VBox fx:id="group" />
+            <VBox fx:id="group" HBox.hgrow="SOMETIMES" />
          </children>
       </HBox>
    </children>

@@ -132,6 +132,7 @@ public abstract class AbstractOverviewController<K, E>{
 		});
 		
 		
+		contextMenu.getItems().clear();
 		contextMenu.getItems().addAll(atualizar, editar, remover);
 		table.setContextMenu(contextMenu);
 		

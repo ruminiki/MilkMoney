@@ -22,6 +22,8 @@ possa exibir vários gráficos.
 
 - numero de partos animal
 
+- erro casas decimais valor leite ex: 0,80
+
 - como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
 	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existe um parto;
 	- uma vez seco o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado
