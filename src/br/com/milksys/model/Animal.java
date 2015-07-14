@@ -39,7 +39,8 @@ import br.com.milksys.util.NumberFormatUtil;
  */
 @Entity
 @Table(name="animal")
-@NamedQuery(name="Animal.findAll", query="SELECT a FROM Animal a")
+@NamedQuery(name="Animal.findAll", query="SELECT a FROM Animal a", 
+hints={ @javax.persistence.QueryHint(name = "org.hibernate.cacheable", value = "false") })
 public class Animal extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

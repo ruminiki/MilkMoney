@@ -14,7 +14,8 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="indicador")
-@NamedQuery(name="Indicador.findAll", query="SELECT r FROM Indicador r order by r.ordem")
+@NamedQuery(name="Indicador.findAll", query="SELECT r FROM Indicador r order by r.ordem", 
+hints={ @javax.persistence.QueryHint(name = "org.hibernate.cacheable", value = "false") })
 public class Indicador extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

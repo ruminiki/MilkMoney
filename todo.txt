@@ -25,6 +25,7 @@ possa exibir vários gráficos.
 - como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
 	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existe um parto;
 	- uma vez seco o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado
+	- depois que a vaca pariu não pode mexer no registro de encerramento da lactação
 	
 - indicadores:
 	- Dias secas (em aberto);

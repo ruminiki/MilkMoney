@@ -70,6 +70,9 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+	public void removeLastByAnimal(Animal animal) {
+		dao.removeLastByAnimal(animal);
+	}
 	
 }

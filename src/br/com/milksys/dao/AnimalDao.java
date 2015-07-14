@@ -18,6 +18,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param");
 		query.setParameter("param", '%' + param + '%');
+		query.setHint("org.hibernate.cacheable", "false");
 		
 		return query.getResultList();
 	}
@@ -29,7 +30,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 
 	}
@@ -38,7 +39,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeas() {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' ");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 	}
 
@@ -49,7 +50,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				"SELECT a FROM Animal a WHERE a.sexo = 'MACHO' and a.finalidadeAnimal = '" + FinalidadeAnimal.REPRODUCAO + "' "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
@@ -59,7 +60,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = 'MACHO' ");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
@@ -72,7 +73,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
@@ -85,13 +86,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "WHERE c.situacaoCobertura not in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+		query.setHint("org.hibernate.cacheable", "false");
 		List<Animal> animaisNaoCobertos = query.getResultList();
 		
 		query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a not in (select c.femea from Cobertura c) and a.sexo = '" + Sexo.FEMEA + "' "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		animaisNaoCobertos.addAll(query.getResultList());
 		
 		return animaisNaoCobertos;
@@ -99,13 +101,13 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasLactacaoXDias(double dias) {
+	public List<Animal> findAllFemeasLactacaoXDias(Integer dias) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Parto p inner join p.cobertura.femea a "
 						+ "WHERE DATEDIFF(p.data, current_date()) between 0 and :dias "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		
+		query.setHint("org.hibernate.cacheable", "false");
 		query.setParameter("dias", dias);
 		
 		return query.getResultList();
@@ -121,18 +123,19 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "and c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasLactacaoMaisXDias(double dias) {
+	public List<Animal> findAllFemeasLactacaoMaisXDias(Integer dias) {
 		Query query = entityManager.createQuery("SELECT a FROM Parto p inner join p.cobertura.femea a "
-				+ "WHERE DATEDIFF(p.parto, current_date()) >= :dias "
+				+ "WHERE DATEDIFF(p.data, current_date()) >= :dias "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id) order by p.data desc limit 1");
-
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id) order by p.data desc");
+		query.setMaxResults(1);
+		query.setHint("org.hibernate.cacheable", "false");
 		query.setParameter("dias", dias);
 		
 		return query.getResultList();
@@ -146,7 +149,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "WHERE not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.data > p.data and e.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
@@ -158,7 +161,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "WHERE not exists (SELECT 1 FROM Parto p inner join p.cobertura c WHERE p.data > e.data and c.femea = a.id) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 		
 	}
@@ -166,14 +169,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisMortos() {
 		Query query = entityManager.createQuery("SELECT a FROM MorteAnimal m inner join m.animal a ");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisVendidos() {
 		Query query = entityManager.createQuery("SELECT a FROM AnimalVendido av inner join av.animal a");
-
+		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 	}
 

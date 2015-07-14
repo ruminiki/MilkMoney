@@ -8,12 +8,15 @@ import java.util.function.Function;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -63,7 +66,12 @@ public abstract class AbstractOverviewController<K, E>{
 	private Map<String, Boolean> formConfig = new HashMap<String, Boolean>()
 	{{put(NEW_DISABLED, false);put(EDIT_DISABLED, false);put(REMOVE_DISABLED, false);}};
 	
-
+	private ContextMenu contextMenu = new ContextMenu();
+	
+	MenuItem atualizar = new MenuItem("Atualizar");
+	MenuItem editar = new MenuItem("Editar");
+	MenuItem remover = new MenuItem("Remover");
+	
 	public void initialize(AbstractFormController<K, E> formController) {
 		
 		this.formController = formController;
@@ -102,6 +110,31 @@ public abstract class AbstractOverviewController<K, E>{
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> refreshTableOverview());
 		}
 		
+		atualizar.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	refreshTableOverview();
+		    }
+		});
+		
+		editar.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleEdit();
+		    }
+		});
+		
+		remover.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleDelete();
+		    }
+		});
+		
+		
+		contextMenu.getItems().addAll(atualizar, editar, remover);
+		table.setContextMenu(contextMenu);
+		
 	}
 	
 	/**
@@ -127,11 +160,23 @@ public abstract class AbstractOverviewController<K, E>{
 				}
 				
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 1) {
-					setObject((AbstractEntity) table.getSelectionModel().getSelectedItem());
+					handleSelectItemTable();
+				}
+				
+				if (event.isSecondaryButtonDown()) {
+					handleRightClick();
 				}
 			}
 
 		});
+	}
+	
+	protected void handleSelectItemTable(){
+		setObject((AbstractEntity) table.getSelectionModel().getSelectedItem());
+	}
+	
+	protected void handleRightClick(){
+		
 	}
 
 	protected void updateLabelNumRegistros(){
@@ -155,6 +200,7 @@ public abstract class AbstractOverviewController<K, E>{
 	protected void refreshTableOverview(){
 		
 		this.data.clear();
+		this.table.getItems().clear();
 		
 		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
 				inputPesquisa.getText().length() > 0){
@@ -168,6 +214,7 @@ public abstract class AbstractOverviewController<K, E>{
 			}
 		}
 		
+		table.setItems(data);
 		table.layout();
 		updateLabelNumRegistros();
 		
@@ -345,6 +392,14 @@ public abstract class AbstractOverviewController<K, E>{
 
 	public void setFormConfig(Map<String, Boolean> formConfig) {
 		this.formConfig = formConfig;
+	}
+
+	public ContextMenu getContextMenu() {
+		return contextMenu;
+	}
+
+	public void setContextMenu(ContextMenu contextMenu) {
+		this.contextMenu = contextMenu;
 	}
 	
 }

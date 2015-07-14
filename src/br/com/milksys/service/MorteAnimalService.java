@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.MorteAnimalDao;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.CausaMorteAnimal;
 import br.com.milksys.model.MorteAnimal;
 
@@ -29,7 +30,11 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 	public boolean remove(MorteAnimal entity) {
 		return dao.remove(entity);
 	}
-
+	
+	public void removeByAnimal(Animal animal) {
+		dao.removeByAnimal(animal);
+	}
+	
 	@Override
 	public MorteAnimal findById(Integer id) {
 		return dao.findById(id);

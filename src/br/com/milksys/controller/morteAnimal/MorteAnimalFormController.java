@@ -16,6 +16,7 @@ import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.animal.AnimalReducedOverviewController;
 import br.com.milksys.controller.causaMorteAnimal.CausaMorteAnimalReducedOverviewController;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.CausaMorteAnimal;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.service.IService;
@@ -76,7 +77,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	@FXML
 	private void handleSelecionarCausaMorteAnimal() {
 		
-		causaMorteReducedOverviewController.setObject(new Animal());
+		causaMorteReducedOverviewController.setObject(new CausaMorteAnimal());
 		
 		causaMorteReducedOverviewController.showForm();
 		

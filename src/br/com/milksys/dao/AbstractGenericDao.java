@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
@@ -21,9 +22,12 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<E>) genericSuperclass.getActualTypeArguments()[1];
 		this.entityManager = Persistence.createEntityManagerFactory("MilkSys").createEntityManager();
-		Session session = entityManager.unwrap(Session.class);
-		session.setCacheMode(CacheMode.REFRESH);
-		//this.entityManager.getEntityManagerFactory().getCache().evictAll();
+		getSession().setCacheMode(CacheMode.REFRESH);
+		this.entityManager.getEntityManagerFactory().getCache().evictAll();
+	}
+	
+	public Session getSession(){
+		return entityManager.unwrap(Session.class);
 	}
 	
 	public boolean persist(E entity) {
@@ -71,6 +75,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 
 	public E findById(K id) {
 		
+		entityManager.unwrap(Session.class).setFlushMode(FlushMode.ALWAYS);
 		E e = entityManager.find(entityClass, id);
 		
 		if ( entityManager.contains(e) ){
@@ -81,18 +86,15 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<E> findAll(Class<E> clazz) {
-		//entityManager.flush();
-		/*List<E> list = entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
+		entityManager.unwrap(Session.class).setFlushMode(FlushMode.ALWAYS);
+		getSession().getSessionFactory().getCache().evictAllRegions();
+		getSession().getSessionFactory().getCache().evictCollectionRegions();
+		Query query = entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz));
+		query.setHint("org.hibernate.cacheable", "false");
+		return query.getResultList();
 		
-		for (Iterator<E> iterator = list.iterator(); iterator.hasNext();) {
-			E e = (E) iterator.next();
-			if ( entityManager.contains(e) ){
-				entityManager.refresh(e);
-			}
-		}*/
-		//entityManager.flush();
-		return entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz)).getResultList();
 	}
 	
 	public EntityManager getEntityManager(){

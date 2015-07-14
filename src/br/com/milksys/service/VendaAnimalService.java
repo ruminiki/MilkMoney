@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.VendaAnimalDao;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.validation.VendaAnimalValidation;
 
@@ -28,6 +29,10 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	@Override
 	public boolean remove(VendaAnimal entity) {
 		return dao.remove(entity);
+	}
+	
+	public void removeByAnimal(Animal animal){
+		dao.removeByAnimal(animal);
 	}
 
 	@Override

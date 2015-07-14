@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
@@ -23,15 +22,13 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 			    String sql = scanner.next();
 		    	Query query = entityManager.createNativeQuery(sql);
 		    	
-		    	EntityTransaction entityTransaction = entityManager.getTransaction();
-				if ( !entityTransaction.isActive() )
-					entityTransaction.begin();
+		    	entityManager.getTransaction().begin();
 		    	try{
 		    		query.executeUpdate();
-		    		entityTransaction.commit();
+		    		entityManager.getTransaction().commit();
 		    	}catch(Exception e){
-		    		if ( entityTransaction.isActive() ){
-		        		entityTransaction.rollback();
+		    		if ( entityManager.getTransaction().isActive() ){
+		    			entityManager.getTransaction().rollback();
 					}
 		    	}
 			}

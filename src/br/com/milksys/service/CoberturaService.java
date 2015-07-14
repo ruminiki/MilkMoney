@@ -33,6 +33,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
 		CoberturaValidation.validaFemeaSelecionada(entity, findByAnimal(entity.getFemea()));
 		CoberturaValidation.validaEnseminacaoArtificial(entity, (entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity)));
+		CoberturaValidation.validaSobreposicaoCoberturas(entity, dao.findLastCoberturaByAnimal(entity.getFemea()));
 		
 		return dao.persist(entity);
 	}

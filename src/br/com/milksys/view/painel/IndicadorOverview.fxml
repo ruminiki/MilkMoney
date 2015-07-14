@@ -25,7 +25,6 @@
                   </TableColumn>
               </columns>
             </TableView>
-            <Label style="-fx-text-fill: #ccc;" text="Label" textFill="RED" />
          </children>
       </VBox>
    </children>

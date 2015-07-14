@@ -99,4 +99,18 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
+	public Cobertura findLastCoberturaByAnimal(Animal femea) {
+		
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea order by c.data desc");
+		query.setParameter("femea", femea);
+		query.setMaxResults(1);
+		
+		try{
+			return ((Cobertura)query.getSingleResult());
+		}catch(NoResultException e){
+			return null;
+		}
+		
+	}
+
 }

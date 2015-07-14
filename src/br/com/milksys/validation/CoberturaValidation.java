@@ -289,6 +289,24 @@ public class CoberturaValidation extends Validator {
 		}
 		
 	}
+
+	/*
+	 * Cada cobertura que tenha parto deve ter um intervalo de pelo menos 21 dias antes da cobertura que teve parto
+	 * (supondo que ela pode ter tido repetição) e 21 dias após o parto. 
+	 */
+	public static void validaSobreposicaoCoberturas(Cobertura cobertura, Cobertura lastCobertura) {
+		
+		if ( lastCobertura != null && lastCobertura.getParto() != null ){
+			
+			//verifica se a cobertura está sendo cacastrada antes de 30 dias após o último parto
+			if ( cobertura.getData().before( DateUtil.asDate(DateUtil.asLocalDate(lastCobertura.getParto().getData()).plusDays(21)) ) &&
+					cobertura.getData().after( DateUtil.asDate(DateUtil.asLocalDate(lastCobertura.getData()).minusDays(21)) )){
+				throw new ValidationException(REGRA_NEGOCIO, "Não é possível registrar a cobertura para o dia " + DateUtil.format(cobertura.getData()) + ", pois "
+						+ "a última cobertura foi no dia " + DateUtil.format(lastCobertura.getData()) + " e o parto no dia " + DateUtil.format(lastCobertura.getParto().getData()) + ".");
+			}
+		}
+		
+	}
 	
 	
 }

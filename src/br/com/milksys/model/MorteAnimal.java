@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -74,7 +75,7 @@ public class MorteAnimal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@OneToOne(targetEntity=Animal.class, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="animal")
 	@FieldRequired(message="animal morto")
 	public Animal getAnimal() {

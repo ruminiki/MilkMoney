@@ -1,9 +1,13 @@
 package br.com.milksys.controller.animal;
 
 import java.util.Date;
-import java.util.function.Function;
+import java.util.Optional;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -16,7 +20,6 @@ import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
-import br.com.milksys.controller.animal.renderer.TableCellOpcoesHyperlinkFactory;
 import br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController;
 import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milksys.controller.raca.RacaOverviewController;
@@ -28,8 +31,10 @@ import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
+import br.com.milksys.service.EncerramentoLactacaoService;
 import br.com.milksys.service.IService;
-import br.com.milksys.service.RacaService;
+import br.com.milksys.service.MorteAnimalService;
+import br.com.milksys.service.VendaAnimalService;
 import br.com.milksys.service.searchers.SearchAnimaisMortos;
 import br.com.milksys.service.searchers.SearchAnimaisVendidos;
 import br.com.milksys.service.searchers.SearchFemeas30DiasLactacao;
@@ -50,7 +55,6 @@ import br.com.milksys.validation.VendaAnimalValidation;
 @Controller
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
 
-	@FXML private TableColumn<Animal, String> opcoesColumn;
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	
@@ -70,7 +74,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, Long> idadeColumn;
 	
 	//services
-	@Autowired private RacaService racaService;
+	@Autowired private EncerramentoLactacaoService encerramentoLactacaoService;
+	@Autowired private MorteAnimalService morteAnimalService;
+	@Autowired private VendaAnimalService vendaAnimalService;
 	
 	//controllers
 	@Autowired private RacaOverviewController racaController;
@@ -80,11 +86,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
 	@Autowired private EncerramentoLactacaoFormController encerramentoLactacaoFormController;
 	
+	private MenuItem encerrarLactacao = new MenuItem();
+	private MenuItem registrarMorte   = new MenuItem();
+	private MenuItem registrarVenda   = new MenuItem();
+	
 	@FXML
 	public void initialize() {
-		
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
-		opcoesColumn.setCellFactory(new TableCellOpcoesHyperlinkFactory<Animal, String>(encerrarLactacaoFunction, registrarMorteFunction, registrarVendaFunction));
 		
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
@@ -106,6 +113,42 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
+		encerrarLactacao.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleDesfazerOuEncerrarLactacao();
+		    }
+		});
+		
+		registrarMorte.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleDesfazerOuRegistrarMorte();
+		    }
+		});
+		
+		registrarVenda.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleDesfazeOuRegistrarVenda();
+		    }
+		});
+		
+		getContextMenu().getItems().addAll(encerrarLactacao, registrarMorte, registrarVenda);
+		
+	}
+	
+	@Override
+	protected void handleRightClick() {
+		super.handleRightClick();
+		
+		encerrarLactacao.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? 
+				"Desfazer Encerramento Lactação" : "Encerrar Lactação");
+		registrarMorte.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? 
+				"Desfazer Registro Morte" : "Registrar Morte");
+		registrarVenda.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? 
+				"Desfazer Registro Venda" : "Registrar Venda");
+
 	}
 
 	@Override
@@ -124,68 +167,92 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		super.setService(service);
 	}
 	
-	//--------------FUNCTIONS-------------------------------------
-	Function<Integer, Boolean> encerrarLactacaoFunction = selectedIndex -> {
+	@FXML
+	private void handleDesfazerOuEncerrarLactacao(){
 		
-		if ( selectedIndex >= 0 ){
-			setObject(table.getItems().get(selectedIndex));
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
+				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o último encerramento de lactação?");
+				if (result.get() == ButtonType.OK) {
+					encerramentoLactacaoService.removeLastByAnimal(getObject());
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+			}else{
+				EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
+				
+				encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
+				encerramentoLactacaoFormController.showForm();
+				if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
+					getObject().setSituacaoAnimal(SituacaoAnimal.SECO);
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+			}
+			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
-			return false;
 		}
-			
-		EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
-		
-		encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
-		encerramentoLactacaoFormController.showForm();
-		if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
-			getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-		}
-		
-		return true;
 		
 	};
 	
-	Function<Integer, Boolean> registrarMorteFunction = selectedIndex -> {
+	@FXML
+	private void handleDesfazerOuRegistrarMorte(){
 		
-		if ( selectedIndex >= 0 ){
-			setObject(table.getItems().get(selectedIndex));
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				
+				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
+				if (result.get() == ButtonType.OK) {
+					morteAnimalService.removeByAnimal(getObject());
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+				
+			}else{
+				
+				MorteAnimalValidation.validaSituacaoAnimal(getObject());
+				
+				morteAnimalFormController.setObject(new MorteAnimal(getObject()));
+				morteAnimalFormController.showForm();
+				if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
+					getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+				
+			}
+			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
-			return false;
 		}
-		
-		MorteAnimalValidation.validaSituacaoAnimal(getObject());
-		
-		morteAnimalFormController.setObject(new MorteAnimal(getObject()));
-		morteAnimalFormController.showForm();
-		if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
-			getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
-		}
-		
-		return true;
 		
 	};
 	
-	Function<Integer, Boolean> registrarVendaFunction = selectedIndex -> {
+	@FXML
+	private void handleDesfazeOuRegistrarVenda(){
 		
-		if ( selectedIndex >= 0 ){
-			setObject(table.getItems().get(selectedIndex));
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
+				if (result.get() == ButtonType.OK) {
+					vendaAnimalService.removeByAnimal(getObject());
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+			}else{
+				VendaAnimalValidation.validaSituacaoAnimal(getObject());
+				
+				vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
+				vendaAnimalFormController.setObject(new VendaAnimal());
+				vendaAnimalFormController.showForm();
+				if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
+					getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+			}
+			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
-			return false;
 		}
-			
-		VendaAnimalValidation.validaSituacaoAnimal(getObject());
-		
-		vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
-		vendaAnimalFormController.setObject(new VendaAnimal());
-		vendaAnimalFormController.showForm();
-		if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
-			getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-		}
-		
-		return true;
 		
 	};
 	

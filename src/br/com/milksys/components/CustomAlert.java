@@ -85,6 +85,5 @@ public class CustomAlert extends Alert {
 		alert.setContentText(message);
 		return alert.showAndWait();
 	}
-	
-	
+
 }

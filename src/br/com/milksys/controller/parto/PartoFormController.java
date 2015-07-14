@@ -34,6 +34,7 @@ import br.com.milksys.model.State;
 import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.model.TipoParto;
 import br.com.milksys.service.IService;
+import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.validation.CriaValidation;
 
@@ -113,6 +114,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		animalCriaFormController.setState(State.CREATE_TO_SELECT);
 		Animal animal = new Animal(cria.getSexo());
 		animal.setPeso(cria.getPeso());
+		animal.setDataNascimento(DateUtil.asDate(inputData.getValue()));
 		
 		Cobertura cobertura = getObject().getCobertura();
 		
@@ -182,8 +184,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 			if ( !getObject().getCrias().remove(index) ){
 				getObject().getCrias().remove(table.getItems().get(index));
 			}
-			table.getItems().remove(index);
-			//table.getItems().addAll(getObject().getAnimaisVendidos());
+			table.getItems().clear();
+			table.getItems().addAll(getObject().getCrias());
 			
 			return true;
 		}

@@ -77,7 +77,6 @@ public class MainApp extends Application {
 
 	public static void main(String[] args) {
 		
-		
 		new ApplicationService().initilizeDatabase();
 		
 		Locale locale = new Locale("pt", "BR");

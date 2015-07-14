@@ -36,6 +36,7 @@ import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
+import br.com.milksys.service.searchers.SearchFemeasAtivas;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
@@ -359,7 +360,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	protected void handleSelecionarFemea() {
 		
 		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
-		//animalReducedController.setSearch(searchFemeasAtivas);
+		animalReducedOverviewController.setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
 		
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
