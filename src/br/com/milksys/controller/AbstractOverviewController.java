@@ -38,21 +38,22 @@ import br.com.milksys.service.searchers.Search;
 @Controller
 public abstract class AbstractOverviewController<K, E>{
 	
-	@FXML protected TableView<E> table;
-	@FXML protected Label lblNumRegistros;
-	@FXML protected Button btnNew;
-	@FXML protected Button btnEdit;
-	@FXML protected Button btnRemove;
-	@FXML protected AnchorPane form;
-	@FXML protected TextField inputPesquisa;
+	@FXML protected TableView<E>      table;
+	@FXML protected Label             lblNumRegistros;
+	@FXML protected Button            btnNew;
+	@FXML protected Button            btnEdit;
+	@FXML protected Button            btnRemove;
+	@FXML protected AnchorPane        form;
+	@FXML protected TextField         inputPesquisa;
 	
-	private Stage dialogStage;
-	protected State state = State.LIST;
-	protected ObservableList<E> data = FXCollections.observableArrayList();
-	protected AbstractEntity object;
-	protected IService<K, E> service;
-	private Search<K,E> search;
-	private Class<?> controllerOrigin;
+	private         Stage             dialogStage;
+	private         State             state         = State.LIST;
+	protected       ObservableList<E> data          = FXCollections.observableArrayList();
+	protected       AbstractEntity    object;
+	protected       IService<K, E>    service;
+	
+	private         Search<K,E>       search;
+	private         Object[]          searchParams;
 	
 	private AbstractFormController<K, E> formController;
 	
@@ -134,6 +135,7 @@ public abstract class AbstractOverviewController<K, E>{
 		
 		contextMenu.getItems().clear();
 		contextMenu.getItems().addAll(atualizar, editar, remover);
+		contextMenu.setPrefWidth(120);
 		table.setContextMenu(contextMenu);
 		
 	}
@@ -209,7 +211,7 @@ public abstract class AbstractOverviewController<K, E>{
 			setSearch(null);
 		}else{
 			if ( search != null ){
-				data.addAll(search.doSearch());
+				data.addAll(search.doSearch(searchParams));
 			}else{
 				this.data.addAll(service.findAll());
 			}
@@ -331,15 +333,6 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 
 	//==========getters e setters
-	
-	public Class<?> getControllerOrigin() {
-		return controllerOrigin;
-	}
-
-	public void setControllerOrigin(Class<?> controller) {
-		this.controllerOrigin = controller;
-	}
-	
 	@SuppressWarnings("unchecked")
 	public E getObject(){
 		
@@ -375,8 +368,9 @@ public abstract class AbstractOverviewController<K, E>{
 		return search;
 	}
 
-	public void setSearch(Search<K,E> search) {
+	public void setSearch(Search<K,E> search, Object ...objects) {
 		this.search = search;
+		this.searchParams = objects;
 	}
 
 	public ObservableList<E> getData() {
@@ -402,5 +396,5 @@ public abstract class AbstractOverviewController<K, E>{
 	public void setContextMenu(ContextMenu contextMenu) {
 		this.contextMenu = contextMenu;
 	}
-	
+
 }

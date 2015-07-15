@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import br.com.milksys.MainApp;
 import br.com.milksys.controller.AbstractReducedOverviewController;
 import br.com.milksys.model.PrestadorServico;
-import br.com.milksys.model.State;
 import br.com.milksys.service.IService;
 
 @Controller
@@ -25,14 +24,12 @@ public class PrestadorServicoReducedOverviewController extends AbstractReducedOv
 	@FXML
 	public void initialize() {
 		
-		if ( state.equals(State.LIST) ){
-			nomeColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("nome"));
-			telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefonePrincipal"));
-			telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefoneSecundario"));
-			emailColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("email"));
-			super.initialize((PrestadorServicoFormController)MainApp.getBean(PrestadorServicoFormController.class));
-		}
-		
+		nomeColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("nome"));
+		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefonePrincipal"));
+		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefoneSecundario"));
+		emailColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("email"));
+		super.initialize((PrestadorServicoFormController)MainApp.getBean(PrestadorServicoFormController.class));
+	
 	}
 
 	@Override

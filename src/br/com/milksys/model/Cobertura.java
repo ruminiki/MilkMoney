@@ -406,9 +406,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return DateUtil.format(getDataRepeticaoCio());
 	}
 	
+	public Date getDataParto(){
+		if ( getParto() != null ){
+			return getParto().getData();	
+		}
+		return null;
+	}
 	@Override
 	public String toString() {
-		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + " PREVISÃO PARTO: " + DateUtil.format(getPrevisaoParto()); 
+		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + 
+				" PREVISÃO PARTO: " + DateUtil.format(DateUtil.asLocalDate(getData()).plusMonths(9)); 
 	}
 	
 }

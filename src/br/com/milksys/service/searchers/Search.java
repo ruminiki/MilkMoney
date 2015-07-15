@@ -4,6 +4,6 @@ import javafx.collections.ObservableList;
 
 public abstract class Search<K, E> {
 	
-	public abstract ObservableList<E> doSearch();
+	public abstract ObservableList<E> doSearch(Object ...objects);
 	
 }

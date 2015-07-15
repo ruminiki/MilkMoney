@@ -68,15 +68,16 @@
         <columns>
           <TableColumn fx:id="femeaColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Fêmea" />
           <TableColumn fx:id="reprodutorColumn" minWidth="200.0" prefWidth="75.0" text="Reprodutor" />
-          <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100" prefWidth="100" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
-          <TableColumn fx:id="previsaoEncerramentoLactacaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Enc. Lactação" />
-          <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
+          <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
+          <TableColumn fx:id="previsaoEncerramentoLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Enc. Lactação" />
+          <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
+            <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Data Parto" />
           <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo Cobertura" />
           <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação Cobertura" />
             <TableColumn prefWidth="75.0" text="Diagnóstico de Prenhez">
                <columns>
-                  <TableColumn fx:id="confirmacaoPrenhezColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
-                  <TableColumn fx:id="reconfirmacaoPrenhezColumn" maxWidth="170.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reconfirmação" />
+                  <TableColumn fx:id="confirmacaoPrenhezColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
+                  <TableColumn fx:id="reconfirmacaoPrenhezColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reconfirmação" />
                </columns>
             </TableColumn>
             <TableColumn fx:id="repeticaoCioColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Repetição" />

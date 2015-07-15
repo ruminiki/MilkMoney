@@ -35,6 +35,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Animal, String> femeaColumn;
 	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
+	@FXML private TableColumn<Cobertura, String> dataPartoColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoEncerramentoLactacaoColumn;
 	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
@@ -56,6 +57,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		femeaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("femea"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
+		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
 		previsaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoEncerramentoLactacao"));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 		
@@ -76,12 +78,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Cobertura";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/cobertura/CoberturaOverview.fxml";
 	}
 

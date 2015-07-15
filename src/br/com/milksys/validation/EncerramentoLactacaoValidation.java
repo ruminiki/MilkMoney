@@ -1,5 +1,6 @@
 package br.com.milksys.validation;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.function.Function;
 
@@ -9,6 +10,7 @@ import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MotivoEncerramentoLactacao;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoAnimal;
+import br.com.milksys.util.DateUtil;
 
 public class EncerramentoLactacaoValidation extends Validator {
 	
@@ -30,6 +32,13 @@ public class EncerramentoLactacaoValidation extends Validator {
 		if ( !encerramentoLactacao.getAnimal().getSexo().equals(Sexo.FEMEA) ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "Somente animais fêmeas podem ter a lactação encerrada. "
 					+ "Por favor, selecione outro animal e tente novamente.");
+		}
+		
+		if ( encerramentoLactacao.getAnimal().getDataUltimaCobertura() != null ){
+			long mesesAposCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(encerramentoLactacao.getAnimal().getDataUltimaCobertura()), DateUtil.asLocalDate(encerramentoLactacao.getData()));
+			if ( mesesAposCobertura > 9 ){
+				throw new ValidationException(REGRA_NEGOCIO, "A data do encerramento da lactação é incompatível com a data da última cobertura. Por favor, verifique a data e tente novamente.");
+			}
 		}
 		
 	}

@@ -7,19 +7,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="322.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.animal.AnimalFormController">
+<AnchorPane prefHeight="287.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.animal.AnimalFormController">
    <children>
       <VBox layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="245.0" prefWidth="585.0">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="234.0" prefWidth="585.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="80.0" prefWidth="130.0" />
                 <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="121.0" />
                   <ColumnConstraints maxWidth="378.0" minWidth="0.0" prefWidth="69.0" />
                   <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="126.0" />
-                  <ColumnConstraints halignment="CENTER" maxWidth="378.0" minWidth="10.0" prefWidth="41.0" />
-                  <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="44.0" />
-                  <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="84.0" />
+                  <ColumnConstraints halignment="CENTER" maxWidth="378.0" minWidth="10.0" prefWidth="28.0" />
+                  <ColumnConstraints maxWidth="378.0" minWidth="8.0" prefWidth="32.0" />
+                  <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="89.0" />
+                  <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -42,24 +43,24 @@
                      </GridPane.margin></Label>
                   <Label text="Número: " />
                   <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="100.0" GridPane.columnIndex="1" />
-                  <UCTextField fx:id="inputNome" maxWidth="418.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
                   <ComboBox fx:id="inputSexo" prefWidth="124.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <UCTextField fx:id="inputRaca" disable="true" onMouseClicked="#handleSelecionarRaca" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarRaca" prefWidth="32.0" text="Novo" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarRaca" prefWidth="56.0" text="Novo" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
                   <ComboBox fx:id="inputFinalidadeAnimal" prefWidth="260.0" promptText="Selecione..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                   <Label text="Mãe: " GridPane.rowIndex="3" />
-                  <Button fx:id="btnBuscarMae" mnemonicParsing="false" onAction="#handleSelecionarMae" prefWidth="32.0" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Button fx:id="btnBuscarMae" mnemonicParsing="false" onAction="#handleSelecionarMae" prefWidth="56.0" text="Buscar" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
                   <UCTextField fx:id="inputMae" disable="true" editable="false" onMouseClicked="#handleSelecionarMae" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <Button fx:id="btnRemoverMae" mnemonicParsing="false" onAction="#handleRemoverMae" text="Remover" visible="false" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                  <Button fx:id="btnRemoverMae" mnemonicParsing="false" onAction="#handleRemoverMae" text="Remover" visible="false" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
@@ -73,12 +74,12 @@
                   <UCTextField fx:id="inputValor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                   <Label text="Pai: " GridPane.rowIndex="4" />
                   <UCTextField fx:id="inputPai" disable="true" editable="false" prefWidth="240.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  <Button fx:id="btnBuscarPaiEnseminacaoArtificial" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" prefWidth="32.0" text="EA" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                  <Button fx:id="btnBuscarPaiEnseminacaoArtificial" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="E" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" prefWidth="36.0" text="MN" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" prefWidth="28.0" text="M" GridPane.columnIndex="5" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

@@ -19,9 +19,9 @@ public class CausaMorteAnimalChartController {
 	@FXML private VBox                      group;
 	@Autowired MorteAnimalService           morteAnimalService;
 	
-	private final CategoryAxis              xAxis     = new CategoryAxis();
-    private final NumberAxis                yAxis     = new NumberAxis();
-	private final BarChart<String,Number>   barChart  = new BarChart<>(xAxis,yAxis);
+	private final CategoryAxis              yAxis     = new CategoryAxis();
+    private final NumberAxis                xAxis     = new NumberAxis();
+	private final BarChart<Number,String>   barChart  = new BarChart<>(xAxis,yAxis);
 	
 	@FXML
 	public void initialize() {

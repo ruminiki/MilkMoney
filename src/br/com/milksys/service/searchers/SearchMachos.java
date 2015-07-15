@@ -15,7 +15,7 @@ public class SearchMachos extends Search<Integer, Animal> {
 	@Autowired AnimalDao dao;
 	
 	@Override
-	public ObservableList<Animal> doSearch() {
+	public ObservableList<Animal> doSearch(Object ...objects) {
 		return FXCollections.observableArrayList(dao.findAllMachos());
 	}
 	

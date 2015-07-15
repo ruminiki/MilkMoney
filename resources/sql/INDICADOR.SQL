@@ -1,17 +1,14 @@
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
 VALUES ('DIAS EM LACTAÇÃO', 'DEL', 1, '200', 'select 
-
-(select sum(datediff(e.data, p.data)) from viewanimaisativos a
+round((select sum(datediff(coalesce(e.data, current_date()), p.data)) from viewanimaisativos a
 inner join cobertura c inner join parto p on (p.cobertura = c.id)
-inner join encerramentolactacao e on (e.animal = a.id)
-where c.femea = a.id and p.data < e.data)
-
+left join encerramentolactacao e on (e.animal = a.id and e.data > p.data)
+where c.femea = a.id)
 /
-
-(select count(*) from viewanimaisativos a
+(select count(distinct a.id) from viewanimaisativos a
 inner join cobertura c inner join parto p on (p.cobertura = c.id)
-inner join encerramentolactacao e on (e.animal = a.id)
-where c.femea = a.id)');
+left join encerramentolactacao e on (e.animal = a.id)
+where c.femea = a.id),0) as s');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
 VALUES ('DIAS EM ABERTO', 'DEA', 2, '200', 'select 
@@ -45,7 +42,7 @@ and a.sexo = \'FÊMEA\\'  and not exists (select 1 from cobertura c inner join pa
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
 VALUES ('NOVILHAS ATÉ 2 ANOS', 'NV2', 7, '--', 'select count(*) from viewAnimaisAtivos a 
-where DATEDIFF(a.dataNascimento, current_date()) <= 720 
+where DATEDIFF(a.dataNascimento, current_date()) between 360 and 720 
 and a.sexo = \'FÊMEA\\'  and not exists (select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
@@ -81,7 +78,14 @@ where not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobe
 (select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id))');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
-VALUES ('% NOVILHAS', '%NV', 12, '200', '');
+VALUES ('% NOVILHAS', '%NV', 12, '200', 'select 
+
+(select count(*) from viewAnimaisAtivos a where a.sexo = \'FÊMEA\\' and
+not exists (select 1 from parto p inner join cobertura c on (p.cobertura = c.id) where c.femea = a.id)) * 100
+
+/
+
+(select count(*) from viewAnimaisAtivos a)');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
 VALUES ('TAXA DE PRENHEZ (%)', 'TP', 13, '200', '');

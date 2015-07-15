@@ -1,7 +1,4 @@
 - carregar o número de vacas em lactação no lançamento de entrega de leite
-- fazer gráfico preço leite
-- fazer gráfico produção de leite por animal
-- fazer gráfico produção de leite por meses
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 - forçar reload dados atualizados em outras telas (atualizar os mapeamentos);
@@ -13,8 +10,6 @@
 
 - na venda fazer a somatória de animais vendidos e do valor total
 
-- ao cadastrar morte, refresh chart
-
 - fazer cadastro de procedimento
 
 - numero de partos animal
@@ -22,9 +17,10 @@
 - erro casas decimais valor leite ex: 0,80
 
 - como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
-	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existe um parto;
-	- uma vez seco o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado
-	- depois que a vaca pariu não pode mexer no registro de encerramento da lactação
+	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existui um parto antes do encerramento;
+	- uma vez seco, o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado;
+	- depois que a vaca pariu não pode mexer no registro de encerramento da lactação;
+	- quando cadastrar o parto, verificar se o animal esteve seco;
 	
 - indicadores:
 	- Dias secas (em aberto);
@@ -38,6 +34,6 @@
 	
 	
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
-cobertura -> encerramento -> parto -> cobertura...
+cobertura -> parto -> cobertura -> encerramento -> parto
 	
 	

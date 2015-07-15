@@ -15,7 +15,7 @@ public class SearchSemenComEstoque extends Search<Integer, Semen> {
 	@Autowired SemenDao dao;
 	
 	@Override
-	public ObservableList<Semen> doSearch() {
+	public ObservableList<Semen> doSearch(Object ...objects) {
 		return FXCollections.observableArrayList(dao.findAllComEstoque());
 	}
 	

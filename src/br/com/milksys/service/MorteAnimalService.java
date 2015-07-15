@@ -56,18 +56,15 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 		return null;
 	}
     
-    public ObservableList<Series<String, Number>> getDataChart(){
+    public ObservableList<Series<Number, String>> getDataChart(){
 
-    	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
-    	
-    	XYChart.Series<String, Number> serie;
-    	
+    	ObservableList<Series<Number, String>> series = FXCollections.observableArrayList();
+    	XYChart.Series<Number, String> serie;
     	for ( CausaMorteAnimal c : causaMorteAnimalService.findAll() ){
-    		serie = new XYChart.Series<String, Number>();
-            serie.getData().add(new XYChart.Data<String, Number>(c.getDescricao(), dao.countByCausa(c.getDescricao())));
+    		serie = new XYChart.Series<Number, String>();
+            serie.getData().add(new XYChart.Data<Number, String>(dao.countByCausa(c.getDescricao()), c.getDescricao()));
             series.add(serie);
     	}
-    	
     	return series;
     	
     }

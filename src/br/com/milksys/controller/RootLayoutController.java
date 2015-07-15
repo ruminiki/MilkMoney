@@ -176,7 +176,7 @@ public class RootLayoutController {
     	
     }
     
-    private void openForm(String formPath){
+    public void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);
     }

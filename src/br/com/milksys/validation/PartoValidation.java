@@ -1,5 +1,6 @@
 package br.com.milksys.validation;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
@@ -37,6 +38,11 @@ public class PartoValidation extends Validator {
 				throw new ValidationException(REGRA_NEGOCIO, "A cobertura selecionada tem situação igual a " + parto.getCobertura().getSituacaoCobertura() + 
 						" não sendo possível o registro do parto.");
 			}
+		}
+		
+		long mesesPartoAposCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(parto.getCobertura().getData()), DateUtil.asLocalDate(parto.getData()));
+		if ( mesesPartoAposCobertura > 10 ){
+			throw new ValidationException(REGRA_NEGOCIO, "A data do parto é incompatível com a data da cobertura. Por favor, verifique a data e tente novamente.");
 		}
 		
 		if ( parto.getTipoParto().equals(TipoParto.ABORTO) ){

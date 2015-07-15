@@ -65,7 +65,10 @@ public class PainelController {
 	
 	@FXML
 	private void handleCausaMorteAnimalChart(){
-		changeItem((AnchorPane) MainApp.load(causaMorteAnimalChartController.getFormName()));
+		group.getChildren().clear();
+		AnchorPane node = (AnchorPane) MainApp.load(causaMorteAnimalChartController.getFormName());
+		//VBox.setVgrow(node, Priority.SOMETIMES);		
+		group.getChildren().add(node);
 	}
 	
 	//....

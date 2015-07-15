@@ -15,7 +15,7 @@ public class SearchFemeas30DiasLactacao extends Search<Integer, Animal> {
 	@Autowired AnimalDao dao;
 	
 	@Override
-	public ObservableList<Animal> doSearch() {
+	public ObservableList<Animal> doSearch(Object ...objects) {
 		return FXCollections.observableArrayList(dao.findAllFemeasLactacaoXDias(30));
 	}
 	
