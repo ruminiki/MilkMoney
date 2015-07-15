@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,11 +19,13 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	@Autowired private IndicadorDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Indicador entity) {
 		return false;
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Indicador entity) {
 		return false;
 	}

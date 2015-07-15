@@ -14,16 +14,21 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="indicador")
-@NamedQuery(name="Indicador.findAll", query="SELECT r FROM Indicador r order by r.ordem", 
-hints={ @javax.persistence.QueryHint(name = "org.hibernate.cacheable", value = "false") })
+@NamedQuery(name="Indicador.findAll", query="SELECT r FROM Indicador r order by r.ordem")
+/*, 
+hints={ @javax.persistence.QueryHint(name = "org.hibernate.cacheable", value = "false"),
+		@javax.persistence.QueryHint(name = "org.hibernate.cacheMode", value = "PUT"),
+		@javax.persistence.QueryHint(name = "org.hibernate.flushMode", value = "ALWAYS")})*/
 public class Indicador extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String descricao;
 	private String sigla;
 	private String valorReferencia;
+	
 	@Type(type="text")
 	private String query;
 	private String valorApurado;

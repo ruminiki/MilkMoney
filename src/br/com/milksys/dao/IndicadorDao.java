@@ -19,10 +19,12 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		for ( Indicador indicador : indicadores ){
 			
 			if ( indicador.getQuery() != null && !indicador.getQuery().isEmpty()){
-				Query query = entityManager.createNativeQuery(indicador.getQuery());
 				
-				if ( query.getSingleResult() != null ){
-					indicador.setValorApurado( query.getSingleResult().toString() );
+				Query query = entityManager.createNativeQuery(indicador.getQuery());
+				Object value = query.getSingleResult();
+				
+				if ( value != null ){
+					indicador.setValorApurado( value.toString() );
 				}else{
 					indicador.setValorApurado("--");
 				}

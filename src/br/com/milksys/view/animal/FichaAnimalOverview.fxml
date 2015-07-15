@@ -10,10 +10,11 @@
 
 <AnchorPane prefHeight="265.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.animal.AnimalCriaFormController">
    <children>
-      <HBox alignment="CENTER" prefHeight="265.0" prefWidth="473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Line endX="100.0" startX="-100.0" />
-         </children>
-      </HBox>
+      <TableView layoutX="25.0" prefHeight="265.0" prefWidth="473.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+          <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" text="Evento" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

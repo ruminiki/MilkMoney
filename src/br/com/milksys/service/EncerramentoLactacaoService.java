@@ -3,6 +3,8 @@ package br.com.milksys.service;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,6 +24,7 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 	@Autowired private CoberturaService coberturaService;
 
 	@Override
+	@Transactional
 	public boolean save(EncerramentoLactacao entity) {
 		
 		EncerramentoLactacaoValidation.validate(entity);
@@ -40,13 +43,14 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 	};
 	
 	@Override
+	@Transactional
 	public boolean remove(EncerramentoLactacao entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public EncerramentoLactacao findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(EncerramentoLactacao.class, id);
 	}
 
 	@Override
@@ -55,9 +59,7 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 	}
 	
 	public ObservableList<EncerramentoLactacao> findAllAsObservableList() {
-		ObservableList<EncerramentoLactacao> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(EncerramentoLactacao.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(EncerramentoLactacao.class));
 	}
 	
 	@Override
@@ -70,7 +72,8 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Transactional
 	public void removeLastByAnimal(Animal animal) {
 		dao.removeLastByAnimal(animal);
 	}

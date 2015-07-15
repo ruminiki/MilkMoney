@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.OcorrenciaFuncionarioDao;
 import br.com.milksys.model.Funcionario;
@@ -18,19 +19,21 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 	@Autowired private OcorrenciaFuncionarioDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(OcorrenciaFuncionario entity) {
 		return dao.persist(entity);
 		
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(OcorrenciaFuncionario entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public OcorrenciaFuncionario findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(OcorrenciaFuncionario.class, id);
 	}
 
 	@Override
@@ -39,9 +42,7 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 	}
 	
 	public ObservableList<OcorrenciaFuncionario> findAllAsObservableList() {
-		ObservableList<OcorrenciaFuncionario> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(OcorrenciaFuncionario.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(OcorrenciaFuncionario.class));
 	}
 
 	@Override

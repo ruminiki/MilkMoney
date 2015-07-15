@@ -10,6 +10,7 @@ import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.PrecoLeiteDao;
 import br.com.milksys.model.PrecoLeite;
@@ -23,19 +24,21 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	private ObservableList<String> meses = Util.generateListMonths();
 
 	@Override
+	@Transactional
 	public boolean save(PrecoLeite entity) {
 		PrecoLeiteValidation.validate(entity);
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(PrecoLeite entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public PrecoLeite findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(PrecoLeite.class, id);
 	}
 
 	@Override
@@ -52,9 +55,7 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	}
 	
 	public ObservableList<PrecoLeite> findAllAsObservableList() {
-		ObservableList<PrecoLeite> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(PrecoLeite.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(PrecoLeite.class));
 	}
 	
 	@Override
@@ -63,9 +64,7 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	}
 
 	public ObservableList<PrecoLeite> findAllByAnoAsObservableList(int anoReferencia) {
-		ObservableList<PrecoLeite> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAllByAno(anoReferencia));
-		return list;
+		return FXCollections.observableArrayList(dao.findAllByAno(anoReferencia));
 	}
 
 	public boolean isPrecoCadastrado(String mesReferencia, int anoReferencia) {

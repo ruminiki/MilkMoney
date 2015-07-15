@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.ProducaoIndividualDao;
 import br.com.milksys.model.Animal;
@@ -24,6 +25,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	
 
 	@Override
+	@Transactional
 	public boolean save(ProducaoIndividual entity) {
 		
 		ProducaoIndividual producaoIndividual = findByAnimalAndData(entity.getAnimal(), entity.getData());
@@ -98,13 +100,14 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	}
 	
 	@Override
+	@Transactional
 	public boolean remove(ProducaoIndividual entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public ProducaoIndividual findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(ProducaoIndividual.class, id);
 	}
 
 	@Override

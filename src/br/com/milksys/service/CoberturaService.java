@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,6 +25,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private CoberturaDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Cobertura entity) {
 		
 		if ( entity.getParto() != null ){
@@ -145,15 +148,15 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return dao.findByAnimal(animal);
 	}
 	
-	
 	@Override
+	@Transactional
 	public boolean remove(Cobertura entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public Cobertura findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Cobertura.class, id);
 	}
 
 	@Override
@@ -170,6 +173,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return FXCollections.observableArrayList(dao.findAllByNumeroNomeAnimal(param));
 	}
 
+	@Transactional
 	public void removeServicoFromCobertura(Cobertura cobertura) {
 		dao.removeServicoFromCobertura(cobertura);
 	}
@@ -179,6 +183,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validate(entity);
 	}
 
+	@Transactional
 	public void registrarParto(Cobertura entity) {
 		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
@@ -191,6 +196,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		}
 	}
 
+	@Transactional
 	public void removerParto(Cobertura entity) {
 		
 		configureSituacaoCobertura(entity);

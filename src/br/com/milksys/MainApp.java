@@ -15,7 +15,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import br.com.milksys.exception.GlobalExceptionHandler;
-import br.com.milksys.service.ApplicationService;
 
 public class MainApp extends Application {
 
@@ -24,7 +23,7 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public MainApp() {
-		context = new ClassPathXmlApplicationContext(new String[] {"services.xml", "controllers.xml", "daos.xml"});
+		context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class MainApp extends Application {
 
 	public static void main(String[] args) {
 		
-		new ApplicationService().initilizeDatabase();
+		///new ApplicationService().initilizeDatabase();
 		
 		Locale locale = new Locale("pt", "BR");
 		Locale.setDefault(locale);

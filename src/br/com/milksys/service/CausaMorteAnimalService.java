@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,18 +19,20 @@ public class CausaMorteAnimalService implements IService<Integer, CausaMorteAnim
 	@Autowired private CausaMorteAnimalDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(CausaMorteAnimal entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(CausaMorteAnimal entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public CausaMorteAnimal findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(CausaMorteAnimal.class, id);
 	}
 
 	@Override

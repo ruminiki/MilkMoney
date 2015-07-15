@@ -4,14 +4,14 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoCobertura;
 
-@Component
+@Repository
 public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	
 	@SuppressWarnings("unchecked")

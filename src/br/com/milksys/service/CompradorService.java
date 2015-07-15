@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,6 +20,7 @@ public class CompradorService implements IService<Integer, Comprador>{
 	@Autowired private CompradorDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Comprador entity) {
 		
 		CompradorValidation.validate(entity);
@@ -25,6 +28,7 @@ public class CompradorService implements IService<Integer, Comprador>{
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Comprador entity) {
 		return dao.remove(entity);
 		
@@ -32,7 +36,7 @@ public class CompradorService implements IService<Integer, Comprador>{
 
 	@Override
 	public Comprador findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Comprador.class, id);
 	}
 
 	@Override

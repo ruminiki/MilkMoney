@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Component;
 
 @Component
+//@ContextConfiguration("classpath:/applicationContext.xml")
 public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 	
 	public void executeSqlFile(File file){

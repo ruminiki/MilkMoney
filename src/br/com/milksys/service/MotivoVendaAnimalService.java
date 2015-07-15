@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.MotivoVendaAnimalDao;
 import br.com.milksys.model.MotivoVendaAnimal;
@@ -17,18 +18,20 @@ public class MotivoVendaAnimalService implements IService<Integer, MotivoVendaAn
 	@Autowired private MotivoVendaAnimalDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(MotivoVendaAnimal entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(MotivoVendaAnimal entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public MotivoVendaAnimal findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(MotivoVendaAnimal.class, id);
 	}
 
 	@Override

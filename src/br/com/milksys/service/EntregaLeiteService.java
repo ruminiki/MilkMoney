@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -28,6 +30,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	private ObservableList<String> meses = Util.generateListMonths();
 
 	@Override
+	@Transactional
 	public boolean save(EntregaLeite entity) {
 		
 		BigDecimal totalEntregue = loadTotalEntreguePeriodo(entity.getDataInicio(), entity.getDataFim());
@@ -45,13 +48,14 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	}
 	
 	@Override
+	@Transactional
 	public boolean remove(EntregaLeite entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public EntregaLeite findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(EntregaLeite.class, id);
 	}
 
 	@Override

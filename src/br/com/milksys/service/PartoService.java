@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.dao.PartoDao;
@@ -20,6 +21,7 @@ public class PartoService implements IService<Integer, Parto>{
 	@Autowired private AnimalDao animalDao;
 
 	@Override
+	@Transactional
 	public boolean save(Parto entity) {
 		
 		PartoValidation.validate(entity);
@@ -28,13 +30,14 @@ public class PartoService implements IService<Integer, Parto>{
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Parto entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public Parto findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Parto.class, id);
 	}
 
 	@Override
@@ -43,9 +46,7 @@ public class PartoService implements IService<Integer, Parto>{
 	}
 	
 	public ObservableList<Parto> findAllAsObservableList() {
-		ObservableList<Parto> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Parto.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Parto.class));
 	}
 	
 	@Override

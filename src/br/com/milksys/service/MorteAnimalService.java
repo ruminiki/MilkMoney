@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
@@ -22,11 +24,13 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 	@Autowired private CausaMorteAnimalService causaMorteAnimalService;
 
 	@Override
+	@Transactional
 	public boolean save(MorteAnimal entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(MorteAnimal entity) {
 		return dao.remove(entity);
 	}
@@ -37,7 +41,7 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 	
 	@Override
 	public MorteAnimal findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(MorteAnimal.class, id);
 	}
 
 	@Override
@@ -46,9 +50,7 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 	}
 	
 	public ObservableList<MorteAnimal> findAllAsObservableList() {
-		ObservableList<MorteAnimal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(MorteAnimal.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(MorteAnimal.class));
 	}
 	
 	@Override

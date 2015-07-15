@@ -13,6 +13,7 @@ import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.ProducaoLeiteDao;
 import br.com.milksys.model.PrecoLeite;
@@ -27,6 +28,7 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	@Autowired private PrecoLeiteService precoLeiteService;
 
 	@Override
+	@Transactional
 	public boolean save(ProducaoLeite entity) {
 		
 		if ( entity.getId() <= 0 ){
@@ -54,13 +56,14 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	}
 	
 	@Override
+	@Transactional
 	public boolean remove(ProducaoLeite entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public ProducaoLeite findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(ProducaoLeite.class, id);
 	}
 
 	@Override
@@ -79,9 +82,7 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	}
 	
 	public ObservableList<ProducaoLeite> findAllByPeriodoAsObservableList(Date inicio, Date fim) {
-		ObservableList<ProducaoLeite> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAllByPeriodo(inicio, fim));
-		return list;
+		return FXCollections.observableArrayList(dao.findAllByPeriodo(inicio, fim));
 	}
 
 	/**

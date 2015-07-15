@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.RacaDao;
 import br.com.milksys.model.Raca;
@@ -17,18 +18,20 @@ public class RacaService implements IService<Integer, Raca>{
 	@Autowired private RacaDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Raca entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Raca entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public Raca findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Raca.class, id);
 	}
 
 	@Override

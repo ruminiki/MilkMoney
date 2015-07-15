@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.PrestadorServicoDao;
 import br.com.milksys.model.PrestadorServico;
@@ -17,18 +18,20 @@ public class PrestadorServicoService implements IService<Integer, PrestadorServi
 	@Autowired private PrestadorServicoDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(PrestadorServico entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(PrestadorServico entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public PrestadorServico findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(PrestadorServico.class, id);
 	}
 
 	@Override
@@ -37,9 +40,7 @@ public class PrestadorServicoService implements IService<Integer, PrestadorServi
 	}
 	
 	public ObservableList<PrestadorServico> findAllAsObservableList() {
-		ObservableList<PrestadorServico> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(PrestadorServico.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(PrestadorServico.class));
 	}
 	
 	@Override

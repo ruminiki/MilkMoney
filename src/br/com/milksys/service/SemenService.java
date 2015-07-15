@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.SemenDao;
 import br.com.milksys.model.Semen;
@@ -18,6 +19,7 @@ public class SemenService implements IService<Integer, Semen>{
 	@Autowired private SemenDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Semen entity) {
 		
 		SemenValidation.validate(entity);
@@ -29,13 +31,14 @@ public class SemenService implements IService<Integer, Semen>{
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Semen entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public Semen findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Semen.class, id);
 	}
 
 	@Override

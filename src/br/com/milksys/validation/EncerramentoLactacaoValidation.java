@@ -37,7 +37,8 @@ public class EncerramentoLactacaoValidation extends Validator {
 		if ( encerramentoLactacao.getAnimal().getDataUltimaCobertura() != null ){
 			long mesesAposCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(encerramentoLactacao.getAnimal().getDataUltimaCobertura()), DateUtil.asLocalDate(encerramentoLactacao.getData()));
 			if ( mesesAposCobertura > 9 ){
-				throw new ValidationException(REGRA_NEGOCIO, "A data do encerramento da lactação é incompatível com a data da última cobertura. Por favor, verifique a data e tente novamente.");
+				throw new ValidationException(REGRA_NEGOCIO, "A data do encerramento da lactação é incompatível com a data da última cobertura ("
+										+ DateUtil.format(encerramentoLactacao.getAnimal().getDataUltimaCobertura()) + "). Por favor, verifique a data e tente novamente.");
 			}
 		}
 		

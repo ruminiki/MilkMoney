@@ -2,6 +2,8 @@ package br.com.milksys.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -17,18 +19,20 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 	@Autowired private FuncionarioDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(Funcionario entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(Funcionario entity) {
 		return dao.remove(entity);
 	}
 
 	@Override
 	public Funcionario findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(Funcionario.class, id);
 	}
 
 	@Override

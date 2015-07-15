@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.VendaAnimalDao;
 import br.com.milksys.model.Animal;
@@ -19,6 +20,7 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	@Autowired private VendaAnimalDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(VendaAnimal entity) {
 		
 		VendaAnimalValidation.validate(entity);
@@ -27,17 +29,19 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	}
 	
 	@Override
+	@Transactional
 	public boolean remove(VendaAnimal entity) {
 		return dao.remove(entity);
 	}
 	
+	@Transactional
 	public void removeByAnimal(Animal animal){
 		dao.removeByAnimal(animal);
 	}
 
 	@Override
 	public VendaAnimal findById(Integer id) {
-		return dao.findById(id);
+		return dao.findById(VendaAnimal.class, id);
 	}
 
 	@Override
@@ -46,9 +50,7 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	}
 	
 	public ObservableList<VendaAnimal> findAllAsObservableList() {
-		ObservableList<VendaAnimal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(VendaAnimal.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(VendaAnimal.class));
 	}
 
 	@Override
