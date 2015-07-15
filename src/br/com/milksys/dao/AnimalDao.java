@@ -69,7 +69,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasCobertas() {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Cobertura c inner join c.femea a "
+				"SELECT distinct a FROM Cobertura c inner join c.femea a "
 				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
@@ -82,21 +82,13 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasNaoCobertas() {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Cobertura c inner join c.femea a "
-				+ "WHERE c.situacaoCobertura not in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
+				"SELECT distinct a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and "
+				+ "not exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') and c.femea = a.id ) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		query.setHint("org.hibernate.cacheable", "false");
-		List<Animal> animaisNaoCobertos = query.getResultList();
 		
-		query = entityManager.createQuery(
-				"SELECT a FROM Animal a WHERE a not in (select c.femea from Cobertura c) and a.sexo = '" + Sexo.FEMEA + "' "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		query.setHint("org.hibernate.cacheable", "false");
-		animaisNaoCobertos.addAll(query.getResultList());
-		
-		return animaisNaoCobertos;
+		return query.getResultList();
 		
 	}
 

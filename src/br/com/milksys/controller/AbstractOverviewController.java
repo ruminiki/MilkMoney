@@ -49,7 +49,7 @@ public abstract class AbstractOverviewController<K, E>{
 	private         Stage             dialogStage;
 	private         State             state         = State.LIST;
 	protected       ObservableList<E> data          = FXCollections.observableArrayList();
-	protected       AbstractEntity    object;
+	protected       E                 object;
 	protected       IService<K, E>    service;
 	
 	private         Search<K,E>       search;
@@ -102,7 +102,7 @@ public abstract class AbstractOverviewController<K, E>{
 		});
 
 		table.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> selectRowTableHandler((AbstractEntity) newValue));
+				.addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
 
 		//configura os botões do formulário
 		configureForm();
@@ -175,7 +175,7 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 	
 	protected void handleSelectItemTable(){
-		setObject((AbstractEntity) table.getSelectionModel().getSelectedItem());
+		setObject(table.getSelectionModel().getSelectedItem());
 	}
 	
 	protected void handleRightClick(){
@@ -188,7 +188,7 @@ public abstract class AbstractOverviewController<K, E>{
 		}
 	}
 	
-	public void setObject(AbstractEntity object) {
+	public void setObject(E object) {
 		this.object = object;
 	}
 
@@ -196,7 +196,7 @@ public abstract class AbstractOverviewController<K, E>{
 		this.service = service;
 	}
 
-	protected void selectRowTableHandler(AbstractEntity value) {
+	protected void selectRowTableHandler(E value) {
 		object = value;
 	}
 
@@ -297,8 +297,11 @@ public abstract class AbstractOverviewController<K, E>{
 		formController.showForm();
 	}
 
-	@FXML
+	@FXML@SuppressWarnings("unchecked")
 	public void handleEdit() {
+		
+		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+		
 		if (object != null) {
 			formController.setRefreshObjectInTableView(refreshObjectInTableView);
 			formController.setAddObjectInTableView(addObjectInTableView);
@@ -333,7 +336,6 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 
 	//==========getters e setters
-	@SuppressWarnings("unchecked")
 	public E getObject(){
 		
 		if ( object == null ){

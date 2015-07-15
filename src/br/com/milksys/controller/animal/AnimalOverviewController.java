@@ -32,6 +32,7 @@ import br.com.milksys.model.Animal;
 import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
+import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.service.EncerramentoLactacaoService;
@@ -160,6 +161,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		encerrarLactacaoMenuItem.setText(
 				getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? 
 				"Desfazer Encerramento Lactação" : "Encerrar Lactação");
+		
+		encerrarLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
+		coberturasMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		
 		registrarMorteMenuItem.setText(
 				getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? 

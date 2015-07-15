@@ -35,6 +35,7 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 		return dao.remove(entity);
 	}
 	
+	@Transactional
 	public void removeByAnimal(Animal animal) {
 		dao.removeByAnimal(animal);
 	}

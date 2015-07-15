@@ -21,11 +21,9 @@ public class MorteAnimalDao extends AbstractGenericDao<Integer, MorteAnimal> {
 
 	public void removeByAnimal(Animal animal) {
 
-        entityManager.getTransaction().begin();
 		Query query = entityManager.createNativeQuery("delete from morteAnimal where animal = :animal");
 		query.setParameter("animal", animal);
 		query.executeUpdate();
-		entityManager.getTransaction().commit();
 		
 	}
 

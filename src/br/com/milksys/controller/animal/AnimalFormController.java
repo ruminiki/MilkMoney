@@ -19,6 +19,7 @@ import br.com.milksys.controller.raca.RacaReducedOverviewController;
 import br.com.milksys.controller.touro.TouroReducedOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
+import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.Touro;
 import br.com.milksys.service.IService;
@@ -177,7 +178,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarRaca() {
 		
-		racaReducedOverviewController.setObject(new Touro());
+		racaReducedOverviewController.setObject(new Raca());
 		racaReducedOverviewController.showForm();
 		
 		if ( racaReducedOverviewController.getObject() != null && racaReducedOverviewController.getObject().getId() > 0 ){

@@ -41,6 +41,33 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return dao.persist(entity);
 	}
 	
+	@Transactional
+	public void registrarParto(Cobertura entity) {
+		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
+		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
+		try{
+			dao.persist(entity);
+		}catch(Exception e){
+			configureSituacaoCobertura(entity);
+			entity.setParto(null);
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Transactional
+	public void removerParto(Cobertura entity) {
+		
+		configureSituacaoCobertura(entity);
+		try{
+			dao.removerParto(entity);
+		}catch(Exception e){
+			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
+	@Transactional
 	public void registrarConfirmacaoPrenhez(Cobertura entity){
 		
 		CoberturaValidation.validateRegistroConfirmacaoPrenhez(entity);
@@ -49,7 +76,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		save(entity);
 	}
 	
-
+	@Transactional
 	public void removerRegistroConfirmacaoPrenhez(Cobertura entity) {
 		
 		entity.setDataConfirmacaoPrenhez(null);
@@ -65,7 +92,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
-	
+	@Transactional
 	public void registrarReconfirmacaoPrenhez(Cobertura entity){
 		
 		CoberturaValidation.validateRegistroReconfirmacaoPrenhez(entity);
@@ -74,6 +101,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		save(entity);
 	}
 	
+	@Transactional
 	public void removerRegistroReconfirmacaoPrenhez(Cobertura entity) {
 		
 		entity.setDataReconfirmacaoPrenhez(null);
@@ -89,6 +117,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 
+	@Transactional
 	public void registrarRepeticaoCio(Cobertura entity){
 		
 		configureSituacaoCobertura(entity);
@@ -97,6 +126,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
+	@Transactional
 	public void removerRegistroRepeticaoCio(Cobertura entity) {
 		
 		entity.setDataRepeticaoCio(null);
@@ -183,32 +213,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validate(entity);
 	}
 
-	@Transactional
-	public void registrarParto(Cobertura entity) {
-		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
-		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
-		try{
-			dao.persist(entity);
-		}catch(Exception e){
-			configureSituacaoCobertura(entity);
-			entity.setParto(null);
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Transactional
-	public void removerParto(Cobertura entity) {
-		
-		configureSituacaoCobertura(entity);
-		try{
-			dao.removerParto(entity);
-		}catch(Exception e){
-			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
-			throw new RuntimeException(e);
-		}
-		
-	}
-	
 	public Cobertura findCoberturaAtivaByAnimal(Animal animal){
 		return dao.findCoberturaAtivaByAnimal(animal);
 	}

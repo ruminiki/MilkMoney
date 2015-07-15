@@ -17,7 +17,9 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	
 	public boolean persist(E entity) {
         try{
-        	entityManager.persist(entity);
+        	
+        	entityManager.merge(entity);
+        	
         }catch(Exception e){
         	throw e;
         }
@@ -27,6 +29,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	public boolean remove(E entity) {
         try{
 	        entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+	        entityManager.flush();
 		}catch (Exception e) {
 			throw e;
 		}
@@ -35,9 +38,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	}
 
 	public E findById(Class<E> clazz, K id) {
-		
 		return entityManager.find(clazz, id);
-		
 	}
 	
 	@SuppressWarnings("unchecked")

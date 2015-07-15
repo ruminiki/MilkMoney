@@ -10,6 +10,9 @@
 
 - na venda fazer a somatória de animais vendidos e do valor total
 
+- erro filtro não cobertas
+- como calcular os dias entre partos, secos.. quando o animal foi vendido?
+
 - fazer cadastro de procedimento
 
 - numero de partos animal
