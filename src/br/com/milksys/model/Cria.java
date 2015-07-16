@@ -102,7 +102,7 @@ public class Cria extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToOne(targetEntity=Parto.class)
 	@JoinColumn(name="parto")
 	public Parto getParto() {
 		return parto.get();
