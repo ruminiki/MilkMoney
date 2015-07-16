@@ -40,29 +40,6 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
-/*	public void removerParto(Cobertura cobertura) {
-		
-		try{
-			EntityTransaction entityTransaction = entityManager.getTransaction();
-	        entityTransaction.begin();
-			
-			if ( cobertura.getId() > 0 && cobertura.getParto() != null && cobertura.getParto().getId() > 0 ){
-				
-					cobertura.setParto(null);
-					entityManager.persist(cobertura);
-				
-			}else{
-				cobertura.setParto(null);
-			}
-	        
-	        entityTransaction.commit();
-		}catch(Exception e ){
-			entityManager.refresh(cobertura);
-			throw e;
-		}
-		
-	}*/
-
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findByAnimal(Animal femea) {
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea");

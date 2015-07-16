@@ -78,7 +78,8 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 			    index++;
 			}
 			
-			encerramentos.remove(index);
+			if ( encerramentos.size() > index )
+				encerramentos.remove(index);
 			    
 		    if ( data_proximo_encerramento != null ){
 		    	diasEmLactacao += ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto_data), DateUtil.asLocalDate(data_proximo_encerramento));

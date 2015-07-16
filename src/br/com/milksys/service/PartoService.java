@@ -52,6 +52,7 @@ public class PartoService implements IService<Integer, Parto>{
 	@Override
 	public void validate(Parto entity) {
 		PartoValidation.validate(entity);
+		PartoValidation.validadeCrias(entity);
 	}
 	
 }

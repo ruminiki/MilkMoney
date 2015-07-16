@@ -120,6 +120,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			if ( partoFormController.getObject() != null ){
 				getObject().setParto(partoFormController.getObject());
 				((CoberturaService)service).registrarParto(getObject());
+				refreshObjectInTableView.apply(getObject());
 			}	
 		}else{
 			CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada tem situação igual a " + getObject().getSituacaoCobertura() + 
@@ -136,7 +137,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			return;
 		}
 		
-		if ( getObject().getParto() != null && getObject().getParto().getId() > 0 ){
+		if ( getObject().getParto() != null ){
 			
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o parto registrado?");
 			if (result.get() == ButtonType.OK) {

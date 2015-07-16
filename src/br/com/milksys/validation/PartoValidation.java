@@ -22,11 +22,6 @@ public class PartoValidation extends Validator {
 					"A data do parto não pode ser maior que a data atual.");
 		}
 		
-		if ( parto.getCrias() == null || parto.getCrias().isEmpty() ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"O parto deve ter pelo menos uma cria registrada.");
-		}
-		
 		if ( parto.getData().before(parto.getCobertura().getData()) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"A data do parto não pode ser menor que a data da cobertura.");
@@ -42,7 +37,16 @@ public class PartoValidation extends Validator {
 		
 		long mesesPartoAposCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(parto.getCobertura().getData()), DateUtil.asLocalDate(parto.getData()));
 		if ( mesesPartoAposCobertura > 10 ){
-			throw new ValidationException(REGRA_NEGOCIO, "A data do parto é incompatível com a data da cobertura. Por favor, verifique a data e tente novamente.");
+			throw new ValidationException(REGRA_NEGOCIO, "A data informada " + DateUtil.format(parto.getData()) + " é incompatível com a data da cobertura e previsão do parto. Por favor, atualize a data do parto e tente novamente.");
+		}
+		
+	}
+	
+	public static void validadeCrias(Parto parto){
+		
+		if ( parto.getCrias() == null || parto.getCrias().isEmpty() ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"O parto deve ter pelo menos uma cria registrada.");
 		}
 		
 		if ( parto.getTipoParto().equals(TipoParto.ABORTO) ){
@@ -66,6 +70,7 @@ public class PartoValidation extends Validator {
 			}
 			
 		}
-		
 	}
+	
+	
 }

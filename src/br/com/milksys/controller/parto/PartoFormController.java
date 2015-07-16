@@ -37,6 +37,7 @@ import br.com.milksys.service.IService;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 import br.com.milksys.validation.CriaValidation;
+import br.com.milksys.validation.PartoValidation;
 
 @Controller
 public class PartoFormController extends AbstractFormController<Integer, Parto> {
@@ -140,6 +141,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	
 	@FXML
 	protected void handleAdicionarCria() {
+		
+		PartoValidation.validate(getObject());
 		
 		if ( inputIncorporadoAoRebanho.getValue() != null && 
 				inputIncorporadoAoRebanho.getValue().equals(SimNao.SIM) ){

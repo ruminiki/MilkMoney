@@ -64,7 +64,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			
 			entity.setParto(null);
 			dao.persist(entity);
-			//dao.removerParto(entity);
+
 		}catch(Exception e){
 			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			throw new RuntimeException(e);
