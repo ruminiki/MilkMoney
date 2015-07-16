@@ -3,11 +3,16 @@ package br.com.milksys.service;
 import java.io.File;
 import java.net.URL;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.com.milksys.dao.ApplicationDao;
 
+@Service
 public class ApplicationService{
 
-	private ApplicationDao dao = new ApplicationDao();
+	@Autowired
+	private ApplicationDao dao;
 
 	public void initilizeDatabase(){
 		File file = null;

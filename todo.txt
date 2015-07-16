@@ -10,10 +10,11 @@
 
 - na venda fazer a somatória de animais vendidos e do valor total
 
-- erro filtro não cobertas
 - como calcular os dias entre partos, secos.. quando o animal foi vendido?
+- permitir cadastro dos valores de referencia nos indicadores;
 
 - fazer cadastro de procedimento
+- gráfico curva lactação animais por parto
 
 - numero de partos animal
 

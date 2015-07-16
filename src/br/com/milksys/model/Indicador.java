@@ -34,6 +34,15 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private String valorApurado;
 	private int ordem;
 	
+	public Indicador() {
+	}
+	
+	public Indicador(String descricao, String sigla, long valor) {
+		this.descricao = descricao;
+		this.sigla = sigla;
+		this.valorApurado = String.valueOf(valor);
+	}
+
 	public int getId() {
 		return id;
 	}

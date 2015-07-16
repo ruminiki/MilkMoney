@@ -8,6 +8,8 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
 
+import br.com.milksys.model.AbstractEntity;
+
 @Component
 public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	protected Class<E> entityClass;
@@ -18,7 +20,12 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	public boolean persist(E entity) {
         try{
         	
-        	entityManager.merge(entity);
+        	if ( ((AbstractEntity)entity).getId() <= 0 ){
+        		entityManager.persist(entity);
+        	}else{
+        		entityManager.merge(entity);	
+        	}
+        	entityManager.flush();
         	
         }catch(Exception e){
         	throw e;
