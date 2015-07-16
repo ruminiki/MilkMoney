@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.RacaDao;
 import br.com.milksys.model.Raca;
+import br.com.milksys.validation.RacaValidation;
 
 @Service
 public class RacaService implements IService<Integer, Raca>{
@@ -20,6 +21,7 @@ public class RacaService implements IService<Integer, Raca>{
 	@Override
 	@Transactional
 	public boolean save(Raca entity) {
+		RacaValidation.validate(entity);
 		return dao.persist(entity);
 	}
 

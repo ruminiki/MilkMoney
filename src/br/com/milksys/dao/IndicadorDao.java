@@ -1,6 +1,7 @@
 package br.com.milksys.dao;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -327,8 +328,33 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		return (result == null ? BigDecimal.ZERO : new BigDecimal(result.toString()));
 		
 	}
+	/*
+	 * TDC - dividindo o número de vacas inseminadas no período de 21 dias pelo número de vacas 
+	 * disponíveis para serem inseminadas no mesmo período.
+	 * 
+	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/manejo-reprodutivo-do-rebanho-leiteiro-26245n.aspx
+	 * 
+	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
+	 * 
+	 * PVE - Periodo voluntário de espera (dias após o parto em que a vaca não deve ser enseminada)
+	 */
+	private BigDecimal getValorApuradoTaxaDeteccaoCio(){
+		
+		//vacas enseminadas ultimos 21 dias
+		BigInteger vacasEnseminadas = (BigInteger) entityManager.createNativeQuery("select count(*) from cobertura c where  DATEDIFF(c.data, current_date()) <= 21 ").getSingleResult();
+		
+		//vacas disponíveis para serem cobertas
+		//não vendidas, não mortas, não cobertas
+		
+		//return (result == null ? BigDecimal.ZERO : new BigDecimal(result.toString()));
+		
+		return BigDecimal.ZERO;
+	}
 	
 	private BigDecimal getValorApuradoTaxaPrenhez(){
 		return BigDecimal.ZERO;
 	}
+	
+	
+	
 }

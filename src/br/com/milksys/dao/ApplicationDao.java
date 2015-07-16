@@ -19,12 +19,14 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 			scanner.useDelimiter(";");
 			while(scanner.hasNext()) {
 			    String sql = scanner.next();
-		    	Query query = entityManager.createNativeQuery(sql);
-		    	try{
-		    		query.executeUpdate();
-		    	}catch(Exception e){
-		    		System.out.println(e.getMessage());
-		    	}
+			    if ( sql != null && !sql.trim().isEmpty() ){
+			    	Query query = entityManager.createNativeQuery(sql);
+			    	try{
+			    		query.executeUpdate();
+			    	}catch(Exception e){
+			    		System.out.println(e.getMessage());
+			    	}
+			    }
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {

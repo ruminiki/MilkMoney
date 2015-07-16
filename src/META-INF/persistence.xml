@@ -31,6 +31,7 @@
 		<class>br.com.milksys.model.EncerramentoLactacao</class>
 		<class>br.com.milksys.model.Touro</class>
 		<class>br.com.milksys.model.Indicador</class>
+		<class>br.com.milksys.model.Parametro</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

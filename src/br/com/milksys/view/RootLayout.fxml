@@ -16,10 +16,9 @@
 						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 					</accelerator>
 			 	  </MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animal" />
-                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
               </items>
             </Menu>
@@ -31,37 +30,24 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" />
 					</items>
 				</Menu>
-            <Menu mnemonicParsing="false" text="Reprodução">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
-                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" /> -->
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Nutrição">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Financeiro">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Propriedade">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFornecedor" text="Fornecedor" />
-               	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
-              </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Estatísticas">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Painel" />
                </items></Menu>
-			<Menu mnemonicParsing="false" text="Help">
+			<Menu mnemonicParsing="false" text="Miscelânea">
 				<items>
+               	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFornecedor" text="Fornecedor" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
+                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" /> -->
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroParametro" text="Parâmetros" />
 					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
 				</items>
 			</Menu>

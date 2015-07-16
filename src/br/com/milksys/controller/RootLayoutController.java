@@ -176,11 +176,18 @@ public class RootLayoutController {
     	
     }
     
+    @FXML
+    private void handleCadastroParametro() {
+    	
+    	openForm("view/parametro/ParametroOverview.fxml");
+    	
+    }
+    
     public void openForm(String formPath){
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	MainApp.rootLayout.setCenter(form);
     }
-
+    
     /**
      * Abre uma janela Sobre.
      */

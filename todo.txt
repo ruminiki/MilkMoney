@@ -19,6 +19,13 @@
 - quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
 - a data da cobertura deve ser maior ou igual a data da compra do semem.
 
+- fazer filtros:
+- em periodo voluntário de espera
+- cobertas primeiro ciclo
+- cobertas segundo ciclo
+- cobertas terceiro ciclo
+- não cobertas após PVE + 3 ciclos
+
 - numero de partos animal
 
 - erro casas decimais valor leite ex: 0,80
