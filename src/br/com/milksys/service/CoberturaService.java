@@ -2,13 +2,12 @@ package br.com.milksys.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.exception.ValidationException;
@@ -23,6 +22,7 @@ import br.com.milksys.validation.Validator;
 public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Autowired private CoberturaDao dao;
+	@Autowired private PartoService partoService;
 
 	@Override
 	@Transactional
@@ -46,7 +46,9 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
 		try{
+			
 			dao.persist(entity);
+			
 		}catch(Exception e){
 			configureSituacaoCobertura(entity);
 			entity.setParto(null);
@@ -59,7 +61,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		configureSituacaoCobertura(entity);
 		try{
-			dao.removerParto(entity);
+			
+			entity.setParto(null);
+			dao.persist(entity);
+			//dao.removerParto(entity);
 		}catch(Exception e){
 			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			throw new RuntimeException(e);

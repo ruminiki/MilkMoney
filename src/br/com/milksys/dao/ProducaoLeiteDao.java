@@ -7,12 +7,12 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoLeite;
 
-@Component
+@Repository
 public class ProducaoLeiteDao extends AbstractGenericDao<Integer, ProducaoLeite> {
 
 	public ProducaoLeite findByDate(Date data) {

@@ -3,13 +3,13 @@ package br.com.milksys.dao;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.AnimalVendido;
 import br.com.milksys.model.VendaAnimal;
 
-@Component
+@Repository
 public class VendaAnimalDao extends AbstractGenericDao<Integer, VendaAnimal> {
 
 	public void removeByAnimal(Animal animal) {

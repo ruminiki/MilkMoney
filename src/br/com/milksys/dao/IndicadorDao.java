@@ -6,14 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import jdk.nashorn.internal.ir.BreakableNode;
-
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Indicador;
 import br.com.milksys.util.DateUtil;
 
-@Component
+@Repository
 public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 
 	@Override

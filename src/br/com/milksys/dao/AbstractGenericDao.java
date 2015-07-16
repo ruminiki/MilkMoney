@@ -6,11 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.AbstractEntity;
 
-@Component
+@Repository
 public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	protected Class<E> entityClass;
 

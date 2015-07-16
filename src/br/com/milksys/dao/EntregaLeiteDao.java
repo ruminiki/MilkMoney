@@ -5,11 +5,11 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.EntregaLeite;
 
-@Component
+@Repository
 public class EntregaLeiteDao extends AbstractGenericDao<Integer, EntregaLeite> {
 
 	@SuppressWarnings("unchecked")

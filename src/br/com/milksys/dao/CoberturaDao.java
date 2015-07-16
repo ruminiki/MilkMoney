@@ -6,13 +6,13 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 
-@Component
+@Repository
 public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	@SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
-	public void removerParto(Cobertura cobertura) {
+/*	public void removerParto(Cobertura cobertura) {
 		
 		try{
 			EntityTransaction entityTransaction = entityManager.getTransaction();
@@ -61,7 +61,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 			throw e;
 		}
 		
-	}
+	}*/
 
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findByAnimal(Animal femea) {

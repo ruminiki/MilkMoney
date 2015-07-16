@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
@@ -16,7 +16,7 @@ import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.FichaAnimal;
 import br.com.milksys.model.Parto;
 
-@Component
+@Repository
 public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 
 	@SuppressWarnings("unchecked")

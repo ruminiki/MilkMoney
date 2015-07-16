@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Fornecedor;
 
-@Component
+@Repository
 public class FornecedorDao extends AbstractGenericDao<Integer, Fornecedor> {
 
 	@SuppressWarnings("unchecked")

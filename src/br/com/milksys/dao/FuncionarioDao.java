@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Funcionario;
 
-@Component
+@Repository
 public class FuncionarioDao extends AbstractGenericDao<Integer, Funcionario> {
 
 	@SuppressWarnings("unchecked")

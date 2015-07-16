@@ -121,7 +121,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=Cobertura.class, cascade=CascadeType.REFRESH)
+	@OneToOne(targetEntity=Cobertura.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, optional=false)
 	@JoinColumn(name="cobertura")
 	@FieldRequired(message="cobertura")
 	public Cobertura getCobertura() {
@@ -137,7 +137,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true,  targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToMany(orphanRemoval=true,  targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="parto")
 	public List<Cria> getCrias() {
 		if ( crias == null )

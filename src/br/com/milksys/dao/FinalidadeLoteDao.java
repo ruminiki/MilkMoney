@@ -1,10 +1,10 @@
 package br.com.milksys.dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.FinalidadeLote;
 
-@Component
+@Repository
 public class FinalidadeLoteDao extends AbstractGenericDao<Integer, FinalidadeLote> {
 
 }

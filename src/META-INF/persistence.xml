@@ -34,7 +34,6 @@
 		<class>br.com.milksys.model.Touro</class>
 		<class>br.com.milksys.model.Indicador</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <validation-mode>NONE</validation-mode>
 		<properties>
 			<!-- Configuring JDBC properties -->
 			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/milkmoney" />
@@ -49,12 +48,12 @@
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
 
 			<!-- Configuring Connection Pool -->
-			<!-- <property name="use_sql_comments" value="true" /> -->
-			<!-- <property name="hibernate.c3p0.min_size" value="5" />
+			<property name="use_sql_comments" value="true" />
+			<property name="hibernate.c3p0.min_size" value="5" />
 			<property name="hibernate.c3p0.max_size" value="20" />
 			<property name="hibernate.c3p0.timeout" value="500" />
 			<property name="hibernate.c3p0.max_statements" value="50" />
-			<property name="hibernate.c3p0.idle_test_period" value="2000" /> -->
+			<property name="hibernate.c3p0.idle_test_period" value="2000" />
 			
 			<!-- <property name="hibernate.cache.use.query_cache" value="false" />
 			<property name="hibernate.cache.use_second_level_cache" value="false"/> -->

@@ -7,9 +7,9 @@ import java.util.Scanner;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-@Component
+@Repository
 public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 	
 	@Transactional

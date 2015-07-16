@@ -1,10 +1,10 @@
 package br.com.milksys.dao;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Touro;
 
-@Component
+@Repository
 public class TouroDao extends AbstractGenericDao<Integer, Touro> {
 
 }

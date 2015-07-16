@@ -302,7 +302,8 @@ public class CoberturaValidation extends Validator {
 			if ( cobertura.getData().before( DateUtil.asDate(DateUtil.asLocalDate(lastCobertura.getParto().getData()).plusDays(21)) ) &&
 					cobertura.getData().after( DateUtil.asDate(DateUtil.asLocalDate(lastCobertura.getData()).minusDays(21)) )){
 				throw new ValidationException(REGRA_NEGOCIO, "Não é possível registrar a cobertura para o dia " + DateUtil.format(cobertura.getData()) + ", pois "
-						+ "a última cobertura foi no dia " + DateUtil.format(lastCobertura.getData()) + " e o parto no dia " + DateUtil.format(lastCobertura.getParto().getData()) + ".");
+						+ "a última cobertura do animal foi no dia " + DateUtil.format(lastCobertura.getData()) + " e o último parto no dia " + DateUtil.format(lastCobertura.getParto().getData()) + ". "
+								+ "É necessário que tenha um intervalo de pelo menos 21 dias entre uma cobertura e outra e um parto e uma cobertura.");
 			}
 		}
 		

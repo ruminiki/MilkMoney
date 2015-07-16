@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.dao.PartoDao;
 import br.com.milksys.model.Parto;
 import br.com.milksys.validation.PartoValidation;
@@ -18,15 +17,11 @@ import br.com.milksys.validation.PartoValidation;
 public class PartoService implements IService<Integer, Parto>{
 
 	@Autowired private PartoDao dao;
-	@Autowired private AnimalDao animalDao;
 
 	@Override
 	@Transactional
 	public boolean save(Parto entity) {
-		
-		PartoValidation.validate(entity);
     	return dao.persist(entity);
-		
 	}
 
 	@Override

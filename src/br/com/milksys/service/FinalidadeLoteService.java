@@ -5,27 +5,26 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.FinalidadeLoteDao;
 import br.com.milksys.model.FinalidadeLote;
 
 @Service
+@Transactional(propagation=Propagation.SUPPORTS)
 public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 
 	@Autowired private FinalidadeLoteDao dao;
 
 	@Override
-	@Transactional
 	public boolean save(FinalidadeLote entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
-	@Transactional
 	public boolean remove(FinalidadeLote entity) {
 		return dao.remove(entity);
 	}

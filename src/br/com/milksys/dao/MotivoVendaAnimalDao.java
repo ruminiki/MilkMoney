@@ -4,11 +4,11 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.MotivoVendaAnimal;
 
-@Component
+@Repository
 public class MotivoVendaAnimalDao extends AbstractGenericDao<Integer, MotivoVendaAnimal> {
 	
 	@SuppressWarnings("unchecked")

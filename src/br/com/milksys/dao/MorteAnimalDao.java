@@ -2,12 +2,12 @@ package br.com.milksys.dao;
 
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.MorteAnimal;
 
-@Component
+@Repository
 public class MorteAnimalDao extends AbstractGenericDao<Integer, MorteAnimal> {
 	
 	public Long countByCausa(String descricao) {
