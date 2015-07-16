@@ -150,6 +150,7 @@ public class Parto extends AbstractEntity implements Serializable {
 		this.crias = crias;
 	}
 	
+	@Access(AccessType.PROPERTY)
 	@OneToOne(orphanRemoval=true, targetEntity=EncerramentoLactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="encerramentoLactacao")
 	public EncerramentoLactacao getEncerramentoLactacao() {

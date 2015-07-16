@@ -23,6 +23,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Autowired private CoberturaDao dao;
 	@Autowired private PartoService partoService;
+	@Autowired private SemenService semenService;
 
 	@Override
 	@Transactional
@@ -35,7 +36,13 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validate(entity);
 		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
 		CoberturaValidation.validaFemeaSelecionada(entity, findByAnimal(entity.getFemea()));
-		CoberturaValidation.validaEnseminacaoArtificial(entity, (entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity)));
+		if ( entity.getSemen() != null ){
+			boolean aumentouQuantidadeDosesUtilizadas = entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity);
+			//recarrega o registro do semen para recalcular as doses disponíveis
+			entity.setSemen(semenService.findById(entity.getSemen().getId()));
+			CoberturaValidation.validaEnseminacaoArtificial(entity, entity.getSemen().getQuantidadeDisponivel(), aumentouQuantidadeDosesUtilizadas);	
+		}
+		
 		CoberturaValidation.validaSobreposicaoCoberturas(entity, dao.findLastCoberturaByAnimal(entity.getFemea()));
 		
 		return dao.persist(entity);

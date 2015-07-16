@@ -132,9 +132,9 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 		return motivoEncerramentoLactacao;
 	}
 	
-	@OneToOne(targetEntity=Parto.class, fetch=FetchType.LAZY)
+	@Access(AccessType.PROPERTY)
+	@OneToOne(targetEntity=Parto.class, cascade={CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="parto")
-	@FieldRequired(message="parto")
 	public Parto getParto() {
 		return parto;
 	}

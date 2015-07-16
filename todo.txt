@@ -16,6 +16,9 @@
 - fazer cadastro de procedimento
 - gráfico curva lactação animais por parto
 
+- quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
+- a data da cobertura deve ser maior ou igual a data da compra do semem.
+
 - numero de partos animal
 
 - erro casas decimais valor leite ex: 0,80

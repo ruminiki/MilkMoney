@@ -1,5 +1,6 @@
 package br.com.milksys.validation;
 
+import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -102,9 +103,10 @@ public class CoberturaValidation extends Validator {
 	 * Valida o registro de enseminação na cobertura.
 	 * 
 	 * @param cobertura
+	 * @param dosesDisponiveis 
 	 * @param aumentouQuantidadeDosesUtilizadas
 	 */
-	public static void validaEnseminacaoArtificial(Cobertura cobertura, boolean aumentouQuantidadeDosesUtilizadas){
+	public static void validaEnseminacaoArtificial(Cobertura cobertura, BigDecimal dosesDisponiveis, boolean aumentouQuantidadeDosesUtilizadas){
 		
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
 			//SEMEN NÃO PODE SER NULO
@@ -117,7 +119,7 @@ public class CoberturaValidation extends Validator {
 			//se durante a ateração de um registro o usuário aumentar a quantidade de doses
 			//sendo que não há doses suficientes disponíveis
 			if ( cobertura.getId() <= 0 || aumentouQuantidadeDosesUtilizadas ){
-				if ( cobertura.getQuantidadeDosesUtilizadas() > cobertura.getSemen().getQuantidadeDisponivel().intValue() ){
+				if ( cobertura.getQuantidadeDosesUtilizadas() > dosesDisponiveis.intValue() ){
 					throw new ValidationException(CAMPO_OBRIGATORIO, 
 							"O sêmen selecionado não possui quantidade suficiente disponível. "
 							+ "Por favor, verifique se a quantidade de doses informada está correta ou selecione outro sêmen.");

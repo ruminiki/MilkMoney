@@ -29,7 +29,15 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 	@Transactional
 	public boolean save(EncerramentoLactacao entity) {
 		
-		this.validate(entity);
+		EncerramentoLactacaoValidation.validate(entity);
+		EncerramentoLactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
+		
+		Parto ultimoParto = partoService.findLastParto(entity.getAnimal());
+		EncerramentoLactacaoValidation.validaUltimoParto(ultimoParto);
+		
+		entity.setParto(ultimoParto);
+		entity.getParto().setEncerramentoLactacao(entity);
+		
 		return dao.persist(entity);
 		
 	}
@@ -68,10 +76,7 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 
 	@Override
 	public void validate(EncerramentoLactacao entity) {
-		Parto ultimoParto = partoService.findLastParto(entity.getAnimal());
-		EncerramentoLactacaoValidation.validaUltimoParto(entity, ultimoParto);
-		EncerramentoLactacaoValidation.validate(entity);
-		EncerramentoLactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
+		
 	}
 	
 	@Transactional

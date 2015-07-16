@@ -60,6 +60,5 @@ public class SemenService implements IService<Integer, Semen>{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
 }

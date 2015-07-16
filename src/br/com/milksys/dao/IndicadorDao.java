@@ -1,6 +1,7 @@
 package br.com.milksys.dao;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -116,13 +117,14 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	@SuppressWarnings("unchecked")
 	private BigDecimal getValorApuradoDiasEmLactacao(){
 		
-		Date       dataInicio     = DateUtil.asDate(LocalDate.of(LocalDate.now().getYear(), 01, 01));
-		Date       dataFim        = DateUtil.asDate(LocalDate.of(LocalDate.now().getYear(), 12, 31));
+		Date       dataInicio     = DateUtil.asDate(LocalDate.now().minusYears(1));
+		Date       dataFim        = DateUtil.asDate(LocalDate.now());
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
+		int        totalPartos    = 0;
 		
 		//busca todas as fêmeas que já tiveram parto
-		Query query = entityManager.createQuery("select a from viewAnimaisAtivos a where a.sexo = '" + Sexo.FEMEA + "' and exists  " +
-				"(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
+		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and exists  " +
+				"(select 1 from Cobertura c inner join c.parto p where c.femea = a.id)");
 		
 		List<Animal> femeas = query.getResultList();
 		
@@ -136,27 +138,40 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 			
 			Parto ultimoPartoAnteriorPeriodo = (Parto) query.getSingleResult();
 			
-			if ( ultimoPartoAnteriorPeriodo != null ){
-				dataInicio = ultimoPartoAnteriorPeriodo.getData();
-			}
-			
 			//localiza o parto anterior a data de inicio, para verificar se ele se sobrepõe ao período atual
 			query = entityManager.createQuery("SELECT p FROM Parto p where p.data between :dataInicio and :dataFim and p.cobertura.femea = :femea order by p.data asc");
-			query.setParameter("dataInicio", dataInicio);
+			query.setParameter("dataInicio", ultimoPartoAnteriorPeriodo != null ? ultimoPartoAnteriorPeriodo.getData() : dataInicio);
 			query.setParameter("dataFim", dataFim);
 			query.setParameter("femea", femea);
 			
 			List<Parto> partos = query.getResultList();
 			
 			for ( Parto  parto : partos ){
-				diasEmLactacao = diasEmLactacao.add(contaDiasLactacaoParto(dataInicio, dataFim, parto, femea));
+				BigDecimal diasLactacaoParto = contaDiasLactacaoParto(
+						parto.getData().before(dataInicio) ? dataInicio : parto.getData(), dataFim, parto, femea);
+				
+				if ( diasLactacaoParto.compareTo(BigDecimal.ZERO) <= 0 ){
+					//se retornou zero é porque o ultimo parto não teve encerramento da lactação
+					//e o animal não foi vendido nem está morto.
+					//Nesse caso utilizar o ultimo dia do ano (para anos passados) ou a data corrente (para o ano atual)
+					//para cálculo dos dias em lactação
+					if ( new Date().before(dataFim) ){
+						diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), LocalDate.now()));
+					}else{
+						diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(dataFim)));
+					}
+				}
+				
+				diasEmLactacao = diasEmLactacao.add(diasLactacaoParto);
+				totalPartos++;
 			}
 			
 		}
 		
-		if ( diasEmLactacao.compareTo(BigDecimal.ZERO) > 0 && femeas.size() > 0 ){
-			diasEmLactacao = diasEmLactacao.divide(BigDecimal.valueOf(femeas.size()));
+		if ( diasEmLactacao.compareTo(BigDecimal.ZERO) > 0 && totalPartos > 0 ){
+			diasEmLactacao = diasEmLactacao.divide(new BigDecimal(totalPartos), 2, RoundingMode.HALF_UP);
 		}
+		
 		return diasEmLactacao;
 		
 	}
@@ -167,17 +182,12 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		//verifica se o parto teve o encerramento da lactação
 		EncerramentoLactacao encerramento = parto.getEncerramentoLactacao();
-		if ( encerramento != null && encerramento.getData().before(dataFim) ){
-			
-			long diasEntreEncerramentoEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(encerramento.getData()));
-			if ( diasEntreEncerramentoEInicioPeriodo > 0 ){//a lactação avançou pelo período
-				diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(diasEntreEncerramentoEInicioPeriodo));
-			}
-			
+		if ( encerramento != null && encerramento.getData().compareTo(dataInicio) >= 0 && encerramento.getData().compareTo(dataFim) <= 0 ){
+			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(encerramento.getData()))));
 		}else{
 			
-			//Procura registro venda animal após inicio do ano
-			VendaAnimal vendaAnimal = findVendaAnimal(dataInicio, femea);
+			//Procura registro venda animal após o último parto
+			VendaAnimal vendaAnimal = findVendaAnimal(parto.getData(), femea);
 			
 			if ( vendaAnimal != null ){
 				long diasEntreVendaEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(vendaAnimal.getDataVenda()));
@@ -186,8 +196,8 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 				}
 			}
 			
-			//Procura registro morte animal após inicio do ano
-			MorteAnimal morteAnimal = findMorteAnimal(dataInicio, femea);
+			//Procura registro morte animal após o último parto
+			MorteAnimal morteAnimal = findMorteAnimal(parto.getData(), femea);
 			if ( morteAnimal != null ){
 				long diasEntreMorteEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(morteAnimal.getDataMorte()));
 				if ( diasEntreMorteEInicioPeriodo > 0 ){//a lactação avançou pelo período
@@ -204,7 +214,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	
 	private VendaAnimal findVendaAnimal(Date dataInicio, Animal animal){
 		
-		Query query = entityManager.createQuery("SELECT v FROM VendaAnimal va inner join va.animaisVendidos av where av.animal = :animal and va.dataVenda > :dataInicio order by va.dataVenda desc");
+		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va inner join va.animaisVendidos av where av.animal = :animal and va.dataVenda > :dataInicio order by va.dataVenda desc");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("animal", animal);
 		query.setMaxResults(1);

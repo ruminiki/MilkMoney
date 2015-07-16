@@ -55,12 +55,9 @@ public class EncerramentoLactacaoValidation extends Validator {
 		
 	}
 
-	public static void validaUltimoParto(EncerramentoLactacao encerramentoLactacao, Parto ultimoPartoAnimal){
+	public static void validaUltimoParto(Parto ultimoPartoAnimal){
 		
-		if ( ultimoPartoAnimal.getEncerramentoLactacao() == null ){
-			encerramentoLactacao.setParto(ultimoPartoAnimal);
-			ultimoPartoAnimal.setEncerramentoLactacao(encerramentoLactacao);
-		}else{
+		if ( ultimoPartoAnimal.getEncerramentoLactacao() != null ){
 			throw new ValidationException(REGRA_NEGOCIO, "A última lactação já está encerrada. Não é possível concluir a operação.");
 		}
 		
