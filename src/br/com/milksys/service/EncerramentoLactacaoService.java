@@ -3,10 +3,10 @@ package br.com.milksys.service;
 import java.util.List;
 import java.util.function.Function;
 
-import javax.transaction.Transactional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import br.com.milksys.dao.EncerramentoLactacaoDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.EncerramentoLactacao;
+import br.com.milksys.model.Parto;
 import br.com.milksys.validation.EncerramentoLactacaoValidation;
 
 @Service
@@ -22,15 +23,13 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 
 	@Autowired private EncerramentoLactacaoDao dao;
 	@Autowired private CoberturaService coberturaService;
+	@Autowired private PartoService partoService;
 
 	@Override
 	@Transactional
 	public boolean save(EncerramentoLactacao entity) {
 		
-		EncerramentoLactacaoValidation.validate(entity);
-		EncerramentoLactacaoValidation.validaSituacaoAnimal(entity.getAnimal());
-		EncerramentoLactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
-		
+		this.validate(entity);
 		return dao.persist(entity);
 		
 	}
@@ -69,8 +68,10 @@ public class EncerramentoLactacaoService implements IService<Integer, Encerramen
 
 	@Override
 	public void validate(EncerramentoLactacao entity) {
-		// TODO Auto-generated method stub
-		
+		Parto ultimoParto = partoService.findLastParto(entity.getAnimal());
+		EncerramentoLactacaoValidation.validaUltimoParto(entity, ultimoParto);
+		EncerramentoLactacaoValidation.validate(entity);
+		EncerramentoLactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
 	}
 	
 	@Transactional

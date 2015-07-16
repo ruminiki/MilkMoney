@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.PartoDao;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Parto;
 import br.com.milksys.validation.PartoValidation;
 
@@ -53,6 +54,10 @@ public class PartoService implements IService<Integer, Parto>{
 	public void validate(Parto entity) {
 		PartoValidation.validate(entity);
 		PartoValidation.validadeCrias(entity);
+	}
+
+	public Parto findLastParto(Animal animal) {
+		return dao.findLastParto(animal);
 	}
 	
 }

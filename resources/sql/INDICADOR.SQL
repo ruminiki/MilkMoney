@@ -51,7 +51,7 @@ where DATEDIFF(a.dataNascimento, current_date()) <= 360
 and a.sexo = \'FÊMEA\\'  and not exists (select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'NV1');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, query) 
-SELECT * FROM (SELECT 'NOVILHAS ATÉ 2 ANOS', 'NV2', 9, '--', 'select count(*) from viewAnimaisAtivos a 
+SELECT * FROM (SELECT 'NOVILHAS 2 ANOS OU MAIS', 'NV2', 9, '--', 'select count(*) from viewAnimaisAtivos a 
 where DATEDIFF(a.dataNascimento, current_date()) between 360 and 720 
 and a.sexo = \'FÊMEA\\'  and not exists (select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'NV2');
 

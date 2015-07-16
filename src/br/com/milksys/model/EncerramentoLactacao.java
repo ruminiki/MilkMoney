@@ -14,12 +14,14 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -41,6 +43,7 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 	private StringProperty            observacao                 = new SimpleStringProperty();
 	private ObjectProperty<Animal>    animal                     = new SimpleObjectProperty<Animal>();
 	private StringProperty            motivoEncerramentoLactacao = new SimpleStringProperty(MotivoEncerramentoLactacao.PREPARACAO_PARTO);
+	private Parto parto;
 
 	public EncerramentoLactacao() {
 	}
@@ -100,7 +103,7 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH, fetch=FetchType.LAZY)
 	@JoinColumn(name="animal")
 	@FieldRequired(message="animal")
 	public Animal getAnimal() {
@@ -129,6 +132,17 @@ public class EncerramentoLactacao extends AbstractEntity implements Serializable
 		return motivoEncerramentoLactacao;
 	}
 	
+	@OneToOne(targetEntity=Parto.class, fetch=FetchType.LAZY)
+	@JoinColumn(name="parto")
+	@FieldRequired(message="parto")
+	public Parto getParto() {
+		return parto;
+	}
+
+	public void setParto(Parto parto) {
+		this.parto = parto;
+	}
+
 	@Transient
 	public String getDiasParaParto() {
 		long dias = 0;

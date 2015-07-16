@@ -8,6 +8,7 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MotivoEncerramentoLactacao;
+import br.com.milksys.model.Parto;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.util.DateUtil;
@@ -17,8 +18,6 @@ public class EncerramentoLactacaoValidation extends Validator {
 	public static void validate(EncerramentoLactacao encerramentoLactacao) {
 	
 		Validator.validate(encerramentoLactacao);
-		
-		validaSituacaoAnimal(encerramentoLactacao.getAnimal());
 		
 		if ( encerramentoLactacao.getData().after(new Date()) ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de encerramento da lactação não pode ser maior que a data atual.");
@@ -56,12 +55,21 @@ public class EncerramentoLactacaoValidation extends Validator {
 		
 	}
 
-	public static void validaSituacaoAnimal(Animal animal){
+	public static void validaUltimoParto(EncerramentoLactacao encerramentoLactacao, Parto ultimoPartoAnimal){
 		
+		if ( ultimoPartoAnimal.getEncerramentoLactacao() == null ){
+			encerramentoLactacao.setParto(ultimoPartoAnimal);
+			ultimoPartoAnimal.setEncerramentoLactacao(encerramentoLactacao);
+		}else{
+			throw new ValidationException(REGRA_NEGOCIO, "A última lactação já está encerrada. Não é possível concluir a operação.");
+		}
+		
+	}
+	
+	public static void validaSituacaoAnimal(Animal animal){
 		if ( animal.getSituacaoAnimal() != null && !animal.getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "Para secar a vaca é necessário que ela esteja em lactação.");
 		}
-		
 	}
 	
 }

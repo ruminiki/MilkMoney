@@ -6,7 +6,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import br.com.milksys.model.Indicador;
-import br.com.milksys.util.NumberFormatUtil;
 
 @SuppressWarnings("hiding")
 public class TableCellValueColorFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
@@ -30,7 +29,7 @@ public class TableCellValueColorFactory<S, String> implements Callback<TableColu
 					
 					Indicador indicador = (Indicador) getTableView().getItems().get(getTableRow().getIndex());
 					
-					if ( NumberFormatUtil.fromString(indicador.getValorReferencia()).compareTo(NumberFormatUtil.fromString(indicador.getValorApurado())) > 0 ){
+					if ( indicador.getValorReferencia().compareTo(indicador.getValorApurado()) > 0 ){
 						label.setStyle("-fx-text-fill: red");
 					}else{
 						label.setStyle("-fx-text-fill: green");

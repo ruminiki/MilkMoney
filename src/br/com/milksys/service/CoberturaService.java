@@ -210,7 +210,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Transactional
 	public void removeServicoFromCobertura(Cobertura cobertura) {
-		dao.removeServicoFromCobertura(cobertura);
+		cobertura.setServico(null);
+		dao.persist(cobertura);
 	}
 
 	@Override

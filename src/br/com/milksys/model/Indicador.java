@@ -1,6 +1,7 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +16,6 @@ import org.hibernate.annotations.Type;
 @Entity
 @Table(name="indicador")
 @NamedQuery(name="Indicador.findAll", query="SELECT r FROM Indicador r order by r.ordem")
-/*, 
-hints={ @javax.persistence.QueryHint(name = "org.hibernate.cacheable", value = "false"),
-		@javax.persistence.QueryHint(name = "org.hibernate.cacheMode", value = "PUT"),
-		@javax.persistence.QueryHint(name = "org.hibernate.flushMode", value = "ALWAYS")})*/
 public class Indicador extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -27,20 +24,20 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private int id;
 	private String descricao;
 	private String sigla;
-	private String valorReferencia;
+	private BigDecimal valorReferencia;
 	
 	@Type(type="text")
 	private String query;
-	private String valorApurado;
+	private BigDecimal valorApurado;
 	private int ordem;
 	
 	public Indicador() {
 	}
 	
-	public Indicador(String descricao, String sigla, long valor) {
+	public Indicador(String descricao, String sigla, BigDecimal valor) {
 		this.descricao = descricao;
 		this.sigla = sigla;
-		this.valorApurado = String.valueOf(valor);
+		this.valorApurado = valor;
 	}
 
 	public int getId() {
@@ -67,11 +64,11 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.sigla = sigla;
 	}
 
-	public String getValorReferencia() {
+	public BigDecimal getValorReferencia() {
 		return valorReferencia;
 	}
 
-	public void setValorReferencia(String valorReferencia) {
+	public void setValorReferencia(BigDecimal valorReferencia) {
 		this.valorReferencia = valorReferencia;
 	}
 
@@ -83,11 +80,11 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.query = query;
 	}
 
-	public String getValorApurado() {
+	public BigDecimal getValorApurado() {
 		return valorApurado;
 	}
 
-	public void setValorApurado(String valorApurado) {
+	public void setValorApurado(BigDecimal valorApurado) {
 		this.valorApurado = valorApurado;
 	}
 

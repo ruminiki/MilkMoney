@@ -49,6 +49,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	private StringProperty complicacaoParto = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
 	private ObjectProperty<Cobertura> cobertura = new SimpleObjectProperty<Cobertura>();
 	private List<Cria> crias = new ArrayList<Cria>();
+	private EncerramentoLactacao encerramentoLactacao;
 	
 	public Parto() {
 	}
@@ -149,6 +150,16 @@ public class Parto extends AbstractEntity implements Serializable {
 		this.crias = crias;
 	}
 	
+	@OneToOne(orphanRemoval=true, targetEntity=EncerramentoLactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name="encerramentoLactacao")
+	public EncerramentoLactacao getEncerramentoLactacao() {
+		return encerramentoLactacao;
+	}
+
+	public void setEncerramentoLactacao(EncerramentoLactacao encerramentoLactacao) {
+		this.encerramentoLactacao = encerramentoLactacao;
+	}
+
 	@Override
 	public String toString() {
 		return "PARTO " + getCobertura().getFemea().getNumeroNome() + " - " +  DateUtil.format(getData());

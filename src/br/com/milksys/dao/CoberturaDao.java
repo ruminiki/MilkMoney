@@ -2,7 +2,6 @@ package br.com.milksys.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -23,23 +22,6 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		return query.getResultList();
 	}
 	
-	public void removeServicoFromCobertura(Cobertura cobertura) {
-		
-		try{
-			EntityTransaction entityTransaction = entityManager.getTransaction();
-	        entityTransaction.begin();
-			
-	        cobertura.setServico(null);
-	        entityManager.persist(cobertura);
-	       
-	        entityTransaction.commit();
-		}catch(Exception e){
-			entityManager.refresh(cobertura);
-			throw e;
-		}
-		
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findByAnimal(Animal femea) {
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea");
