@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.validation.AnimalValidation;
 
 @Service
@@ -69,6 +70,14 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	public Long countAnimaisEmLactacao(Date data) {
 		return dao.countAnimaisEmLactacao(data);
+	}
+	
+	public ObservableList<Lactacao> findLactacoesAnimal(Animal animal) {
+		return FXCollections.observableArrayList(dao.findLactacoesAnimal(animal));
+	}
+
+	public Long getNumeroPartos(Animal animal) {
+		return dao.countNumeroPartos(animal);
 	}
 
 }

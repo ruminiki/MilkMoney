@@ -138,7 +138,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true,  targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(orphanRemoval=true, targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="parto")
 	public List<Cria> getCrias() {
 		if ( crias == null )

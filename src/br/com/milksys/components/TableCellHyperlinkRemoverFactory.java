@@ -13,9 +13,11 @@ import javafx.util.Callback;
 public class TableCellHyperlinkRemoverFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
 	private Function<Integer, Boolean> function;
+	private Boolean disabled;
 	
-	public TableCellHyperlinkRemoverFactory(Function<Integer, Boolean> function) {
+	public TableCellHyperlinkRemoverFactory(Function<Integer, Boolean> function, Boolean disabled) {
 		this.function = function;
+		this.disabled = disabled;
 	}
 
 	@Override
@@ -36,6 +38,7 @@ public class TableCellHyperlinkRemoverFactory<S, String> implements Callback<Tab
 									function.apply(getTableRow().getIndex());
 								}
 							});
+							hp.setDisable(disabled);
 							setGraphic(hp);
 						} 
 					}

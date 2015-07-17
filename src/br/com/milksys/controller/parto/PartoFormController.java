@@ -97,7 +97,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		incorporadoAoRebanhoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("incorporadoAoRebanho"));
 		situacaoNascimentoColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("situacaoNascimento"));
 		removerColumn.setCellValueFactory(new PropertyValueFactory<Cria,String>("situacaoNascimento"));
-		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<Cria, String>(removerCriaParto));
+		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<Cria, String>(removerCriaParto, getObject().getId() > 0));
 		
 		btnAdicionarCria.setDisable(getObject().getId() > 0 );
 		btnSalvar.setDisable(getObject().getId() > 0 );

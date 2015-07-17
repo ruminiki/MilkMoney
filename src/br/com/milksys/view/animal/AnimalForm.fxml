@@ -47,7 +47,7 @@
                   <ComboBox fx:id="inputSexo" prefWidth="124.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <UCTextField fx:id="inputRaca" disable="true" onMouseClicked="#handleSelecionarRaca" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarRaca" prefWidth="56.0" text="Novo" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarRaca" prefWidth="56.0" text="Buscar" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

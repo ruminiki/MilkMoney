@@ -65,4 +65,18 @@ public class ProducaoIndividualDao extends AbstractGenericDao<Integer, ProducaoI
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<ProducaoIndividual> findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT c FROM ProducaoIndividual c WHERE c.animal = :animal and "
+				+ "c.data between :dataInicio and :dataFim order by data");
+		
+		query.setParameter("animal", animal);
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
+		
+	}
+
 }

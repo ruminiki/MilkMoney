@@ -10,72 +10,93 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="521.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.producaoIndividual.ProducaoIndividualOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="438.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.producaoIndividual.ProducaoIndividualOverviewController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="521.0" prefWidth="816.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <Label text="Pesquisar:">
+            <HBox alignment="CENTER" prefHeight="30.0" spacing="5.0" style="-fx-border-color: #CCC;">
                <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
-               <padding>
-                  <Insets right="5.0" top="5.0" />
+                  <Insets right="5.0" />
                </padding>
-            </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
-            <HBox alignment="CENTER" spacing="5.0">
                <children>
-                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                  <Label fx:id="lblHeader" text="PRODUÇÃO INDIVIDUAL " />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <VBox minWidth="510.0" spacing="5.0">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CFE68A;">
+                           <children>
+                              <Label text="LACTAÇÕES">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tableLactacoes" focusTraversable="false">
+                                <columns>
+                                  <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
+                                  <TableColumn fx:id="dataTerminoLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Término" />
+                                    <TableColumn prefWidth="75.0" text="Duração Lactação">
+                                       <columns>
+                                          <TableColumn fx:id="diasEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Dias" />
+                                          <TableColumn fx:id="mesesEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Meses" />
+                                       </columns>
+                                    </TableColumn>
+                                </columns>
+                              </TableView>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E0A366;">
+                           <children>
+                              <Label text="MARCAÇÕES">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" VBox.vgrow="SOMETIMES">
+                          <columns>
+                            <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Data" />
+                              <TableColumn prefWidth="75.0" text="Ordenhas">
+                                 <columns>
+                                    <TableColumn fx:id="primeiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Primeira" />
+                                    <TableColumn fx:id="segundaOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Segunda" />
+                                    <TableColumn fx:id="terceiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Terceira" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="valorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                        <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
+                           <children>
+                              <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Marcação" />
+                              <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                              <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vBoxChart" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #96AFFF;">
+                           <children>
+                              <Label text="GRÁFICO">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
-         <padding>
-            <Insets right="5.0" />
-         </padding>
-      </HBox>
-      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Registros">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-         </children>
       </VBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="55.0">
-         <children>
-            <TableView fx:id="tableAnimal" focusTraversable="false" minWidth="250.0">
-              <columns>
-                <TableColumn fx:id="animalListColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" resizable="false" text="Selecione um Animal" />
-              </columns>
-            </TableView>
-            <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" maxWidth="1.7976931348623157E308" scaleShape="false" HBox.hgrow="SOMETIMES">
-              <columns>
-                  <TableColumn fx:id="animalColumn" maxWidth="-1.0" minWidth="250.0" prefWidth="75.0" text="Animal" />
-                <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Data" />
-                  <TableColumn prefWidth="75.0" text="Ordenhas">
-                     <columns>
-                        <TableColumn fx:id="primeiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Primeira" />
-                        <TableColumn fx:id="segundaOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Segunda" />
-                        <TableColumn fx:id="terceiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Terceira" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn fx:id="valorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
-                  <TableColumn fx:id="observacaoColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="-1.0" text="Observação" />
-              </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-         </children>
-      </HBox>
    </children>
 </AnchorPane>

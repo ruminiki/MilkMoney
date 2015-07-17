@@ -3,9 +3,16 @@ package br.com.milksys.controller.producaoIndividual;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
 
@@ -16,6 +23,7 @@ import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
@@ -26,45 +34,80 @@ import br.com.milksys.service.searchers.SearchFemeasAtivas;
 @Controller
 public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual> {
 
-	@FXML private TableView<Animal> tableAnimal; 
-	@FXML private TableColumn<Animal, String> animalListColumn;
+	//lactacoes
+	@FXML private TableView<Lactacao> tableLactacoes;
+	@FXML private TableColumn<Lactacao, String> dataInicioLactacaoColumn;
+	@FXML private TableColumn<Lactacao, String> dataTerminoLactacaoColumn;
+	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
+	@FXML private TableColumn<Lactacao, String> mesesEmLactacaoColumn;
 	
-	@FXML private TableColumn<Animal, String> animalColumn;
 	@FXML private TableColumn<ProducaoIndividual, LocalDate> dataColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> primeiraOrdenhaColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> segundaOrdenhaColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> terceiraOrdenhaColumn;
-	@FXML private TableColumn<ProducaoIndividual, String> observacaoColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> valorColumn;
+	
+	@FXML private Label lblHeader;
+	
+	@FXML private VBox vBoxChart;
 	
 	@Autowired private AnimalService animalService;
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
 	@Autowired private ProducaoIndividualFormController producaoIndividualFormController;
 	
-	private Animal selectedAnimal;
+	private Animal animal;
+	private Lactacao lactacao;
 	
 	@FXML
 	public void initialize() {
 		
-		tableAnimal.setItems(searchFemeasAtivas.doSearch());
-		tableAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> findByAnimal(newValue));
-		animalListColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("numeroNome"));
+		//tabela lactações
+		dataInicioLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataInicio"));
+		dataTerminoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataFim"));
+		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoDias"));
+		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoMeses"));
+		
+		tableLactacoes.getItems().clear();
+		tableLactacoes.setItems(animalService.findLactacoesAnimal(animal));
+		
+		lblHeader.setText("PRODUÇÃO INDIVIDUAL " + animal.toString());
 	
-		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal, String>("animal"));
 		dataColumn.setCellFactory(new TableCellDateFactory<ProducaoIndividual, LocalDate>("data"));
 		primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
 		segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
 		terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("terceiraOrdenha"));
 		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
-		observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoIndividual, String>("observacao"));
 		
+		//gráfico
+		final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        
+        xAxis.setLabel("Data");
+        
+        final LineChart<String, Number> lineChart = new LineChart<String,Number>(xAxis,yAxis);
+        
+        lineChart.setTitle("Registro Produção Individual");
+        lineChart.setLegendVisible(true);
+        
+        VBox.setVgrow(lineChart, Priority.SOMETIMES);
+        HBox.setHgrow(lineChart, Priority.SOMETIMES);
+        
+        vBoxChart.getChildren().add(lineChart);
+        
+        tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        	lactacao = newValue;
+    		refreshTableOverview();
+    		lineChart.getData().clear();
+    		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+        });
+        
 		super.initialize(producaoIndividualFormController);
 		
 	}
 	
 	@Override
 	public void handleNew() {
-		setObject(new ProducaoIndividual(selectedAnimal));
+		setObject(new ProducaoIndividual(animal));
 		producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
 		producaoIndividualFormController.setState(State.INSERT);
 		producaoIndividualFormController.setObject(getObject());
@@ -85,30 +128,31 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	protected void refreshTableOverview() {
 		data.clear();
 		
-		if ( selectedAnimal == null || selectedAnimal.getId() <= 0 ){
-			if ( tableAnimal.getItems() != null && tableAnimal.getItems().size() > 0 ){
+		if ( lactacao == null ){
+			if ( tableLactacoes.getItems() != null && tableLactacoes.getItems().size() > 0 ){
 				table.getSelectionModel().clearAndSelect(0);
-				selectedAnimal = tableAnimal.getItems().get(0);
+				lactacao = tableLactacoes.getItems().get(0);
 				refreshTableOverview();
 			}	
 		}else{
-			data.addAll(((ProducaoIndividualService)service).findByAnimal(selectedAnimal));
+			data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
 		}
 		
-		updateLabelNumRegistros();
-			
 		((ProducaoIndividualService)service).atualizaValorProducao(data);
 		
 	}
 	
-	private void findByAnimal(Animal animal) {
-		selectedAnimal = animal;
-		refreshTableOverview();
+	public Animal getAnimal() {
+		return animal;
+	}
+
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 
 	@Override
 	protected String getFormName() {
-		return "view/producaoIndividual/ProducaoIndividualForm.fxml";
+		return "view/producaoIndividual/ProducaoIndividualOverview.fxml";
 	}
 	
 	@Override

@@ -1,11 +1,13 @@
-- carregar o número de vacas em lactação no lançamento de producao de leite
-
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 - forçar reload dados atualizados em outras telas (atualizar os mapeamentos);
 
-- Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
-
 - configurar as pesquisas em todos os cadastros;
+- reconstruir tela produção individual
+
+- está permitindo deletar animal sem remover o parto.
+- lazy initialization parto - crias.
+- fazer validações tela cadastro produção individual
+
 - na venda fazer a somatória de animais vendidos e do valor total
 
 - permitir cadastro dos valores de referencia nos indicadores;

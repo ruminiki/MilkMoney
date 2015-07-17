@@ -11,9 +11,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 
 import javax.annotation.Resource;
 
@@ -29,6 +27,7 @@ import br.com.milksys.controller.cobertura.CoberturaOverviewController;
 import br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController;
 import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
+import br.com.milksys.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milksys.controller.raca.RacaOverviewController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
 import br.com.milksys.controller.vendaAnimal.VendaAnimalFormController;
@@ -99,12 +98,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
+	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	
-	private MenuItem encerrarLactacaoMenuItem = new MenuItem();
-	private MenuItem registrarMorteMenuItem   = new MenuItem();
-	private MenuItem registrarVendaMenuItem   = new MenuItem();
-	private MenuItem fichaAnimalMenuItem      = new MenuItem("Ficha Animal");
-	private MenuItem coberturasMenuItem       = new MenuItem("Coberturas");
+	private MenuItem encerrarLactacaoMenuItem   = new MenuItem();
+	private MenuItem registrarMorteMenuItem     = new MenuItem();
+	private MenuItem registrarVendaMenuItem     = new MenuItem();
+	private MenuItem registroProducaoIndividualMenuItem = new MenuItem("Registro Produção Individual");
+	private MenuItem fichaAnimalMenuItem        = new MenuItem("Ficha Animal");
+	private MenuItem coberturasMenuItem         = new MenuItem("Coberturas");
 	
 	@FXML
 	public void initialize() {
@@ -153,7 +154,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		coberturasMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	handleAbriCoberturasAnimal();
+		    	handleAbrirCoberturasAnimal();
+		    }
+		});
+		
+		registroProducaoIndividualMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleOpenMarcacoesLeiteAnimal();
 		    }
 		});
 		
@@ -165,7 +173,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		});
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), encerrarLactacaoMenuItem, 
-				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), coberturasMenuItem, fichaAnimalMenuItem);
+				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), coberturasMenuItem, registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
 		
 	}
 	
@@ -179,6 +187,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		encerrarLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		coberturasMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
+		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		
 		registrarMorteMenuItem.setText(
 				getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? 
@@ -206,17 +215,17 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		super.setService(service);
 	}
 	
+	private void handleOpenMarcacoesLeiteAnimal(){
+		
+		producaoIndividualOverviewController.setAnimal(getObject());
+		producaoIndividualOverviewController.showForm();
+		
+	}
+	
 	private void handleOpenFichaAnimal(){
 		
 		fichaAnimalOverviewController.setAnimal(getObject());
-		AnchorPane node = (AnchorPane) MainApp.load(fichaAnimalOverviewController.getFormName());
-		HBox.setHgrow(node, Priority.SOMETIMES);
-		
-		if ( containerTable.getChildren().size() > 1 ){
-			containerTable.getChildren().set(1, node);
-		}else{
-			containerTable.getChildren().add(node);
-		}
+		fichaAnimalOverviewController.showForm();
 		
 	}
 	
@@ -306,7 +315,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 	};
 	
-	private void handleAbriCoberturasAnimal(){
+	private void handleAbrirCoberturasAnimal(){
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			

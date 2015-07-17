@@ -87,7 +87,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		destinacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<DestinacaoAnimal,String>("destinacaoAnimal"));
 		valorAnimalColumn.setCellValueFactory(new PropertyValueFactory<AnimalVendido,String>("valorAnimal"));
 		removerColumn.setCellValueFactory(new PropertyValueFactory<AnimalVendido,String>("motivoVendaAnimal"));
-		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<AnimalVendido, String>(removerAnimalDaVenda));
+		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<AnimalVendido, String>(removerAnimalDaVenda, false));
 		
 		table.getItems().clear();
 		table.getItems().addAll(getObject().getAnimaisVendidos());

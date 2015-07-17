@@ -1,6 +1,7 @@
 package br.com.milksys.dao;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FinalidadeAnimal;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoCobertura;
 
@@ -201,6 +203,51 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 	}
+	
+	/*
+	 * Identifica os periodos de lactação do animal.
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Lactacao> findLactacoesAnimal(Animal animal) {
+		
+		List<Lactacao> lactacoes = new ArrayList<Lactacao>();
+		
+		Query query = entityManager.createNativeQuery(
+				"select p.data as dataInicio, coalesce(e.data,va.dataVenda,ma.dataMorte,current_date()) as dataFim from animal a "
+				+ "inner join cobertura c on (c.femea = a.id) "
+				+ "inner join parto p on (p.id = c.parto) "
+				+ "left join encerramentoLactacao e on (e.parto = p.id) "
+				+ "left join animalVendido av on (av.animal = a.id ) "
+				+ "left join vendaAnimal va on (va.id = av.vendaAnimal) "
+				+ "left join morteAnimal ma on (ma.animal = a.id)");
+				
+		List<Object[]> result = (List<Object[]>) query.getResultList();
+		
+		for ( Object[] row : result ){
+			Lactacao lactacao = new Lactacao();
+			lactacao.setDataInicio( (Date) row[0] );
+			lactacao.setDataFim( (Date) row[1] );
+			lactacoes.add(lactacao);
+		}
+		
+		return lactacoes;
+		
+	}
+	
+	public Long countNumeroPartos(Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT count(p) FROM Parto p where p.cobertura.femea = :animal");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("animal", animal);
+		
+		try{
+			return (Long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+		
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasSecas() {
@@ -326,6 +373,5 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
 		return (BigInteger) query.getSingleResult();
 	}
-
 
 }

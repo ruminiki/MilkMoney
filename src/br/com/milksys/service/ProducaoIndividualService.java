@@ -6,6 +6,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import br.com.milksys.dao.ProducaoIndividualDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoIndividual;
+import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.ProducaoIndividualValidation;
 
 @Service
@@ -135,6 +138,10 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	public List<ProducaoIndividual> findByAnimal(Animal animal) {
 		return dao.findByAnimal(animal);
 	}
+	
+	public ObservableList<ProducaoIndividual> findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		return FXCollections.observableArrayList(dao.findByAnimalPeriodo(animal, dataInicio, dataFim));
+	}
 
 	public ProducaoIndividual findByAnimalAndData(Animal animal, Date data) {
 		return dao.findByAnimalAndData(animal, data);
@@ -142,9 +149,24 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 
 	@Override
 	public void validate(ProducaoIndividual entity) {
-		// TODO Auto-generated method stub
 		
 	}
-	
-	
+
+	public ObservableList<Series<String, Number>> getDataChart(Animal animal, Date dataInicio, Date dataFim) {
+		
+		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+    	XYChart.Series<String, Number> serie = new XYChart.Series<String, Number>();
+    	
+    	serie.setName("Produção Individual");
+    	
+    	for ( ProducaoIndividual producao : dao.findByAnimalPeriodo(animal, dataInicio, dataFim) ){
+    		serie.getData().add(new XYChart.Data<String, Number>(DateUtil.format(producao.getData()), producao.getTotalProducaoDia()));
+    	}
+    	
+    	series.add(serie);
+    	
+    	return series;
+    	
+	}
+
 }

@@ -27,7 +27,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
 						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" />
+                 <!--  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" /> -->
 					</items>
 				</Menu>
             <Menu mnemonicParsing="false" text="Estatísticas">

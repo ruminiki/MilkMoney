@@ -16,6 +16,7 @@
                 <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="68.0" prefWidth="109.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="143.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="373.0" minWidth="10.0" prefWidth="193.0" />
+                  <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
@@ -45,12 +46,11 @@
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" prefWidth="442.0" spacing="5.0">
                <children>
-                  <Button fx:id="btnOk" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Ok">
+                  <Button fx:id="btnOk" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnRemover" mnemonicParsing="false" text="Remover" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>
