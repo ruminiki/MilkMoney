@@ -244,9 +244,46 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	 * parto anterior das vacas com mais de um parto. Neste dado não entram as vacas de primeira lactação.
 	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/interpretacao-dos-indices-da-eficiencia-reprodutiva-41269n.aspx
 	 * 
+	 * Verificar se incluem as vacas mortas e vendidas
+	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	private BigDecimal getValorApuradoIntervaloEntrePartos(){
-		return BigDecimal.ZERO;
+		
+		BigDecimal intervaloEntrePartos = BigDecimal.ZERO;
+		
+		//vacas com mais de um parto
+		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) "
+				+ "group by a having (select count(p) from Parto p where p.cobertura.femea.id = a.id ) >= 2 ");
+		
+		List<Animal> femeas = query.getResultList();
+		
+		for ( Animal femea : femeas ){
+			//busca os dois últimos partos do animal
+			Query queryParto = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :femea order by p.data desc");
+			queryParto.setMaxResults(2);
+			queryParto.setParameter("femea", femea);
+			
+			List<Parto> partos = queryParto.getResultList();
+			
+			if ( partos != null && partos.size() == 2 ){
+				//soma o intervalo de meses entre um e outro
+				intervaloEntrePartos = BigDecimal.valueOf(ChronoUnit.MONTHS.between(DateUtil.asLocalDate(partos.get(1).getData()), DateUtil.asLocalDate(partos.get(0).getData())));
+				
+			}
+			
+		}
+		//divide a soma dos intervalos pelo número de partos para obter a média
+		if ( intervaloEntrePartos.compareTo(BigDecimal.ZERO) > 0 ){
+			
+			intervaloEntrePartos = intervaloEntrePartos.divide(BigDecimal.valueOf(femeas.size()), 2, RoundingMode.HALF_EVEN);
+			
+		}
+		
+		return intervaloEntrePartos;
+		
 	}
 	
 	private BigDecimal getValorApuradoTamanhoRebanho(){
