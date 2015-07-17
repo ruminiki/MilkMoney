@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import br.com.milksys.components.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
@@ -9,22 +10,56 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxWidth="510.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.painel.IndicadorOverviewController">
+<AnchorPane prefHeight="470.0" prefWidth="861.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.painel.IndicadorOverviewController">
    <children>
-      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" VBox.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" prefHeight="30.0" style="-fx-border-color: #CCC;">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="INDICADORES ZOOTÉCNICOS DO REBANHO" />
+               </children>
+            </HBox>
+            <TableView fx:id="table" cache="true" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" VBox.vgrow="SOMETIMES">
               <columns>
-                  <TableColumn editable="false" prefWidth="75.0" resizable="false" sortable="false" text="Indicadores Zootécnicos">
-                     <columns>
-                      <TableColumn fx:id="indicadorColumn" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" sortable="false" text="Indicador" />
-                        <TableColumn fx:id="siglaColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
-                      <TableColumn fx:id="valorReferenciaColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
-                        <TableColumn fx:id="valorApuradoColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
-                     </columns>
-                  </TableColumn>
+                <TableColumn fx:id="indicadorColumn" maxWidth="-1.0" minWidth="320.0" prefWidth="-1.0" sortable="false" text="Indicador" />
+                  <TableColumn fx:id="siglaColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
+                <TableColumn fx:id="valorReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
+                  <TableColumn fx:id="valorApuradoColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
               </columns>
             </TableView>
+            <GridPane maxHeight="182.0" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="851.0" style="-fx-border-color: #CCC;">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="95.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label fx:id="lblIndicador" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblDefinicaoIndicador" textAlignment="JUSTIFY" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Valor Referência: " GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                     <children>
+                        <UCTextField fx:id="inputValorReferencia" maxWidth="100.0" />
+                        <Button mnemonicParsing="false" onAction="#handleSalvar" text="Salvar" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </GridPane>
          </children>
       </VBox>
    </children>

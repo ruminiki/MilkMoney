@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.milksys.dao.IndicadorDao;
 import br.com.milksys.model.Indicador;
 import br.com.milksys.service.IService;
+import br.com.milksys.validation.IndicadorValidation;
 
 @Service
 public class IndicadorService implements IService<Integer, Indicador>{
@@ -22,7 +23,8 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	@Override
 	@Transactional
 	public boolean save(Indicador entity) {
-		return false;
+		IndicadorValidation.validate(entity);
+		return dao.persist(entity);
 	}
 
 	@Override

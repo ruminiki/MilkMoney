@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
+import br.com.milksys.components.FieldRequired;
+
 
 @Entity
 @Table(name="indicador")
@@ -22,7 +26,8 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private String descricao;
 	private String sigla;
 	private String valorReferencia;
-	
+	@Type(type="text")
+	private String definicao;
 	private String classeCalculo;
 	private String valorApurado;
 	private int ordem;
@@ -44,6 +49,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.id = id;
 	}
 
+	@FieldRequired(message="descrição")
 	public String getDescricao() {
 		return descricao;
 	}
@@ -52,6 +58,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.descricao = descricao;
 	}
 
+	@FieldRequired(message="sigla")
 	public String getSigla() {
 		return sigla;
 	}
@@ -60,6 +67,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.sigla = sigla;
 	}
 
+	@FieldRequired(message="valor de referência")
 	public String getValorReferencia() {
 		return valorReferencia;
 	}
@@ -68,6 +76,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.valorReferencia = valorReferencia;
 	}
 
+	@FieldRequired(message="classe de cálculo")
 	public String getClasseCalculo() {
 		return classeCalculo;
 	}
@@ -90,6 +99,14 @@ public class Indicador extends AbstractEntity implements Serializable {
 
 	public void setOrdem(int ordem) {
 		this.ordem = ordem;
+	}
+	
+	public String getDefinicao() {
+		return definicao;
+	}
+
+	public void setDefinicao(String definicao) {
+		this.definicao = definicao;
 	}
 
 	@Override

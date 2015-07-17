@@ -1,7 +1,6 @@
 package br.com.milksys.service.indicadores;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 
 import org.springframework.beans.factory.annotation.Autowired;

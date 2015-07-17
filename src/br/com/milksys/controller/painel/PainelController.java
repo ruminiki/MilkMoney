@@ -39,12 +39,7 @@ public class PainelController {
 	//handlers
 	@FXML
 	private void handleIndicadores(){
-		group.getChildren().clear();
-		
-		AnchorPane node = (AnchorPane) MainApp.load(indicadorOverviewController.getFormName());
-		VBox.setVgrow(node, Priority.SOMETIMES);		
-		group.getChildren().add(node);
-		
+		changeItem((AnchorPane) MainApp.load(indicadorOverviewController.getFormName()));
 	}
 	
 	
