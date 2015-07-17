@@ -15,8 +15,8 @@ public class SearchFemeasEmLactacao extends Search<Integer, Animal> {
 	@Autowired AnimalDao dao;
 	
 	@Override
-	public ObservableList<Animal> doSearch(Object ...objects) {
-		return FXCollections.observableArrayList(dao.findAllFemeasEmLactacao());
+	public ObservableList<Animal> doSearch(Object ...params) {
+		return FXCollections.observableArrayList(dao.findAllFemeasEmLactacao(params));
 	}
 	
 }

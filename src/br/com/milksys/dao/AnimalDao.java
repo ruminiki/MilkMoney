@@ -1,8 +1,10 @@
 package br.com.milksys.dao;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -136,16 +138,45 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 	}
 
+	/*
+	 *Recupera todos os animais em lactação em um determinado período.
+	 *Se não for passado parâmetro, considera a data atual.
+	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasEmLactacao() {
+	public List<Animal> findAllFemeasEmLactacao(Object ...params) {
 		
-		Query query = entityManager.createQuery("SELECT a FROM Cobertura c inner join c.femea a "
-				+ "inner join c.parto p "
-				+ "WHERE not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.data > p.data and e.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+		Date   data   = (params != null && params.length > 0) ? (Date)   params[0] : new Date();
+
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Cobertura c inner join c.femea a inner join c.parto p WHERE p.data < :data "
+				+ "and not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.parto.id = p.id and e.data <= :data) "
+				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id and v.dataVenda <= :data) "
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
 		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("data", data);
 		return query.getResultList();
+		
+	}
+	
+	/*
+	 *Identifica se o animal está em lactação em uma determinada data.
+	 */
+	public Boolean animalEstaEmLactacao(Date data, Animal animal) {
+		
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Cobertura c inner join c.femea a inner join c.parto p WHERE p.data < :data and a = :animal "
+				+ "and not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.parto.id = p.id and e.data <= :data) "
+				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id and v.dataVenda <= :data) "
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("data", data);
+		query.setParameter("animal", animal);
+		
+		try{
+			return query.getSingleResult() != null;
+		}catch ( NoResultException e ){
+			return false;
+		}
 		
 	}
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.milksys.dao.AnimalDao;
 import br.com.milksys.dao.ProducaoIndividualDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.PrecoLeite;
@@ -22,6 +23,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 
 	@Autowired private ProducaoIndividualDao dao;
 	@Autowired private PrecoLeiteService precoLeiteService;
+	@Autowired private AnimalDao animalDao;	
 	
 
 	@Override
@@ -42,6 +44,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		}else{
 			
 			ProducaoIndividualValidation.validate(entity);
+			ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.animalEstaEmLactacao(entity.getData(), entity.getAnimal()));
 			return dao.persist(entity);
 			
 		}

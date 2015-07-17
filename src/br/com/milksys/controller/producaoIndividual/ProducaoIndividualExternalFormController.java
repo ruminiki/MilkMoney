@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -19,18 +18,23 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.MaskFieldUtil;
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractFormController;
+import br.com.milksys.controller.AbstractOverviewController;
+import br.com.milksys.controller.animal.AnimalReducedOverviewController;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.ProducaoIndividual;
+import br.com.milksys.model.Sexo;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ProducaoIndividualService;
+import br.com.milksys.service.searchers.SearchFemeasEmLactacao;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.util.NumberFormatUtil;
 
@@ -46,14 +50,15 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	@FXML private TableColumn<ProducaoIndividual, BigDecimal> valorColumn;
 	
 	@FXML private DatePicker inputData;
-	@FXML private UCTextField inputObservacao;
-	@FXML private ComboBox<Animal> inputAnimal;
+	@FXML private UCTextField inputObservacao, inputAnimal;
 	@FXML private TextField inputPrimeiraOrdenha;
 	@FXML private TextField inputSegundaOrdenha;
 	@FXML private TextField inputTerceiraOrdenha;
 	
 	@Autowired private AnimalService animalService;
 	@Autowired private ProducaoIndividualService service;
+	
+	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	
 	private Date selectedDate;
 	
@@ -73,7 +78,10 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 		terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("terceiraOrdenha"));
 		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, BigDecimal>("valor"));
 
-		inputAnimal.setItems(animalService.findAllAsObservableList());
+		if ( getObject().getAnimal() != null ){
+			inputAnimal.setText(getObject().getAnimal().toString());
+		}
+		
 		table.setItems(((ProducaoIndividualService)service).findByDate(selectedDate));
 		
 		refreshTableOverview();
@@ -84,6 +92,30 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 		table.getItems().clear();
 		table.getItems().addAll(((ProducaoIndividualService)service).findByDate(selectedDate));
 		((ProducaoIndividualService)service).atualizaValorProducao(table.getItems());
+	}
+	
+	@FXML
+	protected void handleSelecionarFemea() {
+		
+		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
+		animalReducedOverviewController.setSearch((SearchFemeasEmLactacao)MainApp.getBean(SearchFemeasEmLactacao.class), getObject().getData());
+		
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
+		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
+		
+		animalReducedOverviewController.showForm();
+		
+		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setAnimal(animalReducedOverviewController.getObject());
+		}
+		
+		if ( getObject().getAnimal() != null ){
+			inputAnimal.setText(getObject().getAnimal().getNumeroNome());
+		}else{
+			inputAnimal.setText("");
+		}
+		
 	}
 	
 	@Override
@@ -127,7 +159,6 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	@FXML
 	private void handleAdicionar(){
 		
-		getObject().setAnimal(inputAnimal.getSelectionModel().getSelectedItem());
 		getObject().setPrimeiraOrdenha(NumberFormatUtil.fromString(inputPrimeiraOrdenha.getText()));
 		getObject().setSegundaOrdenha(NumberFormatUtil.fromString(inputSegundaOrdenha.getText()));
 		getObject().setTerceiraOrdenha(NumberFormatUtil.fromString(inputTerceiraOrdenha.getText()));
@@ -138,7 +169,7 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 		setObject(new ProducaoIndividual(getObject().getData()));
 
 		//limpa a tela
-		inputAnimal.getSelectionModel().select(null);
+		inputAnimal.clear();
 		inputData.setValue(DateUtil.asLocalDate(getObject().getData()));
 		inputObservacao.setText(null);
 		inputPrimeiraOrdenha.setText(null);

@@ -3,6 +3,7 @@ package br.com.milksys.validation;
 import java.math.BigDecimal;
 
 import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.Sexo;
 
@@ -22,6 +23,16 @@ public class ProducaoIndividualValidation extends Validator {
 		
 		if ( !producaoIndividual.getAnimal().getSexo().equals(Sexo.FEMEA) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, "Somente pode ser registrada a produção de animais fêmeas.");
+		}
+		
+		
+		
+	}
+
+	public static void validateAnimal(Animal animal, Boolean animalEstaEmLactacao) {
+		if ( !animalEstaEmLactacao ){
+			throw new ValidationException(REGRA_NEGOCIO, "O animal " + animal.getNumeroNome() + " não estava em lactação na data selecionada. "
+					+ "Por favor, selecione outro animal, ou verifique se a data de lançamento está correta.");
 		}
 		
 	}
