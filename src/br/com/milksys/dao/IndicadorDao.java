@@ -130,57 +130,27 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	@SuppressWarnings("unchecked")
 	private BigDecimal getValorApuradoDiasEmLactacao(){
 		
-		Date       dataInicio     = DateUtil.asDate(LocalDate.now().minusYears(1));
-		Date       dataFim        = DateUtil.asDate(LocalDate.now());
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		int        totalPartos    = 0;
 		
-		//busca todas as fêmeas que já tiveram parto
-		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and exists  " +
-				"(select 1 from Cobertura c inner join c.parto p where c.femea = a.id)");
+		//busca todos os partos
+		Query query = entityManager.createQuery("SELECT p FROM Parto p order by p.data asc");
 		
-		List<Animal> femeas = query.getResultList();
+		List<Parto> partos = query.getResultList();
 		
-		for ( Animal femea : femeas ){
+		for ( Parto parto : partos ){
 			
-			//localiza o parto anterior a data de inicio, para verificar se ele se sobrepõe ao período atual
-			query = entityManager.createQuery("SELECT p FROM Parto p where p.data <= :dataInicio and p.cobertura.femea = :femea order by p.data desc");
-			query.setParameter("dataInicio", dataInicio);
-			query.setParameter("femea", femea);
-			query.setMaxResults(1);
+			BigDecimal diasLactacaoParto = contaDiasLactacaoParto(parto);
 			
-			Parto ultimoPartoAnteriorPeriodo = null;
-			try{
-				ultimoPartoAnteriorPeriodo = (Parto) query.getSingleResult();
-			}catch(NoResultException e){}
-			
-			//localiza o parto anterior a data de inicio, para verificar se ele se sobrepõe ao período atual
-			query = entityManager.createQuery("SELECT p FROM Parto p where p.data between :dataInicio and :dataFim and p.cobertura.femea = :femea order by p.data asc");
-			query.setParameter("dataInicio", ultimoPartoAnteriorPeriodo != null ? ultimoPartoAnteriorPeriodo.getData() : dataInicio);
-			query.setParameter("dataFim", dataFim);
-			query.setParameter("femea", femea);
-			
-			List<Parto> partos = query.getResultList();
-			
-			for ( Parto  parto : partos ){
-				BigDecimal diasLactacaoParto = contaDiasLactacaoParto(
-						parto.getData().before(dataInicio) ? dataInicio : parto.getData(), dataFim, parto, femea);
-				
-				if ( diasLactacaoParto.compareTo(BigDecimal.ZERO) <= 0 ){
-					//se retornou zero é porque o ultimo parto não teve encerramento da lactação
-					//e o animal não foi vendido nem está morto.
-					//Nesse caso utilizar o ultimo dia do ano (para anos passados) ou a data corrente (para o ano atual)
-					//para cálculo dos dias em lactação
-					if ( new Date().before(dataFim) ){
-						diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), LocalDate.now()));
-					}else{
-						diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(dataFim)));
-					}
-				}
-				
-				diasEmLactacao = diasEmLactacao.add(diasLactacaoParto);
-				totalPartos++;
+			if ( diasLactacaoParto.compareTo(BigDecimal.ZERO) <= 0 ){
+				//se retornou zero é porque o ultimo parto não teve encerramento da lactação
+				//e o animal não foi vendido nem está morto.
+				//Nesse caso utilizar a data corrente para cálculo dos dias em lactação
+				diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), LocalDate.now()));
 			}
+			
+			diasEmLactacao = diasEmLactacao.add(diasLactacaoParto);
+			totalPartos++;
 			
 		}
 		
@@ -192,30 +162,31 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 	}
 	
-	private BigDecimal contaDiasLactacaoParto(Date dataInicio, Date dataFim, Parto parto, Animal femea){
+	private BigDecimal contaDiasLactacaoParto(Parto parto){
 		
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		
 		//verifica se o parto teve o encerramento da lactação
 		EncerramentoLactacao encerramento = parto.getEncerramentoLactacao();
-		if ( encerramento != null && encerramento.getData().compareTo(dataInicio) >= 0 && encerramento.getData().compareTo(dataFim) <= 0 ){
-			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(encerramento.getData()))));
+		
+		if ( encerramento != null ){
+			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(encerramento.getData()))));
 		}else{
 			
-			//Procura registro venda animal após o último parto
-			VendaAnimal vendaAnimal = findVendaAnimal(parto.getData(), femea);
+			//Procura registro venda animal após o parto
+			VendaAnimal vendaAnimal = findVendaAnimal(parto.getData(), parto.getCobertura().getFemea());
 			
 			if ( vendaAnimal != null ){
-				long diasEntreVendaEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(vendaAnimal.getDataVenda()));
+				long diasEntreVendaEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(vendaAnimal.getDataVenda()));
 				if ( diasEntreVendaEInicioPeriodo > 0 ){//a lactação avançou pelo período
 					diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(diasEntreVendaEInicioPeriodo));
 				}
 			}
 			
 			//Procura registro morte animal após o último parto
-			MorteAnimal morteAnimal = findMorteAnimal(parto.getData(), femea);
+			MorteAnimal morteAnimal = findMorteAnimal(parto.getData(), parto.getCobertura().getFemea());
 			if ( morteAnimal != null ){
-				long diasEntreMorteEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(morteAnimal.getDataMorte()));
+				long diasEntreMorteEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(morteAnimal.getDataMorte()));
 				if ( diasEntreMorteEInicioPeriodo > 0 ){//a lactação avançou pelo período
 					diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(diasEntreMorteEInicioPeriodo));
 				}
