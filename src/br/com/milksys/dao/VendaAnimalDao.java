@@ -1,5 +1,7 @@
 package br.com.milksys.dao;
 
+import java.util.Date;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -40,6 +42,21 @@ public class VendaAnimalDao extends AbstractGenericDao<Integer, VendaAnimal> {
 		
 		try{
 			return ((VendaAnimal)query.getSingleResult());
+		}catch(NoResultException e){
+			return null;
+		}
+		
+	}
+
+	public VendaAnimal findByAnimalAfterDate(Date data, Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va inner join va.animaisVendidos av where av.animal = :animal and va.dataVenda > :dataInicio order by va.dataVenda desc");
+		query.setParameter("dataInicio", data);
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (VendaAnimal) query.getSingleResult();
 		}catch(NoResultException e){
 			return null;
 		}

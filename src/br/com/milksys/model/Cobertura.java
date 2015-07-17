@@ -43,7 +43,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(9));  
+	private ObjectProperty<LocalDate> previsaoParto = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusDays(282));  
 	private ObjectProperty<LocalDate> previsaoEncerramentoLactacao = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusMonths(7));  
 	private ObjectProperty<LocalDate> dataConfirmacaoPrenhez = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty situacaoConfirmacaoPrenhez = new SimpleStringProperty();
@@ -415,7 +415,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	@Override
 	public String toString() {
 		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + 
-				" PREVISÃO PARTO: " + DateUtil.format(DateUtil.asLocalDate(getData()).plusMonths(9)); 
+				" PREVISÃO PARTO: " + DateUtil.format(DateUtil.asLocalDate(getData()).plusDays(282)); 
 	}
 	
 }

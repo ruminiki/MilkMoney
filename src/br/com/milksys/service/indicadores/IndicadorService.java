@@ -1,4 +1,4 @@
-package br.com.milksys.service;
+package br.com.milksys.service.indicadores;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.IndicadorDao;
 import br.com.milksys.model.Indicador;
+import br.com.milksys.service.IService;
 
 @Service
 public class IndicadorService implements IService<Integer, Indicador>{

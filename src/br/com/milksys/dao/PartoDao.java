@@ -1,5 +1,7 @@
 package br.com.milksys.dao;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -22,6 +24,26 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 		}catch(NoResultException e){
 			return null;
 		}
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Parto> findAllOrderDataDesc() {
+		
+		Query query = entityManager.createQuery("SELECT p FROM Parto p order by p.data asc");
+		return query.getResultList();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Parto> findUltimos2Partos(Animal femea) {
+		
+		//busca os dois últimos partos do animal
+		Query queryParto = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :femea order by p.data desc");
+		queryParto.setMaxResults(2);
+		queryParto.setParameter("femea", femea);
+		
+		return queryParto.getResultList();
 		
 	}
 	

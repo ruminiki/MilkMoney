@@ -1,5 +1,6 @@
 package br.com.milksys.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -70,6 +71,10 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 			return null;
 		}
 		
+	}
+
+	public BigInteger countCoberturasRealizadasUltimos21Dias() {
+		return (BigInteger) entityManager.createNativeQuery("select count(*) from cobertura c where  DATEDIFF(current_date(), c.data) between 0 and 21 ").getSingleResult();
 	}
 
 }

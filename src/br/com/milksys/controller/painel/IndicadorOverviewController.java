@@ -8,29 +8,27 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milksys.controller.painel.renderer.TableCellValueColorFactory;
-import br.com.milksys.model.Comprador;
 import br.com.milksys.model.Indicador;
-import br.com.milksys.service.IndicadorService;
+import br.com.milksys.service.indicadores.IndicadorService;
 
 @Controller
 public class IndicadorOverviewController {
 
 	@FXML private TableView<Indicador> table;
-	@FXML private TableColumn<Comprador, String> indicadorColumn;
-	@FXML private TableColumn<Comprador, String> siglaColumn;
-	@FXML private TableColumn<Comprador, String> valorReferenciaColumn;
-	@FXML private TableColumn<Comprador, String> valorApuradoColumn;
+	@FXML private TableColumn<Indicador, String> indicadorColumn;
+	@FXML private TableColumn<Indicador, String> siglaColumn;
+	@FXML private TableColumn<Indicador, String> valorReferenciaColumn;
+	@FXML private TableColumn<Indicador, String> valorApuradoColumn;
 	
 	@Autowired private IndicadorService service;
 
 	@FXML
 	public void initialize() {
 
-		indicadorColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("descricao"));
-		siglaColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("sigla"));
-		valorReferenciaColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("valorReferencia"));
-		valorApuradoColumn.setCellFactory(new TableCellValueColorFactory<Comprador,String>("valorApurado"));
+		indicadorColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("descricao"));
+		siglaColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("sigla"));
+		valorReferenciaColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("valorReferencia"));
+		valorApuradoColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("valorApurado"));
 		
 		table.setItems(service.findAllAsObservableList());
 		

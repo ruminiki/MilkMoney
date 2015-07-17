@@ -1,7 +1,6 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Type;
 
 
 @Entity
@@ -24,17 +21,16 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private int id;
 	private String descricao;
 	private String sigla;
-	private BigDecimal valorReferencia;
+	private String valorReferencia;
 	
-	@Type(type="text")
-	private String query;
-	private BigDecimal valorApurado;
+	private String classeCalculo;
+	private String valorApurado;
 	private int ordem;
 	
 	public Indicador() {
 	}
 	
-	public Indicador(String descricao, String sigla, BigDecimal valor) {
+	public Indicador(String descricao, String sigla, String valor) {
 		this.descricao = descricao;
 		this.sigla = sigla;
 		this.valorApurado = valor;
@@ -64,27 +60,27 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.sigla = sigla;
 	}
 
-	public BigDecimal getValorReferencia() {
+	public String getValorReferencia() {
 		return valorReferencia;
 	}
 
-	public void setValorReferencia(BigDecimal valorReferencia) {
+	public void setValorReferencia(String valorReferencia) {
 		this.valorReferencia = valorReferencia;
 	}
 
-	public String getQuery() {
-		return query;
+	public String getClasseCalculo() {
+		return classeCalculo;
 	}
 
-	public void setQuery(String query) {
-		this.query = query;
+	public void setClasseCalculo(String classeCalculo) {
+		this.classeCalculo = classeCalculo;
 	}
 
-	public BigDecimal getValorApurado() {
+	public String getValorApurado() {
 		return valorApurado;
 	}
 
-	public void setValorApurado(BigDecimal valorApurado) {
+	public void setValorApurado(String valorApurado) {
 		this.valorApurado = valorApurado;
 	}
 

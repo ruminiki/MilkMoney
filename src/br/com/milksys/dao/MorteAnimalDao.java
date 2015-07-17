@@ -1,5 +1,8 @@
 package br.com.milksys.dao;
 
+import java.util.Date;
+
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
@@ -25,6 +28,19 @@ public class MorteAnimalDao extends AbstractGenericDao<Integer, MorteAnimal> {
 		query.setParameter("animal", animal);
 		query.executeUpdate();
 		
+	}
+
+	public MorteAnimal findByAnimalAfterDate(Date data, Animal animal) {
+		Query query = entityManager.createQuery("SELECT m FROM MorteAnimal m where m.animal = :animal and m.dataMorte > :dataInicio order by m.dataMorte desc");
+		query.setParameter("dataInicio", data);
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (MorteAnimal) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 
 }
