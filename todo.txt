@@ -1,4 +1,4 @@
-- carregar o número de vacas em lactação no lançamento de entrega de leite
+- carregar o número de vacas em lactação no lançamento de producao de leite
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 - forçar reload dados atualizados em outras telas (atualizar os mapeamentos);

@@ -297,10 +297,10 @@ public abstract class AbstractOverviewController<K, E>{
 		formController.showForm();
 	}
 
-	@FXML@SuppressWarnings("unchecked")
+	@FXML
 	public void handleEdit() {
 		
-		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+		//setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
 		
 		if (object != null) {
 			formController.setRefreshObjectInTableView(refreshObjectInTableView);
@@ -311,6 +311,7 @@ public abstract class AbstractOverviewController<K, E>{
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();
 		}
+		
 	}
 
 	@FXML
@@ -398,5 +399,15 @@ public abstract class AbstractOverviewController<K, E>{
 	public void setContextMenu(ContextMenu contextMenu) {
 		this.contextMenu = contextMenu;
 	}
+
+	protected AbstractFormController<K, E> getFormController() {
+		return formController;
+	}
+
+	protected void setFormController(AbstractFormController<K, E> formController) {
+		this.formController = formController;
+	}
+	
+	
 
 }

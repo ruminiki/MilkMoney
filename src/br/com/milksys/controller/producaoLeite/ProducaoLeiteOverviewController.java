@@ -30,6 +30,7 @@ import br.com.milksys.model.PrecoLeite;
 import br.com.milksys.model.ProducaoIndividual;
 import br.com.milksys.model.ProducaoLeite;
 import br.com.milksys.model.State;
+import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.PrecoLeiteService;
 import br.com.milksys.service.ProducaoLeiteService;
 import br.com.milksys.util.DateUtil;
@@ -59,6 +60,7 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	@FXML private Label lblAno;
 	@FXML private Hyperlink lblValorEstimado;
 	
+	@Autowired private AnimalService animalService;
 	@Autowired private ProducaoLeiteService service;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	@Autowired private PrecoLeiteFormController precoLeiteFormController;
@@ -114,6 +116,15 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 		super.initialize((ProducaoLeiteFormController)MainApp.getBean(ProducaoLeiteFormController.class));
 		this.resume();
 		
+	}
+	
+	@Override
+	public void handleEdit() {
+		//localiza o número de animais em lactação e popula o objeto
+		Long animaisEmLactacaoData = animalService.countAnimaisEmLactacao(getObject().getData());
+		getObject().setNumeroVacasOrdenhadas(animaisEmLactacaoData.intValue());
+		
+		super.handleEdit();
 	}
 	
 	/**

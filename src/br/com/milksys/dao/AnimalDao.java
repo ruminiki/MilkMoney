@@ -179,6 +179,28 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 	}
+	/*
+	 * Conta quantos animais estão em lactação em uma determinada data.
+	 * Utilizado para popular o campo animais ordenhados, na tela de produção diária.
+	 * 
+	 */
+	public Long countAnimaisEmLactacao(Date data) {
+		
+		Query query = entityManager.createQuery(
+				"SELECT count(a) FROM Cobertura c inner join c.femea a inner join c.parto p WHERE p.data < :data "
+				+ "and not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.parto.id = p.id and e.data <= :data) "
+				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id and v.dataVenda <= :data) "
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("data", data);
+		
+		try{
+			return (Long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+		
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasSecas() {
@@ -304,5 +326,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
 		return (BigInteger) query.getSingleResult();
 	}
+
 
 }

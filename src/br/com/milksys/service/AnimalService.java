@@ -1,11 +1,12 @@
 package br.com.milksys.service;
 
+import java.util.Date;
 import java.util.List;
-
-import javax.transaction.Transactional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +65,10 @@ public class AnimalService implements IService<Integer, Animal>{
 	@Override
 	public void validate(Animal entity) {
 		AnimalValidation.validate(entity);
+	}
+
+	public Long countAnimaisEmLactacao(Date data) {
+		return dao.countAnimaisEmLactacao(data);
 	}
 
 }
