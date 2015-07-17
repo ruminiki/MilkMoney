@@ -75,6 +75,7 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	/**
 	 * Configura os meses para registro dos preços.
 	 */
+	@Transactional
 	public void configuraMesesAnoReferencia(int ano){
 		
 		for (int i = 0; i < meses.size(); i++) {

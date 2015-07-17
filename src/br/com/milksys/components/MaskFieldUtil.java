@@ -165,7 +165,7 @@ public abstract class MaskFieldUtil {
                 if (!fieldChange) {
                 	if ( textField.getText() != null ){
 	                    final int length = textField.getText().length();
-	                    if (length > 0 && length < 3 && textField.getText().startsWith("0") ) {
+	                    if (length > 0 && length < 3) {
 	                        textField.setText(textField.getText() + "00");
 	                    }
                 	}

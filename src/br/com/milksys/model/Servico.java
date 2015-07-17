@@ -136,4 +136,11 @@ public class Servico extends AbstractEntity implements Serializable {
 		return valor;
 	}
 	
+	@Override
+	public String toString() {
+		if ( getPrestadorServico() != null )
+			return getDescricao() + " - " + getPrestadorServico().getNome() + " [R$ " + getValor() + "]";
+		return getDescricao();
+	}
+	
 }

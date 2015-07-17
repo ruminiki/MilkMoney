@@ -91,6 +91,7 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	 * @param mes
 	 * @param ano
 	 */
+	@Transactional
 	public void recarregaPrecoLeite(ObservableList<ProducaoLeite> data, String mes, int ano){
 		
 		PrecoLeite precoLeite = precoLeiteService.findByMesAno(mes, ano);
@@ -113,6 +114,7 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	 * @param dataInicio
 	 * @param dataFim
 	 */
+	@Transactional
 	public void configuraTabelaDiasMesSelecionado(Date dataInicio, Date dataFim){
 		
 		Calendar cDataInicio = Calendar.getInstance();

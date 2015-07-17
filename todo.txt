@@ -4,17 +4,13 @@
 - forçar reload dados atualizados em outras telas (atualizar os mapeamentos);
 
 - Alteração de quantidade de semen - atualizar registro na despesa (se despesa já tiver sido paga não deixar alterar)
-- três casas decimais valor do leite
 
 - configurar as pesquisas em todos os cadastros;
-
 - na venda fazer a somatória de animais vendidos e do valor total
 
-- como calcular os dias entre partos, secos.. quando o animal foi vendido?
 - permitir cadastro dos valores de referencia nos indicadores;
 
 - fazer cadastro de procedimento
-- gráfico curva lactação animais por parto
 
 - quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
 - a data da cobertura deve ser maior ou igual a data da compra do semem.
@@ -25,10 +21,22 @@
 - cobertas segundo ciclo
 - cobertas terceiro ciclo
 - não cobertas após PVE + 3 ciclos
+- coberturas a mais de 30 dias sem confirmação de prenhez
+- novilhas aptas (mais 18 meses) não cobertas ou com diagnóstico de gestão não prenhas
+
+- pop up - tela lactações encerradas (data inicio, data fim, dias lactacao, producao media...)s
+
+- fazer gráfico da produção individual (selecionar a lactação, exibir a tabela das medições e o gráfico ao lado)
+  		like http://www.pecuariabrasilassessoria.com.br/software-gado-leite.php
+  		produção estimada 305d
+  		media diaria estimada
+  		dias em lactacao
+  		produção acumulada
 
 - numero de partos animal
 
 - erro casas decimais valor leite ex: 0,80
+- três casas decimais valor do leite
 
 - como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
 	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existui um parto antes do encerramento;

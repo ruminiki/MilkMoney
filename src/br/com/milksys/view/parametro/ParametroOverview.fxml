@@ -25,9 +25,9 @@
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button defaultButton="true" disable="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                  <Button disable="true" layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
             </HBox>
          </children>
@@ -52,7 +52,7 @@
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="siglaColumn" maxWidth="50.0" minWidth="100.0" prefWidth="97.0" resizable="false" style="-fx-alignment: CENTER;" text="Sigla" />
-          <TableColumn fx:id="descricaoColumn" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" text="Descrição" />
+          <TableColumn fx:id="descricaoColumn" maxWidth="-1.0" minWidth="350.0" prefWidth="-1.0" text="Descrição" />
             <TableColumn fx:id="valorColumn" maxWidth="-1.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
         </columns>
          <columnResizePolicy>

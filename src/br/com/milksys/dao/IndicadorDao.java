@@ -11,20 +11,25 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.Indicador;
 import br.com.milksys.model.MorteAnimal;
+import br.com.milksys.model.Parametro;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.Sexo;
+import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.VendaAnimal;
 import br.com.milksys.util.DateUtil;
 
 @Repository
 public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 
+	@Autowired ParametroDao parametroDao;
+	
 	@Override
 	public List<Indicador> findAll(Class<Indicador> clazz) {
 		
@@ -80,6 +85,10 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 			case "TP":
 				indicador.setValorApurado(getValorApuradoTaxaPrenhez());
 				break;
+				
+			case "TDC":
+				indicador.setValorApurado(getValorApuradoTaxaDeteccaoCio());
+				break;
 			default:
 				break;
 			}
@@ -101,7 +110,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 				}
 				
 			}else{
-				indicador.setValorApurado("f�rmula n�o cadastrada");
+				indicador.setValorApurado("fórmula não cadastrada");
 			}
 			
 			
@@ -114,7 +123,10 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 	}
 	
-	//============DIAS LACTA��O===========
+	//============DIAS LACTAÇÃO===========
+	/*
+	 * Buscar todos os partos e fazer a média dos dias em lactação
+	 */
 	@SuppressWarnings("unchecked")
 	private BigDecimal getValorApuradoDiasEmLactacao(){
 		
@@ -123,7 +135,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		int        totalPartos    = 0;
 		
-		//busca todas as f�meas que j� tiveram parto
+		//busca todas as fêmeas que já tiveram parto
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and exists  " +
 				"(select 1 from Cobertura c inner join c.parto p where c.femea = a.id)");
 		
@@ -131,15 +143,18 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		for ( Animal femea : femeas ){
 			
-			//localiza o parto anterior a data de inicio, para verificar se ele se sobrep�e ao per�odo atual
+			//localiza o parto anterior a data de inicio, para verificar se ele se sobrepõe ao período atual
 			query = entityManager.createQuery("SELECT p FROM Parto p where p.data <= :dataInicio and p.cobertura.femea = :femea order by p.data desc");
 			query.setParameter("dataInicio", dataInicio);
 			query.setParameter("femea", femea);
 			query.setMaxResults(1);
 			
-			Parto ultimoPartoAnteriorPeriodo = (Parto) query.getSingleResult();
+			Parto ultimoPartoAnteriorPeriodo = null;
+			try{
+				ultimoPartoAnteriorPeriodo = (Parto) query.getSingleResult();
+			}catch(NoResultException e){}
 			
-			//localiza o parto anterior a data de inicio, para verificar se ele se sobrep�e ao per�odo atual
+			//localiza o parto anterior a data de inicio, para verificar se ele se sobrepõe ao período atual
 			query = entityManager.createQuery("SELECT p FROM Parto p where p.data between :dataInicio and :dataFim and p.cobertura.femea = :femea order by p.data asc");
 			query.setParameter("dataInicio", ultimoPartoAnteriorPeriodo != null ? ultimoPartoAnteriorPeriodo.getData() : dataInicio);
 			query.setParameter("dataFim", dataFim);
@@ -152,10 +167,10 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 						parto.getData().before(dataInicio) ? dataInicio : parto.getData(), dataFim, parto, femea);
 				
 				if ( diasLactacaoParto.compareTo(BigDecimal.ZERO) <= 0 ){
-					//se retornou zero � porque o ultimo parto n�o teve encerramento da lacta��o
-					//e o animal n�o foi vendido nem est� morto.
+					//se retornou zero é porque o ultimo parto não teve encerramento da lactação
+					//e o animal não foi vendido nem está morto.
 					//Nesse caso utilizar o ultimo dia do ano (para anos passados) ou a data corrente (para o ano atual)
-					//para c�lculo dos dias em lacta��o
+					//para cálculo dos dias em lactação
 					if ( new Date().before(dataFim) ){
 						diasLactacaoParto = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), LocalDate.now()));
 					}else{
@@ -181,27 +196,27 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		
-		//verifica se o parto teve o encerramento da lacta��o
+		//verifica se o parto teve o encerramento da lactação
 		EncerramentoLactacao encerramento = parto.getEncerramentoLactacao();
 		if ( encerramento != null && encerramento.getData().compareTo(dataInicio) >= 0 && encerramento.getData().compareTo(dataFim) <= 0 ){
 			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(encerramento.getData()))));
 		}else{
 			
-			//Procura registro venda animal ap�s o �ltimo parto
+			//Procura registro venda animal após o último parto
 			VendaAnimal vendaAnimal = findVendaAnimal(parto.getData(), femea);
 			
 			if ( vendaAnimal != null ){
 				long diasEntreVendaEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(vendaAnimal.getDataVenda()));
-				if ( diasEntreVendaEInicioPeriodo > 0 ){//a lacta��o avan�ou pelo per�odo
+				if ( diasEntreVendaEInicioPeriodo > 0 ){//a lactação avançou pelo período
 					diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(diasEntreVendaEInicioPeriodo));
 				}
 			}
 			
-			//Procura registro morte animal ap�s o �ltimo parto
+			//Procura registro morte animal após o último parto
 			MorteAnimal morteAnimal = findMorteAnimal(parto.getData(), femea);
 			if ( morteAnimal != null ){
 				long diasEntreMorteEInicioPeriodo = ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(morteAnimal.getDataMorte()));
-				if ( diasEntreMorteEInicioPeriodo > 0 ){//a lacta��o avan�ou pelo per�odo
+				if ( diasEntreMorteEInicioPeriodo > 0 ){//a lactação avançou pelo período
 					diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(diasEntreMorteEInicioPeriodo));
 				}
 			}
@@ -220,14 +235,11 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		query.setParameter("animal", animal);
 		query.setMaxResults(1);
 		
-		VendaAnimal vendaAnimal = null;
 		try{
-			vendaAnimal = (VendaAnimal) query.getSingleResult();
+			return (VendaAnimal) query.getSingleResult();
 		}catch(NoResultException e){
 			return null;
 		}
-		
-		return vendaAnimal;
 		
 	}
 	
@@ -237,21 +249,31 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		query.setParameter("animal", animal);
 		query.setMaxResults(1);
 		
-		MorteAnimal morteAnimal = null;
 		try{
-			morteAnimal = (MorteAnimal) query.getSingleResult();
+			return (MorteAnimal) query.getSingleResult();
 		}catch(NoResultException e){
 			return null;
 		}
-		return morteAnimal;
 	}
 	
-	//============FIM DIAS LACTA��O===========
-	
+	//============FIM DIAS LACTAÇÃO===========
+	/*
+	 * Para o cálculo do dias em aberto devemos considerar o número de dias do último parto até:
+	   A data da concepção das vacas gestantes
+	   A data da última cobertura das vacas ainda não confirmadas gestantes
+	   Ou a data em que o cálculo foi realizado.
+       As vacas já definidas como descarte, mas que ainda estão em lactação, não precisam ser incluídas nos cálculos.
+	   O cálculo da média dos dias em aberto é feito pela soma dos dias em aberto de cada vaca divido pelo número de vacas do rebanho.
+	 */
 	private BigDecimal getValorApuradoDiasEmAberto(){
 		return BigDecimal.ZERO;
 	}
-	
+	/*
+	 * O intervalo entre partos atual é o cálculo do número de meses entre o parto mais recente e o 
+	 * parto anterior das vacas com mais de um parto. Neste dado não entram as vacas de primeira lactação.
+	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/interpretacao-dos-indices-da-eficiencia-reprodutiva-41269n.aspx
+	 * 
+	 */
 	private BigDecimal getValorApuradoIntervaloEntrePartos(){
 		return BigDecimal.ZERO;
 	}
@@ -292,7 +314,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		Object result = entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(a.dataNascimento, current_date()) <= 360  " +
+				"where DATEDIFF(current_date(), a.dataNascimento) <= 360  " +
 				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
 						+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)").getSingleResult();
 		return (result == null ? BigDecimal.ZERO : new BigDecimal(result.toString()));
@@ -303,7 +325,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		Object result = entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(a.dataNascimento, current_date()) > 360  " +
+				"where DATEDIFF(current_date(), a.dataNascimento) > 360  " +
 				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
 						+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)").getSingleResult();
 		return (result == null ? BigDecimal.ZERO : new BigDecimal(result.toString()));
@@ -329,32 +351,70 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 	}
 	/*
-	 * TDC - dividindo o n�mero de vacas inseminadas no per�odo de 21 dias pelo n�mero de vacas 
-	 * dispon�veis para serem inseminadas no mesmo per�odo.
+	 * TDC - dividindo o número de vacas inseminadas no período de 21 dias pelo número de vacas 
+	 * disponíveis para serem inseminadas no mesmo período.
 	 * 
 	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/manejo-reprodutivo-do-rebanho-leiteiro-26245n.aspx
 	 * 
 	 * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
 	 * 
-	 * PVE - Periodo volunt�rio de espera (dias ap�s o parto em que a vaca n�o deve ser enseminada)
+	 * PVE - Periodo voluntário de espera (dias após o parto em que a vaca não deve ser enseminada)
 	 */
 	private BigDecimal getValorApuradoTaxaDeteccaoCio(){
 		
+		int diasIdadeMinimaParaCobertura = 0;
+		try{
+			//o parametro estara em meses, multiplicar por 30 para obter os dias
+			diasIdadeMinimaParaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDMC)) * 30;
+		}catch(Exception e){
+			diasIdadeMinimaParaCobertura = 24 * 30;
+		}
+		
+		int periodoVoluntarioEspera = 0;
+		try{
+			periodoVoluntarioEspera = Integer.parseInt(parametroDao.findBySigla(Parametro.PVE));
+		}catch(Exception e){
+			periodoVoluntarioEspera = 40;//default 40 dias
+		}
+		
 		//vacas enseminadas ultimos 21 dias
-		BigInteger vacasEnseminadas = (BigInteger) entityManager.createNativeQuery("select count(*) from cobertura c where  DATEDIFF(c.data, current_date()) <= 21 ").getSingleResult();
+		BigInteger vacasEnseminadas = (BigInteger) entityManager.createNativeQuery(
+				"select count(*) from cobertura c where  DATEDIFF(current_date(), c.data) between 0 and 21 ").getSingleResult();
 		
-		//vacas dispon�veis para serem cobertas
-		//n�o vendidas, n�o mortas, n�o cobertas
+		//vacas disponíveis para serem cobertas:
+		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
+		BigInteger vacasDisponiveis = (BigInteger) entityManager.createNativeQuery(
+				"select count(*) from animal a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
+				+ "not exists (select 1 from animalVendido av where av.animal = a.id) and "
+				+ "not exists (select 1 from morteAnimal ma where ma.animal = a.id) and "
+				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) < 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
 		
-		//return (result == null ? BigDecimal.ZERO : new BigDecimal(result.toString()));
+		if ( vacasEnseminadas.compareTo(BigInteger.ZERO) <= 0 ||
+				vacasDisponiveis.compareTo(BigInteger.ZERO) <= 0 ){
+			return BigDecimal.ZERO;
+		}
 		
-		return BigDecimal.ZERO;
+		return BigDecimal.valueOf(vacasEnseminadas.divide(vacasDisponiveis).multiply(BigInteger.valueOf(100)).longValue());
+		
 	}
+	
 	
 	private BigDecimal getValorApuradoTaxaPrenhez(){
 		return BigDecimal.ZERO;
 	}
 	
+	
+	/*
+	 * 
+		Dias pós-parto no primeiro serviço (primeira cobertura)
+		O número de dias pós-parto no primeiro serviço é influenciado pelo período voluntário de espera (PVE), 
+		como o próprio nome diz, por uma decisão de manejo, por isso esse índice varia muito entre os rebanhos. 
+		Cada fazenda deve, a partir do final do PVE, definir o objetivo a ser alcançado para a média de dias pós-parto no primeiro serviço.
+		Algumas vacas podem ser cobertas com 40 dias pós-parto, porém na maioria dos rebanhos de alta produção, 
+		o máximo de fertilidade é alcançado por volta dos 60 dias pós-parto.
+		http://www.milkpoint.com.br/radar-tecnico/reproducao/interpretacao-dos-indices-da-eficiencia-reprodutiva-41269n.aspx
+	 */
 	
 	
 }

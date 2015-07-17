@@ -336,8 +336,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				
 				if ( servicoFormController.getObject() != null ){
 					getObject().setServico(servicoFormController.getObject());
-					inputNomeResponsavel.setText(servicoFormController.getObject().getPrestadorServico().getNome() 
-							+ " [R$ " + servicoFormController.getObject().getValor() + "]");
+					inputNomeResponsavel.setText(servicoFormController.getObject().toString());
 				}else{
 					getObject().setServico(null); 	
 					inputNomeResponsavel.setText("");
@@ -384,11 +383,11 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@Override
 	public void handleCancel() {
 		
-		
 		if ( servicoRemovido != null && servicoRemovido.getId() > 0 ){
 			//recupera o registro do banco de dados para o caso de o usuário ter alterado algum valor em tela
 			setObject(service.findById(getObject().getId()));
 			getObject().setServico(servicoRemovido);
+			getObject().setNomeResponsavel(servicoRemovido.toString());
 			service.save(getObject());
 		}else{
 			getObject().setServico(null);

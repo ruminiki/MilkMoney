@@ -96,7 +96,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasLactacaoXDias(Integer dias) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Parto p inner join p.cobertura.femea a "
-						+ "WHERE DATEDIFF(p.data, current_date()) between 0 and :dias "
+						+ "WHERE DATEDIFF(current_date(), p.data) between 0 and :dias "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		query.setHint("org.hibernate.cacheable", "false");
@@ -110,7 +110,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasASecar() {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Cobertura c inner join c.femea a "
-				+ "WHERE DATEDIFF(c.previsaoParto, current_date()) <= 70 "
+				+ "WHERE DATEDIFF(c.previsaoParto, current_date()) between 0 and 70 "
 				+ "and not exists (SELECT 1 FROM EncerramentoLactacao e WHERE e.animal = a.id and e.data > c.data) "
 				+ "and c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
@@ -122,8 +122,10 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasLactacaoMaisXDias(Integer dias) {
-		Query query = entityManager.createQuery("SELECT a FROM Parto p inner join p.cobertura.femea a "
-				+ "WHERE DATEDIFF(p.data, current_date()) >= :dias "
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Parto p inner join p.cobertura.femea a "
+				+ "WHERE DATEDIFF(current_date(), p.data) >= :dias "
+				+ "and not exists (SELECT 1 FROM Parto p1 inner join p1.cobertura c1 WHERE c1.femea.id = a.id and p1.data > p.data) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id) order by p.data desc");
 		query.setMaxResults(1);

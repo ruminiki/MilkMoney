@@ -53,6 +53,11 @@ public class CoberturaValidation extends Validator {
 						"O reprodutor selecionado é o pai da fêmea " + cobertura.getFemea().getNumeroNome() + " não sendo possível registrar a cobertura.");
 			}*/
 		}
+		
+		if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
+		}
 
 	}
 	
@@ -131,12 +136,15 @@ public class CoberturaValidation extends Validator {
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"Por favor, infome o campo [quantidade doses utilizadas] para continuar.");
 			}
+			
+			
+			if ( cobertura.getSemen().getDataCompra().after(cobertura.getData()) ){
+				throw new ValidationException(VALIDACAO_FORMULARIO, "A data da cobertura não pode ser menor que a data da "
+						+ "compra do sêmen selecionado. Por favor, corrija e tente novamente.");
+			}
+			
 		}
 		
-		if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
-		}
 	}
 	
 	/**

@@ -25,7 +25,7 @@ public class ParametroOverviewController extends AbstractOverviewController<Inte
 	@FXML
 	public void initialize() {
 		
-		siglaColumn.setCellValueFactory(new PropertyValueFactory<Parametro,String>("id"));
+		siglaColumn.setCellValueFactory(new PropertyValueFactory<Parametro,String>("sigla"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Parametro,String>("descricao"));
 		valorColumn.setCellValueFactory(new PropertyValueFactory<Parametro,String>("valor"));
 		super.initialize(formController);

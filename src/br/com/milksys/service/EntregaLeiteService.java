@@ -89,7 +89,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	 * @param dataInicio
 	 * @param dataFim
 	 */
-
+	@Transactional
 	public void configuraMesesEntregaAnoReferencia(int ano){
 		
 		for (int i = 0; i < meses.size(); i++) {
