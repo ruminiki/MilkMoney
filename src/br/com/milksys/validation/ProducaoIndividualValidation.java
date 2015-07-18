@@ -1,6 +1,7 @@
 package br.com.milksys.validation;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
@@ -25,6 +26,10 @@ public class ProducaoIndividualValidation extends Validator {
 			throw new ValidationException(CAMPO_OBRIGATORIO, "Somente pode ser registrada a produção de animais fêmeas.");
 		}
 		
+		if ( producaoIndividual.getData().after(new Date()) ){
+			throw new ValidationException(REGRA_NEGOCIO, "A data do lançamento da produção não pode ser maior que a data atual. Por favor, corrija e tente novamente.");
+		}
+		 
 		
 		
 	}

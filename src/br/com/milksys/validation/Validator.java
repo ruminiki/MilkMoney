@@ -9,9 +9,9 @@ import br.com.milksys.model.AbstractEntity;
 
 public class Validator {
 
-	public static final String VALIDACAO_FORMULARIO = "Validação de formulário";
-	public static final String CAMPO_OBRIGATORIO = "Campo Obrigatório";
-	public static final String REGRA_NEGOCIO = "Regra Negócio";
+	public static final String VALIDACAO_FORMULARIO = "Opss!! Alguma coisa não está certa!";
+	public static final String CAMPO_OBRIGATORIO = "Opss!! Existem campos obrigatórios!";
+	public static final String REGRA_NEGOCIO = "Opss!! Encontramos uma restrição!";
 	
 	public static void validate(AbstractEntity entity) {
 		for (Method method : entity.getClass().getDeclaredMethods()) {
