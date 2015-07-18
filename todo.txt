@@ -1,12 +1,9 @@
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
-- forçar reload dados atualizados em outras telas (atualizar os mapeamentos);
 
 - configurar as pesquisas em todos os cadastros;
-- reconstruir tela produção individual
 
 - está permitindo deletar animal sem remover o parto.
 - lazy initialization parto - crias.
-- fazer validações tela cadastro produção individual
 
 - na venda fazer a somatória de animais vendidos e do valor total
 

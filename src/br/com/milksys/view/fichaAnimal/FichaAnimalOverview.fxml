@@ -58,69 +58,9 @@
                               </TableColumn>
                           </columns>
                         </TableView>
-                        <HBox alignment="CENTER" minHeight="50.0" spacing="10.0" style="-fx-border-color: #CCC;">
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <Label text="Partos">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lblNumeroPartos" text="Label">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="50.0" prefWidth="122.0">
-                                 <children>
-                                    <Label text="Total Dias Lactação">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lblTotalDiasLactacao" text="Label">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="50.0" prefWidth="122.0">
-                                 <children>
-                                    <Label text="Média Dias Lactação">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lblMediaDiasLactacao" text="Label">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="50.0" prefWidth="122.0">
-                                 <children>
-                                    <Label text="Total Dias Abertos">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lblTotalDiasAbertos" text="Label">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
                      </children>
                   </VBox>
-                  <VBox spacing="5.0">
+                  <VBox spacing="5.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #96AFFF;">
                            <children>
@@ -131,10 +71,10 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TableView>
+                        <TableView fx:id="tableIndicadores" focusTraversable="false">
                           <columns>
-                            <TableColumn fx:id="indicadorColumn" minWidth="300.0" prefWidth="75.0" text="Indicador" />
-                            <TableColumn fx:id="valorIndicadorColumn" minWidth="100.0" prefWidth="75.0" text="Valor" />
+                            <TableColumn fx:id="indicadorColumn" minWidth="380.0" prefWidth="75.0" text="Indicador" />
+                            <TableColumn fx:id="valorApuradoColumn" minWidth="100.0" prefWidth="75.0" text="Valor" />
                           </columns>
                         </TableView>
                      </children>

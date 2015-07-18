@@ -1,8 +1,5 @@
 package br.com.milksys.controller.fichaAnimal;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -16,10 +13,11 @@ import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FichaAnimal;
+import br.com.milksys.model.Indicador;
 import br.com.milksys.model.Lactacao;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.FichaAnimalService;
-import br.com.milksys.util.NumberFormatUtil;
+import br.com.milksys.service.indicadores.IndicadorService;
 
 @Controller
 public class FichaAnimalOverviewController extends AbstractOverviewController<Integer, FichaAnimal>{
@@ -34,10 +32,15 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> mesesEmLactacaoColumn;
 	
-	@FXML private Label lblHeader, lblNumeroPartos, lblTotalDiasLactacao, lblMediaDiasLactacao, lblTotalDiasAbertos;
+	@FXML private Label lblHeader;
+	
+	@FXML private TableView<Indicador> tableIndicadores;
+	@FXML private TableColumn<Indicador, String> indicadorColumn;
+	@FXML private TableColumn<Indicador, String> valorApuradoColumn;
 	
 	@Autowired private FichaAnimalService fichaAnimalService;
 	@Autowired private AnimalService animalService;
+	@Autowired private IndicadorService indicadorService;
 	
 	private Animal animal;
 	
@@ -62,20 +65,11 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		
 		lblHeader.setText("FICHA ANIMAL " + animal.toString());
 		
-		lblNumeroPartos.setText(String.valueOf(animalService.getNumeroPartos(animal)));
+		//tabela indicadores
+		indicadorColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("descricao"));
+		valorApuradoColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("valorApurado"));
 		
-		long totalDiasLactacao = 0;
-		for ( Lactacao lactacao : tableLactacoes.getItems() ){
-			totalDiasLactacao += lactacao.getDuracaoLactacaoDias();
-		}
-		lblTotalDiasLactacao.setText(String.valueOf(totalDiasLactacao));
-		
-		if ( tableLactacoes.getItems() != null &&  tableLactacoes.getItems().size() > 0 && totalDiasLactacao > 0 ){
-			lblMediaDiasLactacao.setText( NumberFormatUtil.decimalFormat(
-					BigDecimal.valueOf(totalDiasLactacao).divide(BigDecimal.valueOf(tableLactacoes.getItems().size()), 1, RoundingMode.HALF_EVEN)) );
-		}else{
-			lblMediaDiasLactacao.setText("0");
-		}
+		tableIndicadores.setItems(indicadorService.findAllAsObservableList());
 		
 	}
 	
