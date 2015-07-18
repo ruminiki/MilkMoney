@@ -17,10 +17,12 @@ import javafx.scene.layout.VBox;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.components.events.ActionEvent;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Lactacao;
@@ -32,7 +34,7 @@ import br.com.milksys.service.ProducaoIndividualService;
 import br.com.milksys.service.searchers.SearchFemeasAtivas;
 
 @Controller
-public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual> {
+public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual> implements ApplicationListener<ActionEvent>{
 
 	//lactacoes
 	@FXML private TableView<Lactacao> tableLactacoes;
@@ -50,6 +52,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private Label lblHeader;
 	
 	@FXML private VBox vBoxChart;
+	private LineChart<String, Number> lineChart;
 	
 	@Autowired private AnimalService animalService;
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
@@ -84,7 +87,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         
         xAxis.setLabel("Data");
         
-        final LineChart<String, Number> lineChart = new LineChart<String,Number>(xAxis,yAxis);
+        lineChart = new LineChart<String,Number>(xAxis,yAxis);
         
         lineChart.setTitle("Registro Produção Individual");
         lineChart.setLegendVisible(true);
@@ -97,8 +100,6 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
         	lactacao = newValue;
     		refreshTableOverview();
-    		lineChart.getData().clear();
-    		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
         });
         
 		super.initialize(producaoIndividualFormController);
@@ -121,6 +122,23 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 			producaoIndividualFormController.setState(State.INSERT);
 			producaoIndividualFormController.setObject(getObject());
 			producaoIndividualFormController.showForm();
+			refreshTableOverview();
+		}
+	}
+	
+	/*
+	 * Recupera o evento disparado pelo form ao salvar o objeto
+	 * para ser possível atualizar o gráfico.
+	 */
+	@Override
+	public void onApplicationEvent(ActionEvent event) {
+		if ( event != null ){
+			if ( ( event.getEventType().equals(ActionEvent.EVENT_INSERT) || event.getEventType().equals(ActionEvent.EVENT_UPDATE)) ){
+				
+				if ( event.getSource().getClass().isInstance(getObject()) ){
+					refreshTableOverview();
+				}
+			}
 		}
 	}
 	
@@ -139,6 +157,9 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		}
 		
 		((ProducaoIndividualService)service).atualizaValorProducao(data);
+		
+		lineChart.getData().clear();
+		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
 		
 	}
 	
