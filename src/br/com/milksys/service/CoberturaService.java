@@ -10,13 +10,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.CoberturaDao;
-import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
-import br.com.milksys.validation.Validator;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
@@ -29,10 +27,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Transactional
 	public boolean save(Cobertura entity) {
 		
-		if ( entity.getParto() != null ){
-			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
-		}
-
 		CoberturaValidation.validate(entity);
 		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
 		CoberturaValidation.validaFemeaSelecionada(entity, findByAnimal(entity.getFemea()));
@@ -50,14 +44,12 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	@Transactional
 	public void registrarParto(Cobertura entity) {
-		entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
 		try{
 			
 			dao.persist(entity);
 			
 		}catch(Exception e){
-			configureSituacaoCobertura(entity);
 			entity.setParto(null);
 			throw new RuntimeException(e);
 		}
@@ -66,110 +58,14 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Transactional
 	public void removerParto(Cobertura entity) {
 		
-		configureSituacaoCobertura(entity);
 		try{
 			
 			entity.setParto(null);
 			dao.persist(entity);
 
 		}catch(Exception e){
-			entity.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			throw new RuntimeException(e);
 		}
-		
-	}
-	
-	@Transactional
-	public void registrarConfirmacaoPrenhez(Cobertura entity){
-		
-		CoberturaValidation.validateRegistroConfirmacaoPrenhez(entity);
-		configureSituacaoCobertura(entity);
-		
-		save(entity);
-	}
-	
-	@Transactional
-	public void removerRegistroConfirmacaoPrenhez(Cobertura entity) {
-		
-		entity.setDataConfirmacaoPrenhez(null);
-		entity.setObservacaoConfirmacaoPrenhez(null);
-		entity.setSituacaoConfirmacaoPrenhez(null);
-		
-		configureSituacaoCobertura(entity);
-		
-		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
-		
-		save(entity);
-		
-	}
-	
-	@Transactional
-	public void registrarReconfirmacaoPrenhez(Cobertura entity){
-		
-		CoberturaValidation.validateRegistroReconfirmacaoPrenhez(entity);
-		configureSituacaoCobertura(entity);
-		
-		save(entity);
-	}
-	
-	@Transactional
-	public void removerRegistroReconfirmacaoPrenhez(Cobertura entity) {
-		
-		entity.setDataReconfirmacaoPrenhez(null);
-		entity.setObservacaoReconfirmacaoPrenhez(null);
-		entity.setSituacaoReconfirmacaoPrenhez(null);
-		
-		configureSituacaoCobertura(entity);
-		
-		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
-		
-		save(entity);
-		
-	}
-
-	@Transactional
-	public void registrarRepeticaoCio(Cobertura entity){
-		
-		configureSituacaoCobertura(entity);
-		CoberturaValidation.validateRegistroRepeticaoCio(entity);
-		save(entity);
-		
-	}
-	
-	@Transactional
-	public void removerRegistroRepeticaoCio(Cobertura entity) {
-		
-		entity.setDataRepeticaoCio(null);
-		entity.setObservacaoRepeticaoCio(null);
-		
-		configureSituacaoCobertura(entity);
-		
-		//verifica se existem outras coberturas para o animal com situação PRENHA, ou INDEFINIDA
-		CoberturaValidation.validaSituacoesCoberturasDoAnimal(entity, findByAnimal(entity.getFemea()));
-		
-		save(entity);
-		
-	}
-	
-	private void configureSituacaoCobertura(Cobertura entity){
-		
-		if ( entity.getDataRepeticaoCio() != null ){
-			entity.setSituacaoCobertura(SituacaoCobertura.REPETIDA);
-		}else{
-			if ( entity.getDataReconfirmacaoPrenhez() != null ){
-				entity.setSituacaoCobertura(entity.getSituacaoReconfirmacaoPrenhez());
-			}else{
-				if ( entity.getDataConfirmacaoPrenhez() != null ){
-					entity.setSituacaoCobertura(entity.getSituacaoConfirmacaoPrenhez());
-				}else{
-					entity.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
-				}
-			}
-		}
-
-		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
 		
 	}
 	
@@ -177,7 +73,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		if ( entity.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
 				entity.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
-			entity.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(9)));
+			entity.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusDays(282)));
 			entity.setPrevisaoEncerramentoLactacao(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(7)));
 		}else{
 			entity.setPrevisaoParto(null);

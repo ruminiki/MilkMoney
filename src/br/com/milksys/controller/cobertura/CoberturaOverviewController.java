@@ -3,8 +3,12 @@ package br.com.milksys.controller.cobertura;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -15,9 +19,9 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
-import br.com.milksys.components.TableCellHyperlinkFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
+import br.com.milksys.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milksys.controller.parto.PartoFormController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
@@ -45,10 +49,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
-	@Autowired private ReconfirmacaoPrenhezFormController reconfirmacaoPrenhezFormController;
-	@Autowired private RepeticaoCioFormController repeticaoCioFormController;
 	
 	@Autowired private PartoFormController partoFormController;
+	
+	private MenuItem registrarPartoMenuItem   = new MenuItem("Registrar Parto");
+	private MenuItem removerPartoMenuItem     = new MenuItem("Remover Parto");
+	private MenuItem confirmarPrenhezMenuItem = new MenuItem("Confirmação de Prenhez");
 	
 	@FXML
 	public void initialize() {
@@ -60,18 +66,30 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
 		previsaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoEncerramentoLactacao"));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
-		
-		//situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<SituacaoCobertura,String>("situacaoCobertura"));
 		situacaoCoberturaColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<SituacaoCobertura,String>("situacaoCobertura"));
 		
-		repeticaoCioColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("repeticao"));
-		repeticaoCioColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(repeticaoCioHandler));
+		registrarPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleRegistrarParto();
+		    }
+		});
 		
-		confirmacaoPrenhezColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("confirmacaoPrenhez"));
-		confirmacaoPrenhezColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(confirmacaoPrenhezHandler));
+		removerPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleRemoverParto();
+		    }
+		});
 		
-		reconfirmacaoPrenhezColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reconfirmacaoPrenhez"));
-		reconfirmacaoPrenhezColumn.setCellFactory(new TableCellHyperlinkFactory<Cobertura, String>(reconfirmacaoPrenhezHandler));
+		confirmarPrenhezMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleConfirmarPrenhez();
+		    }
+		});
+		
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, removerPartoMenuItem, confirmarPrenhezMenuItem);
 		
 		super.initialize(coberturaFormController);
 			
@@ -150,6 +168,23 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
+	private void handleConfirmarPrenhez(){
+		
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return;
+		}
+		
+		if ( permiteEditar.apply(table.getSelectionModel().getSelectedIndex()) ){
+			
+			confirmacaoPrenhezFormController.setCobertura(getObject());
+	    	confirmacaoPrenhezFormController.showForm();
+	    	refreshObjectInTableView.apply(getObject());
+	    	
+		}
+    	
+	}
+	
 	//====FUNCTIONS
 	
 	Function<Integer, Boolean> permiteEditar = index -> {
@@ -169,39 +204,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		}
 		
 		return true;
-		
-	};
-	
-	Function<Integer, Boolean> confirmacaoPrenhezHandler = selectedIndex -> {
-		
-		if ( permiteEditar.apply(selectedIndex) ){
-			confirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
-			confirmacaoPrenhezFormController.setObject(getObject());
-	    	confirmacaoPrenhezFormController.showForm();
-		}
-    	return true;
-	};
-	
-	Function<Integer, Boolean> reconfirmacaoPrenhezHandler = selectedIndex -> {
-		
-		if ( permiteEditar.apply(selectedIndex) ){
-			reconfirmacaoPrenhezFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
-			reconfirmacaoPrenhezFormController.setObject(getObject());
-	    	reconfirmacaoPrenhezFormController.showForm();
-		}
-	    return true;
-	    
-	};
-	
-	Function<Integer, Boolean> repeticaoCioHandler = selectedIndex -> {
-		
-		if ( permiteEditar.apply(selectedIndex) ){
-			repeticaoCioFormController.setRefreshObjectInTableView(this.refreshObjectInTableView);
-			repeticaoCioFormController.setObject(getObject());
-	    	repeticaoCioFormController.showForm();
-		}
-		
-	    return true;
 		
 	};
 	

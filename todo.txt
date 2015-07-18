@@ -1,18 +1,25 @@
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 
 - configurar as pesquisas em todos os cadastros;
-
-- está permitindo deletar animal sem remover o parto.
-- lazy initialization parto - crias.
-
 - na venda fazer a somatória de animais vendidos e do valor total
-
 - permitir cadastro dos valores de referencia nos indicadores;
 
 - fazer cadastro de procedimento
+- refatorar tela cobertura (ver se mantém a confirmação de prenhez na mesma tabela).
+- Colocar o registro e remoção do parto no botão direito;
+- listar os partos do animal na tela principal (permitir acesso ao form de parto para visualização e a remoção do parto)
+- está permitindo deletar animal sem remover o parto.
+- lazy initialization parto - crias.
 
 - quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
 - a data da cobertura deve ser maior ou igual a data da compra do semem.
+
+- fazer tela de acompanhamento reprodutivo do animal
+- ultima cobertura
+- número de serviços (até ela ficar prenha)
+- próximo serviço (PVE + 21 dias)
+- numero de partos animal
+- numero de machos e femeas paridas
 
 - fazer filtros:
 - em periodo voluntário de espera
@@ -31,8 +38,6 @@
   		media diaria estimada
   		dias em lactacao
   		produção acumulada
-
-- numero de partos animal
 
 - erro casas decimais valor leite ex: 0,80
 - três casas decimais valor do leite
@@ -56,111 +61,3 @@
 	
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
 cobertura -> parto -> cobertura -> encerramento -> parto
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		
-		
-		
-		
-		
-		
-		Parto ultimoParto = 
-		
-		
-		
-		
-		
-		Date dataInicio = DateUtil.asDate(LocalDate.of(LocalDate.now().getYear(), 01, 01));
-		Date dataFim    = DateUtil.asDate(LocalDate.of(LocalDate.now().getYear(), 12, 31));
-		
-		Date dataUltimoParto = null;
-		Date dataUltimoEncerramento = null;
-		String ultimaOcorrencia = null;
-		
-		//tenta localizar a ultima ocorrencia - parto ou encerramento antes da data inicial
-		Query query = entityManager.createQuery("SELECT p.cobertura.femea.id, p.data FROM Parto p where p.data < :dataInicio order by p.data desc");
-		query.setParameter("dataInicio", dataInicio);
-		query.setMaxResults(1);
-		
-		Object[] ultimoParto = (Object[]) query.getSingleResult();
-		
-		query = entityManager.createQuery("SELECT e.animal.id, e.data FROM EncerramentoLactacao e where e.data < :datInicio order by e.data desc");
-		query.setParameter("dataInicio", dataInicio);
-		
-		Object[] ultimoEncerramento = (Object[]) query.getSingleResult();
-		
-		//armazena a data da ultima ocorrencia, parto ou encerramento
-		if ( ultimoParto != null ){
-			if ( ultimoEncerramento != null ){
-				if ( ((Date)ultimoParto[1]).after((Date)ultimoEncerramento[1]) ){
-					dataUltimoParto = (Date)ultimoParto[1];
-				}else{
-					dataUltimoEncerramento = (Date)ultimoEncerramento[1];
-				}
-			}else{
-				dataUltimoParto = (Date)ultimoParto[1];
-			}
-		}else{
-			if ( ultimoEncerramento != null ){
-				dataUltimoEncerramento = (Date)ultimoEncerramento[1];
-			}
-		}
-		
-		
-		if ( dataUltimoParto != null ){
-			
-		}
-		
-		
-		
-		
-		
-		
-		List<Object[]> ultimoParto = .getResultList();
-		List<Object[]> encerramentos = entityManager.createQuery("SELECT e.animal.id, e.data FROM EncerramentoLactacao e order by e.data").getResultList();
-		
-		BigDecimal diasEmLactacao = BigDecimal.ZERO;
-		
-		for ( Object[] parto : partos ){
-			
-			int parto_animal = (int)parto[0];
-		    Date parto_data  = (Date)parto[1];
-		    
-			Date data_proximo_encerramento = null;
-			int index = 0;
-			
-			for ( Object[] encerramento : encerramentos ){
-				
-				int encerramento_animal = (int)encerramento[0];
-			    Date encerramento_data  = (Date)encerramento[1];
-			    
-			    if ( encerramento_animal == parto_animal && parto_data.before(encerramento_data) ){
-			    	data_proximo_encerramento = encerramento_data;
-			    	break;
-			    }
-			    index++;
-			}
-			
-			if ( encerramentos.size() > index )
-				encerramentos.remove(index);
-			    
-		    if ( data_proximo_encerramento != null ){
-		    	diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto_data), DateUtil.asLocalDate(data_proximo_encerramento))));
-		    }else{
-		    	diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto_data), LocalDate.now())));
-		    }
-			
-		}
-		
-		return diasEmLactacao;
-	

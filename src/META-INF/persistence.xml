@@ -32,6 +32,7 @@
 		<class>br.com.milksys.model.Touro</class>
 		<class>br.com.milksys.model.Indicador</class>
 		<class>br.com.milksys.model.Parametro</class>
+		<class>br.com.milksys.model.ConfirmacaoPrenhez</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

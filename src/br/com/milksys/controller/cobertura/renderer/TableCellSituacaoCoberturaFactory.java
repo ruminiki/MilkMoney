@@ -38,7 +38,7 @@ public class TableCellSituacaoCoberturaFactory<S, String> implements Callback<Ta
 					if ( item.equals(SituacaoCobertura.PARIDA) )
 						color.setStyle("-fx-background-color: #CCFF99");
 					
-					if ( item.equals(SituacaoCobertura.VAZIA) || item.equals(SituacaoCobertura.REPETIDA) )
+					if ( item.equals(SituacaoCobertura.VAZIA) )
 						color.setStyle("-fx-background-color: #FF6600");
 					
 					if ( item.equals(SituacaoCobertura.PRENHA) )

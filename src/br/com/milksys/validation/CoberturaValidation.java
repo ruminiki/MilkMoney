@@ -17,7 +17,11 @@ import br.com.milksys.util.DateUtil;
 public class CoberturaValidation extends Validator {
 	
 	public static void validate(Cobertura cobertura) {
-	
+		
+		if ( cobertura.getParto() != null ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "A cobertura já tem parto registrado, não sendo possível executar essa operação.");
+		}
+		
 		Validator.validate(cobertura);
 		
 		if ( DateUtil.after(cobertura.getData(), new Date()) ){
@@ -176,115 +180,6 @@ public class CoberturaValidation extends Validator {
 				}
 			}
 		}
-	}
-	
-	
-	public static void validateRegistroConfirmacaoPrenhez(Cobertura cobertura){
-		//===============PREENCHIMENTO DOS CAMPOS===========
-		if ( cobertura.getSituacaoConfirmacaoPrenhez() == null || cobertura.getSituacaoConfirmacaoPrenhez().isEmpty() ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, infome a situação da cobertura para continuar.");
-		}
-		
-		if ( cobertura.getDataConfirmacaoPrenhez() == null ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, informe a data do primeiro toque para continuar.");
-		}
-		
-		if ( cobertura.getDataConfirmacaoPrenhez().before(cobertura.getData()) ||
-				DateUtil.isSameDate(cobertura.getDataConfirmacaoPrenhez(), cobertura.getData())){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data do primeiro toque não pode ser menor ou igual a data da cobertura.");
-		}
-		
-		if ( cobertura.getDataReconfirmacaoPrenhez() != null && !cobertura.getSituacaoReconfirmacaoPrenhez().isEmpty() &&
-				(cobertura.getDataConfirmacaoPrenhez().after(cobertura.getDataReconfirmacaoPrenhez()) || DateUtil.isSameDate(cobertura.getDataConfirmacaoPrenhez(), cobertura.getDataReconfirmacaoPrenhez())) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data do primeiro toque não pode ser maior ou igual a data da reconfirmação.");
-		}
-		
-		if ( cobertura.getDataRepeticaoCio() != null  &&
-				cobertura.getDataConfirmacaoPrenhez().after(cobertura.getDataRepeticaoCio()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data do primeiro toque não pode ser maior que a data da repetição do cio.");
-		}
-		
-	}
-	
-	public static void validateRegistroReconfirmacaoPrenhez(Cobertura cobertura){
-		//===============PREENCHIMENTO DOS CAMPOS===========
-		if ( cobertura.getSituacaoReconfirmacaoPrenhez() == null || cobertura.getSituacaoReconfirmacaoPrenhez().isEmpty() ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, infome a situação da cobertura para continuar.");
-		}
-		
-		if ( cobertura.getDataReconfirmacaoPrenhez() == null ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, informe a data da reconfirmação para continuar.");
-		}
-		
-		if ( cobertura.getDataReconfirmacaoPrenhez().before(cobertura.getData()) ||
-				DateUtil.isSameDate(cobertura.getDataReconfirmacaoPrenhez(), cobertura.getData())){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da reconfirmação não pode ser menor ou igual a data da cobertura.");
-		}
-		
-		if ( cobertura.getDataConfirmacaoPrenhez() == null || 
-				cobertura.getSituacaoConfirmacaoPrenhez() == null || cobertura.getSituacaoConfirmacaoPrenhez().isEmpty() ){ 
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, registre o primeiro toque antes de registrar a reconfirmação.");
-		}
-		
-		if ( cobertura.getDataConfirmacaoPrenhez() != null && !cobertura.getSituacaoConfirmacaoPrenhez().isEmpty() &&
-				(cobertura.getDataConfirmacaoPrenhez().after(cobertura.getDataReconfirmacaoPrenhez()) || DateUtil.isSameDate(cobertura.getDataConfirmacaoPrenhez(), cobertura.getDataReconfirmacaoPrenhez())) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da reconfirmação não pode ser menor ou igual a data do primeiro toque.");
-		}
-		
-		if ( cobertura.getDataRepeticaoCio() != null  &&
-				cobertura.getDataReconfirmacaoPrenhez().after(cobertura.getDataRepeticaoCio()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da reconfirmação não pode ser maior que a data da repetição do cio.");
-		}
-		
-	}
-	
-	public static void validateRegistroRepeticaoCio(Cobertura cobertura){
-		
-		//===============PREENCHIMENTO DOS CAMPOS===========
-		if ( cobertura.getDataRepeticaoCio() == null ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, informe a data da repetição do cio para continuar.");
-		}
-		
-		if ( cobertura.getDataRepeticaoCio().before(cobertura.getData()) ||
-				DateUtil.isSameDate(cobertura.getDataRepeticaoCio(), cobertura.getData())){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da repetição do cio não pode ser menor ou igual a data da cobertura.");
-		}
-		
-		if ( cobertura.getSituacaoCobertura() == null || cobertura.getSituacaoCobertura().isEmpty() ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, infome a situação da cobertura para continuar.");
-		}
-		
-		if ( !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.REPETIDA) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"No registro de repetição de cio a situação escolhida deve ser [" + SituacaoCobertura.REPETIDA+"]");
-		}
-		
-		if ( cobertura.getDataConfirmacaoPrenhez() != null &&
-				cobertura.getDataConfirmacaoPrenhez().after(cobertura.getDataRepeticaoCio()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da repetição do cio não pode ser menor que a data do primeiro toque.");
-		}
-		
-		if ( cobertura.getDataReconfirmacaoPrenhez() != null &&
-				cobertura.getDataReconfirmacaoPrenhez().after(cobertura.getDataRepeticaoCio()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A data da repetição do cio não pode ser menor que a data da reconfirmação.");
-		}
-
 	}
 	
 	public static void validaSituacaoAnimal(Animal animal){

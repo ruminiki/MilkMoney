@@ -18,10 +18,6 @@ public class SituacaoCobertura {
 	 */
 	public static final String INDEFINIDA = "INDEFINIDA";
 	/**
-	 * O animal repetiu de cio.
-	 */
-	public static final String REPETIDA   = "REPETIDA";
-	/**
 	 * Teve o parto registrado.
 	 */
 	public static final String PARIDA     = "PARIDA";

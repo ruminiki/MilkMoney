@@ -39,7 +39,7 @@ public abstract class AbstractFormController<K, E> {
 	
 	private Stage dialogStage;
 	private E object;
-	private IService<K, E> service;
+	protected IService<K, E> service;
 	
 	private boolean closePopUpAfterSave = true;
 	private Search<K,E> search;
