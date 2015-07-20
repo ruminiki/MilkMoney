@@ -9,10 +9,10 @@
 - Colocar o registro e remoção do parto no botão direito;
 - listar os partos do animal na tela principal (permitir acesso ao form de parto para visualização e a remoção do parto)
 - está permitindo deletar animal sem remover o parto.
-- lazy initialization parto - crias.
+
+- Como fazer com uma vaca que pari e não entrará em lactação?
 
 - quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
-- a data da cobertura deve ser maior ou igual a data da compra do semem.
 
 - fazer tela de acompanhamento reprodutivo do animal
 - ultima cobertura

@@ -67,6 +67,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		try{
 			
 			cobertura.setParto(null);
+			configuraDataPrevisaoPartoELactacao(cobertura);
 			dao.persist(cobertura);
 
 		}catch(Exception e){

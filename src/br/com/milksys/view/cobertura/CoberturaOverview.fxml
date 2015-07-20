@@ -74,13 +74,6 @@
             <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Data Parto" />
           <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo Cobertura" />
           <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação Cobertura" />
-            <TableColumn prefWidth="75.0" text="Diagnóstico de Prenhez">
-               <columns>
-                  <TableColumn fx:id="confirmacaoPrenhezColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
-                  <TableColumn fx:id="reconfirmacaoPrenhezColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reconfirmação" />
-               </columns>
-            </TableColumn>
-            <TableColumn fx:id="repeticaoCioColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Repetição" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

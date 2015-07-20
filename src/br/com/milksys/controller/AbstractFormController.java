@@ -247,7 +247,7 @@ public abstract class AbstractFormController<K, E> {
 		return closePopUpAfterSave;
 	}
 
-	public void setClosePopUpAfterSave(boolean closePopUpAfterSave) {
+	public void closePopUpAfterSave(boolean closePopUpAfterSave) {
 		this.closePopUpAfterSave = closePopUpAfterSave;
 	}
 	

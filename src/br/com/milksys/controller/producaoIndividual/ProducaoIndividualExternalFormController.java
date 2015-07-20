@@ -120,7 +120,7 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	
 	@Override
 	protected void handleSave() {
-		super.setClosePopUpAfterSave(false);
+		super.closePopUpAfterSave(false);
 		super.setObject(((ProducaoIndividualService)service).beforeSave(getObject()));
 		
 		try {

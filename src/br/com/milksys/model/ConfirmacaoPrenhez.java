@@ -25,11 +25,6 @@ import javax.persistence.TemporalType;
 import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 
-
-/**
- * The persistent class for the CRIA database table.
- * 
- */
 @Entity
 @Table(name="confirmacaoPrenhez")
 @NamedQuery(name="ConfirmacaoPrenhez.findAll", query="SELECT c FROM ConfirmacaoPrenhez c")
@@ -47,6 +42,10 @@ public class ConfirmacaoPrenhez extends AbstractEntity implements Serializable {
 	
 	public ConfirmacaoPrenhez() {}
 	
+	public ConfirmacaoPrenhez(Cobertura cobertura) {
+		this.setCobertura(cobertura);
+	}
+
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="data")

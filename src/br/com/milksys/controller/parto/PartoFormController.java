@@ -80,9 +80,10 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		inputComplicacaoParto.setItems(ComplicacaoParto.getItems());
 		inputComplicacaoParto.valueProperty().bindBidirectional(getObject().complicacaoPartoProperty());
 		
-		
 		if ( getObject().getId() <= 0 ){
 			cria = new Cria(getObject());
+			inputData.setValue(DateUtil.asLocalDate(getObject().getCobertura().getPrevisaoParto()));
+			inputDataInicioLactacao.setValue(inputData.getValue().plusDays(3));
 		}
 		
 		//cria

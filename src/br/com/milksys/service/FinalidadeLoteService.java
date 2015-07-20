@@ -20,11 +20,13 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 	@Autowired private FinalidadeLoteDao dao;
 
 	@Override
+	@Transactional
 	public boolean save(FinalidadeLote entity) {
 		return dao.persist(entity);
 	}
 
 	@Override
+	@Transactional
 	public boolean remove(FinalidadeLote entity) {
 		return dao.remove(entity);
 	}

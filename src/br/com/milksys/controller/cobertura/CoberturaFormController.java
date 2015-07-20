@@ -209,7 +209,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML
 	private void updateDataPrevisaoParto(){
 		if ( inputData.getValue() != null ){
-			getObject().setPrevisaoParto(DateUtil.asDate(inputData.getValue().plusMonths(9)));
+			getObject().setPrevisaoParto(DateUtil.asDate(inputData.getValue().plusDays(282)));
 			getObject().setPrevisaoEncerramentoLactacao(DateUtil.asDate(inputData.getValue().plusMonths(7)));
 			lblPrevisaoParto.setText(DateUtil.format(getObject().getPrevisaoParto()));
 		}

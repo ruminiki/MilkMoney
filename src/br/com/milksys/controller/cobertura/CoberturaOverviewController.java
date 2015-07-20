@@ -25,6 +25,7 @@ import br.com.milksys.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormContro
 import br.com.milksys.controller.parto.PartoFormController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.model.ConfirmacaoPrenhez;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
@@ -43,9 +44,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String> previsaoEncerramentoLactacaoColumn;
 	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
-	@FXML private TableColumn<Cobertura, String> repeticaoCioColumn;
-	@FXML private TableColumn<Cobertura, String> confirmacaoPrenhezColumn;
-	@FXML private TableColumn<Cobertura, String> reconfirmacaoPrenhezColumn;
 	
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
@@ -67,6 +65,8 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		previsaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoEncerramentoLactacao"));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<SituacaoCobertura,String>("situacaoCobertura"));
+		
+		super.initialize(coberturaFormController);
 		
 		registrarPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
@@ -91,8 +91,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, removerPartoMenuItem, confirmarPrenhezMenuItem);
 		
-		super.initialize(coberturaFormController);
-			
 	}
 	
 	@Override
@@ -178,9 +176,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		if ( permiteEditar.apply(table.getSelectionModel().getSelectedIndex()) ){
 			
-			confirmacaoPrenhezFormController.setCobertura(getObject());
+			confirmacaoPrenhezFormController.setObject(new ConfirmacaoPrenhez(getObject()));
 	    	confirmacaoPrenhezFormController.showForm();
-	    	refreshObjectInTableView.apply(getObject());
+	    	refreshObjectInTableView.apply(service.findById(getObject().getId()));
 	    	
 		}
     	

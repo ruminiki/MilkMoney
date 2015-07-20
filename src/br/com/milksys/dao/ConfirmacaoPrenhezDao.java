@@ -12,7 +12,6 @@ import br.com.milksys.model.ConfirmacaoPrenhez;
 @Repository
 public class ConfirmacaoPrenhezDao extends AbstractGenericDao<Integer, ConfirmacaoPrenhez> {
 
-	
 	@SuppressWarnings("unchecked")
 	public List<ConfirmacaoPrenhez> findByCobertura(Cobertura cobertura) {
 		Query query = entityManager.createQuery("SELECT c FROM ConfirmacaoPrenhez c WHERE c.cobertura = :cobertura");

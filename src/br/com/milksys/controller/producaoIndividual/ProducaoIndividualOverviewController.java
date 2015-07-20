@@ -151,7 +151,9 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 				table.getSelectionModel().clearAndSelect(0);
 				lactacao = tableLactacoes.getItems().get(0);
 				refreshTableOverview();
-			}	
+			}else{
+				return;
+			}
 		}else{
 			data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
 		}

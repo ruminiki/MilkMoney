@@ -269,7 +269,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.REMOVE})
 	@JoinColumn(name="cobertura")
 	public List<ConfirmacaoPrenhez> getConfirmacoesPrenhez() {
 		return confirmacoesPrenhez;
