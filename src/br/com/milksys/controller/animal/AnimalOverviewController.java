@@ -32,6 +32,7 @@ import br.com.milksys.controller.raca.RacaOverviewController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
 import br.com.milksys.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
@@ -293,7 +294,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
 			coberturaOverviewController.setSearch((SearchCoberturasAnimal) MainApp.getBean(SearchCoberturasAnimal.class), getObject());
-			rootLayoutController.openForm(coberturaOverviewController.getFormName());
+			coberturaOverviewController.setObject(new Cobertura());
+			coberturaOverviewController.showForm();
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

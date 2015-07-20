@@ -20,7 +20,7 @@
                      </font></Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #CFE68A;" VBox.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;" VBox.vgrow="SOMETIMES">
                <children>
                   <Label text="NOVO DIANÓSTICO" />
                </children>
@@ -71,7 +71,7 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #96AFFF;">
+            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                <children>
                   <Label text="HISTÓRICO" />
                </children>

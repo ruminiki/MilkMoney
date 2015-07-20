@@ -22,7 +22,7 @@
                <children>
                   <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E0A366;">
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
                               <Label text="EVENTOS">
                                  <font>
@@ -37,7 +37,7 @@
                             <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" sortable="false" text="Evento" />
                           </columns>
                         </TableView>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CFE68A;">
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
                               <Label text="LACTAÇÕES">
                                  <font>
@@ -62,7 +62,7 @@
                   </VBox>
                   <VBox spacing="5.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #96AFFF;">
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
                               <Label text="INDICADORES">
                                  <font>

@@ -34,17 +34,6 @@
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
             </HBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleRegistrarParto" style="-fx-background-color: #CCFF99;" text="Registrar Parto">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Button>
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleRemoverParto" style="-fx-background-color: #FFCC66;" text="Remover Parto">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
          </children>
          <padding>
             <Insets right="5.0" />
