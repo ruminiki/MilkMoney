@@ -288,7 +288,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}
 		
 	};
-	
+	@FXML
 	private void handleAbrirCoberturasAnimal(){
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){

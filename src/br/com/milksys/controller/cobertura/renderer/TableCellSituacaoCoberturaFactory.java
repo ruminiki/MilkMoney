@@ -1,11 +1,8 @@
 package br.com.milksys.controller.cobertura.renderer;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import br.com.milksys.model.SituacaoCobertura;
 
@@ -26,31 +23,28 @@ public class TableCellSituacaoCoberturaFactory<S, String> implements Callback<Ta
 	        @Override
 	        protected void updateItem(String item, boolean empty) {
 	        	if(item!=null){
-					
-					HBox cell = new HBox();
-					cell.setAlignment(Pos.CENTER_LEFT);
-					cell.setSpacing(2);
-					
-					HBox color= new HBox();
-					color.setMinWidth(10);
-					color.setMaxWidth(10);
-					
-					if ( item.equals(SituacaoCobertura.PARIDA) )
-						color.setStyle("-fx-background-color: #CCFF99");
-					
-					if ( item.equals(SituacaoCobertura.VAZIA) )
-						color.setStyle("-fx-background-color: #FF6600");
-					
-					if ( item.equals(SituacaoCobertura.PRENHA) )
-						color.setStyle("-fx-background-color: #FFCC00");
-					
-					if ( item.equals(SituacaoCobertura.INDEFINIDA) )
-						color.setStyle("-fx-background-color: #7C867C");
-					
-					cell.getChildren().add(color);
-					cell.getChildren().add(new Label((java.lang.String)item));
-					
-					setGraphic(cell);
+	        		super.updateItem(item, empty);
+
+	                if (item == null || empty) {
+	                    setText(null);
+	                    setStyle("");
+	                } else {
+	                	
+					     if ( item.equals(SituacaoCobertura.PARIDA) )
+		                    setStyle("-fx-background-color: #CCFF99;-fx-alignment: CENTER;");
+							
+						if ( item.equals(SituacaoCobertura.VAZIA) )
+							setStyle("-fx-background-color: #FF6600;-fx-alignment: CENTER;");
+						
+						if ( item.equals(SituacaoCobertura.PRENHA) )
+							setStyle("-fx-background-color: #FFCC00;-fx-alignment: CENTER;");
+						
+						if ( item.equals(SituacaoCobertura.INDEFINIDA) )
+							setStyle("-fx-background-color: #7C867C;-fx-alignment: CENTER;");
+						
+						setText((java.lang.String)item);
+						
+	                }
 				} 
 	        }
 	    };

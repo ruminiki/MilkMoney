@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.cobertura.CoberturaOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="445.0" prefWidth="1004.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.cobertura.CoberturaOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="inputPesquisa" alignment="CENTER" prefHeight="30.0" prefWidth="250.0" promptText="número ou nome animal">
+            <TextField fx:id="inputPesquisa" alignment="CENTER" prefHeight="30.0" prefWidth="250.0" promptText="reprodutor/tipo cobertura">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
@@ -55,14 +55,18 @@
       </VBox>
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
-          <TableColumn fx:id="femeaColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Fêmea" />
-          <TableColumn fx:id="reprodutorColumn" minWidth="200.0" prefWidth="75.0" text="Reprodutor" />
           <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
-          <TableColumn fx:id="previsaoEncerramentoLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Enc. Lactação" />
-          <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
+          <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+          <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
+            <TableColumn fx:id="femeaColumn" maxWidth="200.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fêmea" />
+          <TableColumn fx:id="reprodutorColumn" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodutor" />
+            <TableColumn prefWidth="75.0" text="Data Prevista">
+               <columns>
+                <TableColumn fx:id="previsaoEncerramentoLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Secar" />
+                <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Parto" />
+               </columns>
+            </TableColumn>
             <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Data Parto" />
-          <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo Cobertura" />
-          <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação Cobertura" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -11,6 +11,7 @@
 - está permitindo deletar animal sem remover o parto.
 
 - Como fazer com uma vaca que pari e não entrará em lactação?
+- não pode registrar cobertura do animal após a data de sua venda ou morte;
 
 - quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
 

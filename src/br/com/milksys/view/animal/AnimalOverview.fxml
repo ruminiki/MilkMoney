@@ -113,6 +113,10 @@
                      </cursor>
                   </Button>
                   <Label text="Opções" />
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleAbrirCoberturasAnimal" text="Coberturas">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
                   <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" style="-fx-background-color: #66A3FF;" text="Ficha do Animal" />
                </children>
                <HBox.margin>
