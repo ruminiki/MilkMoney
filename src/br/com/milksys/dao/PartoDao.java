@@ -28,7 +28,7 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Parto> findAllOrderDataDesc() {
+	public List<Parto> findAllOrderByDataDesc() {
 		
 		Query query = entityManager.createQuery("SELECT p FROM Parto p order by p.data asc");
 		return query.getResultList();

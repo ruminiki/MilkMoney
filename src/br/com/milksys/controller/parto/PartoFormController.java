@@ -26,6 +26,7 @@ import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.ComplicacaoParto;
 import br.com.milksys.model.Cria;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SimNao;
@@ -50,7 +51,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private TableColumn<Cria, String> removerColumn;
 	
 	@FXML private UCTextField inputCobertura;
-	@FXML private DatePicker inputData;
+	@FXML private DatePicker inputData, inputDataInicioLactacao;
 	@FXML private UCTextField inputObservacao;
 	@FXML private ComboBox<String> inputSituacaoNascimento;
 	@FXML private ComboBox<String> inputSexo;
@@ -107,6 +108,19 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		data.clear();
 		data.addAll(getObject().getCrias());
 		table.setItems(data);
+		
+	}
+	
+	@Override
+	protected void beforeSave() {
+		super.beforeSave();
+		
+		Lactacao lactacao = new Lactacao();
+		lactacao.setParto(getObject());
+		lactacao.setAnimal(getObject().getCobertura().getFemea());
+		lactacao.setDataInicio(DateUtil.asDate(inputDataInicioLactacao.getValue()));
+		
+		getObject().setLactacao(lactacao);
 		
 	}
 	

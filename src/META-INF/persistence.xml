@@ -28,11 +28,11 @@
 		<class>br.com.milksys.model.CausaMorteAnimal</class>
 		<class>br.com.milksys.model.MorteAnimal</class>
 		<class>br.com.milksys.model.AnimalVendido</class>
-		<class>br.com.milksys.model.EncerramentoLactacao</class>
 		<class>br.com.milksys.model.Touro</class>
 		<class>br.com.milksys.model.Indicador</class>
 		<class>br.com.milksys.model.Parametro</class>
 		<class>br.com.milksys.model.ConfirmacaoPrenhez</class>
+		<class>br.com.milksys.model.Lactacao</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->
@@ -46,6 +46,7 @@
 			<property name="hibernate.format_sql" value="true" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
 
 			<!-- Configuring Connection Pool -->
 			<property name="use_sql_comments" value="true" />

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import br.com.milksys.dao.PartoDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Parto;
@@ -21,14 +22,14 @@ public class PartoService implements IService<Integer, Parto>{
 
 	@Override
 	@Transactional
-	public boolean save(Parto entity) {
-    	return dao.persist(entity);
+	public boolean save(Parto parto) {
+		throw new NotImplementedException();
 	}
 
 	@Override
 	@Transactional
-	public boolean remove(Parto entity) {
-		return dao.remove(entity);
+	public boolean remove(Parto parto) {
+		throw new NotImplementedException();
 	}
 
 	@Override
@@ -51,9 +52,9 @@ public class PartoService implements IService<Integer, Parto>{
 	}
 
 	@Override
-	public void validate(Parto entity) {
-		PartoValidation.validate(entity);
-		PartoValidation.validadeCrias(entity);
+	public void validate(Parto parto) {
+		PartoValidation.validate(parto);
+		PartoValidation.validadeCrias(parto);
 	}
 
 	public Parto findLastParto(Animal animal) {

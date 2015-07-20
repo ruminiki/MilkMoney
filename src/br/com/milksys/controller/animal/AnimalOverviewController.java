@@ -24,22 +24,21 @@ import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.RootLayoutController;
 import br.com.milksys.controller.cobertura.CoberturaOverviewController;
-import br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController;
 import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
+import br.com.milksys.controller.lactacao.LactacaoFormController;
 import br.com.milksys.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milksys.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milksys.controller.raca.RacaOverviewController;
 import br.com.milksys.controller.semen.SemenReducedOverviewController;
 import br.com.milksys.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.EncerramentoLactacao;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
-import br.com.milksys.service.EncerramentoLactacaoService;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.LactacaoService;
 import br.com.milksys.service.MorteAnimalService;
 import br.com.milksys.service.VendaAnimalService;
 import br.com.milksys.service.searchers.SearchAnimaisMortos;
@@ -56,7 +55,6 @@ import br.com.milksys.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milksys.service.searchers.SearchFemeasSecas;
 import br.com.milksys.service.searchers.SearchMachos;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
-import br.com.milksys.validation.EncerramentoLactacaoValidation;
 import br.com.milksys.validation.MorteAnimalValidation;
 import br.com.milksys.validation.VendaAnimalValidation;
 
@@ -72,7 +70,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML private TableColumn<Animal, Date> dataUltimaCoberturaColumn;
 	@FXML private TableColumn<Animal, String> diasUltimaCoberturaColumn;
-	@FXML private TableColumn<Animal, Date> dataPrevisaoEncerramentoLactacaoColumn;
+	@FXML private TableColumn<Animal, Date> dataPrevisaoLactacaoColumn;
 	@FXML private TableColumn<Animal, Date> dataPrevisaoProximoPartoColumn;
 	@FXML private TableColumn<Animal, String> situacaoUltimaCoberturaColumn;
 	
@@ -84,7 +82,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private HBox containerTable;
 	
 	//services
-	@Autowired private EncerramentoLactacaoService encerramentoLactacaoService;
+	@Autowired private LactacaoService lactacaoService;
 	@Autowired private MorteAnimalService morteAnimalService;
 	@Autowired private VendaAnimalService vendaAnimalService;
 	
@@ -94,18 +92,18 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private SemenReducedOverviewController semenReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
-	@Autowired private EncerramentoLactacaoFormController encerramentoLactacaoFormController;
+	@Autowired private LactacaoFormController encerramentoLactacaoFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	
-	private MenuItem encerrarLactacaoMenuItem   = new MenuItem();
-	private MenuItem registrarMorteMenuItem     = new MenuItem();
-	private MenuItem registrarVendaMenuItem     = new MenuItem();
-	private MenuItem registroProducaoIndividualMenuItem = new MenuItem("Registro Produção Individual");
-	private MenuItem fichaAnimalMenuItem        = new MenuItem("Ficha Animal");
-	private MenuItem coberturasMenuItem         = new MenuItem("Coberturas");
+	private MenuItem desfazerEncerramentoLactacaoMenuItem = new MenuItem("Desfazer Encerramento Lactação");
+	private MenuItem registrarMorteMenuItem               = new MenuItem();
+	private MenuItem registrarVendaMenuItem               = new MenuItem();
+	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
+	private MenuItem fichaAnimalMenuItem                  = new MenuItem("Ficha Animal");
+	private MenuItem coberturasMenuItem                   = new MenuItem("Coberturas");
 	
 	@FXML
 	public void initialize() {
@@ -121,7 +119,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
 		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
-		dataPrevisaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
+		dataPrevisaoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoLactacao"));
 		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 
@@ -130,10 +128,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
-		encerrarLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		desfazerEncerramentoLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	handleDesfazerOuEncerrarLactacao();
+		    	handleDesfazerEncerramentoLactacao();
 		    }
 		});
 		
@@ -172,7 +170,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), encerrarLactacaoMenuItem, 
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), desfazerEncerramentoLactacaoMenuItem, 
 				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), coberturasMenuItem, registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
 		
 	}
@@ -180,23 +178,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Override
 	protected void handleRightClick() {
 		super.handleRightClick();
-		
-		encerrarLactacaoMenuItem.setText(
-				getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? 
-				"Desfazer Encerramento Lactação" : "Encerrar Lactação");
-		
-		encerrarLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
+		desfazerEncerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || !getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO));
 		coberturasMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
-		
-		registrarMorteMenuItem.setText(
-				getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? 
-				"Desfazer Registro Morte" : "Registrar Morte");
-		
-		registrarVendaMenuItem.setText(
-				getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? 
-				"Desfazer Registro Venda" : "Registrar Venda");
-
+		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
+		registrarVendaMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Registro Venda" : "Registrar Venda");
 	}
 
 	@Override
@@ -229,27 +215,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 	}
 	
-	private void handleDesfazerOuEncerrarLactacao(){
+	private void handleDesfazerEncerramentoLactacao(){
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
-				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o último encerramento de lactação?");
-				if (result.get() == ButtonType.OK) {
-					encerramentoLactacaoService.removeLastByAnimal(getObject());
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
-			}else{
-				EncerramentoLactacaoValidation.validaSituacaoAnimal(getObject());
-				
-				encerramentoLactacaoFormController.setObject(new EncerramentoLactacao(getObject()));
-				encerramentoLactacaoFormController.showForm();
-				if ( encerramentoLactacaoFormController.getObject() != null && encerramentoLactacaoFormController.getObject().getId() > 0 ){
-					getObject().setSituacaoAnimal(SituacaoAnimal.SECO);
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
+			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da última lactação?");
+			if (result.get() == ButtonType.OK) {
+				lactacaoService.desfazerEncerramentoLactacao(getObject());
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}
-			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}

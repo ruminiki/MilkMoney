@@ -69,11 +69,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@Autowired private FuncionarioReducedController funcionarioReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private ServicoFormController servicoFormController;
-	/**
-	 * Faz o controle caso o usuário altere a cobertura, mude o responsável e caso exista o serviço associado,
-	 * faz o controle para caso o usuário cancele a alteração o serviço não seja removido
-	 */
-	private Servico servicoRemovido;
 	
 	EventHandler<ActionEvent> selectSemenEventHandler = new EventHandler<ActionEvent>() {
 	    @Override public void handle(ActionEvent e) {
@@ -206,8 +201,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 		}
 		
-		servicoRemovido = null;
-		
 	}
 	
 	/**
@@ -301,16 +294,12 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				inputNomeResponsavel.setDisable(false);
 				getObject().setFuncionarioResponsavel(null);
 				
-				if ( getObject().getServico() != null ){
-					removerServico();
-				}
+				getObject().setServico(null);
 				
 				break;
 			}case 1:{
 				
-				if ( getObject().getServico() != null ){
-					removerServico();
-				}
+				getObject().setServico(null);
 				
 				funcionarioReducedOverviewController.showForm();
 				
@@ -377,44 +366,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}else{
 			inputFemea.setText("");
 		}
-		
-	}
-	
-	@Override
-	public void handleCancel() {
-		
-		if ( servicoRemovido != null && servicoRemovido.getId() > 0 ){
-			//recupera o registro do banco de dados para o caso de o usuário ter alterado algum valor em tela
-			setObject(service.findById(getObject().getId()));
-			getObject().setServico(servicoRemovido);
-			getObject().setNomeResponsavel(servicoRemovido.toString());
-			service.save(getObject());
-		}else{
-			getObject().setServico(null);
-		}
-		
-		super.handleCancel();
-		
-	}
-	
-	@Override
-	protected void handleSave() {
-		
-		if ( servicoRemovido != null ){
-			servicoService.remove(servicoRemovido);
-		}
-		
-		super.handleSave();
-	}
-	
-	private void removerServico(){
-		
-		if ( servicoRemovido == null ){
-			servicoRemovido = getObject().getServico();	
-		}
-		
-		getObject().setServico(null);
-		((CoberturaService)service).removeServicoFromCobertura(getObject());
 		
 	}
 	

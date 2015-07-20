@@ -43,13 +43,13 @@ public class Parto extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty observacao = new SimpleStringProperty();
-	private StringProperty tipoParto = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
-	private StringProperty complicacaoParto = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
-	private ObjectProperty<Cobertura> cobertura = new SimpleObjectProperty<Cobertura>();
-	private List<Cria> crias = new ArrayList<Cria>();
-	private EncerramentoLactacao encerramentoLactacao;
+	private ObjectProperty<LocalDate> data             = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private StringProperty            observacao       = new SimpleStringProperty();
+	private StringProperty            tipoParto        = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
+	private StringProperty            complicacaoParto = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
+	private ObjectProperty<Cobertura> cobertura        = new SimpleObjectProperty<Cobertura>();
+	private List<Cria>                crias            = new ArrayList<Cria>();
+	private Lactacao                  lactacao;
 	
 	public Parto() {
 	}
@@ -151,14 +151,14 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(orphanRemoval=true, targetEntity=EncerramentoLactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name="encerramentoLactacao")
-	public EncerramentoLactacao getEncerramentoLactacao() {
-		return encerramentoLactacao;
+	@OneToOne(orphanRemoval=true, targetEntity=Lactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name="lactacao")
+	public Lactacao getLactacao() {
+		return lactacao;
 	}
 
-	public void setEncerramentoLactacao(EncerramentoLactacao encerramentoLactacao) {
-		this.encerramentoLactacao = encerramentoLactacao;
+	public void setLactacao(Lactacao lactacao) {
+		this.lactacao = lactacao;
 	}
 
 	@Override

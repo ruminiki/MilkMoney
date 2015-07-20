@@ -16,8 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -104,7 +104,7 @@ public class ConfirmacaoPrenhez extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=Cobertura.class)
+	@ManyToOne(targetEntity=Cobertura.class)
 	@JoinColumn(name="cobertura")
 	@FieldRequired(message="cobertura")
 	public Cobertura getCobertura() {

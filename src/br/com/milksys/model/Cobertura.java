@@ -176,7 +176,8 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		if ( this.getParto() != null ){
 			return SituacaoCobertura.PARIDA; 
 		}
-		return situacaoCobertura;
+		
+		return situacaoCobertura == null ? SituacaoCobertura.INDEFINIDA : situacaoCobertura;
 	}
 
 	public void setSituacaoCobertura(String situacaoCobertura) {

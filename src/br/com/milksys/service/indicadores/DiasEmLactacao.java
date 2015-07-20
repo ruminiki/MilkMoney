@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.milksys.dao.MorteAnimalDao;
 import br.com.milksys.dao.PartoDao;
 import br.com.milksys.dao.VendaAnimalDao;
-import br.com.milksys.model.EncerramentoLactacao;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.MorteAnimal;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.VendaAnimal;
@@ -44,7 +44,7 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		int        totalPartos    = 0;
 		
-		List<Parto> partos = partoDao.findAllOrderDataDesc();
+		List<Parto> partos = partoDao.findAllOrderByDataDesc();
 		
 		for ( Parto parto : partos ){
 			
@@ -74,11 +74,10 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 		
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		
-		//verifica se o parto teve o encerramento da lactação
-		EncerramentoLactacao encerramento = parto.getEncerramentoLactacao();
+		Lactacao lactacao = parto.getLactacao();
 		
-		if ( encerramento != null ){
-			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(encerramento.getData()))));
+		if ( lactacao != null ){
+			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(lactacao.getDiasLactacao()));
 		}else{
 			
 			//Procura registro venda animal após o parto

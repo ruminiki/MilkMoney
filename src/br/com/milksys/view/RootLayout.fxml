@@ -44,7 +44,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
-                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroEncerramentoLactacao" text="Encerramento Lactação" /> -->
+                  <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroLactacao" text="Encerramento Lactação" /> -->
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroParametro" text="Parâmetros" />

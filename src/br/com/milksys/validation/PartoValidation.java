@@ -4,6 +4,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
+import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cria;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
@@ -69,6 +70,13 @@ public class PartoValidation extends Validator {
 						"A data de nascimento do animal [" + a.getAnimal().getNumeroNome() + "] deve ser igual a data do parto.");
 			}
 			
+		}
+	}
+
+	public static void validaEncerramentoLactacao(Animal femea, boolean inLactacao) {
+		if ( inLactacao ){
+			throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. Por favor, registre o encerramento da "
+					+ "última lactação para então registrar o novo parto e iniciar uma nova lactação.");
 		}
 	}
 	

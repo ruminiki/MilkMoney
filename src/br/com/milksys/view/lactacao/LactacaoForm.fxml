@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="184.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.encerramentoLactacao.EncerramentoLactacaoFormController">
+<AnchorPane prefHeight="184.0" prefWidth="511.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.encerramentoLactacao.LactacaoFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -37,11 +37,17 @@
                   </Button>
                   <Label text="Motivo Encerramento: " GridPane.rowIndex="2" />
                   <ComboBox fx:id="inputMotivoEncerramento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                  <Label text="Data: " />
-                  
-                        <DatePicker fx:id="inputData" prefWidth="120.0" GridPane.columnIndex="1" />
+                  <Label text="Data Início: " />
                   <Label text="Observação: " GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
+                     <children>
+                        
+                              <DatePicker fx:id="inputDataInicio" prefWidth="120.0" />
+                        <Label text="Data Fim: " />
+                        <DatePicker fx:id="inputDataFim" prefWidth="120.0" />
+                     </children>
+                  </HBox>
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">

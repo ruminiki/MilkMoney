@@ -47,7 +47,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		}else{
 			
 			ProducaoIndividualValidation.validate(entity);
-			ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.animalEstaEmLactacao(entity.getData(), entity.getAnimal()));
+			ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.isInLactacao(entity.getData(), entity.getAnimal()));
 			return dao.persist(entity);
 			
 		}

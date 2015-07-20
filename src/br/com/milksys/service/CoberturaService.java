@@ -1,5 +1,6 @@
 package br.com.milksys.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
+import br.com.milksys.validation.PartoValidation;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
@@ -22,46 +24,50 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private CoberturaDao dao;
 	@Autowired private PartoService partoService;
 	@Autowired private SemenService semenService;
+	@Autowired private AnimalService animalService;
 
 	@Override
 	@Transactional
-	public boolean save(Cobertura entity) {
+	public boolean save(Cobertura cobertura) {
 		
-		CoberturaValidation.validate(entity);
-		CoberturaValidation.validaSituacaoAnimal(entity.getFemea());
-		CoberturaValidation.validaFemeaSelecionada(entity, findByAnimal(entity.getFemea()));
-		if ( entity.getSemen() != null ){
-			boolean aumentouQuantidadeDosesUtilizadas = entity.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(entity);
+		CoberturaValidation.validate(cobertura);
+		CoberturaValidation.validaSituacaoAnimal(cobertura.getFemea());
+		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea()));
+		if ( cobertura.getSemen() != null ){
+			boolean aumentouQuantidadeDosesUtilizadas = cobertura.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(cobertura);
 			//recarrega o registro do semen para recalcular as doses disponíveis
-			entity.setSemen(semenService.findById(entity.getSemen().getId()));
-			CoberturaValidation.validaEnseminacaoArtificial(entity, entity.getSemen().getQuantidadeDisponivel(), aumentouQuantidadeDosesUtilizadas);	
+			cobertura.setSemen(semenService.findById(cobertura.getSemen().getId()));
+			CoberturaValidation.validaEnseminacaoArtificial(cobertura, cobertura.getSemen().getQuantidadeDisponivel(), aumentouQuantidadeDosesUtilizadas);	
 		}
 		
-		CoberturaValidation.validaSobreposicaoCoberturas(entity, dao.findLastCoberturaByAnimal(entity.getFemea()));
+		CoberturaValidation.validaSobreposicaoCoberturas(cobertura, dao.findLastCoberturaByAnimal(cobertura.getFemea()));
 		
-		return dao.persist(entity);
+		return dao.persist(cobertura);
 	}
 	
 	@Transactional
-	public void registrarParto(Cobertura entity) {
-		configuraDataPrevisaoPartoEEncerramentoLactacao(entity);
+	public void registrarParto(Cobertura cobertura) {
 		try{
 			
-			dao.persist(entity);
+			configuraDataPrevisaoPartoELactacao(cobertura);
+			//verifica se existem lactacoes em aberto
+			PartoValidation.validaEncerramentoLactacao(cobertura.getFemea(), animalService.isInLactacao(new Date(), cobertura.getFemea()));
+			
+			dao.persist(cobertura);
 			
 		}catch(Exception e){
-			entity.setParto(null);
+			cobertura.setParto(null);
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Transactional
-	public void removerParto(Cobertura entity) {
+	public void removerParto(Cobertura cobertura) {
 		
 		try{
 			
-			entity.setParto(null);
-			dao.persist(entity);
+			cobertura.setParto(null);
+			dao.persist(cobertura);
 
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -69,15 +75,15 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
-	private void configuraDataPrevisaoPartoEEncerramentoLactacao(Cobertura entity){
+	private void configuraDataPrevisaoPartoELactacao(Cobertura cobertura){
 		
-		if ( entity.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
-				entity.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
-			entity.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusDays(282)));
-			entity.setPrevisaoEncerramentoLactacao(DateUtil.asDate(DateUtil.asLocalDate(entity.getData()).plusMonths(7)));
+		if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
+				cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
+			cobertura.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(cobertura.getData()).plusDays(282)));
+			cobertura.setPrevisaoEncerramentoLactacao(DateUtil.asDate(DateUtil.asLocalDate(cobertura.getData()).plusMonths(7)));
 		}else{
-			entity.setPrevisaoParto(null);
-			entity.setPrevisaoEncerramentoLactacao(null);
+			cobertura.setPrevisaoParto(null);
+			cobertura.setPrevisaoEncerramentoLactacao(null);
 		}
 		
 	}
@@ -88,8 +94,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	@Override
 	@Transactional
-	public boolean remove(Cobertura entity) {
-		return dao.remove(entity);
+	public boolean remove(Cobertura cobertura) {
+		return dao.remove(cobertura);
 	}
 
 	@Override
@@ -111,15 +117,9 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return FXCollections.observableArrayList(dao.findAllByNumeroNomeAnimal(param));
 	}
 
-	@Transactional
-	public void removeServicoFromCobertura(Cobertura cobertura) {
-		cobertura.setServico(null);
-		dao.persist(cobertura);
-	}
-
 	@Override
-	public void validate(Cobertura entity) {
-		CoberturaValidation.validate(entity);
+	public void validate(Cobertura cobertura) {
+		CoberturaValidation.validate(cobertura);
 	}
 
 	public Cobertura findCoberturaAtivaByAnimal(Animal animal){

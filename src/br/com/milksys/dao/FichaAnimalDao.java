@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
-import br.com.milksys.model.EncerramentoLactacao;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.FichaAnimal;
 import br.com.milksys.model.Parto;
 
@@ -35,8 +35,8 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		}
 		
 		
-		query = entityManager.createQuery("SELECT c.id, c.dataConfirmacaoPrenhez, c.situacaoConfirmacaoPrenhez "
-				+ "FROM Cobertura c WHERE c.femea = :animal and c.dataConfirmacaoPrenhez is not null order by c.dataConfirmacaoPrenhez");
+		query = entityManager.createQuery("SELECT c.id, c.data, c.situacaoCobertura "
+				+ "FROM ConfirmacaoPrenhez c WHERE c.cobertura.femea = :animal order by c.data");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
@@ -45,31 +45,6 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 			fichasAnimal.add(new FichaAnimal((Date)o[1], 
 					"DIAGNÓSTICO (" + String.valueOf(o[2]) + ")", Integer.parseInt(String.valueOf(o[0])), Cobertura.class));
 		}
-		
-
-		query = entityManager.createQuery("SELECT c.id, c.dataReconfirmacaoPrenhez, c.situacaoReconfirmacaoPrenhez "
-				+ "FROM Cobertura c WHERE c.femea = :animal and c.dataReconfirmacaoPrenhez is not null order by c.dataReconfirmacaoPrenhez");
-		query.setParameter("animal", animal);
-		result = query.getResultList();
-		
-		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], 
-					"DIAGNÓSTICO (" + String.valueOf(o[2]) + ")", Integer.parseInt(String.valueOf(o[0])), Cobertura.class));
-		}
-		
-
-		query = entityManager.createQuery("SELECT c.id, c.dataRepeticaoCio "
-				+ "FROM Cobertura c WHERE c.femea = :animal and c.dataRepeticaoCio is not null order by c.dataRepeticaoCio");
-		query.setParameter("animal", animal);
-		result = query.getResultList();
-		
-		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], 
-					"REPETIÇÃO CIO", Integer.parseInt(String.valueOf(o[0])), Cobertura.class));
-		}
-
 		
 		query = entityManager.createQuery("SELECT p.id, p.data "
 				+ "FROM Parto p WHERE p.cobertura.femea = :animal order by p.data");
@@ -82,14 +57,14 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		}
 		
 		
-		query = entityManager.createQuery("SELECT e.id, e.data "
-				+ "FROM EncerramentoLactacao e WHERE e.animal = :animal order by e.data");
+		query = entityManager.createQuery("SELECT e.id, e.dataFim "
+				+ "FROM Lactacao e WHERE e.animal = :animal and dataFim is not null order by e.dataFim");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], "ENCERRAMENTO LACTAÇÃO", Integer.parseInt(String.valueOf(o[0])), EncerramentoLactacao.class));
+			fichasAnimal.add(new FichaAnimal((Date)o[1], "ENCERRAMENTO LACTAÇÃO", Integer.parseInt(String.valueOf(o[0])), Lactacao.class));
 		}
 		
 		Collections.sort(fichasAnimal, new Comparator<FichaAnimal>() {

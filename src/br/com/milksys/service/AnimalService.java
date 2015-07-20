@@ -20,6 +20,7 @@ import br.com.milksys.validation.AnimalValidation;
 public class AnimalService implements IService<Integer, Animal>{
 
 	@Autowired private AnimalDao dao;
+	@Autowired private LactacaoService lactacaoService;
 
 	@Override
 	@Transactional
@@ -69,15 +70,19 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public Long countAnimaisEmLactacao(Date data) {
-		return dao.countAnimaisEmLactacao(data);
+		return dao.contaAnimaisEmLactacao(data);
 	}
 	
 	public ObservableList<Lactacao> findLactacoesAnimal(Animal animal) {
-		return FXCollections.observableArrayList(dao.findLactacoesAnimal(animal));
+		return FXCollections.observableArrayList(lactacaoService.findLactacoesAnimal(animal));
 	}
 
 	public Long getNumeroPartos(Animal animal) {
-		return dao.countNumeroPartos(animal);
+		return dao.contaNumeroPartos(animal);
+	}
+
+	public boolean isInLactacao(Date data, Animal animal) {
+		return dao.isInLactacao(data, animal);
 	}
 
 }

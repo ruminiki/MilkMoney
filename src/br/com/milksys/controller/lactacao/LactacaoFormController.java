@@ -1,4 +1,4 @@
-package br.com.milksys.controller.encerramentoLactacao;
+package br.com.milksys.controller.lactacao;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,16 +15,16 @@ import br.com.milksys.controller.AbstractFormController;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.animal.AnimalReducedOverviewController;
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.EncerramentoLactacao;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.MotivoEncerramentoLactacao;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.service.IService;
 
 @Controller
-public class EncerramentoLactacaoFormController extends AbstractFormController<Integer, EncerramentoLactacao> {
+public class LactacaoFormController extends AbstractFormController<Integer, Lactacao> {
 
 	@FXML private UCTextField inputObservacao, inputAnimal;
-	@FXML private DatePicker inputData;
+	@FXML private DatePicker inputDataInicio, inputDataFim;
 	@FXML private ComboBox<String> inputMotivoEncerramento;
 	@FXML private Button btnBuscarAnimal;
 	
@@ -34,7 +34,8 @@ public class EncerramentoLactacaoFormController extends AbstractFormController<I
 	public void initialize() {
 		
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
-		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputDataInicio.valueProperty().bindBidirectional(getObject().dataInicioProperty());
+		inputDataFim.valueProperty().bindBidirectional(getObject().dataFimProperty());
 		inputMotivoEncerramento.setItems(MotivoEncerramentoLactacao.getItems());
 		inputMotivoEncerramento.valueProperty().bindBidirectional(getObject().motivoEncerramentoLactacaoProperty());
 		
@@ -57,7 +58,6 @@ public class EncerramentoLactacaoFormController extends AbstractFormController<I
 		
 		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
 			getObject().setAnimal(animalReducedOverviewController.getObject());
-			getObject().setDataPrevisaoParto(animalReducedOverviewController.getObject().getDataPrevisaoProximoParto());
 		}
 		
 		if ( getObject().getAnimal() != null ){
@@ -70,17 +70,17 @@ public class EncerramentoLactacaoFormController extends AbstractFormController<I
 	
 	@Override
 	public String getFormName() {
-		return "view/encerramentoLactacao/EncerramentoLactacaoForm.fxml";
+		return "view/lactacao/LactacaoForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Encerramento Lactação";
+		return "Lactação";
 	}
 	
 	@Override
-	@Resource(name = "encerramentoLactacaoService")
-	protected void setService(IService<Integer, EncerramentoLactacao> service) {
+	@Resource(name = "lactacaoService")
+	protected void setService(IService<Integer, Lactacao> service) {
 		super.setService(service);
 	}
 

@@ -160,6 +160,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o parto registrado?");
 			if (result.get() == ButtonType.OK) {
 				((CoberturaService)service).removerParto(getObject());
+				refreshObjectInTableView.apply(getObject());
 			}
 			
 		}else{
