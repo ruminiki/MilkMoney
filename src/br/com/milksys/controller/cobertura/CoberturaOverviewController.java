@@ -29,7 +29,6 @@ import br.com.milksys.model.ConfirmacaoPrenhez;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
-import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 
@@ -42,8 +41,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
 	@FXML private TableColumn<Cobertura, String> dataPartoColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoEncerramentoLactacaoColumn;
-	@FXML private TableColumn<TipoCobertura, String> tipoCoberturaColumn;
-	@FXML private TableColumn<SituacaoCobertura, String> situacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> tipoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> situacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> statusColumn;
 	
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
@@ -63,8 +63,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
 		previsaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoEncerramentoLactacao"));
-		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<TipoCobertura,String>("tipoCobertura"));
-		situacaoCoberturaColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<SituacaoCobertura,String>("situacaoCobertura"));
+		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("tipoCobertura"));
+		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
+		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
 		
 		super.initialize(coberturaFormController);
 		

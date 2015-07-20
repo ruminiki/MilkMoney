@@ -63,6 +63,13 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	@Formula("(SELECT c.situacaoCobertura FROM confirmacaoPrenhez c WHERE c.cobertura = id order by c.data desc limit 1)")
 	private String                      situacaoCobertura;
 	
+	public Cobertura() {
+	}
+	
+	public Cobertura(Animal femea) {
+		setFemea(femea);
+	}
+
 	public int getId() {
 		return this.id;
 	}

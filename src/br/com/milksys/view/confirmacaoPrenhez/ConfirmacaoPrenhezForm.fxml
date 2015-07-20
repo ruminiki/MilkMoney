@@ -60,7 +60,7 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+                        <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
                      </children>
                      <VBox.margin>
                         <Insets right="5.0" />

@@ -139,64 +139,62 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		
 		btnSalvar.setDisable(getObject().getParto() != null);
 		
-		if ( getObject().getId() > 0 ){
-			
-			if ( getObject().getFemea() != null ){
-				inputFemea.textProperty().bindBidirectional(getObject().getFemea().numeroNomeProperty());
-			}
-			
-			if ( getObject().getTouro() != null ){
-				if ( inputReprodutor == null ){
-					inputReprodutor = new UCTextField();
-					inputReprodutor.setDisable(true);
-				}
-				
-				gridPane.getChildren().remove(inputSemen);
-				gridPane.getChildren().remove(inputReprodutor);
-				gridPane.getChildren().add(inputReprodutor);
-				GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
-				
-				inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
+		if ( getObject().getFemea() != null ){
+			inputFemea.textProperty().bindBidirectional(getObject().getFemea().numeroNomeProperty());
+		}
+		
+		if ( getObject().getTouro() != null ){
+			if ( inputReprodutor == null ){
+				inputReprodutor = new UCTextField();
 				inputReprodutor.setDisable(true);
-				btnNovoReprodutor.setDisable(false);
-				btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
 			}
 			
-			if ( getObject().getSemen() != null ){
-				if ( inputSemen == null ){
-					inputSemen = new UCTextField();
-					inputSemen.setDisable(true);
-				}
-				
-				gridPane.getChildren().remove(inputReprodutor);
-				gridPane.getChildren().remove(inputSemen);
-				gridPane.getChildren().add(inputSemen);
-				GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
-				
-				btnNovoReprodutor.setDisable(false);
-				btnNovoReprodutor.setOnAction(selectSemenEventHandler);
-				
+			gridPane.getChildren().remove(inputSemen);
+			gridPane.getChildren().remove(inputReprodutor);
+			gridPane.getChildren().add(inputReprodutor);
+			GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
+			
+			inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
+			inputReprodutor.setDisable(true);
+			btnNovoReprodutor.setDisable(false);
+			btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
+		}
+		
+		if ( getObject().getSemen() != null ){
+			if ( inputSemen == null ){
+				inputSemen = new UCTextField();
 				inputSemen.setDisable(true);
-				inputSemen.setText(getObject().getSemen().getTouro().toString());
-				
-				lblQuantidadeDosesSemen.setVisible(true);
-				inputQuantidadeDosesSemen.setVisible(true);
-				
 			}
 			
-			if ( getObject().getFuncionarioResponsavel() != null ){
-				inputResponsavelServico.getSelectionModel().select(1);
+			gridPane.getChildren().remove(inputReprodutor);
+			gridPane.getChildren().remove(inputSemen);
+			gridPane.getChildren().add(inputSemen);
+			GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
+			
+			btnNovoReprodutor.setDisable(false);
+			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
+			
+			inputSemen.setDisable(true);
+			inputSemen.setText(getObject().getSemen().getTouro().toString());
+			
+			lblQuantidadeDosesSemen.setVisible(true);
+			inputQuantidadeDosesSemen.setVisible(true);
+			
+		}
+		
+		if ( getObject().getFuncionarioResponsavel() != null ){
+			inputResponsavelServico.getSelectionModel().select(1);
+			inputNomeResponsavel.setDisable(true);
+		}else{
+			if ( getObject().getServico() != null ){
+				inputResponsavelServico.getSelectionModel().select(2);
 				inputNomeResponsavel.setDisable(true);
 			}else{
-				if ( getObject().getServico() != null ){
-					inputResponsavelServico.getSelectionModel().select(2);
-					inputNomeResponsavel.setDisable(true);
-				}else{
-					inputResponsavelServico.getSelectionModel().select(0);
-				}
+				inputResponsavelServico.getSelectionModel().select(0);
 			}
-			
-		}else{
+		}
+		
+		if ( getObject().getId() <= 0 ){
 			btnNovoReprodutor.setDisable(false);
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 		}

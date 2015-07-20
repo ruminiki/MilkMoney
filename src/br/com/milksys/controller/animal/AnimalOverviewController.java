@@ -22,7 +22,7 @@ import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
-import br.com.milksys.controller.RootLayoutController;
+import br.com.milksys.controller.cobertura.CoberturaFormController;
 import br.com.milksys.controller.cobertura.CoberturaOverviewController;
 import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milksys.controller.lactacao.LactacaoFormController;
@@ -44,7 +44,6 @@ import br.com.milksys.service.MorteAnimalService;
 import br.com.milksys.service.VendaAnimalService;
 import br.com.milksys.service.searchers.SearchAnimaisMortos;
 import br.com.milksys.service.searchers.SearchAnimaisVendidos;
-import br.com.milksys.service.searchers.SearchCoberturasAnimal;
 import br.com.milksys.service.searchers.SearchFemeas30DiasLactacao;
 import br.com.milksys.service.searchers.SearchFemeas60DiasLactacao;
 import br.com.milksys.service.searchers.SearchFemeasASecar;
@@ -95,7 +94,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
 	@Autowired private LactacaoFormController encerramentoLactacaoFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
-	@Autowired private RootLayoutController rootLayoutController;
+	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	
@@ -104,7 +103,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private MenuItem registrarVendaMenuItem               = new MenuItem();
 	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
 	private MenuItem fichaAnimalMenuItem                  = new MenuItem("Ficha Animal");
-	private MenuItem coberturasMenuItem                   = new MenuItem("Coberturas");
+	private MenuItem registrarCoberturaMenuItem           = new MenuItem("Registrar Cobertura");
 	
 	@FXML
 	public void initialize() {
@@ -150,10 +149,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		coberturasMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		registrarCoberturaMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	handleAbrirCoberturasAnimal();
+		    	coberturaFormController.setObject(new Cobertura(getObject()));
+		    	coberturaFormController.showForm();
 		    }
 		});
 		
@@ -172,7 +172,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		});
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), desfazerEncerramentoLactacaoMenuItem, 
-				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), coberturasMenuItem, registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
+				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registrarCoberturaMenuItem, registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
 		
 	}
 	
@@ -180,7 +180,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	protected void handleRightClick() {
 		super.handleRightClick();
 		desfazerEncerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || !getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO));
-		coberturasMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
+		registrarCoberturaMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
 		registrarVendaMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Registro Venda" : "Registrar Venda");
@@ -289,11 +289,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 	};
 	@FXML
-	private void handleAbrirCoberturasAnimal(){
+	private void handleCoberturas(){
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			
-			coberturaOverviewController.setSearch((SearchCoberturasAnimal) MainApp.getBean(SearchCoberturasAnimal.class), getObject());
 			coberturaOverviewController.setObject(new Cobertura());
 			coberturaOverviewController.showForm();
 			

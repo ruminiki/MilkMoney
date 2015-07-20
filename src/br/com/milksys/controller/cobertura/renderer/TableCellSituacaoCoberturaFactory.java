@@ -42,8 +42,6 @@ public class TableCellSituacaoCoberturaFactory<S, String> implements Callback<Ta
 						if ( item.equals(SituacaoCobertura.INDEFINIDA) )
 							setStyle("-fx-background-color: #7C867C;-fx-alignment: CENTER;");
 						
-						setText((java.lang.String)item);
-						
 	                }
 				} 
 	        }

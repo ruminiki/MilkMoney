@@ -113,7 +113,7 @@
                      </cursor>
                   </Button>
                   <Label text="Opções" />
-                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleAbrirCoberturasAnimal" text="Coberturas">
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleCoberturas" text="Coberturas">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
