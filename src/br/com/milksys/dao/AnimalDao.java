@@ -25,6 +25,15 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Animal> findFemeasByNumeroNome(String param) {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param and a.sexo = '" + Sexo.FEMEA + "'");
+		query.setParameter("param", '%' + param + '%');
+		query.setHint("org.hibernate.cacheable", "false");
+		
+		return query.getResultList();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasAtivas() {
@@ -330,6 +339,27 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				"where a.sexo = '" + Sexo.FEMEA + "' and not exists "
 				+ "(select 1 from lactacao lc where lc.animal = a.id)");
 		return (BigInteger) query.getSingleResult();
+	}
+	/*
+	 * Vacas disponíveis para serem cobertas:
+	 * (1) não vendidas, 
+	 * (2) não mortas, 
+	 * (3) que não estejam cobertas(prenhas) no período de 21 dias, 
+	 * (3) não são recém paridas,  
+	 * (4) tem idade suficiente para cobertura
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAnimaisDisponiveisParaCobertura(int diasIdadeMinimaParaCobertura, int periodoVoluntarioEspera) {
+		
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
+				+ "not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) < 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")");
+		
+		return query.getResultList();
+		
 	}
 
 }

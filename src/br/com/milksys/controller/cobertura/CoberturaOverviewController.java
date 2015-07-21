@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javax.annotation.Resource;
@@ -19,12 +20,14 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milksys.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milksys.controller.parto.PartoFormController;
+import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.ConfirmacaoPrenhez;
@@ -34,6 +37,11 @@ import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.searchers.Search;
+import br.com.milksys.service.searchers.SearchAnimaisDisponiveisParaCobertura;
+import br.com.milksys.service.searchers.SearchFemeas;
+import br.com.milksys.service.searchers.SearchFemeasByNumeroNome;
+import br.com.milksys.validation.Validator;
 
 
 @Controller
@@ -50,6 +58,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	@FXML private ListView<Animal> listAnimal;
 	@FXML private Label lblHeader;
+	@FXML private TextField inputPesquisaAnimal;
 	
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
@@ -60,11 +69,13 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	private MenuItem removerPartoMenuItem     = new MenuItem("Remover Parto");
 	private MenuItem confirmarPrenhezMenuItem = new MenuItem("Confirmação de Prenhez");
 	
+	private Animal femea;
+	
 	@FXML
 	public void initialize() {
 		
-		//list animais
-		listAnimal.setItems(animalService.findAllFemeasAtivasAsObservableList());
+		//popula o list animais
+		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
 		listAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
 		
 		if ( listAnimal.getItems().size() > 0 ) {
@@ -105,10 +116,23 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, removerPartoMenuItem, confirmarPrenhezMenuItem);
 		
+		//pesquisa textual animal
+		if ( inputPesquisaAnimal != null ){
+			inputPesquisaAnimal.textProperty().addListener((observable, oldValue, newValue) -> {
+				SearchFemeasByNumeroNome search = (SearchFemeasByNumeroNome) MainApp.getBean(SearchFemeasByNumeroNome.class);
+				listAnimal.setItems(search.doSearch(new Object[]{newValue}));
+			});
+		}
+		
 	}
 	
 	private void animalSelectHandler(){
-		lblHeader.setText("COBERTURAS - " + listAnimal.getSelectionModel().getSelectedItem().toString());
+		this.femea = listAnimal.getSelectionModel().getSelectedItem();
+		if ( femea != null ){
+			lblHeader.setText("COBERTURAS - " + femea.toString());
+		}else{
+			lblHeader.setText("NENHUM ANIMAL SELECIONADO");
+		}
 		refreshTableOverview();
 	}
 	
@@ -134,6 +158,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		updateLabelNumRegistros();
 	}
 	
+	//sobrescreve o método para carregar o objeto customizado para a tela de cadastro
+	@Override
+	public Cobertura newObject() {
+		if ( femea == null ){
+			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione um animal para registrar a cobertura.");
+		}
+		return new Cobertura(femea);
+	}
+	
 	@Override
 	public String getFormTitle() {
 		return "Cobertura";
@@ -151,6 +184,22 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	}
 	
 	//====HANDLERS
+	
+	@FXML
+	private void handleBuscarFemeasDisponeisParaCobertura(){
+		doSearchAnimais((SearchAnimaisDisponiveisParaCobertura) MainApp.getBean(SearchAnimaisDisponiveisParaCobertura.class));
+	}
+	
+	@FXML
+	private void handleBuscarTodasAsFemeas(){
+		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
+	}
+	
+	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
+		listAnimal.setItems(search.doSearch(params));
+		inputPesquisaAnimal.clear();
+		listAnimal.getSelectionModel().clearAndSelect(0);
+	}
 	
 	@FXML
 	private void handleRegistrarParto(){
@@ -216,9 +265,10 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		}
 		
 		if ( permiteEditar.apply(table.getSelectionModel().getSelectedIndex()) ){
-			
+			confirmacaoPrenhezFormController.setState(State.CREATE_TO_SELECT);
 			confirmacaoPrenhezFormController.setObject(new ConfirmacaoPrenhez(getObject()));
 	    	confirmacaoPrenhezFormController.showForm();
+	    	((CoberturaService)service).saveConfirmacaoPrenhez(getObject());
 	    	refreshObjectInTableView.apply(service.findById(getObject().getId()));
 	    	
 		}

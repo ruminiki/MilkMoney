@@ -56,7 +56,7 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 		removerColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez,String>("situacaoCobertura"));
 		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ConfirmacaoPrenhez, String>(removerDiagnosticoPrenhez, getObject().getId() > 0));
 		
-		table.setItems(service.findByCobertura(getObject().getCobertura()));
+		table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhez());
 		
 		super.service = service;
 		closePopUpAfterSave(false);
@@ -64,6 +64,7 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	
 	@Override
 	protected void afterSave() {
+		getObject().getCobertura().getConfirmacoesPrenhez().add(getObject());
 		table.getItems().add(getObject());
 	};
 	
@@ -71,8 +72,11 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 		
 		if ( index <= table.getItems().size() ){
 			
-			service.remove(table.getItems().get(index));
-			table.setItems(service.findByCobertura(getObject().getCobertura()));
+			if ( !getObject().getCobertura().getConfirmacoesPrenhez().remove(index) ){
+				getObject().getCobertura().getConfirmacoesPrenhez().remove(table.getItems().get(index));
+			}
+			table.getItems().clear();
+			table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhez());
 			return true;
 			
 		}

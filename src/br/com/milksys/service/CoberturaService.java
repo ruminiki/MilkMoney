@@ -1,5 +1,7 @@
 package br.com.milksys.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
+import br.com.milksys.model.ConfirmacaoPrenhez;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
@@ -22,6 +25,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private CoberturaDao dao;
 	@Autowired private PartoService partoService;
 	@Autowired private SemenService semenService;
+	@Autowired private ConfirmacaoPrenhezService confirmacaoPrenhezService;
 
 	@Override
 	@Transactional
@@ -92,6 +96,31 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public boolean remove(Cobertura cobertura) {
 		return dao.remove(cobertura);
 	}
+	
+	@Transactional
+	public void saveConfirmacaoPrenhez(Cobertura cobertura) {
+		
+		//ordena as confirmações pela data para recuperar a última situação
+		
+		Collections.sort(cobertura.getConfirmacoesPrenhez(), new Comparator<ConfirmacaoPrenhez>() {
+		    @Override
+		    public int compare(ConfirmacaoPrenhez cp1, ConfirmacaoPrenhez cp2) {
+		        return cp1.getData().compareTo(cp2.getData());
+		    }
+		});
+		
+		//recupera o último registro de confirmação (a maior data)
+		if ( cobertura.getConfirmacoesPrenhez() != null && cobertura.getConfirmacoesPrenhez().size() > 0 ){
+			ConfirmacaoPrenhez cp = cobertura.getConfirmacoesPrenhez().get(cobertura.getConfirmacoesPrenhez().size()-1);
+			cobertura.setSituacaoCobertura(cp.getSituacaoCobertura());
+		}else{
+			cobertura.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+		}
+		
+		//salva em cascata as confirmações registradas dentro da mesma transação
+		save(cobertura);
+		
+	}
 
 	@Override
 	public Cobertura findById(Integer id) {
@@ -109,7 +138,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	@Override
 	public ObservableList<Cobertura> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.findAllByNumeroNomeAnimal(param));
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override
@@ -120,5 +149,5 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public Cobertura findCoberturaAtivaByAnimal(Animal animal){
 		return dao.findCoberturaAtivaByAnimal(animal);
 	}
-	
+
 }

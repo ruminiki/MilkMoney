@@ -16,8 +16,13 @@ import br.com.milksys.model.SituacaoCobertura;
 public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	@SuppressWarnings("unchecked")
-	public List<Cobertura> findAllByNumeroNomeAnimal(String param) {
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c inner join c.femea a WHERE a.nome like :param or a.numero like :param");
+	public List<Cobertura> defaultSearch(String param) {
+		
+		Query query = entityManager.createQuery(
+				"select c from Cobertura c "
+				+ "left join (select cp from ConfirmacaoPrenhez cp where cp.situacaoCobertura like :param order by cp.data desc limit 1) as cp on (cp.cobertura = c) "
+				+ "left join Animal macho on (macho = c.touro and macho.numero like :param or macho.nome like :param) "
+				+ "left join Semen semen on (semen = c.semen and semen.touro.nome like :param)");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

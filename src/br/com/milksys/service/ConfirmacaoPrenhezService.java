@@ -64,4 +64,9 @@ public class ConfirmacaoPrenhezService implements IService<Integer, ConfirmacaoP
 		ConfirmacaoPrenhezValidation.validate(confirmacaoPrenhez);
 	}
 
+	public ConfirmacaoPrenhez findLastByCobertura(Cobertura cobertura) {
+		return dao.findLastByCobertura(cobertura);
+		
+	}
+
 }

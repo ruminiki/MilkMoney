@@ -169,7 +169,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	protected void handleRightClick() {
 		super.handleRightClick();
 		
-		encerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || (!getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) && !getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO)));
+		encerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || !(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) || getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO)));
 		encerramentoLactacaoMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? "Desfazer Encerramento Lactação" : "Encerrar Lactação");
 		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
@@ -222,6 +222,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
 					lactacaoFormController.setObject(lactacaoService.findUltimaLactacaoAnimal(getObject()));
 					lactacaoFormController.showForm();
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
 				}
 			}
 		}else{
@@ -292,6 +293,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private void handleCoberturas(){
 		coberturaOverviewController.setObject(new Cobertura());
 		coberturaOverviewController.showForm();
+		refreshTableOverview();
 	};
 	
 	

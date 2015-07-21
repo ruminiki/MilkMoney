@@ -78,7 +78,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT MAX(c.previsaoEncerramentoLactacao) FROM cobertura c WHERE c.femea = id)")
 	private Date dataPrevisaoLactacao;
 
-	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id ORDER BY c.data desc LIMIT 1)")
+	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
 	private String situacaoUltimaCobertura;
 	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")

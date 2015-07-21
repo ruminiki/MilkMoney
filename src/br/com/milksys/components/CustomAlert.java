@@ -17,15 +17,15 @@ public class CustomAlert extends Alert {
 	public static void nenhumRegistroSelecionado(){
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Nenhuma Seleção");
-		alert.setHeaderText("Nenhum registro selecionado");
-		alert.setContentText("Por favor, selecione um registro na tabela para continuar.");
+		alert.setHeaderText("Nenhum registro selecionado.");
+		alert.setContentText("Ok podemos tentar novamente! Por favor, selecione um registro na tabela para continuar.");
 		alert.showAndWait();
 	}
 
 	public static Optional<ButtonType> confirmarExclusao() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmação");
-		alert.setHeaderText("Confirme a exclusão do registro");
+		alert.setHeaderText("Por favor, confirme a exclusão do registro.");
 		alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
 		return alert.showAndWait();
 	}
@@ -41,7 +41,7 @@ public class CustomAlert extends Alert {
 	public static void campoObrigatorio(String field) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Campo Requerido");
-		alert.setHeaderText("Validação de Formulário");
+		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
 		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
 		alert.showAndWait();
 	}
@@ -57,7 +57,7 @@ public class CustomAlert extends Alert {
 	public static void mensagemInfo(String string) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Atenção");
-		alert.setHeaderText("Informação");
+		alert.setHeaderText("Olhe, uma informação importante!");
 		alert.setContentText(string);
 		alert.showAndWait();
 		

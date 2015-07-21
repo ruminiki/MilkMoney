@@ -36,10 +36,8 @@ import br.com.milksys.model.TipoCobertura;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ServicoService;
-import br.com.milksys.service.searchers.SearchFemeasAtivas;
 import br.com.milksys.service.searchers.SearchReprodutoresAtivos;
 import br.com.milksys.util.DateUtil;
-import br.com.milksys.validation.CoberturaValidation;
 
 @Controller
 public class CoberturaFormController extends AbstractFormController<Integer, Cobertura> {
@@ -47,7 +45,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML private DatePicker inputData;
 	@FXML private Label lblPrevisaoParto;
 	@FXML private ComboBox<String> inputSituacaoCobertura;
-	@FXML private UCTextField inputFemea;
 	@FXML private UCTextField inputReprodutor;
 	@FXML private UCTextField inputSemen;
 	@FXML private UCTextField inputQuantidadeDosesSemen;
@@ -57,8 +54,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML private UCTextField inputObservacao;
 	@FXML private Button btnNovoReprodutor;
 	@FXML private Button btnSalvar;
-	@FXML private Label lblReprodutor;
-	@FXML private Label lblQuantidadeDosesSemen;
+	@FXML private Label lblReprodutor, lblQuantidadeDosesSemen, lblHeader;
 	@FXML private GridPane gridPane;
 	
 	@Autowired private CoberturaService service;
@@ -139,10 +135,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		
 		btnSalvar.setDisable(getObject().getParto() != null);
 		
-		if ( getObject().getFemea() != null ){
-			inputFemea.textProperty().bindBidirectional(getObject().getFemea().numeroNomeProperty());
-		}
-		
 		if ( getObject().getTouro() != null ){
 			if ( inputReprodutor == null ){
 				inputReprodutor = new UCTextField();
@@ -152,7 +144,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			gridPane.getChildren().remove(inputSemen);
 			gridPane.getChildren().remove(inputReprodutor);
 			gridPane.getChildren().add(inputReprodutor);
-			GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
+			GridPane.setConstraints(inputReprodutor, 1, 2, 3, 1);
 			
 			inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
 			inputReprodutor.setDisable(true);
@@ -169,7 +161,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			gridPane.getChildren().remove(inputReprodutor);
 			gridPane.getChildren().remove(inputSemen);
 			gridPane.getChildren().add(inputSemen);
-			GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
+			GridPane.setConstraints(inputSemen, 1, 2, 3, 1);
 			
 			btnNovoReprodutor.setDisable(false);
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
@@ -193,6 +185,8 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				inputResponsavelServico.getSelectionModel().select(0);
 			}
 		}
+		
+		lblHeader.setText("REGISTRANDO COBERTURA PARA O ANIMAL: " + getObject().getFemea().toString());
 		
 		if ( getObject().getId() <= 0 ){
 			btnNovoReprodutor.setDisable(false);
@@ -248,7 +242,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().remove(inputReprodutor);
 		gridPane.getChildren().add(inputReprodutor);
-		GridPane.setConstraints(inputReprodutor, 1, 3, 3, 1);
+		GridPane.setConstraints(inputReprodutor, 1, 2, 3, 1);
 		
 		super.getDialogStage().show();
 		
@@ -275,7 +269,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		gridPane.getChildren().remove(inputReprodutor);
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().add(inputSemen);
-		GridPane.setConstraints(inputSemen, 1, 3, 3, 1);
+		GridPane.setConstraints(inputSemen, 1, 2, 3, 1);
 		
 		super.getDialogStage().show();
 		
@@ -340,31 +334,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 				break;
 			}
 		}
-	}
-	
-	@FXML
-	protected void handleSelecionarFemea() {
-		
-		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
-		animalReducedOverviewController.setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
-		
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
-		
-		animalReducedOverviewController.showForm();
-		
-		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setFemea(animalReducedOverviewController.getObject());
-			CoberturaValidation.validaFemeaSelecionada(getObject(), service.findByAnimal(getObject().getFemea()));
-		}
-		
-		if ( getObject().getFemea() != null ){
-			inputFemea.setText(getObject().getFemea().getNumeroNome());
-		}else{
-			inputFemea.setText("");
-		}
-		
 	}
 	
 	@Override

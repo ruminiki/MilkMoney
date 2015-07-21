@@ -83,7 +83,7 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 		lactacao.setDataFim(null);
 		lactacao.setMotivoEncerramentoLactacao(null);
 		
-		save(lactacao);
+		dao.persist(lactacao);
 		
 	}
 

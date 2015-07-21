@@ -26,8 +26,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Formula;
-
 import br.com.milksys.components.FieldRequired;
 import br.com.milksys.util.DateUtil;
 
@@ -60,7 +58,6 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	//jpa
 	private Parto                       parto;
 	private List<ConfirmacaoPrenhez>    confirmacoesPrenhez;
-	@Formula("(SELECT c.situacaoCobertura FROM confirmacaoPrenhez c WHERE c.cobertura = id order by c.data desc limit 1)")
 	private String                      situacaoCobertura;
 	
 	public Cobertura() {
@@ -276,7 +273,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.REMOVE})
+	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="cobertura")
 	public List<ConfirmacaoPrenhez> getConfirmacoesPrenhez() {
 		return confirmacoesPrenhez;
