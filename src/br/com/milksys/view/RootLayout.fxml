@@ -16,7 +16,7 @@
 						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
 					</accelerator>
 			 	  </MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Cobertura" />
+                  <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Reprodução" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animal" />
 				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />

@@ -38,14 +38,14 @@ public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
 		int diasIdadeMinimaParaCobertura = 0;
 		try{
 			//o parametro estara em meses, multiplicar por 30 para obter os dias
-			diasIdadeMinimaParaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDMC)) * 30;
+			diasIdadeMinimaParaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)) * 30;
 		}catch(Exception e){
 			diasIdadeMinimaParaCobertura = 24 * 30;
 		}
 		
 		int periodoVoluntarioEspera = 0;
 		try{
-			periodoVoluntarioEspera = Integer.parseInt(parametroDao.findBySigla(Parametro.PVE));
+			periodoVoluntarioEspera = Integer.parseInt(parametroDao.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
 		}catch(Exception e){
 			periodoVoluntarioEspera = 40;//default 40 dias
 		}

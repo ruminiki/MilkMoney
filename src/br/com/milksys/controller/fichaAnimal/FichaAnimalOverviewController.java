@@ -57,7 +57,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		//tabela eventos
 		dataColumn.setCellFactory(new TableCellDateFactory<FichaAnimal,String>("data"));
 		eventoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("evento"));
-		//filter ober table view eventos
+		//filter over table view eventos
 		FilteredList<FichaAnimal> filteredData = new FilteredList<>(fichaAnimalService.findAllByAnimal(animal), ficha -> true);
 		inputPesquisaEventos.textProperty().addListener(obs->{
 	        String filter = inputPesquisaEventos.getText(); 

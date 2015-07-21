@@ -35,6 +35,10 @@ public class ParametroService implements IService<Integer, Parametro>{
 	public Parametro findById(Integer id) {
 		return dao.findById(Parametro.class, id);
 	}
+	
+	public String findBySigla(String param) {
+		return dao.findBySigla(param);
+	}
 
 	@Override
 	public List<Parametro> findAll() {

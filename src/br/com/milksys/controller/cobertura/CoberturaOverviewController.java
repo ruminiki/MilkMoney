@@ -31,16 +31,20 @@ import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.ConfirmacaoPrenhez;
+import br.com.milksys.model.Parametro;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
+import br.com.milksys.service.ParametroService;
 import br.com.milksys.service.searchers.Search;
 import br.com.milksys.service.searchers.SearchAnimaisDisponiveisParaCobertura;
 import br.com.milksys.service.searchers.SearchFemeas;
 import br.com.milksys.service.searchers.SearchFemeasByNumeroNome;
+import br.com.milksys.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
+import br.com.milksys.service.searchers.SearchFemeasNaoPrenhasXDiasAposParto;
 import br.com.milksys.validation.Validator;
 
 
@@ -51,7 +55,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
 	@FXML private TableColumn<Cobertura, String> dataPartoColumn;
-	@FXML private TableColumn<Cobertura, String> previsaoEncerramentoLactacaoColumn;
 	@FXML private TableColumn<Cobertura, String> tipoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> statusColumn;
@@ -64,7 +67,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private PartoFormController partoFormController;
 	@Autowired private AnimalService animalService;
+	@Autowired private ParametroService parametroService;
 	
+	//menu context tabela cobertura
 	private MenuItem registrarPartoMenuItem   = new MenuItem("Registrar Parto");
 	private MenuItem removerPartoMenuItem     = new MenuItem("Remover Parto");
 	private MenuItem confirmarPrenhezMenuItem = new MenuItem("Confirmação de Prenhez");
@@ -86,7 +91,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
-		previsaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoEncerramentoLactacao"));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
@@ -183,7 +187,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		super.setService(service);
 	}
 	
-	//====HANDLERS
+	//====FILTROS ANIMAIS=======
 	
 	@FXML
 	private void handleBuscarFemeasDisponeisParaCobertura(){
@@ -195,13 +199,42 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
 	}
 	
+	@FXML
+	private void handleBuscarEmPeriodoVolutarioDeEspera(){
+		doSearchAnimais((SearchFemeasEmPeriodoVoluntarioEspera) MainApp.getBean(SearchFemeasEmPeriodoVoluntarioEspera.class));
+	}
+	
+	@FXML
+	private void handleBuscarNaoPrenhasPrimeiroCiclo(){
+		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
+		int primeiroCiclo = periodoVoluntarioEspera + 21;
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
+				new Object[]{primeiroCiclo});
+	}
+	
+	@FXML
+	private void handleBuscarNaoPrenhasSegundoCiclo(){
+		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
+		int primeiroCiclo = periodoVoluntarioEspera + 42;
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
+				new Object[]{primeiroCiclo});
+	}
+	
+	@FXML
+	private void handleBuscarNaoPrenhasTerceiroCiclo(){
+		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
+		int primeiroCiclo = periodoVoluntarioEspera + 63;
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
+				new Object[]{primeiroCiclo});
+	}
+	
 	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
 		listAnimal.setItems(search.doSearch(params));
 		inputPesquisaAnimal.clear();
 		listAnimal.getSelectionModel().clearAndSelect(0);
 	}
 	
-	@FXML
+	//====CONTEXT MENU COBERTURAS=======
 	private void handleRegistrarParto(){
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){
@@ -235,7 +268,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
-	@FXML
 	private void handleRemoverParto(){
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){

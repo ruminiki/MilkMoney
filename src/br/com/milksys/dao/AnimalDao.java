@@ -107,7 +107,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasLactacaoXDias(Integer dias) {
 		
-		Query query = entityManager.createQuery("SELECT a FROM Lactacao lc inner lc.animal a "
+		Query query = entityManager.createQuery("SELECT a FROM Lactacao lc inner join lc.animal a "
 						+ "WHERE lc.dataFim is null and DATEDIFF(current_date(), lc.dataInicio) between 0 and :dias "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
@@ -121,8 +121,21 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasASecar() {
 		
-		Query query = entityManager.createQuery("SELECT a FROM Lactacao lc inner join lc.animal a "
-				+ "WHERE DATEDIFF(lc.dataInicio, current_date()) >= 210 and lc.dataFim is null "
+		Query query = entityManager.createQuery("SELECT a FROM Animal a "
+				+ "WHERE exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and DATEDIFF(current_date(), lc.dataInicio) >= 210 and lc.dataFim is null) "
+				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+		query.setHint("org.hibernate.cacheable", "false");
+		return query.getResultList();
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAllFemeasSecas() {
+		
+		Query query = entityManager.createQuery("SELECT a FROM Animal a "
+				+ "WHERE not exists (SELECT 1 FROM Lactacao lc where lc.animal = a and lc.dataFim is null) "
+				+ "and exists (SELECT 1 FROM Parto p where p.cobertura.femea = a) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		query.setHint("org.hibernate.cacheable", "false");
@@ -217,18 +230,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}catch ( NoResultException e ){
 			return 0L;
 		}
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasSecas() {
-		
-		Query query = entityManager.createQuery("SELECT a FROM Animal a "
-				+ "WHERE exists (SELECT 1 FROM Lactacao lc where lc.animal = a and lc.dataFim is null) "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v inner join v.animaisVendidos av WHERE av.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		query.setHint("org.hibernate.cacheable", "false");
-		return query.getResultList();
 		
 	}
 
@@ -329,7 +330,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
 		return (BigInteger) entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
-				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) < 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
 				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
 	}
 
@@ -352,14 +353,32 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAnimaisDisponiveisParaCobertura(int diasIdadeMinimaParaCobertura, int periodoVoluntarioEspera) {
 		
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
+				"SELECT a FROM Animal a where DATEDIFF(current_date(), a.dataNascimento) > " + diasIdadeMinimaParaCobertura + " and "
 				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
 				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) < 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
-				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")");
+				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ") and "
+				+ "a.sexo = '" + Sexo.FEMEA + "'");
 		
 		return query.getResultList();
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAllFemeasEmPeriodoVoluntarioEspera(int periodoVoluntarioEspera) {
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a Where "
+				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")");
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Animal> findFemeasNaoPrenhasXDiasAposParto(int dias) {
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a Where "
+				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + dias + ") and "
+				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
+		return query.getResultList();
 	}
 
 }

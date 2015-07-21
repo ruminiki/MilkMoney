@@ -69,23 +69,25 @@ public class CoberturaValidation extends Validator {
 	 * Uma vaca não pode ter a cobertura cadastrada/alterada se:
 	 * 1. Foi coberta a menos de 21 dias;
 	 * 2. Tiver outra cobertura com situação: PRENHA, ou INDEFINIDA; 
-	 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA ou indicar a repetição;
+	 * Obs: Sempre que a vaca repetir de cio o usuário deve marcar a situação da cobertura como VAZIA;
 	 * No caso de registro de parto a situação muda para PARIDA.
 	 * @param cobertura
 	 */
-	public static void validaFemeaSelecionada(Cobertura cobertura, List<Cobertura> coberturasAnimal){
+	public static void validaFemeaSelecionada(Cobertura cobertura, List<Cobertura> coberturasAnimal, int idadeMinimaParaCobertura){
 		
 		if ( cobertura.getFemea() != null && !cobertura.getFemea().getSexo().equals(Sexo.FEMEA) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
+			throw new ValidationException(REGRA_NEGOCIO, 
 					"O animal selecionado para a cobertura deve ser uma fêmea.");
 		}
 		
-		/*if ( cobertura.getFemea().getIdade() < 18 ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"A fêmea selecionada possui apenas " + cobertura.getFemea().getIdade() + " meses de idade. " +
-					"No entanto é necessário que tenha pelo menos 18 meses. " +
-					"Verifique se existe um erro no cadastro do animal.");
-		}*/
+		//calcula a idade da fêma na data da cobertura
+		long idadeFemeaDataCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(cobertura.getFemea().getDataNascimento()));
+		
+		if ( Math.abs(idadeFemeaDataCobertura) < idadeMinimaParaCobertura ){
+			throw new ValidationException(REGRA_NEGOCIO, 
+					"A fêmea selecionada possui " + Math.abs(idadeFemeaDataCobertura) + " meses de idade no dia " + DateUtil.format(cobertura.getData()) + ". " + 
+					"No entanto a idade mínima para cobertura está definida em " + idadeMinimaParaCobertura + " meses. Por favor, verifique se a data da cobertura e o cadastro do animal estão corretos e tente novamente.");
+		}
 		
 		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
 			
@@ -96,7 +98,7 @@ public class CoberturaValidation extends Validator {
 					long diasEntreCoberturas = ChronoUnit.DAYS.between(DateUtil.asLocalDate(c.getData()), DateUtil.asLocalDate(cobertura.getData()));
 					
 					if ( Math.abs(diasEntreCoberturas) < 21 ){
-						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
+						throw new ValidationException(REGRA_NEGOCIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
 								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
 								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
 					}else{
@@ -131,7 +133,7 @@ public class CoberturaValidation extends Validator {
 			//sendo que não há doses suficientes disponíveis
 			if ( cobertura.getId() <= 0 || aumentouQuantidadeDosesUtilizadas ){
 				if ( cobertura.getQuantidadeDosesUtilizadas() > dosesDisponiveis.intValue() ){
-					throw new ValidationException(CAMPO_OBRIGATORIO, 
+					throw new ValidationException(REGRA_NEGOCIO, 
 							"O sêmen selecionado não possui quantidade suficiente disponível. "
 							+ "Por favor, verifique se a quantidade de doses informada está correta ou selecione outro sêmen.");
 				}
@@ -172,7 +174,7 @@ public class CoberturaValidation extends Validator {
 					
 					if ( (c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || c.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) &&
 						 (cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) ){
-						throw new ValidationException(CAMPO_OBRIGATORIO,
+						throw new ValidationException(REGRA_NEGOCIO,
 								"A fêmea [" + c.getFemea().getNumeroNome()+"] possui uma cobertura registrada no dia " + 
 								DateUtil.format(c.getData()) +	" com situação " + c.getSituacaoCobertura() + ". " +
 								"É necessário finalizar aquela cobertura, indicando se houve repetição de cio ou parto, para então registrar/alterar essa cobertura. " +

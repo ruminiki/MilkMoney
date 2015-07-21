@@ -15,16 +15,16 @@ import br.com.milksys.dao.CoberturaDao;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.ConfirmacaoPrenhez;
+import br.com.milksys.model.Parametro;
 import br.com.milksys.model.SituacaoCobertura;
-import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Autowired private CoberturaDao dao;
-	@Autowired private PartoService partoService;
 	@Autowired private SemenService semenService;
+	@Autowired private ParametroService parametroService;
 	@Autowired private ConfirmacaoPrenhezService confirmacaoPrenhezService;
 
 	@Override
@@ -33,7 +33,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		CoberturaValidation.validate(cobertura);
 		CoberturaValidation.validaSituacaoAnimal(cobertura.getFemea());
-		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea()));
+		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea()), Integer.valueOf(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)));
 		if ( cobertura.getSemen() != null ){
 			boolean aumentouQuantidadeDosesUtilizadas = cobertura.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(cobertura);
 			//recarrega o registro do semen para recalcular as doses disponíveis
@@ -50,7 +50,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public void registrarParto(Cobertura cobertura) {
 		try{
 			
-			configuraDataPrevisaoPartoELactacao(cobertura);
+			cobertura.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			dao.persist(cobertura);
 			
 		}catch(Exception e){
@@ -65,24 +65,13 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		try{
 			
 			cobertura.setParto(null);
-			configuraDataPrevisaoPartoELactacao(cobertura);
+			//reconfigura situação cobertura
+			ConfirmacaoPrenhez cp = confirmacaoPrenhezService.findLastByCobertura(cobertura);
+			cobertura.setSituacaoCobertura(cp != null ? cp.getSituacaoCobertura() : SituacaoCobertura.INDEFINIDA);
 			dao.persist(cobertura);
 
 		}catch(Exception e){
 			throw new RuntimeException(e);
-		}
-		
-	}
-	
-	private void configuraDataPrevisaoPartoELactacao(Cobertura cobertura){
-		
-		if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
-				cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
-			cobertura.setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(cobertura.getData()).plusDays(282)));
-			cobertura.setPrevisaoEncerramentoLactacao(DateUtil.asDate(DateUtil.asLocalDate(cobertura.getData()).plusMonths(7)));
-		}else{
-			cobertura.setPrevisaoParto(null);
-			cobertura.setPrevisaoEncerramentoLactacao(null);
 		}
 		
 	}

@@ -33,9 +33,9 @@ public class Parametro extends AbstractEntity implements Serializable {
 	private StringProperty descricao = new SimpleStringProperty();
 	private StringProperty valor = new SimpleStringProperty();
 	
-	public static final String PVE = "PVE";//período voluntário de espera (dias)
-	public static final String PMEC = "PMEC";//período mínimo entre coberturas (dias)
-	public static final String IDMC = "IDMC";//idade mínima para cobertua (meses)
+	public static final String PERIODO_VOLUNTARIO_ESPERA = "PVE";//período voluntário de espera (dias)
+	public static final String PERIODO_MINIMO_ENTRE_COBERTURAS = "PMEC";//período mínimo entre coberturas (dias)
+	public static final String IDADE_MINIMA_PARA_COBERTURA = "IDMC";//idade mínima para cobertua (meses)
 	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="sigla")
