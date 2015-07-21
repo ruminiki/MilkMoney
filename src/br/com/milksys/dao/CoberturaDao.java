@@ -20,9 +20,13 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 		Query query = entityManager.createQuery(
 				"select c from Cobertura c "
-				+ "left join (select cp from ConfirmacaoPrenhez cp where cp.situacaoCobertura like :param order by cp.data desc limit 1) as cp on (cp.cobertura = c) "
-				+ "left join Animal macho on (macho = c.touro and macho.numero like :param or macho.nome like :param) "
-				+ "left join Semen semen on (semen = c.semen and semen.touro.nome like :param)");
+				+ "left join c.touro t "
+				+ "left join c.semen s "
+				+ "WHERE c.situacaoCobertura like :param or "
+				+ "t.numero like :param or "
+				+ "t.nome like :param or "
+				+ "s.touro.nome like :param or"
+				+ "c.tipoCobertura like :param ");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

@@ -8,10 +8,10 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -51,40 +51,48 @@ import br.com.milksys.validation.Validator;
 @Controller
 public class CoberturaOverviewController extends AbstractOverviewController<Integer, Cobertura> {
 
-	@FXML private TableColumn<Cobertura, String> dataColumn;
-	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
-	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
-	@FXML private TableColumn<Cobertura, String> dataPartoColumn;
-	@FXML private TableColumn<Cobertura, String> tipoCoberturaColumn;
-	@FXML private TableColumn<Cobertura, String> situacaoCoberturaColumn;
-	@FXML private TableColumn<Cobertura, String> statusColumn;
+	@FXML private TableColumn<Cobertura, String>        dataColumn;
+	@FXML private TableColumn<Cobertura, String>        reprodutorColumn;
+	@FXML private TableColumn<Cobertura, String>        previsaoPartoColumn;
+	@FXML private TableColumn<Cobertura, String>        dataPartoColumn;
+	@FXML private TableColumn<Cobertura, String>        tipoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String>        situacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String>        statusColumn;
 	
-	@FXML private ListView<Animal> listAnimal;
-	@FXML private Label lblHeader;
-	@FXML private TextField inputPesquisaAnimal;
+	@FXML private TableView<Animal>                     tableAnimais;
+	@FXML private TableColumn<Animal, String>           dataNascimentoAnimalColumn;
+	@FXML private TableColumn<Animal, String>           situacaoAnimalColumn;
+	@FXML private TableColumn<Animal, String>           animalColumn;
 	
-	@Autowired private CoberturaFormController coberturaFormController;
+	@FXML private Label                                 lblHeader;
+	@FXML private TextField                             inputPesquisaAnimal;
+	
+	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
-	@Autowired private PartoFormController partoFormController;
-	@Autowired private AnimalService animalService;
-	@Autowired private ParametroService parametroService;
+	@Autowired private PartoFormController              partoFormController;
+	@Autowired private AnimalService                    animalService;
+	@Autowired private ParametroService                 parametroService;
 	
 	//menu context tabela cobertura
-	private MenuItem registrarPartoMenuItem   = new MenuItem("Registrar Parto");
-	private MenuItem removerPartoMenuItem     = new MenuItem("Remover Parto");
-	private MenuItem confirmarPrenhezMenuItem = new MenuItem("Confirmação de Prenhez");
+	private MenuItem registrarPartoMenuItem             = new MenuItem("Registrar Parto");
+	private MenuItem removerPartoMenuItem               = new MenuItem("Remover Parto");
+	private MenuItem confirmarPrenhezMenuItem           = new MenuItem("Confirmação de Prenhez");
 	
-	private Animal femea;
+	private Animal                                      femea;
 	
 	@FXML
 	public void initialize() {
 		
-		//popula o list animais
-		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
-		listAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
+		//TABELA ANIMAIS
+		dataNascimentoAnimalColumn.setCellFactory(new TableCellDateFactory<Animal,String>("dataNascimento"));
+		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
+		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numeroNome"));
 		
-		if ( listAnimal.getItems().size() > 0 ) {
-			listAnimal.getSelectionModel().clearAndSelect(0);
+		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
+		tableAnimais.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
+		
+		if ( tableAnimais.getItems().size() > 0 ) {
+			tableAnimais.getSelectionModel().clearAndSelect(0);
 		}
 		
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
@@ -124,14 +132,14 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		if ( inputPesquisaAnimal != null ){
 			inputPesquisaAnimal.textProperty().addListener((observable, oldValue, newValue) -> {
 				SearchFemeasByNumeroNome search = (SearchFemeasByNumeroNome) MainApp.getBean(SearchFemeasByNumeroNome.class);
-				listAnimal.setItems(search.doSearch(new Object[]{newValue}));
+				tableAnimais.setItems(search.doSearch(new Object[]{newValue}));
 			});
 		}
 		
 	}
 	
 	private void animalSelectHandler(){
-		this.femea = listAnimal.getSelectionModel().getSelectedItem();
+		this.femea = tableAnimais.getSelectionModel().getSelectedItem();
 		if ( femea != null ){
 			lblHeader.setText("COBERTURAS - " + femea.toString());
 		}else{
@@ -153,7 +161,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			if ( super.getSearch() != null ){
 				data.addAll(super.getSearch().doSearch());
 			}else{
-				this.data.addAll( ((CoberturaService)service).findByAnimal(listAnimal.getSelectionModel().getSelectedItem()));
+				this.data.addAll( ((CoberturaService)service).findByAnimal(tableAnimais.getSelectionModel().getSelectedItem()));
 			}
 		}
 		
@@ -229,9 +237,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	}
 	
 	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
-		listAnimal.setItems(search.doSearch(params));
+		tableAnimais.setItems(search.doSearch(params));
 		inputPesquisaAnimal.clear();
-		listAnimal.getSelectionModel().clearAndSelect(0);
+		tableAnimais.getSelectionModel().clearAndSelect(0);
 	}
 	
 	//====CONTEXT MENU COBERTURAS=======

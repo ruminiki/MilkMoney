@@ -13,7 +13,7 @@
    <children>
       <HBox layoutX="5.0" layoutY="5.0" prefHeight="507.0" prefWidth="1115.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <VBox alignment="TOP_CENTER" minWidth="300.0" spacing="3.0">
+            <VBox alignment="TOP_CENTER" minWidth="450.0" spacing="3.0">
                <children>
                   <HBox alignment="CENTER" minHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;">
                      <children>
@@ -33,33 +33,43 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ListView fx:id="listAnimal" cacheShape="false" focusTraversable="false" prefHeight="272.0" prefWidth="250.0" VBox.vgrow="SOMETIMES" />
-                  <Label text="Filtros">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
+                  <TableView fx:id="tableAnimais" cacheShape="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="SOMETIMES">
+                    <columns>
+                      <TableColumn fx:id="situacaoAnimalColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                      <TableColumn fx:id="dataNascimentoAnimalColumn" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
+                        <TableColumn fx:id="animalColumn" minWidth="250.0" prefWidth="75.0" text="Animal" />
+                    </columns>
+                  </TableView>
+                  <VBox alignment="CENTER" maxHeight="105.0" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                      <children>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarTodasAsFemeas" text="Todas" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarFemeasDisponeisParaCobertura" text="Disponíveis" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarEmPeriodoVolutarioDeEspera" text="PVE" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasPrimeiroCiclo" text="1º Ciclo" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasSegundoCiclo" text="2º Ciclo" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasTerceiroCiclo" text="3º Ciclo" />
+                        <Label text="Filtros">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
+                           <children>
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarTodasAsFemeas" text="Todas" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarFemeasDisponeisParaCobertura" text="Disponíveis" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarEmPeriodoVolutarioDeEspera" text="PVE" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasPrimeiroCiclo" text="1º Ciclo" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasSegundoCiclo" text="2º Ciclo" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasTerceiroCiclo" text="3º Ciclo" />
+                           </children>
+                        </HBox>
+                        <Label text="Operações">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
+                           <children>
+                              <Button minHeight="30.0" mnemonicParsing="false" text="Analisar Animais Selecionados" />
+                              <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Cobertura" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
-                  <Label text="Operações">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
-                     <children>
-                        <Button minHeight="30.0" mnemonicParsing="false" text="Analisar Animais Selecionados" />
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Cobertura" />
-                     </children>
-                  </HBox>
+                  </VBox>
                </children>
             </VBox>
             <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" HBox.hgrow="SOMETIMES">
