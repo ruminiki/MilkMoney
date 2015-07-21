@@ -363,7 +363,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Override
 	public String toString() {
-		return getNumeroNome() + "[" + getSituacaoAnimal() +"]";
+		return getNumeroNome();
 	}
 
 }

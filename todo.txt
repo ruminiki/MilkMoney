@@ -5,15 +5,12 @@
 - permitir cadastro dos valores de referencia nos indicadores;
 
 - fazer cadastro de procedimento
-- refatorar tela cobertura (ver se mantém a confirmação de prenhez na mesma tabela).
 - Colocar o registro e remoção do parto no botão direito;
 - listar os partos do animal na tela principal (permitir acesso ao form de parto para visualização e a remoção do parto)
 - está permitindo deletar animal sem remover o parto.
 
 - Como fazer com uma vaca que pari e não entrará em lactação?
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
-
-- quando registrar o parto, alertar sobre o não registro do encerramento da lactação;
 
 - fazer tela de acompanhamento reprodutivo do animal
 - ultima cobertura
@@ -31,8 +28,6 @@
 - coberturas a mais de 30 dias sem confirmação de prenhez
 - novilhas aptas (mais 18 meses) não cobertas ou com diagnóstico de gestão não prenhas
 
-- pop up - tela lactações encerradas (data inicio, data fim, dias lactacao, producao media...)s
-
 - fazer gráfico da produção individual (selecionar a lactação, exibir a tabela das medições e o gráfico ao lado)
   		like http://www.pecuariabrasilassessoria.com.br/software-gado-leite.php
   		produção estimada 305d
@@ -42,12 +37,6 @@
 
 - erro casas decimais valor leite ex: 0,80
 - três casas decimais valor do leite
-
-- como resolver: Entre cada parto a vaca só pode ter um encerramento lactação:
-	- só pode cadastrar o encerramento da lactação se tiver em lactação - isso garante que existui um parto antes do encerramento;
-	- uma vez seco, o animal só mudará de status se remover o registro de encerramento ou tiver o parto cadastrado;
-	- depois que a vaca pariu não pode mexer no registro de encerramento da lactação;
-	- quando cadastrar o parto, verificar se o animal esteve seco;
 	
 - indicadores:
 	- Dias secas (em aberto);

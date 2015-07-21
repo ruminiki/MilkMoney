@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.PropertyDecimalValueFactory;
 import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.components.TableCellIndexFactory;
 import br.com.milksys.components.events.ActionEvent;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
@@ -38,6 +39,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 
 	//lactacoes
 	@FXML private TableView<Lactacao> tableLactacoes;
+	@FXML private TableColumn<Lactacao, String> numeroLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> dataInicioLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> dataTerminoLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
@@ -65,6 +67,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	public void initialize() {
 		
 		//tabela lactações
+		numeroLactacaoColumn.setCellFactory(new TableCellIndexFactory<Lactacao,String>());
 		dataInicioLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataInicio"));
 		dataTerminoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataFim"));
 		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoDias"));

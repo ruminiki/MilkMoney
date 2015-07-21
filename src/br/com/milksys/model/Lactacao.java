@@ -152,7 +152,7 @@ public class Lactacao extends AbstractEntity implements Serializable {
 				DateUtil.asLocalDate(getDataFim() != null ? getDataFim() : new Date()));
 	}
 	
-	public int getDuracaoLactacaoMeses() {
+	public int getMesesLactacao() {
 		return (int) ChronoUnit.MONTHS.between(DateUtil.asLocalDate(getDataInicio()), 
 				DateUtil.asLocalDate(getDataFim() != null ? getDataFim() : new Date()));
 	}

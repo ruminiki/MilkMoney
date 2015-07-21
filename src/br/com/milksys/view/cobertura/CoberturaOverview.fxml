@@ -9,86 +9,89 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="507.0" prefWidth="1078.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.cobertura.CoberturaOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="507.0" prefWidth="1115.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.cobertura.CoberturaOverviewController">
    <children>
-      <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <HBox layoutX="5.0" layoutY="5.0" prefHeight="507.0" prefWidth="1115.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;">
+            <VBox minWidth="300.0" spacing="3.0">
                <children>
-                  <TextField fx:id="inputPesquisaAnimal" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="241.0" promptText="número/nome animal">
-                     <padding>
-                        <Insets left="3.0" right="5.0" top="5.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="3.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <TextField fx:id="inputPesquisa" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="405.0" prefHeight="30.0" promptText="reprodutor/tipo cobertura/situação" HBox.hgrow="SOMETIMES">
-                     <padding>
-                        <Insets right="5.0" top="5.0" />
-                     </padding>
-                  </TextField>
-                  <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
+                  <HBox alignment="CENTER" minHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;">
                      <children>
-                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+                        <TextField fx:id="inputPesquisaAnimal" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="número/nome animal" HBox.hgrow="SOMETIMES">
+                           <HBox.margin>
+                              <Insets left="3.0" right="3.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                     <children>
+                        <Label text="ANIMAIS">
                            <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Registros">
-                           <font>
-                              <Font size="9.0" />
+                              <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <ListView fx:id="listAnimal" cacheShape="false" focusTraversable="false" prefHeight="272.0" prefWidth="250.0" />
+                  <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
+                     <children>
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarFemeasDisponeisParaCobertura" text="Disponíveis" />
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarTodasAsFemeas" text="Todas" />
+                        <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Cobertura" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                     <children>
+                        <Label text="DADOS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #CCC;" VBox.vgrow="SOMETIMES" />
                </children>
-            </HBox>
-            <HBox spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" VBox.vgrow="SOMETIMES">
+            </VBox>
+            <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <VBox minWidth="250.0" prefHeight="200.0" spacing="3.0">
+                  <HBox alignment="CENTER_RIGHT" maxHeight="50.0" minHeight="50.0" spacing="3.0" style="-fx-border-color: #CCC;" VBox.vgrow="NEVER">
                      <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                        <TextField fx:id="inputPesquisa" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="405.0" prefHeight="30.0" promptText="reprodutor/tipo cobertura/situação" HBox.hgrow="SOMETIMES">
+                           <padding>
+                              <Insets right="5.0" top="5.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                        <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
                            <children>
-                              <Label text="ANIMAIS">
+                              <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
                                  <font>
-                                    <Font name="System Bold" size="12.0" />
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Registros">
+                                 <font>
+                                    <Font size="9.0" />
                                  </font>
                               </Label>
                            </children>
-                        </HBox>
-                        <ListView fx:id="listAnimal" cacheShape="false" focusTraversable="false" prefHeight="272.0" prefWidth="250.0" />
-                        <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
-                           <children>
-                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarFemeasDisponeisParaCobertura" text="Disponíveis" />
-                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarTodasAsFemeas" text="Todas" />
-                              <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Cobertura" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-                           <children>
-                              <Label text="DADOS">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #CCC;" VBox.vgrow="SOMETIMES" />
+                        </VBox>
                      </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" HBox.hgrow="SOMETIMES">
+                  </HBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" VBox.vgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
@@ -121,8 +124,8 @@
                      </children>
                   </VBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
 </AnchorPane>

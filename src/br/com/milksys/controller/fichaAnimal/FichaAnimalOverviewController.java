@@ -1,5 +1,7 @@
 package br.com.milksys.controller.fichaAnimal;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.components.TableCellDateFactory;
+import br.com.milksys.components.TableCellIndexFactory;
+import br.com.milksys.components.UCTextField;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.FichaAnimal;
@@ -25,8 +29,10 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	@FXML private TableView<FichaAnimal> tableEventos;
 	@FXML private TableColumn<FichaAnimal, String> dataColumn;
 	@FXML private TableColumn<FichaAnimal, String> eventoColumn;
+	@FXML private UCTextField inputPesquisaEventos;
 	
 	@FXML private TableView<Lactacao> tableLactacoes;
+	@FXML private TableColumn<Lactacao, String> numeroLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> dataInicioLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> dataTerminoLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
@@ -43,6 +49,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	@Autowired private IndicadorService indicadorService;
 	
 	private Animal animal;
+	//ObservableList<FichaAnimal> eventos = FXCollections.observableArrayList();
 	
 	@FXML
 	public void initialize() {
@@ -50,15 +57,26 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		//tabela eventos
 		dataColumn.setCellFactory(new TableCellDateFactory<FichaAnimal,String>("data"));
 		eventoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("evento"));
+		//filter ober table view eventos
+		FilteredList<FichaAnimal> filteredData = new FilteredList<>(fichaAnimalService.findAllByAnimal(animal), ficha -> true);
+		inputPesquisaEventos.textProperty().addListener(obs->{
+	        String filter = inputPesquisaEventos.getText(); 
+	        if(filter == null || filter.length() == 0) {
+	            filteredData.setPredicate(ficha -> true);
+	        }else {
+	            filteredData.setPredicate(ficha -> ficha.getEvento().contains(filter));
+	        }
+	    });
+        SortedList<FichaAnimal> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(tableEventos.comparatorProperty());
+		tableEventos.setItems(sortedData);
 		
-		tableEventos.getItems().clear();
-		tableEventos.setItems(fichaAnimalService.findAllByAnimal(animal));
-
 		//tabela lactações
+		numeroLactacaoColumn.setCellFactory(new TableCellIndexFactory<Lactacao,String>());
 		dataInicioLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataInicio"));
 		dataTerminoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataFim"));
-		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoDias"));
-		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoMeses"));
+		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("diasLactacao"));
+		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mesesLactacao"));
 		
 		tableLactacoes.getItems().clear();
 		tableLactacoes.setItems(animalService.findLactacoesAnimal(animal));

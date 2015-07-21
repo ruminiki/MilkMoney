@@ -99,6 +99,8 @@ public class CoberturaValidation extends Validator {
 						throw new ValidationException(CAMPO_OBRIGATORIO, "O intervalo entre uma cobertura e outra deve ser de pelo menos 21 dias. "
 								+ "A fêmea [" + c.getFemea().getNumeroNome()+"] teve cobertura registrada no dia " + DateUtil.format(c.getData()) + ". "
 								+ "Verifique se aquela data está correta. Se for necessário corrija-a para então ser possível registrar essa cobertura.");
+					}else{
+						validaSobreposicaoCoberturas(cobertura, c);
 					}
 					
 					validaSituacoesCoberturasDoAnimal(cobertura, coberturasAnimal);
