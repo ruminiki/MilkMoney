@@ -71,6 +71,10 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 		
 	}
 	
+	public Lactacao findUltimaLactacaoAnimal(Animal animal){
+		return dao.findUltimaLactacaoAnimal(animal);
+	}
+	
 	@Transactional
 	public void desfazerEncerramentoLactacao(Animal animal) {
 		

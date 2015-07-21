@@ -22,7 +22,6 @@ import br.com.milksys.MainApp;
 import br.com.milksys.components.CustomAlert;
 import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
-import br.com.milksys.controller.cobertura.CoberturaFormController;
 import br.com.milksys.controller.cobertura.CoberturaOverviewController;
 import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milksys.controller.lactacao.LactacaoFormController;
@@ -92,18 +91,16 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private SemenReducedOverviewController semenReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
-	@Autowired private LactacaoFormController encerramentoLactacaoFormController;
+	@Autowired private LactacaoFormController lactacaoFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
-	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	
-	private MenuItem desfazerEncerramentoLactacaoMenuItem = new MenuItem("Desfazer Encerramento Lactação");
+	private MenuItem encerramentoLactacaoMenuItem = new MenuItem("Encerrar Lactação");
 	private MenuItem registrarMorteMenuItem               = new MenuItem();
 	private MenuItem registrarVendaMenuItem               = new MenuItem();
 	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
 	private MenuItem fichaAnimalMenuItem                  = new MenuItem("Ficha Animal");
-	private MenuItem registrarCoberturaMenuItem           = new MenuItem("Registrar Cobertura");
 	
 	@FXML
 	public void initialize() {
@@ -128,10 +125,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
-		desfazerEncerramentoLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		encerramentoLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	handleDesfazerEncerramentoLactacao();
+		    	handleDesfazerOuEncerrarLactacao();
 		    }
 		});
 		
@@ -149,14 +146,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		registrarCoberturaMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	coberturaFormController.setObject(new Cobertura(getObject()));
-		    	coberturaFormController.showForm();
-		    }
-		});
-		
 		registroProducaoIndividualMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
@@ -171,16 +160,17 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), desfazerEncerramentoLactacaoMenuItem, 
-				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registrarCoberturaMenuItem, registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), encerramentoLactacaoMenuItem, 
+				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
 		
 	}
 	
 	@Override
 	protected void handleRightClick() {
 		super.handleRightClick();
-		desfazerEncerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || !getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO));
-		registrarCoberturaMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
+		
+		encerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || (!getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) && !getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO)));
+		encerramentoLactacaoMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? "Desfazer Encerramento Lactação" : "Encerrar Lactação");
 		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
 		registrarVendaMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Registro Venda" : "Registrar Venda");
@@ -216,13 +206,23 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 	}
 	
-	private void handleDesfazerEncerramentoLactacao(){
+	private void handleDesfazerOuEncerrarLactacao(){
 		
 		if ( table.getSelectionModel().getSelectedItem() != null ){
-			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da última lactação?");
-			if (result.get() == ButtonType.OK) {
-				lactacaoService.desfazerEncerramentoLactacao(getObject());
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+			
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
+			
+				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da última lactação?");
+				if (result.get() == ButtonType.OK) {
+					lactacaoService.desfazerEncerramentoLactacao(getObject());
+					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				}
+				
+			}else{
+				if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
+					lactacaoFormController.setObject(lactacaoService.findUltimaLactacaoAnimal(getObject()));
+					lactacaoFormController.showForm();
+				}
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -290,16 +290,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	};
 	@FXML
 	private void handleCoberturas(){
-		
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			coberturaOverviewController.setObject(new Cobertura());
-			coberturaOverviewController.showForm();
-			
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
-		}
-		
+		coberturaOverviewController.setObject(new Cobertura());
+		coberturaOverviewController.showForm();
 	};
 	
 	

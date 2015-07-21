@@ -280,6 +280,7 @@ public abstract class AbstractOverviewController<K, E>{
 		
 	}
 	
+	@FXML
 	protected void closeForm(){
 		if ( dialogStage != null )
 			dialogStage.close();

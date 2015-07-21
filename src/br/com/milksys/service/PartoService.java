@@ -1,5 +1,6 @@
 package br.com.milksys.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -19,6 +20,7 @@ import br.com.milksys.validation.PartoValidation;
 public class PartoService implements IService<Integer, Parto>{
 
 	@Autowired private PartoDao dao;
+	@Autowired private AnimalService animalService;
 
 	@Override
 	@Transactional
@@ -55,6 +57,7 @@ public class PartoService implements IService<Integer, Parto>{
 	public void validate(Parto parto) {
 		PartoValidation.validate(parto);
 		PartoValidation.validadeCrias(parto);
+		PartoValidation.validaEncerramentoLactacao(parto.getCobertura().getFemea(), animalService.isInLactacao(new Date(), parto.getCobertura().getFemea()));
 	}
 
 	public Parto findLastParto(Animal animal) {

@@ -7,6 +7,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
@@ -29,14 +31,15 @@ import br.com.milksys.model.ConfirmacaoPrenhez;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
+import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
+
 
 @Controller
 public class CoberturaOverviewController extends AbstractOverviewController<Integer, Cobertura> {
 
 	@FXML private TableColumn<Cobertura, String> dataColumn;
-	@FXML private TableColumn<Animal, String> femeaColumn;
 	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoPartoColumn;
 	@FXML private TableColumn<Cobertura, String> dataPartoColumn;
@@ -45,10 +48,13 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String> situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> statusColumn;
 	
+	@FXML private ListView<Animal> listAnimal;
+	@FXML private Label lblHeader;
+	
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
-	
 	@Autowired private PartoFormController partoFormController;
+	@Autowired private AnimalService animalService;
 	
 	private MenuItem registrarPartoMenuItem   = new MenuItem("Registrar Parto");
 	private MenuItem removerPartoMenuItem     = new MenuItem("Remover Parto");
@@ -57,8 +63,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML
 	public void initialize() {
 		
+		//list animais
+		listAnimal.setItems(animalService.findAllFemeasAtivasAsObservableList());
+		listAnimal.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
+		
+		if ( listAnimal.getItems().size() > 0 ) {
+			listAnimal.getSelectionModel().clearAndSelect(0);
+		}
+		
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
-		femeaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("femea"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
@@ -92,6 +105,33 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, removerPartoMenuItem, confirmarPrenhezMenuItem);
 		
+	}
+	
+	private void animalSelectHandler(){
+		lblHeader.setText("COBERTURAS - " + listAnimal.getSelectionModel().getSelectedItem().toString());
+		refreshTableOverview();
+	}
+	
+	@Override
+	protected void refreshTableOverview() {
+		this.data.clear();
+		this.table.getItems().clear();
+		
+		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+				inputPesquisa.getText().length() > 0){
+			data.addAll(handleDefaultSearch());
+			setSearch(null);
+		}else{
+			if ( super.getSearch() != null ){
+				data.addAll(super.getSearch().doSearch());
+			}else{
+				this.data.addAll( ((CoberturaService)service).findByAnimal(listAnimal.getSelectionModel().getSelectedItem()));
+			}
+		}
+		
+		table.setItems(data);
+		table.layout();
+		updateLabelNumRegistros();
 	}
 	
 	@Override

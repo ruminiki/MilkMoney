@@ -56,8 +56,8 @@ public class AnimalService implements IService<Integer, Animal>{
 		return FXCollections.observableArrayList(dao.findAllByNumeroNome(param));
 	}
 
-	public ObservableList<Animal> findAllFemeasAsObservableList() {
-		return findAllAsObservableList();
+	public ObservableList<Animal> findAllFemeasAtivasAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAllFemeasAtivas());
 	}
 
 	public ObservableList<Animal> findAllReprodutoresAsObservableList() {

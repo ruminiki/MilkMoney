@@ -1,6 +1,5 @@
 package br.com.milksys.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -16,7 +15,6 @@ import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.CoberturaValidation;
-import br.com.milksys.validation.PartoValidation;
 
 @Service
 public class CoberturaService implements IService<Integer, Cobertura>{
@@ -24,7 +22,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private CoberturaDao dao;
 	@Autowired private PartoService partoService;
 	@Autowired private SemenService semenService;
-	@Autowired private AnimalService animalService;
 
 	@Override
 	@Transactional
@@ -50,9 +47,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		try{
 			
 			configuraDataPrevisaoPartoELactacao(cobertura);
-			//verifica se existem lactacoes em aberto
-			PartoValidation.validaEncerramentoLactacao(cobertura.getFemea(), animalService.isInLactacao(new Date(), cobertura.getFemea()));
-			
 			dao.persist(cobertura);
 			
 		}catch(Exception e){
