@@ -1,5 +1,7 @@
 package br.com.milksys.validation;
 
+import java.time.temporal.ChronoUnit;
+
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.ConfirmacaoPrenhez;
 import br.com.milksys.model.SituacaoCobertura;
@@ -19,6 +21,13 @@ public class ConfirmacaoPrenhezValidation extends Validator{
 				DateUtil.isSameDate(confirmacaoPrenhez.getData(), confirmacaoPrenhez.getCobertura().getData()) ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"A data da confirmação não pode ser menor ou igual a data da cobertura.");
+		}
+		
+		long mesesCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(confirmacaoPrenhez.getCobertura().getData()), DateUtil.asLocalDate(confirmacaoPrenhez.getData()));
+		
+		if ( mesesCobertura > 4 ){
+			throw new ValidationException(REGRA_NEGOCIO, "A data do diagnóstico é incompatível com a data da cobertura. Os diagnósticos devem ser realizados "
+					+ "até 120 dias após a cobertura. Por favor, corrija a data e tente novamente.");
 		}
 		
 	}

@@ -4,8 +4,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import br.com.milksys.exception.ValidationException;
-import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cria;
+import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.SituacaoNascimento;
@@ -73,10 +73,21 @@ public class PartoValidation extends Validator {
 		}
 	}
 
-	public static void validaEncerramentoLactacao(Animal femea, boolean inLactacao) {
-		if ( inLactacao ){
-			throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. Por favor, registre o encerramento da "
-					+ "última lactação para então registrar o novo parto e iniciar uma nova lactação.");
+	public static void validaEncerramentoLactacao(Parto parto, Lactacao lactacao) {
+		if ( lactacao != null ){
+			
+			if ( lactacao.getDataFim() == null ){
+				throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. Por favor, registre o encerramento "
+						+ "para então registrar o novo parto e iniciar uma nova lactação.");	
+			}
+			
+			if ( parto.getData().compareTo(lactacao.getDataFim()) <= 0 ){
+				throw new ValidationException(REGRA_NEGOCIO, "A última lactação registrada para o animal " + parto.getCobertura().getFemea().toString() + " foi do dia "
+						+ DateUtil.format(lactacao.getDataInicio()) + " à " + DateUtil.format(lactacao.getDataFim()) + ". Você está tentando registrar o parto para o dia " + 
+						DateUtil.format(parto.getData()) + ". Isso ocasionará a sobreposição de lactações. Por favor, corrija a data do parto, ou se necessário desfaça o encerramento "
+								+ "da lactação e encerre-a na data correta. Feito isso, será possível o registro do parto.");	
+			}
+			
 		}
 	}
 	
