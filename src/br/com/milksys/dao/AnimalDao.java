@@ -219,20 +219,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 	}
 	
-	public Long contaNumeroPartos(Animal animal) {
-		
-		Query query = entityManager.createQuery("SELECT count(p) FROM Parto p where p.cobertura.femea = :animal");
-		query.setHint("org.hibernate.cacheable", "false");
-		query.setParameter("animal", animal);
-		
-		try{
-			return (Long) query.getSingleResult();
-		}catch ( NoResultException e ){
-			return 0L;
-		}
-		
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisMortos() {
 		Query query = entityManager.createQuery("SELECT a FROM MorteAnimal m inner join m.animal a ");
@@ -244,6 +230,16 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllAnimaisVendidos() {
 		Query query = entityManager.createQuery("SELECT a FROM AnimalVendido av inner join av.animal a");
 		query.setHint("org.hibernate.cacheable", "false");
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAnimaisComParto() {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
+				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id ) ");
+		
 		return query.getResultList();
 	}
 

@@ -2,17 +2,14 @@ package br.com.milksys.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
-import br.com.milksys.dao.PartoDao;
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.Parto;
-import br.com.milksys.util.DateUtil;
+import br.com.milksys.service.PartoService;
 
 /**
  * O intervalo entre partos atual é o cálculo do número de meses entre o parto mais recente e o 
@@ -29,7 +26,7 @@ import br.com.milksys.util.DateUtil;
 public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 
 	@Autowired AnimalDao animalDao;
-	@Autowired PartoDao partoDao;
+	@Autowired PartoService partoService;
 	
 	
 	@Override
@@ -41,13 +38,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 		
 		for ( Animal femea : femeas ){
 			
-			List<Parto> partos = partoDao.findUltimos2Partos(femea);
-			
-			if ( partos != null && partos.size() == 2 ){
-				//soma o intervalo de meses entre um e outro
-				intervaloEntrePartos = BigDecimal.valueOf(ChronoUnit.MONTHS.between(DateUtil.asLocalDate(partos.get(1).getData()), DateUtil.asLocalDate(partos.get(0).getData())));
-				
-			}
+			intervaloEntrePartos = BigDecimal.valueOf(partoService.getIntervaloEntrePartos(femea));
 			
 		}
 		//divide a soma dos intervalos pelo número de partos para obter a média

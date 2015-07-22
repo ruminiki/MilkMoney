@@ -4,6 +4,8 @@
 - na venda fazer a somatória de animais vendidos e do valor total
 - permitir cadastro dos valores de referencia nos indicadores;
 
+- FAZER IMPRESSÃO DE FORMUÁRIOS MODELOS
+
 - fazer cadastro de procedimento
 - Colocar o registro e remoção do parto no botão direito;
 - listar os partos do animal na tela principal (permitir acesso ao form de parto para visualização e a remoção do parto)
@@ -22,6 +24,9 @@
 - Dias em lactação;
 - Intervalo entre partos;
 - idade primeiro parto;
+
+(criar tabela ficha animal - antes de gerar o relatório, calcular os valores e inserir no banco,
+o relatório irá apenas carregar os dados da tabela e exibir para o usuário).
 
 - criar botão para exportar resultados da tabela para pdf no pentaho
 

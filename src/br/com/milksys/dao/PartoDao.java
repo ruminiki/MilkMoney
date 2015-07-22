@@ -26,6 +26,34 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 		}
 		
 	}
+	
+	public long countByAnimal(Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT count(p) FROM Parto p where p.cobertura.femea = :animal");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("animal", animal);
+		
+		try{
+			return (long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+		
+	}
+	
+	public long countCriasByAnimalAndSexo(Animal aimal, String sexo) {
+		
+		Query query = entityManager.createQuery("SELECT count(c) FROM Parto p inner join p.crias c where p.cobertura.femea = :animal and c.sexo = :sexo");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("sexo", sexo);
+		
+		try{
+			return (long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+		
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Parto> findAllOrderByDataDesc() {
@@ -44,6 +72,29 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 		queryParto.setParameter("femea", femea);
 		
 		return queryParto.getResultList();
+		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Parto> findByAnimal(Animal femea) {
+		//busca os dois últimos partos do animal
+		Query queryParto = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :femea order by p.data desc");
+		queryParto.setParameter("femea", femea);
+		
+		return queryParto.getResultList();
+	}
+
+	public Parto findFirstParto(Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :animal order by p.data asc");
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (Parto) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
 		
 	}
 	

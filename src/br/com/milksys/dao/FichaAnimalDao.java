@@ -6,15 +6,13 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import br.com.milksys.model.Animal;
-import br.com.milksys.model.Cobertura;
-import br.com.milksys.model.Lactacao;
 import br.com.milksys.model.FichaAnimal;
-import br.com.milksys.model.Parto;
 
 @Repository
 public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
@@ -24,48 +22,59 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		
 		List<FichaAnimal> fichasAnimal = new ArrayList<FichaAnimal>();
 		
-		Query query = entityManager.createQuery("SELECT c.id, c.data FROM Cobertura c WHERE c.femea = :animal order by c.data");
+		Query query = entityManager.createQuery("SELECT c.data FROM Cobertura c WHERE c.femea = :animal order by c.data");
 		query.setParameter("animal", animal);
 		
 		List<Object> result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], "COBERTURA", Integer.parseInt(String.valueOf(o[0])), Cobertura.class));
+			fichasAnimal.add(new FichaAnimal((Date)o[0], "COBERTURA"));
 		}
 		
 		
-		query = entityManager.createQuery("SELECT c.id, c.data, c.situacaoCobertura "
+		query = entityManager.createQuery("SELECT c.data, c.situacaoCobertura "
 				+ "FROM ConfirmacaoPrenhez c WHERE c.cobertura.femea = :animal order by c.data");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], 
-					"DIAGNÓSTICO (" + String.valueOf(o[2]) + ")", Integer.parseInt(String.valueOf(o[0])), Cobertura.class));
+			fichasAnimal.add(new FichaAnimal((Date)o[0], "DIAGNÓSTICO (" + String.valueOf(o[1]) + ")"));
 		}
 		
-		query = entityManager.createQuery("SELECT p.id, p.data "
+		query = entityManager.createQuery("SELECT p.data "
 				+ "FROM Parto p WHERE p.cobertura.femea = :animal order by p.data");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], "PARTO", Integer.parseInt(String.valueOf(o[0])), Parto.class));
+			fichasAnimal.add(new FichaAnimal((Date)o[0], "PARTO"));
 		}
 		
 		
-		query = entityManager.createQuery("SELECT e.id, e.dataFim "
-				+ "FROM Lactacao e WHERE e.animal = :animal and dataFim is not null order by e.dataFim");
+		query = entityManager.createQuery("SELECT e.dataInicio " 
+				+ "FROM Lactacao e WHERE e.animal = :animal order by e.dataInicio");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[1], "ENCERRAMENTO LACTAÇÃO", Integer.parseInt(String.valueOf(o[0])), Lactacao.class));
+			fichasAnimal.add(new FichaAnimal((Date)o[0], "INICIO LACTAÇÃO"));
 		}
+		
+		
+		query = entityManager.createQuery("SELECT e.dataFim " 
+				+ "FROM Lactacao e WHERE e.animal = :animal order by e.dataFim");
+		query.setParameter("animal", animal);
+		result = query.getResultList();
+		
+		for ( int index = 0; index < result.size(); index++ ){
+			Object[] o = (Object[]) result.get(index);
+			fichasAnimal.add(new FichaAnimal((Date)o[0], "ENCERRAMENTO LACTAÇÃO"));
+		}
+		
 		
 		Collections.sort(fichasAnimal, new Comparator<FichaAnimal>() {
 	        @Override
@@ -75,6 +84,19 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 	    });
 		
 		return fichasAnimal;
+		
+	}
+
+	public FichaAnimal findFichaAnimal(Animal animal) {
+		Query query = entityManager.createQuery("SELECT f FROM FichaAnimal f WHERE f.animal = :animal");
+		query.setParameter("animal", animal);
+		
+		try{
+			return (FichaAnimal) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+		
 		
 	}
 

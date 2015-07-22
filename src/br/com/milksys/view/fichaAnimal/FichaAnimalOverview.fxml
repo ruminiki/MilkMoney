@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="465.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController">
+<AnchorPane prefHeight="476.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -44,21 +44,6 @@
                               </TableColumn>
                           </columns>
                         </TableView>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-                           <children>
-                              <Label text="INDICADORES">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="tableIndicadores" focusTraversable="false">
-                          <columns>
-                            <TableColumn fx:id="indicadorColumn" minWidth="380.0" prefWidth="75.0" text="Indicador" />
-                            <TableColumn fx:id="valorApuradoColumn" minWidth="100.0" prefWidth="75.0" text="Valor" />
-                          </columns>
-                        </TableView>
                      </children>
                   </VBox>
                   <VBox spacing="5.0" HBox.hgrow="SOMETIMES">
@@ -83,6 +68,38 @@
                   </VBox>
                </children>
             </HBox>
+            <VBox spacing="3.0">
+               <children>
+                  <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                     <children>
+                        <Label text="INDICADORES">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="tableFichaAnimal" focusTraversable="false" prefHeight="220.0">
+                    <columns>
+                      <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Ult. Cob." />
+                      <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Nº Serv." />
+                        <TableColumn fx:id="proximoServicoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Próx. Serv." />
+                        <TableColumn fx:id="numeroPartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Nº Partos" />
+                        <TableColumn prefWidth="75.0" text="Crias">
+                           <columns>
+                              <TableColumn fx:id="criasFemeasColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" text="Fêmeas" />
+                              <TableColumn fx:id="criasMachosColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" text="Machos" />
+                           </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="diasEmAbertoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="DEA" />
+                        <TableColumn fx:id="diasEmLactacaoAnimalColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="DEL" />
+                        <TableColumn fx:id="intervaloEntrePartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="IEP" />
+                        <TableColumn fx:id="idadePrimeiroPartoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" text="Idade 1º Parto" />
+                        <TableColumn fx:id="idadePrimeiraCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" text="Idade 1º Cob." />
+                    </columns>
+                  </TableView>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>

@@ -1,6 +1,7 @@
 package br.com.milksys.dao;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -26,7 +27,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 				+ "t.numero like :param or "
 				+ "t.nome like :param or "
 				+ "s.touro.nome like :param or "
-				+ "c.tipoCobertura like :param) ");
+				+ "c.tipoCobertura like :param) order by c.data desc ");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();
@@ -34,7 +35,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findByAnimal(Animal femea) {
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea");
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea order by c.data desc");
 		query.setParameter("femea", femea);
 		
 		return query.getResultList();
@@ -68,7 +69,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
-	public Cobertura findLastCoberturaByAnimal(Animal femea) {
+	public Cobertura findLastCoberturaAnimal(Animal femea) {
 		
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea order by c.data desc");
 		query.setParameter("femea", femea);
@@ -84,6 +85,35 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	public BigInteger countCoberturasRealizadasUltimos21Dias() {
 		return (BigInteger) entityManager.createNativeQuery("select count(*) from cobertura c where  DATEDIFF(current_date(), c.data) between 0 and 21 ").getSingleResult();
+	}
+
+	//recupera a primeira cobertura após uma determinada data
+	public Cobertura findFirstAfterDate(Animal femea, Date data) {
+		
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data > :data order by c.data");
+		query.setParameter("femea", femea);
+		query.setParameter("data", data);
+		query.setMaxResults(1);
+		
+		try{
+			return ((Cobertura)query.getSingleResult());
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+
+	public Cobertura findFirstCobertura(Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c where c.femea = :animal order by p.data asc");
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (Cobertura) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+		
 	}
 
 }

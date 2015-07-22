@@ -1,5 +1,6 @@
 package br.com.milksys.service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -12,8 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milksys.dao.AnimalDao;
+import br.com.milksys.dao.CoberturaDao;
+import br.com.milksys.dao.PartoDao;
 import br.com.milksys.model.Animal;
+import br.com.milksys.model.Cobertura;
 import br.com.milksys.model.Lactacao;
+import br.com.milksys.model.Parto;
+import br.com.milksys.util.DateUtil;
 import br.com.milksys.validation.AnimalValidation;
 
 @Service
@@ -21,6 +27,8 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	@Autowired private AnimalDao dao;
 	@Autowired private LactacaoService lactacaoService;
+	@Autowired private PartoDao partoDao;
+	@Autowired private CoberturaDao coberturaDao;
 
 	@Override
 	@Transactional
@@ -78,11 +86,29 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public Long getNumeroPartos(Animal animal) {
-		return dao.contaNumeroPartos(animal);
+		return partoDao.countByAnimal(animal);
 	}
 
 	public boolean isInLactacao(Date data, Animal animal) {
 		return dao.isInLactacao(data, animal);
+	}
+
+	public int getIdadePrimeiroParto(Animal animal) {
+		Parto parto = partoDao.findFirstParto(animal);
+		int idadePrimeiroParto = 0;
+		if ( parto != null ){
+			idadePrimeiroParto = (int) ChronoUnit.MONTHS.between(DateUtil.asLocalDate(animal.getDataNascimento()), DateUtil.asLocalDate(parto.getData()));
+		}
+		return idadePrimeiroParto;
+	}
+	
+	public int getIdadePrimeiraCobertura(Animal animal) {
+		Cobertura cobertua = coberturaDao.findFirstCobertura(animal);
+		int idadePrimeiroCobertura = 0;
+		if ( cobertua != null ){
+			idadePrimeiroCobertura = (int) ChronoUnit.MONTHS.between(DateUtil.asLocalDate(animal.getDataNascimento()), DateUtil.asLocalDate(cobertua.getData()));
+		}
+		return idadePrimeiroCobertura;
 	}
 
 }

@@ -1,8 +1,15 @@
 package br.com.milksys.service.indicadores;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.milksys.dao.AnimalDao;
+import br.com.milksys.model.Animal;
+import br.com.milksys.service.CoberturaService;
 
 /**
  *Para o cálculo do dias em aberto devemos considerar o número de dias do último parto até:
@@ -18,10 +25,23 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DiasEmAberto extends AbstractCalculadorIndicador{
+	
+	@Autowired CoberturaService coberturaService;
+	@Autowired AnimalDao animalDao;
 
 	@Override
 	public String getValue() {
 		BigDecimal diasEmAberto = BigDecimal.ZERO;
+		
+		List<Animal> vacas = animalDao.findAnimaisComParto();
+		
+		for ( Animal femea : vacas ){
+			diasEmAberto = diasEmAberto.add(BigDecimal.valueOf(coberturaService.getDiasEmAberto(femea)));
+		}
+		
+		if ( vacas != null && vacas.size() > 0 ){
+			diasEmAberto = diasEmAberto.divide(BigDecimal.valueOf(vacas.size()), 2, RoundingMode.HALF_EVEN);
+		}
 		
 		return String.valueOf(diasEmAberto);
 		
