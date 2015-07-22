@@ -22,11 +22,11 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 				"select c from Cobertura c "
 				+ "left join c.touro t "
 				+ "left join c.semen s "
-				+ "WHERE c.situacaoCobertura like :param or "
+				+ "WHERE (c.situacaoCobertura like :param or "
 				+ "t.numero like :param or "
 				+ "t.nome like :param or "
-				+ "s.touro.nome like :param or"
-				+ "c.tipoCobertura like :param ");
+				+ "s.touro.nome like :param or "
+				+ "c.tipoCobertura like :param) ");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

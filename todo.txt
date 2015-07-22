@@ -12,12 +12,18 @@
 - Como fazer com uma vaca que pari e não entrará em lactação?
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
 
-- fazer tela de acompanhamento reprodutivo do animal
+- fazer tela de acompanhamento reprodutivo do animal (pentaho report - substituir a ficha do animal)
 - ultima cobertura
 - número de serviços (até ela ficar prenha)
 - próximo serviço (PVE + 21 dias)
 - numero de partos animal
 - numero de machos e femeas paridas
+- Dias secas (em aberto);
+- Dias em lactação;
+- Intervalo entre partos;
+- idade primeiro parto;
+
+- criar botão para exportar resultados da tabela para pdf no pentaho
 
 - fazer gráfico da produção individual (selecionar a lactação, exibir a tabela das medições e o gráfico ao lado)
   		like http://www.pecuariabrasilassessoria.com.br/software-gado-leite.php

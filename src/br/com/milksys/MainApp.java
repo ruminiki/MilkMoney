@@ -42,6 +42,7 @@ public class MainApp extends Application {
 	        loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 	        rootLayout = (BorderPane) loader.load();
 	        Scene scene = new Scene(rootLayout);
+	        scene.getStylesheets().add("style.css");
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
 	    } catch (Exception e) {
