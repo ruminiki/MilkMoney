@@ -1,6 +1,8 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -120,7 +122,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getDiasEmAberto() {
-		return String.valueOf(diasEmAberto + "D " + ((int)(diasEmAberto/30)) + "M");
+		return String.valueOf(diasEmAberto + "d / " + BigDecimal.valueOf(diasEmAberto).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
 	}
 
 	public void setDiasEmAberto(int diasEmAberto) {
@@ -128,7 +130,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getDiasEmLactacao() {
-		return String.valueOf(diasEmLactacao + "D " + ((int)(diasEmLactacao/30)) + "M");
+		return String.valueOf(diasEmLactacao + "d / " + BigDecimal.valueOf(diasEmLactacao).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
 	}
 
 	public void setDiasEmLactacao(int diasEmLactacao) {
@@ -136,7 +138,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getIntervaloEntrePartos() {
-		return intervaloEntrePartos + "M";
+		return intervaloEntrePartos + "m";
 	}
 
 	public void setIntervaloEntrePartos(int intervaloEntrePartos) {
@@ -144,7 +146,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getIdadePrimeiroParto() {
-		return idadePrimeiroParto + "M";
+		return idadePrimeiroParto + "m";
 	}
 
 	public void setIdadePrimeiroParto(int idadePrimeiroParto) {
@@ -152,7 +154,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getIdadePrimeiraCobertura() {
-		return idadePrimeiraCobertura + "M";
+		return idadePrimeiraCobertura + "m";
 	}
 
 	public void setIdadePrimeiraCobertura(int idadePrimeiraCobertura) {
