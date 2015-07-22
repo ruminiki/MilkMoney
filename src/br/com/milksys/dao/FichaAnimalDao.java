@@ -28,10 +28,10 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		List<Object> result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[0], "COBERTURA"));
+			if ( result.get(index) != null )
+				fichasAnimal.add(new FichaAnimal(new Date(((java.sql.Date)result.get(index)).getTime()), "COBERTURA"));
 		}
-		
+
 		
 		query = entityManager.createQuery("SELECT c.data, c.situacaoCobertura "
 				+ "FROM ConfirmacaoPrenhez c WHERE c.cobertura.femea = :animal order by c.data");
@@ -39,40 +39,39 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[0], "DIAGNÓSTICO (" + String.valueOf(o[1]) + ")"));
+			if ( result.get(index) != null ){
+				Object[] o = (Object[]) result.get(index);
+				fichasAnimal.add(new FichaAnimal((Date)o[0], "DIAGNÓSTICO (" + String.valueOf(o[1]) + ")"));
+			}
 		}
 		
-		query = entityManager.createQuery("SELECT p.data "
-				+ "FROM Parto p WHERE p.cobertura.femea = :animal order by p.data");
+		query = entityManager.createQuery("SELECT p.data FROM Parto p WHERE p.cobertura.femea = :animal order by p.data");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[0], "PARTO"));
+			if ( result.get(index) != null )
+				fichasAnimal.add(new FichaAnimal(new Date(((java.sql.Date)result.get(index)).getTime()), "PARTO"));
 		}
 		
 		
-		query = entityManager.createQuery("SELECT e.dataInicio " 
-				+ "FROM Lactacao e WHERE e.animal = :animal order by e.dataInicio");
+		query = entityManager.createQuery("SELECT e.dataInicio FROM Lactacao e WHERE e.animal = :animal order by e.dataInicio");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[0], "INICIO LACTAÇÃO"));
+			if ( result.get(index) != null )
+				fichasAnimal.add(new FichaAnimal(new Date(((java.sql.Date)result.get(index)).getTime()), "INICIO LACTAÇÃO"));
 		}
 		
 		
-		query = entityManager.createQuery("SELECT e.dataFim " 
-				+ "FROM Lactacao e WHERE e.animal = :animal order by e.dataFim");
+		query = entityManager.createQuery("SELECT e.dataFim FROM Lactacao e WHERE e.animal = :animal order by e.dataFim");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
-			Object[] o = (Object[]) result.get(index);
-			fichasAnimal.add(new FichaAnimal((Date)o[0], "ENCERRAMENTO LACTAÇÃO"));
+			if ( result.get(index) != null )
+				fichasAnimal.add(new FichaAnimal(new Date(((java.sql.Date)result.get(index)).getTime()), "ENCERRAMENTO LACTAÇÃO"));
 		}
 		
 		

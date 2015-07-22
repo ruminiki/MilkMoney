@@ -104,7 +104,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	public Cobertura findFirstCobertura(Animal animal) {
 		
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c where c.femea = :animal order by p.data asc");
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c where c.femea = :animal order by c.data asc");
 		query.setParameter("animal", animal);
 		query.setMaxResults(1);
 		

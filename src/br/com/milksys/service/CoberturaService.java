@@ -157,8 +157,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		int index = 0;
 		
 		for (Cobertura cobertura : coberturas){
-			//pula a última cobertura
-			if ( index == 0 ) continue;
 			//conta quantas coberturas não tiveram parto, antes da última
 			if ( !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ) index++;
 			else break;

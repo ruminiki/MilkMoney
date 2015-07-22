@@ -81,21 +81,21 @@
                   </HBox>
                   <TableView fx:id="tableFichaAnimal" focusTraversable="false" prefHeight="220.0">
                     <columns>
-                      <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Ult. Cob." />
-                      <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Nº Serv." />
-                        <TableColumn fx:id="proximoServicoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Próx. Serv." />
-                        <TableColumn fx:id="numeroPartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="Nº Partos" />
+                      <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Ult. Cob." />
+                      <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº Serv." />
+                        <TableColumn fx:id="proximoServicoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Próx. Serv." />
+                        <TableColumn fx:id="numeroPartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº Partos" />
                         <TableColumn prefWidth="75.0" text="Crias">
                            <columns>
-                              <TableColumn fx:id="criasFemeasColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" text="Fêmeas" />
-                              <TableColumn fx:id="criasMachosColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" text="Machos" />
+                              <TableColumn fx:id="criasFemeasColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fêmeas" />
+                              <TableColumn fx:id="criasMachosColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Machos" />
                            </columns>
                         </TableColumn>
-                        <TableColumn fx:id="diasEmAbertoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="DEA" />
-                        <TableColumn fx:id="diasEmLactacaoAnimalColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="DEL" />
-                        <TableColumn fx:id="intervaloEntrePartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" text="IEP" />
-                        <TableColumn fx:id="idadePrimeiroPartoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" text="Idade 1º Parto" />
-                        <TableColumn fx:id="idadePrimeiraCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" text="Idade 1º Cob." />
+                        <TableColumn fx:id="diasEmAbertoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DEA" />
+                        <TableColumn fx:id="diasEmLactacaoAnimalColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DEL" />
+                        <TableColumn fx:id="intervaloEntrePartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="IEP" />
+                        <TableColumn fx:id="idadePrimeiroPartoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade 1º Parto" />
+                        <TableColumn fx:id="idadePrimeiraCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade 1º Cob." />
                     </columns>
                   </TableView>
                </children>

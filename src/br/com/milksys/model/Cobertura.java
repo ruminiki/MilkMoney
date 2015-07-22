@@ -2,6 +2,7 @@ package br.com.milksys.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -261,7 +262,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="cobertura")
 	public List<ConfirmacaoPrenhez> getConfirmacoesPrenhez() {
-		return confirmacoesPrenhez;
+		return confirmacoesPrenhez == null ? new ArrayList<ConfirmacaoPrenhez>() : confirmacoesPrenhez;
 	}
 
 	public void setConfirmacoesPrenhez(List<ConfirmacaoPrenhez> confirmacoesPrenhez) {

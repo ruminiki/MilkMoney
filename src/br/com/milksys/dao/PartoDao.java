@@ -41,10 +41,11 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 		
 	}
 	
-	public long countCriasByAnimalAndSexo(Animal aimal, String sexo) {
+	public long countCriasByAnimalAndSexo(Animal animal, String sexo) {
 		
 		Query query = entityManager.createQuery("SELECT count(c) FROM Parto p inner join p.crias c where p.cobertura.femea = :animal and c.sexo = :sexo");
 		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("animal", animal);
 		query.setParameter("sexo", sexo);
 		
 		try{

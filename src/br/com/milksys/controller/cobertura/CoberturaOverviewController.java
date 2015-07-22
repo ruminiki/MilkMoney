@@ -93,6 +93,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		if ( tableAnimais.getItems().size() > 0 ) {
 			tableAnimais.getSelectionModel().clearAndSelect(0);
+			animalSelectHandler();
 		}
 		
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));

@@ -97,7 +97,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		numeroServicosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroServicosAtePrenhez"));
 		proximoServicoColumn.setCellFactory(new TableCellDateFactory<FichaAnimal,String>("proximoServico"));
 		numeroPartosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroPartos"));
-		criasFemeasColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroCriasFemeas"));
+		criasFemeasColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroCriasFemea"));
 		criasMachosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroCriasMacho"));
 		diasEmAbertoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("diasEmAberto"));
 		diasEmLactacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("diasEmLactacao"));

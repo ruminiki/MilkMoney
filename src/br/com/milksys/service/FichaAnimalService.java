@@ -30,7 +30,7 @@ public class FichaAnimalService{
 		FichaAnimal fichaAnimal = dao.findFichaAnimal(animal);
 		
 		if (fichaAnimal == null){
-			fichaAnimal = new FichaAnimal();
+			fichaAnimal = new FichaAnimal(animal);
 		}
 		//ultima cobertura
 		fichaAnimal.setDataUltimaCobertura(coberturaService.getDataUltimaCoberturaAnimal(animal));
@@ -43,7 +43,7 @@ public class FichaAnimalService{
 		//número de crias machos
 		fichaAnimal.setNumeroCriasMacho(partoService.countCriasByAnimalAndSexo(animal, Sexo.MACHO));
 		//número de crias fêmeas
-		fichaAnimal.setNumeroCriasFemeas(partoService.countCriasByAnimalAndSexo(animal, Sexo.FEMEA));
+		fichaAnimal.setNumeroCriasFemea(partoService.countCriasByAnimalAndSexo(animal, Sexo.FEMEA));
 		//número de dias em aberto
 		fichaAnimal.setDiasEmAberto(coberturaService.getDiasEmAberto(animal));
 		//dias em lactação
