@@ -1,5 +1,7 @@
 package br.com.milksys.service;
 
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -25,7 +27,7 @@ public class FichaAnimalService{
 	}
 	
 	@Transactional
-	public FichaAnimal getFichaAnimal(Animal animal){
+	public FichaAnimal generateFichaAnimal(Animal animal){
 		
 		FichaAnimal fichaAnimal = dao.findFichaAnimal(animal);
 		
@@ -58,6 +60,17 @@ public class FichaAnimalService{
 		dao.persist(fichaAnimal);
 		
 		return fichaAnimal;
+	}
+	
+	@Transactional
+	public void generateFichaForAll(){
+		
+		List<Animal> animais = animalService.findAll();
+		for ( Animal animal : animais ){
+			generateFichaAnimal(animal);
+		}
+		
+		
 	}
 	
 	

@@ -64,7 +64,7 @@
                         </Label>
                         <HBox alignment="CENTER" prefHeight="30.0" spacing="3.0">
                            <children>
-                              <Button minHeight="30.0" mnemonicParsing="false" text="Analisar Animais Selecionados" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Analisar Animais Selecionados" />
                               <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Cobertura" />
                            </children>
                         </HBox>

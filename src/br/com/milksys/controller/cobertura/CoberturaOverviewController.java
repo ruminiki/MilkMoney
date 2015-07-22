@@ -35,10 +35,12 @@ import br.com.milksys.model.Parametro;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
+import br.com.milksys.reports.GenericPentahoReport;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.ParametroService;
+import br.com.milksys.service.RelatorioService;
 import br.com.milksys.service.searchers.Search;
 import br.com.milksys.service.searchers.SearchAnimaisDisponiveisParaCobertura;
 import br.com.milksys.service.searchers.SearchFemeas;
@@ -72,6 +74,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private AnimalService                    animalService;
 	@Autowired private ParametroService                 parametroService;
+	@Autowired private RelatorioService					relatorioService;
 	
 	//menu context tabela cobertura
 	private MenuItem registrarPartoMenuItem             = new MenuItem("Registrar Parto");
@@ -133,7 +136,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		if ( inputPesquisaAnimal != null ){
 			inputPesquisaAnimal.textProperty().addListener((observable, oldValue, newValue) -> {
 				SearchFemeasByNumeroNome search = (SearchFemeasByNumeroNome) MainApp.getBean(SearchFemeasByNumeroNome.class);
-				tableAnimais.setItems(search.doSearch(new Object[]{newValue}));
+				tableAnimais.setItems(search.doSearch(newValue));
 			});
 		}
 		
@@ -217,30 +220,44 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	private void handleBuscarNaoPrenhasPrimeiroCiclo(){
 		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
 		int primeiroCiclo = periodoVoluntarioEspera + 21;
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
-				new Object[]{primeiroCiclo});
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),primeiroCiclo);
 	}
 	
 	@FXML
 	private void handleBuscarNaoPrenhasSegundoCiclo(){
 		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
 		int primeiroCiclo = periodoVoluntarioEspera + 42;
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
-				new Object[]{primeiroCiclo});
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),primeiroCiclo);
 	}
 	
 	@FXML
 	private void handleBuscarNaoPrenhasTerceiroCiclo(){
 		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
 		int primeiroCiclo = periodoVoluntarioEspera + 63;
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),
-				new Object[]{primeiroCiclo});
+		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),primeiroCiclo);
 	}
 	
 	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
 		tableAnimais.setItems(search.doSearch(params));
 		inputPesquisaAnimal.clear();
 		tableAnimais.getSelectionModel().clearAndSelect(0);
+	}
+	
+	//------ANÁLISE REPORT----
+	@FXML
+	private void gerarRelatorioAnaliseReprodutiva(){
+		//os ids dos animais selecionados são passados como parâmetro
+		StringBuilder sb = new StringBuilder();
+		
+		for ( Animal animal : tableAnimais.getItems() ){
+			sb.append(animal.getId());
+			sb.append(",");
+		}
+		
+		sb.replace(sb.length(), sb.length(), "");
+		
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FICHA_ANIMAL_FILE_REPORT, sb.toString());
 	}
 	
 	//====CONTEXT MENU COBERTURAS=======

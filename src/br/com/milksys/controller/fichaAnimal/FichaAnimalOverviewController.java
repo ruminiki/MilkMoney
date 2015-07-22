@@ -105,7 +105,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		idadePrimeiroPartoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("idadePrimeiroParto"));
 		idadePrimeiraCoberturaColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("idadePrimeiraCobertura"));
 		
-		tableFichaAnimal.setItems(FXCollections.observableArrayList(fichaAnimalService.getFichaAnimal(animal)));
+		tableFichaAnimal.setItems(FXCollections.observableArrayList(fichaAnimalService.generateFichaAnimal(animal)));
 		
 	}
 	

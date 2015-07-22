@@ -36,5 +36,24 @@
 	<classpathentry kind="lib" path="lib/spring-webmvc-4.1.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-websocket-4.1.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/servlet-api-2.3.jar"/>
+	<classpathentry kind="lib" path="lib/itext-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/itext-rtf-2.1.7.jar"/>
+	<classpathentry kind="lib" path="lib/libbase-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libdocbundle-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libfonts-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libformat-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libformula-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libformula-ui-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libloader-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libpixie-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/librepository-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libserializer-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libsparkline-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/libxml-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-core-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar"/>
+	<classpathentry kind="lib" path="lib/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-3.9.jar"/>
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas-3.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
