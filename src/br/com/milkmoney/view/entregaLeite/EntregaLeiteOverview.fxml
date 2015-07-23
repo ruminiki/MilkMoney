@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="425.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.entregaLeite.EntregaLeiteOverviewController">
+   <children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="425.0" prefWidth="707.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" spacing="5.0">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
+                                 <children>
+                                    <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="8.0" />
+                                       </font></Button>
+                                    <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="8.0" />
+                                       </font></Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Label text="Ano Referência">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <GridPane prefHeight="48.0" prefWidth="300.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="0.0" prefWidth="150.0" text="Total Entregue (litros)" textAlignment="CENTER" GridPane.rowIndex="1" />
+                        <Label fx:id="lblTotalEntregue" alignment="CENTER" contentDisplay="CENTER" maxHeight="150.0" prefHeight="30.0" prefWidth="150.0" text="lblTotalEntregue" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="0.0" prefWidth="150.0" text="Valor Recebido (R$)" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="lblTotalRecebido" alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="0.0" prefWidth="150.0" text="lblValorRecebido" textAlignment="CENTER" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="table" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" scaleShape="false" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="mesReferenciaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Mês" />
+                  <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Período Produção">
+                     <columns>
+                        <TableColumn fx:id="dataInicioColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Início" />
+                        <TableColumn fx:id="dataFimColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Fim" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn maxWidth="172.0" minWidth="100.0" prefWidth="172.0" style="-fx-alignment: CENTER;" text="Preço do Leite (R$ litro)">
+                     <columns>
+                        <TableColumn fx:id="valorMaximoPraticadoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Máximo Praticado" />
+                        <TableColumn fx:id="valorRecebidoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Recebido" />
+                     </columns>
+                  </TableColumn>
+                <TableColumn fx:id="volumeColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Volume (l)" />
+                  <TableColumn fx:id="valorTotalColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Valor R$" />
+                  <TableColumn fx:id="observacaoColumn" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="1.0" text="Observaçao" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</AnchorPane>

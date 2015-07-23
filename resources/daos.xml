@@ -7,6 +7,6 @@
 
 
 	<context:annotation-config/>
-	<context:component-scan base-package="br.com.milksys.dao"></context:component-scan>
+	<context:component-scan base-package="br.com.milkmoney.dao"></context:component-scan>
 	
 </beans>

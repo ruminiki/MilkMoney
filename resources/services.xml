@@ -8,6 +8,6 @@
 	
 	<context:annotation-config/>
 	
-	<context:component-scan base-package="br.com.milksys.service"></context:component-scan>
+	<context:component-scan base-package="br.com.milkmoney.service"></context:component-scan>
 	
 </beans>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.RootLayoutController">
+   <top>
+      <VBox maxHeight="50.0" minHeight="50.0" BorderPane.alignment="CENTER">
+         <children>
+      		<MenuBar>
+      			<menus>
+                  <Menu mnemonicParsing="false" text="Rebanho">
+                    <items>
+      				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroAnimal" text="Animal">
+      					<accelerator>
+      						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+      					</accelerator>
+      			 	  </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Reprodução" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+      				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                    </items>
+                  </Menu>
+      				<Menu mnemonicParsing="false" text="Produção">
+      					<items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
+      						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
+                       <!--  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" /> -->
+      					</items>
+      				</Menu>
+                  <Menu mnemonicParsing="false" text="Relatórios">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
+                        <Menu mnemonicParsing="false" text="Formulários de Campo">
+                          <items>
+                            <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroParto" text="Registro Parto" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroProducao" text="Registro Produção de Leite" />
+                          </items>
+                        </Menu>
+                     </items>
+                  </Menu>
+      			<Menu mnemonicParsing="false" text="Miscelânea">
+      				<items>
+                        <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Indicadores" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animais" />
+                        <Menu mnemonicParsing="false" text="Cadastros">
+                           <items>
+                              <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroFornecedor" text="Fornecedor" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroPropriedade" text="Propriedade" />
+                           </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Despesas/Aquisições">
+                          <items>
+                              <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroLactacao" text="Encerramento Lactação" /> -->
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
+                           	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
+                          </items>
+                        </Menu>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <Menu mnemonicParsing="false" text="Configuração">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroParametro" text="Parâmetros" />
+                          </items>
+                        </Menu>
+      					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+      				</items>
+      			</Menu>
+      			</menus>
+      		</MenuBar>
+            <HBox alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #C2D1B2;" VBox.vgrow="SOMETIMES">
+               <children>
+                  <Label fx:id="lblHeader" text="Label" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Hyperlink fx:id="hlPropriedade" focusTraversable="false" text="Hyperlink">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Hyperlink>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="form" prefHeight="432.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.precoLeite.PrecoLeiteOverviewController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="5.0">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
+                                 <children>
+                                    <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="8.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="8.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Label text="Ano Referência">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+         </children>
+         <padding>
+            <Insets right="5.0" />
+         </padding>
+      </HBox>
+      <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+        <columns>
+          <TableColumn fx:id="mesReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Mês" />
+            <TableColumn fx:id="anoReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" style="-fx-alignment: center;" text="Ano" />
+            <TableColumn prefWidth="75.0" sortable="false" text="Valor">
+               <columns>
+                  <TableColumn fx:id="valorMaximoPraticadoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="100.0" sortable="false" style="-fx-alignment: center;" text="Máximo Praticado" />
+                  <TableColumn fx:id="valorRecebidoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Recebido" />
+               </columns>
+            </TableColumn>
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </children>
+</AnchorPane>

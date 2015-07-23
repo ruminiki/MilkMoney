@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="479.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.painel.PainelController">
+   <children>
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="TOP_CENTER" maxWidth="105.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleIndicadores" text="Indicadores">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Gráficos" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleProducaoLeiteChart" text="Produção Leite">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleEntregaLeiteChart" text="Entrega Leite" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleCausaMorteAnimalChart" text="Causa Morte" />
+                  <Separator prefWidth="200.0" />
+                  <Hyperlink text="Notificações" />
+                  <Separator prefWidth="200.0" />
+               </children>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox fx:id="group" HBox.hgrow="SOMETIMES" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

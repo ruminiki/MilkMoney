@@ -11,7 +11,7 @@
        http://www.springframework.org/schema/context    http://www.springframework.org/schema/context/spring-context-3.2.xsd
        http://www.springframework.org/schema/tx         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
-	  <context:component-scan base-package="br.com.milksys.dao"/>
+	  <context:component-scan base-package="br.com.milkmoney.dao"/>
 	  
 	  <bean id="jdbcPropertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="265.0" prefWidth="473.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalCriaFormController">
+   <children>
+      <VBox layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="213.0" prefWidth="463.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="140.0" minWidth="80.0" prefWidth="105.0" />
+                <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="166.0" />
+                  <ColumnConstraints halignment="RIGHT" maxWidth="378.0" minWidth="0.0" prefWidth="71.0" />
+                  <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="117.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Nome: " GridPane.rowIndex="1" />
+                  <Label text="Sexo: " GridPane.rowIndex="2" />
+                  <Label text="Raça: " GridPane.rowIndex="5" />
+                   <Label text="Finalidade Animal: " GridPane.rowIndex="6" />
+                  <Label graphicTextGap="10.0" text="Data Nasc.: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Label text="Número: " />
+                  <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="120.0" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputNome" maxWidth="418.0" prefHeight="25.0" prefWidth="305.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="inputSexo" maxWidth="120.0" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="inputDataNascimento" disable="true" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" minWidth="250.0" spacing="5.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                     <children>
+                        <ComboBox fx:id="inputRaca" prefWidth="260.0" promptText="Selecione..." />
+                     </children>
+                  </HBox>
+                  <ComboBox fx:id="inputFinalidadeAnimal" prefWidth="260.0" promptText="Selecione..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                  <Label text="Mãe: " GridPane.rowIndex="3" />
+                  <Label text="Pai: " GridPane.rowIndex="4" />
+                  <UCTextField fx:id="inputMae" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputPai" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </GridPane>
+            <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="375.0" spacing="5.0">
+               <children>
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Ok">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

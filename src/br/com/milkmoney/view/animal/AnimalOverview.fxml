@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="304.0" prefWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalOverviewController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="nome ou número">
+               <padding>
+                  <Insets right="5.0" top="5.0" />
+               </padding>
+               <HBox.margin>
+                  <Insets left="3.0" />
+               </HBox.margin>
+            </TextField>
+            <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+            <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+            <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="60.0" />
+               </HBox.margin>
+            </HBox>
+           <!--  <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#encerrarLactacao" text="Secar" /> -->
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label text="Registros">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <HBox fx:id="containerTable" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #CCC;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
+         <children>
+            <VBox alignment="TOP_CENTER" minWidth="105.0" spacing="3.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Label text="Filtros" />
+                  <Separator prefWidth="200.0" />
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" text="Fêmeas">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindMachos" prefHeight="30.0" text="Machos">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasEmLactacao" prefHeight="30.0" text="Em Lactação">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeas30DiasLactacao" prefHeight="30.0" text="Até 30 dias">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeas60DiasLactacao" prefHeight="30.0" text="Até 60 dias">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasMais60DiasLactacao" prefHeight="30.0" text="+ 60 dias">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" text="Não Cobertas">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasCobertas" text="Cobertas">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="Enc. Lactação">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasSecas" text="Secas">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindAnimaisVendidos" text="Vendidos">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindAnimaisMortos" text="Mortos">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </Button>
+                  <Separator prefWidth="200.0" />
+                  <Label text="Opções" />
+                  <Separator prefWidth="200.0" />
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleCoberturas" text="Coberturas">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor></Button>
+               </children>
+               <HBox.margin>
+                  <Insets bottom="3.0" left="3.0" top="3.0" />
+               </HBox.margin>
+            </VBox>
+            <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" HBox.hgrow="SOMETIMES">
+              <columns>
+                  <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                <TableColumn fx:id="numeroColumn" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Número" />
+                  <TableColumn fx:id="nomeColumn" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
+                  <TableColumn fx:id="racaColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
+                  <TableColumn fx:id="sexoColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
+                  <TableColumn fx:id="dataNascimentoColumn" editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
+                  <TableColumn fx:id="idadeColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade (M)" />
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Último Parto">
+                     <columns>
+                        <TableColumn fx:id="dataUltimoPartoColumn" editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                        <TableColumn fx:id="diasUltimoPartoColumn" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DPP" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Última Cobertura">
+                     <columns>
+                        <TableColumn fx:id="dataUltimaCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                        <TableColumn fx:id="dataPrevisaoLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-aligment: CENTER;" text="Prev. Secagem" />
+                        <TableColumn fx:id="dataPrevisaoProximoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Próximo Parto" />
+                        <TableColumn fx:id="diasUltimaCoberturaColumn" maxWidth="50.0" minWidth="50.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DPC" />
+                        <TableColumn fx:id="situacaoUltimaCoberturaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                     </columns>
+                  </TableColumn>
+              </columns>
+               <HBox.margin>
+                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+               </HBox.margin>
+            </TableView>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
