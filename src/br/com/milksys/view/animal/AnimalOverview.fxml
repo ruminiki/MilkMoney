@@ -93,7 +93,7 @@
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
                   </Button>
-                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="A Secar">
+                  <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="Enc. Lactação">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>

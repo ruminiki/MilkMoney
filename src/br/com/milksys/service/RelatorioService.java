@@ -4,27 +4,38 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.milksys.model.Propriedade;
 import br.com.milksys.reports.GenericPentahoReport;
 
 @Service
 public class RelatorioService {
 
 	@Autowired FichaAnimalService fichaAnimalService;
+	@Autowired PropriedadeService propriedadeService;
 	
-	public static final String FICHA_ANIMAL_FILE_REPORT = "report/fichaAnimal.prpt"; 
+	public static final String FICHA_ANIMAL                        = "report/fichaAnimal.prpt"; 
+	public static final String FORMULARIO_CAMPO_REGISTRO_COBERTURA = "report/formularioCobertura.prpt"; 
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		Thread t = new Thread(new Runnable() {
+			
+			//deve ter cadastrado a propriedade
+			Propriedade propriedade = propriedadeService.findAll().get(0);
+			MasterReport masterReport;
 		    @Override
 		    public void run(){
 		    	switch (report) {
-				case FICHA_ANIMAL_FILE_REPORT:
+				case FICHA_ANIMAL:
 					fichaAnimalService.generateFichaForAll();
-					MasterReport masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("animais", param[0]);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				}
 		    }

@@ -6,7 +6,8 @@
 - na venda fazer a somatória de animais vendidos e do valor total
 - permitir cadastro dos valores de referencia nos indicadores;
 - FAZER IMPRESSÃO DE FORMUÁRIOS MODELOS
-
+- criar uma barra superiora com o nome da propriedade
+- instalador
 
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;

@@ -257,7 +257,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		sb.replace(sb.length(), sb.length(), "");
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_ANIMAL_FILE_REPORT, sb.toString());
+				RelatorioService.FICHA_ANIMAL, sb.toString());
 	}
 	
 	//====CONTEXT MENU COBERTURAS=======

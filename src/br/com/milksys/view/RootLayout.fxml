@@ -34,9 +34,9 @@
                   <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Ficha Animal" />
                   <Menu mnemonicParsing="false" text="Formulários de Campo">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Coberturas" />
-                        <MenuItem mnemonicParsing="false" text="Partos" />
-                        <MenuItem mnemonicParsing="false" text="Produção de Leite" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
+                        <MenuItem mnemonicParsing="false" text="Registro Parto" />
+                        <MenuItem mnemonicParsing="false" text="Registro Produção de Leite" />
                     </items>
                   </Menu>
                </items></Menu>

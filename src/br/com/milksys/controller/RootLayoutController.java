@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
+import br.com.milksys.reports.GenericPentahoReport;
+import br.com.milksys.service.RelatorioService;
 
 
 @Controller
@@ -142,6 +144,13 @@ public class RootLayoutController {
     @FXML
     private void  handleCadastroPropriedade() {
     	openFormAsPopUp("view/propriedade/PropriedadeReducedOverview.fxml");
+    }
+    
+    @FXML
+    private void handleFormularioCampoRegistroCobertura(){
+    	RelatorioService relatorioService = (RelatorioService)MainApp.getBean(RelatorioService.class);
+    	relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA);
     }
     
     public void openFormAsPopUp(String formPath){
