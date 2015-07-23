@@ -29,6 +29,7 @@ import br.com.milksys.controller.cobertura.renderer.TableCellSituacaoCoberturaFa
 import br.com.milksys.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milksys.controller.parto.PartoFormController;
+import br.com.milksys.controller.reports.GenericPentahoReport;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.model.Cobertura;
@@ -37,7 +38,6 @@ import br.com.milksys.model.Parametro;
 import br.com.milksys.model.Parto;
 import br.com.milksys.model.SituacaoCobertura;
 import br.com.milksys.model.State;
-import br.com.milksys.reports.GenericPentahoReport;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.CoberturaService;
 import br.com.milksys.service.IService;

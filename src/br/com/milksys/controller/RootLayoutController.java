@@ -18,9 +18,7 @@ import br.com.milksys.MainApp;
 import br.com.milksys.controller.propriedade.PropriedadeReducedOverviewController;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Propriedade;
-import br.com.milksys.reports.GenericPentahoReport;
 import br.com.milksys.service.PropriedadeService;
-import br.com.milksys.service.RelatorioService;
 import br.com.milksys.validation.Validator;
 
 
@@ -139,10 +137,13 @@ public class RootLayoutController {
     }
     
     @FXML
+    private void handleFormularioCampoRegistroParto(){
+    	openFormAsPopUp("view/reports/FormularioRegistroPartoParametros.fxml");
+    }
+    
+    @FXML
     private void handleFormularioCampoRegistroCobertura(){
-    	RelatorioService relatorioService = (RelatorioService)MainApp.getBean(RelatorioService.class);
-    	relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA);
+    	openFormAsPopUp("view/reports/FormularioRegistroPartoParametros.fxml");
     }
     
     public void openFormAsPopUp(String formPath){

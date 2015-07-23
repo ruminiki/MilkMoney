@@ -30,6 +30,15 @@
             <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
             <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
             <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+               </children>
+               <HBox.margin>
+                  <Insets right="60.0" />
+               </HBox.margin>
+            </HBox>
            <!--  <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#encerrarLactacao" text="Secar" /> -->
          </children>
       </HBox>
@@ -120,7 +129,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Ficha do Animal">
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor></Button>

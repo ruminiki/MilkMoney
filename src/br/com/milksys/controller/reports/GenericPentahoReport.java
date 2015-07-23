@@ -1,4 +1,4 @@
-package br.com.milksys.reports;
+package br.com.milksys.controller.reports;
 
 import java.awt.Desktop;
 import java.io.File;

@@ -34,11 +34,10 @@
       				</Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Ficha Animal" />
                         <Menu mnemonicParsing="false" text="Formulários de Campo">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
-                              <MenuItem mnemonicParsing="false" text="Registro Parto" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroParto" text="Registro Parto" />
                               <MenuItem mnemonicParsing="false" text="Registro Produção de Leite" />
                           </items>
                         </Menu>
