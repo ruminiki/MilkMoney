@@ -6,20 +6,19 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import br.com.milksys.model.Funcionario;
+import br.com.milksys.model.Propriedade;
 
 @Repository
-public class FuncionarioDao extends AbstractGenericDao<Integer, Funcionario> {
+public class PropriedadeDao extends AbstractGenericDao<Integer, Propriedade> {
 
 	@SuppressWarnings("unchecked")
-	public List<Funcionario> defaultSearch(String param) {
+	public List<Propriedade> findByDescricao(String param) {
 		
-		Query query = entityManager.createQuery("SELECT f FROM Funcionario f WHERE f.nome like :param");
+		Query query = entityManager.createQuery("SELECT r FROM Propriedade r WHERE r.descricao like :param");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();
 		
 	}
-	
-	
+
 }

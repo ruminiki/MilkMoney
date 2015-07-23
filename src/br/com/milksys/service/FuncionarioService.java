@@ -46,7 +46,7 @@ public class FuncionarioService implements IService<Integer, Funcionario>{
 
 	@Override
 	public ObservableList<Funcionario> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.findByNome(param));
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 	
 	public ObservableList<Funcionario> findAllAtivosAsObservableList() {

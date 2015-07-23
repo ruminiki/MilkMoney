@@ -1,55 +1,21 @@
-- Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
-
+- os filtros de 1,2 e 3 ciclos devem pegar as vacas que passaram do período e ainda não foram cobertas;
+- revisar os reduced forms (like semen e animal)
+- qdo abre como popup o botão fechar não funciona;
+- revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
 - configurar as pesquisas em todos os cadastros;
 - na venda fazer a somatória de animais vendidos e do valor total
 - permitir cadastro dos valores de referencia nos indicadores;
-
 - FAZER IMPRESSÃO DE FORMUÁRIOS MODELOS
 
-- fazer cadastro de procedimento
-- Colocar o registro e remoção do parto no botão direito;
-- listar os partos do animal na tela principal (permitir acesso ao form de parto para visualização e a remoção do parto)
-- está permitindo deletar animal sem remover o parto.
 
+
+- Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
+- fazer cadastro de procedimento
+- está permitindo deletar animal sem remover o parto.
 - Como fazer com uma vaca que pari e não entrará em lactação?
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
-
-- fazer tela de acompanhamento reprodutivo do animal (pentaho report - substituir a ficha do animal)
-- ultima cobertura
-- número de serviços (até ela ficar prenha)
-- próximo serviço (PVE + 21 dias)
-- numero de partos animal
-- numero de machos e femeas paridas
-- Dias secas (em aberto);
-- Dias em lactação;
-- Intervalo entre partos;
-- idade primeiro parto;
-
-(criar tabela ficha animal - antes de gerar o relatório, calcular os valores e inserir no banco,
-o relatório irá apenas carregar os dados da tabela e exibir para o usuário).
-
-- criar botão para exportar resultados da tabela para pdf no pentaho
-
-- fazer gráfico da produção individual (selecionar a lactação, exibir a tabela das medições e o gráfico ao lado)
-  		like http://www.pecuariabrasilassessoria.com.br/software-gado-leite.php
-  		produção estimada 305d
-  		media diaria estimada
-  		dias em lactacao
-  		produção acumulada
-
 - erro casas decimais valor leite ex: 0,80
 - três casas decimais valor do leite
-	
-- indicadores:
-	- Dias secas (em aberto);
-	- Dias em lactação;
-	- Intervalo entre partos;
-	- % de vacas rebanho;
-	- % de vacas em lactação;
-	- taxa de prenhez;
-	- idade primeiro parto;
-	- animais até determinada idade
-	
 	
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
 cobertura -> parto -> cobertura -> encerramento -> parto

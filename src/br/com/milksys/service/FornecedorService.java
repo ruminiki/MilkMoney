@@ -50,7 +50,7 @@ public class FornecedorService implements IService<Integer, Fornecedor>{
 
 	@Override
 	public ObservableList<Fornecedor> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.findByNome(param));
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

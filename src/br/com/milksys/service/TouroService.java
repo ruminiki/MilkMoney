@@ -45,7 +45,7 @@ public class TouroService implements IService<Integer, Touro>{
 	
 	@Override
 	public ObservableList<Touro> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

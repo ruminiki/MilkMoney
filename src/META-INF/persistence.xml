@@ -34,6 +34,7 @@
 		<class>br.com.milksys.model.ConfirmacaoPrenhez</class>
 		<class>br.com.milksys.model.Lactacao</class>
 		<class>br.com.milksys.model.FichaAnimal</class>
+		<class>br.com.milksys.model.Propriedade</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

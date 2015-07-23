@@ -129,6 +129,12 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		}
 	}
 	
+	@Override
+	protected void handleDelete() {
+		super.handleDelete();
+		refreshTableOverview();
+	}
+	
 	/*
 	 * Recupera o evento disparado pelo form ao salvar o objeto
 	 * para ser possível atualizar o gráfico.

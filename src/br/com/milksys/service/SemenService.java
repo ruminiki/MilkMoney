@@ -52,7 +52,7 @@ public class SemenService implements IService<Integer, Semen>{
 
 	@Override
 	public ObservableList<Semen> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.findDefault(param));
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

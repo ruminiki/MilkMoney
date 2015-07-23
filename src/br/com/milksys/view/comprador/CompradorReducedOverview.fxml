@@ -9,20 +9,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.comprador.CompradorReducedOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="393.0" prefWidth="782.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.comprador.CompradorReducedOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Pesquisar:">
-               <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
+            <TextField fx:id="inputPesquisar" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="nome/telefone/e-mail">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Button mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Pesquisar" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
@@ -32,7 +31,7 @@
                </children>
             </HBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button minHeight="30.0" mnemonicParsing="false" onAction="#fechar" text="Fechar" />
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
             <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
          </children>
          <padding>

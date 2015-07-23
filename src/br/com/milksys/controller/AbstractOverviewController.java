@@ -282,8 +282,11 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	@FXML
 	protected void closeForm(){
-		if ( dialogStage != null )
+		if ( dialogStage != null ){
 			dialogStage.close();
+		}else{
+			//como fechar os popups abertos pelo root layout?
+		}
 	}
 	
 	// ========= HANDLERS INTERFACE=============//

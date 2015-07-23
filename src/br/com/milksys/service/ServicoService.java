@@ -45,7 +45,7 @@ public class ServicoService implements IService<Integer, Servico>{
 	
 	@Override
 	public ObservableList<Servico> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

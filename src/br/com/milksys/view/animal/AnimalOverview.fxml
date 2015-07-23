@@ -120,7 +120,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" text="Ficha do Animal">
+                  <Button maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Ficha do Animal">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor></Button>

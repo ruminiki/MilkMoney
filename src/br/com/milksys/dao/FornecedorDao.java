@@ -12,9 +12,11 @@ import br.com.milksys.model.Fornecedor;
 public class FornecedorDao extends AbstractGenericDao<Integer, Fornecedor> {
 
 	@SuppressWarnings("unchecked")
-	public List<Fornecedor> findByNome(String param) {
+	public List<Fornecedor> defaultSearch(String param) {
 		
-		Query query = entityManager.createQuery("SELECT f FROM Fornecedor f WHERE f.nome like :param");
+		Query query = entityManager.createQuery("SELECT f FROM Fornecedor f WHERE f.nome like :param or "
+				+ "f.email like :param or "
+				+ "f.telefone like :param");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

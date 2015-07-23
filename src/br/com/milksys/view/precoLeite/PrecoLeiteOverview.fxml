@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="form" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.precoLeite.PrecoLeiteOverviewController">
+<AnchorPane fx:id="form" prefHeight="460.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.precoLeite.PrecoLeiteOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -55,12 +55,14 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
          </children>
          <padding>
             <Insets right="5.0" />
          </padding>
       </HBox>
-      <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="55.0">
+      <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="mesReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Mês" />
             <TableColumn fx:id="anoReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" style="-fx-alignment: center;" text="Ano" />

@@ -45,7 +45,7 @@ public class PrestadorServicoService implements IService<Integer, PrestadorServi
 	
 	@Override
 	public ObservableList<PrestadorServico> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

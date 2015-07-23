@@ -37,9 +37,11 @@ import br.com.milksys.model.Raca;
 import br.com.milksys.model.Sexo;
 import br.com.milksys.model.SituacaoAnimal;
 import br.com.milksys.model.VendaAnimal;
+import br.com.milksys.reports.GenericPentahoReport;
 import br.com.milksys.service.IService;
 import br.com.milksys.service.LactacaoService;
 import br.com.milksys.service.MorteAnimalService;
+import br.com.milksys.service.RelatorioService;
 import br.com.milksys.service.VendaAnimalService;
 import br.com.milksys.service.searchers.SearchAnimaisMortos;
 import br.com.milksys.service.searchers.SearchAnimaisVendidos;
@@ -84,6 +86,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private LactacaoService lactacaoService;
 	@Autowired private MorteAnimalService morteAnimalService;
 	@Autowired private VendaAnimalService vendaAnimalService;
+	@Autowired private RelatorioService relatorioService;
 	
 	//controllers
 	@Autowired private RacaOverviewController racaController;
@@ -376,6 +379,23 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private void handleFindAnimaisMortos(){
 		setSearch((SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class));
 		refreshTableOverview();
+	}
+	
+	//------ANÁLISE REPORT----
+	@FXML
+	private void gerarRelatorioAnaliseReprodutiva(){
+		//os ids dos animais selecionados são passados como parâmetro
+		StringBuilder sb = new StringBuilder();
+		
+		for ( Animal animal :table.getItems() ){
+			sb.append(animal.getId());
+			sb.append(",");
+		}
+		
+		sb.replace(sb.length(), sb.length(), "");
+		
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FICHA_ANIMAL_FILE_REPORT, sb.toString());
 	}
 	
 }

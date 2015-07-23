@@ -78,6 +78,7 @@
                               <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Marcação" />
                               <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                               <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                            </children>
                         </HBox>
                      </children>

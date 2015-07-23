@@ -15,18 +15,18 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import br.com.milksys.exception.GlobalExceptionHandler;
-import br.com.milksys.service.ApplicationService;
 
 public class MainApp extends Application {
 
 	public static Stage primaryStage;
+	public Stage dialogStage;
 	public static BorderPane rootLayout;
 	private static ApplicationContext context;
 	
 	public MainApp() {
 		context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
-		ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-		applicationService.initilizeDatabase();
+		//ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
+		//applicationService.initilizeDatabase();
 	}
 
 	@Override
