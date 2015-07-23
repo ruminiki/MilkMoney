@@ -136,14 +136,20 @@ public class RootLayoutController {
     	openFormAsPopUp("view/propriedade/PropriedadeReducedOverview.fxml");
     }
     
+    //-----reports------
+    @FXML
+    private void handleReportFichaAnimal(){
+    	openFormAsPopUp("view/reports/RelatorioFichaAnimal.fxml");
+    }
+    
     @FXML
     private void handleFormularioCampoRegistroParto(){
-    	openFormAsPopUp("view/reports/FormularioRegistroPartoParametros.fxml");
+    	openFormAsPopUp("view/reports/FormularioRegistroParto.fxml");
     }
     
     @FXML
     private void handleFormularioCampoRegistroCobertura(){
-    	openFormAsPopUp("view/reports/FormularioRegistroPartoParametros.fxml");
+    	openFormAsPopUp("view/reports/FormularioRegistroCobertura.fxml");
     }
     
     public void openFormAsPopUp(String formPath){

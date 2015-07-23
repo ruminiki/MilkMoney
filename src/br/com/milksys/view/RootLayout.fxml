@@ -41,6 +41,7 @@
                               <MenuItem mnemonicParsing="false" text="Registro Produção de Leite" />
                           </items>
                         </Menu>
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
                      </items>
                   </Menu>
       			<Menu mnemonicParsing="false" text="Miscelânea">

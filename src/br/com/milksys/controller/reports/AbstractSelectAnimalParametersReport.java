@@ -7,25 +7,21 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import br.com.milksys.MainApp;
 import br.com.milksys.components.UCTextField;
-import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
 import br.com.milksys.service.AnimalService;
 import br.com.milksys.service.RelatorioService;
-import br.com.milksys.validation.Validator;
 
-@Controller
-public class FormularioRegistroPartoParametrosController {
-
-	@FXML private UCTextField inputPesquisa;
-	@FXML private ListView<Animal> listAnimais, listSelecionados;
-	@FXML private Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
+public class AbstractSelectAnimalParametersReport {
 	
-	@Autowired private AnimalService animalService;
-	@Autowired private RelatorioService relatorioService;
+	@FXML protected UCTextField inputPesquisa;
+	@FXML protected ListView<Animal> listAnimais, listSelecionados;
+	@FXML protected Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
+	
+	@Autowired protected AnimalService animalService;
+	@Autowired protected RelatorioService relatorioService;
 
 	@FXML
 	public void initialize() {
@@ -73,7 +69,7 @@ public class FormularioRegistroPartoParametrosController {
 	}
 	
 	@FXML
-	private void handleCancelar(){
+	protected void handleClose(){
 		if ( btnAdicionar != null ){
 			Stage stage = (Stage)btnAdicionar.getScene().getWindow();
 			// se for popup
@@ -85,25 +81,4 @@ public class FormularioRegistroPartoParametrosController {
 		}
 	}
 	
-	@FXML
-	private void handleExecutar(){
-		
-		if ( listSelecionados.getItems().size() <= 0 ){
-			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");
-		}
-		
-		//os ids dos animais selecionados são passados como parâmetro
-		StringBuilder sb = new StringBuilder();
-		
-		for ( Animal animal : listSelecionados.getItems() ){
-			sb.append(animal.getId());
-			sb.append(",");
-		}
-		
-		sb.replace(sb.length(), sb.length(), "");
-		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FORMULARIO_CAMPO_REGISTRO_PARTO, sb.toString());
-	}
-
 }

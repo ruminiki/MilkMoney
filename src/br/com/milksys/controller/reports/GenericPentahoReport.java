@@ -4,6 +4,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -40,7 +42,8 @@ public class GenericPentahoReport {
 	public static void runReport(String format, String path){
 		try {
 			
-			String outputFileName = "reportOutput/report" + format;
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDDHHMSS");
+			String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
 			
 			if ( format.equals(PDF_OUTPUT_FORMAT) ){
 				PdfReportUtil.createPDF(getReportDefinition(path), new File(outputFileName));	

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="357.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.reports.FormularioRegistroPartoParametrosController">
+<AnchorPane prefHeight="357.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.reports.FormularioRegistroCoberturaController">
    <children>
       <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -51,7 +51,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleCancelar" text="Cancelar" />
+                  <Button mnemonicParsing="false" onAction="#handleClose" text="Cancelar" />
                </children>
                <VBox.margin>
                   <Insets right="5.0" />
