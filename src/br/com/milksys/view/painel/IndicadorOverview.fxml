@@ -28,18 +28,19 @@
                   <TableColumn fx:id="siglaColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
                 <TableColumn fx:id="valorReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
                   <TableColumn fx:id="valorApuradoColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
+                  <TableColumn fx:id="resultadoColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Resultado" />
               </columns>
             </TableView>
-            <GridPane maxHeight="182.0" maxWidth="1.7976931348623157E308" prefHeight="109.0" prefWidth="851.0" style="-fx-border-color: #CCC;">
+            <GridPane maxHeight="182.0" maxWidth="1.7976931348623157E308" minHeight="120.0" prefHeight="109.0" prefWidth="851.0" style="-fx-border-color: #CCC;">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="95.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="101.0" minWidth="100.0" prefWidth="95.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label fx:id="lblIndicador" GridPane.columnIndex="1">
@@ -47,14 +48,15 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblDefinicaoIndicador" textAlignment="JUSTIFY" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Valor Referência: " GridPane.rowIndex="2" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <Label fx:id="lblDefinicaoIndicador" textAlignment="JUSTIFY" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Valor Referência: " GridPane.rowIndex="1" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                      <children>
                         <UCTextField fx:id="inputValorReferencia" maxWidth="100.0" />
                         <Button mnemonicParsing="false" onAction="#handleSalvar" text="Salvar" />
                      </children>
                   </HBox>
+                  <Label text="Definição: " GridPane.rowIndex="2" />
                </children>
                <VBox.margin>
                   <Insets top="5.0" />

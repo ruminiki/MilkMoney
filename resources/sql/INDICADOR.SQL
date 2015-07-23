@@ -50,6 +50,6 @@ INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo)
 SELECT * FROM (SELECT 'TAXA DE PRENHEZ (%)', 'TP', 16, '200', 'br.com.milksys.service.indicadores.TaxaPrenhez') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'TP');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'RELAÇÃO VACAS SECAS x VACAS EM LACTAÇÃO', 'VSVL', 17, '20%', 'br.com.milksys.service.indicadores.RelacaoVacasSecasXVacasLactacao',
+SELECT * FROM (SELECT 'RELAÇÃO VACAS SECAS x VACAS EM LACTAÇÃO', 'VSVL', 17, '20', 'br.com.milksys.service.indicadores.RelacaoVacasSecasXVacasLactacao',
 'A relação vacas secas/lactação mede a eficiência reprodutiva do rebanho e determina lucro ou prejuízo, sendo o desequilíbrio dessa relação uma das causas de maiores prejuízos na atividade leiteira. Existem dois fatores básicos que determinam a porcentagem de vacas secas e de vacas em lactação. São eles a persistência de lactação, definida pela raça ou grau de sangue, e o período de serviço (tempo gasto para emprenhar a vaca depois do parto), determinado pela ocorrência ou não de cios pós-parto e a eficiência da monta ou IA (Inseminação Artificial).') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'VSVL');
 

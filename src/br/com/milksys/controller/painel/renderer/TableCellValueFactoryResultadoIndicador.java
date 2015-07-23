@@ -1,6 +1,5 @@
 package br.com.milksys.controller.painel.renderer;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -8,11 +7,11 @@ import javafx.util.Callback;
 import br.com.milksys.model.Indicador;
 
 @SuppressWarnings("hiding")
-public class TableCellValueColorFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
+public class TableCellValueFactoryResultadoIndicador<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
 	String property;
 	
-	public TableCellValueColorFactory(String property) {
+	public TableCellValueFactoryResultadoIndicador(String property) {
 		this.property = property;
 	}
 
@@ -24,18 +23,20 @@ public class TableCellValueColorFactory<S, String> implements Callback<TableColu
 	        @Override
 	        protected void updateItem(String item, boolean empty) {
 	        	if(item!=null){
-					Label label = new Label();
-					label.setText(item.toString());
-					
 					Indicador indicador = (Indicador) getTableView().getItems().get(getTableRow().getIndex());
-					
-					if ( indicador.getValorReferencia().compareTo(indicador.getValorApurado()) > 0 ){
-						label.setStyle("-fx-text-fill: red");
-					}else{
-						label.setStyle("-fx-text-fill: green");
+					/*if ( indicador.getResultado().compareTo(BigDecimal.valueOf(70)) < 0 ){
+						setTextFill(Color.RED);
 					}
 					
-					setGraphic(label);
+					if ( indicador.getResultado().compareTo(BigDecimal.valueOf(100)) < 0 ){
+						setTextFill(Color.YELLOW);
+					}
+					
+					if ( indicador.getResultado().compareTo(BigDecimal.valueOf(100)) >= 0 ){
+						setTextFill(Color.GREEN);
+					}*/
+					setText(indicador.getResultado().toString() + "%");
+					setStyle("-fx-alignment: CENTER; -fx-font-weight: bold;");
 				} 
 	        }
 	    };

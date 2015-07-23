@@ -36,7 +36,7 @@ public class RelacaoVacasSecasXVacasLactacao extends AbstractCalculadorIndicador
 			}
 		}
 		
-		return String.valueOf(relacao) + "%";
+		return String.valueOf(relacao);
 		
 	}
 	

@@ -1,6 +1,8 @@
 package br.com.milksys.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -30,6 +33,8 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private String definicao;
 	private String classeCalculo;
 	private String valorApurado;
+	@Transient
+	private BigDecimal resultado;
 	private int ordem;
 	
 	public Indicador() {
@@ -107,6 +112,22 @@ public class Indicador extends AbstractEntity implements Serializable {
 
 	public void setDefinicao(String definicao) {
 		this.definicao = definicao;
+	}
+	
+	public BigDecimal getResultado() {
+		
+		BigDecimal valorApurado    = BigDecimal.valueOf(Double.parseDouble(getValorApurado()));
+		BigDecimal valorReferencia = BigDecimal.valueOf(Double.parseDouble(getValorReferencia()));
+		BigDecimal resultado = BigDecimal.ZERO;
+		if ( valorApurado.compareTo(resultado) > 0 && valorReferencia.compareTo(resultado) > 0 ){
+			resultado = valorApurado.multiply(BigDecimal.valueOf(100)).divide(valorReferencia, 2, RoundingMode.HALF_EVEN);
+		}
+		return resultado;
+		
+	}
+
+	public void setResultado(BigDecimal resultado) {
+		this.resultado = resultado;
 	}
 
 	@Override
