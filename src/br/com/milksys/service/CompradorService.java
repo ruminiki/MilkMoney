@@ -45,14 +45,12 @@ public class CompradorService implements IService<Integer, Comprador>{
 	}
 	
 	public ObservableList<Comprador> findAllAsObservableList() {
-		ObservableList<Comprador> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Comprador.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(Comprador.class));
 	}
 	
 	@Override
 	public ObservableList<Comprador> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
 	@Override

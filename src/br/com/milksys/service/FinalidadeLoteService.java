@@ -42,14 +42,12 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 	}
 	
 	public ObservableList<FinalidadeLote> findAllAsObservableList() {
-		ObservableList<FinalidadeLote> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(FinalidadeLote.class));
-		return list;
+		return FXCollections.observableArrayList(dao.findAll(FinalidadeLote.class));
 	}
 
 	@Override
 	public ObservableList<FinalidadeLote> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 	
 	@Override

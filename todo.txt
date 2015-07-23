@@ -1,17 +1,14 @@
-- os filtros de 1,2 e 3 ciclos devem pegar as vacas que passaram do período e ainda não foram cobertas;
-- revisar os reduced forms (like semen e animal)
-- qdo abre como popup o botão fechar não funciona;
+
 - revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
-- configurar as pesquisas em todos os cadastros;
 - na venda fazer a somatória de animais vendidos e do valor total
 - permitir cadastro dos valores de referencia nos indicadores;
 - FAZER IMPRESSÃO DE FORMUÁRIOS MODELOS
 - criar uma barra superiora com o nome da propriedade
 - instalador
+- fazer cadastro de procedimento (listar nos eventos) (opção no botão direito para acesso a tela de manutenção do cadastro)
 
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
-- fazer cadastro de procedimento
 - está permitindo deletar animal sem remover o parto.
 - Como fazer com uma vaca que pari e não entrará em lactação?
 - não pode registrar cobertura do animal após a data de sua venda ou morte;

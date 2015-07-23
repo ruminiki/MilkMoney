@@ -16,7 +16,7 @@ public class FornecedorDao extends AbstractGenericDao<Integer, Fornecedor> {
 		
 		Query query = entityManager.createQuery("SELECT f FROM Fornecedor f WHERE f.nome like :param or "
 				+ "f.email like :param or "
-				+ "f.telefone like :param");
+				+ "f.telefonePrincipal like :param");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

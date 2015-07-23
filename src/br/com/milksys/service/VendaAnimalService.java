@@ -55,7 +55,7 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 
 	@Override
 	public ObservableList<VendaAnimal> defaultSearch(String param) {
-		return null;
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 	
 	@Override

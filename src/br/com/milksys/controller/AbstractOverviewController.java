@@ -285,7 +285,15 @@ public abstract class AbstractOverviewController<K, E>{
 		if ( dialogStage != null ){
 			dialogStage.close();
 		}else{
-			//como fechar os popups abertos pelo root layout?
+			if ( table != null ){
+				Stage stage = (Stage)table.getScene().getWindow();
+				// se for popup
+				if ( stage.getModality().equals(Modality.APPLICATION_MODAL) ){
+					((Stage)table.getScene().getWindow()).close();	
+				}else{
+					MainApp.resetLayout();
+				}
+			}
 		}
 	}
 	

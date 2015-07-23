@@ -368,11 +368,27 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 	}
 
+	/*
+	 * Esse método é utilizado para filtra os animais não cobertos 
+	 * dentro do período dos três primeiros ciclos após o parto.
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Animal> findFemeasNaoPrenhasXDiasAposParto(int dias) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a Where "
 				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + dias + ") and "
+				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
+		return query.getResultList();
+	}
+	/*
+	 * Esse método é utilizado para filtra os animais não cobertos 
+	 * após já passados os três primeiros ciclos.
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Animal> findFemeasNaoPrenhasAposXDiasAposParto(int dias) {
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a Where "
+				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between >= " + dias + ") and "
 				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
 		return query.getResultList();
 	}

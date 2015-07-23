@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
@@ -26,6 +27,7 @@ import br.com.milksys.components.TableCellDateFactory;
 import br.com.milksys.controller.AbstractOverviewController;
 import br.com.milksys.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milksys.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
+import br.com.milksys.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milksys.controller.parto.PartoFormController;
 import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Animal;
@@ -46,6 +48,7 @@ import br.com.milksys.service.searchers.SearchAnimaisDisponiveisParaCobertura;
 import br.com.milksys.service.searchers.SearchFemeas;
 import br.com.milksys.service.searchers.SearchFemeasByNumeroNome;
 import br.com.milksys.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
+import br.com.milksys.service.searchers.SearchFemeasNaoPrenhasAposXDiasAposParto;
 import br.com.milksys.service.searchers.SearchFemeasNaoPrenhasXDiasAposParto;
 import br.com.milksys.validation.Validator;
 
@@ -69,6 +72,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private Label                                 lblHeader;
 	@FXML private TextField                             inputPesquisaAnimal;
 	
+	@Autowired private FichaAnimalOverviewController    fichaAnimalOverviewController;
 	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private PartoFormController              partoFormController;
@@ -77,10 +81,11 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private RelatorioService					relatorioService;
 	
 	//menu context tabela cobertura
-	private MenuItem registrarPartoMenuItem             = new MenuItem("Registrar Parto");
-	private MenuItem removerPartoMenuItem               = new MenuItem("Remover Parto");
-	private MenuItem confirmarPrenhezMenuItem           = new MenuItem("Confirmação de Prenhez");
-	
+	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
+	private MenuItem    removerPartoMenuItem            = new MenuItem("Remover Parto");
+	private MenuItem    confirmarPrenhezMenuItem        = new MenuItem("Confirmação de Prenhez");
+	private MenuItem    fichaAnimalMenuItem             = new MenuItem("Ficha Animal");
+	private ContextMenu menuTabelaAnimais               = new ContextMenu(fichaAnimalMenuItem);
 	private Animal                                      femea;
 	
 	@FXML
@@ -91,13 +96,22 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numeroNome"));
 		
-		doSearchAnimais((SearchFemeas) MainApp.getBean(SearchFemeas.class));
+		handleBuscarFemeasDisponeisParaCobertura();
 		tableAnimais.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
 		
 		if ( tableAnimais.getItems().size() > 0 ) {
 			tableAnimais.getSelectionModel().clearAndSelect(0);
 			animalSelectHandler();
 		}
+		
+		fichaAnimalMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleOpenFichaAnimal();
+		    }
+		});
+		
+		tableAnimais.setContextMenu(menuTabelaAnimais);
 		
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
@@ -237,6 +251,14 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),primeiroCiclo);
 	}
 	
+	@FXML
+	private void handleBuscarNaoPrenhasAposTerceiroCiclo(){
+		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
+		int primeiroCiclo = periodoVoluntarioEspera + 63;
+		doSearchAnimais((SearchFemeasNaoPrenhasAposXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasAposXDiasAposParto.class),primeiroCiclo);
+	}
+	
+	
 	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
 		tableAnimais.setItems(search.doSearch(params));
 		inputPesquisaAnimal.clear();
@@ -260,7 +282,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 				RelatorioService.FICHA_ANIMAL, sb.toString());
 	}
 	
-	//====CONTEXT MENU COBERTURAS=======
+	//====CONTEXT MENUS =======
+	
+	private void handleOpenFichaAnimal(){
+		
+		fichaAnimalOverviewController.setAnimal(femea);
+		fichaAnimalOverviewController.showForm();
+		
+	}
+	
 	private void handleRegistrarParto(){
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){

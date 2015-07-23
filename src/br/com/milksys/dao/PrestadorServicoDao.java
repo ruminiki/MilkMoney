@@ -15,7 +15,7 @@ public class PrestadorServicoDao extends AbstractGenericDao<Integer, PrestadorSe
 	public List<PrestadorServico> defaultSearch(String param) {
 		
 		Query query = entityManager.createQuery("SELECT p FROM PrestadorServico p WHERE p.nome like :param or "
-				+ "p.telefone like :param or p.email like :param");
+				+ "p.telefonePrincipal like :param or p.email like :param");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

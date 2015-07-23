@@ -9,20 +9,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.vendaAnimal.VendaAnimalOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="457.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milksys.controller.vendaAnimal.VendaAnimalOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Pesquisar:">
-               <padding>
-                  <Insets left="5.0" />
-               </padding></Label>
-            <TextField prefHeight="30.0" promptText="Descrição">
+            <TextField alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="comprador/animal">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+            <Button mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Pesquisar">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>

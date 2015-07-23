@@ -36,7 +36,7 @@ public class MainApp extends Application {
 		initRootLayout();
 	}
 
-	public void initRootLayout() {
+	public static void initRootLayout() {
 	    try {
 	    	FXMLLoader loader = new FXMLLoader();
 	        loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
@@ -45,6 +45,15 @@ public class MainApp extends Application {
 	        scene.getStylesheets().add("style.css");
 	        primaryStage.setScene(scene);
 	        primaryStage.show();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	}
+	
+	public static void resetLayout() {
+	    try {
+	    	rootLayout.getChildren().remove(1);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }

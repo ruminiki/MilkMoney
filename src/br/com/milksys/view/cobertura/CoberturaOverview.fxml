@@ -55,6 +55,7 @@
                               <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasPrimeiroCiclo" text="1º Ciclo" />
                               <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasSegundoCiclo" text="2º Ciclo" />
                               <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasTerceiroCiclo" text="3º Ciclo" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasAposTerceiroCiclo" text="Após 3º" />
                            </children>
                         </HBox>
                         <Label text="Operações">

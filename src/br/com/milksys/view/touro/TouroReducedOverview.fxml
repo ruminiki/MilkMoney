@@ -21,10 +21,13 @@
                   <Insets left="5.0" />
                </HBox.margin>
                <cursor>
-                  <Cursor fx:constant="HAND" />
+                  <Cursor fx:constant="DEFAULT" />
                </cursor>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro" />
+            <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />

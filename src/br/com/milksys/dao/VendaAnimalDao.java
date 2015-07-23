@@ -1,6 +1,7 @@
 package br.com.milksys.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -61,6 +62,15 @@ public class VendaAnimalDao extends AbstractGenericDao<Integer, VendaAnimal> {
 			return null;
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<VendaAnimal> defaultSearch(String param) {
+		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va inner join va.animaisVendidos av inner join va.comprador c "
+				+ "where av.animal.nome like :param or av.animal.numero like :param or c.nome like :param order by va.dataVenda desc");
+		query.setParameter("param", "%"+param+"%");
+		
+		return query.getResultList();
 	}
 	
 }
