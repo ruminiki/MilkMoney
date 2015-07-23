@@ -2,6 +2,7 @@
 - revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
 - na venda fazer a somatória de animais vendidos e do valor total
 - permitir cadastro dos valores de referencia nos indicadores;
+
 - FAZER IMPRESSÃO DE FORMUÁRIOS MODELOS
 
 - rename milkSys to milkMoney

@@ -34,14 +34,14 @@
       				</Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
                         <Menu mnemonicParsing="false" text="Formulários de Campo">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
                               <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroParto" text="Registro Parto" />
-                              <MenuItem mnemonicParsing="false" text="Registro Produção de Leite" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroProducao" text="Registro Produção de Leite" />
                           </items>
                         </Menu>
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
                      </items>
                   </Menu>
       			<Menu mnemonicParsing="false" text="Miscelânea">

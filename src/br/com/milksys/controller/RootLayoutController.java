@@ -91,12 +91,12 @@ public class RootLayoutController {
 
     @FXML
     private void handleCadastroSemen() {
-    	openFormAsPopUp("view/semen/SemenReducedOverview.fxml");
+    	openFormAsPopUp("view/semen/SemenOverview.fxml");
     }
     
     @FXML
     private void handleCadastroTouro() {
-    	openFormAsPopUp("view/touro/TouroReducedOverview.fxml");
+    	openFormAsPopUp("view/touro/TouroOverview.fxml");
     }
     
     @FXML
@@ -107,7 +107,7 @@ public class RootLayoutController {
     
     @FXML
     private void handleCadastroFuncionario() {
-    	openFormAsPopUp("view/funcionario/FuncionarioReducedOverview.fxml");
+    	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml");
     }
     
     @FXML
@@ -117,7 +117,7 @@ public class RootLayoutController {
     
     @FXML
     private void handleCadastroFornecedor() {
-    	openFormAsPopUp("view/fornecedor/FornecedorReducedOverview.fxml");
+    	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml");
     }
     
     @FXML
@@ -133,7 +133,7 @@ public class RootLayoutController {
     
     @FXML
     private void  handleCadastroPropriedade() {
-    	openFormAsPopUp("view/propriedade/PropriedadeReducedOverview.fxml");
+    	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml");
     }
     
     //-----reports------
@@ -151,6 +151,12 @@ public class RootLayoutController {
     private void handleFormularioCampoRegistroCobertura(){
     	openFormAsPopUp("view/reports/FormularioRegistroCobertura.fxml");
     }
+    
+    @FXML
+    private void handleFormularioCampoRegistroProducao(){
+    	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml");
+    }
+    
     
     public void openFormAsPopUp(String formPath){
     	

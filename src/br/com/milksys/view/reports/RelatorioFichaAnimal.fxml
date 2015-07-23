@@ -21,7 +21,7 @@
                               <Label text="PESQUISAR ANIMAIS" />
                            </children>
                         </HBox>
-                        <ListView fx:id="listAnimais" />
+                        <ListView fx:id="listAnimais" focusTraversable="false" />
                      </children>
                   </VBox>
                   <VBox alignment="CENTER" spacing="5.0" HBox.hgrow="SOMETIMES">
@@ -39,7 +39,7 @@
                               <Label text="ANIMAIS SELECIONADOS" />
                            </children>
                         </HBox>
-                        <ListView fx:id="listSelecionados" />
+                        <ListView fx:id="listSelecionados" focusTraversable="false" />
                      </children>
                   </VBox>
                </children>

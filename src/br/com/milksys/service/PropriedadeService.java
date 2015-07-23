@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milksys.dao.PropriedadeDao;
+import br.com.milksys.exception.ValidationException;
 import br.com.milksys.model.Propriedade;
 import br.com.milksys.validation.PropriedadeValidation;
+import br.com.milksys.validation.Validator;
 
 @Service
 public class PropriedadeService implements IService<Integer, Propriedade>{
@@ -28,6 +30,11 @@ public class PropriedadeService implements IService<Integer, Propriedade>{
 	@Override
 	@Transactional
 	public boolean remove(Propriedade propriedade) {
+		
+		if ( propriedade.getId() == 1 ){
+			throw new ValidationException(Validator.REGRA_NEGOCIO, "Essa propriedade é a propriedade principal não podendo ser removida.");
+		}
+			
 		return dao.remove(propriedade);
 	}
 

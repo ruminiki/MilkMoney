@@ -42,7 +42,7 @@ public class GenericPentahoReport {
 	public static void runReport(String format, String path){
 		try {
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDDHHMSS");
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
 			String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
 			
 			if ( format.equals(PDF_OUTPUT_FORMAT) ){
@@ -65,7 +65,8 @@ public class GenericPentahoReport {
 	public static void runReport(String format, MasterReport report){
 		try {
 			
-			String outputFileName = "reportOutput/report" + format;
+			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
+			String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
 			
 			if ( format.equals(PDF_OUTPUT_FORMAT) ){
 				PdfReportUtil.createPDF(report, new File(outputFileName));	

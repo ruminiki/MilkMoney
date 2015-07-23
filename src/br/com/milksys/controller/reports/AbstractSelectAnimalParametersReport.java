@@ -3,6 +3,7 @@ package br.com.milksys.controller.reports;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -33,13 +34,22 @@ public class AbstractSelectAnimalParametersReport {
 		}
 		
 		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList());
+		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		btnAdicionar.setOnAction(action -> {
 			
-			if ( listAnimais.getSelectionModel().getSelectedItem() != null ){
-				if ( !listSelecionados.getItems().contains(listAnimais.getSelectionModel().getSelectedItem()) ){
-					listSelecionados.getItems().add(listAnimais.getSelectionModel().getSelectedItem());
+			if ( listAnimais.getSelectionModel().getSelectedItems() != null ){
+				
+				for ( Animal animal : listAnimais.getSelectionModel().getSelectedItems() ){
+					
+					if ( !listSelecionados.getItems().contains(animal) ){
+						listSelecionados.getItems().add(animal);
+					}
+					
 				}
+				
+				listAnimais.getSelectionModel().clearSelection();
+				
 			}
 			
 		});
