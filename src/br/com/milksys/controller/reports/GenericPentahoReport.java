@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -39,21 +40,35 @@ public class GenericPentahoReport {
         
 	}
 	
+	private static String getFileName(String format){
+		
+		try {
+		  Files.newDirectoryStream( new File("reportOutput/").toPath() ).forEach( file -> {
+		    try { Files.delete( file ); }
+		    catch ( IOException e ) {}
+		  } );
+		}catch ( IOException e ) {}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
+		String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
+		return outputFileName;
+		
+	}
+	
 	public static void runReport(String format, String path){
 		try {
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
-			String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
+			File output = new File(getFileName(format));
 			
 			if ( format.equals(PDF_OUTPUT_FORMAT) ){
-				PdfReportUtil.createPDF(getReportDefinition(path), new File(outputFileName));	
+				PdfReportUtil.createPDF(getReportDefinition(path), output);	
 			}
 			
 			if ( format.equals(XLS_OUTPUT_FORMAT) ){
-				ExcelReportUtil.createXLS(getReportDefinition(path), outputFileName);	
+				ExcelReportUtil.createXLS(getReportDefinition(path), output.getAbsolutePath());	
 			}
 			
-			Desktop.getDesktop().open(new File(outputFileName));
+			Desktop.getDesktop().open(output);
 			
 		} catch (ReportProcessingException e) {
 			e.printStackTrace();
@@ -65,18 +80,17 @@ public class GenericPentahoReport {
 	public static void runReport(String format, MasterReport report){
 		try {
 			
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMddHHmmss");
-			String outputFileName = "reportOutput/" + sdf.format(new Date()) + format;
+			File output = new File(getFileName(format));
 			
 			if ( format.equals(PDF_OUTPUT_FORMAT) ){
-				PdfReportUtil.createPDF(report, new File(outputFileName));	
+				PdfReportUtil.createPDF(report, output);	
 			}
 			
 			if ( format.equals(XLS_OUTPUT_FORMAT) ){
-				ExcelReportUtil.createXLS(report, outputFileName);	
+				ExcelReportUtil.createXLS(report, output.getAbsolutePath());	
 			}
 			
-			Desktop.getDesktop().open(new File(outputFileName));
+			Desktop.getDesktop().open(output);
 			
 		} catch (ReportProcessingException e) {
 			e.printStackTrace();
