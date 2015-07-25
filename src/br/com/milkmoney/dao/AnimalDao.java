@@ -388,7 +388,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findFemeasNaoPrenhasAposXDiasAposParto(int dias) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a Where "
-				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between >= " + dias + ") and "
+				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) >= " + dias + ") and "
 				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
 		return query.getResultList();
 	}
