@@ -63,6 +63,7 @@
                <children>
                   <Label text="Filtros" />
                   <Separator prefWidth="200.0" />
+                  <Button maxHeight="30.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#clearFilter" text="Todos" />
                   <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" minWidth="105.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" text="Fêmeas">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />

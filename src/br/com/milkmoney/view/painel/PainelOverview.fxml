@@ -34,6 +34,7 @@
                   </Button>
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleEntregaLeiteChart" text="Entrega Leite" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleCausaMorteAnimalChart" text="Causa Morte" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                   <Separator prefWidth="200.0" />
                   <Hyperlink text="Notificações" />
                   <Separator prefWidth="200.0" />
@@ -43,7 +44,11 @@
                </padding>
             </VBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <VBox fx:id="group" HBox.hgrow="SOMETIMES" />
+            <VBox HBox.hgrow="SOMETIMES">
+               <children>
+                  <VBox fx:id="group" HBox.hgrow="SOMETIMES" VBox.vgrow="SOMETIMES" />
+               </children>
+            </VBox>
          </children>
       </HBox>
    </children>

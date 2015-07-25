@@ -5,6 +5,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +36,19 @@ public class PainelController {
         HBox.setHgrow(node, Priority.SOMETIMES);
 		group.getChildren().add(node);
 		
+	}
+	
+	@FXML
+	protected void closeForm(){
+		if ( group != null ){
+			Stage stage = (Stage)group.getScene().getWindow();
+			// se for popup
+			if ( stage.getModality().equals(Modality.APPLICATION_MODAL) ){
+				((Stage)group.getScene().getWindow()).close();	
+			}else{
+				MainApp.resetLayout();
+			}
+		}
 	}
 	
 	//handlers

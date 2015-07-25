@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.RootLayoutController">
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.RootLayoutController">
    <top>
       <VBox maxHeight="50.0" minHeight="50.0" BorderPane.alignment="CENTER">
          <children>
@@ -76,7 +77,7 @@
       			</Menu>
       			</menus>
       		</MenuBar>
-            <HBox alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #C2D1B2;" VBox.vgrow="SOMETIMES">
+            <HBox fx:id="hBoxBreadCrumbs" alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #C2D1B2;" VBox.vgrow="SOMETIMES">
                <children>
                   <Label fx:id="lblHeader" text="Label" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />

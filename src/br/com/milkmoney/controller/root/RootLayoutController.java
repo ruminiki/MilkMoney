@@ -1,6 +1,4 @@
-package br.com.milkmoney.controller;
-
-import java.io.IOException;
+package br.com.milkmoney.controller.root;
 
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -24,13 +22,12 @@ import br.com.milkmoney.validation.Validator;
 
 @Controller
 public class RootLayoutController {
-
 	
 	@FXML private Label lblHeader;
 	@FXML private Hyperlink hlPropriedade;
 	
 	@FXML
-	private void initialize(){
+	protected void initialize(){
 		
 		PropriedadeReducedOverviewController propriedadeReducedOverviewController = 
 				(PropriedadeReducedOverviewController)MainApp.getBean(PropriedadeReducedOverviewController.class);
@@ -54,106 +51,107 @@ public class RootLayoutController {
 		
 	}
 	
-	private void setTitle(String title){
-		lblHeader.setText(title);
+	protected void setTitle(String title){
+		if ( lblHeader != null )
+			lblHeader.setText(title);
 	}
 	
     @FXML
-    private void handleCadastroAnimal() throws IOException {
+    protected void handleCadastroAnimal() {
     	openForm("view/animal/AnimalOverview.fxml");
     	setTitle("Rebanho > Animais");
     }
 
     @FXML
-    private void handleCadastroVendaAnimal() {
+    protected void handleCadastroVendaAnimal() {
     	openForm("view/vendaAnimal/VendaAnimalOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroFinalidadeLote() {
+    protected void handleCadastroFinalidadeLote() {
     	openFormAsPopUp("view/finalidadeLote/FinalidadeLoteOverview.fxml");
     }
        
     @FXML
-    private void handleCadastroPrecoLeite() {
+    protected void handleCadastroPrecoLeite() {
     	openFormAsPopUp("view/precoLeite/PrecoLeiteOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroProducaoLeite() {
+    protected void handleCadastroProducaoLeite() {
     	openForm("view/producaoLeite/ProducaoLeiteOverview.fxml");
     }
        
     @FXML
-    private void handleCadastroEntregaLeite() {
+    protected void handleCadastroEntregaLeite() {
     	openForm("view/entregaLeite/EntregaLeiteOverview.fxml");
     }
 
     @FXML
-    private void handleCadastroSemen() {
+    protected void handleCadastroSemen() {
     	openFormAsPopUp("view/semen/SemenOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroTouro() {
+    protected void handleCadastroTouro() {
     	openFormAsPopUp("view/touro/TouroOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroCobertura() {
+    protected void handleCadastroCobertura() {
     	openForm("view/cobertura/CoberturaOverview.fxml");
     	setTitle("Rebanho > Reprodução");
     }
     
     @FXML
-    private void handleCadastroFuncionario() {
+    protected void handleCadastroFuncionario() {
     	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroServico() {
+    protected void handleCadastroServico() {
     	openFormAsPopUp("view/servico/ServicoOverview.fxml");
     }
     
     @FXML
-    private void handleCadastroFornecedor() {
+    protected void handleCadastroFornecedor() {
     	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml");
     }
     
     @FXML
-    private void handlePainel() {
+    protected void handlePainel() {
     	openForm("view/painel/PainelOverview.fxml");
     	setTitle("Miscelânea > Indicadores");
     }
     
     @FXML
-    private void handleCadastroParametro() {
+    protected void handleCadastroParametro() {
     	openFormAsPopUp("view/parametro/ParametroOverview.fxml");
     }
     
     @FXML
-    private void  handleCadastroPropriedade() {
+    protected void  handleCadastroPropriedade() {
     	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml");
     }
     
     //-----reports------
     @FXML
-    private void handleReportFichaAnimal(){
+    protected void handleReportFichaAnimal(){
     	openFormAsPopUp("view/reports/RelatorioFichaAnimal.fxml");
     }
     
     @FXML
-    private void handleFormularioCampoRegistroParto(){
+    protected void handleFormularioCampoRegistroParto(){
     	openFormAsPopUp("view/reports/FormularioRegistroParto.fxml");
     }
     
     @FXML
-    private void handleFormularioCampoRegistroCobertura(){
+    protected void handleFormularioCampoRegistroCobertura(){
     	openFormAsPopUp("view/reports/FormularioRegistroCobertura.fxml");
     }
     
     @FXML
-    private void handleFormularioCampoRegistroProducao(){
+    protected void handleFormularioCampoRegistroProducao(){
     	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml");
     }
     
@@ -183,7 +181,7 @@ public class RootLayoutController {
      * Abre uma janela Sobre.
      */
     @FXML
-    private void handleAbout() {
+    protected void handleAbout() {
     	
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Milk Money 1.0");
@@ -194,7 +192,7 @@ public class RootLayoutController {
     }
 
     @FXML
-    private void handleExit() {
+    protected void handleExit() {
         System.exit(0);
     }
 }
