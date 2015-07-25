@@ -49,17 +49,17 @@ public class MainApp extends Application {
 	private static final String       ICON_INDICADORES = "img/indicadores.png";
 	private static final int          SPLASH_WIDTH     = 500;
     private static final int          SPLASH_HEIGHT    = 140;
-    private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
-  	private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
-  	//private static final String DATABASE_START = "database\\bin\\mysqld.exe";
-  	//private static final String DATABASE_STOP  = "database\\bin\\mysqld.exe -u root shutdown";
+    //private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
+  	//private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
+  	private static final String DATABASE_START = "database\\bin\\mysqld.exe";
+  	private static final String DATABASE_STOP  = "database\\bin\\mysqld.exe -u root shutdown";
 
     private Pane                      splashLayout;
     private ProgressBar               loadProgress;
     private Label                     progressText;
     
 	private static final boolean      SPLASH           = true;
-	private static final boolean      START_DATABASE   = false;
+	private static final boolean      START_DATABASE   = true;
 		
 	public MainApp() {
 		if ( !SPLASH ){

@@ -135,43 +135,24 @@ public abstract class MaskFieldUtil {
      * @param textField TextField
      */
     public static void decimal(final TextField textField) {
-        //textField.setAlignment(Pos.CENTER_RIGHT);
-        textField.lengthProperty().addListener(new ChangeListener<Number>() {
+    	
+        textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                String value = textField.getText();
-                value = value.replaceAll("[^0-9]", "");
-                value = value.replaceAll("([0-9]{1})([0-9]{14})$", "$1.$2");
-                value = value.replaceAll("([0-9]{1})([0-9]{11})$", "$1.$2");
-                value = value.replaceAll("([0-9]{1})([0-9]{8})$", "$1.$2");
-                value = value.replaceAll("([0-9]{1})([0-9]{5})$", "$1.$2");
-                value = value.replaceAll("([0-9]{1})([0-9]{2})$", "$1,$2");
-                textField.setText(value);
-                positionCaret(textField);
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	System.out.println("OLD " + oldValue + " - NEW " + newValue);
+            	if ( !oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
+            		
+            		String value = textField.getText();
+                    value = value.replaceAll("[^0-9]", "");
+                    value = value.replaceAll("([0-9]{1})([0-9]{2})$", "$1,$2");
+                    textField.setText(value);
+                    positionCaret(textField);
 
-                textField.textProperty().addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                        if (newValue.length() > 17)
-                            textField.setText(oldValue);
-                    }
-                });
-            }
-        });
-
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean fieldChange) {
-                if (!fieldChange) {
-                	if ( textField.getText() != null ){
-	                    final int length = textField.getText().length();
-	                    if (length > 0 && length < 3) {
-	                        textField.setText(textField.getText() + "00");
-	                    }
-                	}
                 }
             }
+                
         });
+
     }
 
     /**
