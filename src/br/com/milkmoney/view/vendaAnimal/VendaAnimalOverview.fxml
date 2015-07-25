@@ -13,7 +13,7 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="comprador/animal">
+            <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="comprador/animal">
                <padding>
                   <Insets right="5.0" top="5.0" />
                </padding>
@@ -31,6 +31,15 @@
                   <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+               <HBox.margin>
+                  <Insets right="50.0" />
+               </HBox.margin>
+               <children>
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
                </children>
             </HBox>
          </children>

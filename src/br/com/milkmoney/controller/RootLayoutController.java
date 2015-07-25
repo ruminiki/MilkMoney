@@ -66,7 +66,7 @@ public class RootLayoutController {
 
     @FXML
     private void handleCadastroVendaAnimal() {
-    	openFormAsPopUp("view/vendaAnimal/VendaAnimalOverview.fxml");
+    	openForm("view/vendaAnimal/VendaAnimalOverview.fxml");
     }
     
     @FXML
@@ -86,7 +86,7 @@ public class RootLayoutController {
        
     @FXML
     private void handleCadastroEntregaLeite() {
-    	openFormAsPopUp("view/entregaLeite/EntregaLeiteOverview.fxml");
+    	openForm("view/entregaLeite/EntregaLeiteOverview.fxml");
     }
 
     @FXML

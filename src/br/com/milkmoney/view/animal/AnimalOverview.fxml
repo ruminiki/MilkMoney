@@ -21,6 +21,7 @@
                   <Insets left="3.0" />
                </HBox.margin>
             </TextField>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -58,7 +59,7 @@
       </VBox>
       <HBox fx:id="containerTable" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #CCC;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="49.0">
          <children>
-            <VBox alignment="TOP_CENTER" minWidth="105.0" spacing="3.0" HBox.hgrow="SOMETIMES">
+            <VBox alignment="TOP_CENTER" maxWidth="105.0" minWidth="105.0" spacing="3.0" HBox.hgrow="SOMETIMES">
                <children>
                   <Label text="Filtros" />
                   <Separator prefWidth="200.0" />

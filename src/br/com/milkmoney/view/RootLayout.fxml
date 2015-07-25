@@ -20,6 +20,7 @@
       					</accelerator>
       			 	  </MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Reprodução" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda de Animais" />
                         <SeparatorMenuItem mnemonicParsing="false" />
       				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                     </items>
@@ -47,7 +48,6 @@
       			<Menu mnemonicParsing="false" text="Miscelânea">
       				<items>
                         <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Indicadores" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda Animais" />
                         <Menu mnemonicParsing="false" text="Cadastros">
                            <items>
                               <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->

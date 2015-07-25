@@ -124,13 +124,13 @@
                         </HBox>
                         <TableView fx:id="table" focusTraversable="false" VBox.vgrow="SOMETIMES">
                           <columns>
+                              <TableColumn fx:id="statusColumn" maxWidth="10.0" prefWidth="75.0" />
                             <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                             <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
                             <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
                             <TableColumn fx:id="reprodutorColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodutor" />
                               <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Previsão Parto" />
                               <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Data Parto" />
-                              <TableColumn fx:id="statusColumn" maxWidth="10.0" prefWidth="75.0" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

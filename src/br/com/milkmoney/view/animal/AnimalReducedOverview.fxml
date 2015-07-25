@@ -9,92 +9,72 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="581.0" prefHeight="338.0" prefWidth="829.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalReducedOverviewController">
+<AnchorPane minWidth="581.0" prefHeight="376.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalReducedOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="5.0">
-               <children>
-                  <Button fx:id="btnNew" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button fx:id="btnEdit" layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button fx:id="btnRemove" layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#fechar" text="Fechar" />
-                  <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
-               </children>
+            <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="nome ou número">
+               <padding>
+                  <Insets right="5.0" top="5.0" />
+               </padding>
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
-            </HBox>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Label text="Filtros">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Label>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" text="Fêmeas">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" text="Machos">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindReprodutores" text="Reprodutores">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button fx:id="btnNew" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+            <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+            <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
+               <children>
+                  <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Registros">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
          <padding>
             <Insets right="5.0" />
          </padding>
       </HBox>
-      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Registros">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
          <children>
-            <VBox alignment="TOP_CENTER" maxHeight="50.0" minHeight="50.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
-               <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
-                     <children>
-                        <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="nome ou número">
-                           <padding>
-                              <Insets right="5.0" top="5.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets left="5.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Separator orientation="VERTICAL" prefHeight="200.0" />
-                        <Label text="Filtros">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" text="Fêmeas">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" text="Machos">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleFindReprodutores" text="Reprodutores">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </padding>
-                  </HBox>
-               </children>
-            </VBox>
             <TableView fx:id="table" focusTraversable="false" VBox.vgrow="SOMETIMES">
               <columns>
                   <TableColumn fx:id="situacaoAnimalColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
