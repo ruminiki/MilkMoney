@@ -12,6 +12,7 @@
       <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <VBox fx:id="vBoxRebanho" maxHeight="128.0" minWidth="128.0" />
+            <VBox fx:id="vBoxProducao" maxHeight="128.0" minWidth="128.0" />
             <VBox fx:id="vBoxReproducao" maxHeight="128.0" minWidth="128.0" />
             <VBox fx:id="vBoxIndicadores" maxHeight="128.0" minWidth="128.0" />
          </children>

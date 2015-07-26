@@ -1,11 +1,13 @@
 package br.com.milkmoney.controller.parto;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -17,6 +19,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.TableCellHyperlinkRemoverFactory;
 import br.com.milkmoney.components.UCTextField;
@@ -34,6 +37,7 @@ import br.com.milkmoney.model.SituacaoNascimento;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.TipoCobertura;
 import br.com.milkmoney.model.TipoParto;
+import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
@@ -60,11 +64,12 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private ComboBox<String> inputComplicacaoParto;
 	@FXML private UCTextField inputPeso;
 	
-	@FXML private Button btnSalvar, btnAdicionarCria;
+	@FXML private Button btnSalvar, btnAdicionarCria, btnRemover;
 	
 	private Cria cria;
 	
 	@Autowired private AnimalCriaFormController animalCriaFormController;
+	@Autowired private CoberturaService coberturaService;
 	
 	private ObservableList<Cria> data = FXCollections.observableArrayList();
 
@@ -105,6 +110,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		btnSalvar.setDisable(getObject().getId() > 0 );
 		inputData.setDisable(getObject().getId() > 0 );
 		inputObservacao.setDisable(getObject().getId() > 0);
+		
+		btnRemover.setVisible(getObject().getId() > 0);
 		
 		data.clear();
 		data.addAll(getObject().getCrias());
@@ -209,6 +216,15 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		}
 		return false;
 	};
+	
+	@FXML
+	private void handleRemover(){
+		Optional<ButtonType> result = CustomAlert.confirmarExclusao();
+		if (result.get() == ButtonType.OK) {
+			coberturaService.removerParto(getObject().getCobertura());
+			closeForm();
+		}
+	}
 	
 	@Override
 	public String getFormName() {

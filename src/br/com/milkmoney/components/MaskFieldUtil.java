@@ -152,6 +152,24 @@ public abstract class MaskFieldUtil {
             }
                 
         });
+        
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if ( textField.getText().length() == 3 && textField.getText().contains(",") ){
+					textField.setText(textField.getText()+"0");
+				}
+				if ( textField.getText().length() == 2 && textField.getText().contains(",") ){
+					textField.setText(textField.getText()+"00");
+				}
+				if ( textField.getText().length() == 1 ){
+					textField.setText(textField.getText()+",00");
+				}
+			}
+
+		});
 
     }
 

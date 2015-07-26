@@ -13,13 +13,14 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class CenteredMenuController {
 
-	@FXML private VBox vBoxRebanho, vBoxReproducao, vBoxIndicadores;
+	@FXML private VBox vBoxRebanho, vBoxReproducao, vBoxIndicadores, vBoxProducao;
 	
 	@Autowired private RootLayoutController rootLayoutController;
 	
 	private static final String ICON_REBANHO = "img/rebanho.png";
 	private static final String ICON_REPRODUCAO = "img/reproducao.png";
 	private static final String ICON_INDICADORES = "img/indicadores.png";
+	private static final String ICON_PRODUCAO = "img/producao.png";
 	
 	@FXML
 	private void initialize(){
@@ -86,6 +87,27 @@ public class CenteredMenuController {
             	rootLayoutController.handlePainel();
             }
 		});
+        
+        vBoxProducao.setStyle(
+                "-fx-padding: 1; " +
+                "-fx-cursor: HAND; " +
+                "-fx-background-image: url('" + ICON_PRODUCAO + "'); " +		
+                "-fx-background-color: cornsilk; " +
+                "-fx-border-width:0; " +
+                "-fx-border-color: " +
+                    "linear-gradient(" +
+                        "to bottom, " +
+                        "chocolate, " +
+                        "derive(chocolate, 50%)" +
+                    ");"
+        );
+        vBoxProducao.setEffect(new DropShadow());
+        vBoxProducao.setOnMouseReleased(new EventHandler<Event>() {
+        	@Override
+        	public void handle(Event event) {
+        		rootLayoutController.handleCadastroProducaoLeite();
+        	}
+        });
         
 	}
 	

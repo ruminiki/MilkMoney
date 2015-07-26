@@ -47,19 +47,20 @@ public class MainApp extends Application {
 	private static final String       ICON_REBANHO     = "img/rebanho.png";
 	private static final String       ICON_REPRODUCAO  = "img/reproducao.png";
 	private static final String       ICON_INDICADORES = "img/indicadores.png";
-	private static final int          SPLASH_WIDTH     = 500;
+	private static final String       ICON_PRODUCAO    = "img/producao.png";
+	private static final int          SPLASH_WIDTH     = 628;
     private static final int          SPLASH_HEIGHT    = 140;
     //private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
   	//private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
-  	private static final String DATABASE_START = "database\\bin\\mysqld.exe";
-  	private static final String DATABASE_STOP  = "database\\bin\\mysqld.exe -u root shutdown";
+  	private static final String       DATABASE_START = "database\\bin\\mysqld.exe";
+  	private static final String       DATABASE_STOP  = "database\\bin\\mysqld.exe -u root shutdown";
 
     private Pane                      splashLayout;
     private ProgressBar               loadProgress;
     private Label                     progressText;
     
 	private static final boolean      SPLASH           = true;
-	private static final boolean      START_DATABASE   = true;
+	private static final boolean      START_DATABASE   = false;
 		
 	public MainApp() {
 		if ( !SPLASH ){
@@ -124,6 +125,7 @@ public class MainApp extends Application {
 	        HBox hbox = new HBox();
 	        hbox.setAlignment(Pos.CENTER);
 	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REBANHO))));
+	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_PRODUCAO))));
 	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REPRODUCAO))));
 	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_INDICADORES))));
 	        hbox.setSpacing(10);

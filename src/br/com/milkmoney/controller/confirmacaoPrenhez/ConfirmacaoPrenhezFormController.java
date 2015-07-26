@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.confirmacaoPrenhez;
 import java.util.function.Function;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -29,6 +30,7 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	@FXML private Label            lblCobertura;
 	@FXML private ComboBox<String> inputSituacaoCobertura, inputMetodoConfirmacao;
 	@FXML private UCTextField      inputObservacao;
+	@FXML private Button           btnSalvar;
 	
 	@FXML private TableView<ConfirmacaoPrenhez> table;
 	@FXML private TableColumn<ConfirmacaoPrenhez, String> dataConfirmacaoColumn;
@@ -54,10 +56,10 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez, String>("situacaoCobertura"));
 		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez, String>("metodoConfirmacao"));
 		removerColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez,String>("situacaoCobertura"));
-		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ConfirmacaoPrenhez, String>(removerDiagnosticoPrenhez, getObject().getId() > 0));
+		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ConfirmacaoPrenhez, String>(removerDiagnosticoPrenhez, getObject().getCobertura().getParto() != null));
 		
 		table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhez());
-		
+		btnSalvar.setDisable(getObject().getCobertura().getParto() != null);
 		super.service = service;
 		closePopUpAfterSave(false);
 	}

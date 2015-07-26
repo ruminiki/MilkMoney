@@ -22,7 +22,7 @@ public class Validator {
 					Object result = method.invoke(entity);
 
 					if (result == null || (result instanceof String && ((String) result).isEmpty())) {
-						throw new ValidationException(CAMPO_OBRIGATORIO, "Por favor, infome o campo [" + annotation.message() + "] para continuar.");
+						throw new ValidationException(CAMPO_OBRIGATORIO, "Por favor, informe o campo [" + annotation.message() + "] para continuar.");
 					}
 
 				} catch (IllegalAccessException | IllegalArgumentException

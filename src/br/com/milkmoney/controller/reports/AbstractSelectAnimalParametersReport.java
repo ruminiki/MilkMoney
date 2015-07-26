@@ -1,9 +1,11 @@
 package br.com.milkmoney.controller.reports;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -35,6 +37,20 @@ public class AbstractSelectAnimalParametersReport {
 		
 		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList());
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		
+		// captura o evento de double click da table
+		listAnimais.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
+					if ( !listSelecionados.getItems().contains(listAnimais.getSelectionModel().getSelectedItem()) ){
+						listSelecionados.getItems().add(listAnimais.getSelectionModel().getSelectedItem());
+					}
+					listAnimais.getSelectionModel().clearSelection();
+				}
+			}
+		});
 		
 		btnAdicionar.setOnAction(action -> {
 			

@@ -65,6 +65,7 @@ public class RootLayoutController {
     @FXML
     protected void handleCadastroVendaAnimal() {
     	openForm("view/vendaAnimal/VendaAnimalOverview.fxml");
+    	setTitle("Rebanho > Venda Animal");
     }
     
     @FXML
@@ -80,11 +81,13 @@ public class RootLayoutController {
     @FXML
     protected void handleCadastroProducaoLeite() {
     	openForm("view/producaoLeite/ProducaoLeiteOverview.fxml");
+    	setTitle("Produção > Produção de Leite");
     }
        
     @FXML
     protected void handleCadastroEntregaLeite() {
     	openForm("view/entregaLeite/EntregaLeiteOverview.fxml");
+    	setTitle("Produção > Entrega de Leite");
     }
 
     @FXML

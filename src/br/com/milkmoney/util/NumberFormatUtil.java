@@ -12,6 +12,7 @@ public class NumberFormatUtil {
 	public static String decimalFormat(BigDecimal number) {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
 		df.applyPattern("###,##0.00");
+		df.setMinimumFractionDigits(2);
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
 		symbols.setGroupingSeparator('.');
@@ -26,6 +27,7 @@ public class NumberFormatUtil {
 	public static BigDecimal fromString(String value) {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
 		df.applyPattern("###,##0.00");
+		df.setMinimumFractionDigits(2);
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
 		symbols.setGroupingSeparator('.');

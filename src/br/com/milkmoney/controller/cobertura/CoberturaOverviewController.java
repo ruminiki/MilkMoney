@@ -1,12 +1,10 @@
 package br.com.milkmoney.controller.cobertura;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -82,7 +80,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	//menu context tabela cobertura
 	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
-	private MenuItem    removerPartoMenuItem            = new MenuItem("Remover Parto");
 	private MenuItem    confirmarPrenhezMenuItem        = new MenuItem("Confirmação de Prenhez");
 	private MenuItem    fichaAnimalMenuItem             = new MenuItem("Ficha Animal");
 	private ContextMenu menuTabelaAnimais               = new ContextMenu(fichaAnimalMenuItem);
@@ -130,13 +127,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		    }
 		});
 		
-		removerPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleRemoverParto();
-		    }
-		});
-		
 		confirmarPrenhezMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
@@ -144,7 +134,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		    }
 		});
 		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, removerPartoMenuItem, confirmarPrenhezMenuItem);
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, confirmarPrenhezMenuItem);
 		
 		//pesquisa textual animal
 		if ( inputPesquisaAnimal != null ){
@@ -195,6 +185,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione um animal para registrar a cobertura.");
 		}
 		return new Cobertura(femea);
+	}
+	
+	@Override
+	protected void handleRightClick() {
+		super.handleRightClick();
+		
+		registrarPartoMenuItem.setDisable(getObject().getSituacaoCobertura().equals(SituacaoCobertura.VAZIA));
+		registrarPartoMenuItem.setText(getObject().getParto() != null ? "Visualizar Parto" : "Registrar Parto");
+		
 	}
 	
 	@Override
@@ -297,51 +296,31 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			CustomAlert.nenhumRegistroSelecionado();
 			return;
 		}
-		
-		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ||
-				getObject().getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ||
-						getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-			
-			partoFormController.setState(State.CREATE_TO_SELECT);
-			
-			if ( getObject().getParto() != null && getObject().getParto().getId() > 0 ){
-				partoFormController.setObject(getObject().getParto());
-			}else{
+		if ( getObject().getParto() == null ){
+			if ( getObject().getSituacaoCobertura().matches(SituacaoCobertura.INDEFINIDA + "|" + SituacaoCobertura.PRENHA) ){
+				
+				partoFormController.setState(State.CREATE_TO_SELECT);
 				partoFormController.setObject(new Parto(getObject()));
+				partoFormController.showForm();
+				
+				if ( partoFormController.getObject() != null ){
+					getObject().setParto(partoFormController.getObject());
+					((CoberturaService)service).registrarParto(getObject());
+					refreshObjectInTableView.apply(getObject());
+				}	
+				
+			}else{
+				CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada tem situação igual a " + getObject().getSituacaoCobertura() + 
+						" não sendo possível registrar o parto.");
 			}
+		}else{
 			
+			partoFormController.setObject(getObject().getParto());
 			partoFormController.showForm();
+			refreshObjectInTableView.apply(getObject());
 			
-			if ( partoFormController.getObject() != null ){
-				getObject().setParto(partoFormController.getObject());
-				((CoberturaService)service).registrarParto(getObject());
-				refreshObjectInTableView.apply(getObject());
-			}	
-		}else{
-			CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada tem situação igual a " + getObject().getSituacaoCobertura() + 
-					" não sendo possível registrar o parto.");
 		}
 		
-	}
-	
-	private void handleRemoverParto(){
-		
-		if ( table.getSelectionModel().getSelectedItem() == null ){
-			CustomAlert.nenhumRegistroSelecionado();
-			return;
-		}
-		
-		if ( getObject().getParto() != null ){
-			
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao("Confirmar remoção registro", "Tem certeza que deseja remover o parto registrado?");
-			if (result.get() == ButtonType.OK) {
-				((CoberturaService)service).removerParto(getObject());
-				refreshObjectInTableView.apply(getObject());
-			}
-			
-		}else{
-			CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada não tem parto registrado.");
-		}
 		
 	}
 	
@@ -352,14 +331,11 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			return;
 		}
 		
-		if ( permiteEditar.apply(table.getSelectionModel().getSelectedIndex()) ){
-			confirmacaoPrenhezFormController.setState(State.CREATE_TO_SELECT);
-			confirmacaoPrenhezFormController.setObject(new ConfirmacaoPrenhez(getObject()));
-	    	confirmacaoPrenhezFormController.showForm();
-	    	((CoberturaService)service).saveConfirmacaoPrenhez(getObject());
-	    	refreshObjectInTableView.apply(service.findById(getObject().getId()));
-	    	
-		}
+		confirmacaoPrenhezFormController.setState(State.CREATE_TO_SELECT);
+		confirmacaoPrenhezFormController.setObject(new ConfirmacaoPrenhez(getObject()));
+    	confirmacaoPrenhezFormController.showForm();
+    	((CoberturaService)service).saveConfirmacaoPrenhez(getObject());
+    	refreshObjectInTableView.apply(service.findById(getObject().getId()));
     	
 	}
 	
