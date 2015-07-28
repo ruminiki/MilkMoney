@@ -34,7 +34,7 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 
 		
 		query = entityManager.createQuery("SELECT c.data, c.situacaoCobertura "
-				+ "FROM ConfirmacaoPrenhez c WHERE c.cobertura.femea = :animal order by c.data");
+				+ "FROM ConfirmacaoPrenhes c WHERE c.cobertura.femea = :animal order by c.data");
 		query.setParameter("animal", animal);
 		result = query.getResultList();
 		

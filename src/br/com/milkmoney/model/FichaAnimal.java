@@ -29,7 +29,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	@JoinColumn(name="animal")
 	private Animal animal;
 	private Date   dataUltimaCobertura;
-	private int    numeroServicosAtePrenhez;
+	private int    numeroServicosAtePrenhes;
 	private Date   proximoServico;
 	private int    numeroPartos;
 	private int    numeroCriasMacho;
@@ -73,12 +73,12 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 		this.dataUltimaCobertura = dataUltimaCobertura;
 	}
 
-	public int getNumeroServicosAtePrenhez() {
-		return numeroServicosAtePrenhez;
+	public int getNumeroServicosAtePrenhes() {
+		return numeroServicosAtePrenhes;
 	}
 
-	public void setNumeroServicosAtePrenhez(int numeroServicosAtePrenhez) {
-		this.numeroServicosAtePrenhez = numeroServicosAtePrenhez;
+	public void setNumeroServicosAtePrenhes(int numeroServicosAtePrenhes) {
+		this.numeroServicosAtePrenhes = numeroServicosAtePrenhes;
 	}
 
 	public Date getProximoServico() {

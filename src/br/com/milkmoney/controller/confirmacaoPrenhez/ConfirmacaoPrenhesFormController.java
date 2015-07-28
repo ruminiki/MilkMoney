@@ -18,13 +18,13 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellHyperlinkRemoverFactory;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
-import br.com.milkmoney.model.ConfirmacaoPrenhez;
-import br.com.milkmoney.model.MetodoConfirmacaoPrenhez;
+import br.com.milkmoney.model.ConfirmacaoPrenhes;
+import br.com.milkmoney.model.MetodoConfirmacaoPrenhes;
 import br.com.milkmoney.model.SituacaoCobertura;
-import br.com.milkmoney.service.ConfirmacaoPrenhezService;
+import br.com.milkmoney.service.ConfirmacaoPrenhesService;
 
 @Controller
-public class ConfirmacaoPrenhezFormController extends AbstractFormController<Integer, ConfirmacaoPrenhez> {
+public class ConfirmacaoPrenhesFormController extends AbstractFormController<Integer, ConfirmacaoPrenhes> {
 
 	@FXML private DatePicker       inputData;
 	@FXML private Label            lblCobertura;
@@ -32,13 +32,13 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	@FXML private UCTextField      inputObservacao;
 	@FXML private Button           btnSalvar;
 	
-	@FXML private TableView<ConfirmacaoPrenhez> table;
-	@FXML private TableColumn<ConfirmacaoPrenhez, String> dataConfirmacaoColumn;
-	@FXML private TableColumn<ConfirmacaoPrenhez, String> situacaoCoberturaColumn;
-	@FXML private TableColumn<ConfirmacaoPrenhez, String> metodoConfirmacaoColumn;
-	@FXML private TableColumn<ConfirmacaoPrenhez, String> removerColumn;
+	@FXML private TableView<ConfirmacaoPrenhes> table;
+	@FXML private TableColumn<ConfirmacaoPrenhes, String> dataConfirmacaoColumn;
+	@FXML private TableColumn<ConfirmacaoPrenhes, String> situacaoCoberturaColumn;
+	@FXML private TableColumn<ConfirmacaoPrenhes, String> metodoConfirmacaoColumn;
+	@FXML private TableColumn<ConfirmacaoPrenhes, String> removerColumn;
 	
-	@Autowired ConfirmacaoPrenhezService service;
+	@Autowired ConfirmacaoPrenhesService service;
 	
 	@FXML
 	public void initialize() {
@@ -48,17 +48,17 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
 		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoCoberturaProperty());
-		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhez.getItems());
+		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhes.getItems());
 		inputMetodoConfirmacao.valueProperty().bindBidirectional(getObject().metodoConfirmacaoProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		
-		dataConfirmacaoColumn.setCellFactory(new TableCellDateFactory<ConfirmacaoPrenhez, String>("data"));
-		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez, String>("situacaoCobertura"));
-		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez, String>("metodoConfirmacao"));
-		removerColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhez,String>("situacaoCobertura"));
-		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ConfirmacaoPrenhez, String>(removerDiagnosticoPrenhez, getObject().getCobertura().getParto() != null));
+		dataConfirmacaoColumn.setCellFactory(new TableCellDateFactory<ConfirmacaoPrenhes, String>("data"));
+		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhes, String>("situacaoCobertura"));
+		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhes, String>("metodoConfirmacao"));
+		removerColumn.setCellValueFactory(new PropertyValueFactory<ConfirmacaoPrenhes,String>("situacaoCobertura"));
+		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ConfirmacaoPrenhes, String>(removerDiagnosticoPrenhes, getObject().getCobertura().getParto() != null));
 		
-		table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhez());
+		table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhes());
 		btnSalvar.setDisable(getObject().getCobertura().getParto() != null);
 		super.service = service;
 		closePopUpAfterSave(false);
@@ -66,19 +66,19 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	
 	@Override
 	protected void afterSave() {
-		getObject().getCobertura().getConfirmacoesPrenhez().add(getObject());
+		getObject().getCobertura().getConfirmacoesPrenhes().add(getObject());
 		table.getItems().add(getObject());
 	};
 	
-	Function<Integer, Boolean> removerDiagnosticoPrenhez = index -> {
+	Function<Integer, Boolean> removerDiagnosticoPrenhes = index -> {
 		
 		if ( index <= table.getItems().size() ){
 			
-			if ( !getObject().getCobertura().getConfirmacoesPrenhez().remove(index) ){
-				getObject().getCobertura().getConfirmacoesPrenhez().remove(table.getItems().get(index));
+			if ( !getObject().getCobertura().getConfirmacoesPrenhes().remove(index) ){
+				getObject().getCobertura().getConfirmacoesPrenhes().remove(table.getItems().get(index));
 			}
 			table.getItems().clear();
-			table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhez());
+			table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhes());
 			return true;
 			
 		}
@@ -87,12 +87,12 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	
 	@Override
 	protected String getFormName() {
-		return "view/confirmacaoPrenhez/ConfirmacaoPrenhezForm.fxml";
+		return "view/confirmacaoPrenhes/ConfirmacaoPrenhesForm.fxml";
 	}
 
 	@Override
 	protected String getFormTitle() {
-		return "Confirmação Prenhez";
+		return "Confirmação Prenhes";
 	}
 
 }

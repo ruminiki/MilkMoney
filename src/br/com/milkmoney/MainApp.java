@@ -60,7 +60,7 @@ public class MainApp extends Application {
     private Label                     progressText;
     
 	private static final boolean      SPLASH           = true;
-	private static final boolean      START_DATABASE   = false;
+	private static final boolean      START_DATABASE   = true;
 		
 	public MainApp() {
 		if ( !SPLASH ){

@@ -57,7 +57,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty              observacao                   = new SimpleStringProperty();
 	//jpa
 	private Parto                       parto;
-	private List<ConfirmacaoPrenhez>    confirmacoesPrenhez;
+	private List<ConfirmacaoPrenhes>    confirmacoesPrenhes;
 	private String                      situacaoCobertura;
 	
 	public Cobertura() {
@@ -259,14 +259,14 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhez.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhes.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="cobertura")
-	public List<ConfirmacaoPrenhez> getConfirmacoesPrenhez() {
-		return confirmacoesPrenhez == null ? new ArrayList<ConfirmacaoPrenhez>() : confirmacoesPrenhez;
+	public List<ConfirmacaoPrenhes> getConfirmacoesPrenhes() {
+		return confirmacoesPrenhes == null ? new ArrayList<ConfirmacaoPrenhes>() : confirmacoesPrenhes;
 	}
 
-	public void setConfirmacoesPrenhez(List<ConfirmacaoPrenhez> confirmacoesPrenhez) {
-		this.confirmacoesPrenhez = confirmacoesPrenhez;
+	public void setConfirmacoesPrenhes(List<ConfirmacaoPrenhes> confirmacoesPrenhes) {
+		this.confirmacoesPrenhes = confirmacoesPrenhes;
 	}
 
 	public String getReprodutor(){

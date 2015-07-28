@@ -101,6 +101,18 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 			return null;
 		}
 	}
+	
+	//recupera a primeira cobertura após uma determinada data
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findAllAfterDate(Animal femea, Date data) {
+		
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data > :data order by c.data");
+		query.setParameter("femea", femea);
+		query.setParameter("data", data);
+		
+		return query.getResultList();
+		
+	}
 
 	public Cobertura findFirstCobertura(Animal animal) {
 		

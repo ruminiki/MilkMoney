@@ -26,9 +26,9 @@ import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
 
 @Entity
-@Table(name="confirmacaoPrenhez")
-@NamedQuery(name="ConfirmacaoPrenhez.findAll", query="SELECT c FROM ConfirmacaoPrenhez c")
-public class ConfirmacaoPrenhez extends AbstractEntity implements Serializable {
+@Table(name="confirmacaoPrenhes")
+@NamedQuery(name="ConfirmacaoPrenhes.findAll", query="SELECT c FROM ConfirmacaoPrenhes c")
+public class ConfirmacaoPrenhes extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +40,9 @@ public class ConfirmacaoPrenhez extends AbstractEntity implements Serializable {
 	private StringProperty            observacao        = new SimpleStringProperty();
 	private ObjectProperty<Cobertura> cobertura         = new SimpleObjectProperty<Cobertura>();
 	
-	public ConfirmacaoPrenhez() {}
+	public ConfirmacaoPrenhes() {}
 	
-	public ConfirmacaoPrenhez(Cobertura cobertura) {
+	public ConfirmacaoPrenhes(Cobertura cobertura) {
 		this.setCobertura(cobertura);
 	}
 

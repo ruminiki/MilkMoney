@@ -18,27 +18,27 @@ public class ApplicationService{
 		File file = null;
 		
 		//indicadores
-		file = getFile(ClassLoader.getSystemResource("sql/INDICADOR.SQL"));
+		file = getFile(getClass().getClassLoader().getResource("sql/INDICADOR.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
 		
 		//parametros
-		file = getFile(ClassLoader.getSystemResource("sql/PARAMETROS.SQL"));
+		file = getFile(getClass().getClassLoader().getResource("sql/PARAMETROS.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
 		
 		//view_animais_ativos
-		file = getFile(ClassLoader.getSystemResource("sql/ANIMAIS_ATIVOS_VIEW.SQL"));
+		file = getFile(getClass().getClassLoader().getResource("sql/ANIMAIS_ATIVOS_VIEW.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
 		
 		//raca
-		file = getFile(ClassLoader.getSystemResource("sql/RACA.SQL"));
+		file = getFile(getClass().getClassLoader().getResource("sql/RACA.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
 		
 		//view situacao animal
-		file = getFile(ClassLoader.getSystemResource("sql/SITUACAO_ANIMAL_VIEW.SQL"));
+		file = getFile(getClass().getClassLoader().getResource("sql/SITUACAO_ANIMAL_VIEW.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
 	}

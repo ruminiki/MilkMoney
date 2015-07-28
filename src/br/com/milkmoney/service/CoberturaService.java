@@ -1,5 +1,7 @@
 package br.com.milkmoney.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.ConfirmacaoPrenhez;
+import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -31,7 +33,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private SemenService semenService;
 	@Autowired private PartoService partoService;
 	@Autowired private ParametroService parametroService;
-	@Autowired private ConfirmacaoPrenhezService confirmacaoPrenhezService;
+	@Autowired private ConfirmacaoPrenhesService confirmacaoPrenhesService;
 
 	@Override
 	@Transactional
@@ -72,7 +74,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			
 			cobertura.setParto(null);
 			//reconfigura situação cobertura
-			ConfirmacaoPrenhez cp = confirmacaoPrenhezService.findLastByCobertura(cobertura);
+			ConfirmacaoPrenhes cp = confirmacaoPrenhesService.findLastByCobertura(cobertura);
 			cobertura.setSituacaoCobertura(cp != null ? cp.getSituacaoCobertura() : SituacaoCobertura.INDEFINIDA);
 			dao.persist(cobertura);
 
@@ -93,20 +95,20 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	@Transactional
-	public void saveConfirmacaoPrenhez(Cobertura cobertura) {
+	public void saveConfirmacaoPrenhes(Cobertura cobertura) {
 		
 		//ordena as confirmações pela data para recuperar a última situação
 		
-		Collections.sort(cobertura.getConfirmacoesPrenhez(), new Comparator<ConfirmacaoPrenhez>() {
+		Collections.sort(cobertura.getConfirmacoesPrenhes(), new Comparator<ConfirmacaoPrenhes>() {
 		    @Override
-		    public int compare(ConfirmacaoPrenhez cp1, ConfirmacaoPrenhez cp2) {
+		    public int compare(ConfirmacaoPrenhes cp1, ConfirmacaoPrenhes cp2) {
 		        return cp1.getData().compareTo(cp2.getData());
 		    }
 		});
 		
 		//recupera o último registro de confirmação (a maior data)
-		if ( cobertura.getConfirmacoesPrenhez() != null && cobertura.getConfirmacoesPrenhez().size() > 0 ){
-			ConfirmacaoPrenhez cp = cobertura.getConfirmacoesPrenhez().get(cobertura.getConfirmacoesPrenhez().size()-1);
+		if ( cobertura.getConfirmacoesPrenhes() != null && cobertura.getConfirmacoesPrenhes().size() > 0 ){
+			ConfirmacaoPrenhes cp = cobertura.getConfirmacoesPrenhes().get(cobertura.getConfirmacoesPrenhes().size()-1);
 			cobertura.setSituacaoCobertura(cp.getSituacaoCobertura());
 		}else{
 			cobertura.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
@@ -151,7 +153,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return cobertura != null ? cobertura.getData() : null;
 	}
 	
-	public int getNumeroServicosAtePrenhez(Animal animal) {
+	public int getNumeroServicosAtePrenhes(Animal animal) {
 		
 		List<Cobertura> coberturas = dao.findByAnimal(animal);
 		int index = 0;
@@ -163,6 +165,32 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		}
 		
 		return index;
+		
+	}
+	
+	public BigDecimal getMediaIntervaloPrimeiraCoberturaAtePrenhes(Animal animal) {
+		
+		List<Cobertura> coberturas = dao.findByAnimal(animal);
+		int index = 0;
+		
+		Date dataPrimeiraCobertura = null;
+		int intervaloEntreCoberturas = 0;
+		
+		for (Cobertura cobertura : coberturas){
+			
+			//conta quantas coberturas não tiveram parto, antes da última
+			if ( !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+				index++;
+				if ( dataPrimeiraCobertura == null ){
+					dataPrimeiraCobertura = cobertura.getData();
+				}else{
+					intervaloEntreCoberturas += (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataPrimeiraCobertura), DateUtil.asLocalDate(cobertura.getData()));
+				}
+			}
+			else break;
+		}
+		
+		return BigDecimal.valueOf(intervaloEntreCoberturas).divide(BigDecimal.valueOf(index), 2, RoundingMode.HALF_EVEN);
 		
 	}
 
@@ -185,7 +213,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			}
 			
 			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) ){
-				ConfirmacaoPrenhez cp = confirmacaoPrenhezService.findLastByCobertura(cobertura);
+				ConfirmacaoPrenhes cp = confirmacaoPrenhesService.findLastByCobertura(cobertura);
 				if ( cp != null )
 					return DateUtil.asDate(DateUtil.asLocalDate(cp.getData()).plusDays(21));
 			}
@@ -208,7 +236,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			Cobertura primeiraCoberturaAposParto = dao.findFirstAfterDate(animal, ultimoParto.getData());
 			
 			if ( primeiraCoberturaAposParto != null ){
-				ConfirmacaoPrenhez confirmacao = confirmacaoPrenhezService.findLastByCobertura(primeiraCoberturaAposParto);
+				ConfirmacaoPrenhes confirmacao = confirmacaoPrenhesService.findLastByCobertura(primeiraCoberturaAposParto);
 				//A data da concepção das vacas gestantes
 				if ( confirmacao.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
 					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(confirmacao.getData()));

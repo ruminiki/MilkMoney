@@ -24,14 +24,14 @@ import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
-import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.ConfirmacaoPrenhez;
+import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -72,7 +72,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	@Autowired private FichaAnimalOverviewController    fichaAnimalOverviewController;
 	@Autowired private CoberturaFormController          coberturaFormController;
-	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
+	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private AnimalService                    animalService;
 	@Autowired private ParametroService                 parametroService;
@@ -80,7 +80,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	//menu context tabela cobertura
 	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
-	private MenuItem    confirmarPrenhezMenuItem        = new MenuItem("Confirmação de Prenhez");
+	private MenuItem    confirmarPrenhesMenuItem        = new MenuItem("Confirmação de Prenhes");
 	private MenuItem    fichaAnimalMenuItem             = new MenuItem("Ficha Animal");
 	private ContextMenu menuTabelaAnimais               = new ContextMenu(fichaAnimalMenuItem);
 	private Animal                                      femea;
@@ -127,14 +127,14 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		    }
 		});
 		
-		confirmarPrenhezMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		confirmarPrenhesMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	handleConfirmarPrenhez();
+		    	handleConfirmarPrenhes();
 		    }
 		});
 		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, confirmarPrenhezMenuItem);
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, confirmarPrenhesMenuItem);
 		
 		//pesquisa textual animal
 		if ( inputPesquisaAnimal != null ){
@@ -324,17 +324,17 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
-	private void handleConfirmarPrenhez(){
+	private void handleConfirmarPrenhes(){
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
 			return;
 		}
 		
-		confirmacaoPrenhezFormController.setState(State.CREATE_TO_SELECT);
-		confirmacaoPrenhezFormController.setObject(new ConfirmacaoPrenhez(getObject()));
-    	confirmacaoPrenhezFormController.showForm();
-    	((CoberturaService)service).saveConfirmacaoPrenhez(getObject());
+		confirmacaoPrenhesFormController.setState(State.CREATE_TO_SELECT);
+		confirmacaoPrenhesFormController.setObject(new ConfirmacaoPrenhes(getObject()));
+    	confirmacaoPrenhesFormController.showForm();
+    	((CoberturaService)service).saveConfirmacaoPrenhes(getObject());
     	refreshObjectInTableView.apply(service.findById(getObject().getId()));
     	
 	}

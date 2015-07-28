@@ -234,6 +234,16 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Animal> findAnimaisComCobertura() {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
+				+ "exists (select 1 from Cobertura c where c.femea.id = a.id ) ");
+		
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Animal> findAnimaisComParto() {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
 				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
@@ -392,5 +402,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
 		return query.getResultList();
 	}
+
 
 }
