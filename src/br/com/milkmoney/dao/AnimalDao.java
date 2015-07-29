@@ -374,6 +374,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasEmPeriodoVoluntarioEspera(int periodoVoluntarioEspera) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a Where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
 				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")");
 		return query.getResultList();
 	}
@@ -386,6 +388,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findFemeasNaoPrenhasXDiasAposParto(int dias) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a Where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
 				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + dias + ") and "
 				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
 		return query.getResultList();
@@ -398,8 +402,20 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findFemeasNaoPrenhasAposXDiasAposParto(int dias) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a Where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
 				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) >= " + dias + ") and "
 				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Animal> findFemeasPrenhas() {
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a Where "
+				+ "not exists (select 1 from AnimalVendido av where av.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
+				+ "exists (select 1 from Cobertura c where  c.femea = a and c.situacaoCobertura = '" + SituacaoCobertura.PRENHA + "')");
 		return query.getResultList();
 	}
 

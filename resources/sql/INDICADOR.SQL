@@ -55,19 +55,17 @@ SELECT * FROM (SELECT 'RELAÇÃO VACAS SECAS x VACAS EM LACTAÇÃO', 'VSVL', 17, '20
 'A relação vacas secas/lactação mede a eficiência reprodutiva do rebanho e determina lucro ou prejuízo, sendo o desequilíbrio dessa relação uma das causas de maiores prejuízos na atividade leiteira. Existem dois fatores básicos que determinam a porcentagem de vacas secas e de vacas em lactação. São eles a persistência de lactação, definida pela raça ou grau de sangue, e o período de serviço (tempo gasto para emprenhar a vaca depois do parto), determinado pela ocorrência ou não de cios pós-parto e a eficiência da monta ou IA (Inseminação Artificial).') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'VSVL');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'DIAS PÓS PARTO NO PRIMEIRO SERVIÇO', 'DPPPS', 18, '60', 'br.com.milkmoney.service.indicadores.RelacaoVacasSecasXVacasLactacao',
+SELECT * FROM (SELECT 'DIAS PÓS PARTO NO PRIMEIRO SERVIÇO', 'DPPPS', 18, '60', 'br.com.milkmoney.service.indicadores.DiasPosPartoNoPrimeiroServico',
 'O número de dias pós-parto no primeiro serviço é influenciado pelo período voluntário de espera (PVE) e é o cálculo do número de dias do parto até o primeiro serviço para as vacas inseminadas.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'DPPPS');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'NÚMERO DE SERVIÇOS POR CONCEPÇÃO', 'NSPC', 19, '2', 'br.com.milkmoney.service.indicadores.RelacaoVacasSecasXVacasLactacao',
+SELECT * FROM (SELECT 'NÚMERO DE SERVIÇOS POR CONCEPÇÃO', 'NSPC', 19, '2', 'br.com.milkmoney.service.indicadores.NumeroServicosPorConcepcao',
 'Número de serviços necessários até que se atinja a concepção.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'NSPC');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
 SELECT * FROM (SELECT 'PERÍODO DE SERVIÇO', 'PS', 20, '2', 'br.com.milkmoney.service.indicadores.RelacaoVacasSecasXVacasLactacao',
 'Para obter um intervalo entre partos entre 12 e 13 meses, é necessário que o Período de Serviço de um rebanho varie de 85 a 120 dias.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'PS');
 
-
-
-Dias em aberto = 123 dias
-Período de gestação = 279 dias
-Intervalo entre parto projetado (IEPP) = (123 + 279)/30,25 = 13,3 meses
+INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
+SELECT * FROM (SELECT 'INTERVALO ENTRE PARTOS PROJETADO', 'IEPP', 21, '2', 'br.com.milkmoney.service.indicadores.IntervaloEntrePartosProjetado',
+'O objetivo dessa comparação é saber se a eficiência reprodutiva da propriedade nos últimos 9 meses esta melhorando, se mantendo ou piorando..') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'IEPP');

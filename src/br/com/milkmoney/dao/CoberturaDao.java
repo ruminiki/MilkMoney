@@ -102,6 +102,19 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		}
 	}
 	
+	public Cobertura findFirstBeforeDate(Animal femea, Date data) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data < :data order by c.data");
+		query.setParameter("femea", femea);
+		query.setParameter("data", data);
+		query.setMaxResults(1);
+		
+		try{
+			return ((Cobertura)query.getSingleResult());
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+	
 	//recupera a primeira cobertura após uma determinada data
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findAllAfterDate(Animal femea, Date data) {
@@ -113,7 +126,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		return query.getResultList();
 		
 	}
-
+	
 	public Cobertura findFirstCobertura(Animal animal) {
 		
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c where c.femea = :animal order by c.data asc");
@@ -127,5 +140,6 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		}
 		
 	}
+
 
 }
