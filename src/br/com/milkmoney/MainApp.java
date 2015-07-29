@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -65,8 +66,15 @@ public class MainApp extends Application {
 	public MainApp() {
 		if ( !SPLASH ){
 			context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
-			ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-			applicationService.initilizeDatabase();
+			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
+					applicationService.initilizeDatabase();
+				}
+			});
+			
 		}
 	}
 	
@@ -92,9 +100,15 @@ public class MainApp extends Application {
 	            	updateMessage("Carregando aplicação . . .");
 	            	context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
 	            	
-	            	updateMessage("Inicializando banco de dados . . .");
-	            	ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-	        		applicationService.initilizeDatabase();
+	            	//INICIALIZAÇÃO BANCO DE DADOS
+	            	Platform.runLater(new Runnable() {
+	    				@Override
+	    				public void run() {
+	    					updateMessage("Inicializando banco de dados . . .");
+	    	            	ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
+	    	        		applicationService.initilizeDatabase();
+	    				}
+	    			});
 	            	
 	                updateMessage("Todos os arquivos foram carregados.");
 	                return null;
@@ -184,9 +198,9 @@ public class MainApp extends Application {
     		
     		primaryStage = stage;
     		
-	    	FXMLLoader loader = new FXMLLoader();
-	        loader.setLocation(MainApp.class.getResource("view/root/RootLayout.fxml"));
-	        rootLayout = (BorderPane) loader.load();
+	    	//FXMLLoader loader = new FXMLLoader();
+	       // loader.setLocation(MainApp.class.getResource());
+	        rootLayout = (BorderPane) load("view/root/RootLayout.fxml");
 	        
 	        primaryStage = new Stage(StageStyle.DECORATED);
 	        primaryStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(APPLICATION_ICON)));

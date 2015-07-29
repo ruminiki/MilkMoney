@@ -1,5 +1,6 @@
 package br.com.milkmoney.controller.root;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,7 +24,7 @@ import br.com.milkmoney.validation.Validator;
 @Controller
 public class RootLayoutController {
 	
-	@FXML private Label lblHeader;
+	@FXML private Label lblHeader, lblMessage;
 	@FXML private Hyperlink hlPropriedade;
 	
 	@FXML
@@ -51,7 +52,22 @@ public class RootLayoutController {
 		
 	}
 	
-	protected void setTitle(String title){
+	public void setMessage(String message){
+		
+		Platform.runLater(() -> {
+            try {
+            	Thread.sleep(5000);
+                lblMessage.setText("");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
+		
+		if ( lblMessage != null )
+			lblMessage.setText(message);
+	}
+	
+	public void setTitle(String title){
 		if ( lblHeader != null )
 			lblHeader.setText(title);
 	}

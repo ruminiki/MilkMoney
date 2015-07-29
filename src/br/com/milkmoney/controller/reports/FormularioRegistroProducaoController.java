@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.util.Util;
@@ -19,7 +20,7 @@ public class FormularioRegistroProducaoController{
 
 	@FXML private ListView<String> listMeses;
 	@Autowired private RelatorioService relatorioService;
-	
+	@Autowired private RootLayoutController rootLayoutController;
 	
 	@FXML
 	public void initialize() {
@@ -50,6 +51,7 @@ public class FormularioRegistroProducaoController{
 				RelatorioService.FORMULARIO_CAMPO_REGISTRO_PRODUCAO, listMeses.getSelectionModel().getSelectedIndex() + 1);
 		
 		handleClose();
+		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
 
 }
