@@ -124,10 +124,10 @@ public abstract class AbstractFormController<K, E> {
 	// ========= HANDLERS INTERFACE=============//
 
 	
-	@FXML @SuppressWarnings("unchecked")
+	@FXML 
 	public void handleCancel() {
 		dialogStage.close();
-		setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
+		//setObject(service.findById( (K) ((Integer)((AbstractEntity) getObject()).getId()) ));
 		
 		if ( refreshObjectInTableView != null )
 			refreshObjectInTableView.apply(getObject());

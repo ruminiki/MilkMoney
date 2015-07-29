@@ -64,12 +64,11 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		dataInicioColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataInicio"));
 		dataFimColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataFim"));
 		volumeColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("volume"));
+		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado"));
 		valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorRecebido"));
 		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorTotal"));
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("observacao"));
-	
-		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado"));
-		valorMaximoPraticadoColumn.setCellFactory(new Callback<TableColumn<EntregaLeite,String>, TableCell<EntregaLeite,String>>(){
+		valorRecebidoColumn.setCellFactory(new Callback<TableColumn<EntregaLeite,String>, TableCell<EntregaLeite,String>>(){
 			@Override
 			public TableCell<EntregaLeite, String> call(TableColumn<EntregaLeite, String> param) {
 				TableCell<EntregaLeite, String> cell = new TableCell<EntregaLeite, String>(){
@@ -128,6 +127,8 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 	protected void refreshTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByAnoAsObservableList(selectedAnoReferencia));
+		//carrega o preço do leite do mês e atualiza no registro de entrega
+		service.setPrecoLeite(data);
 	}
 
 	/**

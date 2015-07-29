@@ -94,20 +94,30 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 		
 		for (int i = 0; i < meses.size(); i++) {
 			
-			PrecoLeite precoLeite = precoLeiteService.findByMesAno(meses.get(i), ano);
 			EntregaLeite entregaLeite = findByMesAno(meses.get(i), ano);
 			
 			if ( entregaLeite == null ){
-				entregaLeite = new EntregaLeite(meses.get(i), ano, BigDecimal.ZERO, precoLeite);
+				entregaLeite = new EntregaLeite(meses.get(i), ano, BigDecimal.ZERO);
 			}else{
 				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
 				entregaLeite.setVolume(totalEntregue);
-				if ( entregaLeite.getPrecoLeite() == null ){
-					entregaLeite.setPrecoLeite(precoLeite);
-				}
+				
 			}
 			
 			save(entregaLeite);
+		}
+
+	}
+	
+	public void setPrecoLeite(ObservableList<EntregaLeite> data){
+		
+		for ( EntregaLeite entregaLeite : data ) {
+			
+			PrecoLeite precoLeite = precoLeiteService.findByMesAno(entregaLeite.getMesReferencia(), entregaLeite.getAnoReferencia());
+			if ( entregaLeite.getPrecoLeite() == null ){
+				entregaLeite.setPrecoLeite(precoLeite);
+			}
+			
 		}
 
 	}

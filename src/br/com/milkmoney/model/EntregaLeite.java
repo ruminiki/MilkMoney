@@ -49,16 +49,12 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
 
 	public EntregaLeite() {
-		
 	}
 	
-	public EntregaLeite(String mesReferencia, int anoReferencia, 
-			BigDecimal volume, PrecoLeite precoLeite) {
+	public EntregaLeite(String mesReferencia, int anoReferencia, BigDecimal volume) {
 		this.mesReferencia.set(mesReferencia);
 		this.anoReferencia.set(String.valueOf(anoReferencia));
 		this.volume.set(String.valueOf(volume));
-		this.precoLeite.set(precoLeite);
-		
 	}
 	
 	public int getId() {
