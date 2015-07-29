@@ -47,8 +47,8 @@ INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo)
 SELECT * FROM (SELECT 'TAXA DE DETECÇÃO DE CIO OU TAXA DE SERVIÇO (%)', 'TDC', 15, '200', 'br.com.milkmoney.service.indicadores.TaxaDeteccaoCio') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'TDC');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'TAXA DE PRENHEZ (%)', 'TP', 16, '200', 'br.com.milkmoney.service.indicadores.TaxaPrenhes',
-'O intervalo da primeira IA até a concepção representa a taxa de prenhes, ou seja, a velocidade em que a vaca fica gestante. Esse intervalo varia muito entre vacas do mesmo rebanho. Dois fatores determinam a taxa de prenhes: 1 - Taxa de concepção; 2 - Taxa de detecção de cio ou taxa de serviço. ') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'TP');
+SELECT * FROM (SELECT 'TAXA DE PRENHES (%)', 'TP', 16, '50', 'br.com.milkmoney.service.indicadores.TaxaPrenhes',
+'A relação vacas secas/lactação mede a eficiência reprodutiva do rebanho e determina lucro ou prejuízo, sendo o desequilíbrio dessa relação uma das causas de maiores prejuízos na atividade leiteira. Existem dois fatores básicos que determinam a porcentagem de vacas secas e de vacas em lactação. São eles a persistência de lactação, definida pela raça ou grau de sangue, e o período de serviço (tempo gasto para emprenhar a vaca depois do parto), determinado pela ocorrência ou não de cios pós-parto e a eficiência da monta ou IA (Inseminação Artificial).') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'TDC');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
 SELECT * FROM (SELECT 'RELAÇÃO VACAS SECAS x VACAS EM LACTAÇÃO', 'VSVL', 17, '20', 'br.com.milkmoney.service.indicadores.RelacaoVacasSecasXVacasLactacao',
@@ -68,4 +68,4 @@ SELECT * FROM (SELECT 'PERÍODO DE SERVIÇO', 'PS', 20, '2', 'br.com.milkmoney.ser
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, valorReferencia, classeCalculo, definicao) 
 SELECT * FROM (SELECT 'INTERVALO ENTRE PARTOS PROJETADO', 'IEPP', 21, '2', 'br.com.milkmoney.service.indicadores.IntervaloEntrePartosProjetado',
-'O objetivo dessa comparação é saber se a eficiência reprodutiva da propriedade nos últimos 9 meses esta melhorando, se mantendo ou piorando..') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'IEPP');
+'O objetivo dessa comparação é saber se a eficiência reprodutiva da propriedade nos últimos 9 meses esta melhorando, se mantendo ou piorando.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'IEPP');

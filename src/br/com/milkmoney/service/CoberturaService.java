@@ -190,7 +190,11 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			else break;
 		}
 		
-		return BigDecimal.valueOf(intervaloEntreCoberturas).divide(BigDecimal.valueOf(index), 2, RoundingMode.HALF_EVEN);
+		if ( intervaloEntreCoberturas > 0 ){
+			return BigDecimal.valueOf(intervaloEntreCoberturas).divide(BigDecimal.valueOf(index), 2, RoundingMode.HALF_EVEN);	
+		}
+		
+		return BigDecimal.ZERO;
 		
 	}
 

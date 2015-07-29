@@ -139,15 +139,12 @@ public abstract class MaskFieldUtil {
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	System.out.println("OLD " + oldValue + " - NEW " + newValue);
             	if ( !oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
-            		
             		String value = textField.getText();
                     value = value.replaceAll("[^0-9]", "");
                     value = value.replaceAll("([0-9]{1})([0-9]{2})$", "$1,$2");
                     textField.setText(value);
                     positionCaret(textField);
-
                 }
             }
                 

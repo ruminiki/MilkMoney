@@ -67,8 +67,10 @@ public class DiasPosPartoNoPrimeiroServico extends AbstractCalculadorIndicador{
 			Parto parto = partoDao.findLastParto(animal);
 			if ( parto != null ){
 				Cobertura cobertura = coberturaDao.findFirstAfterDate(animal, parto.getData());
-				diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.add(
-						BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()))));
+				if ( cobertura != null ){
+					diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.add(
+							BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()))));
+				}
 			}
 			
 		}
