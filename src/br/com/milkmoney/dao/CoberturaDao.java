@@ -103,7 +103,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 	}
 	
 	public Cobertura findFirstBeforeDate(Animal femea, Date data) {
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data < :data order by c.data");
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data < :data order by c.data desc");
 		query.setParameter("femea", femea);
 		query.setParameter("data", data);
 		query.setMaxResults(1);

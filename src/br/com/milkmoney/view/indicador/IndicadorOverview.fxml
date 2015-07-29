@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="470.0" prefWidth="861.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.IndicadorOverviewController">
+   <children>
+      <VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="30.0" style="-fx-border-color: #CCC;">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="INDICADORES ZOOTÉCNICOS DO REBANHO" />
+               </children>
+            </HBox>
+            <TableView fx:id="table" cache="true" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" VBox.vgrow="SOMETIMES">
+              <columns>
+                <TableColumn fx:id="indicadorColumn" maxWidth="-1.0" minWidth="320.0" prefWidth="-1.0" sortable="false" text="Indicador" />
+                  <TableColumn fx:id="siglaColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
+                <TableColumn fx:id="valorReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
+                  <TableColumn fx:id="valorApuradoColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
+                  <TableColumn fx:id="resultadoColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Resultado" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

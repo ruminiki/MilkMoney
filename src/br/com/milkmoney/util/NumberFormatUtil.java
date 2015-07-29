@@ -17,7 +17,7 @@ public class NumberFormatUtil {
 		symbols.setDecimalSeparator(',');
 		symbols.setGroupingSeparator('.');
 		df.setDecimalFormatSymbols(symbols);
-		return df.format(number);
+		return number == null ? df.format(BigDecimal.ZERO) : df.format(number);
 	}
 	
 	public static BigDecimal intFormat(BigDecimal number) {

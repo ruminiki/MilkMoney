@@ -53,7 +53,7 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 	@Autowired private CoberturaDao coberturaDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		long numeroServicosPorConcepcao = 0;
 		
 		List<Animal> animais = animalDao.findFemeasPrenhas();
@@ -76,7 +76,7 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 			numeroServicosPorConcepcao = numeroServicosPorConcepcao / animais.size();
 		}
 		
-		return String.valueOf(BigDecimal.valueOf(numeroServicosPorConcepcao).setScale(2));
+		return BigDecimal.valueOf(numeroServicosPorConcepcao).setScale(2);
 		
 	}
 

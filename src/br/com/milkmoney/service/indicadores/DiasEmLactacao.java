@@ -32,7 +32,7 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 	@Autowired private PartoService partoService;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		int        totalPartos    = 0;
 		
@@ -49,8 +49,8 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 		if ( diasEmLactacao.compareTo(BigDecimal.ZERO) > 0 && totalPartos > 0 ){
 			diasEmLactacao = diasEmLactacao.divide(new BigDecimal(totalPartos), 2, RoundingMode.HALF_UP);
 		}
-		
-		return String.valueOf(diasEmLactacao);
+	
+		return diasEmLactacao;
 		
 	}
 	

@@ -19,13 +19,13 @@ import br.com.milkmoney.dao.AnimalDao;
 @Service
 public class TotalNovilhasMais24Meses extends AbstractCalculadorIndicador{
 
-	@Autowired AnimalDao animalDao;
+	@Autowired private AnimalDao animalDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 
 		BigInteger tamanho = animalDao.countAllNovilhasIdadeAcimaXMeses(24);
-		return (tamanho == null ? String.valueOf(BigDecimal.ZERO) : String.valueOf(tamanho));
+		return (tamanho == null ? BigDecimal.ZERO : BigDecimal.valueOf(tamanho.intValue()));
 		
 	}
 	

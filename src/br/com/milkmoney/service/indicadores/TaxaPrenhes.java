@@ -26,11 +26,11 @@ import br.com.milkmoney.service.CoberturaService;
 @Service
 public class TaxaPrenhes extends AbstractCalculadorIndicador{
 
-	@Autowired AnimalDao animalDao;
-	@Autowired CoberturaService coberturaService;
+	@Autowired private AnimalDao animalDao;
+	@Autowired private CoberturaService coberturaService;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 
 		List<Animal> animais = animalDao.findAnimaisComCobertura(); 
 		BigDecimal somaMediaIntervaloPrimeiraCoberturaAtePrenhes = BigDecimal.ZERO;
@@ -40,10 +40,10 @@ public class TaxaPrenhes extends AbstractCalculadorIndicador{
 		}
 		
 		if ( animais != null && animais.size() > 0 && somaMediaIntervaloPrimeiraCoberturaAtePrenhes.compareTo(BigDecimal.ZERO) > 0 ){
-			return String.valueOf(somaMediaIntervaloPrimeiraCoberturaAtePrenhes.divide(BigDecimal.valueOf(animais.size()), 2, RoundingMode.HALF_EVEN));
+			return somaMediaIntervaloPrimeiraCoberturaAtePrenhes.divide(BigDecimal.valueOf(animais.size()), 2, RoundingMode.HALF_EVEN);
 		}
 		
-		return String.valueOf(BigDecimal.ZERO);
+		return BigDecimal.ZERO;
 		
 	}
 	

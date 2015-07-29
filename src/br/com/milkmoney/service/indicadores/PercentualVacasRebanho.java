@@ -21,7 +21,7 @@ public class PercentualVacasRebanho extends AbstractCalculadorIndicador{
 	@Autowired AnimalDao animalDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 
 		BigDecimal rebanho = BigDecimal.valueOf(animalDao.countAllAtivos().longValue());
 		BigDecimal vacas   = BigDecimal.valueOf(animalDao.countAllVacasAtivas().longValue());
@@ -31,7 +31,7 @@ public class PercentualVacasRebanho extends AbstractCalculadorIndicador{
 			result = vacas.divide(rebanho,2,RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
 		}
 		
-		return String.valueOf(result);
+		return result;
 		
 	}
 	

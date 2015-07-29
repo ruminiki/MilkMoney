@@ -242,7 +242,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			if ( primeiraCoberturaAposParto != null ){
 				ConfirmacaoPrenhes confirmacao = confirmacaoPrenhesService.findLastByCobertura(primeiraCoberturaAposParto);
 				//A data da concepção das vacas gestantes
-				if ( confirmacao.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
+				if ( confirmacao != null && confirmacao.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
 					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(confirmacao.getData()));
 				}else{
 					//A data da última cobertura das vacas ainda não confirmadas gestantes

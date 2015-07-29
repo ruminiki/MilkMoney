@@ -57,7 +57,7 @@ public class DiasPosPartoNoPrimeiroServico extends AbstractCalculadorIndicador{
 	@Autowired private CoberturaDao coberturaDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		BigDecimal diasEntrePartoEPrimeiroServico = BigDecimal.ZERO;
 		
 		List<Animal> animais = animalDao.findAnimaisComParto();
@@ -79,7 +79,7 @@ public class DiasPosPartoNoPrimeiroServico extends AbstractCalculadorIndicador{
 			diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.divide(BigDecimal.valueOf(animais.size()), 2, RoundingMode.HALF_EVEN);
 		}
 		
-		return String.valueOf(diasEntrePartoEPrimeiroServico);
+		return diasEntrePartoEPrimeiroServico;
 		
 	}
 	

@@ -21,10 +21,10 @@ public class TamanhoRebanho extends AbstractCalculadorIndicador{
 	@Autowired AnimalDao animalDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		
 		BigInteger tamanho = animalDao.countAllAtivos();
-		return (tamanho == null ? String.valueOf(BigDecimal.ZERO) : String.valueOf(tamanho));
+		return (tamanho == null ? BigDecimal.ZERO : BigDecimal.valueOf(tamanho.intValue()));
 		
 	}
 	

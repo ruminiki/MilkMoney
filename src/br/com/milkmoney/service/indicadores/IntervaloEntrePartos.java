@@ -30,7 +30,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 	
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		BigDecimal intervaloEntrePartos = BigDecimal.ZERO;
 		
 		//vacas com mais de um parto
@@ -48,7 +48,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 			
 		}
 		
-		return String.valueOf(intervaloEntrePartos);
+		return intervaloEntrePartos;
 		
 	}
 	

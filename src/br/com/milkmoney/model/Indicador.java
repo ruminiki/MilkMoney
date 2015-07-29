@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +20,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 
 import br.com.milkmoney.components.FieldRequired;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Entity
@@ -26,24 +32,22 @@ public class Indicador extends AbstractEntity implements Serializable {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String descricao;
-	private String sigla;
-	private String valorReferencia;
-	@Type(type="text")
-	private String definicao;
-	private String classeCalculo;
-	private String valorApurado;
-	@Transient
-	private BigDecimal resultado;
+	private StringProperty descricao = new SimpleStringProperty();
+	private StringProperty sigla = new SimpleStringProperty();
+	private StringProperty valorReferencia = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty valorApurado = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty definicao = new SimpleStringProperty();
+	private StringProperty classeCalculo = new SimpleStringProperty();
+	private StringProperty objetivo = new SimpleStringProperty(ObjetivoIndicador.ACIMA_VALOR_REFERENCIA);
 	private int ordem;
 	
 	public Indicador() {
 	}
 	
-	public Indicador(String descricao, String sigla, String valor) {
-		this.descricao = descricao;
-		this.sigla = sigla;
-		this.valorApurado = valor;
+	public Indicador(String descricao, String sigla, BigDecimal valorApurado) {
+		setDescricao(descricao);
+		setSigla(sigla);
+		setValorApurado(valorApurado);
 	}
 
 	public int getId() {
@@ -54,50 +58,77 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.id = id;
 	}
 
+	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="descrição")
 	public String getDescricao() {
-		return descricao;
+		return descricao.get();
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+		this.descricao.set(descricao);
+	}
+	
+	public StringProperty descricaoProperty(){
+		return descricao;
 	}
 
+	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="sigla")
 	public String getSigla() {
-		return sigla;
+		return sigla.get();
 	}
 
 	public void setSigla(String sigla) {
-		this.sigla = sigla;
+		this.sigla.set(sigla);
+	}
+	
+	public StringProperty siglaProperty(){
+		return sigla;
 	}
 
+	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="valor de referência")
-	public String getValorReferencia() {
+	public BigDecimal getValorReferencia() {
+		return NumberFormatUtil.fromString(valorReferencia.get());
+	}
+
+	public void setValorReferencia(BigDecimal valorReferencia) {
+		this.valorReferencia.set(NumberFormatUtil.decimalFormat(valorReferencia));
+	}
+	
+	public StringProperty valorReferenciaProperty(){
 		return valorReferencia;
 	}
 
-	public void setValorReferencia(String valorReferencia) {
-		this.valorReferencia = valorReferencia;
-	}
-
+	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="classe de cálculo")
 	public String getClasseCalculo() {
-		return classeCalculo;
+		return classeCalculo.get();
 	}
 
 	public void setClasseCalculo(String classeCalculo) {
-		this.classeCalculo = classeCalculo;
+		this.classeCalculo.set(classeCalculo);
+	}
+	
+	public StringProperty classeCalculoProperty(){
+		return classeCalculo;
 	}
 
-	public String getValorApurado() {
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getValorApurado() {
+		return NumberFormatUtil.fromString(valorApurado.get());
+	}
+
+	@Access(AccessType.PROPERTY)
+	public void setValorApurado(BigDecimal valorApurado) {
+		this.valorApurado.set(NumberFormatUtil.decimalFormat(valorApurado));
+	}
+
+	public StringProperty valorApuradoProperty(){
 		return valorApurado;
 	}
-
-	public void setValorApurado(String valorApurado) {
-		this.valorApurado = valorApurado;
-	}
-
+	
+	@Access(AccessType.PROPERTY)
 	public int getOrdem() {
 		return ordem;
 	}
@@ -106,30 +137,57 @@ public class Indicador extends AbstractEntity implements Serializable {
 		this.ordem = ordem;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@Type(type="text")
 	public String getDefinicao() {
-		return definicao;
+		return definicao.get();
 	}
 
 	public void setDefinicao(String definicao) {
-		this.definicao = definicao;
+		this.definicao.set(definicao);
 	}
 	
+	public StringProperty definicaoProperty(){
+		return definicao;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="objetivo")
+	public String getObjetivo() {
+		return objetivo.get();
+	}
+
+	public void setObjetivo(String objetivo) {
+		this.objetivo.set(objetivo);
+	}
+	
+	public StringProperty objetivoProperty(){
+		return objetivo;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@Transient
 	public BigDecimal getResultado() {
 		
-		BigDecimal valorApurado    = BigDecimal.valueOf(Double.parseDouble(getValorApurado()));
-		BigDecimal valorReferencia = BigDecimal.valueOf(Double.parseDouble(getValorReferencia()));
 		BigDecimal resultado = BigDecimal.ZERO;
-		if ( valorApurado.compareTo(resultado) > 0 && valorReferencia.compareTo(resultado) > 0 ){
-			resultado = valorApurado.multiply(BigDecimal.valueOf(100)).divide(valorReferencia, 2, RoundingMode.HALF_EVEN);
+		if ( getValorApurado().compareTo(resultado) > 0 && getValorReferencia().compareTo(resultado) > 0 ){
+			resultado = getValorApurado().multiply(BigDecimal.valueOf(100)).divide(getValorReferencia(), 2, RoundingMode.HALF_EVEN);
 		}
+		
+		
+		
+		if ( resultado.compareTo(BigDecimal.valueOf(100)) > 0 ){
+			resultado = resultado.subtract(BigDecimal.valueOf(100));
+		}
+		
+		if ( resultado.compareTo(BigDecimal.valueOf(100)) < 0 ){
+			resultado = BigDecimal.valueOf(100).subtract(resultado);
+		}
+		
 		return resultado;
 		
 	}
-
-	public void setResultado(BigDecimal resultado) {
-		this.resultado = resultado;
-	}
-
+	
 	@Override
 	public String toString() {
 		return getDescricao();

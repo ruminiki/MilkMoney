@@ -30,7 +30,7 @@ public class DiasEmAberto extends AbstractCalculadorIndicador{
 	@Autowired AnimalDao animalDao;
 
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 		BigDecimal diasEmAberto = BigDecimal.ZERO;
 		
 		List<Animal> vacas = animalDao.findAnimaisComParto();
@@ -43,7 +43,7 @@ public class DiasEmAberto extends AbstractCalculadorIndicador{
 			diasEmAberto = diasEmAberto.divide(BigDecimal.valueOf(vacas.size()), 2, RoundingMode.HALF_EVEN);
 		}
 		
-		return String.valueOf(diasEmAberto);
+		return diasEmAberto;
 		
 	}
 	

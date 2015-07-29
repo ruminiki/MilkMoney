@@ -35,7 +35,7 @@ public class IndicadorService implements IService<Integer, Indicador>{
 
 	@Override
 	public Indicador findById(Integer id) {
-		return null;
+		return dao.findById(Indicador.class, id);
 	}
 
 	@Override

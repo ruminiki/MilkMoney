@@ -1,7 +1,9 @@
 package br.com.milkmoney.service.indicadores;
 
+import java.math.BigDecimal;
+
 public abstract class AbstractCalculadorIndicador {
 	
-	public abstract String getValue();
+	public abstract BigDecimal getValue();
 
 }

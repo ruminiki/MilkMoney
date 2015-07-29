@@ -22,7 +22,7 @@ public class RelacaoVacasSecasXVacasLactacao extends AbstractCalculadorIndicador
 	@Autowired AnimalDao animalDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 
 		BigDecimal vacasSecas    = BigDecimal.valueOf(animalDao.countAllFemeasSecas().longValue());
 		BigDecimal vacasLactacao = BigDecimal.valueOf(animalDao.countAllFemeasEmLactacao().longValue());
@@ -36,7 +36,7 @@ public class RelacaoVacasSecasXVacasLactacao extends AbstractCalculadorIndicador
 			}
 		}
 		
-		return String.valueOf(relacao);
+		return relacao;
 		
 	}
 	

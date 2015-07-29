@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.confirmacaoPrenhez;
+package br.com.milkmoney.controller.confirmacaoPrenhes;
 
 import java.util.function.Function;
 
@@ -22,6 +22,7 @@ import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.MetodoConfirmacaoPrenhes;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.service.ConfirmacaoPrenhesService;
+import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class ConfirmacaoPrenhesFormController extends AbstractFormController<Integer, ConfirmacaoPrenhes> {
@@ -46,6 +47,7 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 		lblCobertura.setText(getObject().getCobertura().toString());
 		
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputData.setValue(DateUtil.asLocalDate(getObject().getCobertura().getData()).plusDays(60));
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
 		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoCoberturaProperty());
 		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhes.getItems());

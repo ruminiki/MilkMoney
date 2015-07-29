@@ -1,25 +1,24 @@
-package br.com.milkmoney.controller.painel;
+package br.com.milkmoney.controller.indicador;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.components.MaskFieldUtil;
-import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.PropertyDecimalValueFactory;
+import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.painel.renderer.TableCellValueFactoryResultadoIndicador;
 import br.com.milkmoney.model.Indicador;
-import br.com.milkmoney.service.indicadores.IndicadorService;
+import br.com.milkmoney.service.IService;
 
 @Controller
-public class IndicadorOverviewController {
+public class IndicadorOverviewController extends AbstractOverviewController<Integer, Indicador>{
 
 	@FXML private TableView<Indicador> table;
 	@FXML private TableColumn<Indicador, String> indicadorColumn;
@@ -28,23 +27,23 @@ public class IndicadorOverviewController {
 	@FXML private TableColumn<Indicador, String> valorApuradoColumn;
 	@FXML private TableColumn<Indicador, String> resultadoColumn;
 	@FXML private Label lblIndicador, lblDefinicaoIndicador;
-	@FXML private UCTextField inputValorReferencia;
 	
-	@Autowired private IndicadorService service;
-	
-	private Indicador selectedIndicador;
+	//private Indicador selectedIndicador;
 
 	@FXML
 	public void initialize() {
 
 		indicadorColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("descricao"));
 		siglaColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("sigla"));
-		valorReferenciaColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("valorReferencia"));
-		valorApuradoColumn.setCellValueFactory(new PropertyValueFactory<Indicador,String>("valorApurado"));
+		valorReferenciaColumn.setCellValueFactory(new PropertyDecimalValueFactory<Indicador,String>("valorReferencia"));
+		valorApuradoColumn.setCellValueFactory(new PropertyDecimalValueFactory<Indicador,String>("valorApurado"));
 		resultadoColumn.setCellFactory(new TableCellValueFactoryResultadoIndicador<Indicador,String>("resultado"));
 		
 		table.setItems(service.findAllAsObservableList());
-		if ( table.getItems() != null && table.getItems().size() > 0 ){
+		
+		super.initialize((IndicadorFormController)MainApp.getBean(IndicadorFormController.class));
+		
+		/*if ( table.getItems() != null && table.getItems().size() > 0 ){
 			table.getSelectionModel().clearAndSelect(0);
 			selectRowTableHandler(table.getItems().get(0));
 		}
@@ -60,25 +59,23 @@ public class IndicadorOverviewController {
 					handleSalvar();
 				}
 			}
-		});
-		
-		MaskFieldUtil.decimal(inputValorReferencia);
+		});*/
 		
 	}
-	
-	private void selectRowTableHandler(Indicador indicador) {
+	/*
+	protected void selectRowTableHandler(Indicador indicador) {
 		if ( indicador != null ){
 			selectedIndicador = indicador;
 			lblIndicador.setText(indicador.getDescricao());
 			lblDefinicaoIndicador.setText(indicador.getDefinicao());
-			inputValorReferencia.setText(indicador.getValorReferencia());
+			inputValorReferencia.setText(NumberFormatUtil.decimalFormat(indicador.getValorReferencia()));
 		}
 	}
 	
 	@FXML
 	private void handleSalvar(){
 		if ( selectedIndicador != null ){
-			selectedIndicador.setValorReferencia(inputValorReferencia.getText());
+			selectedIndicador.setValorReferencia(NumberFormatUtil.fromString(inputValorReferencia.getText()));
 			service.save(selectedIndicador);
 			
 			for ( int index = 0; index < table.getItems().size(); index++ ){
@@ -89,10 +86,22 @@ public class IndicadorOverviewController {
 			}
 			
 		}
-	}
+	}*/
 
 	public String getFormName(){
-		return "view/painel/IndicadorOverview.fxml";
+		return "view/indicador/IndicadorOverview.fxml";
 	}
+
+	@Override
+	protected String getFormTitle() {
+		return "Indicador";
+	}
+	
+	@Override
+	@Resource(name = "indicadorService")
+	protected void setService(IService<Integer, Indicador> service) {
+		super.setService(service);
+	}
+
 
 }

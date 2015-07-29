@@ -24,7 +24,7 @@ import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
-import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;

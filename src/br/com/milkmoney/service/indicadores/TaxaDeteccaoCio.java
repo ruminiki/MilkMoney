@@ -28,12 +28,12 @@ import br.com.milkmoney.model.Parametro;
 @Service
 public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
 
-	@Autowired AnimalDao animalDao;
-	@Autowired ParametroDao parametroDao;
-	@Autowired CoberturaDao coberturaDao;
+	@Autowired private AnimalDao animalDao;
+	@Autowired private ParametroDao parametroDao;
+	@Autowired private CoberturaDao coberturaDao;
 	
 	@Override
-	public String getValue() {
+	public BigDecimal getValue() {
 
 		int diasIdadeMinimaParaCobertura = 0;
 		try{
@@ -59,10 +59,10 @@ public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
 				
 		if ( vacasEnseminadas.compareTo(BigInteger.ZERO) <= 0 ||
 				vacasDisponiveis.compareTo(BigInteger.ZERO) <= 0 ){
-			return String.valueOf(BigDecimal.ZERO);
+			return BigDecimal.ZERO;
 		}
 		
-		return String.valueOf(vacasEnseminadas.divide(vacasDisponiveis).multiply(BigInteger.valueOf(100)));
+		return BigDecimal.valueOf(vacasEnseminadas.divide(vacasDisponiveis).multiply(BigInteger.valueOf(100)).intValue());
 		
 	}
 	
