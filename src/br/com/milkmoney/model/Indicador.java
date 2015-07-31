@@ -174,8 +174,6 @@ public class Indicador extends AbstractEntity implements Serializable {
 			resultado = getValorApurado().multiply(BigDecimal.valueOf(100)).divide(getValorReferencia(), 2, RoundingMode.HALF_EVEN);
 		}
 		
-		
-		
 		if ( resultado.compareTo(BigDecimal.valueOf(100)) > 0 ){
 			resultado = resultado.subtract(BigDecimal.valueOf(100));
 		}
