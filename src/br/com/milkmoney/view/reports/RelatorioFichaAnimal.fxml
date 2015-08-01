@@ -46,6 +46,9 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
                <children>
+                  <ToggleButton fx:id="btnPDF" mnemonicParsing="false" text="PDF" />
+                  <ToggleButton fx:id="btnXLS" mnemonicParsing="false" text="XLS" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Executar Relatório">
                      <HBox.margin>
                         <Insets />

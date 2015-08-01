@@ -32,7 +32,7 @@ public class FormularioRegistroCoberturaController extends AbstractSelectAnimalP
 		sb.replace(sb.length(), sb.length(), "");
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA, sb.toString());
+			RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA, sb.toString());
 		
 		super.handleClose();
 		

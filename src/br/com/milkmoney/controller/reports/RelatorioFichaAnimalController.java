@@ -33,8 +33,13 @@ public class RelatorioFichaAnimalController extends AbstractSelectAnimalParamete
 		
 		sb.replace(sb.length(), sb.length(), "");
 		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
+			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
+		}else{
+			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.FICHA_ANIMAL, sb.toString());
+		}
 		
 		super.handleClose();
 		

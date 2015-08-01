@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +24,9 @@ public class AbstractSelectAnimalParametersReport {
 	@FXML protected UCTextField inputPesquisa;
 	@FXML protected ListView<Animal> listAnimais, listSelecionados;
 	@FXML protected Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
+	@FXML protected ToggleButton btnPDF, btnXLS;
+	
+	protected ToggleGroup toggleGroupFormato = new ToggleGroup();
 	
 	@Autowired protected AnimalService animalService;
 	@Autowired protected RelatorioService relatorioService;
@@ -91,6 +96,12 @@ public class AbstractSelectAnimalParametersReport {
 		btnRemoverTodos.setOnAction(action -> {
 			listSelecionados.getItems().clear();
 		});
+		
+		if ( btnPDF != null && btnXLS != null ){
+			btnXLS.setToggleGroup(toggleGroupFormato);
+			btnPDF.setToggleGroup(toggleGroupFormato);
+			toggleGroupFormato.selectToggle(btnPDF);
+		}
 		
 	}
 	
