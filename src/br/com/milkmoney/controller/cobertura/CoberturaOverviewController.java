@@ -28,6 +28,7 @@ import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormCont
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
+import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
@@ -74,6 +75,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
 	@Autowired private PartoFormController              partoFormController;
+	@Autowired private RootLayoutController             rootLayoutController;
 	@Autowired private AnimalService                    animalService;
 	@Autowired private ParametroService                 parametroService;
 	@Autowired private RelatorioService					relatorioService;
@@ -279,6 +281,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
+		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
 	
 	//====CONTEXT MENUS =======

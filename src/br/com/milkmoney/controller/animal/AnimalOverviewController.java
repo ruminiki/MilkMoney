@@ -29,6 +29,7 @@ import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milkmoney.controller.raca.RacaOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
+import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.controller.semen.SemenReducedOverviewController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
@@ -98,6 +99,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
+	@Autowired private RootLayoutController rootLayoutController;
 	
 	private MenuItem encerramentoLactacaoMenuItem = new MenuItem("Encerrar Lactação");
 	private MenuItem registrarMorteMenuItem               = new MenuItem();
@@ -396,6 +398,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
+		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
 	
 }
