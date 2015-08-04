@@ -2,18 +2,24 @@
 - revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
 - na venda fazer a somatória de animais vendidos e do valor total
 
-- rename milkSys to milkMoney
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
-- instalador
-- fazer cadastro de procedimento (listar nos eventos) (opção no botão direito para acesso a tela de manutenção do cadastro)
+- calcular média de produção da lactação;
+- quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
+- fazer cadastro de procedimento (listar nos eventos) (opção no botão direito para acesso a tela de manutenção do cadastro)
+- fazer cadastro de lotes;
+
+- Relatórios
+	- Coberturas;
+	- Previsão de Parto;
+	- Rebanho;
+	- Indicadores;
 
 - Ao clicar sobre a quantidade de animais vendidos (tabela vendas) exibir os animais;
 - está permitindo deletar animal sem remover o parto.
 - Como fazer com uma vaca que pari e não entrará em lactação?
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
-- erro casas decimais valor leite ex: 0,80
 - três casas decimais valor do leite
 	
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos

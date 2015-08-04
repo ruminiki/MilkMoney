@@ -398,7 +398,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
+		
 		rootLayoutController.setMessage("O relatório está sendo executado...");
+		
 	}
 	
 }

@@ -32,7 +32,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai, inputValor, inputRaca;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
-	@FXML private Button btnRemoverMae, btnRemoverPai, btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
+	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
 
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -55,17 +55,14 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		
 		if ( getObject().getMae() != null ){
 			inputMae.textProperty().set(getObject().getMae().getNumeroNome());
-			btnRemoverMae.setVisible(true);
 		}
 		
 		if ( getObject().getPaiMontaNatural() != null ){
 			inputPai.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());
-			btnRemoverPai.setVisible(true);
 		}
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
 			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());
-			btnRemoverPai.setVisible(true);
 		}
 		
 		if ( getObject().getRaca() != null ){
@@ -77,8 +74,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			btnBuscarMae.setDisable(true);
 			btnBuscarPaiEnseminacaoArtificial.setDisable(true);
 			btnBuscarPaiMontaNatural.setDisable(true);
-			btnRemoverMae.setDisable(true);
-			btnRemoverPai.setDisable(true);
 			inputDataNascimento.setDisable(true);
 			inputSexo.setDisable(true);
 		}
@@ -108,8 +103,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			inputMae.textProperty().set("");
 		}
 		
-		btnRemoverMae.setVisible(getObject().getMae() != null);
-		
 	}
 	
 	@FXML
@@ -136,7 +129,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}else{
 			inputPai.textProperty().set("");
 		}
-		btnRemoverPai.setVisible(getObject().getPaiMontaNatural() != null || getObject().getPaiEnseminacaoArtificial() != null);
+
 	}
 	
 	@FXML
@@ -154,7 +147,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}else{
 			inputPai.textProperty().set("");
 		}
-		btnRemoverPai.setVisible(getObject().getPaiMontaNatural() != null || getObject().getPaiEnseminacaoArtificial() != null);
 		
 	}
 	
@@ -162,7 +154,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	private void handleRemoverMae(){
 		getObject().setMae(null);
 		inputMae.setText("");
-		btnRemoverMae.setVisible(false);
 		btnBuscarMae.requestFocus();
 	}
 	
@@ -171,7 +162,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		getObject().setPaiMontaNatural(null);
 		getObject().setPaiEnseminacaoArtificial(null);
 		inputPai.setText("");
-		btnRemoverPai.setVisible(false);
 		btnBuscarPaiEnseminacaoArtificial.requestFocus();
 	}
 	
