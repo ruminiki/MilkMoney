@@ -22,10 +22,24 @@ public class FichaAnimalDao extends AbstractGenericDao<Integer, FichaAnimal> {
 		
 		List<FichaAnimal> fichasAnimal = new ArrayList<FichaAnimal>();
 		
-		Query query = entityManager.createQuery("SELECT c.data FROM Cobertura c WHERE c.femea = :animal order by c.data");
+		Query query = entityManager.createQuery("SELECT coalesce(p.dataRealizacao, p.dataAgendada) as data, "
+				+ "p.tipoProcedimento.descricao FROM Procedimento p inner join p.animais a "
+				+ "WHERE a = :animal order by 1");
 		query.setParameter("animal", animal);
 		
 		List<Object> result = query.getResultList();
+		
+		for ( int index = 0; index < result.size(); index++ ){
+			if ( result.get(index) != null ){
+				Object[] o = (Object[]) result.get(index);
+				fichasAnimal.add(new FichaAnimal(new Date(((java.sql.Date)o[0]).getTime()), String.valueOf(o[1]) ));
+			}
+		}
+		
+		query = entityManager.createQuery("SELECT c.data FROM Cobertura c WHERE c.femea = :animal order by c.data");
+		query.setParameter("animal", animal);
+		
+		result = query.getResultList();
 		
 		for ( int index = 0; index < result.size(); index++ ){
 			if ( result.get(index) != null )
