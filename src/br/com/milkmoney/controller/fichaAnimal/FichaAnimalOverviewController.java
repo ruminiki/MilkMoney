@@ -19,8 +19,8 @@ import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.Lactacao;
-import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.FichaAnimalService;
+import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 
 @Controller
@@ -37,6 +37,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	@FXML private TableColumn<Lactacao, String> dataTerminoLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> mesesEmLactacaoColumn;
+	@FXML private TableColumn<Lactacao, String> mediaProducaoColumn;
 	
 	@FXML private Label lblHeader;
 	
@@ -55,7 +56,7 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	
 	
 	@Autowired private FichaAnimalService fichaAnimalService;
-	@Autowired private AnimalService animalService;
+	@Autowired private LactacaoService lactacaoService;
 	@Autowired private IndicadorService indicadorService;
 	
 	private Animal animal;
@@ -86,9 +87,10 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		dataTerminoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataFim"));
 		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("diasLactacao"));
 		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mesesLactacao"));
+		mediaProducaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mediaProducao"));
 		
 		tableLactacoes.getItems().clear();
-		tableLactacoes.setItems(animalService.findLactacoesAnimal(animal));
+		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
 		
 		lblHeader.setText("FICHA ANIMAL " + animal.toString());
 		

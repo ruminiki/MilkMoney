@@ -29,8 +29,8 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.ProducaoIndividual;
 import br.com.milkmoney.model.State;
-import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
+import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ProducaoIndividualService;
 import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 
@@ -44,6 +44,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private TableColumn<Lactacao, String> dataTerminoLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> diasEmLactacaoColumn;
 	@FXML private TableColumn<Lactacao, String> mesesEmLactacaoColumn;
+	@FXML private TableColumn<Lactacao, String> mediaProducaoColumn;
 	
 	@FXML private TableColumn<ProducaoIndividual, LocalDate> dataColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> primeiraOrdenhaColumn;
@@ -56,7 +57,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private VBox vBoxChart;
 	private LineChart<String, Number> lineChart;
 	
-	@Autowired private AnimalService animalService;
+	@Autowired private LactacaoService lactacaoService;
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
 	@Autowired private ProducaoIndividualFormController producaoIndividualFormController;
 	
@@ -70,11 +71,12 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		numeroLactacaoColumn.setCellFactory(new TableCellIndexFactory<Lactacao,String>());
 		dataInicioLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataInicio"));
 		dataTerminoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("dataFim"));
-		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoDias"));
-		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("duracaoLactacaoMeses"));
+		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("diasLactacao"));
+		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mesesLactacao"));
+		mediaProducaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mediaProducao"));
 		
 		tableLactacoes.getItems().clear();
-		tableLactacoes.setItems(animalService.findLactacoesAnimal(animal));
+		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
 		
 		lblHeader.setText("PRODUÇÃO INDIVIDUAL " + animal.toString());
 	
@@ -171,6 +173,9 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		
 		lineChart.getData().clear();
 		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+		
+		//recarrega as lactações para atualizar a média de produção do período
+		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
 		
 	}
 	

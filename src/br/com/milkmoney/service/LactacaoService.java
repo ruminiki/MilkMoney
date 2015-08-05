@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
@@ -88,8 +89,16 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 		
 	}
 
-	public List<Lactacao> findLactacoesAnimal(Animal animal) {
-		return dao.findByAnimal(animal);
+	public ObservableList<Lactacao> findLactacoesAnimal(Animal animal) {
+		
+		List<Lactacao> lactacoes = dao.findByAnimal(animal);
+		
+		for ( Lactacao lactacao : lactacoes ){
+			lactacao.setMediaProducao(producaoIndividualService.getMediaAnimalPeriodo(
+					animal, lactacao.getDataInicio(), lactacao.getDataFim() == null ? new Date() : lactacao.getDataFim()));
+		}
+		
+		return FXCollections.observableArrayList(lactacoes);
 	}
 	
 }

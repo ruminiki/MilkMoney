@@ -24,8 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Formula;
+import javax.persistence.Transient;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -45,7 +44,9 @@ public class Lactacao extends AbstractEntity implements Serializable {
 	private ObjectProperty<Animal>    animal                     = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Parto>     parto                      = new SimpleObjectProperty<Parto>();
 	private StringProperty            motivoEncerramentoLactacao = new SimpleStringProperty(MotivoEncerramentoLactacao.PREPARACAO_PARTO);
-
+	@Transient
+	private Float                     mediaProducao;
+	
 	public Lactacao() {
 	}
 	
@@ -159,6 +160,15 @@ public class Lactacao extends AbstractEntity implements Serializable {
 				DateUtil.asLocalDate(getDataFim() != null ? getDataFim() : new Date()));
 	}
 	
+	@Transient
+	public Float getMediaProducao() {
+		return mediaProducao;
+	}
+
+	public void setMediaProducao(Float mediaProducao) {
+		this.mediaProducao = mediaProducao;
+	}
+
 	@Override
 	public String toString() {
 		return DateUtil.format(getDataInicio()) + " - " + DateUtil.format(getDataFim());

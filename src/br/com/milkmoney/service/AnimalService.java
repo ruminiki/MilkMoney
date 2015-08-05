@@ -17,7 +17,6 @@ import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.AnimalValidation;
@@ -26,7 +25,6 @@ import br.com.milkmoney.validation.AnimalValidation;
 public class AnimalService implements IService<Integer, Animal>{
 
 	@Autowired private AnimalDao dao;
-	@Autowired private LactacaoService lactacaoService;
 	@Autowired private PartoDao partoDao;
 	@Autowired private CoberturaDao coberturaDao;
 
@@ -81,10 +79,6 @@ public class AnimalService implements IService<Integer, Animal>{
 		return dao.contaAnimaisEmLactacao(data);
 	}
 	
-	public ObservableList<Lactacao> findLactacoesAnimal(Animal animal) {
-		return FXCollections.observableArrayList(lactacaoService.findLactacoesAnimal(animal));
-	}
-
 	public Long getNumeroPartos(Animal animal) {
 		return partoDao.countByAnimal(animal);
 	}
