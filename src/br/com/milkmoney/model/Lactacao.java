@@ -25,6 +25,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Formula;
+
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
 

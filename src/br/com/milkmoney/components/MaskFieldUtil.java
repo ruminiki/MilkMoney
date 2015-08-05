@@ -139,7 +139,8 @@ public abstract class MaskFieldUtil {
         textField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            	if ( !oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
+            	if ( oldValue != null && newValue != null &&
+            			!oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
             		String value = textField.getText();
                     value = value.replaceAll("[^0-9]", "");
                     value = value.replaceAll("([0-9]{1})([0-9]{2})$", "$1,$2");
@@ -155,18 +156,20 @@ public abstract class MaskFieldUtil {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable,
 					Boolean oldValue, Boolean newValue) {
-				if ( textField.getText().length() == 3 && textField.getText().contains(",") ){
-					textField.setText(textField.getText()+"0");
-				}
-				if ( textField.getText().length() == 2 ){ 
-					if ( textField.getText().contains(",") ){
-						textField.setText(textField.getText()+"00");
-					}else{
+				if ( textField != null && textField.getText() != null ){
+					if ( textField.getText().length() == 3 && textField.getText().contains(",") ){
+						textField.setText(textField.getText()+"0");
+					}
+					if ( textField.getText().length() == 2 ){ 
+						if ( textField.getText().contains(",") ){
+							textField.setText(textField.getText()+"00");
+						}else{
+							textField.setText(textField.getText()+",00");
+						}
+					}
+					if ( textField.getText().length() == 1 ){
 						textField.setText(textField.getText()+",00");
 					}
-				}
-				if ( textField.getText().length() == 1 ){
-					textField.setText(textField.getText()+",00");
 				}
 			}
 

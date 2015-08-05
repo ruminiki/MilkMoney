@@ -182,5 +182,17 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		return somaProducao > 0 ? somaProducao/totalRegistros : somaProducao;
 		
 	}
+	
+	public Float getMediaAnimalPeriodo(Animal animal, Date inicio, Date fim){
+		float somaProducao = 0F;
+		int   totalRegistros = 0;
+		
+		for ( ProducaoIndividual producao : dao.findByAnimalPeriodo(animal, inicio, fim) ){
+			somaProducao += producao.getTotalProducaoDia().floatValue();
+			totalRegistros++;
+		}
+		
+		return somaProducao > 0 ? somaProducao/totalRegistros : somaProducao;
+	}
 
 }

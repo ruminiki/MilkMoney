@@ -37,11 +37,13 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 	@Override
 	protected void handleSelectItemTable() {
 		super.handleSelectItemTable();
-		listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
-		lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-		lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
-		lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
-		lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
+		if ( getObject() != null ){
+			listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
+			lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
+			lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
+			lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
+			lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
+		}
 	}
 	
 	@Override

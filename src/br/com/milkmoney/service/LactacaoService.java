@@ -22,6 +22,7 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 
 	@Autowired private LactacaoDao dao;
 	@Autowired private CoberturaService coberturaService;
+	@Autowired private ProducaoIndividualService producaoIndividualService;
 
 	@Override
 	@Transactional
@@ -90,5 +91,5 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	public List<Lactacao> findLactacoesAnimal(Animal animal) {
 		return dao.findByAnimal(animal);
 	}
-
+	
 }

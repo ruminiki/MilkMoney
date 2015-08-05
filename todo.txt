@@ -8,7 +8,6 @@
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
 - fazer cadastro de procedimento (listar nos eventos) (opção no botão direito para acesso a tela de manutenção do cadastro)
-- fazer cadastro de lotes;
 
 - Relatórios
 	- Coberturas;

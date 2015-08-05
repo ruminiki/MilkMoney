@@ -42,6 +42,7 @@
                                     <TableColumn fx:id="mesesEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Meses" />
                                  </columns>
                               </TableColumn>
+                              <TableColumn fx:id="mediaProducaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Média (l)" />
                           </columns>
                         </TableView>
                      </children>
