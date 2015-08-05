@@ -47,6 +47,11 @@ public class ApplicationService{
 		if ( file != null )
 			dao.executeSqlFile(file);
 		
+		//tipo procedimento
+		file = getFile(getClass().getClassLoader().getResource("sql/TIPO_PROCEDIMENTO.SQL"));
+		if ( file != null )
+			dao.executeSqlFile(file);
+		
 	}
 	
 	

@@ -8,7 +8,8 @@
 		<class>br.com.milkmoney.model.Raca</class>
 		<class>br.com.milkmoney.model.FinalidadeLote</class>
 		<class>br.com.milkmoney.model.PrecoLeite</class>
-		<class>br.com.milkmoney.model.SituacaoProcedimentoAgendado</class>
+		<class>br.com.milkmoney.model.Procedimento</class>
+		<class>br.com.milkmoney.model.TipoProcedimento</class>
 		<class>br.com.milkmoney.model.EntregaLeite</class>
 		<class>br.com.milkmoney.model.ProducaoLeite</class>
 		<class>br.com.milkmoney.model.ProducaoIndividual</class>

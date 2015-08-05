@@ -2,6 +2,7 @@ package br.com.milkmoney.model;
 
 import java.io.Serializable;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
@@ -14,22 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
-/**
- * The persistent class for the situacaoprocedimentoagendado database table.
- * 
- */
 @Entity
-@Table(name="situacaoProcedimentoAgendado")
-@NamedQuery(name="SituacaoProcedimentoAgendado.findAll", query="SELECT s FROM SituacaoProcedimentoAgendado s")
-public class SituacaoProcedimentoAgendado extends AbstractEntity implements Serializable {
+@Table(name="tipoProcedimento")
+@NamedQuery(name="TipoProcedimento.findAll", query="SELECT f FROM TipoProcedimento f")
+public class TipoProcedimento extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private StringProperty descricao = new SimpleStringProperty();
 
-	private StringProperty descricao;
-
-	public SituacaoProcedimentoAgendado() {
+	public TipoProcedimento() {
 	}
 
 	public int getId() {
@@ -50,6 +46,11 @@ public class SituacaoProcedimentoAgendado extends AbstractEntity implements Seri
 	
 	public StringProperty descricaoProperty(){
 		return this.descricao;
+	}
+	
+	@Override
+	public String toString() {
+		return getDescricao();
 	}
 
 }

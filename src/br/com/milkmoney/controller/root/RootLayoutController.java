@@ -156,7 +156,13 @@ public class RootLayoutController {
     @FXML
     protected void handleCadastroLote() {
     	openForm("view/lote/LoteOverview.fxml");
-    	setTitle("Rebanho > Lotes");
+    	setTitle("Rebanho > Lote");
+    }
+    
+    @FXML
+    protected void handleCadastroProcedimento() {
+    	openForm("view/procedimento/ProcedimentoOverview.fxml");
+    	setTitle("Rebanho > Procedimento");
     }
     
     //-----reports------

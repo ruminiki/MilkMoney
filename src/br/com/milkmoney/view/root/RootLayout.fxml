@@ -22,7 +22,8 @@
       					</accelerator>
       			 	  </MenuItem>
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroCobertura" text="Reprodução" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroLote" text="Lotes" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroLote" text="Lote" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroProcedimento" text="Procedimento" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda de Animais" />
                         <SeparatorMenuItem mnemonicParsing="false" />
       				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
