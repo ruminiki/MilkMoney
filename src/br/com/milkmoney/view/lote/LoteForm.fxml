@@ -8,14 +8,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="506.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.reports.FormularioRegistroCoberturaController">
+<AnchorPane prefHeight="506.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lote.LoteFormController">
    <children>
       <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane prefHeight="166.0" prefWidth="733.0" VBox.vgrow="SOMETIMES">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="84.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="649.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="92.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="295.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="347.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,9 +27,14 @@
                   <Label text="Descrição: " />
                   <Label text="Finalidade: " GridPane.rowIndex="1" />
                   <Label text="Ativo: " GridPane.rowIndex="2" />
-                  <UCTextField maxWidth="350.0" prefWidth="250.0" GridPane.columnIndex="1" />
-                  <ComboBox prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+                  <ComboBox fx:id="inputAtivo" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputFinalidade" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarFinalidade" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
             </GridPane>
             <Separator prefWidth="200.0" />
@@ -55,7 +61,7 @@
                               <Label text="ANIMAIS" />
                            </children>
                         </HBox>
-                        <ListView fx:id="listSelecionados" focusTraversable="false" />
+                        <ListView fx:id="listAnimaisSelecionados" focusTraversable="false" />
                      </children>
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="19.0">
@@ -84,7 +90,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblTotalAnimais1" text="30,5">
+                              <Label fx:id="lblMediaProducao" text="30,5">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -101,7 +107,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblTotalAnimais11" text="30,5">
+                              <Label fx:id="lblMediaIdade" text="30,5">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -113,12 +119,12 @@
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;">
                            <children>
-                              <Label text="Média Lactações">
+                              <Label text="Média Lactções">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblTotalAnimais111" text="30,5">
+                              <Label fx:id="lblMediaLactacoes" text="30,5">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
@@ -137,12 +143,12 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Salvar">
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleClose" text="Cancelar" />
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>
                   <Insets right="5.0" />

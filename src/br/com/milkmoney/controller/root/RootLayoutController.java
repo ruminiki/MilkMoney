@@ -153,6 +153,12 @@ public class RootLayoutController {
     	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml");
     }
     
+    @FXML
+    protected void handleCadastroLote() {
+    	openForm("view/lote/LoteOverview.fxml");
+    	setTitle("Rebanho > Lotes");
+    }
+    
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){

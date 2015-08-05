@@ -17,6 +17,11 @@ public class ApplicationService{
 	public void initilizeDatabase(){
 		File file = null;
 		
+		//propriedade
+		file = getFile(getClass().getClassLoader().getResource("sql/PROPRIEDADE.SQL"));
+		if ( file != null )
+			dao.executeSqlFile(file);
+		
 		//indicadores
 		file = getFile(getClass().getClassLoader().getResource("sql/INDICADOR.SQL"));
 		if ( file != null )
@@ -41,6 +46,7 @@ public class ApplicationService{
 		file = getFile(getClass().getClassLoader().getResource("sql/SITUACAO_ANIMAL_VIEW.SQL"));
 		if ( file != null )
 			dao.executeSqlFile(file);
+		
 	}
 	
 	

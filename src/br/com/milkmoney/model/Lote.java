@@ -11,21 +11,23 @@ import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import br.com.milkmoney.components.FieldRequired;
 
 
 @Entity
-@NamedQuery(name="Lote.findAll", query="SELECT l FROM Lote l")
+@Table(name="lote")
+@NamedQuery(name="Lote.findAll", query="SELECT a FROM Lote a")
 public class Lote extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,8 +35,8 @@ public class Lote extends AbstractEntity implements Serializable {
 	private int id;
 	private StringProperty                 descricao      = new SimpleStringProperty();
 	private ObjectProperty<FinalidadeLote> finalidadeLote = new SimpleObjectProperty<FinalidadeLote>();
-	private ObjectProperty<Boolean>        ativo          = new SimpleObjectProperty<Boolean>();
-	private List<LoteAnimal>               loteAnimal     = new ArrayList<LoteAnimal>();
+	private StringProperty                 ativo          = new SimpleStringProperty(SimNao.SIM);
+	private List<Animal>                   animais        = new ArrayList<Animal>();
 	
 	public Lote() {
 	}
@@ -67,7 +69,7 @@ public class Lote extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(targetEntity=FinalidadeLote.class)
-	@JoinColumn(name="finalidade")
+	@JoinColumn(name="finalidadeLote")
 	@FieldRequired(message="finalidade")
 	public FinalidadeLote getFinalidadeLote() {
 		return finalidadeLote.get();
@@ -84,27 +86,28 @@ public class Lote extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="ativo")
-	public Boolean isAtivo() {
+	public String isAtivo() {
 		return this.ativo.get();
 	}
 
-	public void setAtivo(Boolean ativo) {
+	public void setAtivo(String ativo) {
 		this.ativo.set(ativo);
 	}
 	
-	public ObjectProperty<Boolean> ativoProperty(){
+	public StringProperty ativoProperty(){
 		return ativo;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=LoteAnimal.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name="lote")
-	public List<LoteAnimal> getLoteAnimal() {
-		return loteAnimal;
+	@ManyToMany
+	@JoinTable(name="loteAnimal", joinColumns={@JoinColumn(name="lote", referencedColumnName="id")},
+	      inverseJoinColumns={@JoinColumn(name="animal", referencedColumnName="id")})
+	public List<Animal> getAnimais() {
+		return animais;
 	}
 
-	public void setLoteAnimal(List<LoteAnimal> loteAnimal) {
-		this.loteAnimal = loteAnimal;
+	public void setAnimais(List<Animal> animais) {
+		this.animais = animais;
 	}
 
 	@Override

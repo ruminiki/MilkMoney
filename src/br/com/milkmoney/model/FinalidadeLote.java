@@ -51,5 +51,10 @@ public class FinalidadeLote extends AbstractEntity implements Serializable {
 	public StringProperty descricaoProperty(){
 		return this.descricao;
 	}
+	
+	@Override
+	public String toString() {
+		return getDescricao();
+	}
 
 }
