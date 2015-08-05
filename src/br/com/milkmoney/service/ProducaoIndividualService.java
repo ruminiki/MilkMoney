@@ -168,5 +168,19 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
     	return series;
     	
 	}
+	
+	public Float getMediaProducaoAnimal(Animal animal){
+			
+		float somaProducao = 0F;
+		int   totalRegistros = 0;
+		
+		for ( ProducaoIndividual producao : dao.findByAnimal(animal) ){
+			somaProducao += producao.getTotalProducaoDia().floatValue();
+			totalRegistros++;
+		}
+		
+		return somaProducao > 0 ? somaProducao/totalRegistros : somaProducao;
+		
+	}
 
 }

@@ -37,13 +37,6 @@ public class ProducaoIndividualDao extends AbstractGenericDao<Integer, ProducaoI
 	@SuppressWarnings("unchecked")
 	public List<ProducaoIndividual> findByAnimal(Animal animal) {
 		
-		//recupera os registros com o preco do leite no mês do lançamento da produção
-		/*String hql = "SELECT c, "
-				   + "(SELECT coalesce(p.valorRecebido, p.valorMaximoPraticado) * (c.primeiraOrdenha + c.segundaOrdenha + c.terceiraOrdenha) FROM PrecoLeite p "
-				   + "where p.codigoMes = month(c.data) and anoReferencia = year(c.data)) as valor "
-				   + "FROM ProducaoIndividual c "
-				   + "WHERE c.animal = :animal order by c.data";*/
-		
 		Query query = entityManager.createQuery("SELECT c FROM ProducaoIndividual c WHERE c.animal = :animal order by data");
 		query.setParameter("animal", animal);
 		

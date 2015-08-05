@@ -24,6 +24,7 @@ import br.com.milkmoney.model.Lote;
 import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
+import br.com.milkmoney.service.LoteService;
 
 @Controller
 public class LoteFormController extends AbstractFormController<Integer, Lote>  {
@@ -56,7 +57,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 			public void handle(MouseEvent event) {
 				
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					if ( !listAnimaisSelecionados.getItems().contains(listAnimais.getSelectionModel().getSelectedItem()) ){
+					if ( !animalAlreadySelected(listAnimais.getSelectionModel().getSelectedItem()) ){
 						adicionarAnimalAoLote(listAnimais.getSelectionModel().getSelectedItem());
 					}
 					listAnimais.getSelectionModel().clearSelection();
@@ -70,7 +71,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 				
 				for ( Animal animal : listAnimais.getSelectionModel().getSelectedItems() ){
 					
-					if ( !listAnimaisSelecionados.getItems().contains(animal) ){
+					if ( !animalAlreadySelected(animal) ){
 						adicionarAnimalAoLote(animal);
 					}
 					
@@ -86,7 +87,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 			
 			for ( Animal animal : listAnimais.getItems() ){
 				
-				if ( !listAnimaisSelecionados.getItems().contains(animal) ){
+				if ( !animalAlreadySelected(animal) ){
 					adicionarAnimalAoLote(animal);
 				}
 				
@@ -111,16 +112,37 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 			inputFinalidade.setText(getObject().getFinalidadeLote().getDescricao());
 		}
 		
+		atualizaResumo();
+		
+	}
+	
+	private boolean animalAlreadySelected(Animal animal){
+		
+		for ( Animal a : listAnimaisSelecionados.getItems() ){
+			if ( a.getId() == animal.getId() )
+				return true;
+		}
+		
+		return false;
+	}
+	
+	private void atualizaResumo(){
+		lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
+		lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
+		lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
+		lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
 	}
 	
 	private void adicionarAnimalAoLote(Animal animal){
 		listAnimaisSelecionados.getItems().add(animal);
 		getObject().getAnimais().add(animal);
+		atualizaResumo();
 	}
 	
 	private void removerAnimalLote(Animal animal){
 		listAnimaisSelecionados.getItems().remove(animal);
 		getObject().getAnimais().remove(animal);
+		atualizaResumo();
 	}
 	
 	@FXML

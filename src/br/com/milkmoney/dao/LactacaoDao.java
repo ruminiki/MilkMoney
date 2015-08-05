@@ -33,5 +33,19 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		query.setParameter("animal", animal);
 		return query.getResultList();
 	}
+	
+	public long countByAnimal(Animal animal) {
+		
+		Query query = entityManager.createQuery("SELECT count(p) FROM Lactacao p where p.animal = :animal");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("animal", animal);
+		
+		try{
+			return (long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+		
+	}
 
 }
