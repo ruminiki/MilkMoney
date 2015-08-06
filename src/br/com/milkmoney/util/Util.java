@@ -37,4 +37,21 @@ public class Util {
 		return optionsMesReferencia;
 	}
 	
+	public static ObservableList<String> generateListMonthsAbrev(){
+		ObservableList<String> optionsMesReferencia = FXCollections.observableArrayList();
+		optionsMesReferencia.add("JAN");
+		optionsMesReferencia.add("FEV");
+		optionsMesReferencia.add("MAR");
+		optionsMesReferencia.add("ABR");
+		optionsMesReferencia.add("MAI");
+		optionsMesReferencia.add("JUN");
+		optionsMesReferencia.add("JUL");
+		optionsMesReferencia.add("AGO");
+		optionsMesReferencia.add("SET");
+		optionsMesReferencia.add("OUT");
+		optionsMesReferencia.add("NOV");
+		optionsMesReferencia.add("DEZ");
+		return optionsMesReferencia;
+	}
+	
 }

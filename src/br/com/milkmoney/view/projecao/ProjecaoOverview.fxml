@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="617.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.projecao.ProjecaoOverviewController">
+   <children>
+      <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" minHeight="30.0" style="-fx-border-color: #CCC;">
+               <children>
+                  <Label fx:id="lblHeader" text="DIMENSIONAMENTO DO REBANHO E PRODUÇÃO" />
+               </children>
+            </HBox>
+            <VBox>
+               <children>
+                  <HBox spacing="5.0">
+                     <children>
+                        <TableView fx:id="table" focusTraversable="false" maxHeight="280.0" prefHeight="305.0" HBox.hgrow="SOMETIMES">
+                          <columns>
+                              <TableColumn fx:id="periodoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Período" />
+                            <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animais">
+                                 <columns>
+                                    <TableColumn fx:id="animaisLactacaoColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Lactação" />
+                                    <TableColumn fx:id="percentualVariacaoAnimaisLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
+                                    <TableColumn fx:id="animaisSecosColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Secos" />
+                                    <TableColumn fx:id="percentualVariacaoAnimaisSecosColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
+                                 </columns>
+                              </TableColumn>
+                            <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Produção">
+                                 <columns>
+                                    <TableColumn fx:id="producaoDiariaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Diária" />
+                                    <TableColumn fx:id="percentualVariacaoProducaoDiariaColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
+                                    <TableColumn fx:id="producaoMensalColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Mensal" />
+                                 </columns>
+                              </TableColumn>
+                              <TableColumn fx:id="faturamentoColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Faturamento" />
+                              <TableColumn fx:id="percentualVariacaoFaturamentoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox fx:id="vbChart" prefHeight="200.0" prefWidth="100.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

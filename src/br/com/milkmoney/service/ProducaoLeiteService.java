@@ -153,5 +153,60 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
     	
     }
 	
+	public Double getMediaProducaoIndividualPeriodo(Date dataInicio, Date dataFim){
+		
+		double mediaProducaoIndividualDiaria = 0;
+		
+		List<ProducaoLeite> producaoLeitePeriodo = dao.findAllByPeriodo(dataInicio, dataFim);
+		
+		int diasRegistrados = 0;
+		
+		for ( ProducaoLeite producaoLeite : producaoLeitePeriodo ){
+			
+			if ( producaoLeite.getVolumeProduzido().compareTo(BigDecimal.ZERO) > 0 ){
+				mediaProducaoIndividualDiaria += producaoLeite.getMediaProducao().doubleValue();
+				diasRegistrados++;
+			}
+			
+		}
+		
+		return diasRegistrados > 0 ? mediaProducaoIndividualDiaria / diasRegistrados : 0;
+		
+	}
+	
+	public Double getMediaProducaoDiariaPeriodo(Date dataInicio, Date dataFim){
+		
+		double totalProducaoDiaria = 0;
+		
+		List<ProducaoLeite> producaoLeitePeriodo = dao.findAllByPeriodo(dataInicio, dataFim);
+		
+		int diasRegistrados = 0;
+		
+		for ( ProducaoLeite producaoLeite : producaoLeitePeriodo ){
+			
+			if ( producaoLeite.getVolumeProduzido().compareTo(BigDecimal.ZERO) > 0 ){
+				totalProducaoDiaria += producaoLeite.getVolumeProduzido().doubleValue();
+				diasRegistrados++;
+			}
+			
+		}
+		
+		return diasRegistrados > 0 ? totalProducaoDiaria / diasRegistrados : 0;
+		
+	}
+	
+	public Double getProducaoPeriodo(Date dataInicio, Date dataFim){
+		
+		double producaoPeriodo = 0;
+		
+		List<ProducaoLeite> producaoLeitePeriodo = dao.findAllByPeriodo(dataInicio, dataFim);
+		
+		for ( ProducaoLeite producaoLeite : producaoLeitePeriodo ){
+			producaoPeriodo += producaoLeite.getVolumeProduzido().doubleValue();
+		}
+		
+		return producaoPeriodo;
+		
+	}
 	
 }

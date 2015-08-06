@@ -102,15 +102,20 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         
         vBoxChart.getChildren().add(lineChart);
         
-        tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        	lactacao = newValue;
-    		refreshTableOverview();
-        });
+        tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowLactacaoTableHandler(newValue));
         
 		super.initialize(producaoIndividualFormController);
 		
 	}
 	
+	private void selectRowLactacaoTableHandler(Lactacao newValue) {
+    	if ( newValue != null && data != null ){
+    		lactacao = newValue;
+    		data.clear();
+    		data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+    	}
+	}
+
 	@Override
 	public void handleNew() {
 		setObject(new ProducaoIndividual(animal));
@@ -176,6 +181,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		
 		//recarrega as lactações para atualizar a média de produção do período
 		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
+		tableLactacoes.getSelectionModel().select(lactacao);
 		
 	}
 	

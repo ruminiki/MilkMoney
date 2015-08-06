@@ -58,7 +58,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	//jpa
 	private Parto                       parto;
 	private List<ConfirmacaoPrenhes>    confirmacoesPrenhes;
-	private String                      situacaoCobertura;
+	private String                      situacaoCobertura            = SituacaoCobertura.INDEFINIDA;
 	
 	public Cobertura() {
 	}

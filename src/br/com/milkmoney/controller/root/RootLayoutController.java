@@ -165,6 +165,11 @@ public class RootLayoutController {
     	setTitle("Rebanho > Procedimento");
     }
     
+    @FXML
+    protected void handleProjecao() {
+    	openFormAsPopUp("view/projecao/ProjecaoOverview.fxml");
+    }
+    
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){
