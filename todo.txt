@@ -3,10 +3,12 @@
 - na venda fazer a somatória de animais vendidos e do valor total
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
-
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
-- fazer cadastro de procedimento (listar nos eventos) (opção no botão direito para acesso a tela de manutenção do cadastro)
+- Estimativa vacas lactação
+	- Partos previstos
+	- Enc. Lactações Previstos
+	- Prev. Produção
 
 
 - Relatórios

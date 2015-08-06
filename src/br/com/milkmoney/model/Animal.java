@@ -324,8 +324,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Transient
 	public Date getDataPrevisaoEncerramentoLactacao() {
 		
-		if ( dataUltimoParto != null ){
-			return DateUtil.asDate(DateUtil.asLocalDate(dataUltimoParto).plusMonths(7));
+		if ( dataUltimaCobertura != null ){
+			return DateUtil.asDate(DateUtil.asLocalDate(dataUltimaCobertura).plusMonths(7));
 		}
 		return null;
 	}

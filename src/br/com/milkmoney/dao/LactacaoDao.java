@@ -1,5 +1,6 @@
 package br.com.milkmoney.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -46,6 +47,16 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 			return 0L;
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Lactacao> findAllWithDurationIn(Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT lc FROM Lactacao lc where coalesce(lc.dataFim, :dataFim) between :dataInicio and :dataFim ");
+		
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
 	}
 
 }
