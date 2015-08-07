@@ -182,6 +182,18 @@ public class Indicador extends AbstractEntity implements Serializable {
 			resultado = BigDecimal.valueOf(100).subtract(resultado);
 		}
 		
+		if ( null != getObjetivo() && getObjetivo().equals(ObjetivoIndicador.ACIMA_VALOR_REFERENCIA) ){
+			if ( getValorApurado().compareTo(getValorReferencia()) < 0 ){
+				resultado = resultado.multiply(BigDecimal.valueOf(-1));
+			}
+		}
+		
+		if ( null != getObjetivo() &&  getObjetivo().equals(ObjetivoIndicador.ABAIXO_VALOR_REFERENCIA) ){
+			if ( getValorApurado().compareTo(getValorReferencia()) > 0 ){
+				resultado = resultado.multiply(BigDecimal.valueOf(-1));
+			}
+		}
+		
 		return resultado;
 		
 	}

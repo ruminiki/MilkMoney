@@ -23,7 +23,7 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	@Override
 	@Transactional
 	public boolean save(Indicador entity) {
-		IndicadorValidation.validate(entity);
+		validate(entity);
 		return dao.persist(entity);
 	}
 
@@ -54,7 +54,7 @@ public class IndicadorService implements IService<Integer, Indicador>{
 
 	@Override
 	public void validate(Indicador entity) {
-		
+		IndicadorValidation.validate(entity);
 	}
 	
 	
