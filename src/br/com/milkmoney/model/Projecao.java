@@ -1,21 +1,23 @@
 package br.com.milkmoney.model;
 
+import java.math.BigDecimal;
+
 import br.com.milkmoney.util.Util;
 
 
 public class Projecao {
 
-	private int    mesReferencia;
-	private int    anoReferencia;
-	private int    numeroAnimaisLactacao;
-	private double percentualVariacaoNumeroAnimaisLactacao;
-	private int    numeroAnimaisSecos;
-	private double percentualVariacaoNumeroAnimaisSecos;
-	private double producaoDiaria;
-	private double percentualVariacaoProducaoDiaria;
-	private double producaoMensal;
-	private double faturamentoMensal;
-	private double percentualVariacaFaturamentoMensal;
+	private int        mesReferencia;
+	private int        anoReferencia;
+	private int        numeroAnimaisLactacao;
+	private BigDecimal percentualVariacaoNumeroAnimaisLactacao;
+	private int        numeroAnimaisSecos;
+	private BigDecimal percentualVariacaoNumeroAnimaisSecos;
+	private BigDecimal producaoDiaria;
+	private BigDecimal percentualVariacaoProducaoDiaria;
+	private BigDecimal producaoMensal;
+	private BigDecimal faturamentoMensal;
+	private BigDecimal percentualVariacaFaturamentoMensal;
 	
 
 	public Projecao() {
@@ -58,63 +60,63 @@ public class Projecao {
 		this.numeroAnimaisSecos = numeroAnimaisSecos;
 	}
 
-	public double getProducaoDiaria() {
-		return producaoDiaria;
-	}
-
-	public void setProducaoDiaria(double producaoDiaria) {
-		this.producaoDiaria = producaoDiaria;
-	}
-
-	public double getProducaoMensal() {
-		return producaoMensal;
-	}
-
-	public void setProducaoMensal(double producaoMensal) {
-		this.producaoMensal = producaoMensal;
-	}
-
-	public double getFaturamentoMensal() {
-		return faturamentoMensal;
-	}
-
-	public void setFaturamentoMensal(double faturamentoMensal) {
-		this.faturamentoMensal = faturamentoMensal;
-	}
-	
-	public double getPercentualVariacaoNumeroAnimaisLactacao() {
+	public BigDecimal getPercentualVariacaoNumeroAnimaisLactacao() {
 		return percentualVariacaoNumeroAnimaisLactacao;
 	}
 
 	public void setPercentualVariacaoNumeroAnimaisLactacao(
-			double percentualVariacaoNumeroAnimaisLactacao) {
+			BigDecimal percentualVariacaoNumeroAnimaisLactacao) {
 		this.percentualVariacaoNumeroAnimaisLactacao = percentualVariacaoNumeroAnimaisLactacao;
 	}
 
-	public double getPercentualVariacaoNumeroAnimaisSecos() {
+	public BigDecimal getPercentualVariacaoNumeroAnimaisSecos() {
 		return percentualVariacaoNumeroAnimaisSecos;
 	}
 
 	public void setPercentualVariacaoNumeroAnimaisSecos(
-			double percentualVariacaoNumeroAnimaisSecos) {
+			BigDecimal percentualVariacaoNumeroAnimaisSecos) {
 		this.percentualVariacaoNumeroAnimaisSecos = percentualVariacaoNumeroAnimaisSecos;
 	}
 
-	public double getPercentualVariacaoProducaoDiaria() {
+	public BigDecimal getProducaoDiaria() {
+		return producaoDiaria;
+	}
+
+	public void setProducaoDiaria(BigDecimal producaoDiaria) {
+		this.producaoDiaria = producaoDiaria;
+	}
+
+	public BigDecimal getPercentualVariacaoProducaoDiaria() {
 		return percentualVariacaoProducaoDiaria;
 	}
 
 	public void setPercentualVariacaoProducaoDiaria(
-			double percentualVariacaoProducaoDiaria) {
+			BigDecimal percentualVariacaoProducaoDiaria) {
 		this.percentualVariacaoProducaoDiaria = percentualVariacaoProducaoDiaria;
 	}
 
-	public double getPercentualVariacaFaturamentoMensal() {
+	public BigDecimal getProducaoMensal() {
+		return producaoMensal;
+	}
+
+	public void setProducaoMensal(BigDecimal producaoMensal) {
+		this.producaoMensal = producaoMensal;
+	}
+
+	public BigDecimal getFaturamentoMensal() {
+		return faturamentoMensal;
+	}
+
+	public void setFaturamentoMensal(BigDecimal faturamentoMensal) {
+		this.faturamentoMensal = faturamentoMensal;
+	}
+
+	public BigDecimal getPercentualVariacaFaturamentoMensal() {
 		return percentualVariacaFaturamentoMensal;
 	}
 
 	public void setPercentualVariacaFaturamentoMensal(
-			double percentualVariacaFaturamentoMensal) {
+			BigDecimal percentualVariacaFaturamentoMensal) {
 		this.percentualVariacaFaturamentoMensal = percentualVariacaFaturamentoMensal;
 	}
 

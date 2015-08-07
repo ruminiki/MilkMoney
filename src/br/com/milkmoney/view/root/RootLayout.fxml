@@ -52,7 +52,7 @@
       			<Menu mnemonicParsing="false" text="Miscelânea">
       				<items>
                         <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Indicadores" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleProjecao" text="Projecao" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleProjecao" text="Projeção" />
                         <Menu mnemonicParsing="false" text="Cadastros">
                            <items>
                               <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->

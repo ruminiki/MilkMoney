@@ -47,7 +47,6 @@ public class PrecoLeiteChartController {
         lineChart.setTitle("Variação Preço do Leite");
         lineChart.setLegendVisible(true);
         
-        
         VBox.setVgrow(lineChart, Priority.SOMETIMES);
         HBox.setHgrow(lineChart, Priority.SOMETIMES);
         
@@ -79,9 +78,6 @@ public class PrecoLeiteChartController {
 		});
         
 	}
-	
-	
-	
 	
 	public String getFormName(){
 		return "view/painel/PrecoLeiteChart.fxml";

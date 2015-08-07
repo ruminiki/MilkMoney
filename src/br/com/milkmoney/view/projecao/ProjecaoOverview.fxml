@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="617.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.projecao.ProjecaoOverviewController">
+<AnchorPane prefHeight="617.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.projecao.ProjecaoOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -18,37 +18,54 @@
                   <Label fx:id="lblHeader" text="DIMENSIONAMENTO DO REBANHO E PRODUÇÃO" />
                </children>
             </HBox>
-            <VBox>
+            <HBox spacing="5.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <HBox spacing="5.0">
+                  <VBox maxWidth="705.0" spacing="5.0" VBox.vgrow="SOMETIMES">
                      <children>
-                        <TableView fx:id="table" focusTraversable="false" maxHeight="280.0" prefHeight="305.0" HBox.hgrow="SOMETIMES">
+                        <TableView fx:id="table" focusTraversable="false" maxHeight="270.0" maxWidth="705.0" prefHeight="305.0">
                           <columns>
                               <TableColumn fx:id="periodoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Período" />
                             <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animais">
                                  <columns>
                                     <TableColumn fx:id="animaisLactacaoColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Lactação" />
-                                    <TableColumn fx:id="percentualVariacaoAnimaisLactacaoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
                                     <TableColumn fx:id="animaisSecosColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Secos" />
-                                    <TableColumn fx:id="percentualVariacaoAnimaisSecosColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
                                  </columns>
                               </TableColumn>
                             <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Produção">
                                  <columns>
                                     <TableColumn fx:id="producaoDiariaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Diária" />
-                                    <TableColumn fx:id="percentualVariacaoProducaoDiariaColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
                                     <TableColumn fx:id="producaoMensalColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Mensal" />
                                  </columns>
                               </TableColumn>
                               <TableColumn fx:id="faturamentoColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Faturamento" />
-                              <TableColumn fx:id="percentualVariacaoFaturamentoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="\%" />
                           </columns>
                         </TableView>
+                        <HBox spacing="5.0" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <VBox fx:id="vbChartProducao" HBox.hgrow="SOMETIMES" VBox.vgrow="SOMETIMES">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox fx:id="vbChartFaturamento" HBox.hgrow="SOMETIMES" />
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox spacing="5.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <VBox fx:id="vbChartLactacao" HBox.hgrow="SOMETIMES" VBox.vgrow="SOMETIMES" />
+                        <VBox fx:id="vbChartAnimaisSecos" VBox.vgrow="SOMETIMES" />
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <VBox fx:id="vbChart" prefHeight="200.0" prefWidth="100.0" />
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </HBox>
          </children>
       </VBox>
    </children>

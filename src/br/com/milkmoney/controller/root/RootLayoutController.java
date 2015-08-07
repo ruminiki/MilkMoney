@@ -167,7 +167,8 @@ public class RootLayoutController {
     
     @FXML
     protected void handleProjecao() {
-    	openFormAsPopUp("view/projecao/ProjecaoOverview.fxml");
+    	openForm("view/projecao/ProjecaoOverview.fxml");
+    	setTitle("Miscelânea > Projeção");
     }
     
     //-----reports------
