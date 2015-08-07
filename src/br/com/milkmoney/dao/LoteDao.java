@@ -12,9 +12,11 @@ import br.com.milkmoney.model.Lote;
 public class LoteDao extends AbstractGenericDao<Integer, Lote> {
 
 	@SuppressWarnings("unchecked")
-	public List<Lote> findByDescricao(String param) {
+	public List<Lote> defaultSearch(String param) {
 		
-		Query query = entityManager.createQuery("SELECT r FROM Lote r WHERE r.descricao like :param");
+		Query query = entityManager.createQuery("SELECT r FROM Lote r "
+				+ "WHERE r.descricao like :param or "
+				+ "r.finalidadeLote.descricao like :param ");
 		query.setParameter("param", '%' + param + '%');
 		
 		return query.getResultList();

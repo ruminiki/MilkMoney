@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.dao.PrecoLeiteDao;
-import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.PrecoLeite;
 import br.com.milkmoney.model.Projecao;
 import br.com.milkmoney.util.DateUtil;
@@ -47,68 +46,64 @@ public class ProjecaoService{
 	 * 
 	 */
 
-	public int calculaNumeroAnimaisLactacao(int mesReferencia, int anoReferencia){
+	private void setNumeroAnimaisLactacaoESecos(Projecao projecao){
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(anoReferencia, mesReferencia, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		calendar.set(projecao.getAnoReferencia(), projecao.getMesReferencia(), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 		
 		Date dataInicio = Calendar.getInstance().getTime();
 		Date dataFim = calendar.getTime();
 		
 		//verifica as coberturas que tem previsão de parto dentro do período informado
-		List<Cobertura> partosPrevistos = coberturaDao.findAllWithPrevisaoPartoIn(dataInicio, dataFim);
+		int partosPrevistos = coberturaDao.countAllWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
 		
 		//desconta os encerramentos de lactação
-		List<Cobertura> encerramentosPrevistos =  coberturaDao.findAllWithPrevisaoEncerramentoIn(dataInicio, dataFim);
+		int encerramentosPrevistos =  coberturaDao.countAllWithPrevisaoEncerramentoIn(dataInicio, dataFim).intValue();
 		
 		//considera os animais já em lactação e que não serão encerrados no período
 		int lactacoes = animalDao.countAllFemeasEmLactacao().intValue();
 		
-		return 	(lactacoes - (encerramentosPrevistos != null ? encerramentosPrevistos.size() : 0)) +
-				(partosPrevistos != null ? partosPrevistos.size() : 0);
-
-	}
-
-	private int calculaNumeroAnimaisSecos(int mesReferencia, int anoReferencia) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.set(anoReferencia, mesReferencia, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-		
-		Date dataInicio = Calendar.getInstance().getTime();
-		Date dataFim = calendar.getTime();
-		
-		//verifica as coberturas que tem previsão de parto dentro do período informado
-		List<Cobertura> partosPrevistos = coberturaDao.findAllWithPrevisaoPartoIn(dataInicio, dataFim);
-		
-		//desconta os encerramentos de lactação
-		List<Cobertura> encerramentosPrevistos =  coberturaDao.findAllWithPrevisaoEncerramentoIn(dataInicio, dataFim);
+		projecao.setNumeroAnimaisLactacao((lactacoes - encerramentosPrevistos) + partosPrevistos);
 		
 		//considera os animais já em lactação e que não serão encerrados no período
 		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
 		
-		return 	(animaisSecos + (encerramentosPrevistos != null ? encerramentosPrevistos.size() : 0)) -
-				(partosPrevistos != null ? partosPrevistos.size() : 0);
+		projecao.setNumeroAnimaisSecos((animaisSecos + encerramentosPrevistos) - partosPrevistos);
 
 	}
 	
-	private BigDecimal calculaPercentualVariacaoNumeroAnimaisSecos(int numeroAnimaisSecosPrevistos){
-		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
+	private void setProducaoDiaria(Projecao projecao){
 		
-		if ( animaisSecos > 0 )
-			return BigDecimal.valueOf((( numeroAnimaisSecosPrevistos - animaisSecos ) * 100) / animaisSecos);
+		BigDecimal producaoDiaria = getProducaoDiariaIndividualAtual()
+				.multiply(BigDecimal.valueOf(projecao.getNumeroAnimaisLactacao()))
+				.setScale(1, RoundingMode.UP);
 		
-		return BigDecimal.valueOf(numeroAnimaisSecosPrevistos * 100).setScale(2, RoundingMode.UP);
-		
-	}
-
-	private BigDecimal calculaPercentualVariacaoNumeroAnimaisLactacao(int numeroAnimaisLactacaoPrevistos){
-		int animaisLactacao = animalDao.countAllFemeasEmLactacao().intValue();
-		
-		if ( animaisLactacao > 0 )
-			return BigDecimal.valueOf((( numeroAnimaisLactacaoPrevistos - animaisLactacao ) * 100) / animaisLactacao);
-		
-		return BigDecimal.valueOf(numeroAnimaisLactacaoPrevistos * 100).setScale(2, RoundingMode.UP);
-		 
+		projecao.setProducaoDiaria(producaoDiaria);
 	}
 	
+	private void setProducaoMensal(Projecao projecao){
+		
+		//multiplica a previsão de produção diária pelos dias do mês de referência
+		BigDecimal producaoMensal =
+				projecao.getProducaoDiaria()
+				.multiply(BigDecimal.valueOf(LocalDate.of(projecao.getAnoReferencia(), projecao.getMesReferencia(), 01).lengthOfMonth()))
+				.setScale(1, RoundingMode.UP);
+		
+		projecao.setProducaoMensal(producaoMensal);
+				
+	}
+	
+	private void setFaturamento(Projecao projecao){
+		PrecoLeite precoLeite = precoLeiteDao.findByMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+		
+		if ( precoLeite != null ){
+			projecao.setFaturamentoMensal(precoLeite.getValor().multiply(projecao.getProducaoMensal()).setScale(1, RoundingMode.UP));
+			/*projecao.setPercentualVariacaFaturamentoMensal(projecao.getFaturamentoMensal()
+					.subtract(getFaturamentoMensalAtual())
+					.multiply(BigDecimal.valueOf(100))
+					.divide(getFaturamentoMensalAtual(), 1, RoundingMode.UP));*/
+		}
+	}
+
 	private BigDecimal getProducaoDiariaIndividualAtual(){
 		
 		Date inicioMesAtual = DateUtil.asDate(LocalDate.now().withDayOfMonth(01));
@@ -129,6 +124,29 @@ public class ProjecaoService{
 		
 	}
 
+	@SuppressWarnings("unused")
+	private BigDecimal calculaPercentualVariacaoNumeroAnimaisSecos(int numeroAnimaisSecosPrevistos){
+		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
+		
+		if ( animaisSecos > 0 )
+			return BigDecimal.valueOf((( numeroAnimaisSecosPrevistos - animaisSecos ) * 100) / animaisSecos);
+		
+		return BigDecimal.valueOf(numeroAnimaisSecosPrevistos * 100).setScale(2, RoundingMode.UP);
+		
+	}
+
+	@SuppressWarnings("unused")
+	private BigDecimal calculaPercentualVariacaoNumeroAnimaisLactacao(int numeroAnimaisLactacaoPrevistos){
+		int animaisLactacao = animalDao.countAllFemeasEmLactacao().intValue();
+		
+		if ( animaisLactacao > 0 )
+			return BigDecimal.valueOf((( numeroAnimaisLactacaoPrevistos - animaisLactacao ) * 100) / animaisLactacao);
+		
+		return BigDecimal.valueOf(numeroAnimaisLactacaoPrevistos * 100).setScale(2, RoundingMode.UP);
+		 
+	}
+	
+	@SuppressWarnings("unused")
 	private BigDecimal calculaPercentualVariacaoProducaoDiaria(BigDecimal producaoDiariaPrevista){
 		BigDecimal producaoDiariaAtual = getProducaoDiariaAtual();
 		
@@ -158,26 +176,10 @@ public class ProjecaoService{
 	public Projecao generatePrevisao(int mesReferencia, int anoReferencia){
 		
 		Projecao projecao = new Projecao(mesReferencia, anoReferencia);
-		projecao.setNumeroAnimaisLactacao(calculaNumeroAnimaisLactacao(mesReferencia, anoReferencia));
-		projecao.setNumeroAnimaisSecos(calculaNumeroAnimaisSecos(mesReferencia, anoReferencia));
-		projecao.setProducaoDiaria(getProducaoDiariaIndividualAtual().multiply(BigDecimal.valueOf(projecao.getNumeroAnimaisLactacao())).setScale(1, RoundingMode.UP));
-		//multiplica a previsão de produção diária pelos dias do mês de referência
-		projecao.setProducaoMensal(projecao.getProducaoDiaria().multiply(BigDecimal.valueOf(LocalDate.of(anoReferencia, mesReferencia, 01).lengthOfMonth())).setScale(1, RoundingMode.UP));
-		
-		//projecao.setPercentualVariacaoNumeroAnimaisSecos(calculaPercentualVariacaoNumeroAnimaisSecos(projecao.getNumeroAnimaisSecos()));
-		//projecao.setPercentualVariacaoNumeroAnimaisLactacao(calculaPercentualVariacaoNumeroAnimaisLactacao(projecao.getNumeroAnimaisLactacao()));
-		//projecao.setPercentualVariacaoProducaoDiaria(calculaPercentualVariacaoProducaoDiaria(projecao.getProducaoDiaria()));
-		
-		PrecoLeite precoLeite = precoLeiteDao.findByMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
-		
-		if ( precoLeite != null ){
-			projecao.setFaturamentoMensal(precoLeite.getValor().multiply(projecao.getProducaoMensal()).setScale(1, RoundingMode.UP));
-			/*projecao.setPercentualVariacaFaturamentoMensal(projecao.getFaturamentoMensal()
-					.subtract(getFaturamentoMensalAtual())
-					.multiply(BigDecimal.valueOf(100))
-					.divide(getFaturamentoMensalAtual(), 1, RoundingMode.UP));*/
-		}
-		
+		setNumeroAnimaisLactacaoESecos(projecao);
+		setProducaoDiaria(projecao);
+		setProducaoMensal(projecao);
+		setFaturamento(projecao);
 		return projecao;
 		
 	}

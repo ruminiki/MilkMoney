@@ -155,8 +155,7 @@ public class RootLayoutController {
     
     @FXML
     protected void handleCadastroLote() {
-    	openForm("view/lote/LoteOverview.fxml");
-    	setTitle("Rebanho > Lote");
+    	openFormAsPopUp("view/lote/LoteOverview.fxml");
     }
     
     @FXML

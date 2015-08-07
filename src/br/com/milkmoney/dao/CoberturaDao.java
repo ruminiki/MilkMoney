@@ -141,24 +141,22 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Cobertura> findAllWithPrevisaoPartoIn(Date dataInicio, Date dataFim) {
+	public Long countAllWithPrevisaoPartoIn(Date dataInicio, Date dataFim) {
 		
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c "
+		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
 				+ "WHERE c.previsaoParto between :dataInicio and :dataFim and "
 				+ "c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "order by c.data");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		
-		return query.getResultList();
+		return (Long) query.getSingleResult();
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Cobertura> findAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
+	public Long countAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
 		
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c "
+		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
 				+ "WHERE (adddate(c.data, 210) between :dataInicio and :dataFim or datediff(c.previsaoParto, :dataFim) between 0 and 60 ) and "
 				+ "c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "  
 				+ "order by c.data");
@@ -166,7 +164,7 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		
-		return query.getResultList();
+		return (Long) query.getSingleResult();
 	}
 
 

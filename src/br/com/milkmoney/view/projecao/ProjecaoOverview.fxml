@@ -22,7 +22,7 @@
                <children>
                   <VBox maxWidth="705.0" spacing="5.0" VBox.vgrow="SOMETIMES">
                      <children>
-                        <TableView fx:id="table" focusTraversable="false" maxHeight="270.0" maxWidth="705.0" prefHeight="305.0">
+                        <TableView fx:id="table" focusTraversable="false" maxHeight="270.0" maxWidth="705.0" minHeight="270.0" minWidth="705.0" prefHeight="305.0">
                           <columns>
                               <TableColumn fx:id="periodoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Período" />
                             <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animais">
