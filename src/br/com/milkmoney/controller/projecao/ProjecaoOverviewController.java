@@ -109,7 +109,7 @@ public class ProjecaoOverviewController {
 		
 	}
 
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Projecao";
 	}
 	

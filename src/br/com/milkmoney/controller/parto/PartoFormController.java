@@ -232,7 +232,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Parto";
 	}
 	

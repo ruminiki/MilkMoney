@@ -30,7 +30,7 @@ public abstract class AbstractReducedOverviewController<K, E> extends AbstractOv
 	}
 	
 	@FXML
-	private void fechar(){
+	private void handleLimparSelecao(){
 		this.setObject(null);
 		super.closeForm();
 	}

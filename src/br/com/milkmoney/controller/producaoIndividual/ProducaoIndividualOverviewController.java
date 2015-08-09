@@ -194,12 +194,12 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/producaoIndividual/ProducaoIndividualOverview.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Produção Individual";
 	}
 	

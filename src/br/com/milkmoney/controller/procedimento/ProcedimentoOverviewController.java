@@ -36,12 +36,12 @@ public class ProcedimentoOverviewController extends AbstractOverviewController<I
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/procedimento/ProcedimentoOverview.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Procedimento";
 	}
 	

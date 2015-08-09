@@ -183,12 +183,12 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/entregaLeite/EntregaLeiteOverview.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Entrega Leite";
 	}
 	

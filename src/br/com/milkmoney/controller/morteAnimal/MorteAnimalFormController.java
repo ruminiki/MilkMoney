@@ -99,7 +99,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Morte Animal";
 	}
 	

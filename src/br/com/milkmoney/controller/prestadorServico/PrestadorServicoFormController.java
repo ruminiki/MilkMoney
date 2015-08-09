@@ -37,12 +37,12 @@ public class PrestadorServicoFormController extends AbstractFormController<Integ
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/prestadorServico/PrestadorServicoForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Prestador de Serviço";
 	}
 

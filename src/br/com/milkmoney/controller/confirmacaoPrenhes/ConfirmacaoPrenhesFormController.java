@@ -88,12 +88,12 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 	};
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/confirmacaoPrenhes/ConfirmacaoPrenhesForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Confirmação Prenhes";
 	}
 

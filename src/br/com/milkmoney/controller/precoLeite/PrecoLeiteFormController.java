@@ -39,12 +39,12 @@ public class PrecoLeiteFormController extends AbstractFormController<Integer, Pr
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/precoLeite/PrecoLeiteForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Preço Leite";
 	}
 	

@@ -29,12 +29,12 @@ public class FinalidadeLoteOverviewController extends AbstractOverviewController
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Finalidade Lote";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/finalidadeLote/FinalidadeLoteOverview.fxml";
 	}
 	

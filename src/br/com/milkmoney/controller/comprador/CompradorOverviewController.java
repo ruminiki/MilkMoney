@@ -40,12 +40,12 @@ public class CompradorOverviewController extends AbstractOverviewController<Inte
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Comprador";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/comprador/CompradorOverview.fxml";
 	}
 

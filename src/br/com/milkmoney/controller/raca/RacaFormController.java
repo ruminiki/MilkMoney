@@ -22,12 +22,12 @@ public class RacaFormController extends AbstractFormController<Integer, Raca> {
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/raca/RacaForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Raça";
 	}
 	

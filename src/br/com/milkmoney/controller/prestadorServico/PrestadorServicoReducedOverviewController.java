@@ -38,7 +38,7 @@ public class PrestadorServicoReducedOverviewController extends AbstractReducedOv
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Prestador de Serviço";
 	}
 	

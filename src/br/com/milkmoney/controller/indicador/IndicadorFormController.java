@@ -40,12 +40,12 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/indicador/IndicadorForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Indicador";
 	}
 	

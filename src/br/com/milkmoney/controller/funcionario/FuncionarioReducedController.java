@@ -39,7 +39,7 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Funcionário";
 	}
 	

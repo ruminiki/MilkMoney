@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -88,6 +89,7 @@ public abstract class AbstractFormController<K, E> {
 		
 		dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
+		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
 

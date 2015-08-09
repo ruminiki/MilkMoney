@@ -85,17 +85,14 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarMae() {
 		
-		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
+		animalReducedOverviewController.setObject(getObject().getMae());
 		animalReducedOverviewController.setSearch((SearchFemeas) MainApp.getBean(SearchFemeas.class));
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
 
 		animalReducedOverviewController.showForm();
-		
-		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setMae(animalReducedOverviewController.getObject());
-		}
+		getObject().setMae(animalReducedOverviewController.getObject());
 		
 		if ( getObject().getMae() != null ){
 			inputMae.textProperty().set(getObject().getMae().getNumeroNome());	
@@ -108,22 +105,15 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarPaiMontaNatural() {
 		
-		Animal animalAux = getObject();
-		
-		animalReducedOverviewController.setObject(new Animal(Sexo.MACHO));
+		animalReducedOverviewController.setObject(getObject().getPaiMontaNatural());
 		animalReducedOverviewController.setSearch((SearchMachos) MainApp.getBean(SearchMachos.class));
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
 
 		animalReducedOverviewController.showForm();
-		
-		setObject(animalAux);
-		
-		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setPaiMontaNatural(animalReducedOverviewController.getObject());
-		}
-		
+		getObject().setPaiMontaNatural(animalReducedOverviewController.getObject());
+
 		if ( getObject().getPaiMontaNatural() != null ){
 			inputPai.textProperty().set(getObject().getPaiMontaNatural().getNumeroNome());	
 		}else{
@@ -138,9 +128,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		touroReducedOverviewController.setObject(new Touro());
 		touroReducedOverviewController.showForm();
 		
-		if ( touroReducedOverviewController.getObject() != null && touroReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setPaiEnseminacaoArtificial(touroReducedOverviewController.getObject());
-		}
+		getObject().setPaiEnseminacaoArtificial(touroReducedOverviewController.getObject());
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){
 			inputPai.textProperty().set(getObject().getPaiEnseminacaoArtificial().toString());	
@@ -189,7 +177,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Animal";
 	}
 	

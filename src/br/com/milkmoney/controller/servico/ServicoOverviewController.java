@@ -37,12 +37,12 @@ public class ServicoOverviewController extends AbstractOverviewController<Intege
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Serviço";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/servico/ServicoOverview.fxml";
 	}
 	

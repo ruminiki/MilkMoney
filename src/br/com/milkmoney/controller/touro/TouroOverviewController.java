@@ -31,7 +31,7 @@ public class TouroOverviewController extends AbstractOverviewController<Integer,
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Touro";
 	}
 	

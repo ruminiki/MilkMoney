@@ -22,12 +22,12 @@ public class TipoProcedimentoFormController extends AbstractFormController<Integ
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/tipoProcedimento/TipoProcedimentoForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Tipo Procedimento";
 	}
 	

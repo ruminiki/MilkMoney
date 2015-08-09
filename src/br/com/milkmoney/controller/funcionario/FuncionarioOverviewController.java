@@ -62,12 +62,12 @@ public class FuncionarioOverviewController extends AbstractOverviewController<In
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/funcionario/FuncionarioOverview.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Funcionário";
 	}
 	

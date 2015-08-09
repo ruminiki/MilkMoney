@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -86,12 +87,12 @@ public class RootLayoutController {
     
     @FXML
     protected void handleCadastroFinalidadeLote() {
-    	openFormAsPopUp("view/finalidadeLote/FinalidadeLoteOverview.fxml");
+    	openFormAsPopUp("view/finalidadeLote/FinalidadeLoteOverview.fxml", "Finalidade Lote");
     }
        
     @FXML
     protected void handleCadastroPrecoLeite() {
-    	openFormAsPopUp("view/precoLeite/PrecoLeiteOverview.fxml");
+    	openFormAsPopUp("view/precoLeite/PrecoLeiteOverview.fxml", "Preço Leite");
     }
     
     @FXML
@@ -108,12 +109,12 @@ public class RootLayoutController {
 
     @FXML
     protected void handleCadastroSemen() {
-    	openFormAsPopUp("view/semen/SemenOverview.fxml");
+    	openFormAsPopUp("view/semen/SemenOverview.fxml", "Sêmen");
     }
     
     @FXML
     protected void handleCadastroTouro() {
-    	openFormAsPopUp("view/touro/TouroOverview.fxml");
+    	openFormAsPopUp("view/touro/TouroOverview.fxml", "Touro");
     }
     
     @FXML
@@ -124,17 +125,17 @@ public class RootLayoutController {
     
     @FXML
     protected void handleCadastroFuncionario() {
-    	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml");
+    	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml", "Funcionário");
     }
     
     @FXML
     protected void handleCadastroServico() {
-    	openFormAsPopUp("view/servico/ServicoOverview.fxml");
+    	openFormAsPopUp("view/servico/ServicoOverview.fxml", "Serviço");
     }
     
     @FXML
     protected void handleCadastroFornecedor() {
-    	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml");
+    	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml", "Fornecedor");
     }
     
     @FXML
@@ -145,17 +146,17 @@ public class RootLayoutController {
     
     @FXML
     protected void handleCadastroParametro() {
-    	openFormAsPopUp("view/parametro/ParametroOverview.fxml");
+    	openFormAsPopUp("view/parametro/ParametroOverview.fxml", "Parâmetros");
     }
     
     @FXML
     protected void  handleCadastroPropriedade() {
-    	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml");
+    	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml", "Propriedade");
     }
     
     @FXML
     protected void handleCadastroLote() {
-    	openFormAsPopUp("view/lote/LoteOverview.fxml");
+    	openFormAsPopUp("view/lote/LoteOverview.fxml", "Lote Animal");
     }
     
     @FXML
@@ -173,30 +174,33 @@ public class RootLayoutController {
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){
-    	openFormAsPopUp("view/reports/RelatorioFichaAnimal.fxml");
+    	openFormAsPopUp("view/reports/RelatorioFichaAnimal.fxml", "Relatório Ficha Animal");
     }
     
     @FXML
     protected void handleFormularioCampoRegistroParto(){
-    	openFormAsPopUp("view/reports/FormularioRegistroParto.fxml");
+    	openFormAsPopUp("view/reports/FormularioRegistroParto.fxml", "Formulário Registro Parto");
     }
     
     @FXML
     protected void handleFormularioCampoRegistroCobertura(){
-    	openFormAsPopUp("view/reports/FormularioRegistroCobertura.fxml");
+    	openFormAsPopUp("view/reports/FormularioRegistroCobertura.fxml", "Formulário Registro Cobertura");
     }
     
     @FXML
     protected void handleFormularioCampoRegistroProducao(){
-    	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml");
+    	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml", "Formulário Registro Produção");
     }
     
-    
-    public void openFormAsPopUp(String formPath){
+	public void openFormAsPopUp(String formPath, String title){
     	
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);
     	
 		Stage dialogStage = new Stage();
+		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
+		
+		dialogStage.setTitle(title);
+		
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
 

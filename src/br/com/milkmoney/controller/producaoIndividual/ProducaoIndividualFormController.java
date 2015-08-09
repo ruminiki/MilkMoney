@@ -57,7 +57,7 @@ public class ProducaoIndividualFormController extends AbstractFormController<Int
     }
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/producaoIndividual/ProducaoIndividualForm.fxml";
 	}
 	
@@ -66,7 +66,7 @@ public class ProducaoIndividualFormController extends AbstractFormController<Int
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Produção Individual";
 	}
 

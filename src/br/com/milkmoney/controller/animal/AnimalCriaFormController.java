@@ -74,7 +74,7 @@ public class AnimalCriaFormController extends AbstractFormController<Integer, An
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Animal - Cria";
 	}
 	

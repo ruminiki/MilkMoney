@@ -22,12 +22,12 @@ public class CausaMorteAnimalFormController extends AbstractFormController<Integ
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/causaMorteAnimal/CausaMorteAnimalForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Causa Morte Animal";
 	}
 	

@@ -229,7 +229,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Venda Animal";
 	}
 	

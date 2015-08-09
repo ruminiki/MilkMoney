@@ -41,7 +41,7 @@ public class CompradorReducedOverviewController extends AbstractReducedOverviewC
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Comprador";
 	}
 	

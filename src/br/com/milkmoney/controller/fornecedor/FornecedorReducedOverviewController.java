@@ -39,7 +39,7 @@ public class FornecedorReducedOverviewController extends AbstractReducedOverview
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Fornecedor";
 	}
 	

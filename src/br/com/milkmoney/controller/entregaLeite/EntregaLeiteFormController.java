@@ -49,12 +49,12 @@ public class EntregaLeiteFormController extends AbstractFormController<Integer, 
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/entregaLeite/EntregaLeiteForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Entrega Leite";
 	}
 	

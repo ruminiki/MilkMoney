@@ -29,12 +29,12 @@ public class MotivoVendaAnimalOverviewController extends AbstractOverviewControl
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Motivo Venda Animal";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/motivoVendaAnimal/MotivoVendaAnimalOverview.fxml";
 	}
 

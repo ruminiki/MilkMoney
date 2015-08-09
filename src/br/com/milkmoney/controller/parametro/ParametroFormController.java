@@ -26,12 +26,12 @@ public class ParametroFormController extends AbstractFormController<Integer, Par
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/parametro/ParametroForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Parâmetro";
 	}
 	

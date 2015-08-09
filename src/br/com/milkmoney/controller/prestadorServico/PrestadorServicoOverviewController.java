@@ -35,7 +35,7 @@ public class PrestadorServicoOverviewController extends AbstractOverviewControll
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Prestador de Serviço";
 	}
 	

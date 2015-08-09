@@ -85,7 +85,7 @@ public class PrecoLeiteOverviewController extends AbstractOverviewController<Int
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Preço Leite";
 	}
 	

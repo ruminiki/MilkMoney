@@ -7,12 +7,6 @@
 
 - colocar ícones nas janelas
 
-- Estimativa vacas lactação
-	- Partos previstos
-	- Enc. Lactações Previstos
-	- Prev. Produção
-
-
 - Relatórios
 	- Coberturas;
 	- Previsão de Parto;

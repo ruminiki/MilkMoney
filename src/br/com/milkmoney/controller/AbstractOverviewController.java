@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -258,8 +259,8 @@ public abstract class AbstractOverviewController<K, E>{
 		return false;
 	};
 	
-	protected abstract String getFormTitle();
-	protected abstract String getFormName();
+	public abstract String getFormTitle();
+	public abstract String getFormName();
 	
 	public void showForm() {
 		
@@ -267,6 +268,7 @@ public abstract class AbstractOverviewController<K, E>{
 		
 		dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
+		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
 

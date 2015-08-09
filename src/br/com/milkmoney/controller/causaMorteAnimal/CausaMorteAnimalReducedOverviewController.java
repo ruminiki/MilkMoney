@@ -34,7 +34,7 @@ public class CausaMorteAnimalReducedOverviewController extends AbstractReducedOv
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Causa Morte Animal";
 	}
 	

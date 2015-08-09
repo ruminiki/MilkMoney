@@ -182,12 +182,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Animal";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/animal/AnimalOverview.fxml";
 	}
 	

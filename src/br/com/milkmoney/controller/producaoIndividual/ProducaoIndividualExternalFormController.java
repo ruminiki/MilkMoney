@@ -186,12 +186,12 @@ public class ProducaoIndividualExternalFormController extends AbstractFormContro
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/producaoIndividual/ProducaoIndividualExternalForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Produção Individual";
 	}
 

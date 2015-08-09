@@ -336,12 +336,12 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/cobertura/CoberturaForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Cobertura";
 	}
 

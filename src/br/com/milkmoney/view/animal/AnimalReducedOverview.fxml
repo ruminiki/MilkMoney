@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="581.0" prefHeight="376.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalReducedOverviewController">
+<AnchorPane minWidth="581.0" prefHeight="376.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalReducedOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -53,6 +53,7 @@
             <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
                <children>
@@ -79,9 +80,9 @@
               <columns>
                   <TableColumn fx:id="situacaoAnimalColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                <TableColumn fx:id="numeroColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Número" />
-               <TableColumn fx:id="nomeColumn" maxWidth="200.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
-               <TableColumn fx:id="dataNascimentoColumn" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
-               <TableColumn fx:id="racaColumn" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
+               <TableColumn fx:id="nomeColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
+               <TableColumn fx:id="dataNascimentoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
+               <TableColumn fx:id="racaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
                <TableColumn fx:id="sexoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
               </columns>
                <columnResizePolicy>

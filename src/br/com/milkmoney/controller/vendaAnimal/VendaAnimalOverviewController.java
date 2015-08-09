@@ -61,12 +61,12 @@ public class VendaAnimalOverviewController extends AbstractOverviewController<In
 	};
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Venda Animal";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/vendaAnimal/VendaAnimalOverview.fxml";
 	}
 	

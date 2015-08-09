@@ -34,7 +34,7 @@ public class RacaReducedOverviewController extends AbstractReducedOverviewContro
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Raça";
 	}
 	

@@ -74,7 +74,7 @@ public class LactacaoFormController extends AbstractFormController<Integer, Lact
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Lactação";
 	}
 	

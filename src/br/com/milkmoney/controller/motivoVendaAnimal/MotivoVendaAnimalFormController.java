@@ -22,12 +22,12 @@ public class MotivoVendaAnimalFormController extends AbstractFormController<Inte
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/motivoVendaAnimal/MotivoVendaAnimalForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Motivo Venda Animal";
 	}
 	

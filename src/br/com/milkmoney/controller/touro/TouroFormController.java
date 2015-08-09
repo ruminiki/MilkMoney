@@ -24,12 +24,12 @@ public class TouroFormController extends AbstractFormController<Integer, Touro> 
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/touro/TouroForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Touro";
 	}
 	

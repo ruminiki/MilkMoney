@@ -33,7 +33,7 @@ public class ParametroOverviewController extends AbstractOverviewController<Inte
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Parâmetro";
 	}
 	

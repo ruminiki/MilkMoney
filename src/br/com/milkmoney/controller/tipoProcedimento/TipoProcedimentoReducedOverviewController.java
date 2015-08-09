@@ -34,7 +34,7 @@ public class TipoProcedimentoReducedOverviewController extends AbstractReducedOv
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Tipo Procedimento";
 	}
 	

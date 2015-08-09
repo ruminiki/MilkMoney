@@ -47,12 +47,12 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/lote/LoteOverview.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Lote";
 	}
 	

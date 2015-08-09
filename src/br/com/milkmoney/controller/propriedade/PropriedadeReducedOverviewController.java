@@ -37,7 +37,7 @@ public class PropriedadeReducedOverviewController extends AbstractReducedOvervie
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Propriedade";
 	}
 	

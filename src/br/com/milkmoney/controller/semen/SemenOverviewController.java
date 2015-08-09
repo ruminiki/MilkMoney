@@ -43,12 +43,12 @@ public class SemenOverviewController extends AbstractOverviewController<Integer,
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/semen/SemenOverview.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Sêmen";
 	}
 

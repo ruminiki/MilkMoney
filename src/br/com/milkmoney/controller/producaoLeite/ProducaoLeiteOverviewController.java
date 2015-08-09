@@ -276,12 +276,12 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/producaoLeite/ProducaoLeiteForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Produção Leite";
 	}
 	

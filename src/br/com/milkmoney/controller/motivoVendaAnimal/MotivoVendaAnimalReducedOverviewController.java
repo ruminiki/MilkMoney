@@ -34,7 +34,7 @@ public class MotivoVendaAnimalReducedOverviewController extends AbstractReducedO
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Motivo Venda Animal";
 	}
 	

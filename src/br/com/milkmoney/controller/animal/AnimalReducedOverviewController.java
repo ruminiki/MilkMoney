@@ -71,7 +71,7 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Animal";
 	}
 	

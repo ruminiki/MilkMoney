@@ -50,7 +50,7 @@ public class SemenReducedOverviewController extends AbstractReducedOverviewContr
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Semen";
 	}
 	

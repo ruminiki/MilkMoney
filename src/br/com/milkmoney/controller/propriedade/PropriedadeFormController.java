@@ -24,12 +24,12 @@ public class PropriedadeFormController extends AbstractFormController<Integer, P
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/propriedade/PropriedadeForm.fxml";
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Propriedade";
 	}
 	

@@ -70,7 +70,7 @@ public class OcorrenciaFuncionarioOverviewController extends AbstractOverviewCon
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Ocorrências Funcionário";
 	}
 	

@@ -22,12 +22,12 @@ public class MotivoOcorrenciaFuncionarioFormController extends AbstractFormContr
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Motivo Ocorrência Funcionário";
 	}
 	

@@ -34,7 +34,7 @@ public class MotivoOcorrenciaFuncionarioReducedOverviewController extends Abstra
 	}
 	
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Motivo Ocorrência Funcionário";
 	}
 	

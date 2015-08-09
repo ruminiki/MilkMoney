@@ -41,12 +41,12 @@ public class FornecedorFormController extends AbstractFormController<Integer, Fo
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/fornecedor/FornecedorForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Fornecedor";
 	}
 

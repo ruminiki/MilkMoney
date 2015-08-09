@@ -43,12 +43,12 @@ public class CompradorFormController extends AbstractFormController<Integer, Com
 	}
 
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/comprador/CompradorForm.fxml";
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Comprador";
 	}
 

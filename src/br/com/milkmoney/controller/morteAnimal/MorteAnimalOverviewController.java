@@ -40,12 +40,12 @@ public class MorteAnimalOverviewController extends AbstractOverviewController<In
 	}
 
 	@Override
-	protected String getFormTitle() {
+	public String getFormTitle() {
 		return "Morte Animal";
 	}
 	
 	@Override
-	protected String getFormName() {
+	public String getFormName() {
 		return "view/morteAnimal/MorteAnimalOverview.fxml";
 	}
 	
