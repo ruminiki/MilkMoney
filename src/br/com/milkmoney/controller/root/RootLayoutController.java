@@ -171,6 +171,17 @@ public class RootLayoutController {
     	setTitle("Miscelânea > Projeção");
     }
     
+    @FXML
+    protected void handleCadastroInsumo() {
+    	openFormAsPopUp("view/insumo/InsumoOverview.fxml", "Insumo");
+    }
+    
+    @FXML
+    protected void handleCadastroCompra() {
+    	openForm("view/compra/CompraOverview.fxml");
+    	setTitle("Financeiro > Compra Insumos");
+    }
+    
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){
@@ -190,11 +201,6 @@ public class RootLayoutController {
     @FXML
     protected void handleFormularioCampoRegistroProducao(){
     	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml", "Formulário Registro Produção");
-    }
-    
-    @FXML
-    protected void handleCadastroInsumo() {
-    	openFormAsPopUp("view/insumo/InsumoOverview.fxml", "Insumo");
     }
     
 	public void openFormAsPopUp(String formPath, String title){

@@ -38,6 +38,7 @@
                   <Menu mnemonicParsing="false" text="Financeiro">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#handleCadastroInsumo" text="Insumos" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCompra" text="Compra Insumos" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">

@@ -39,7 +39,7 @@ public class InsumoReducedOverviewController extends AbstractReducedOverviewCont
 	
 	@Override
 	public String getFormName() {
-		return "view/insumo/InsumoOverview.fxml";
+		return "view/insumo/InsumoReducedOverview.fxml";
 	}
 	
 	@Override
