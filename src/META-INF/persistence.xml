@@ -37,6 +37,7 @@
 		<class>br.com.milkmoney.model.FichaAnimal</class>
 		<class>br.com.milkmoney.model.Propriedade</class>
 		<class>br.com.milkmoney.model.Lote</class>
+		<class>br.com.milkmoney.model.Sistema</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
@@ -33,6 +34,22 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 			e.printStackTrace();
 		} 
 		    
+	}
+	
+	public String getVersaoSistema() {
+		Query query = entityManager.createQuery("select versao from Sistema");
+		try{
+			return (String) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+		
+	}
+
+	@Transactional
+	public void setSystemVersion(String novaVersao) {
+		Query query = entityManager.createQuery("update Sistema set versao = '" + novaVersao + "'");
+		query.executeUpdate();
 	}
 	
 }
