@@ -192,6 +192,11 @@ public class RootLayoutController {
     	openFormAsPopUp("view/reports/FormularioRegistroProducao.fxml", "Formulário Registro Produção");
     }
     
+    @FXML
+    protected void handleCadastroInsumo() {
+    	openFormAsPopUp("view/insumo/InsumoOverview.fxml", "Insumo");
+    }
+    
 	public void openFormAsPopUp(String formPath, String title){
     	
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);

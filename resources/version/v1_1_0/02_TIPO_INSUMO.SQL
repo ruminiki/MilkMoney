@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS milkmoney.tipoInsumo (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  descricao VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1
+COLLATE = latin1_swedish_ci;
+

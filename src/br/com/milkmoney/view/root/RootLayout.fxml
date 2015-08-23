@@ -25,8 +25,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroLote" text="Lote" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroProcedimento" text="Procedimento" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda de Animais" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-      				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                     </items>
                   </Menu>
       				<Menu mnemonicParsing="false" text="Produção">
@@ -37,6 +35,11 @@
                        <!--  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" /> -->
       					</items>
       				</Menu>
+                  <Menu mnemonicParsing="false" text="Financeiro">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#handleCadastroInsumo" text="Insumos" />
+                    </items>
+                  </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
@@ -76,9 +79,14 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroParametro" text="Parâmetros" />
                           </items>
                         </Menu>
-      					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
       				</items>
       			</Menu>
+                  <Menu mnemonicParsing="false" text="Sistema">
+                    <items>
+      					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
+      				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                    </items>
+                  </Menu>
       			</menus>
       		</MenuBar>
             <HBox fx:id="hBoxBreadCrumbs" alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #C2D1B2;" VBox.vgrow="SOMETIMES">

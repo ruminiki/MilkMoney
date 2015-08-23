@@ -38,6 +38,9 @@
 		<class>br.com.milkmoney.model.Propriedade</class>
 		<class>br.com.milkmoney.model.Lote</class>
 		<class>br.com.milkmoney.model.Sistema</class>
+		<class>br.com.milkmoney.model.Insumo</class>
+		<class>br.com.milkmoney.model.UnidadeMedida</class>
+		<class>br.com.milkmoney.model.TipoInsumo</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

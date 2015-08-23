@@ -15,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,22 +44,18 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public  static final String       APPLICATION_ICON = "img/icon.png";
-	//private static final String       ICON_REBANHO     = "img/rebanho.png";
-	//private static final String       ICON_REPRODUCAO  = "img/reproducao.png";
-	//private static final String       ICON_INDICADORES = "img/indicadores.png";
 	private static final String       SPLASH_IMAGE     = "img/splash.png";
-	private static final int          SPLASH_WIDTH     = 717;
-    private static final int          SPLASH_HEIGHT    = 315;
+    private static final int          SPLASH_HEIGHT    = 182;
     //private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
   	//private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
-  	private static final String       DATABASE_START = "database\\bin\\mysqld.exe";
-  	private static final String       DATABASE_STOP  = "database\\bin\\mysqld.exe -u root shutdown";
+  	private static final String       DATABASE_START   = "database\\bin\\mysqld.exe";
+  	private static final String       DATABASE_STOP    = "database\\bin\\mysqld.exe -u root shutdown";
 
     private Pane                      splashLayout;
-    private ProgressBar               loadProgress;
+    //private ProgressBar               loadProgress;
     private Label                     progressText;
     
-	private static final boolean      SPLASH           = false;
+	private static final boolean      SPLASH           = true;
 	private static final boolean      START_DATABASE   = false;
 		
 	public MainApp() {
@@ -128,35 +123,25 @@ public class MainApp extends Application {
     public void init() {
     	
     	if ( SPLASH ){
-	        loadProgress = new ProgressBar();
-	        loadProgress.setPrefWidth(SPLASH_WIDTH);
-	        progressText = new Label("Carregando dados . . .");
+
+    		progressText = new Label("Carregando dados . . .");
 	        progressText.setTextFill(Color.BLACK);
 	        splashLayout = new VBox();
-	        splashLayout.setPrefHeight(SPLASH_HEIGHT);
-	        ((VBox)splashLayout).setAlignment(Pos.BOTTOM_LEFT);
+	        splashLayout.setMaxHeight(SPLASH_HEIGHT);
 	        
 	        HBox hbox = new HBox();
 	        hbox.setAlignment(Pos.CENTER);
 	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(SPLASH_IMAGE))));
-	        //hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REPRODUCAO))));
-	        //hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_INDICADORES))));
-	        //hbox.setSpacing(10);
 	        
-	        splashLayout.getChildren().addAll(hbox, progressText, loadProgress);
+	        splashLayout.getChildren().addAll(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(SPLASH_IMAGE))), progressText);
+	        
 	        progressText.setAlignment(Pos.CENTER);
 	        
-	        //"-fx-background-image: url('" + SPLASH_IMAGE + "'); " +	
 	        splashLayout.setStyle(
 	                "-fx-padding: 1; " +
 	                "-fx-background-color: white; " +
-	                "-fx-border-width: 3; " +
-	                "-fx-border-color:gray" +
-	                    "linear-gradient(" +
-	                        "to bottom, " +
-	                        "chocolate, " +
-	                        "derive(chocolate, 50%)" +
-	                    ");"
+	                "-fx-border-width: 0.5; " +
+	                "-fx-border-color:gray; "
 	        );
 	        splashLayout.setEffect(new DropShadow());
     	}
@@ -165,11 +150,8 @@ public class MainApp extends Application {
 	
 	private void showSplash(final Stage initStage,Task<?> task,InitCompletionHandler initCompletionHandler) {
         progressText.textProperty().bind(task.messageProperty());
-        loadProgress.progressProperty().bind(task.progressProperty());
         task.stateProperty().addListener((observableValue, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                loadProgress.progressProperty().unbind();
-                loadProgress.setProgress(1);
                 initStage.toFront();
                 FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), splashLayout);
                 fadeSplash.setFromValue(1.0);
