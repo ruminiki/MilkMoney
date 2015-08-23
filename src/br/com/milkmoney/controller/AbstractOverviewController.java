@@ -237,16 +237,22 @@ public abstract class AbstractOverviewController<K, E>{
 		refreshTableOverview();
 	}
 	
-	public Function<E, Boolean> refreshObjectInTableView = (object) -> {
+	public void refreshObjectInTableView(E object){
 		if ( object != null ){
 			for (int index = 0; index < data.size(); index++) {
 				AbstractEntity o = (AbstractEntity) data.get(index);
 				if (o.getId() == ((AbstractEntity) object).getId()) {
 					data.set(index, (E) object);
 					table.layout();
-					return true;
 				}
 			}
+		}
+	}
+	
+	public Function<E, Boolean> refreshObjectInTableView = (object) -> {
+		if ( object != null ){
+			refreshObjectInTableView(object);
+			return true;
 		}
 		return false;
 	};

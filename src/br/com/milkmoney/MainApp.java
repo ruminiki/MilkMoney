@@ -45,12 +45,12 @@ public class MainApp extends Application {
 	private static ApplicationContext context;
 	
 	public  static final String       APPLICATION_ICON = "img/icon.png";
-	private static final String       ICON_REBANHO     = "img/rebanho.png";
-	private static final String       ICON_REPRODUCAO  = "img/reproducao.png";
-	private static final String       ICON_INDICADORES = "img/indicadores.png";
-	private static final String       ICON_PRODUCAO    = "img/producao.png";
-	private static final int          SPLASH_WIDTH     = 628;
-    private static final int          SPLASH_HEIGHT    = 140;
+	//private static final String       ICON_REBANHO     = "img/rebanho.png";
+	//private static final String       ICON_REPRODUCAO  = "img/reproducao.png";
+	//private static final String       ICON_INDICADORES = "img/indicadores.png";
+	private static final String       SPLASH_IMAGE     = "img/splash.png";
+	private static final int          SPLASH_WIDTH     = 717;
+    private static final int          SPLASH_HEIGHT    = 315;
     //private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
   	//private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
   	private static final String       DATABASE_START = "database\\bin\\mysqld.exe";
@@ -138,11 +138,10 @@ public class MainApp extends Application {
 	        
 	        HBox hbox = new HBox();
 	        hbox.setAlignment(Pos.CENTER);
-	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REBANHO))));
-	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_PRODUCAO))));
-	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REPRODUCAO))));
-	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_INDICADORES))));
-	        hbox.setSpacing(10);
+	        hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(SPLASH_IMAGE))));
+	        //hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_REPRODUCAO))));
+	        //hbox.getChildren().add(new ImageView(new Image(ClassLoader.getSystemResourceAsStream(ICON_INDICADORES))));
+	        //hbox.setSpacing(10);
 	        
 	        splashLayout.getChildren().addAll(hbox, progressText, loadProgress);
 	        progressText.setAlignment(Pos.CENTER);
@@ -151,8 +150,8 @@ public class MainApp extends Application {
 	        splashLayout.setStyle(
 	                "-fx-padding: 1; " +
 	                "-fx-background-color: white; " +
-	                "-fx-border-width:0; " +
-	                "-fx-border-color: " +
+	                "-fx-border-width: 3; " +
+	                "-fx-border-color:gray" +
 	                    "linear-gradient(" +
 	                        "to bottom, " +
 	                        "chocolate, " +

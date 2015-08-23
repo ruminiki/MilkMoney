@@ -1,11 +1,13 @@
+- Revisar limpar seleção (pai e mãe animal)
+- remover casas decimais volume produzido e volume entregue
+- ao atualizar os animais do lote, recarregar o lote selecionado para listar os animais
+
 
 - revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
 - na venda fazer a somatória de animais vendidos e do valor total
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
-
-- colocar ícones nas janelas
 
 - Relatórios
 	- Coberturas;

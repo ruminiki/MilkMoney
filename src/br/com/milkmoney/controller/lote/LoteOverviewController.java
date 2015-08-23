@@ -47,6 +47,12 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 	}
 	
 	@Override
+	public void refreshObjectInTableView(Lote object) {
+		super.refreshObjectInTableView(object);
+		handleSelectItemTable();
+	}
+	
+	@Override
 	public String getFormName() {
 		return "view/lote/LoteOverview.fxml";
 	}

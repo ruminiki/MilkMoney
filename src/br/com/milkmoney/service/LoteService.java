@@ -1,5 +1,7 @@
 package br.com.milkmoney.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -69,7 +71,9 @@ public class LoteService implements IService<Integer, Lote>{
 			
 		}
 		
-		return somaIdade > 0 ? somaIdade / lote.getAnimais().size() : somaIdade;
+		return BigDecimal.valueOf(somaIdade > 0 ? somaIdade / lote.getAnimais().size() : somaIdade)
+				.setScale(2, RoundingMode.HALF_EVEN)
+				.floatValue();
 		
 	}
 
@@ -83,7 +87,9 @@ public class LoteService implements IService<Integer, Lote>{
 			
 		}
 		
-		return somaLactacoes > 0 ? somaLactacoes / lote.getAnimais().size() : somaLactacoes;
+		return BigDecimal.valueOf(somaLactacoes > 0 ? somaLactacoes / lote.getAnimais().size() : somaLactacoes)
+				.setScale(2, RoundingMode.HALF_EVEN)
+				.floatValue();
 	}
 
 	public Float getMediaProducaoAnimais(Lote lote) {
@@ -94,7 +100,9 @@ public class LoteService implements IService<Integer, Lote>{
 			mediaAnimal += producaoIndividualService.getMediaProducaoAnimal(animal);
 		}
 		
-		return mediaAnimal > 0 ? mediaAnimal / lote.getAnimais().size() : mediaAnimal;
+		return BigDecimal.valueOf(mediaAnimal > 0 ? mediaAnimal / lote.getAnimais().size() : mediaAnimal)
+				.setScale(2, RoundingMode.HALF_EVEN)
+				.floatValue();
 	}
 	
 	
