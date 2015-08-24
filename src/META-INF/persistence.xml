@@ -43,6 +43,7 @@
 		<class>br.com.milkmoney.model.TipoInsumo</class>
 		<class>br.com.milkmoney.model.Compra</class>
 		<class>br.com.milkmoney.model.ItemCompra</class>
+		<class>br.com.milkmoney.model.CategoriaDespesa</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

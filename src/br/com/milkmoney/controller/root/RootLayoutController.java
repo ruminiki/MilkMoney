@@ -182,6 +182,10 @@ public class RootLayoutController {
     	setTitle("Financeiro > Compra Insumos");
     }
     
+    @FXML
+    protected void handleCadastroCategoriaDespesa() {
+    	openFormAsPopUp("view/categoriaDespesa/CategoriaDespesaOverview.fxml", "Categoria de Despesa");
+    }
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){
