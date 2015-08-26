@@ -183,8 +183,8 @@ public class RootLayoutController {
     }
     
     @FXML
-    protected void handleCadastroCategoriaDespesa() {
-    	openFormAsPopUp("view/categoriaDespesa/CategoriaDespesaOverview.fxml", "Categoria de Despesa");
+    protected void handleCadastroCategoriaLancamentoFinanceiro() {
+    	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Despesa");
     }
     //-----reports------
     @FXML

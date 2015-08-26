@@ -23,21 +23,21 @@ import br.com.milkmoney.components.FieldRequired;
 
 
 @Entity
-@Table(name="categoriaDespesa")
-@NamedQuery(name="CategoriaDespesa.findAll", query="SELECT r FROM CategoriaDespesa r")
-public class CategoriaDespesa extends AbstractEntity implements Serializable {
+@Table(name="categoriaLancamentoFinanceiro")
+@NamedQuery(name="CategoriaLancamentoFinanceiro.findAll", query="SELECT r FROM CategoriaLancamentoFinanceiro r")
+public class CategoriaLancamentoFinanceiro extends AbstractEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private StringProperty                         descricao          = new SimpleStringProperty();
-	private SimpleObjectProperty<CategoriaDespesa> categoriaSuperiora = new SimpleObjectProperty<CategoriaDespesa>();
+	private SimpleObjectProperty<CategoriaLancamentoFinanceiro> categoriaSuperiora = new SimpleObjectProperty<CategoriaLancamentoFinanceiro>();
 	
-	public CategoriaDespesa() {
+	public CategoriaLancamentoFinanceiro() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CategoriaDespesa(String descricao) {
+	public CategoriaLancamentoFinanceiro(String descricao) {
 		setDescricao(descricao);
 	}
 
@@ -64,17 +64,17 @@ public class CategoriaDespesa extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=CategoriaDespesa.class, cascade=CascadeType.REFRESH)
+	@OneToOne(targetEntity=CategoriaLancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="categoriaSuperiora")
-	public CategoriaDespesa getCategoriaSuperiora() {
+	public CategoriaLancamentoFinanceiro getCategoriaSuperiora() {
 		return categoriaSuperiora.get();
 	}
 	
-	public void setCategoriaSuperiora(CategoriaDespesa categoriaSuperiora) {
+	public void setCategoriaSuperiora(CategoriaLancamentoFinanceiro categoriaSuperiora) {
 		this.categoriaSuperiora.set(categoriaSuperiora);
 	}
 	
-	public ObjectProperty<CategoriaDespesa> categoriaSuperioraProperty(){
+	public ObjectProperty<CategoriaLancamentoFinanceiro> categoriaSuperioraProperty(){
 		return categoriaSuperiora;
 	}
 	

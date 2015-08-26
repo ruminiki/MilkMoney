@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.categoriaDespesa;
+package br.com.milkmoney.controller.categoriaLancamentoFinanceiro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.CustomAlert;
-import br.com.milkmoney.model.CategoriaDespesa;
-import br.com.milkmoney.service.CategoriaDespesaService;
+import br.com.milkmoney.model.CategoriaLancamentoFinanceiro;
+import br.com.milkmoney.service.CategoriaLancamentoFinanceiroService;
 
 @Controller
-public class CategoriaDespesaOverviewController {
+public class CategoriaLancamentoFinanceiroOverviewController {
 
-	@FXML private TreeView<CategoriaDespesa> treeView;
-	@Autowired private CategoriaDespesaFormController formController;
-	@Autowired private CategoriaDespesaService service;
+	@FXML private TreeView<CategoriaLancamentoFinanceiro> treeView;
+	@Autowired private CategoriaLancamentoFinanceiroFormController formController;
+	@Autowired private CategoriaLancamentoFinanceiroService service;
 	
-	private TreeItem<CategoriaDespesa> rootNode = new TreeItem<CategoriaDespesa>(new CategoriaDespesa("Categorias"));
+	private TreeItem<CategoriaLancamentoFinanceiro> rootNode = new TreeItem<CategoriaLancamentoFinanceiro>(new CategoriaLancamentoFinanceiro("Categorias"));
 	
 	@FXML
 	public void initialize() {
@@ -49,14 +49,14 @@ public class CategoriaDespesaOverviewController {
 	private void configuraTreeView(){
 		
 		rootNode.getChildren().clear();
-		List<TreeItem<CategoriaDespesa>> itensSemPai = new ArrayList<TreeItem<CategoriaDespesa>>();
+		List<TreeItem<CategoriaLancamentoFinanceiro>> itensSemPai = new ArrayList<TreeItem<CategoriaLancamentoFinanceiro>>();
 		
-		for ( CategoriaDespesa categoria : service.findAllAsObservableList() ) {
+		for ( CategoriaLancamentoFinanceiro categoria : service.findAllAsObservableList() ) {
 			
-			TreeItem<CategoriaDespesa> newItem = new TreeItem<CategoriaDespesa>(categoria);
+			TreeItem<CategoriaLancamentoFinanceiro> newItem = new TreeItem<CategoriaLancamentoFinanceiro>(categoria);
 			newItem.setExpanded(true);
 			
-			for ( TreeItem<CategoriaDespesa> itemSemPai : itensSemPai ){
+			for ( TreeItem<CategoriaLancamentoFinanceiro> itemSemPai : itensSemPai ){
 				if ( itemSemPai.getValue().getCategoriaSuperiora().getId() == newItem.getValue().getId() ){
 					newItem.getChildren().add(itemSemPai);
 					break;
@@ -79,9 +79,9 @@ public class CategoriaDespesaOverviewController {
 		
 	}
 	
-	private boolean percorreArvore(TreeItem<CategoriaDespesa> root, TreeItem<CategoriaDespesa> newItem){
+	private boolean percorreArvore(TreeItem<CategoriaLancamentoFinanceiro> root, TreeItem<CategoriaLancamentoFinanceiro> newItem){
 		
-        for (TreeItem<CategoriaDespesa> i : root.getChildren()) {
+        for (TreeItem<CategoriaLancamentoFinanceiro> i : root.getChildren()) {
         	
         	//verifica se o novo item é filho do item sendo verificado
             if ( newItem.getValue().getCategoriaSuperiora() != null && 
@@ -115,7 +115,7 @@ public class CategoriaDespesaOverviewController {
 	
 	@FXML
 	private void handleNew(){
-		formController.setObject(new CategoriaDespesa());
+		formController.setObject(new CategoriaLancamentoFinanceiro());
 		formController.showForm();
 		configuraTreeView();
 	}
@@ -154,7 +154,7 @@ public class CategoriaDespesaOverviewController {
 	}
 	
 	public String getFormName() {
-		return "view/categoriaDespesa/CategoriaDespesaOverview.fxml";
+		return "view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml";
 	}
 	
 }
