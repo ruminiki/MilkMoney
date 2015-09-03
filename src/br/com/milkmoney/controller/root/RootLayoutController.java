@@ -108,11 +108,6 @@ public class RootLayoutController {
     }
 
     @FXML
-    protected void handleCadastroSemen() {
-    	openFormAsPopUp("view/semen/SemenOverview.fxml", "Sêmen");
-    }
-    
-    @FXML
     protected void handleCadastroTouro() {
     	openFormAsPopUp("view/touro/TouroOverview.fxml", "Touro");
     }

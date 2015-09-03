@@ -3,9 +3,7 @@ package br.com.milkmoney.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,10 +20,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -41,12 +37,14 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	private int id;
 	
 	private ObjectProperty<LocalDate>         dataVenda               = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate>         dataPrevisaoRecebimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty                    valorTotal              = new SimpleStringProperty();
 	private ObjectProperty<Comprador>         comprador               = new SimpleObjectProperty<Comprador>();
 	private StringProperty                    observacao              = new SimpleStringProperty();
-	private List<AnimalVendido>               animaisVendidos         = new ArrayList<AnimalVendido>();
+	private ObjectProperty<Animal>            animal                  = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<MotivoVendaAnimal> motivoVendaAnimal       = new SimpleObjectProperty<MotivoVendaAnimal>();
+	private StringProperty                    destinacaoAnimal        = new SimpleStringProperty(DestinacaoAnimal.ABATE);
+	private StringProperty                    valorAnimal             = new SimpleStringProperty();
 
+	
 	public VendaAnimal() {
 	}
 	
@@ -71,35 +69,6 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<LocalDate> dataVendaProperty(){
 		return dataVenda;
-	}
-	
-	@Temporal(TemporalType.DATE)
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="data recebimento previsto")
-	public Date getDataPrevisaoRecebimento() {
-		return DateUtil.asDate(this.dataPrevisaoRecebimento.get());
-	}
-
-	public void setDataPrevisaoRecebimento(Date dataPrevisaoRecebimento) {
-		this.dataPrevisaoRecebimento.set(DateUtil.asLocalDate(dataPrevisaoRecebimento));
-	}
-	
-	public ObjectProperty<LocalDate> dataRecebimentoProperty(){
-		return dataPrevisaoRecebimento;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="valor total da venda")
-	public BigDecimal getValorTotal() {
-		return NumberFormatUtil.fromString(this.valorTotal.get());
-	}
-
-	public void setValorTotal(BigDecimal valorTotal) {
-		this.valorTotal.set(NumberFormatUtil.decimalFormat(valorTotal));
-	}
-
-	public StringProperty valorTotalProperty(){
-		return valorTotal;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -132,24 +101,63 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true,  targetEntity=AnimalVendido.class, cascade={CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name="vendaAnimal")
-	public List<AnimalVendido> getAnimaisVendidos() {
-		return animaisVendidos;
-	}
-
-	public void setAnimaisVendidos(List<AnimalVendido> animaisVendidos) {
-		this.animaisVendidos = animaisVendidos;
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="animal")
+	@FieldRequired(message="animal")
+	public Animal getAnimal() {
+		return animal.get();
 	}
 	
-	@Transient
-	public String getQuantidadeAnimaisVendidos(){
-		
-		if ( getAnimaisVendidos() != null ){
-			return String.valueOf(getAnimaisVendidos().size());
-		}
-		return "0";
-		
+	public void setAnimal(Animal animal) {
+		this.animal.set(animal);
+	}
+	
+	public ObjectProperty<Animal> animalProperty(){
+		return animal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(targetEntity=MotivoVendaAnimal.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="motivoVendaAnimal")
+	@FieldRequired(message="motivo venda animal")
+	public MotivoVendaAnimal getMotivoVendaAnimal() {
+		return this.motivoVendaAnimal.get();
+	}
+
+	public void setMotivoVendaAnimal(MotivoVendaAnimal motivoVendaAnimal) {
+		this.motivoVendaAnimal.set(motivoVendaAnimal);
+	}
+	
+	public ObjectProperty<MotivoVendaAnimal> motivoVendaAnimalProperty(){
+		return motivoVendaAnimal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="destinação do animal")
+	public String getDestinacaoAnimal() {
+		return this.destinacaoAnimal.get();
+	}
+
+	public void setDestinacaoAnimal(String destinacaoAnimal) {
+		this.destinacaoAnimal.set(destinacaoAnimal);
+	}
+	
+	public StringProperty destinacaoAnimalProperty(){
+		return destinacaoAnimal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="valor do animal")
+	public BigDecimal getValorAnimal() {
+		return NumberFormatUtil.fromString(this.valorAnimal.get());
+	}
+
+	public void setValorAnimal(BigDecimal valorAnimal) {
+		this.valorAnimal.set(NumberFormatUtil.decimalFormat(valorAnimal));
+	}
+
+	public StringProperty valorAnimalProperty(){
+		return valorAnimal;
 	}
 	
 }

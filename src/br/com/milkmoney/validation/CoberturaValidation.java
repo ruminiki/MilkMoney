@@ -1,6 +1,5 @@
 package br.com.milkmoney.validation;
 
-import java.math.BigDecimal;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -36,12 +35,12 @@ public class CoberturaValidation extends Validator {
 		
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
 			//TOURO NÃO PODE SER NULO
-			if ( cobertura.getTouro() == null ){
+			if ( cobertura.getTouroMontaNatural() == null ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"Por favor, infome o campo [reprodutor] para continuar.");
 			}
 			//DEVE SER DO SEXO MACHO
-			if ( !cobertura.getTouro().getSexo().equals(Sexo.MACHO) ){
+			if ( !cobertura.getTouroMontaNatural().getSexo().equals(Sexo.MACHO) ){
 				throw new ValidationException(CAMPO_OBRIGATORIO, 
 						"O reprodutor selecionado para a cobertura deve ser um macho.");
 			}
@@ -58,9 +57,18 @@ public class CoberturaValidation extends Validator {
 			}*/
 		}
 		
+		if ( cobertura.getTipoCobertura().equals(TipoCobertura.INSEMINACAO_ARTIFICIAL) ){
+			//SEMEN NÃO PODE SER NULO
+			if ( cobertura.getTouroInseminacaoArtificial() == null ){
+				throw new ValidationException(CAMPO_OBRIGATORIO, 
+						"Por favor, infome o campo [sêmen] para continuar.");
+			}
+			
+		}
+		
 		if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
-					"Por favor, infome o campo [responsável pela enseminação] para continuar.");
+					"Por favor, infome o campo [responsável pela inseminação] para continuar.");
 		}
 
 	}
@@ -110,49 +118,6 @@ public class CoberturaValidation extends Validator {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Valida o registro de enseminação na cobertura.
-	 * 
-	 * @param cobertura
-	 * @param dosesDisponiveis 
-	 * @param aumentouQuantidadeDosesUtilizadas
-	 */
-	public static void validaEnseminacaoArtificial(Cobertura cobertura, BigDecimal dosesDisponiveis, boolean aumentouQuantidadeDosesUtilizadas){
-		
-		if ( cobertura.getTipoCobertura().equals(TipoCobertura.ENSEMINACAO_ARTIFICIAL) ){
-			//SEMEN NÃO PODE SER NULO
-			if ( cobertura.getSemen() == null ){
-				throw new ValidationException(CAMPO_OBRIGATORIO, 
-						"Por favor, infome o campo [sêmen] para continuar.");
-			}
-			
-			//se for novo registro ou 
-			//se durante a ateração de um registro o usuário aumentar a quantidade de doses
-			//sendo que não há doses suficientes disponíveis
-			if ( cobertura.getId() <= 0 || aumentouQuantidadeDosesUtilizadas ){
-				if ( cobertura.getQuantidadeDosesUtilizadas() > dosesDisponiveis.intValue() ){
-					throw new ValidationException(REGRA_NEGOCIO, 
-							"O sêmen selecionado não possui quantidade suficiente disponível. "
-							+ "Por favor, verifique se a quantidade de doses informada está correta ou selecione outro sêmen.");
-				}
-			}
-			
-			//DEVE SER INFORMADA A QUANTIDADE DE DOSES PARA FAZER O CONTROLE SOBRE O ESTOQUE
-			if ( cobertura.getQuantidadeDosesUtilizadas() <= 0 ){
-				throw new ValidationException(CAMPO_OBRIGATORIO, 
-						"Por favor, infome o campo [quantidade doses utilizadas] para continuar.");
-			}
-			
-			
-			if ( cobertura.getSemen().getDataCompra().after(cobertura.getData()) ){
-				throw new ValidationException(VALIDACAO_FORMULARIO, "A data da cobertura não pode ser menor que a data da "
-						+ "compra do sêmen selecionado. Por favor, corrija e tente novamente.");
-			}
-			
-		}
-		
 	}
 	
 	/**

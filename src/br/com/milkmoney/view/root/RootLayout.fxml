@@ -70,8 +70,6 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Despesas/Aquisições">
                           <items>
-                              <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroLactacao" text="Encerramento Lactação" /> -->
-                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroSemen" text="Sêmen" />
                            	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
                           </items>
                         </Menu>

@@ -30,7 +30,6 @@ import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverview
 import br.com.milkmoney.controller.raca.RacaOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
-import br.com.milkmoney.controller.semen.SemenReducedOverviewController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
@@ -92,7 +91,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	//controllers
 	@Autowired private RacaOverviewController racaController;
 	@Autowired private AnimalReducedOverviewController animalReducedController;
-	@Autowired private SemenReducedOverviewController semenReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
 	@Autowired private LactacaoFormController lactacaoFormController;
@@ -279,8 +277,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				}
 			}else{
 				VendaAnimalValidation.validaSituacaoAnimal(getObject());
-				
-				vendaAnimalFormController.getAnimalVendido().setAnimal(getObject());
+				vendaAnimalFormController.setAnimalVendido(getObject());
 				vendaAnimalFormController.setObject(new VendaAnimal());
 				vendaAnimalFormController.showForm();
 				if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){

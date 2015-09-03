@@ -46,10 +46,10 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	private ObjectProperty<LocalDate>   data                         = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private ObjectProperty<LocalDate>   previsaoParto                = new SimpleObjectProperty<LocalDate>(LocalDate.now().plusDays(282));  
-	private StringProperty              tipoCobertura                = new SimpleStringProperty(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
+	private StringProperty              tipoCobertura                = new SimpleStringProperty(TipoCobertura.INSEMINACAO_ARTIFICIAL);
 	private ObjectProperty<Animal>      femea                        = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Animal>      touro                        = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Semen>       semen                        = new SimpleObjectProperty<Semen>();
+	private ObjectProperty<Animal>      touroMontaNatural            = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Touro>       touroInseminacaoArtificial   = new SimpleObjectProperty<Touro>();
 	private StringProperty              quantidadeDosesUtilizadas    = new SimpleStringProperty();
 	private StringProperty              nomeResponsavel              = new SimpleStringProperty();
 	private ObjectProperty<Funcionario> funcionarioResponsavel       = new SimpleObjectProperty<Funcionario>();
@@ -149,17 +149,17 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="touro")
-	public Animal getTouro() {
-		return touro.get();
+	@JoinColumn(name="touroMontaNatural")
+	public Animal getTouroMontaNatural() {
+		return touroMontaNatural.get();
 	}
 	
-	public void setTouro(Animal touro) {
-		this.touro.set(touro);
+	public void setTouroMontaNatural(Animal touroMontaNatural) {
+		this.touroMontaNatural.set(touroMontaNatural);
 	}
 	
-	public ObjectProperty<Animal> touroProperty(){
-		return touro;
+	public ObjectProperty<Animal> touroMontaNaturalProperty(){
+		return touroMontaNatural;
 	}
 	
 	public String getSituacaoCobertura() {
@@ -176,17 +176,17 @@ public class Cobertura extends AbstractEntity implements Serializable {
 
 	@Access(AccessType.PROPERTY)
 	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="semen")
-	public Semen getSemen() {
-		return semen.get();
+	@JoinColumn(name="touroInseminacaoArtificial")
+	public Touro getTouroInseminacaoArtificial() {
+		return touroInseminacaoArtificial.get();
 	}
 	
-	public void setSemen(Semen semen) {
-		this.semen.set(semen);
+	public void setTouroInseminacaoArtificial(Touro touroInseminacaoArtificial) {
+		this.touroInseminacaoArtificial.set(touroInseminacaoArtificial);
 	}
 	
-	public ObjectProperty<Semen> semenProperty(){
-		return semen;
+	public ObjectProperty<Touro> touroInseminacaoArtificialProperty(){
+		return touroInseminacaoArtificial;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -270,11 +270,11 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 
 	public String getReprodutor(){
-		if ( this.getTouro() != null )
-			return this.getTouro().getNumeroNome();
+		if ( this.getTouroMontaNatural() != null )
+			return this.getTouroMontaNatural().getNumeroNome();
 		
-		if ( this.getSemen() != null )
-			return this.getSemen().getTouro().toString();
+		if ( this.getTouroInseminacaoArtificial() != null )
+			return this.getTouroInseminacaoArtificial().toString();
 		
 		return null;
 	}

@@ -22,7 +22,7 @@ public class AnimalValidation extends Validator {
 		}
 		
 		if ( animal.getPaiMontaNatural() != null && animal.getPaiEnseminacaoArtificial() != null ){
-			throw new ValidationException("PAI", "Não é possível registrar o pai como monta natural e enseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
+			throw new ValidationException("PAI", "Não é possível registrar o pai como monta natural e inseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
 		}
 		
 		if ( animal.getPaiMontaNatural() != null && 

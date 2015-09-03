@@ -22,7 +22,7 @@ import br.com.milkmoney.model.Parametro;
  * 
  * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
  * 
- * PVE - Periodo voluntário de espera (dias após o parto em que a vaca não deve ser enseminada)
+ * PVE - Periodo voluntário de espera (dias após o parto em que a vaca não deve ser inseminada)
  */
 
 @Service
@@ -50,7 +50,7 @@ public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
 			periodoVoluntarioEspera = 40;//default 40 dias
 		}
 		
-		//vacas enseminadas ultimos 21 dias
+		//vacas inseminadas ultimos 21 dias
 		BigInteger vacasEnseminadas = coberturaDao.countCoberturasRealizadasUltimos21Dias();
 		
 		//vacas disponíveis para serem cobertas:

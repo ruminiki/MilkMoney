@@ -8,10 +8,10 @@ import javafx.collections.ObservableList;
 public class TipoCobertura{
 
 	public static final String MONTA_NATURAL = "MONTA NATURAL";
-	public static final String ENSEMINACAO_ARTIFICIAL = "ENSEMINAÇÃO ARTIFICIAL";
+	public static final String INSEMINACAO_ARTIFICIAL = "INSEMINAÇÃO ARTIFICIAL";
 	
 	public static ObservableList<String> getItems(){
-		return FXCollections.observableArrayList(MONTA_NATURAL, ENSEMINACAO_ARTIFICIAL);
+		return FXCollections.observableArrayList(MONTA_NATURAL, INSEMINACAO_ARTIFICIAL);
 	}
 	
 }

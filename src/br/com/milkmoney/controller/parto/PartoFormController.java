@@ -79,6 +79,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		//parto
 		inputCobertura.setText(getObject().getCobertura().toString());
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputDataInicioLactacao.valueProperty().bindBidirectional(getObject().dataInicioLactacaoProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		inputTipoParto.setItems(TipoParto.getItems());
 		inputTipoParto.valueProperty().bindBidirectional(getObject().tipoPartoProperty());
@@ -144,9 +145,9 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		animal.setMae(cobertura.getFemea());
 		
 		if ( cobertura.getTipoCobertura().equals(TipoCobertura.MONTA_NATURAL) ){
-			animal.setPaiMontaNatural(cobertura.getTouro());
+			animal.setPaiMontaNatural(cobertura.getTouroMontaNatural());
 		}else{
-			animal.setPaiEnseminacaoArtificial(cobertura.getSemen().getTouro());
+			animal.setPaiEnseminacaoArtificial(cobertura.getTouroInseminacaoArtificial());
 		}
 		
 		animalCriaFormController.setObject(animal);

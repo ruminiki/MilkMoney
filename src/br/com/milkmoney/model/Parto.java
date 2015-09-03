@@ -43,12 +43,13 @@ public class Parto extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> data             = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty            observacao       = new SimpleStringProperty();
-	private StringProperty            tipoParto        = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
-	private StringProperty            complicacaoParto = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
-	private ObjectProperty<Cobertura> cobertura        = new SimpleObjectProperty<Cobertura>();
-	private List<Cria>                crias            = new ArrayList<Cria>();
+	private ObjectProperty<LocalDate> data               = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private StringProperty            observacao         = new SimpleStringProperty();
+	private StringProperty            tipoParto          = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
+	private StringProperty            complicacaoParto   = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
+	private ObjectProperty<Cobertura> cobertura          = new SimpleObjectProperty<Cobertura>();
+	private ObjectProperty<LocalDate> dataInicioLactacao = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private List<Cria>                crias              = new ArrayList<Cria>();
 	private Lactacao                  lactacao;
 	
 	public Parto() {
@@ -120,6 +121,21 @@ public class Parto extends AbstractEntity implements Serializable {
 	public ObjectProperty<LocalDate> dataProperty(){
 		return data;
 	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	public Date getDataInicioLactacao() {
+		return DateUtil.asDate(dataInicioLactacao.get());
+	}
+
+	public void setDataInicioLactacao(Date dataInicioLactacao) {
+		this.dataInicioLactacao.set(DateUtil.asLocalDate(dataInicioLactacao));
+	}
+	
+	public ObjectProperty<LocalDate> dataInicioLactacaoProperty(){
+		return dataInicioLactacao;
+	}
+	
 	
 	@Access(AccessType.PROPERTY)
 	@OneToOne(targetEntity=Cobertura.class)

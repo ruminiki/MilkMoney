@@ -21,18 +21,18 @@ import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
 import br.com.milkmoney.controller.funcionario.FuncionarioReducedController;
-import br.com.milkmoney.controller.semen.SemenReducedOverviewController;
 import br.com.milkmoney.controller.servico.ServicoFormController;
+import br.com.milkmoney.controller.touro.TouroReducedOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FinalidadeAnimal;
 import br.com.milkmoney.model.ResponsavelServico;
-import br.com.milkmoney.model.Semen;
 import br.com.milkmoney.model.Servico;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.TipoCobertura;
+import br.com.milkmoney.model.Touro;
 import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.ServicoService;
@@ -61,7 +61,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@Autowired private ServicoService servicoService;
 	
 	//controllers
-	@Autowired private SemenReducedOverviewController semenReducedOverviewController;
+	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private FuncionarioReducedController funcionarioReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private ServicoFormController servicoFormController;
@@ -69,18 +69,18 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	EventHandler<ActionEvent> selectSemenEventHandler = new EventHandler<ActionEvent>() {
 	    @Override public void handle(ActionEvent e) {
 	    	
-			semenReducedOverviewController.setObject(new Semen());
-			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
-			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
-			semenReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
-			semenReducedOverviewController.showForm();
+			touroReducedOverviewController.setObject(new Touro());
+			touroReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
+			touroReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
+			touroReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, false);
+			touroReducedOverviewController.showForm();
 			
-			if ( semenReducedOverviewController.getObject() != null && semenReducedOverviewController.getObject().getId() > 0 ){
-				getObject().setSemen(semenReducedOverviewController.getObject());
+			if ( touroReducedOverviewController.getObject() != null && touroReducedOverviewController.getObject().getId() > 0 ){
+				getObject().setTouroInseminacaoArtificial(touroReducedOverviewController.getObject());
 			}
 			
-			if ( getObject().getSemen() != null ){
-				inputSemen.setText(getObject().getSemen().getTouro().toString());	
+			if ( getObject().getTouroInseminacaoArtificial() != null ){
+				inputSemen.setText(getObject().getTouroInseminacaoArtificial().toString());	
 			}else{
 				inputSemen.setText("");
 			}
@@ -101,11 +101,11 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			animalReducedOverviewController.showForm();
 			
 			if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-				getObject().setTouro(animalReducedOverviewController.getObject());
+				getObject().setTouroMontaNatural(animalReducedOverviewController.getObject());
 			}
 			
-			if ( getObject().getTouro() != null ) {
-				inputReprodutor.setText(getObject().getTouro().getNumeroNome());
+			if ( getObject().getTouroMontaNatural() != null ) {
+				inputReprodutor.setText(getObject().getTouroMontaNatural().getNumeroNome());
 			}else{
 				inputReprodutor.setText("");
 			}
@@ -120,7 +120,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		lblPrevisaoParto.textProperty().set(DateUtil.format(getObject().getPrevisaoParto()));
 		
 		inputTipoCobertura.setItems(TipoCobertura.getItems());
-		inputTipoCobertura.getSelectionModel().select(TipoCobertura.ENSEMINACAO_ARTIFICIAL);
+		inputTipoCobertura.getSelectionModel().select(TipoCobertura.INSEMINACAO_ARTIFICIAL);
 		inputTipoCobertura.valueProperty().bindBidirectional(getObject().tipoCoberturaProperty());
 		
 		inputResponsavelServico.setItems(ResponsavelServico.getItems());
@@ -135,7 +135,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		
 		btnSalvar.setDisable(getObject().getParto() != null);
 		
-		if ( getObject().getTouro() != null ){
+		if ( getObject().getTouroMontaNatural() != null ){
 			if ( inputReprodutor == null ){
 				inputReprodutor = new UCTextField();
 				inputReprodutor.setDisable(true);
@@ -146,13 +146,13 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			gridPane.getChildren().add(inputReprodutor);
 			GridPane.setConstraints(inputReprodutor, 1, 2, 3, 1);
 			
-			inputReprodutor.textProperty().bindBidirectional(getObject().getTouro().numeroNomeProperty());
+			inputReprodutor.textProperty().bindBidirectional(getObject().getTouroMontaNatural().numeroNomeProperty());
 			inputReprodutor.setDisable(true);
 			btnNovoReprodutor.setDisable(false);
 			btnNovoReprodutor.setOnAction(selectReprodutorEventHandler);
 		}
 		
-		if ( getObject().getSemen() != null ){
+		if ( getObject().getTouroInseminacaoArtificial() != null ){
 			if ( inputSemen == null ){
 				inputSemen = new UCTextField();
 				inputSemen.setDisable(true);
@@ -167,7 +167,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 			
 			inputSemen.setDisable(true);
-			inputSemen.setText(getObject().getSemen().getTouro().toString());
+			inputSemen.setText(getObject().getTouroInseminacaoArtificial().toString());
 			
 			lblQuantidadeDosesSemen.setVisible(true);
 			inputQuantidadeDosesSemen.setVisible(true);
@@ -236,7 +236,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		inputQuantidadeDosesSemen.setDisable(true);
 		btnNovoReprodutor.setDisable(false);
 		inputReprodutor.setText("");
-		getObject().setTouro(null);
+		getObject().setTouroMontaNatural(null);
 		
 		gridPane.getChildren().remove(inputSemen);
 		gridPane.getChildren().remove(inputReprodutor);
@@ -249,8 +249,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	}
 	
 	/*
-	 * Quando for enseminação artificial habilita busca de semen
-	 * e do campo para informar a quantidade de doses utilizadas
+	 * Quando for inseminação artificial habilita busca de touro
 	 */
 	private void configuraTelaEnseminacaoArtificial(){
 		
@@ -263,7 +262,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		inputQuantidadeDosesSemen.setDisable(false);
 		inputSemen.setText("");
 		btnNovoReprodutor.setDisable(false);
-		getObject().setSemen(null);
+		getObject().setTouroInseminacaoArtificial(null);
 
 		gridPane.getChildren().remove(inputReprodutor);
 		gridPane.getChildren().remove(inputSemen);

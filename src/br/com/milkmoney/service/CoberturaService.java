@@ -30,7 +30,6 @@ import br.com.milkmoney.validation.CoberturaValidation;
 public class CoberturaService implements IService<Integer, Cobertura>{
 
 	@Autowired private CoberturaDao dao;
-	@Autowired private SemenService semenService;
 	@Autowired private PartoService partoService;
 	@Autowired private ParametroService parametroService;
 	@Autowired private ConfirmacaoPrenhesService confirmacaoPrenhesService;
@@ -42,13 +41,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		CoberturaValidation.validate(cobertura);
 		CoberturaValidation.validaSituacaoAnimal(cobertura.getFemea());
 		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea()), Integer.valueOf(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)));
-		if ( cobertura.getSemen() != null ){
-			boolean aumentouQuantidadeDosesUtilizadas = cobertura.getQuantidadeDosesUtilizadas() > dao.findQuantidadeDosesSemenUtilizadasNaCobertura(cobertura);
-			//recarrega o registro do semen para recalcular as doses disponíveis
-			cobertura.setSemen(semenService.findById(cobertura.getSemen().getId()));
-			CoberturaValidation.validaEnseminacaoArtificial(cobertura, cobertura.getSemen().getQuantidadeDisponivel(), aumentouQuantidadeDosesUtilizadas);	
-		}
-		
 		CoberturaValidation.validaSobreposicaoCoberturas(cobertura, dao.findLastCoberturaAnimal(cobertura.getFemea()));
 		
 		return dao.persist(cobertura);

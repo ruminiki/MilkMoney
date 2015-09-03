@@ -19,7 +19,6 @@ public class ConfirmacaoPrenhesService implements IService<Integer, ConfirmacaoP
 
 	@Autowired private ConfirmacaoPrenhesDao dao;
 	@Autowired private PartoService partoService;
-	@Autowired private SemenService semenService;
 
 	@Override
 	@Transactional
