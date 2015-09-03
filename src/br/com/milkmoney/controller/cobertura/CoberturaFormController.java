@@ -130,7 +130,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesUtilizadasProperty());
 		
 		if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
-			getObject().setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			getObject().setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
 		}
 		
 		btnSalvar.setDisable(getObject().getParto() != null);

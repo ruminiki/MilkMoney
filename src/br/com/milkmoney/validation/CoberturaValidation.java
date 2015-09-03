@@ -137,8 +137,8 @@ public class CoberturaValidation extends Validator {
 				//se não for a mesma cobertura
 				if ( c.getId() != cobertura.getId() ){
 					
-					if ( (c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || c.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) &&
-						 (cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || cobertura.getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA)) ){
+					if ( (c.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || c.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA)) &&
+						 (cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) || cobertura.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA)) ){
 						throw new ValidationException(REGRA_NEGOCIO,
 								"A fêmea [" + c.getFemea().getNumeroNome()+"] possui uma cobertura registrada no dia " + 
 								DateUtil.format(c.getData()) +	" com situação " + c.getSituacaoCobertura() + ". " +

@@ -19,18 +19,18 @@ public class PartoValidation extends Validator {
 		Validator.validate(parto);
 		
 		if ( parto.getData().after(new Date()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
+			throw new ValidationException(REGRA_NEGOCIO, 
 					"A data do parto não pode ser maior que a data atual.");
 		}
 		
 		if ( parto.getData().before(parto.getCobertura().getData()) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, 
+			throw new ValidationException(REGRA_NEGOCIO, 
 					"A data do parto não pode ser menor que a data da cobertura.");
 		}
 		
 		if ( parto.getCobertura().getSituacaoCobertura() != null ){
 			if ( !parto.getCobertura().getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) &&
-					!parto.getCobertura().getSituacaoCobertura().equals(SituacaoCobertura.INDEFINIDA) ){
+					!parto.getCobertura().getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
 				throw new ValidationException(REGRA_NEGOCIO, "A cobertura selecionada tem situação igual a " + parto.getCobertura().getSituacaoCobertura() + 
 						" não sendo possível o registro do parto.");
 			}
@@ -66,7 +66,7 @@ public class PartoValidation extends Validator {
 			
 			if ( a.getAnimal() != null &&
 					!DateUtil.isSameDate(a.getAnimal().getDataNascimento(), parto.getData()) ){
-				throw new ValidationException(CAMPO_OBRIGATORIO, 
+				throw new ValidationException(REGRA_NEGOCIO, 
 						"A data de nascimento do animal [" + a.getAnimal().getNumeroNome() + "] deve ser igual a data do parto.");
 			}
 			

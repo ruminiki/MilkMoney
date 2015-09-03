@@ -20,15 +20,15 @@ public class RacaService implements IService<Integer, Raca>{
 
 	@Override
 	@Transactional
-	public boolean save(Raca entity) {
-		RacaValidation.validate(entity);
-		return dao.persist(entity);
+	public boolean save(Raca raca) {
+		validate(raca);
+		return dao.persist(raca);
 	}
 
 	@Override
 	@Transactional
-	public boolean remove(Raca entity) {
-		return dao.remove(entity);
+	public boolean remove(Raca raca) {
+		return dao.remove(raca);
 	}
 
 	@Override
@@ -51,9 +51,8 @@ public class RacaService implements IService<Integer, Raca>{
 	}
 
 	@Override
-	public void validate(Raca entity) {
-		// TODO Auto-generated method stub
-		
+	public void validate(Raca raca) {
+		RacaValidation.validate(raca);
 	}
 	
 	

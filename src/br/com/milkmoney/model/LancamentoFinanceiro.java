@@ -1,71 +1,53 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Formula;
-
-import br.com.milkmoney.components.FieldRequired;
-import br.com.milkmoney.util.DateUtil;
-import br.com.milkmoney.util.NumberFormatUtil;
 
 
-/**
- * The persistent class for the ANIMAL database table.
- * 
- */
 @Entity
-@Table(name="animal")
-@NamedQuery(name="Animal.findAll", query="SELECT a FROM Animal a")
-public class Animal extends AbstractEntity implements Serializable {
+@Table(name="lancamentoFinanceiro")
+@NamedQuery(name="LancamentoFinanceiro.findAll", query="SELECT a FROM LancamentoFinanceiro a")
+public class LancamentoFinanceiro extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataNascimento           = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty            nome                     = new SimpleStringProperty();
+	private ObjectProperty<LocalDate> dataEmissao           = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate> dataVencimento        = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate> dataPagamento         = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	
+	private StringProperty            tipoLancamento        = new SimpleStringProperty(TipoLancamentoFinanceiro.DESPESA);
 	private StringProperty            numero                   = new SimpleStringProperty();
 	private StringProperty            sexo                     = new SimpleStringProperty(Sexo.FEMEA);
-	private StringProperty            finalidadeAnimal         = new SimpleStringProperty(FinalidadeAnimal.PRODUCAO_LEITE);
+	/*private StringProperty            finalidadeLancamentoFinanceiro         = new SimpleStringProperty(FinalidadeLancamentoFinanceiro.PRODUCAO_LEITE);
 	
 	private ObjectProperty<Raca>      raca                     = new SimpleObjectProperty<Raca>();
 	
-	private ObjectProperty<Animal>    mae                      = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Animal>    paiMontaNatural          = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<LancamentoFinanceiro>    mae                      = new SimpleObjectProperty<LancamentoFinanceiro>();
+	private ObjectProperty<LancamentoFinanceiro>    paiMontaNatural          = new SimpleObjectProperty<LancamentoFinanceiro>();
 	private ObjectProperty<Touro>     paiEnseminacaoArtificial = new SimpleObjectProperty<Touro>();
 	
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
 	
-	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
-	private String situacaoAnimal;
+	@Formula("(SELECT s.situacao FROM viewSituacaoLancamentoFinanceiro s WHERE s.lancamentoFinanceiro = id limit 1)")
+	private String situacaoLancamentoFinanceiro;
 	
 	@Formula("(SELECT MAX(p.data) FROM parto p inner join cobertura c ON (c.parto = p.id) "
-			+ "INNER JOIN animal a on (a.id = c.femea) WHERE a.id = id)")
+			+ "INNER JOIN lancamentoFinanceiro a on (a.id = c.femea) WHERE a.id = id)")
 	private Date dataUltimoParto;
 
 	@Formula("(SELECT MAX(c.data) FROM cobertura c WHERE c.femea = id)")
@@ -77,18 +59,18 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
 	private String situacaoUltimaCobertura;
 	
-	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
+	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.lancamentoFinanceiro = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 
-	public Animal() {}
+	public LancamentoFinanceiro() {}
 
-	public Animal(String sexo) {
+	public LancamentoFinanceiro(String sexo) {
 		this.sexo.set(sexo);
 	}
 
-	public Animal(String sexo, String finalidadeAnimal) {
+	public LancamentoFinanceiro(String sexo, String finalidadeLancamentoFinanceiro) {
 		this.sexo.set(sexo);
-		this.finalidadeAnimal.set(finalidadeAnimal);
+		this.finalidadeLancamentoFinanceiro.set(finalidadeLancamentoFinanceiro);
 	}
 
 	@Temporal(TemporalType.DATE)
@@ -143,17 +125,17 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="finalidade do animal")
-	public String getFinalidadeAnimal() {
-		return finalidadeAnimal.get();
+	@FieldRequired(message="finalidade do lancamentoFinanceiro")
+	public String getFinalidadeLancamentoFinanceiro() {
+		return finalidadeLancamentoFinanceiro.get();
 	}
 	
-	public void setFinalidadeAnimal(String finalidadeAnimal) {
-		this.finalidadeAnimal.set(finalidadeAnimal);
+	public void setFinalidadeLancamentoFinanceiro(String finalidadeLancamentoFinanceiro) {
+		this.finalidadeLancamentoFinanceiro.set(finalidadeLancamentoFinanceiro);
 	}
 	
-	public StringProperty finalidadeAnimalProperty(){
-		return finalidadeAnimal;
+	public StringProperty finalidadeLancamentoFinanceiroProperty(){
+		return finalidadeLancamentoFinanceiro;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -187,32 +169,32 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(targetEntity=LancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="mae")
-	public Animal getMae() {
+	public LancamentoFinanceiro getMae() {
 		return mae.get();
 	}
 	
-	public void setMae(Animal mae) {
+	public void setMae(LancamentoFinanceiro mae) {
 		this.mae.set(mae);
 	}
 	
-	public ObjectProperty<Animal> maeProperty(){
+	public ObjectProperty<LancamentoFinanceiro> maeProperty(){
 		return mae;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(targetEntity=LancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="paiMontaNatural")
-	public Animal getPaiMontaNatural() {
+	public LancamentoFinanceiro getPaiMontaNatural() {
 		return paiMontaNatural.get();
 	}
 	
-	public void setPaiMontaNatural(Animal paiMontaNatural) {
+	public void setPaiMontaNatural(LancamentoFinanceiro paiMontaNatural) {
 		this.paiMontaNatural.set(paiMontaNatural);
 	}
 	
-	public ObjectProperty<Animal> paiMontaNaturalProperty(){
+	public ObjectProperty<LancamentoFinanceiro> paiMontaNaturalProperty(){
 		return paiMontaNatural;
 	}
 	
@@ -258,16 +240,16 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Transient
-	public String getSituacaoAnimal() {
+	public String getSituacaoLancamentoFinanceiro() {
 		
-		if ( situacaoAnimal == null ){
-			return SituacaoAnimal.NAO_DEFINIDA;
+		if ( situacaoLancamentoFinanceiro == null ){
+			return SituacaoLancamentoFinanceiro.NAO_DEFINIDA;
 		}
-		return this.situacaoAnimal;
+		return this.situacaoLancamentoFinanceiro;
 	}
 
-	public void setSituacaoAnimal(String situacaoAnimal) {
-		this.situacaoAnimal = situacaoAnimal;
+	public void setSituacaoLancamentoFinanceiro(String situacaoLancamentoFinanceiro) {
+		this.situacaoLancamentoFinanceiro = situacaoLancamentoFinanceiro;
 	}
 	
 	//==========================
@@ -314,10 +296,6 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	@Transient
 	public Date getDataPrevisaoProximoParto() {
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return null;
-		}
 		return dataPrevisaoProximoParto;
 	}
 
@@ -327,11 +305,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Transient
 	public Date getDataPrevisaoEncerramentoLactacao() {
-		
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return null;
-		}
 		
 		if ( dataUltimaCobertura != null ){
 			return DateUtil.asDate(DateUtil.asLocalDate(dataUltimaCobertura).plusMonths(7));
@@ -352,12 +325,6 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	@Transient
 	public String getDiasUltimaCobertura() {
-		
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return "--";
-		}
-		
 		if ( getDataUltimaCobertura() != null )
 			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now()));
 		return "--";
@@ -376,5 +343,10 @@ public class Animal extends AbstractEntity implements Serializable {
 	public String toString() {
 		return getNumeroNome();
 	}
-
+*/
+	@Override
+	public int getId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

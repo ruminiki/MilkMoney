@@ -34,8 +34,7 @@ public class TableCellOpcoesHyperlinkFactory<S, String> implements Callback<Tabl
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
 		        	if ( tableRowProperty().getValue().getItem() != null ){
-						if(item!=null){
-							
+		        		if(item!=null){
 							HBox cell = new HBox();
 							cell.setAlignment(Pos.CENTER);
 							cell.setSpacing(-4);

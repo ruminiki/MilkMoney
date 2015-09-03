@@ -11,7 +11,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 
 import javax.annotation.Resource;
 
@@ -64,23 +63,18 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
-	
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
+	@FXML private TableColumn<Raca, String> racaColumn;
+	@FXML private TableColumn<String, String> sexoColumn;
+	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
+	@FXML private TableColumn<Animal, Long> idadeColumn;
 	@FXML private TableColumn<Animal, Date> dataUltimoPartoColumn;
 	@FXML private TableColumn<Animal, String> diasUltimoPartoColumn;
-	
 	@FXML private TableColumn<Animal, Date> dataUltimaCoberturaColumn;
 	@FXML private TableColumn<Animal, String> diasUltimaCoberturaColumn;
 	@FXML private TableColumn<Animal, Date> dataPrevisaoLactacaoColumn;
 	@FXML private TableColumn<Animal, Date> dataPrevisaoProximoPartoColumn;
 	@FXML private TableColumn<Animal, String> situacaoUltimaCoberturaColumn;
-	
-	@FXML private TableColumn<Raca, String> racaColumn;
-	@FXML private TableColumn<String, String> sexoColumn;
-	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
-	@FXML private TableColumn<Animal, Long> idadeColumn;
-	
-	@FXML private HBox containerTable;
 	
 	//services
 	@Autowired private LactacaoService lactacaoService;
@@ -113,18 +107,15 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
-		
+		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
+		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
 		dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
 		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
-		
 		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
 		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
 		dataPrevisaoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
 		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
-
-		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
-		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		

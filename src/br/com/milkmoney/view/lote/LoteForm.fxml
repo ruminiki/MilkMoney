@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="506.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lote.LoteFormController">
+<AnchorPane prefHeight="392.0" prefWidth="743.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lote.LoteFormController">
    <children>
       <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <GridPane prefHeight="166.0" prefWidth="733.0" VBox.vgrow="SOMETIMES">
+            <GridPane minHeight="90.0" prefHeight="166.0" prefWidth="733.0" VBox.vgrow="SOMETIMES">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="92.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="295.0" />
@@ -54,7 +54,7 @@
                         <Button fx:id="btnRemoverTodos" mnemonicParsing="false" text="&lt;&lt;" />
                      </children>
                   </VBox>
-                  <VBox spacing="3.0" HBox.hgrow="SOMETIMES">
+                  <VBox alignment="CENTER" spacing="3.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
                            <children>
@@ -64,11 +64,11 @@
                         <ListView fx:id="listAnimaisSelecionados" focusTraversable="false" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="19.0">
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="3.0">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;">
+                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" />
+                              <Insets />
                            </VBox.margin>
                            <children>
                               <Label text="Total Animais">
@@ -78,12 +78,12 @@
                               </Label>
                               <Label fx:id="lblTotalAnimais" text="30">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;">
+                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                            <children>
                               <Label text="Média Produção">
                                  <font>
@@ -92,15 +92,15 @@
                               </Label>
                               <Label fx:id="lblMediaProducao" text="30,5">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;">
+                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                            <children>
                               <Label text="Média Lactações">
                                  <font>
@@ -109,15 +109,15 @@
                               </Label>
                               <Label fx:id="lblMediaLactacoes" text="30,5">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: #CCC;">
+                        <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="100.0" style="-fx-border-color: #CCC;">
                            <children>
                               <Label text="Média Idade">
                                  <font>
@@ -126,12 +126,12 @@
                               </Label>
                               <Label fx:id="lblMediaIdade" text="30,5">
                                  <font>
-                                    <Font size="30.0" />
+                                    <Font size="25.0" />
                                  </font>
                               </Label>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                              <Insets />
                            </VBox.margin>
                         </VBox>
                      </children>

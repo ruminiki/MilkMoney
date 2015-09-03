@@ -26,6 +26,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Formula;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -58,7 +61,13 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	//jpa
 	private Parto                       parto;
 	private List<ConfirmacaoPrenhes>    confirmacoesPrenhes;
-	private String                      situacaoCobertura            = SituacaoCobertura.INDEFINIDA;
+	private String                      situacaoCobertura            = SituacaoCobertura.NAO_CONFIRMADA;
+	
+	@Formula("(SELECT c.data FROM confirmacaoPrenhes c WHERE c.cobertura = id order by data desc limit 1)")
+	private Date dataConfirmacaoPrenhes;
+	
+	@Formula("(SELECT c.metodoConfirmacao FROM confirmacaoPrenhes c WHERE c.cobertura = id order by data desc limit 1)")
+	private String metodoConfirmacaoPrenhes;
 	
 	public Cobertura() {
 	}
@@ -167,7 +176,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 			return SituacaoCobertura.PARIDA; 
 		}
 		
-		return situacaoCobertura == null ? SituacaoCobertura.INDEFINIDA : situacaoCobertura;
+		return situacaoCobertura == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoCobertura;
 	}
 
 	public void setSituacaoCobertura(String situacaoCobertura) {
@@ -267,6 +276,24 @@ public class Cobertura extends AbstractEntity implements Serializable {
 
 	public void setConfirmacoesPrenhes(List<ConfirmacaoPrenhes> confirmacoesPrenhes) {
 		this.confirmacoesPrenhes = confirmacoesPrenhes;
+	}
+	
+	@Transient
+	public Date getDataConfirmacaoPrenhes() {
+		return dataConfirmacaoPrenhes;
+	}
+
+	public void setDataConfirmacaoPrenhes(Date dataConfirmacaoPrenhes) {
+		this.dataConfirmacaoPrenhes = dataConfirmacaoPrenhes;
+	}
+
+	@Transient
+	public String getMetodoConfirmacaoPrenhes() {
+		return metodoConfirmacaoPrenhes == null ? "--" : metodoConfirmacaoPrenhes;
+	}
+
+	public void setMetodoConfirmacaoPrenhes(String metodoConfirmacaoPrenhes) {
+		this.metodoConfirmacaoPrenhes = metodoConfirmacaoPrenhes;
 	}
 
 	public String getReprodutor(){

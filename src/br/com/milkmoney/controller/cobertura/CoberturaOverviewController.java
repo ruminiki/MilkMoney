@@ -1,5 +1,6 @@
 package br.com.milkmoney.controller.cobertura;
 
+import java.util.Date;
 import java.util.function.Function;
 
 import javafx.event.ActionEvent;
@@ -23,6 +24,8 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
@@ -55,6 +58,7 @@ import br.com.milkmoney.validation.Validator;
 @Controller
 public class CoberturaOverviewController extends AbstractOverviewController<Integer, Cobertura> {
 
+	//COBERTURAS
 	@FXML private TableColumn<Cobertura, String>        dataColumn;
 	@FXML private TableColumn<Cobertura, String>        reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String>        previsaoPartoColumn;
@@ -62,11 +66,21 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String>        tipoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String>        situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String>        statusColumn;
-	
+	@FXML private TableColumn<Cobertura, String>        dataConfirmacaoColumn;
+	@FXML private TableColumn<Cobertura, String>        metodoConfirmacaoColumn;
+	//ANIMAIS
 	@FXML private TableView<Animal>                     tableAnimais;
 	@FXML private TableColumn<Animal, String>           dataNascimentoAnimalColumn;
 	@FXML private TableColumn<Animal, String>           situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, String>           animalColumn;
+	@FXML private TableColumn<Animal, Date>             dataUltimoPartoColumn;
+	@FXML private TableColumn<Animal, String>           diasUltimoPartoColumn;
+	
+	@FXML private TableColumn<Animal, Date>             dataUltimaCoberturaColumn;
+	@FXML private TableColumn<Animal, String>           diasUltimaCoberturaColumn;
+	@FXML private TableColumn<Animal, Date>             dataPrevisaoLactacaoColumn;
+	@FXML private TableColumn<Animal, Date>             dataPrevisaoProximoPartoColumn;
+	@FXML private TableColumn<Animal, String>           situacaoUltimaCoberturaColumn;
 	
 	@FXML private Label                                 lblHeader;
 	@FXML private TextField                             inputPesquisaAnimal;
@@ -94,8 +108,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		dataNascimentoAnimalColumn.setCellFactory(new TableCellDateFactory<Animal,String>("dataNascimento"));
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numeroNome"));
+		dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
+		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
+		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
+		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
+		dataPrevisaoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
+		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
+		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 		
-		handleBuscarFemeasDisponeisParaCobertura();
+		handleBuscarTodasAsFemeas();
 		tableAnimais.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
 		
 		if ( tableAnimais.getItems().size() > 0 ) {
@@ -115,10 +136,12 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
-		dataPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("dataParto"));
+		dataPartoColumn.setCellFactory(new TableCellRegistrarPartoHyperlinkFactory<Cobertura,String>("dataParto", registrarParto));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
+		dataConfirmacaoColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
+		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("metodoConfirmacaoPrenhes"));
 		
 		super.initialize(coberturaFormController);
 		
@@ -300,7 +323,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			return;
 		}
 		if ( getObject().getParto() == null ){
-			if ( getObject().getSituacaoCobertura().matches(SituacaoCobertura.INDEFINIDA + "|" + SituacaoCobertura.PRENHA) ){
+			if ( getObject().getSituacaoCobertura().matches(SituacaoCobertura.NAO_CONFIRMADA + "|" + SituacaoCobertura.PRENHA) ){
 				
 				partoFormController.setState(State.CREATE_TO_SELECT);
 				partoFormController.setObject(new Parto(getObject()));
@@ -337,31 +360,28 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		confirmacaoPrenhesFormController.setState(State.CREATE_TO_SELECT);
 		confirmacaoPrenhesFormController.setObject(new ConfirmacaoPrenhes(getObject()));
     	confirmacaoPrenhesFormController.showForm();
-    	((CoberturaService)service).saveConfirmacaoPrenhes(getObject());
-    	refreshObjectInTableView.apply(service.findById(getObject().getId()));
+    	
+    	if ( !getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+    		((CoberturaService)service).saveConfirmacaoPrenhes(getObject());
+    		refreshObjectInTableView.apply(service.findById(getObject().getId()));
+    	}
     	
 	}
 	
 	//====FUNCTIONS
 	
-	Function<Integer, Boolean> permiteEditar = index -> {
-		
-		if ( index >= 0 ){
-			setObject(data.get(index));
-		}
-		
-		if ( getObject() == null ){
-			CustomAlert.nenhumRegistroSelecionado();
-			return false;
-		}
-		
-		if ( getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-			CustomAlert.mensagemInfo("A cobertura já tem parto registrado, não sendo possível alteração.");
-			return false;
-		}
-		
+	Function<Integer, Boolean> registrarParto = index -> {
+		table.getSelectionModel().select(index);
+		handleRegistrarParto();
 		return true;
-		
 	};
+	
+	Function<Integer, Boolean> confirmarPrenhes = index -> {
+		table.getSelectionModel().select(index);
+		handleConfirmarPrenhes();
+		return true;
+	};
+	
+	
 	
 }

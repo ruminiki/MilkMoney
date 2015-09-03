@@ -22,25 +22,25 @@ public class AnimalValidation extends Validator {
 		}
 		
 		if ( animal.getPaiMontaNatural() != null && animal.getPaiEnseminacaoArtificial() != null ){
-			throw new ValidationException("PAI", "Não é possível registrar o pai como monta natural e inseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
+			throw new ValidationException(REGRA_NEGOCIO, "Não é possível registrar o pai como monta natural e inseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
 		}
 		
 		if ( animal.getPaiMontaNatural() != null && 
 				(!animal.getPaiMontaNatural().getSexo().equals(Sexo.MACHO) || !animal.getPaiMontaNatural().getFinalidadeAnimal().equals(FinalidadeAnimal.REPRODUCAO)) ){
-			throw new ValidationException("PAI MONTA NATURAL", "Deve ser selecionado um animal macho com finalidade reprodução para o campo pai monta natural.");
+			throw new ValidationException(REGRA_NEGOCIO, "Deve ser selecionado um animal macho com finalidade reprodução para o campo pai monta natural.");
 		}
 		
 		if ( animal.getMae() != null && animal.getMae().getId() == animal.getId() ){
-			throw new ValidationException("MÃE", "O animal que está sendo cadastrado não pode ser mãe dele mesmo. Por favor selecione outro animal.");
+			throw new ValidationException(REGRA_NEGOCIO, "O animal que está sendo cadastrado não pode ser mãe dele mesmo. Por favor selecione outro animal.");
 		}
 		
 		if ( animal.getMae() != null && animal.getMae().getMae() != null &&
 				animal.getId() == animal.getMae().getMae().getId() ){
-			throw new ValidationException("MÃE", "O animal não pode ser mãe de sua própria mãe. Por favor, corrija e tente novamente.");
+			throw new ValidationException(REGRA_NEGOCIO, "O animal não pode ser mãe de sua própria mãe. Por favor, corrija e tente novamente.");
 		}
 		
 		if ( animal.getPaiMontaNatural() != null && animal.getPaiMontaNatural().getId() == animal.getId() ){
-			throw new ValidationException("PAI", "O animal que está sendo cadastrado não pode ser pai dele mesmo. Por favor selecione outro animal.");
+			throw new ValidationException(REGRA_NEGOCIO, "O animal que está sendo cadastrado não pode ser pai dele mesmo. Por favor selecione outro animal.");
 		}
 		
 		if ( animal.getSexo().equals(Sexo.MACHO) && animal.getFinalidadeAnimal().equals(FinalidadeAnimal.PRODUCAO_LEITE) ){

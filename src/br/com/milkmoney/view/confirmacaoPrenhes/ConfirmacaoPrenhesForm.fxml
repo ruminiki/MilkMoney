@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="422.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
+<AnchorPane prefHeight="365.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -60,6 +60,7 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
                      </children>
                      <VBox.margin>
                         <Insets right="5.0" />
@@ -72,7 +73,7 @@
             </VBox>
             <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                <children>
-                  <Label text="HISTÓRICO" />
+                  <Label text="HISTÓRICO DIAGNÓSTICOS" />
                </children>
             </HBox>
             <VBox VBox.vgrow="SOMETIMES">
@@ -87,14 +88,6 @@
                   </TableView>
                </children>
             </VBox>
-            <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </HBox>
          </children>
       </VBox>
    </children>

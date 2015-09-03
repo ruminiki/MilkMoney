@@ -82,7 +82,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		Query query = entityManager.createQuery(
 				"SELECT distinct a FROM Cobertura c inner join c.femea a "
-				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') "
+				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		query.setHint("org.hibernate.cacheable", "false");
@@ -95,7 +95,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		Query query = entityManager.createQuery(
 				"SELECT distinct a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and "
-				+ "not exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura in ('" + SituacaoCobertura.INDEFINIDA + "','" + SituacaoCobertura.PRENHA + "') and c.femea = a.id ) "
+				+ "not exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') and c.femea = a.id ) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		query.setHint("org.hibernate.cacheable", "false");
@@ -336,7 +336,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
 		return (BigInteger) entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
-				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and "
 				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
 	}
 
@@ -362,7 +362,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				"SELECT a FROM Animal a where DATEDIFF(current_date(), a.dataNascimento) > " + diasIdadeMinimaParaCobertura + " and "
 				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
 				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.INDEFINIDA + "')) and "
+				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and "
 				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ") and "
 				+ "a.sexo = '" + Sexo.FEMEA + "'");
 		

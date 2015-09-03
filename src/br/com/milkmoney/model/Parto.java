@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -43,14 +44,14 @@ public class Parto extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> data               = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private StringProperty            observacao         = new SimpleStringProperty();
-	private StringProperty            tipoParto          = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
-	private StringProperty            complicacaoParto   = new SimpleStringProperty(ComplicacaoParto.NENHUMA);
-	private ObjectProperty<Cobertura> cobertura          = new SimpleObjectProperty<Cobertura>();
-	private ObjectProperty<LocalDate> dataInicioLactacao = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private List<Cria>                crias              = new ArrayList<Cria>();
-	private Lactacao                  lactacao;
+	private ObjectProperty<LocalDate>        data               = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private StringProperty                   observacao         = new SimpleStringProperty();
+	private StringProperty                   tipoParto          = new SimpleStringProperty(TipoParto.PARTO_NORMAL);
+	private ObjectProperty<ComplicacaoParto> complicacaoParto   = new SimpleObjectProperty<ComplicacaoParto>();
+	private ObjectProperty<Cobertura>        cobertura          = new SimpleObjectProperty<Cobertura>();
+	private ObjectProperty<LocalDate>        dataInicioLactacao = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private List<Cria>                       crias              = new ArrayList<Cria>();
+	private Lactacao                         lactacao;
 	
 	public Parto() {
 	}
@@ -82,16 +83,18 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@ManyToOne(targetEntity=ComplicacaoParto.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="complicacaoParto")
 	@FieldRequired(message="complicação do parto")
-	public String getComplicacaoParto() {
+	public ComplicacaoParto getComplicacaoParto() {
 		return this.complicacaoParto.get();
 	}
 
-	public void setComplicacaoParto(String complicacaoParto) {
+	public void setComplicacaoParto(ComplicacaoParto complicacaoParto) {
 		this.complicacaoParto.set(complicacaoParto);
 	}
 
-	public StringProperty complicacaoPartoProperty(){
+	public ObjectProperty<ComplicacaoParto> complicacaoPartoProperty(){
 		return complicacaoParto;
 	}
 	

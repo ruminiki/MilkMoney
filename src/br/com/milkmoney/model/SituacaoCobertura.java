@@ -16,14 +16,14 @@ public class SituacaoCobertura {
 	/**
 	 * Não é possível afirmar se a cobertura foi bem sucedida e a vaca está prenha.
 	 */
-	public static final String INDEFINIDA = "INDEFINIDA";
+	public static final String NAO_CONFIRMADA = "NÃO CONFIRMADA";
 	/**
 	 * Teve o parto registrado.
 	 */
 	public static final String PARIDA     = "PARIDA";
 	
 	public static ObservableList<String> getItems(){
-		return FXCollections.observableArrayList(INDEFINIDA, PRENHA, VAZIA);
+		return FXCollections.observableArrayList(NAO_CONFIRMADA, PRENHA, VAZIA);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package br.com.milkmoney.controller.categoriaLancamentoFinanceiro;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 
@@ -18,11 +20,27 @@ public class CategoriaLancamentoFinanceiroFormController extends AbstractFormCon
 	@FXML private UCTextField inputDescricao;
 	@FXML private ComboBox<CategoriaLancamentoFinanceiro> inputCategoriaLancamentoFinanceiroSuperiora;
 
+	private CategoriaLancamentoFinanceiro categoriaNull = new CategoriaLancamentoFinanceiro("");
+	private ObservableList<CategoriaLancamentoFinanceiro> data;
+	
 	@FXML
 	public void initialize() {
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
-		inputCategoriaLancamentoFinanceiroSuperiora.setItems(service.findAllAsObservableList());
+		data = FXCollections.observableArrayList(categoriaNull);
+		data.addAll(service.findAllAsObservableList());
+		inputCategoriaLancamentoFinanceiroSuperiora.setItems(data);
 		inputCategoriaLancamentoFinanceiroSuperiora.valueProperty().bindBidirectional(getObject().categoriaSuperioraProperty());
+	}
+	
+	@Override
+	protected void beforeSave() {
+		super.beforeSave();
+		
+		if ( getObject().getCategoriaSuperiora() != null && 
+			getObject().getCategoriaSuperiora().getId() <= 0 ){
+				getObject().setCategoriaSuperiora(null);
+		}
+		
 	}
 
 	@Override

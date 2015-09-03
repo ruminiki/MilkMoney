@@ -102,12 +102,8 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);	
-
 		animalReducedOverviewController.showForm();
-		
-		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setAnimal(animalReducedOverviewController.getObject());
-		}
+		getObject().setAnimal(animalReducedOverviewController.getObject());
 		
 		if ( getObject().getAnimal() != null ){
 			inputAnimal.textProperty().set(getObject().getAnimal().getNumeroNome());	

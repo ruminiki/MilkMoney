@@ -67,7 +67,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			cobertura.setParto(null);
 			//reconfigura situação cobertura
 			ConfirmacaoPrenhes cp = confirmacaoPrenhesService.findLastByCobertura(cobertura);
-			cobertura.setSituacaoCobertura(cp != null ? cp.getSituacaoCobertura() : SituacaoCobertura.INDEFINIDA);
+			cobertura.setSituacaoCobertura(cp != null ? cp.getSituacaoCobertura() : SituacaoCobertura.NAO_CONFIRMADA);
 			dao.persist(cobertura);
 
 		}catch(Exception e){
@@ -103,7 +103,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			ConfirmacaoPrenhes cp = cobertura.getConfirmacoesPrenhes().get(cobertura.getConfirmacoesPrenhes().size()-1);
 			cobertura.setSituacaoCobertura(cp.getSituacaoCobertura());
 		}else{
-			cobertura.setSituacaoCobertura(SituacaoCobertura.INDEFINIDA);
+			cobertura.setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
 		}
 		
 		//salva em cascata as confirmações registradas dentro da mesma transação

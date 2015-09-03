@@ -22,6 +22,7 @@
 		<class>br.com.milkmoney.model.Fornecedor</class>
 		<class>br.com.milkmoney.model.Cobertura</class>
 		<class>br.com.milkmoney.model.Parto</class>
+		<class>br.com.milkmoney.model.ComplicacaoParto</class>
 		<class>br.com.milkmoney.model.Cria</class>
 		<class>br.com.milkmoney.model.Comprador</class>
 		<class>br.com.milkmoney.model.VendaAnimal</class>

@@ -1,17 +1,56 @@
 package br.com.milkmoney.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.io.Serializable;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
-public class ComplicacaoParto{
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import br.com.milkmoney.components.FieldRequired;
+
+@Entity
+@Table(name="complicacaoParto")
+@NamedQuery(name="ComplicacaoParto.findAll", query="SELECT r FROM ComplicacaoParto r")
+public class ComplicacaoParto extends AbstractEntity implements Serializable {
 	
-	public static final String DESLOCAMENTO_ABOMASSO = "DESLOCAMENTO DE ABOMASSO";
-	public static final String RETENCAO_PLACENTA = "RETENÇÃO DE PLACENTA";
-	public static final String NENHUMA = "NENHUMA";
+	private static final long serialVersionUID = 1L;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private StringProperty descricao = new SimpleStringProperty();
 	
-	public static ObservableList<String> getItems(){
-		return FXCollections.observableArrayList(NENHUMA, RETENCAO_PLACENTA, DESLOCAMENTO_ABOMASSO);
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="descrição")
+	public String getDescricao() {
+		return this.descricao.get();
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao.set(descricao);
+	}
+	
+	public StringProperty descricaoProperty(){
+		return descricao;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	@Override
+	public String toString() {
+		return getDescricao();
 	}
 	
 }

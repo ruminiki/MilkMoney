@@ -21,7 +21,6 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeAnimal;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
-import br.com.milkmoney.model.Touro;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.searchers.SearchFemeas;
 import br.com.milkmoney.service.searchers.SearchMachos;
@@ -125,9 +124,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML
 	private void handleSelecionarPaiEnseminacaoArtificial() {
 		
-		touroReducedOverviewController.setObject(new Touro());
 		touroReducedOverviewController.showForm();
-		
 		getObject().setPaiEnseminacaoArtificial(touroReducedOverviewController.getObject());
 		
 		if ( getObject().getPaiEnseminacaoArtificial() != null ){

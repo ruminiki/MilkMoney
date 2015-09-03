@@ -24,8 +24,8 @@
             <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="185.0" prefWidth="279.0">
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="231.0" minWidth="31.0" prefWidth="31.0" />
-                <ColumnConstraints maxWidth="425.0" minWidth="0.0" prefWidth="425.0" />
-                  <ColumnConstraints halignment="RIGHT" maxWidth="378.0" minWidth="0.0" prefWidth="67.0" />
+                <ColumnConstraints maxWidth="437.0" minWidth="0.0" prefWidth="437.0" />
+                  <ColumnConstraints halignment="LEFT" maxWidth="378.0" minWidth="0.0" prefWidth="55.0" />
                   <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
@@ -44,11 +44,16 @@
                   <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
                   <Label text="Tipo Parto: " GridPane.rowIndex="3" />
                   <ComboBox fx:id="inputTipoParto" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                  <ComboBox fx:id="inputComplicacaoParto" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
                   <Label text="Complicação Parto: " GridPane.rowIndex="4" />
                   <Label text="Início Lactação: " GridPane.rowIndex="2" />
                   <DatePicker fx:id="inputDataInicioLactacao" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <DatePicker fx:id="inputData" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="inputData" onAction="#updateDataInicioLactacao" prefWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputComplicacaoParto" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarComplicacaoParto" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
