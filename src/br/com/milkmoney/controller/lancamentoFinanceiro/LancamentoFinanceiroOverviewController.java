@@ -1,14 +1,22 @@
 package br.com.milkmoney.controller.lancamentoFinanceiro;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,8 +26,11 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
 import br.com.milkmoney.model.LancamentoFinanceiro;
+import br.com.milkmoney.model.SaldoCategoriaDespesa;
+import br.com.milkmoney.model.TipoLancamentoFinanceiro;
 import br.com.milkmoney.service.LancamentoFinanceiroService;
 import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Controller
@@ -35,7 +46,13 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	@FXML private TableColumn<LancamentoFinanceiro, String> tipoLancamentoFinanceiroColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> situacaoLancamentoFinanceiroColumn;
 	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez;
-	@FXML private Label lblAno;
+	@FXML private Label lblAno, lblReceitas, lblDespesas, lblSaldo;
+	@FXML private VBox vbChart;
+	
+	@FXML private TableView<SaldoCategoriaDespesa> tableSaldoCategoriaDespesa;
+	@FXML private TableColumn<SaldoCategoriaDespesa, String> categoriaColumn;
+	@FXML private TableColumn<SaldoCategoriaDespesa, String> saldoColumn;
+	@FXML private TableColumn<SaldoCategoriaDespesa, String> percentualColumn;
 	
 	@Autowired private LancamentoFinanceiroService service;
 	
@@ -43,6 +60,10 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	private int selectedMes = LocalDate.now().getMonthValue();
 
 	private ToggleGroup groupMes = new ToggleGroup();
+	
+	private final CategoryAxis              yAxis     = new CategoryAxis();
+    private final NumberAxis                xAxis     = new NumberAxis();
+	private final BarChart<String, Number>  barChart  = new BarChart<>(yAxis,xAxis);
 	
 	@FXML
 	public void initialize() {
@@ -55,6 +76,12 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		dataPagamentoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataPagamento"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("descricao"));
 		valorColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("valorTotal"));
+		
+		//tabela saldos categorias
+		categoriaColumn.setCellValueFactory(new PropertyValueFactory<SaldoCategoriaDespesa,String>("categoria"));
+		saldoColumn.setCellValueFactory(new PropertyValueFactory<SaldoCategoriaDespesa,String>("saldo"));
+		percentualColumn.setCellValueFactory(new PropertyValueFactory<SaldoCategoriaDespesa,String>("percentual"));
+		
 		super.initialize((LancamentoFinanceiroFormController) MainApp.getBean(LancamentoFinanceiroFormController.class));
 		super.setService(service);
 		
@@ -65,6 +92,38 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		
 		lblAno.setText(String.valueOf(selectedAno));
 		
+		//xAxis.setLabel("Tipo");
+       // yAxis.setLabel("Valor");
+		xAxis.setCacheShape(true);
+		yAxis.setCenterShape(true);
+
+        //barChart.setPrefHeight(200);
+        //barChart.setPrefWidth(200);
+        
+        barChart.setTitle("Receitas x Despesas");
+        barChart.setLegendVisible(false);
+        
+       // xAxis.setTickLabelRotation(90);
+       // xAxis.setTickLabelsVisible(true);
+        
+        VBox.setVgrow(barChart, Priority.SOMETIMES);
+        HBox.setHgrow(barChart, Priority.SOMETIMES);
+        
+        vbChart.getChildren().add(barChart);
+		
+	}
+	
+	private void refreshTela(){
+		updateChart();
+		updateResumo();
+		updateLabelNumRegistros();
+		updateSaldosCategorias();
+	}
+	
+	@Override
+	protected void handleDelete() {
+		super.handleDelete();
+		refreshTela();
 	}
 	
 	@Override
@@ -74,6 +133,12 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 			//somente adiciona na tabela se o lançamento vence no mês que está sendo exibido
 			super.addObjectInTableView(lancamento);
 		}
+	}
+	
+	@Override
+	public void refreshObjectInTableView(LancamentoFinanceiro lancamento) {
+		super.refreshObjectInTableView(lancamento);
+		refreshTela();
 	}
 	
 	@Override
@@ -91,7 +156,40 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		
 		table.setItems(data);
 		table.layout();
-		updateLabelNumRegistros();
+		
+		refreshTela();
+	}
+	
+	private void updateChart(){
+		barChart.getData().clear();
+        barChart.getData().addAll(service.getDataChart(data));
+	}
+	
+	private void updateResumo(){
+		
+		BigDecimal receitas = new BigDecimal(0);
+		BigDecimal despesas = new BigDecimal(0);
+		BigDecimal saldo = new BigDecimal(0);
+		
+		for ( LancamentoFinanceiro lancamento : table.getItems() ){
+			if ( lancamento.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
+				receitas = receitas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+			}else{
+				despesas = despesas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+			}
+		}
+		
+		saldo = receitas.subtract(despesas);
+		
+		lblReceitas.setText("R$ " + NumberFormatUtil.decimalFormat(receitas));
+		lblDespesas.setText("R$ " + NumberFormatUtil.decimalFormat(despesas));
+		lblSaldo.setText("R$ " + NumberFormatUtil.decimalFormat(saldo));
+		
+	}
+	
+	private void updateSaldosCategorias(){
+		tableSaldoCategoriaDespesa.getItems().clear();
+		tableSaldoCategoriaDespesa.getItems().addAll(service.getSaldoByCategoriaDespesa(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
 	}
 	
 	/**
