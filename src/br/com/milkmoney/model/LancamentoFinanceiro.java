@@ -23,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -40,22 +41,22 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	
 	private ObjectProperty<LocalDate>                     dataEmissao           = new SimpleObjectProperty<LocalDate>(LocalDate.now());
 	private ObjectProperty<LocalDate>                     dataVencimento        = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate>                     dataPagamento         = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>                     dataPagamento         = new SimpleObjectProperty<LocalDate>();
 	private StringProperty                                tipoLancamento        = new SimpleStringProperty(TipoLancamentoFinanceiro.DESPESA);
 	private ObjectProperty<CentroCusto>                   centroCusto           = new SimpleObjectProperty<CentroCusto>();
 	private ObjectProperty<CategoriaLancamentoFinanceiro> categoria             = new SimpleObjectProperty<CategoriaLancamentoFinanceiro>();
 	private StringProperty                                valor                 = new SimpleStringProperty();
 	private StringProperty                                juros                 = new SimpleStringProperty();
 	private StringProperty                                multa                 = new SimpleStringProperty();
-	private StringProperty                                observacao            = new SimpleStringProperty(Sexo.FEMEA);
+	private StringProperty                                descricao             = new SimpleStringProperty();
+	private StringProperty                                observacao            = new SimpleStringProperty();
 	
 	public LancamentoFinanceiro() {
 	}
 
 	@Override
 	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	public void setId(int id) {
@@ -94,7 +95,6 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="data pagamento")
 	public Date getDataPagamento() {
 		return DateUtil.asDate(this.dataPagamento.get());
 	}
@@ -108,6 +108,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="tipo lançamento")
 	public String getTipoLancamento() {
 		return this.tipoLancamento.get();
 	}
@@ -119,14 +120,28 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	public StringProperty tipoLancamentoProperty(){
 		return tipoLancamento;
 	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="descrição")
+	public String getDescricao() {
+		return this.descricao.get();
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao.set(descricao);
+	}
+
+	public StringProperty descricaoProperty(){
+		return descricao;
+	}
 
 	@Access(AccessType.PROPERTY)
 	public String getObservacao() {
 		return this.observacao.get();
 	}
 
-	public void setObservacao(String descricao) {
-		this.observacao.set(descricao);
+	public void setObservacao(String observacao) {
+		this.observacao.set(observacao);
 	}
 
 	public StringProperty observacaoProperty(){
@@ -166,6 +181,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	}
 	
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="valor do lançamento")
 	public BigDecimal getValor() {
 		return NumberFormatUtil.fromString(this.valor.get());
 	}
@@ -204,5 +220,19 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 		return multa;
 	}
 	
+	//--------------
+	@Transient
+	public String getTipoLancamentoFormatado(){
+		if ( getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
+			return "C";
+		}
+		return "D";
+	}
+	
+	
+	@Transient
+	public String getValorTotal(){
+		return NumberFormatUtil.decimalFormat( getValor().add(getJuros()).add(getMulta()));
+	}
 	
 }

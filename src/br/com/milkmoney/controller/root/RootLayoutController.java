@@ -178,8 +178,14 @@ public class RootLayoutController {
     }
     
     @FXML
+    protected void handleCadastroLancamentoFinanceiro() {
+    	openForm("view/lancamentoFinanceiro/LancamentoFinanceiroOverview.fxml");
+    	setTitle("Financeiro > Lançamentos");
+    }
+    
+    @FXML
     protected void handleCadastroCategoriaLancamentoFinanceiro() {
-    	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Despesa");
+    	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Lançamento Financeiro");
     }
     //-----reports------
     @FXML

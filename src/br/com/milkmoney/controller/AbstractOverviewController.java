@@ -257,10 +257,16 @@ public abstract class AbstractOverviewController<K, E>{
 		return false;
 	};
 	
-	public Function<E, Boolean> addObjectInTableView = (object) -> {
+	public void addObjectInTableView(E object){
 		if ( object != null ){
 			getData().add((E) object);
 			updateLabelNumRegistros();
+		}
+	}
+	
+	public Function<E, Boolean> addObjectInTableView = (object) -> {
+		if ( object != null ){
+			addObjectInTableView(object);
 		}
 		return false;
 	};

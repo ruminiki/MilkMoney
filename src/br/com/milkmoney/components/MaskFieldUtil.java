@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -174,6 +173,19 @@ public abstract class MaskFieldUtil {
 			}
 
 		});
+        
+		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	
+			@Override
+			public void handle(KeyEvent event) {
+	
+				if (event.getCode().equals(KeyCode.BACK_SPACE) || event.getCode().equals(KeyCode.DELETE) ) {
+					textField.setText("");
+				}
+	
+			}
+	
+		});
 
     }
 
@@ -267,13 +279,8 @@ public abstract class MaskFieldUtil {
      * @param textField TextField
      */
     private static void positionCaret(final TextField textField) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                // Posiciona o cursor sempre a direita.
-                textField.positionCaret(textField.getText().length());
-            }
-        });
+        // Posiciona o cursor sempre a direita.
+        //textField.positionCaret(textField.getText().length());
     }
 
     /**

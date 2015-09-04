@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="236.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaFormController">
+<AnchorPane prefHeight="263.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lancamentoFinanceiro.LancamentoFinanceiroFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane fx:id="gridPane">
              <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="129.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="106.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="106.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="149.0" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="89.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="115.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="62.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="169.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="47.0" />
                   <ColumnConstraints />
                   <ColumnConstraints />
               </columnConstraints>
@@ -29,26 +29,13 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
               <children>
-               	  <Label text="Emissão: " />
-                  <Label text="Observação: " GridPane.rowIndex="5" />
-                  <Label text="Tipo Lançamento: " GridPane.rowIndex="1" />
-                  <Label fx:id="lblReprodutor" text="Categoria: " GridPane.rowIndex="2" />
-                  <Label fx:id="lblQuantidadeDosesSemen" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="30.0" prefWidth="119.0" text="Centro de Custo: " textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.rowIndex="3" />
-                  <Label text="Valor: " GridPane.rowIndex="4" />
-                  <ComboBox fx:id="inputTipoLancamento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputCategoria" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                  <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Button>
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets right="17.0" />
-                     </GridPane.margin></UCTextField>
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
+             	  <Label text="Descrição: " />
+                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="4" />
+               	  <Label text="Emissão: " GridPane.rowIndex="1" />
+               	  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
                      <children>
                         <DatePicker fx:id="inputDataEmissao" maxWidth="100.0" minWidth="100.0" />
                         <Label text="Vencimento: " />
@@ -57,9 +44,24 @@
                         <DatePicker fx:id="inputDataPagamento" maxWidth="100.0" minWidth="100.0" />
                      </children>
                   </HBox>
-                  <UCTextField fx:id="inputCentroCusto" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4">
+                  
+                  <Label text="Tipo Lançamento: " GridPane.rowIndex="2" />
+                  <ComboBox fx:id="inputTipoLancamento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  
+                  <Label text="Categoria: " GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputCategoria" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarCategoriaLancamento" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Button>
+                  
+                  <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="30.0" prefWidth="119.0" text="Centro de Custo: " textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.rowIndex="4" />
+                   <UCTextField fx:id="inputCentroCusto" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarCentroCusto" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  
+                  <Label text="Valor: " GridPane.rowIndex="5" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
                      <children>
                         <UCTextField fx:id="inputValor" maxWidth="123.0" minWidth="115.0" />
                         <Label text="Juros: " />
@@ -68,6 +70,10 @@
                         <UCTextField fx:id="inputMulta" maxWidth="123.0" minWidth="115.0" />
                      </children>
                   </HBox>
+               
+                  <Label text="Observação: " GridPane.rowIndex="6" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
+                  
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">

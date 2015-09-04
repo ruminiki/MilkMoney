@@ -47,6 +47,9 @@ public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements 
 							}
 						});
 			            setGraphic(hpS);
+		        	}else{
+		        		setText("");
+		        		setGraphic(null);
 		        	}
 		            setStyle("-fx-alignment: CENTER");
 		        }

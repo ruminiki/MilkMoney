@@ -43,7 +43,11 @@ public class TableCellSituacaoCoberturaFactory<S, String> implements Callback<Ta
 							setStyle("-fx-background-color: #7C867C;-fx-alignment: CENTER;");
 						
 	                }
-				} 
+				}else{
+					super.updateItem(item, empty);
+					setStyle("");
+					setText(null);
+				}
 	        }
 	    };
 	    

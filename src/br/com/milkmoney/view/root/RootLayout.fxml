@@ -37,9 +37,11 @@
       				</Menu>
                   <Menu mnemonicParsing="false" text="Financeiro">
                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroLancamentoFinanceiro" text="Lançamentos" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
                       <MenuItem mnemonicParsing="false" onAction="#handleCadastroInsumo" text="Insumos" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCompra" text="Compra Insumos" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCategoriaLancamentoFinanceiro" text="Categoria Despesa" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCompra" text="Notas Fiscais Compra" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCategoriaLancamentoFinanceiro" text="Categoria Lançamento Financeiro" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
@@ -60,18 +62,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleProjecao" text="Projeção" />
                         <Menu mnemonicParsing="false" text="Cadastros">
                            <items>
-                              <!-- <MenuItem mnemonicParsing="false" onAction="#handleCadastroMorteAnimal" text="Morte Animal" /> -->
-                              <MenuItem mnemonicParsing="false" onAction="#handleCadastroFinalidadeLote" text="Finalidade Lote" />
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroFuncionario" text="Funcionário" />
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroFornecedor" text="Fornecedor" />
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroTouro" text="Touro" />
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroPropriedade" text="Propriedade" />
                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Despesas/Aquisições">
-                          <items>
-                           	  <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviço" />
-                          </items>
                         </Menu>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <Menu mnemonicParsing="false" text="Configuração">

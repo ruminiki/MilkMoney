@@ -45,6 +45,8 @@
 		<class>br.com.milkmoney.model.Compra</class>
 		<class>br.com.milkmoney.model.ItemCompra</class>
 		<class>br.com.milkmoney.model.CategoriaLancamentoFinanceiro</class>
+		<class>br.com.milkmoney.model.CentroCusto</class>
+		<class>br.com.milkmoney.model.LancamentoFinanceiro</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->

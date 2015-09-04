@@ -46,6 +46,9 @@ public class TableCellRegistrarPartoHyperlinkFactory<S, LocalDate> implements Ca
 							}
 						});
 			            setGraphic(hpS);
+		        	}else{
+			        	setText("");
+			        	setGraphic(null);
 		        	}
 		            setStyle("-fx-alignment: CENTER");
 		        }

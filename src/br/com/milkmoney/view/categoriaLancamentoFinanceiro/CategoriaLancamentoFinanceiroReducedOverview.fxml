@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="299.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.categoriaLancamentoFinanceiro.CategoriaLancamentoFinanceiroOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="299.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.categoriaLancamentoFinanceiro.CategoriaLancamentoFinanceiroReducedOverviewController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="descrição">
                <padding>
@@ -23,16 +23,15 @@
             </TextField>
             <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <HBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="SOMETIMES">
+            <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
             </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
             <Separator orientation="VERTICAL" prefHeight="200.0" />
          </children>
          <padding>
