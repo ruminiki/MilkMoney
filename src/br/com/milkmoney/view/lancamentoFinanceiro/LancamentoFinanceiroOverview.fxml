@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="590.0" prefHeight="507.0" prefWidth="1150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
+   <children>
+      <VBox layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" VBox.vgrow="SOMETIMES">
+               <items>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" spacing="3.0">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="50.0" spacing="5.0" style="-fx-border-color: #CCC;">
+                           <children>
+                              <TextField fx:id="inputPesquisaAnimal" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="30.0" promptText="número/nome animal" HBox.hgrow="SOMETIMES">
+                                 <HBox.margin>
+                                    <Insets left="3.0" right="3.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Separator orientation="VERTICAL" />
+                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar">
+                                 <HBox.margin>
+                                    <Insets right="3.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                           <children>
+                              <Label text="Receitas">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tableAnimais" cacheShape="false" focusTraversable="false" VBox.vgrow="SOMETIMES">
+                          <columns>
+                            <TableColumn fx:id="situacaoAnimalColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
+                            <TableColumn fx:id="animalColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
+                            <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Valor" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+                  <VBox spacing="3.0">
+                     <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+                                 <children>
+                                    <Label fx:id="lblHeader" text="Despesas">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <TableView fx:id="table" focusTraversable="false" minHeight="180.0" VBox.vgrow="SOMETIMES">
+                                <columns>
+                                    <TableColumn fx:id="statusColumn" maxWidth="10.0" prefWidth="75.0" />
+                                  <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                                  <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
+                                  <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                                  <TableColumn fx:id="reprodutorColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodutor" />
+                                    <TableColumn prefWidth="75.0" text="Diagnóstico Prenhes">
+                                       <columns>
+                                          <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                                          <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />
+                                       </columns>
+                                    </TableColumn>
+                                    <TableColumn prefWidth="75.0" text="Parto">
+                                       <columns>
+                                          <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Data Prevista" />
+                                          <TableColumn fx:id="dataPartoColumn" maxWidth="110.0" minWidth="110.0" style="-fx-alignment: CENTER;" text="Data Parto" />
+                                       </columns>
+                                    </TableColumn>
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </items>
+            </SplitPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

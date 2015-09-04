@@ -1,19 +1,32 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import br.com.milkmoney.components.FieldRequired;
+import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Entity
@@ -25,205 +38,131 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataEmissao           = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate> dataVencimento        = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate> dataPagamento         = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>                     dataEmissao           = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>                     dataVencimento        = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>                     dataPagamento         = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private StringProperty                                tipoLancamento        = new SimpleStringProperty(TipoLancamentoFinanceiro.DESPESA);
+	private ObjectProperty<CentroCusto>                   centroCusto           = new SimpleObjectProperty<CentroCusto>();
+	private ObjectProperty<CategoriaLancamentoFinanceiro> categoria             = new SimpleObjectProperty<CategoriaLancamentoFinanceiro>();
+	private StringProperty                                valor                 = new SimpleStringProperty();
+	private StringProperty                                juros                 = new SimpleStringProperty();
+	private StringProperty                                multa                 = new SimpleStringProperty();
+	private StringProperty                                observacao            = new SimpleStringProperty(Sexo.FEMEA);
 	
-	private StringProperty            tipoLancamento        = new SimpleStringProperty(TipoLancamentoFinanceiro.DESPESA);
-	private StringProperty            numero                   = new SimpleStringProperty();
-	private StringProperty            sexo                     = new SimpleStringProperty(Sexo.FEMEA);
-	/*private StringProperty            finalidadeLancamentoFinanceiro         = new SimpleStringProperty(FinalidadeLancamentoFinanceiro.PRODUCAO_LEITE);
-	
-	private ObjectProperty<Raca>      raca                     = new SimpleObjectProperty<Raca>();
-	
-	private ObjectProperty<LancamentoFinanceiro>    mae                      = new SimpleObjectProperty<LancamentoFinanceiro>();
-	private ObjectProperty<LancamentoFinanceiro>    paiMontaNatural          = new SimpleObjectProperty<LancamentoFinanceiro>();
-	private ObjectProperty<Touro>     paiEnseminacaoArtificial = new SimpleObjectProperty<Touro>();
-	
-	private StringProperty            peso                     = new SimpleStringProperty();
-	private StringProperty            valor                    = new SimpleStringProperty();
-	
-	@Formula("(SELECT s.situacao FROM viewSituacaoLancamentoFinanceiro s WHERE s.lancamentoFinanceiro = id limit 1)")
-	private String situacaoLancamentoFinanceiro;
-	
-	@Formula("(SELECT MAX(p.data) FROM parto p inner join cobertura c ON (c.parto = p.id) "
-			+ "INNER JOIN lancamentoFinanceiro a on (a.id = c.femea) WHERE a.id = id)")
-	private Date dataUltimoParto;
-
-	@Formula("(SELECT MAX(c.data) FROM cobertura c WHERE c.femea = id)")
-	private Date dataUltimaCobertura;
-	
-	@Formula("(SELECT MAX(c.previsaoParto) FROM cobertura c WHERE c.femea = id)")
-	private Date dataPrevisaoProximoParto;
-	
-	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
-	private String situacaoUltimaCobertura;
-	
-	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.lancamentoFinanceiro = id LIMIT 1)")
-	private Boolean nascimentoCadastrado = false;
-
-	public LancamentoFinanceiro() {}
-
-	public LancamentoFinanceiro(String sexo) {
-		this.sexo.set(sexo);
+	public LancamentoFinanceiro() {
 	}
 
-	public LancamentoFinanceiro(String sexo, String finalidadeLancamentoFinanceiro) {
-		this.sexo.set(sexo);
-		this.finalidadeLancamentoFinanceiro.set(finalidadeLancamentoFinanceiro);
-	}
-
-	@Temporal(TemporalType.DATE)
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="data de nascimento")
-	public Date getDataNascimento() {
-		return DateUtil.asDate(this.dataNascimento.get());
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento.set(DateUtil.asLocalDate(dataNascimento));
-	}
-	
-	public ObjectProperty<LocalDate> dataNascimentoProperty(){
-		return dataNascimento;
-	}
-
+	@Override
 	public int getId() {
-		return this.id;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 	
+	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="nome")
-	public String getNome() {
-		return this.nome.get();
+	@FieldRequired(message="data emissão")
+	public Date getDataEmissao() {
+		return DateUtil.asDate(this.dataEmissao.get());
+	}
+	
+	public void setDataEmissao(Date dataEmissao) {
+		this.dataEmissao.set(DateUtil.asLocalDate(dataEmissao));
+	}
+	
+	public ObjectProperty<LocalDate> dataEmissaoProperty(){
+		return dataEmissao;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data vencimento")
+	public Date getDataVencimento() {
+		return DateUtil.asDate(this.dataVencimento.get());
+	}
+	
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento.set(DateUtil.asLocalDate(dataVencimento));
+	}
+	
+	public ObjectProperty<LocalDate> dataVencimentoProperty(){
+		return dataVencimento;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data pagamento")
+	public Date getDataPagamento() {
+		return DateUtil.asDate(this.dataPagamento.get());
+	}
+	
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento.set(DateUtil.asLocalDate(dataPagamento));
+	}
+	
+	public ObjectProperty<LocalDate> dataPagamentoProperty(){
+		return dataPagamento;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getTipoLancamento() {
+		return this.tipoLancamento.get();
 	}
 
-	public void setNome(String nome) {
-		this.nome.set(nome);
+	public void setTipoLancamento(String tipoLancamento) {
+		this.tipoLancamento.set(tipoLancamento);
 	}
 
-	public StringProperty nomeProperty(){
-		return nome;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="número")
-	public String getNumero() {
-		return this.numero.get();
+	public StringProperty tipoLancamentoProperty(){
+		return tipoLancamento;
 	}
 
-	public void setNumero(String numero) {
-		this.numero.set(numero);
-	}
-	
-	public StringProperty numeroProperty(){
-		return numero;
-	}
-	
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="finalidade do lancamentoFinanceiro")
-	public String getFinalidadeLancamentoFinanceiro() {
-		return finalidadeLancamentoFinanceiro.get();
-	}
-	
-	public void setFinalidadeLancamentoFinanceiro(String finalidadeLancamentoFinanceiro) {
-		this.finalidadeLancamentoFinanceiro.set(finalidadeLancamentoFinanceiro);
-	}
-	
-	public StringProperty finalidadeLancamentoFinanceiroProperty(){
-		return finalidadeLancamentoFinanceiro;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="sexo")
-	public String getSexo() {
-		return this.sexo.get();
+	public String getObservacao() {
+		return this.observacao.get();
 	}
 
-	public void setSexo(String sexo) {
-		this.sexo.set(sexo);
-	}
-	
-	public StringProperty sexoProperty(){
-		return sexo;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Raca.class, cascade=CascadeType.REFRESH)
-	@JoinColumn(name="raca")
-	@FieldRequired(message="raça")
-	public Raca getRaca() {
-		return raca.get();
-	}
-	
-	public void setRaca(Raca raca) {
-		this.raca.set(raca);
-	}
-	
-	public ObjectProperty<Raca> racaProperty(){
-		return raca;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=LancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
-	@JoinColumn(name="mae")
-	public LancamentoFinanceiro getMae() {
-		return mae.get();
-	}
-	
-	public void setMae(LancamentoFinanceiro mae) {
-		this.mae.set(mae);
-	}
-	
-	public ObjectProperty<LancamentoFinanceiro> maeProperty(){
-		return mae;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=LancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
-	@JoinColumn(name="paiMontaNatural")
-	public LancamentoFinanceiro getPaiMontaNatural() {
-		return paiMontaNatural.get();
-	}
-	
-	public void setPaiMontaNatural(LancamentoFinanceiro paiMontaNatural) {
-		this.paiMontaNatural.set(paiMontaNatural);
-	}
-	
-	public ObjectProperty<LancamentoFinanceiro> paiMontaNaturalProperty(){
-		return paiMontaNatural;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Touro.class, cascade=CascadeType.REFRESH)
-	@JoinColumn(name="paiEnseminacaoArtificial")
-	public Touro getPaiEnseminacaoArtificial() {
-		return this.paiEnseminacaoArtificial.get();
+	public void setObservacao(String descricao) {
+		this.observacao.set(descricao);
 	}
 
-	public void setPaiEnseminacaoArtificial(Touro paiEnseminacaoArtificial) {
-		this.paiEnseminacaoArtificial.set(paiEnseminacaoArtificial);
+	public StringProperty observacaoProperty(){
+		return observacao;
+	}
+
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="centroCusto")
+	@FieldRequired(message="centro de custo")
+	public CentroCusto getCentroCusto() {
+		return centroCusto.get();
 	}
 	
-	public ObjectProperty<Touro> paiEnseminacaoArtificialProperty(){
-		return paiEnseminacaoArtificial;
+	public void setCentroCusto(CentroCusto centroCusto) {
+		this.centroCusto.set(centroCusto);
+	}
+	
+	public ObjectProperty<CentroCusto> centroCustoProperty(){
+		return centroCusto;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public BigDecimal getPeso() {
-		return NumberFormatUtil.fromString(this.peso.get());
+	@ManyToOne(cascade=CascadeType.REFRESH)
+	@JoinColumn(name="categoria")
+	@FieldRequired(message="categoria do lançamento")
+	public CategoriaLancamentoFinanceiro getCategoria() {
+		return categoria.get();
 	}
-
-	public void setPeso(BigDecimal peso) {
-		this.peso.set(NumberFormatUtil.decimalFormat(peso));
+	
+	public void setCategoria(CategoriaLancamentoFinanceiro categoria) {
+		this.categoria.set(categoria);
 	}
-
-	public StringProperty pesoProperty(){
-		return peso;
+	
+	public ObjectProperty<CategoriaLancamentoFinanceiro> categoriaProperty(){
+		return categoria;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -234,119 +173,36 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	public void setValor(BigDecimal valor) {
 		this.valor.set(NumberFormatUtil.decimalFormat(valor));
 	}
-
+	
 	public StringProperty valorProperty(){
 		return valor;
 	}
 	
-	@Transient
-	public String getSituacaoLancamentoFinanceiro() {
-		
-		if ( situacaoLancamentoFinanceiro == null ){
-			return SituacaoLancamentoFinanceiro.NAO_DEFINIDA;
-		}
-		return this.situacaoLancamentoFinanceiro;
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getJuros() {
+		return NumberFormatUtil.fromString(this.juros.get());
 	}
 
-	public void setSituacaoLancamentoFinanceiro(String situacaoLancamentoFinanceiro) {
-		this.situacaoLancamentoFinanceiro = situacaoLancamentoFinanceiro;
+	public void setJuros(BigDecimal juros) {
+		this.juros.set(NumberFormatUtil.decimalFormat(juros));
 	}
 	
-	//==========================
-	public String getNumeroNome(){
-		return this.numero.get() + "-" + this.nome.get();
+	public StringProperty jurosProperty(){
+		return juros;
 	}
 	
-	public StringProperty numeroNomeProperty(){
-		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
+	@Access(AccessType.PROPERTY)
+	public BigDecimal getMulta() {
+		return NumberFormatUtil.fromString(this.multa.get());
+	}
+
+	public void setMulta(BigDecimal multa) {
+		this.multa.set(NumberFormatUtil.decimalFormat(multa));
 	}
 	
-	public long getIdade() {
-		
-		if ( this.dataNascimento != null && this.dataNascimento.get() != null )
-			return ChronoUnit.MONTHS.between(this.dataNascimento.get(), LocalDate.now());
-		return 0;
-		
+	public StringProperty multaProperty(){
+		return multa;
 	}
 	
-	@Transient
-	public String getDiasUltimoParto() {
-		if ( getDataUltimoParto() != null )
-			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now()));
-		return "--";
-	}
-
-	@Transient
-	public Date getDataUltimoParto() {
-		return dataUltimoParto;
-	}
-
-	public void setDataUltimoParto(Date dataUltimoParto) {
-		this.dataUltimoParto = dataUltimoParto;
-	}
-
-	@Transient
-	public Date getDataUltimaCobertura() {
-		return dataUltimaCobertura;
-	}
-
-	public void setDataUltimaCobertura(Date dataUltimaCobertura) {
-		this.dataUltimaCobertura = dataUltimaCobertura;
-	}
-
-	@Transient
-	public Date getDataPrevisaoProximoParto() {
-		return dataPrevisaoProximoParto;
-	}
-
-	public void setDataPrevisaoProximoParto(Date dataPrevisaoProximoParto) {
-		this.dataPrevisaoProximoParto = dataPrevisaoProximoParto;
-	}
 	
-	@Transient
-	public Date getDataPrevisaoEncerramentoLactacao() {
-		
-		if ( dataUltimaCobertura != null ){
-			return DateUtil.asDate(DateUtil.asLocalDate(dataUltimaCobertura).plusMonths(7));
-		}
-		return null;
-	}
-
-	@Transient
-	public String getSituacaoUltimaCobertura() {
-		if ( situacaoUltimaCobertura == null || situacaoUltimaCobertura.isEmpty() )
-			return "--";
-		return situacaoUltimaCobertura;
-	}
-
-	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
-		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
-	}
-
-	@Transient
-	public String getDiasUltimaCobertura() {
-		if ( getDataUltimaCobertura() != null )
-			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now()));
-		return "--";
-	}
-	
-	@Transient
-	public Boolean isNascimentoCadastrado() {
-		return nascimentoCadastrado != null ? nascimentoCadastrado : false;
-	}
-
-	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
-		this.nascimentoCadastrado = nascimentoCadastrado;
-	}
-	
-	@Override
-	public String toString() {
-		return getNumeroNome();
-	}
-*/
-	@Override
-	public int getId() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
