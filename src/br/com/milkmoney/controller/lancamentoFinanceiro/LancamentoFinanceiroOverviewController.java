@@ -25,6 +25,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
+import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellValorLancamentoFinanceiroFactory;
 import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
@@ -39,7 +40,7 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	//LANÇAMENTOS
 	@FXML private TableColumn<LancamentoFinanceiro, String> dataEmissaoColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> dataVencimentoColumn;
-	@FXML private TableColumn<LancamentoFinanceiro, String> dataPagamentoColumn;
+	@FXML private TableColumn<LancamentoFinanceiro, String> categoriaLancamentoColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> centroCustoColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> descricaoColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> valorColumn;
@@ -73,9 +74,9 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		centroCustoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("centroCusto"));
 		dataEmissaoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataEmissao"));
 		dataVencimentoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataVencimento"));
-		dataPagamentoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataPagamento"));
+		categoriaLancamentoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("categoria"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("descricao"));
-		valorColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("valorTotal"));
+		valorColumn.setCellFactory(new TableCellValorLancamentoFinanceiroFactory<LancamentoFinanceiro,String>("valorTotal"));
 		
 		//tabela saldos categorias
 		categoriaColumn.setCellValueFactory(new PropertyValueFactory<SaldoCategoriaDespesa,String>("categoria"));
@@ -91,25 +92,32 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		groupMes.getToggles().get(selectedMes - 1).setSelected(true);
 		
 		lblAno.setText(String.valueOf(selectedAno));
-		
-		//xAxis.setLabel("Tipo");
-       // yAxis.setLabel("Valor");
 		xAxis.setCacheShape(true);
 		yAxis.setCenterShape(true);
-
-        //barChart.setPrefHeight(200);
-        //barChart.setPrefWidth(200);
-        
         barChart.setTitle("Receitas x Despesas");
         barChart.setLegendVisible(false);
-        
-       // xAxis.setTickLabelRotation(90);
-       // xAxis.setTickLabelsVisible(true);
-        
         VBox.setVgrow(barChart, Priority.SOMETIMES);
         HBox.setHgrow(barChart, Priority.SOMETIMES);
         
         vbChart.getChildren().add(barChart);
+        
+        /*final Tooltip caption = new Tooltip("");
+        caption.setStyle("-fx-font: 10 arial;");
+        
+        for (final Series<String, Number> data : barChart.getData() ) {
+        	for ( Data<String, Number> serie : data.getData() ){
+        		serie.getNode().addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override public void handle(MouseEvent e) {
+                        caption.setAnchorX(e.getSceneX());
+                        caption.setAnchorY(e.getSceneY());
+                        caption.setText("R$ " + serie.getYValue());
+                        caption.show(barChart.getScene().getWindow());
+                        
+                     }
+                });
+        	}
+        }*/
 		
 	}
 	

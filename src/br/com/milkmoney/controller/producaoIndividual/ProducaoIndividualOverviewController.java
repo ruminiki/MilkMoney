@@ -3,8 +3,8 @@ package br.com.milkmoney.controller.producaoIndividual;
 import java.time.LocalDate;
 
 import javafx.fxml.FXML;
+import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -55,7 +55,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private Label lblHeader;
 	
 	@FXML private VBox vBoxChart;
-	private LineChart<String, Number> lineChart;
+	private AreaChart<String, Number> lineChart;
 	
 	@Autowired private LactacaoService lactacaoService;
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
@@ -92,7 +92,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         
         xAxis.setLabel("Data");
         
-        lineChart = new LineChart<String,Number>(xAxis,yAxis);
+        lineChart = new AreaChart<String,Number>(xAxis,yAxis);
         
         lineChart.setTitle("Registro Produção Individual");
         lineChart.setLegendVisible(true);
