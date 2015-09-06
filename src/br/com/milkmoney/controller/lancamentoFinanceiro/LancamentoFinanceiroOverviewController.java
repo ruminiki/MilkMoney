@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.lancamentoFinanceiro;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -46,7 +47,7 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	@FXML private TableColumn<LancamentoFinanceiro, String> valorColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> tipoLancamentoFinanceiroColumn;
 	@FXML private TableColumn<LancamentoFinanceiro, String> situacaoLancamentoFinanceiroColumn;
-	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez;
+	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez, tbReceita, tbDespesa;
 	@FXML private Label lblAno, lblReceitas, lblDespesas, lblSaldo;
 	@FXML private VBox vbChart;
 	
@@ -60,7 +61,7 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	private int selectedAno = LocalDate.now().getYear();
 	private int selectedMes = LocalDate.now().getMonthValue();
 
-	private ToggleGroup groupMes = new ToggleGroup();
+	private ToggleGroup groupMes  = new ToggleGroup();
 	
 	private final CategoryAxis              yAxis     = new CategoryAxis();
     private final NumberAxis                xAxis     = new NumberAxis();
@@ -166,6 +167,11 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		table.layout();
 		
 		refreshTela();
+	}
+	
+	@Override
+	public ObservableList<LancamentoFinanceiro> handleDefaultSearch() {
+		return service.findByMes(inputPesquisa.getText(), DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 	}
 	
 	private void updateChart(){

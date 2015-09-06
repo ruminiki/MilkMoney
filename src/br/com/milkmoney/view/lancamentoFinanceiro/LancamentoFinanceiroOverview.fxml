@@ -102,7 +102,7 @@
                         <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
                         <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
                         <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
-                        <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor" />
+                        <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" text="Valor" />
                      </columns>
                   </TableView>
                   <VBox minWidth="320.0" spacing="3.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
@@ -145,6 +145,11 @@
                               <Label text="Saldo" />
                            </children>
                         </VBox>
+                        <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
+                           <children>
+                              <Label text="Principais Despesas" />
+                           </children>
+                        </HBox>
                         <TableView fx:id="tableSaldoCategoriaDespesa">
                           <columns>
                             <TableColumn fx:id="categoriaColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="230.0" text="Categoria" />

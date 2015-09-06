@@ -1,8 +1,9 @@
 package br.com.milkmoney.controller.lancamentoFinanceiro;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 
 import javax.annotation.Resource;
 
@@ -23,11 +24,11 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 
 	@FXML private DatePicker inputDataEmissao, inputDataVencimento, inputDataPagamento;
 	@FXML private UCTextField inputCategoria, inputCentroCusto, inputValor, inputJuros, inputMulta, inputDescricao, inputObservacao;
-	@FXML private ComboBox<String> inputTipoLancamento;
-	
+	@FXML private ToggleButton tbReceita, tbDespesa;
 	@Autowired private CentroCustoReducedOverviewController centroCustoReducedOverviewController;
 	@Autowired private CategoriaLancamentoFinanceiroReducedOverviewController categoriaLancamentoFinanceiroReducedOverviewController;
 	
+	private ToggleGroup groupTipo = new ToggleGroup();
 	
 	@FXML
 	public void initialize() {
@@ -40,8 +41,6 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		inputMulta.textProperty().bindBidirectional(getObject().multaProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
-		inputTipoLancamento.getItems().addAll(TipoLancamentoFinanceiro.getItems());
-		inputTipoLancamento.valueProperty().bindBidirectional(getObject().tipoLancamentoProperty());
 		
 		MaskFieldUtil.decimal(inputValor);
 		MaskFieldUtil.decimal(inputJuros);
@@ -53,6 +52,33 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		
 		if ( getObject().getCentroCusto() != null ){
 			inputCentroCusto.setText(getObject().getCentroCusto().toString());
+		}
+		
+		groupTipo.getToggles().clear();
+		groupTipo.getToggles().addAll(tbReceita, tbDespesa);
+		
+		tbDespesa.setSelected(getObject().getTipoLancamento().equals(TipoLancamentoFinanceiro.DESPESA));
+		tbReceita.setSelected(getObject().getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA));
+		
+		tbDespesa.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			tbReceita.setSelected(!tbDespesa.isSelected());
+			
+		});
+		
+		tbReceita.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			tbDespesa.setSelected(!tbReceita.isSelected());
+		});
+		
+	}
+	
+	@Override
+	protected void beforeSave() {
+		super.beforeSave();
+		
+		if ( tbDespesa.isSelected() ){
+			getObject().setTipoLancamento(TipoLancamentoFinanceiro.DESPESA);
+		}else{
+			getObject().setTipoLancamento(TipoLancamentoFinanceiro.RECEITA);
 		}
 		
 	}

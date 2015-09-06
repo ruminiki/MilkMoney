@@ -80,4 +80,18 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<LancamentoFinanceiro> findByMes(String param, Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT r FROM LancamentoFinanceiro r WHERE r.dataVencimento between :inicio and :fim and "
+				+ "(r.descricao like :param or "
+				+ "r.tipoLancamento like :param or "
+				+ "r.categoria.descricao like :param or "
+				+ "r.centroCusto.descricao like :param)");
+		query.setParameter("param", '%' + param + '%');
+		query.setParameter("inicio", dataInicio);
+		query.setParameter("fim", dataFim);
+		
+		return query.getResultList();
+	}
+
 }

@@ -66,6 +66,10 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		return dao.findByMes(dataInicio, dataFim);
 	}
 	
+	public ObservableList<LancamentoFinanceiro> findByMes(String param, Date dataInicio, Date dataFim) {
+		return FXCollections.observableArrayList(dao.findByMes(param, dataInicio, dataFim));
+	}
+	
 	@SuppressWarnings("unchecked")
 	public ObservableList<Series<String, Number>> getDataChart(ObservableList<LancamentoFinanceiro> data){
 
