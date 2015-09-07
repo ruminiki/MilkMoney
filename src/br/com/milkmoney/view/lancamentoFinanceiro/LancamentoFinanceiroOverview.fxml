@@ -161,15 +161,6 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" style="-fx-border-color: #CCC;">
-               <children>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <Label text="Análises" />
-                        <Button mnemonicParsing="false" text="Centro de Custo" />
-                     </children>
-                  </VBox>
-               </children></HBox>
          </children>
       </VBox>
    </children>

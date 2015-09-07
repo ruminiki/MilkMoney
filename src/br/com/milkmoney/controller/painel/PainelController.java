@@ -24,6 +24,7 @@ public class PainelController {
 	@Autowired ProducaoLeiteChartController producaoLeiteChartController;
 	@Autowired EntregaLeiteChartController entregaLeiteChartController;
 	@Autowired CausaMorteAnimalChartController causaMorteAnimalChartController;
+	@Autowired FinanceiroChartController financeiroChartController;
 	
 	@FXML
 	public void initialize() {
@@ -58,6 +59,10 @@ public class PainelController {
 		changeItem((AnchorPane) MainApp.load(indicadorOverviewController.getFormName()));
 	}
 	
+	@FXML
+	private void handleFinanceiroChart(){
+		changeItem((AnchorPane) MainApp.load(financeiroChartController.getFormName()));
+	}
 	
 	@FXML
 	private void handlePrecoLeiteChart(){

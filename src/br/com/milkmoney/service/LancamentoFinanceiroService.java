@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.LancamentoFinanceiroDao;
 import br.com.milkmoney.model.LancamentoFinanceiro;
+import br.com.milkmoney.model.LancamentoFinanceiroChartModel;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
 import br.com.milkmoney.util.NumberFormatUtil;
@@ -98,10 +99,33 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
     	return series;
     	
     }
+	
+	@SuppressWarnings("unchecked")
+	public ObservableList<Series<String, Number>> getDataChart(int ano) {
+		
+		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+    	XYChart.Series<String, Number> serieDespesas = new XYChart.Series<String, Number>();
+    	XYChart.Series<String, Number> serieReceitas = new XYChart.Series<String, Number>();
+    	
+    	serieDespesas.setName("Despesas");
+    	serieReceitas.setName("Receitas");
+    	
+    	for ( LancamentoFinanceiroChartModel model : dao.resumeByMonthAndYear(ano)){
+    		
+    		serieReceitas.getData().add(new XYChart.Data<String, Number>(model.getMes(), model.getReceita()));	
+   			serieDespesas.getData().add(new XYChart.Data<String, Number>(model.getMes(), model.getDespesa()));	
+    		
+    	}
+    	
+    	series.addAll(serieReceitas, serieDespesas);
+    	
+    	return series;
+    	
+	}
 
 	public List<SaldoCategoriaDespesa> getSaldoByCategoriaDespesa(Date dataInicio, Date dataFim) {
 		return dao.getSaldoByCategoriaDespesa(dataInicio, dataFim);
 	}
-	
+
 	
 }

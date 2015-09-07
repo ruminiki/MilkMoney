@@ -22,6 +22,7 @@
                   </Button>
                   <Separator prefWidth="200.0" />
                   <Label text="Gráficos" />
+                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleFinanceiroChart" text="Financeiro" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
                      <cursor>
                         <Cursor fx:constant="HAND" />

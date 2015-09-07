@@ -6,13 +6,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javafx.collections.ObservableList;
+
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.LancamentoFinanceiro;
+import br.com.milkmoney.model.LancamentoFinanceiroChartModel;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
+import br.com.milkmoney.util.Util;
 
 @Repository
 public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, LancamentoFinanceiro> {
@@ -92,6 +96,61 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		query.setParameter("fim", dataFim);
 		
 		return query.getResultList();
+	}
+
+	public List<LancamentoFinanceiroChartModel> resumeByMonthAndYear(int ano) {
+		
+		List<LancamentoFinanceiroChartModel> list = new ArrayList<LancamentoFinanceiroChartModel>();
+		ObservableList<String> meses = Util.generateListMonths();
+		
+		Query query = entityManager.createQuery(
+				"select " +
+		
+				"month(lf.dataVencimento) as mes, " +
+
+				"coalesce((select  " +
+				"sum(valor+juros+multa) as receita  " +
+				"from LancamentoFinanceiro lr where " +
+				"month(lr.dataVencimento) = month(lf.dataVencimento) and tipoLancamento = 'RECEITA'),0) as receita,  " +
+
+				"coalesce((select  " +
+				"sum(valor+juros+multa) as despesa  " +
+				"from LancamentoFinanceiro ld where " +
+				"month(ld.dataVencimento) = month(lf.dataVencimento) and  tipoLancamento = 'DESPESA'),0) as despesa  " +
+
+				"from LancamentoFinanceiro lf where year(lf.dataVencimento) = :ano group by month(dataVencimento) order by mes");
+		
+		query.setParameter("ano", ano);
+		
+		@SuppressWarnings("unchecked")
+		List<Object> result = query.getResultList();
+		boolean existeMes = false;
+		
+		for ( int mes = 0; mes < 12; mes++ ){
+			for ( int index = 0; index < result.size(); index++ ){
+				if ( result.get(index) != null ){
+					Object[] row = (Object[]) result.get(index);
+					if ( Integer.parseInt(row[0].toString()) == mes + 1 ){
+						existeMes = true;
+						LancamentoFinanceiroChartModel lancamento = new LancamentoFinanceiroChartModel(
+								meses.get(Integer.parseInt(row[0].toString())),
+								BigDecimal.valueOf(Double.valueOf(row[1].toString())), 
+								BigDecimal.valueOf(Double.valueOf(row[2].toString())));
+						list.add(lancamento);
+						break;
+					}
+				}
+			}
+			
+			if ( !existeMes ){
+				LancamentoFinanceiroChartModel lancamento = new LancamentoFinanceiroChartModel(
+						meses.get(mes), BigDecimal.ZERO, BigDecimal.ZERO);
+				list.add(lancamento);
+			}
+		}
+		
+		return list;
+		
 	}
 
 }
