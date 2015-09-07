@@ -231,8 +231,13 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	
 	
 	@Transient
-	public String getValorTotal(){
-		return NumberFormatUtil.decimalFormat( getValor().add(getJuros()).add(getMulta()));
+	public BigDecimal getValorTotal(){
+		return getValor().add(getJuros()).add(getMulta());
+	}
+	
+	@Transient
+	public String getValorTotalFormatado(){
+		return "R$ " + NumberFormatUtil.decimalFormat( getValor().add(getJuros()).add(getMulta()));
 	}
 	
 }

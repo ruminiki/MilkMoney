@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.LancamentoFinanceiroDao;
+import br.com.milkmoney.model.CentroCusto;
 import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.LancamentoFinanceiroChartModel;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
-import br.com.milkmoney.util.NumberFormatUtil;
 import br.com.milkmoney.validation.LancamentoFinanceiroValidation;
 
 @Service
@@ -82,9 +82,9 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		
 		for ( LancamentoFinanceiro lancamento : data ){
 			if ( lancamento.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
-				receitas = receitas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+				receitas = receitas.add(lancamento.getValorTotal());
 			}else{
-				despesas = despesas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+				despesas = despesas.add(lancamento.getValorTotal());
 			}
 		}
     	
@@ -101,7 +101,7 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
     }
 	
 	@SuppressWarnings("unchecked")
-	public ObservableList<Series<String, Number>> getDataChart(int ano) {
+	public ObservableList<Series<String, Number>> getDataChart(int ano, CentroCusto centroCusto) {
 		
 		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
     	XYChart.Series<String, Number> serieDespesas = new XYChart.Series<String, Number>();
@@ -110,7 +110,7 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
     	serieDespesas.setName("Despesas");
     	serieReceitas.setName("Receitas");
     	
-    	for ( LancamentoFinanceiroChartModel model : dao.resumeByMonthAndYear(ano)){
+    	for ( LancamentoFinanceiroChartModel model : dao.resumeByMonthAndYear(ano, centroCusto)){
     		
     		serieReceitas.getData().add(new XYChart.Data<String, Number>(model.getMes(), model.getReceita()));	
    			serieDespesas.getData().add(new XYChart.Data<String, Number>(model.getMes(), model.getDespesa()));	

@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.milkmoney.model.CentroCusto;
 import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.LancamentoFinanceiroChartModel;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
@@ -98,7 +99,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		return query.getResultList();
 	}
 
-	public List<LancamentoFinanceiroChartModel> resumeByMonthAndYear(int ano) {
+	public List<LancamentoFinanceiroChartModel> resumeByMonthAndYear(int ano, CentroCusto centroCusto) {
 		
 		List<LancamentoFinanceiroChartModel> list = new ArrayList<LancamentoFinanceiroChartModel>();
 		ObservableList<String> meses = Util.generateListMonths();
@@ -111,16 +112,20 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 				"coalesce((select  " +
 				"sum(valor+juros+multa) as receita  " +
 				"from LancamentoFinanceiro lr where " +
+				"(:centroCusto <= 0 or lr.centroCusto = lf.centroCusto) and " +
 				"month(lr.dataVencimento) = month(lf.dataVencimento) and tipoLancamento = 'RECEITA'),0) as receita,  " +
 
 				"coalesce((select  " +
 				"sum(valor+juros+multa) as despesa  " +
 				"from LancamentoFinanceiro ld where " +
+				"(:centroCusto <= 0 or ld.centroCusto = lf.centroCusto) and " +
 				"month(ld.dataVencimento) = month(lf.dataVencimento) and  tipoLancamento = 'DESPESA'),0) as despesa  " +
 
-				"from LancamentoFinanceiro lf where year(lf.dataVencimento) = :ano group by month(dataVencimento) order by mes");
+				"from LancamentoFinanceiro lf where year(lf.dataVencimento) = :ano " +
+				"and (:centroCusto <= 0 or lf.centroCusto = :centroCusto) group by month(dataVencimento) order by mes");
 		
 		query.setParameter("ano", ano);
+		query.setParameter("centroCusto", centroCusto == null ? 0 : centroCusto.getId());
 		
 		@SuppressWarnings("unchecked")
 		List<Object> result = query.getResultList();

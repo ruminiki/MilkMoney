@@ -26,7 +26,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
-import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellValorLancamentoFinanceiroFactory;
+import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellTipoLancamentoFinanceiroFactory;
 import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
@@ -71,13 +71,13 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 	public void initialize() {
 		
 		situacaoLancamentoFinanceiroColumn.setCellFactory(new TableCellSituacaoLancamentoFinanceiroFactory<LancamentoFinanceiro,String>("dataEmissao"));
-		tipoLancamentoFinanceiroColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("tipoLancamentoFormatado"));
+		tipoLancamentoFinanceiroColumn.setCellFactory(new TableCellTipoLancamentoFinanceiroFactory<LancamentoFinanceiro,String>("tipoLancamentoFormatado"));
 		centroCustoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("centroCusto"));
 		dataEmissaoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataEmissao"));
 		dataVencimentoColumn.setCellFactory(new TableCellDateFactory<LancamentoFinanceiro,String>("dataVencimento"));
 		categoriaLancamentoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("categoria"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("descricao"));
-		valorColumn.setCellFactory(new TableCellValorLancamentoFinanceiroFactory<LancamentoFinanceiro,String>("valorTotal"));
+		valorColumn.setCellValueFactory(new PropertyValueFactory<LancamentoFinanceiro,String>("valorTotalFormatado"));
 		
 		//tabela saldos categorias
 		categoriaColumn.setCellValueFactory(new PropertyValueFactory<SaldoCategoriaDespesa,String>("categoria"));
@@ -187,9 +187,9 @@ public class LancamentoFinanceiroOverviewController extends AbstractOverviewCont
 		
 		for ( LancamentoFinanceiro lancamento : table.getItems() ){
 			if ( lancamento.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
-				receitas = receitas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+				receitas = receitas.add(lancamento.getValorTotal());
 			}else{
-				despesas = despesas.add(NumberFormatUtil.fromString(lancamento.getValorTotal()));
+				despesas = despesas.add(lancamento.getValorTotal());
 			}
 		}
 		

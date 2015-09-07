@@ -34,7 +34,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="100.0" VBox.vgrow="NEVER">
                            <children>
-                              <Button fx:id="btnIncrease" focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                              <Button fx:id="btnIncrease" focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -47,7 +47,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </Label>
-                              <Button fx:id="btnDecrease" focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                              <Button fx:id="btnDecrease" focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
                                  <font>
                                     <Font size="10.0" />
                                  </font>
@@ -100,9 +100,9 @@
                         <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
                         <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
                         <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
-                        <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
+                        <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
                         <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
-                        <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" text="Valor" />
+                        <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
                      </columns>
                   </TableView>
                   <VBox minWidth="320.0" spacing="3.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
