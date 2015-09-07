@@ -5,8 +5,8 @@ import java.time.LocalDate;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -36,7 +36,7 @@ public class FinanceiroChartController {
 	@Autowired LancamentoFinanceiroService lancamentoFinanceiroService;
 	@Autowired CentroCustoService centroCustoService;
 	
-	private AreaChart<String, Number> areaChart;
+	private LineChart<String, Number> lineChart;
 	
 	private CentroCusto ccBlank = new CentroCusto();
 	
@@ -55,17 +55,17 @@ public class FinanceiroChartController {
         
         xAxis.setLabel("Meses");
         
-        areaChart = new AreaChart<String,Number>(xAxis,yAxis);
+        lineChart = new LineChart<String,Number>(xAxis,yAxis);
         
-        areaChart.setTitle("Receitas x Despesas");
-        areaChart.setLegendVisible(true);
+        lineChart.setTitle("Receitas x Despesas");
+        lineChart.setLegendVisible(true);
         
-        VBox.setVgrow(areaChart, Priority.SOMETIMES);
-        HBox.setHgrow(areaChart, Priority.SOMETIMES);
+        VBox.setVgrow(lineChart, Priority.SOMETIMES);
+        HBox.setHgrow(lineChart, Priority.SOMETIMES);
         
         setDataChart();
         
-        group.getChildren().add(areaChart);
+        group.getChildren().add(lineChart);
         
         btnBuscarDadosGrafico.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -92,8 +92,8 @@ public class FinanceiroChartController {
 	}
 	
 	private void setDataChart(){
-		areaChart.getData().clear();
-		areaChart.getData().addAll(lancamentoFinanceiroService.getDataChart(Integer.parseInt(inputAno.getText()), 
+		lineChart.getData().clear();
+		lineChart.getData().addAll(lancamentoFinanceiroService.getDataChart(Integer.parseInt(inputAno.getText()), 
 				inputCentroCusto.getValue() != null && inputCentroCusto.getValue().getId() > 0 ? inputCentroCusto.getValue() : null));
 	}
 	
