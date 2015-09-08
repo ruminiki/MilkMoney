@@ -1,16 +1,21 @@
 package br.com.milkmoney.controller.indicador;
 
+import java.util.function.Function;
+
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.BoxIndicador;
 import br.com.milkmoney.components.PropertyDecimalValueFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.painel.renderer.TableCellValueFactoryResultadoIndicador;
@@ -28,7 +33,9 @@ public class IndicadorOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Indicador, String> resultadoColumn;
 	@FXML private Label lblIndicador, lblDefinicaoIndicador;
 	
-	//private Indicador selectedIndicador;
+	@FXML private GridPane grid;
+	
+	private ObservableList<Indicador> data;
 
 	@FXML
 	public void initialize() {
@@ -38,56 +45,39 @@ public class IndicadorOverviewController extends AbstractOverviewController<Inte
 		valorReferenciaColumn.setCellValueFactory(new PropertyDecimalValueFactory<Indicador,String>("valorReferencia"));
 		valorApuradoColumn.setCellValueFactory(new PropertyDecimalValueFactory<Indicador,String>("valorApurado"));
 		resultadoColumn.setCellFactory(new TableCellValueFactoryResultadoIndicador<Indicador,String>("resultado"));
-		
-		table.setItems(service.findAllAsObservableList());
-		
 		super.initialize((IndicadorFormController)MainApp.getBean(IndicadorFormController.class));
 		
-		/*if ( table.getItems() != null && table.getItems().size() > 0 ){
-			table.getSelectionModel().clearAndSelect(0);
-			selectRowTableHandler(table.getItems().get(0));
-		}
+		data = service.findAllAsObservableList();
 		
-		table.getSelectionModel().selectedItemProperty()
-		.addListener((observable, oldValue, newValue) -> selectRowTableHandler(newValue));
+		int row = 0;
+		int col = 0;
 		
-		// captura o evento de ENTER no text field
-		inputValorReferencia.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode().equals(KeyCode.ENTER)) {
-					handleSalvar();
-				}
+		for ( Indicador indicador : data ){
+			
+			BoxIndicador box = new BoxIndicador(indicador, editIndicador);
+			GridPane.setConstraints(box, row, col);
+			
+			col++;
+			
+			if ( col == 5 ){
+				col = 0;
+				row++;
 			}
-		});*/
-		
-	}
-	/*
-	protected void selectRowTableHandler(Indicador indicador) {
-		if ( indicador != null ){
-			selectedIndicador = indicador;
-			lblIndicador.setText(indicador.getDescricao());
-			lblDefinicaoIndicador.setText(indicador.getDefinicao());
-			inputValorReferencia.setText(NumberFormatUtil.decimalFormat(indicador.getValorReferencia()));
+			
+			grid.getChildren().add(box);
+			
 		}
+		
+			
 	}
 	
-	@FXML
-	private void handleSalvar(){
-		if ( selectedIndicador != null ){
-			selectedIndicador.setValorReferencia(NumberFormatUtil.fromString(inputValorReferencia.getText()));
-			service.save(selectedIndicador);
-			
-			for ( int index = 0; index < table.getItems().size(); index++ ){
-				Indicador indicador = table.getItems().get(index);
-				if ( selectedIndicador.getId() == indicador.getId() ){
-					table.getItems().set(index, selectedIndicador);
-				}
-			}
-			
-		}
-	}*/
-
+	Function<Indicador, Boolean> editIndicador = indicador -> {
+		setObject(indicador);
+		//FIXME ao editar deve atualizar o box
+		handleEdit();
+		return true;
+	};
+	
 	public String getFormName(){
 		return "view/indicador/IndicadorOverview.fxml";
 	}

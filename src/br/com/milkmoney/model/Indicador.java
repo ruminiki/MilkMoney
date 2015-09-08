@@ -34,11 +34,12 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private int id;
 	private StringProperty descricao = new SimpleStringProperty();
 	private StringProperty sigla = new SimpleStringProperty();
-	private StringProperty valorReferencia = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty menorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty maiorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty valorApurado = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty definicao = new SimpleStringProperty();
 	private StringProperty classeCalculo = new SimpleStringProperty();
-	private StringProperty objetivo = new SimpleStringProperty(ObjetivoIndicador.ACIMA_VALOR_REFERENCIA);
+	private StringProperty objetivo = new SimpleStringProperty(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL);
 	private int ordem;
 	
 	public Indicador() {
@@ -87,17 +88,31 @@ public class Indicador extends AbstractEntity implements Serializable {
 	}
 
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="valor de referência")
-	public BigDecimal getValorReferencia() {
-		return NumberFormatUtil.fromString(valorReferencia.get());
+	@FieldRequired(message="menor valor ideal")
+	public BigDecimal getMenorValorIdeal() {
+		return NumberFormatUtil.fromString(menorValorIdeal.get());
 	}
 
-	public void setValorReferencia(BigDecimal valorReferencia) {
-		this.valorReferencia.set(NumberFormatUtil.decimalFormat(valorReferencia));
+	public void setMenorValorIdeal(BigDecimal menorValorIdeal) {
+		this.menorValorIdeal.set(NumberFormatUtil.decimalFormat(menorValorIdeal));
 	}
 	
-	public StringProperty valorReferenciaProperty(){
-		return valorReferencia;
+	public StringProperty menorValorIdealProperty(){
+		return menorValorIdeal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="maior valor ideal")
+	public BigDecimal getMaiorValorIdeal() {
+		return NumberFormatUtil.fromString(maiorValorIdeal.get());
+	}
+
+	public void setMaiorValorIdeal(BigDecimal maiorValorIdeal) {
+		this.maiorValorIdeal.set(NumberFormatUtil.decimalFormat(maiorValorIdeal));
+	}
+	
+	public StringProperty maiorValorIdealProperty(){
+		return maiorValorIdeal;
 	}
 
 	@Access(AccessType.PROPERTY)
@@ -170,7 +185,8 @@ public class Indicador extends AbstractEntity implements Serializable {
 	public BigDecimal getResultado() {
 		
 		BigDecimal resultado = BigDecimal.ZERO;
-		if ( getValorApurado().compareTo(resultado) > 0 && getValorReferencia().compareTo(resultado) > 0 ){
+		
+	/*	if ( getValorApurado().compareTo(resultado) > 0 && getValorReferencia().compareTo(resultado) > 0 ){
 			resultado = getValorApurado().multiply(BigDecimal.valueOf(100)).divide(getValorReferencia(), 2, RoundingMode.HALF_EVEN);
 		}
 		
@@ -192,7 +208,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 			if ( getValorApurado().compareTo(getValorReferencia()) > 0 ){
 				resultado = resultado.multiply(BigDecimal.valueOf(-1));
 			}
-		}
+		}*/
 		
 		return resultado;
 		

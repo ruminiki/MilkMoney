@@ -21,22 +21,26 @@ import br.com.milkmoney.util.NumberFormatUtil;
 public class IndicadorFormController extends AbstractFormController<Integer, Indicador> {
 
 	@FXML private UCTextField inputDescricao, inputSigla;
-	@FXML private TextField inputValorReferencia, inputValorApurado, inputResultado;
+	@FXML private TextField inputMenorValorIdeal, inputMaiorValorIdeal, inputValorApurado, inputResultado;
 	@FXML private TextArea inputDefinicao;
 	@FXML private ComboBox<String> inputObjetivo;
 
 	@FXML
 	public void initialize() {
+		
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		inputSigla.textProperty().bindBidirectional(getObject().siglaProperty());
 		inputDefinicao.textProperty().bindBidirectional(getObject().definicaoProperty());
-		inputValorReferencia.textProperty().bindBidirectional(getObject().valorReferenciaProperty());
+		inputMenorValorIdeal.textProperty().bindBidirectional(getObject().menorValorIdealProperty());
+		inputMaiorValorIdeal.textProperty().bindBidirectional(getObject().maiorValorIdealProperty());
 		inputValorApurado.textProperty().bindBidirectional(getObject().valorApuradoProperty());
 		inputResultado.setText(NumberFormatUtil.decimalFormat(getObject().getResultado()));
 		inputObjetivo.setItems(ObjetivoIndicador.getItems());
 		inputObjetivo.valueProperty().bindBidirectional(getObject().objetivoProperty());
 		
-		MaskFieldUtil.decimal(inputValorReferencia);
+		MaskFieldUtil.decimal(inputMenorValorIdeal);
+		MaskFieldUtil.decimal(inputMaiorValorIdeal);
+		
 	}
 
 	@Override
