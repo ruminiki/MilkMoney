@@ -72,9 +72,8 @@ public class IndicadorOverviewController extends AbstractOverviewController<Inte
 	}
 	
 	Function<Indicador, Boolean> editIndicador = indicador -> {
-		setObject(indicador);
-		//FIXME ao editar deve atualizar o box
-		handleEdit();
+		super.setObject(indicador);
+		super.handleEdit();
 		return true;
 	};
 	
