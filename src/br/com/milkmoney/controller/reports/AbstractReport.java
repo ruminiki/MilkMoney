@@ -9,12 +9,14 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.service.RelatorioService;
 
 public class AbstractReport {
 	
 	@FXML protected ToggleButton btnPDF, btnXLS;
 	@Autowired protected RelatorioService relatorioService;
+	@Autowired protected RootLayoutController rootLayoutController;
 	
 	protected ToggleGroup toggleGroupFormato = new ToggleGroup();
 
@@ -25,16 +27,17 @@ public class AbstractReport {
 			btnXLS.setToggleGroup(toggleGroupFormato);
 			btnPDF.setToggleGroup(toggleGroupFormato);
 			toggleGroupFormato.selectToggle(btnPDF);
-		}
-		
-		btnXLS.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			btnPDF.setSelected(!btnXLS.isSelected());
 			
-		});
-		
-		btnPDF.selectedProperty().addListener((observable, oldValue, newValue) -> {
-			btnXLS.setSelected(!btnPDF.isSelected());
-		});
+			btnXLS.selectedProperty().addListener((observable, oldValue, newValue) -> {
+				btnPDF.setSelected(!btnXLS.isSelected());
+				
+			});
+			
+			btnPDF.selectedProperty().addListener((observable, oldValue, newValue) -> {
+				btnXLS.setSelected(!btnPDF.isSelected());
+			});
+			
+		}
 		
 	}
 	

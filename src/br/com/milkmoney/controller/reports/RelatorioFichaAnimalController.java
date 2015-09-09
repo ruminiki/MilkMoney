@@ -2,10 +2,8 @@ package br.com.milkmoney.controller.reports;
 
 import javafx.fxml.FXML;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.RelatorioService;
@@ -14,8 +12,6 @@ import br.com.milkmoney.validation.Validator;
 @Controller
 public class RelatorioFichaAnimalController extends AbstractSelectAnimalParametersReport {
 
-	@Autowired private RootLayoutController rootLayoutController;
-	
 	@FXML
 	private void handleExecutar(){
 		

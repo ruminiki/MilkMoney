@@ -86,6 +86,8 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 			listSelecionados.getItems().clear();
 		});
 		
+		super.initialize();
+		
 	}
 	
 }

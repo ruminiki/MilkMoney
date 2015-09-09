@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
-import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.controller.touro.TouroReducedOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -29,7 +28,6 @@ public class RelatorioCoberturaController extends AbstractReport{
 	@FXML private UCTextField inputTouroInseminacaoArtificial, inputTouroMontaNatural;
 	@FXML private ComboBox<String> inputTipoCobertura, inputSituacaoCobertura;
 	
-	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	

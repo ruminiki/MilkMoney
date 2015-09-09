@@ -47,6 +47,7 @@
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportPartosPrevistos" text="Partos Previstos" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReportCobertura" text="Coberturas" />
                         <Menu mnemonicParsing="false" text="Formulários de Campo">
                           <items>

@@ -19,11 +19,7 @@ where MONTH(lf.dataVencimento) = 09 and YEAR(lf.dataVencimento) = 2015
 group by centroCusto, categoria
 order by centroCusto, tipoLancamento desc, categoria
 
-
-
-
 - Relatórios
-	- Coberturas;
 	- Previsão de Parto;
 	- Rebanho;
 	- Indicadores;
