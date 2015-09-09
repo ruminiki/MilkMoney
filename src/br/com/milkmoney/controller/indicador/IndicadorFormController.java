@@ -15,13 +15,12 @@ import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.ObjetivoIndicador;
 import br.com.milkmoney.service.IService;
-import br.com.milkmoney.util.NumberFormatUtil;
 
 @Controller
 public class IndicadorFormController extends AbstractFormController<Integer, Indicador> {
 
 	@FXML private UCTextField inputDescricao, inputSigla;
-	@FXML private TextField inputMenorValorIdeal, inputMaiorValorIdeal, inputValorApurado, inputResultado;
+	@FXML private TextField inputMenorValorIdeal, inputMaiorValorIdeal, inputValorApurado;
 	@FXML private TextArea inputDefinicao;
 	@FXML private ComboBox<String> inputObjetivo;
 
@@ -34,7 +33,6 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 		inputMenorValorIdeal.textProperty().bindBidirectional(getObject().menorValorIdealProperty());
 		inputMaiorValorIdeal.textProperty().bindBidirectional(getObject().maiorValorIdealProperty());
 		inputValorApurado.textProperty().bindBidirectional(getObject().valorApuradoProperty());
-		inputResultado.setText(NumberFormatUtil.decimalFormat(getObject().getResultado()));
 		inputObjetivo.setItems(ObjetivoIndicador.getItems());
 		inputObjetivo.valueProperty().bindBidirectional(getObject().objetivoProperty());
 		

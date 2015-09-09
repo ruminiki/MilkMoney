@@ -28,6 +28,7 @@
                 <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -36,16 +37,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <VBox.margin>
+                  <Insets left="3.0" right="3.0" />
+               </VBox.margin>
             </GridPane>
-            <TableView fx:id="table" cache="true" cacheShape="false" centerShape="false" editable="true" focusTraversable="false" maxHeight="100.0" prefHeight="72.0" prefWidth="851.0" visible="false" VBox.vgrow="SOMETIMES">
-              <columns>
-                <TableColumn fx:id="indicadorColumn" maxWidth="-1.0" minWidth="320.0" prefWidth="-1.0" sortable="false" text="Indicador" />
-                  <TableColumn fx:id="siglaColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Sigla" />
-                <TableColumn fx:id="valorReferenciaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Referência" />
-                  <TableColumn fx:id="valorApuradoColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER;" text="Valor Apurado" />
-                  <TableColumn fx:id="resultadoColumn" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Resultado" />
-              </columns>
-            </TableView>
          </children>
       </VBox>
    </children>
