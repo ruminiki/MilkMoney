@@ -1,5 +1,7 @@
 package br.com.milkmoney.service;
 
+import java.util.Date;
+
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class RelatorioService {
 	public static final String FORMULARIO_CAMPO_REGISTRO_COBERTURA = "report/formularioCobertura.prpt"; 
 	public static final String FORMULARIO_CAMPO_REGISTRO_PARTO     = "report/formularioParto.prpt"; 
 	public static final String FORMULARIO_CAMPO_REGISTRO_PRODUCAO  = "report/formularioRegistroProducao.prpt"; 
+	public static final String RELATORIO_COBERTURA                 = "report/relatorioCobertura.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		Thread t = new Thread(new Runnable() {
@@ -50,6 +53,17 @@ public class RelatorioService {
 					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
 					masterReport.getParameterValues().put("mes", String.valueOf(param[0]));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case RELATORIO_COBERTURA:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
+					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
+					masterReport.getParameterValues().put("situacaoCobertura", String.valueOf(param[2]));
+					masterReport.getParameterValues().put("tipoCobertura", String.valueOf(param[3]));
+					masterReport.getParameterValues().put("touroInseminacaoArtificial", Integer.parseInt(param[4].toString()));
+					masterReport.getParameterValues().put("touroMontaNatural", Integer.parseInt(param[5].toString()));
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:

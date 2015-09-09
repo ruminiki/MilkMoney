@@ -5,31 +5,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.AnimalService;
-import br.com.milkmoney.service.RelatorioService;
 
-public class AbstractSelectAnimalParametersReport {
+public class AbstractSelectAnimalParametersReport extends AbstractReport{
 	
 	@FXML protected UCTextField inputPesquisa;
 	@FXML protected ListView<Animal> listAnimais, listSelecionados;
 	@FXML protected Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
-	@FXML protected ToggleButton btnPDF, btnXLS;
-	
-	protected ToggleGroup toggleGroupFormato = new ToggleGroup();
-	
 	@Autowired protected AnimalService animalService;
-	@Autowired protected RelatorioService relatorioService;
 
 	@FXML
 	public void initialize() {
@@ -97,25 +86,6 @@ public class AbstractSelectAnimalParametersReport {
 			listSelecionados.getItems().clear();
 		});
 		
-		if ( btnPDF != null && btnXLS != null ){
-			btnXLS.setToggleGroup(toggleGroupFormato);
-			btnPDF.setToggleGroup(toggleGroupFormato);
-			toggleGroupFormato.selectToggle(btnPDF);
-		}
-		
-	}
-	
-	@FXML
-	protected void handleClose(){
-		if ( btnAdicionar != null ){
-			Stage stage = (Stage)btnAdicionar.getScene().getWindow();
-			// se for popup
-			if ( stage.getModality().equals(Modality.APPLICATION_MODAL) ){
-				((Stage)btnAdicionar.getScene().getWindow()).close();	
-			}else{
-				MainApp.resetLayout();
-			}
-		}
 	}
 	
 }
