@@ -83,9 +83,5 @@ SELECT * FROM (SELECT 'INTERVALO ENTRE PARTOS PROJETADO', 'IEPP', 21, '12', '15'
 'O objetivo dessa comparação é saber se a eficiência reprodutiva da propriedade nos últimos 9 meses esta melhorando, se mantendo ou piorando.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'IEPP');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, menorValorIdeal, maiorValorIdeal, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'CUSTO POR LITRO LEITE', 'CLL', 22, '0.70', '0.90', 'br.com.milkmoney.service.indicadores.CustoLitroLeite',
-'Nesse indicador é registrado o custo do litro de leite. Para a realização do cálculo é considerado apenas o centro de custo LEITE.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'CLL');
-
-INSERT INTO INDICADOR (descricao, sigla, ordem, menorValorIdeal, maiorValorIdeal, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'MARGEM LUCRO BRUTA', 'MLB', 23, '30', '50', 'br.com.milkmoney.service.indicadores.MargemLucroLitroLeite',
-'Nesse indicador é registrado a margem de lucro bruta por litro de leite comercializado. Para a realização do cálculo é considerado apenas o centro de custo LEITE.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'MLB');
+SELECT * FROM (SELECT 'MÉDIA DIAS PÓS PARTO', 'MDPP', 22, '100', '200', 'br.com.milkmoney.service.indicadores.MediaDiasPosParto',
+'Nesse indicador é registrado a média de dias pós parto das vacas em lactação. Uma média entre 100 e 200 dias indica a maioria dos animais no pico da produção na lactação.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'MDPP');

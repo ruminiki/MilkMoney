@@ -250,4 +250,18 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return diasEmAberto;
 	}
 
+	public long getDiasUltimoPartoAteConfirmacaoPrenhes(Animal animal) {
+		Parto ultimoParto = partoService.findLastParto(animal);
+		int dias = 0;
+		if ( ultimoParto != null ){
+			
+			ConfirmacaoPrenhes confirmacao = confirmacaoPrenhesService.findFirstAfterData(animal, ultimoParto.getData(), SituacaoCobertura.PRENHA);
+			if ( confirmacao != null ){
+				dias = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(confirmacao.getData()));
+			}
+			
+		}
+		return dias;
+	}
+
 }

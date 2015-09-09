@@ -419,5 +419,12 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 	}
 
+	public BigInteger countDiasLactacao(Animal animal) {
+		Query query = entityManager.createNativeQuery(
+				"select DATEDIFF(current_date(), l.dataInicio) from Lactacao l where l.animal = :animal");
+		query.setParameter("animal", animal);
+		return (BigInteger) query.getSingleResult();
+	}
+
 
 }

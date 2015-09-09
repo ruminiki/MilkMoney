@@ -1,21 +1,8 @@
-Taxa de natalidade: é o número de bezerros nascidos
-vivos durante o ano dividido pelo número médio
-mensal de vacas (anotar o total de vacas a cada
-mês e no final de 12 meses calcular a média), multiplicado
-por 100. O ideal é ter 100% de bezerros
-nascidos vivos no período de um ano.
-
-- construir indicador média dias pós parto das vacas em lactação
-- revisar os indicadores (como alterar o valor de referência e os textos de ajuda);
-
 - remover casas decimais volume produzido e volume entregue
-
-- remover máscara decimal - fazer apenas restrição de caracteres
 - fazer log de acessos ao sistema
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
-
 
 -fluxo de caixa
 select 

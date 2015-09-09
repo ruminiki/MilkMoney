@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.ConfirmacaoPrenhesDao;
+import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.validation.ConfirmacaoPrenhesValidation;
@@ -66,6 +68,10 @@ public class ConfirmacaoPrenhesService implements IService<Integer, ConfirmacaoP
 	public ConfirmacaoPrenhes findLastByCobertura(Cobertura cobertura) {
 		return dao.findLastByCobertura(cobertura);
 		
+	}
+
+	public ConfirmacaoPrenhes findFirstAfterData(Animal animal, Date data, String situacao) {
+		return dao.findFirstAfterData(animal, data, situacao);
 	}
 
 }
