@@ -62,7 +62,7 @@ public class ProducaoIndividualDao extends AbstractGenericDao<Integer, ProducaoI
 	public List<ProducaoIndividual> findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
 		
 		Query query = entityManager.createQuery("SELECT c FROM ProducaoIndividual c WHERE c.animal = :animal and "
-				+ "(c.data between :dataInicio and :dataFim or (c.data >= :dataInicio and :dataFim is null)) order by data");
+				+ "c.data between :dataInicio and coalesce(:dataFim, now()) order by data");
 		
 		query.setParameter("animal", animal);
 		query.setParameter("dataInicio", dataInicio);

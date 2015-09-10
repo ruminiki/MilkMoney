@@ -24,6 +24,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.animal.AnimalFormController;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
@@ -90,6 +91,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private RootLayoutController             rootLayoutController;
+	@Autowired private AnimalFormController             animalFormController;
 	@Autowired private AnimalService                    animalService;
 	@Autowired private ParametroService                 parametroService;
 	@Autowired private RelatorioService					relatorioService;
@@ -98,7 +100,8 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
 	private MenuItem    confirmarPrenhesMenuItem        = new MenuItem("Confirmação de Prenhes");
 	private MenuItem    fichaAnimalMenuItem             = new MenuItem("Ficha Animal");
-	private ContextMenu menuTabelaAnimais               = new ContextMenu(fichaAnimalMenuItem);
+	private MenuItem    editarAnimalMenuItem            = new MenuItem("Editar Animal");
+	private ContextMenu menuTabelaAnimais               = new ContextMenu(editarAnimalMenuItem, fichaAnimalMenuItem);
 	private Animal                                      femea;
 	
 	@FXML
@@ -128,6 +131,13 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		    @Override
 		    public void handle(ActionEvent event) {
 		    	handleOpenFichaAnimal();
+		    }
+		});
+		
+		editarAnimalMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleEditAnimal();
 		    }
 		});
 		
@@ -313,6 +323,13 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		fichaAnimalOverviewController.setAnimal(femea);
 		fichaAnimalOverviewController.showForm();
+		
+	}
+	
+	private void handleEditAnimal(){
+		
+		animalFormController.setObject(femea);
+		animalFormController.showForm();
 		
 	}
 	

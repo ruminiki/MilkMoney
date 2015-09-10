@@ -113,6 +113,9 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
     		lactacao = newValue;
     		data.clear();
     		data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+    		((ProducaoIndividualService)service).atualizaValorProducao(data);
+    		lineChart.getData().clear();
+    		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
     	}
 	}
 
