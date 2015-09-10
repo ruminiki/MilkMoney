@@ -3,6 +3,8 @@ package br.com.milkmoney.dao;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -36,10 +38,13 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<LancamentoFinanceiro> findByMes(Date dataInicio, Date dataFim) {
-		Query query = entityManager.createQuery("SELECT c FROM LancamentoFinanceiro c WHERE c.dataVencimento between :inicio and :fim");
+	public List<LancamentoFinanceiro> findByMes(Date dataInicio, Date dataFim, String tipoLancamento) {
+		Query query = entityManager.createQuery("SELECT c FROM LancamentoFinanceiro c WHERE "
+				+ "(c.dataVencimento between :inicio and :fim or c.dataPagamento between :inicio and :fim) and "
+				+ "(:tipoLancamento is null or c.tipoLancamento = :tipoLancamento)");
 		query.setParameter("inicio", dataInicio);
 		query.setParameter("fim", dataFim);
+		query.setParameter("tipoLancamento", tipoLancamento);
 		return query.getResultList();
 	}
 
@@ -50,7 +55,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		Query query = entityManager.createQuery(
 				"SELECT categoria.descricao, sum(juros + multa + valor) as total "
 				+ "FROM LancamentoFinanceiro l "
-				+ "WHERE dataVencimento between :inicio and :fim "
+				+ "WHERE (l.dataVencimento between :inicio and :fim or l.dataPagamento between :inicio and :fim)  "
 				+ "and l.tipoLancamento = '" + TipoLancamentoFinanceiro.DESPESA + "' group by 1 order by 2");
 		
 		query.setParameter("inicio", dataInicio);
@@ -73,7 +78,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 				Object[] row = (Object[]) result.get(index);
 				
 				BigDecimal saldo = BigDecimal.valueOf(Double.valueOf(row[1].toString()));
-				BigDecimal percentual = saldo.divide(totalDespesa, RoundingMode.HALF_EVEN)
+				BigDecimal percentual = saldo.divide(totalDespesa, 3, RoundingMode.HALF_EVEN)
 											 .multiply(BigDecimal.valueOf(100));
 				
 				list.add(new SaldoCategoriaDespesa(String.valueOf(row[0]), saldo, percentual));
@@ -81,13 +86,21 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 			}
 		}
 		
+		Collections.sort(list, new Comparator<SaldoCategoriaDespesa>() {
+		    @Override
+		    public int compare(SaldoCategoriaDespesa s1, SaldoCategoriaDespesa s2) {
+		        return s2.getPercentual().compareTo(s1.getPercentual());
+		    }
+		});
+		
 		return list;
 		
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<LancamentoFinanceiro> findByMes(String param, Date dataInicio, Date dataFim) {
-		Query query = entityManager.createQuery("SELECT r FROM LancamentoFinanceiro r WHERE r.dataVencimento between :inicio and :fim and "
+		Query query = entityManager.createQuery("SELECT r FROM LancamentoFinanceiro r WHERE "
+				+ "(r.dataVencimento between :inicio and :fim or r.dataPagamento between :inicio and :fim) and "
 				+ "(r.descricao like :param or "
 				+ "r.tipoLancamento like :param or "
 				+ "r.categoria.descricao like :param or "
@@ -121,7 +134,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 				"(:centroCusto <= 0 or ld.centroCusto = lf.centroCusto) and " +
 				"month(ld.dataVencimento) = month(lf.dataVencimento) and  tipoLancamento = 'DESPESA'),0) as despesa  " +
 
-				"from LancamentoFinanceiro lf where year(lf.dataVencimento) = :ano " +
+				"from LancamentoFinanceiro lf where (year(lf.dataVencimento) = :ano or year(lf.dataPagamento) = :ano)" +
 				"and (:centroCusto <= 0 or lf.centroCusto = :centroCusto) group by month(dataVencimento) order by mes");
 		
 		query.setParameter("ano", ano);

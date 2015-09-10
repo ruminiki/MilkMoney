@@ -63,8 +63,8 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		LancamentoFinanceiroValidation.validate(lancamentoFinanceiro);
 	}
 
-	public List<LancamentoFinanceiro> findByMes(Date dataInicio, Date dataFim) {
-		return dao.findByMes(dataInicio, dataFim);
+	public ObservableList<LancamentoFinanceiro> findByMes(Date dataInicio, Date dataFim, String tipoLancamento) {
+		return FXCollections.observableArrayList(dao.findByMes(dataInicio, dataFim, tipoLancamento));
 	}
 	
 	public ObservableList<LancamentoFinanceiro> findByMes(String param, Date dataInicio, Date dataFim) {

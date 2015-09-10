@@ -4,6 +4,8 @@
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
+- parcelar lançamentos
+
 -fluxo de caixa
 select 
 
@@ -20,9 +22,6 @@ group by centroCusto, categoria
 order by centroCusto, tipoLancamento desc, categoria
 
 - Relatórios
-	- Previsão de Parto;
-	- Rebanho;
-	- Indicadores;
 	- Partos;
 
 - está permitindo deletar animal sem remover o parto.

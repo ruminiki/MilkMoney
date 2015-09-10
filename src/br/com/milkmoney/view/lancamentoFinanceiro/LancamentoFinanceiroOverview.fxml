@@ -70,70 +70,82 @@
                   <ToggleButton fx:id="tbDez" maxWidth="38.0" minHeight="30.0" minWidth="38.0" mnemonicParsing="false" text="Dez" HBox.hgrow="SOMETIMES" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
-                     <children>
-                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Registros">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar">
+                     <HBox.margin>
+                        <Insets right="3.0" />
+                     </HBox.margin></Button>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <TableView fx:id="table" cacheShape="false" focusTraversable="false" HBox.hgrow="SOMETIMES">
-                     <columns>
-                        <TableColumn fx:id="situacaoLancamentoFinanceiroColumn" maxWidth="10.0" prefWidth="75.0" />
-                        <TableColumn fx:id="tipoLancamentoFinanceiroColumn" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
-                        <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
-                        <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
-                        <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
-                        <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
-                        <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
-                        <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
-                     </columns>
-                  </TableView>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                     <items>
+                        <VBox prefHeight="150.0">
+                           <children>
+                              <TableView fx:id="tableReceitas" cacheShape="false" focusTraversable="false" prefHeight="150.0" VBox.vgrow="SOMETIMES">
+                                 <columns>
+                                    <TableColumn fx:id="situacaoLancamentoFinanceiroColumn" maxWidth="10.0" prefWidth="75.0" />
+                                    <TableColumn fx:id="tipoLancamentoFinanceiroColumn" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                                    <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
+                                    <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
+                                    <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Recebimento" />
+                                    <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                                    <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
+                                    <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
+                                 </columns>
+                              </TableView>
+                              <HBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="CENTER_RIGHT">
+                                       <children>
+                                          <Label fx:id="lblReceitas" text="Label">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Receitas" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <TableView fx:id="tableDespesas" cacheShape="false" focusTraversable="false" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn fx:id="situacaoLancamentoFinanceiroColumn1" maxWidth="10.0" prefWidth="75.0" />
+                                    <TableColumn fx:id="tipoLancamentoFinanceiroColumn1" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                                    <TableColumn fx:id="descricaoColumn1" minWidth="250.0" prefWidth="75.0" text="Descrição" />
+                                    <TableColumn fx:id="dataEmissaoColumn1" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
+                                    <TableColumn fx:id="dataVencimentoColumn1" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
+                                    <TableColumn fx:id="categoriaLancamentoColumn1" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                                    <TableColumn fx:id="centroCustoColumn1" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
+                                    <TableColumn fx:id="valorColumn1" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
+                                 </columns>
+                              </TableView>
+                              <HBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" VBox.vgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="CENTER_RIGHT">
+                                       <children>
+                                          <Label fx:id="lblDespesas" text="Label">
+                                             <font>
+                                                <Font size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Despesas" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </items>
+                  </SplitPane>
                   <VBox minWidth="320.0" spacing="3.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
                      <children>
                         <VBox fx:id="vbChart" minHeight="200.0" VBox.vgrow="SOMETIMES" />
-                        <Separator prefWidth="200.0" />
-                        <HBox alignment="CENTER" maxHeight="30.0" spacing="3.0" VBox.vgrow="SOMETIMES">
-                           <children>
-                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <Label fx:id="lblReceitas" text="Label">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Receitas" />
-                                 </children>
-                              </VBox>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
-                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <Label fx:id="lblDespesas" text="Label">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Despesas" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
                         <Separator prefWidth="200.0" />
                         <VBox alignment="CENTER" maxHeight="30.0">
                            <children>
@@ -145,6 +157,32 @@
                               <Label text="Saldo" />
                            </children>
                         </VBox>
+                        <Separator prefWidth="200.0" />
+                        <HBox alignment="CENTER" maxHeight="30.0" spacing="3.0" VBox.vgrow="SOMETIMES">
+                           <children>
+                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
+                                 <children>
+                                    <Label fx:id="lblCustoLitroLeite" text="Label">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Custo Litro Leite" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
+                                 <children>
+                                    <Label fx:id="lblMargemLucro" text="Label">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Margem Lucro" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                            <children>
                               <Label text="Principais Despesas" />

@@ -39,4 +39,15 @@ public class NumberFormatUtil {
 		}
 	}
 
+	public static String decimalFormat(BigDecimal number, int precision) {
+		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+		df.applyPattern("###,##0.00");
+		df.setMinimumFractionDigits(precision);
+		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+		symbols.setDecimalSeparator(',');
+		symbols.setGroupingSeparator('.');
+		df.setDecimalFormatSymbols(symbols);
+		return number == null ? df.format(BigDecimal.ZERO) : df.format(number);
+	}
+
 }
