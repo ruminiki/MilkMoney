@@ -72,9 +72,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, String> diasUltimoPartoColumn;
 	@FXML private TableColumn<Animal, Date> dataUltimaCoberturaColumn;
 	@FXML private TableColumn<Animal, String> diasUltimaCoberturaColumn;
-	@FXML private TableColumn<Animal, Date> dataPrevisaoLactacaoColumn;
 	@FXML private TableColumn<Animal, Date> dataPrevisaoProximoPartoColumn;
 	@FXML private TableColumn<Animal, String> situacaoUltimaCoberturaColumn;
+	@FXML private TableColumn<Animal, Date> dataPrevisaoEncerramentoLactacaoColumn;
 	
 	//services
 	@Autowired private LactacaoService lactacaoService;
@@ -113,7 +113,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
 		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
 		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
-		dataPrevisaoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
+		dataPrevisaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
 		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 		

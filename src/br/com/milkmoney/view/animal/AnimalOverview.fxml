@@ -75,6 +75,7 @@
                         <TableColumn fx:id="diasUltimoPartoColumn" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Dias PP" />
                      </columns>
                   </TableColumn>
+                  <TableColumn fx:id="dataPrevisaoEncerramentoLactacaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Prev. Enc. Lac." />
                   <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Última Cobertura">
                      <columns>
                         <TableColumn fx:id="dataUltimaCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />

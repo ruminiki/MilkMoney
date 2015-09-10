@@ -74,6 +74,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT MAX(c.previsaoParto) FROM cobertura c WHERE c.femea = id)")
 	private Date dataPrevisaoProximoParto;
 	
+	@Formula("(SELECT MAX(l.dataInicio) FROM lactacao l WHERE l.animal = id)")
+	private Date dataInicioUltimaLactacao;
+	
 	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
 	private String situacaoUltimaCobertura;
 	
@@ -326,20 +329,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Transient
-	public Date getDataPrevisaoEncerramentoLactacao() {
-		
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return null;
-		}
-		
-		if ( dataUltimaCobertura != null ){
-			return DateUtil.asDate(DateUtil.asLocalDate(dataUltimaCobertura).plusMonths(7));
-		}
-		return null;
-	}
-
-	@Transient
 	public String getSituacaoUltimaCobertura() {
 		if ( situacaoUltimaCobertura == null || situacaoUltimaCobertura.isEmpty() )
 			return "--";
@@ -370,6 +359,15 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
 		this.nascimentoCadastrado = nascimentoCadastrado;
+	}
+	
+	@Transient
+	public Date getDataPrevisaoEncerramentoLactacao(){
+		if ( situacaoAnimal != null && situacaoAnimal.equals(SituacaoAnimal.EM_LACTACAO) 
+				&& dataInicioUltimaLactacao != null ){
+			return DateUtil.asDate(DateUtil.asLocalDate(dataInicioUltimaLactacao).plusDays(305));
+		}
+		return null;
 	}
 	
 	@Override
