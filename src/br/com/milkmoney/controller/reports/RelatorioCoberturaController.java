@@ -102,7 +102,7 @@ public class RelatorioCoberturaController extends AbstractReport{
 				RelatorioService.RELATORIO_COBERTURA, params);
 		}else{
 			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_ANIMAL, params);
+					RelatorioService.RELATORIO_COBERTURA, params);
 		}
 		
 		super.handleClose();

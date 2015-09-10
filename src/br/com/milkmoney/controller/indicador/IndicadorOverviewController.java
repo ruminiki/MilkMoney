@@ -11,16 +11,21 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.BoxIndicador;
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
+import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
+import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 
 @Controller
 public class IndicadorOverviewController {
 
 	@FXML private GridPane grid;
-	@Autowired IndicadorService service;
-	@Autowired IndicadorFormController indicadorFormController;
+	@Autowired private IndicadorService service;
+	@Autowired private IndicadorFormController indicadorFormController;
+	@Autowired private RelatorioService relatorioService;
+	@Autowired private RootLayoutController rootLayoutController;
 	
 	private ObservableList<Indicador> data;
 	
@@ -61,6 +66,14 @@ public class IndicadorOverviewController {
 		}
 		return true;
 	};
+	
+	@FXML
+	private void handleImprimirIndicadores(){
+		
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, RelatorioService.RELATORIO_INDICADORES);
+		rootLayoutController.setMessage("O relatório está sendo executado...");
+		
+	}
 	
 	public String getFormName(){
 		return "view/indicador/IndicadorOverview.fxml";
