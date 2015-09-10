@@ -23,6 +23,7 @@ public class RelatorioService {
 	public static final String RELATORIO_PARTOS_PREVISTOS          = "report/relatorioPartosPrevistos.prpt";
 	public static final String RELATORIO_INDICADORES               = "report/relatorioIndicadores.prpt";
 	public static final String RELATORIO_PARTOS 				   = "report/relatorioPartos.prpt";
+	public static final String RESUMO_FINANCEIRO                   = "report/resumoFinanceiro.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		Thread t = new Thread(new Runnable() {
@@ -82,6 +83,12 @@ public class RelatorioService {
 					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
 					masterReport.getParameterValues().put("quantidadeDias", Integer.parseInt(param[0].toString()));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case RESUMO_FINANCEIRO:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("ano", Integer.parseInt(param[0].toString()));
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:

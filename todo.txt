@@ -6,23 +6,6 @@
 
 - parcelar lançamentos
 
--fluxo de caixa
-select 
-
-lf.tipoLancamento,
-sum(valor+juros+multa) as valor,
-cc.descricao as centroCusto,
-cat.descricao as categoria
-
-from lancamentoFinanceiro lf
-inner join centroCusto cc on cc.id = lf.centroCusto
-inner join categoriaLancamentoFinanceiro cat on cat.id = lf.categoria
-where MONTH(lf.dataVencimento) = 09 and YEAR(lf.dataVencimento) = 2015
-group by centroCusto, categoria
-order by centroCusto, tipoLancamento desc, categoria
-
-- Relatórios
-	- Partos;
 
 - está permitindo deletar animal sem remover o parto.
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
