@@ -41,7 +41,7 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
-		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
+		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 		
 		super.initialize(animalFormController);
 

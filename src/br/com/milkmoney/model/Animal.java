@@ -278,6 +278,10 @@ public class Animal extends AbstractEntity implements Serializable {
 		return this.numero.get() + "-" + this.nome.get();
 	}
 	
+	public String getSexoFormatado(){
+		return this.getSexo().substring(0, 1);
+	}
+	
 	public StringProperty numeroNomeProperty(){
 		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
 	}

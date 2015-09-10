@@ -121,13 +121,22 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
 		
 		try{
-			if ( Integer.parseInt(sdf.format(data1)) > Integer.parseInt(sdf.format(data2)) )
-				return true;
+			return Integer.parseInt(sdf.format(data1)) > Integer.parseInt(sdf.format(data2));
 		}catch(Exception e){
 			return false;
 		}
 		
-		return false;
+	}
+	
+	public static boolean before(Date data1, Date data2) {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
+		
+		try{
+			return Integer.parseInt(sdf.format(data1)) < Integer.parseInt(sdf.format(data2));
+		}catch(Exception e){
+			return false;
+		}
 		
 	}
 }

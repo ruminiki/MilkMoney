@@ -59,4 +59,20 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		return query.getResultList();
 	}
 
+	public Lactacao findLactacaoAnimal(Animal animal, Date data) {
+			
+		Query query = entityManager.createQuery(
+				"SELECT lc FROM Lactacao lc WHERE lc.animal = :animal and :data between lc.dataInicio and coalesce(lc.dataFim, current_date())");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("data", data);
+		query.setParameter("animal", animal);
+		
+		try{
+			return (Lactacao)query.getSingleResult();
+		}catch ( NoResultException e ){
+			return null;
+		}
+		
+	}
+
 }

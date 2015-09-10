@@ -108,7 +108,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
-		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexo"));
+		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 		dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
 		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
 		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));

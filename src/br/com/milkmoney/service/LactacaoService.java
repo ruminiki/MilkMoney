@@ -100,5 +100,9 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 		
 		return FXCollections.observableArrayList(lactacoes);
 	}
+
+	public Lactacao findLactacaoAnimal(Animal animal, Date data) {
+		return dao.findLactacaoAnimal(animal, data);
+	}
 	
 }

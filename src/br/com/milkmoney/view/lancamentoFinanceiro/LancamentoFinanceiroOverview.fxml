@@ -158,31 +158,6 @@
                            </children>
                         </VBox>
                         <Separator prefWidth="200.0" />
-                        <HBox alignment="CENTER" maxHeight="30.0" spacing="3.0" VBox.vgrow="SOMETIMES">
-                           <children>
-                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <Label fx:id="lblCustoLitroLeite" text="Label">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Custo Litro Leite" />
-                                 </children>
-                              </VBox>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
-                              <VBox alignment="CENTER" HBox.hgrow="SOMETIMES">
-                                 <children>
-                                    <Label fx:id="lblMargemLucro" text="Label">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label text="Margem Lucro" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
                         <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                            <children>
                               <Label text="Principais Despesas" />

@@ -86,7 +86,9 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 							    }
 							});
 							setGraphic(link);
-						} 
+						}else{
+							setGraphic(null);
+						}
 					}
 				};                           
 				return cell;

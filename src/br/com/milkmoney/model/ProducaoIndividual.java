@@ -44,6 +44,7 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 	private StringProperty terceiraOrdenha = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	private ObjectProperty<Animal> animal = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Lactacao> lactacao = new SimpleObjectProperty<Lactacao>();
 	private BigDecimal valor;
 	
 	public ProducaoIndividual() {
@@ -53,8 +54,9 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 		setData(data);
 	}
 
-	public ProducaoIndividual(Animal animal) {
-		this.animal.set(animal);
+	public ProducaoIndividual(Animal animal, Lactacao lactacao) {
+		setAnimal(animal);
+		setLactacao(lactacao);
 	}
 
 	@Temporal(TemporalType.DATE)
@@ -145,6 +147,21 @@ public class ProducaoIndividual extends AbstractEntity implements Serializable {
 	
 	public ObjectProperty<Animal> animalProperty(){
 		return animal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne@JoinColumn(name="lactacao")
+	@FieldRequired(message="lactação")
+	public Lactacao getLactacao() {
+		return lactacao.get();
+	}
+	
+	public void setLactacao(Lactacao lactacao) {
+		this.lactacao.set(lactacao);
+	}
+	
+	public ObjectProperty<Lactacao> lactacaoProperty(){
+		return lactacao;
 	}
 	
 	public StringProperty numeroNomeAnimalProperty(){

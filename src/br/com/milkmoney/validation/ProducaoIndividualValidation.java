@@ -7,6 +7,7 @@ import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.ProducaoIndividual;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.util.DateUtil;
 
 public class ProducaoIndividualValidation extends Validator {
 	
@@ -23,15 +24,25 @@ public class ProducaoIndividualValidation extends Validator {
 		}
 		
 		if ( !producaoIndividual.getAnimal().getSexo().equals(Sexo.FEMEA) ){
-			throw new ValidationException(CAMPO_OBRIGATORIO, "Somente pode ser registrada a produção de animais fêmeas.");
+			throw new ValidationException(REGRA_NEGOCIO, "Somente pode ser registrada a produção de animais fêmeas.");
 		}
 		
 		if ( producaoIndividual.getData().after(new Date()) ){
 			throw new ValidationException(REGRA_NEGOCIO, "A data do lançamento da produção não pode ser maior que a data atual. Por favor, corrija e tente novamente.");
 		}
+		
+		if ( producaoIndividual.getLactacao() != null ){
+			
+			Date dataFinal = producaoIndividual.getLactacao().getDataFim() != null ? producaoIndividual.getLactacao().getDataFim() : new Date();
+			
+			if ( !(producaoIndividual.getData().compareTo(producaoIndividual.getLactacao().getDataInicio()) >= 0 &&
+					producaoIndividual.getData().compareTo(dataFinal) <= 0) ){
+				throw new ValidationException(REGRA_NEGOCIO, "O lançamento da produção deve ocorrer dentro do período de lactação do animal. "
+						+ "Verifique se o animal selecionado está em lactação no dia " + DateUtil.format(producaoIndividual.getData()) + ".");
+			}
+			
+		}
 		 
-		
-		
 	}
 
 	public static void validateAnimal(Animal animal, Boolean animalEstaEmLactacao) {

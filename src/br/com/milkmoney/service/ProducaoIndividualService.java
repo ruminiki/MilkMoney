@@ -26,6 +26,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 
 	@Autowired private ProducaoIndividualDao dao;
 	@Autowired private PrecoLeiteService precoLeiteService;
+	@Autowired private LactacaoService lactacaoService;
 	@Autowired private AnimalDao animalDao;	
 	
 
@@ -45,9 +46,14 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 			
 			return dao.persist(atualizaValor(producaoIndividual));	
 		}else{
+			//quando a produção é cadastrada pela tela de registro da produção diária do rebanho, não há a seleção da lactação
+			//por isso a seleção é feita aqui
+			if ( entity.getLactacao() == null ){
+				entity.setLactacao(lactacaoService.findLactacaoAnimal(entity.getAnimal(), entity.getData()));
+				ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), entity.getLactacao() != null);
+			}
 			
 			ProducaoIndividualValidation.validate(entity);
-			ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.isInLactacao(entity.getData(), entity.getAnimal()));
 			return dao.persist(entity);
 			
 		}
