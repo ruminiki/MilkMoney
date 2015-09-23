@@ -130,7 +130,10 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 		
+		super.initialize(coberturaFormController);
+		
 		handleBuscarTodasAsFemeas();
+		
 		tableAnimais.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> animalSelectHandler());
 		
 		if ( tableAnimais.getItems().size() > 0 ) {
@@ -204,9 +207,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 				tableAnimais.setItems(search.doSearch(newValue));
 			});
 		}
-		
-		
-		super.initialize(coberturaFormController);
 		
 	}
 	

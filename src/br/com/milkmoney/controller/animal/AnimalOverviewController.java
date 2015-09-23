@@ -6,11 +6,14 @@ import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
 
@@ -31,11 +34,14 @@ import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.VendaAnimal;
+import br.com.milkmoney.service.AnimalService;
+import br.com.milkmoney.service.FichaAnimalService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.MorteAnimalService;
 import br.com.milkmoney.service.RelatorioService;
@@ -53,6 +59,7 @@ import br.com.milkmoney.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milkmoney.service.searchers.SearchFemeasSecas;
 import br.com.milkmoney.service.searchers.SearchMachos;
 import br.com.milkmoney.service.searchers.SearchReprodutoresAtivos;
+import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.MorteAnimalValidation;
 import br.com.milkmoney.validation.VendaAnimalValidation;
 
@@ -66,17 +73,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<String, String> sexoColumn;
 	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, Long> idadeColumn;
-	@FXML private TableColumn<Animal, Date> dataUltimoPartoColumn;
-	@FXML private TableColumn<Animal, String> diasUltimoPartoColumn;
-	@FXML private TableColumn<Animal, Date> dataUltimaCoberturaColumn;
-	@FXML private TableColumn<Animal, String> diasUltimaCoberturaColumn;
-	@FXML private TableColumn<Animal, Date> dataPrevisaoProximoPartoColumn;
-	@FXML private TableColumn<Animal, String> situacaoUltimaCoberturaColumn;
-	@FXML private TableColumn<Animal, Date> dataPrevisaoEncerramentoLactacaoColumn;
+	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
+						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto;
+	@FXML private VBox vBoxChart;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
 	@Autowired private VendaAnimalService vendaAnimalService;
+	@Autowired private FichaAnimalService fichaAnimalService;
 	@Autowired private RelatorioService relatorioService;
 	
 	//controllers
@@ -94,6 +98,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
 	private MenuItem fichaAnimalMenuItem                  = new MenuItem("Ficha Animal");
 	
+	private PieChart chart;
+	
 	@FXML
 	public void initialize() {
 		
@@ -104,16 +110,13 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
-		dataUltimoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimoParto"));
-		diasUltimoPartoColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimoParto"));
-		dataUltimaCoberturaColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataUltimaCobertura"));
-		diasUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("diasUltimaCobertura"));
-		dataPrevisaoEncerramentoLactacaoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoEncerramentoLactacao"));
-		dataPrevisaoProximoPartoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataPrevisaoProximoParto"));
-		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
+		chart = new PieChart(((AnimalService)service).getChartData());
+	    chart.setTitle("Situação Animais Rebanho");
+        vBoxChart.getChildren().add(chart);
+       
 		registrarMorteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
@@ -144,6 +147,27 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), 
 				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
+		
+	}
+	
+	@Override
+	protected void selectRowTableHandler(Animal animal) {
+		super.selectRowTableHandler(animal);
+		if ( animal != null ){
+			FichaAnimal fichaAnimal = fichaAnimalService.generateFichaAnimal(animal);
+			
+			if ( fichaAnimal != null ){
+				lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());
+				lblDataUltimaCobertura.setText(fichaAnimal.getDataUltimaCobertura() != null ? DateUtil.format(fichaAnimal.getDataUltimaCobertura()) : "--"); 
+				lblProximoServico.setText(fichaAnimal.getProximoServico() != null ? DateUtil.format(fichaAnimal.getProximoServico()) : "--"); 
+				lblNumeroPartos.setText(""+fichaAnimal.getNumeroPartos() + " - "  + fichaAnimal.getNumeroCriasFemea() + "F" + " - " + fichaAnimal.getNumeroCriasMacho() + "M"); 
+				lblIdadePrimeiroParto.setText(""+fichaAnimal.getIdadePrimeiroParto());
+				lblIdadePrimeiraCobertura.setText(fichaAnimal.getIdadePrimeiraCobertura()); 
+				lblDiasEmLactacao.setText(fichaAnimal.getDiasEmLactacao()); 
+				lblDiasEmAberto.setText(fichaAnimal.getDiasEmAberto()); 
+				lblIntervaloPrimeiroParto.setText(fichaAnimal.getIntervaloEntrePartos());
+			}
+		}
 		
 	}
 	

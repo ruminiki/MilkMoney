@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +19,7 @@ import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.Parto;
+import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.AnimalValidation;
 
@@ -87,6 +89,14 @@ public class AnimalService implements IService<Integer, Animal>{
 		return dao.isInLactacao(data, animal);
 	}
 
+	public ObservableList<PieChart.Data> getChartData(){
+		ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                new PieChart.Data(SituacaoAnimal.EM_LACTACAO, dao.countAllFemeasEmLactacao().doubleValue()),
+                new PieChart.Data(SituacaoAnimal.SECO, dao.countAllFemeasSecas().doubleValue()));
+        return pieChartData;
+	}
+	
 	public int getIdadePrimeiroParto(Animal animal) {
 		Parto parto = partoDao.findFirstParto(animal);
 		int idadePrimeiroParto = 0;

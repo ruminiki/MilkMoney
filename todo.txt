@@ -5,7 +5,6 @@
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
 - parcelar lançamentos
-- atualizar a lista de animais ao mexer nas coberturas
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 --indicadores

@@ -425,5 +425,4 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return (BigInteger) query.getSingleResult();
 	}
 
-
 }

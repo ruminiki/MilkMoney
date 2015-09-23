@@ -20,7 +20,7 @@
             </HBox>
             <HBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" HBox.hgrow="SOMETIMES">
+                  <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" HBox.hgrow="ALWAYS">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
@@ -31,7 +31,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TableView fx:id="tableLactacoes" focusTraversable="false">
+                        <TableView fx:id="tableLactacoes" focusTraversable="false" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="numeroLactacaoColumn" maxWidth="25.0" minWidth="25.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº" />
                             <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
@@ -47,7 +47,7 @@
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox spacing="5.0" HBox.hgrow="SOMETIMES">
+                  <VBox minWidth="412.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>
@@ -62,45 +62,13 @@
                         <TableView fx:id="tableEventos" focusTraversable="false">
                           <columns>
                             <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                            <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" text="Evento" />
+                            <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="290.0" text="Evento" />
                           </columns>
                         </TableView>
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <VBox spacing="3.0">
-               <children>
-                  <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-                     <children>
-                        <Label text="INDICADORES">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <TableView fx:id="tableFichaAnimal" focusTraversable="false" prefHeight="220.0">
-                    <columns>
-                      <TableColumn fx:id="ultimaCoberturaColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Ult. Cob." />
-                      <TableColumn fx:id="numeroServicosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº Serv." />
-                        <TableColumn fx:id="proximoServicoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Próx. Serv." />
-                        <TableColumn fx:id="numeroPartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº Partos" />
-                        <TableColumn prefWidth="75.0" text="Crias">
-                           <columns>
-                              <TableColumn fx:id="criasFemeasColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Fêmeas" />
-                              <TableColumn fx:id="criasMachosColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Machos" />
-                           </columns>
-                        </TableColumn>
-                        <TableColumn fx:id="diasEmAbertoColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DEA" />
-                        <TableColumn fx:id="diasEmLactacaoAnimalColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="DEL" />
-                        <TableColumn fx:id="intervaloEntrePartosColumn" maxWidth="85.0" minWidth="85.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="IEP" />
-                        <TableColumn fx:id="idadePrimeiroPartoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade 1º Parto" />
-                        <TableColumn fx:id="idadePrimeiraCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade 1º Cob." />
-                    </columns>
-                  </TableView>
-               </children>
-            </VBox>
          </children>
       </VBox>
    </children>

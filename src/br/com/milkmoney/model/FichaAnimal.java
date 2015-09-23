@@ -122,7 +122,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getDiasEmAberto() {
-		return String.valueOf(diasEmAberto + "d / " + BigDecimal.valueOf(diasEmAberto).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
+		return String.valueOf(diasEmAberto + "d - " + BigDecimal.valueOf(diasEmAberto).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
 	}
 
 	public void setDiasEmAberto(int diasEmAberto) {
@@ -130,7 +130,7 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	}
 
 	public String getDiasEmLactacao() {
-		return String.valueOf(diasEmLactacao + "d / " + BigDecimal.valueOf(diasEmLactacao).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
+		return String.valueOf(diasEmLactacao + "d - " + BigDecimal.valueOf(diasEmLactacao).divide(BigDecimal.valueOf(30), 1, RoundingMode.HALF_EVEN) + "m");
 	}
 
 	public void setDiasEmLactacao(int diasEmLactacao) {

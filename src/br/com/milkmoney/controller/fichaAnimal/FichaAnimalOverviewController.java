@@ -1,6 +1,5 @@
 package br.com.milkmoney.controller.fichaAnimal;
 
-import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -41,20 +40,6 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	
 	@FXML private Label lblHeader;
 	
-	@FXML private TableView<FichaAnimal> tableFichaAnimal;
-	@FXML private TableColumn<FichaAnimal, String> ultimaCoberturaColumn;
-	@FXML private TableColumn<FichaAnimal, String> numeroServicosColumn;
-	@FXML private TableColumn<FichaAnimal, String> proximoServicoColumn;
-	@FXML private TableColumn<FichaAnimal, String> numeroPartosColumn;
-	@FXML private TableColumn<FichaAnimal, String> criasFemeasColumn;
-	@FXML private TableColumn<FichaAnimal, String> criasMachosColumn;
-	@FXML private TableColumn<FichaAnimal, String> diasEmAbertoColumn;
-	@FXML private TableColumn<FichaAnimal, String> diasEmLactacaoAnimalColumn;
-	@FXML private TableColumn<FichaAnimal, String> intervaloEntrePartosColumn;
-	@FXML private TableColumn<FichaAnimal, String> idadePrimeiroPartoColumn;
-	@FXML private TableColumn<FichaAnimal, String> idadePrimeiraCoberturaColumn;
-	
-	
 	@Autowired private FichaAnimalService fichaAnimalService;
 	@Autowired private LactacaoService lactacaoService;
 	@Autowired private IndicadorService indicadorService;
@@ -93,21 +78,6 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
 		
 		lblHeader.setText("FICHA ANIMAL " + animal.toString());
-		
-		//tabela indicadores
-		ultimaCoberturaColumn.setCellFactory(new TableCellDateFactory<FichaAnimal,String>("dataUltimaCobertura"));
-		numeroServicosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroServicosAtePrenhes"));
-		proximoServicoColumn.setCellFactory(new TableCellDateFactory<FichaAnimal,String>("proximoServico"));
-		numeroPartosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroPartos"));
-		criasFemeasColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroCriasFemea"));
-		criasMachosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("numeroCriasMacho"));
-		diasEmAbertoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("diasEmAberto"));
-		diasEmLactacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("diasEmLactacao"));
-		intervaloEntrePartosColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("intervaloEntrePartos"));
-		idadePrimeiroPartoColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("idadePrimeiroParto"));
-		idadePrimeiraCoberturaColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("idadePrimeiraCobertura"));
-		
-		tableFichaAnimal.setItems(FXCollections.observableArrayList(fichaAnimalService.generateFichaAnimal(animal)));
 		
 	}
 	
