@@ -24,7 +24,6 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
-import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
@@ -33,7 +32,6 @@ import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.Raca;
@@ -74,7 +72,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, Long> idadeColumn;
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
-						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto;
+						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar;
 	@FXML private VBox vBoxChart;
 	
 	//services
@@ -88,15 +86,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private AnimalReducedOverviewController animalReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
-	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private RootLayoutController rootLayoutController;
 	
 	private MenuItem registrarMorteMenuItem               = new MenuItem();
 	private MenuItem registrarVendaMenuItem               = new MenuItem();
-	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
-	private MenuItem fichaAnimalMenuItem                  = new MenuItem("Ficha Animal");
 	
 	private PieChart chart;
 	
@@ -131,22 +126,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		registroProducaoIndividualMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleOpenMarcacoesLeiteAnimal();
-		    }
-		});
-		
-		fichaAnimalMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleOpenFichaAnimal();
-		    }
-		});
-		
 		getContextMenu().getItems().addAll(new SeparatorMenuItem(), 
-				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
+				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem());
 		
 	}
 	
@@ -166,6 +147,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				lblDiasEmLactacao.setText(fichaAnimal.getDiasEmLactacao()); 
 				lblDiasEmAberto.setText(fichaAnimal.getDiasEmAberto()); 
 				lblIntervaloPrimeiroParto.setText(fichaAnimal.getIntervaloEntrePartos());
+				lblDataSecar.setText(animal.getDataPrevisaoEncerramentoLactacao() != null ? DateUtil.format(animal.getDataPrevisaoEncerramentoLactacao()) : "--");
 			}
 		}
 		
@@ -175,7 +157,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	protected void handleRightClick() {
 		super.handleRightClick();
 		
-		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
 		registrarVendaMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Registro Venda" : "Registrar Venda");
 	}
@@ -196,18 +177,31 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		super.setService(service);
 	}
 	
-	private void handleOpenMarcacoesLeiteAnimal(){
+	@FXML
+	private void handleOpenProducaoAnimal(){
 		
-		producaoIndividualOverviewController.setAnimal(getObject());
-		producaoIndividualOverviewController.showForm();
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
+				producaoIndividualOverviewController.setAnimal(getObject());
+				producaoIndividualOverviewController.showForm();
+			}else{
+				CustomAlert.mensagemInfo("Somente podem ter registro de produção, animais fêmeas. "
+						+ "Por favor, selecione outro animal e tente novamente.");
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
 		
 	}
 	
+	@FXML
 	private void handleOpenFichaAnimal(){
-		
-		fichaAnimalOverviewController.setAnimal(getObject());
-		fichaAnimalOverviewController.showForm();
-		
+		if ( table.getSelectionModel().getSelectedItem() != null ){
+			fichaAnimalOverviewController.setAnimal(getObject());
+			fichaAnimalOverviewController.showForm();
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
 	}
 	
 	private void handleDesfazerOuRegistrarMorte(){
@@ -267,13 +261,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}
 		
 	};
-	@FXML
-	private void handleCoberturas(){
-		coberturaOverviewController.setObject(new Cobertura());
-		coberturaOverviewController.showForm();
-		refreshTableOverview();
-	};
-	
 	
 	//-------------FILTRO RÁPIDO----------------------------------
 	

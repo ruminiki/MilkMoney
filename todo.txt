@@ -10,6 +10,9 @@
 --indicadores
 - período de serviço?? definir
 
+--Relatórios
+- animais para secar
+
 - está permitindo deletar animal sem remover o parto.
 - não pode registrar cobertura do animal após a data de sua venda ou morte;
 - três casas decimais valor do leite

@@ -75,13 +75,52 @@
                   </TableView>
                   <VBox maxWidth="350.0" minWidth="350.0" prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
                      <children>
+                        <HBox VBox.vgrow="NEVER">
+                           <children>
+                              <MenuBar HBox.hgrow="ALWAYS">
+                                <menus>
+                                  <Menu mnemonicParsing="false" text="Filtro Animais">
+                                    <items>
+                                          <MenuItem mnemonicParsing="false" onAction="#clearFilter" text="Todos" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeas" text="Fêmeas" />
+                                      <MenuItem mnemonicParsing="false" onAction="#handleFindMachos" text="Machos" />
+                                          <SeparatorMenuItem mnemonicParsing="false" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasEmLactacao" text="Em Lactação" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasSecas" text="Secas" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindAnimaisVendidos" text="Vendidos" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindAnimaisMortos" text="Mortos" />
+                                          <SeparatorMenuItem mnemonicParsing="false" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasCobertas" text="Cobertas" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" text="Não Cobertas" />
+                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="Para Secar" />
+                                    </items>
+                                  </Menu>
+                                    <Menu mnemonicParsing="false" text="Opções">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />
+                                      </items>
+                                    </Menu>
+                                </menus>
+                              </MenuBar>
+                              <VBox alignment="CENTER" spacing="3.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="3.0" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="3.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="3.0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                         <VBox fx:id="vBoxChart" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
                         <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                            <children>
                               <Label text="Ficha Animal" />
                            </children>
                         </HBox>
-                        <VBox maxHeight="200.0" prefHeight="200.0" prefWidth="100.0">
+                        <VBox maxHeight="250.0" prefHeight="250.0" prefWidth="100.0" spacing="3.0">
                            <children>
                               <GridPane>
                                 <columnConstraints>
@@ -90,6 +129,7 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -101,145 +141,79 @@
                                 </rowConstraints>
                                  <children>
                                     <Label text="Data Ultima Cobertura: " />
-                                    <Label text="Número de Serviços: " GridPane.rowIndex="1" />
-                                    <Label text="Data Próximo Serviço: " GridPane.rowIndex="2" />
-                                    <Label text="Número de Partos: " GridPane.rowIndex="3" />
-                                    <Label text="Idade Primeiro Parto: " GridPane.rowIndex="4" />
-                                    <Label text="Idade Primeira Cobertura: " GridPane.rowIndex="5" />
-                                    <Label text="Dias em Lactação (DEL): " GridPane.rowIndex="6" />
-                                    <Label text="Dias em Aberto (DEA): " GridPane.rowIndex="7" />
-                                    <Label text="Intervalo Entre Partos (IEP): " GridPane.rowIndex="8" />
+                                    <Label text="Número de Serviços: " GridPane.rowIndex="2" />
+                                    <Label text="Data Próximo Serviço: " GridPane.rowIndex="3" />
+                                    <Label text="Número de Partos: " GridPane.rowIndex="4" />
+                                    <Label text="Idade Primeiro Parto: " GridPane.rowIndex="5" />
+                                    <Label text="Idade Primeira Cobertura: " GridPane.rowIndex="6" />
+                                    <Label text="Dias em Lactação (DEL): " GridPane.rowIndex="7" />
+                                    <Label text="Dias em Aberto (DEA): " GridPane.rowIndex="8" />
+                                    <Label text="Intervalo Entre Partos (IEP): " GridPane.rowIndex="9" />
                                     <Label fx:id="lblDataUltimaCobertura" text="--" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblNumeroServicos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <Label fx:id="lblNumeroServicos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblProximoServico" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <Label fx:id="lblProximoServico" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblNumeroPartos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <Label fx:id="lblNumeroPartos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblIdadePrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                    <Label fx:id="lblIdadePrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblIdadePrimeiraCobertura" text="--" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                    <Label fx:id="lblIdadePrimeiraCobertura" text="--" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblDiasEmLactacao" text="--" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                    <Label fx:id="lblDiasEmLactacao" text="--" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblDiasEmAberto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                    <Label fx:id="lblDiasEmAberto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="lblIntervaloPrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                    <Label fx:id="lblIntervaloPrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label text="Secar Em: " GridPane.rowIndex="1" />
+                                    <Label fx:id="lblDataSecar" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </GridPane>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#handleOpenProducaoAnimal" text="Produção Animal" />
+                                    <Button mnemonicParsing="false" onAction="#handleOpenFichaAnimal" text="Ficha Animal" />
+                                 </children>
+                              </HBox>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="3.0" />
+                           </VBox.margin>
                         </VBox>
                      </children></VBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" maxHeight="60.0" minHeight="60.0" spacing="3.0" style="-fx-border-color: #CCC;" VBox.vgrow="NEVER">
-               <children>
-                  <VBox alignment="CENTER" spacing="3.0">
-                     <children>
-                        <Label text="Filtros" />
-                        <HBox alignment="CENTER_LEFT" spacing="3.0">
-                           <children>
-                              <Button maxHeight="30.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" text="Todos" />
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeas" prefHeight="30.0" text="Fêmeas">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindMachos" prefHeight="30.0" text="Machos">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasEmLactacao" prefHeight="30.0" text="Em Lactação">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasSecas" text="Secas">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindAnimaisVendidos" text="Vendidos">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindAnimaisMortos" text="Mortos">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Separator orientation="VERTICAL" prefHeight="200.0" />
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasCobertas" text="Cobertas">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" text="Não Cobertas">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                              <Button maxHeight="0.0" maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="Secar">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox alignment="CENTER" spacing="3.0">
-                     <children>
-                        <Label text="Opções" />
-                        <HBox alignment="CENTER_LEFT" spacing="3.0">
-                           <children>
-                              <Button maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#handleCoberturas" text="Coberturas">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <Button maxWidth="105.0" minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir">
-                                 <cursor>
-                                    <Cursor fx:constant="DEFAULT" />
-                                 </cursor>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
                </children>
             </HBox>
          </children>
