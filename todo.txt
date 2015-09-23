@@ -5,7 +5,11 @@
 - quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
 
 - parcelar lançamentos
-- associar a produção individual a uma lactação - fazer o delete cascade
+- atualizar a lista de animais ao mexer nas coberturas
+- permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
+
+--indicadores
+- período de serviço?? definir
 
 - está permitindo deletar animal sem remover o parto.
 - não pode registrar cobertura do animal após a data de sua venda ou morte;

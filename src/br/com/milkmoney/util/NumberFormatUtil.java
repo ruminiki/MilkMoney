@@ -50,4 +50,18 @@ public class NumberFormatUtil {
 		return number == null ? df.format(BigDecimal.ZERO) : df.format(number);
 	}
 
+	public static BigDecimal intFromString(String value) {
+		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+		df.setMinimumFractionDigits(0);
+		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+		symbols.setDecimalSeparator(',');
+		symbols.setGroupingSeparator('.');
+		df.setDecimalFormatSymbols(symbols);
+		try {
+			return new BigDecimal(df.parse(value).doubleValue()).setScale(0, BigDecimal.ROUND_HALF_EVEN);
+		} catch (ParseException | NullPointerException e) {
+			return BigDecimal.ZERO;
+		}
+	}
+
 }

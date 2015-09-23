@@ -20,6 +20,12 @@ public class LactacaoValidation extends Validator {
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de início da lactação não pode ser maior que a data atual.");
 		}
 		
+		if ( lactacao.getMotivoEncerramentoLactacao() != null ){
+			if ( lactacao.getDataFim() == null ){
+				throw new ValidationException(CAMPO_OBRIGATORIO, "É necessário informar a data de encerramento da lactação. Por favor, tente novamente.");
+			}
+		}
+		
 		if ( lactacao.getDataInicio().after(lactacao.getDataFim()) || 
 				DateUtil.isSameDate(lactacao.getDataInicio(), lactacao.getDataFim()) ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de encerramento deve ser maior que a data de início da lactação.");
@@ -37,7 +43,7 @@ public class LactacaoValidation extends Validator {
 		if ( lactacao.getMotivoEncerramentoLactacao() != null &&
 				lactacao.getMotivoEncerramentoLactacao().equals(MotivoEncerramentoLactacao.PREPARACAO_PARTO) ){
 			if ( isFemeaCoberta != null && !isFemeaCoberta.apply(lactacao.getAnimal()) ){
-				throw new ValidationException(REGRA_NEGOCIO, "Quando o motivo do encerramento for, previsão para o parto é necessário "
+				throw new ValidationException(REGRA_NEGOCIO, "Quando o motivo do encerramento for previsão para o parto é necessário "
 						+ "que a fêmea selecionada possua cobertura cadastrada em aberto (INDEFINIDA ou PRENHA). "
 						+ "Por favor, cadastre a cobertura para então ser possível fazer o encerramento da lactação.");
 			}else{

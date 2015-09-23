@@ -7,6 +7,7 @@ import java.util.List;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -179,6 +180,23 @@ public class CoberturaValidation extends Validator {
 						+ "a última cobertura do animal foi no dia " + DateUtil.format(lastCobertura.getData()) + " e o último parto no dia " + DateUtil.format(lastCobertura.getParto().getData()) + ". "
 								+ "É necessário que tenha um intervalo de pelo menos 21 dias entre uma cobertura e outra e um parto e uma cobertura.");
 			}
+		}
+		
+	}
+	
+	public static void validaRegistroPartoCobertura(Cobertura cobertura, Lactacao lactacao){
+		if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PARIDA + "|" + SituacaoCobertura.VAZIA) ){
+			throw new ValidationException(REGRA_NEGOCIO, "A cobertura selecionada tem situação igual a " + cobertura.getSituacaoCobertura() + 
+					" não sendo possível registrar o parto.");
+		}
+		
+		if ( lactacao != null ){
+			
+			if ( lactacao.getDataFim() == null ){
+				throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. Por favor, registre o encerramento "
+						+ "para então registrar o novo parto e iniciar uma nova lactação.");	
+			}
+			
 		}
 		
 	}

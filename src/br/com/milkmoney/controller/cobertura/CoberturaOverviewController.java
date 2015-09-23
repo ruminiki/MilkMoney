@@ -1,11 +1,13 @@
 package br.com.milkmoney.controller.cobertura;
 
 import java.util.Date;
+import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -14,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
@@ -30,6 +33,7 @@ import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyp
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
+import br.com.milkmoney.controller.lactacao.LactacaoFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
@@ -39,11 +43,14 @@ import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
+import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.IService;
+import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ParametroService;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.searchers.Search;
@@ -53,6 +60,7 @@ import br.com.milkmoney.service.searchers.SearchFemeasByNumeroNome;
 import br.com.milkmoney.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasAposXDiasAposParto;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasXDiasAposParto;
+import br.com.milkmoney.validation.CoberturaValidation;
 import br.com.milkmoney.validation.Validator;
 
 
@@ -92,16 +100,19 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private RootLayoutController             rootLayoutController;
 	@Autowired private AnimalFormController             animalFormController;
+	@Autowired private LactacaoFormController           lactacaoFormController;
 	@Autowired private AnimalService                    animalService;
 	@Autowired private ParametroService                 parametroService;
 	@Autowired private RelatorioService					relatorioService;
+	@Autowired private LactacaoService                  lactacaoService;
 	
 	//menu context tabela cobertura
 	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
 	private MenuItem    confirmarPrenhesMenuItem        = new MenuItem("Confirmação de Prenhes");
 	private MenuItem    fichaAnimalMenuItem             = new MenuItem("Ficha Animal");
 	private MenuItem    editarAnimalMenuItem            = new MenuItem("Editar Animal");
-	private ContextMenu menuTabelaAnimais               = new ContextMenu(editarAnimalMenuItem, fichaAnimalMenuItem);
+	private MenuItem    encerramentoLactacaoMenuItem    = new MenuItem("Encerrar Lactação");
+	private ContextMenu menuTabelaAnimais               = new ContextMenu(editarAnimalMenuItem, encerramentoLactacaoMenuItem, fichaAnimalMenuItem);
 	private Animal                                      femea;
 	
 	@FXML
@@ -141,6 +152,13 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		    }
 		});
 		
+		encerramentoLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	handleDesfazerOuEncerrarLactacao();
+		    }
+		});
+		
 		tableAnimais.setContextMenu(menuTabelaAnimais);
 		
 		dataColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
@@ -153,7 +171,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		dataConfirmacaoColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
 		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("metodoConfirmacaoPrenhes"));
 		
-		super.initialize(coberturaFormController);
+		tableAnimais.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isSecondaryButtonDown()) {
+					encerramentoLactacaoMenuItem.setDisable(femea.getSexo().equals(Sexo.MACHO) || !(femea.getSituacaoAnimal().equals(SituacaoAnimal.SECO) || femea.getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO)));
+					encerramentoLactacaoMenuItem.setText(femea.getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? "Desfazer Encerramento Lactação" : "Encerrar Lactação");
+				}
+			}
+		});
 		
 		registrarPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
@@ -178,6 +204,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 				tableAnimais.setItems(search.doSearch(newValue));
 			});
 		}
+		
+		
+		super.initialize(coberturaFormController);
 		
 	}
 	
@@ -211,6 +240,19 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		table.setItems(data);
 		table.layout();
 		updateLabelNumRegistros();
+	}
+	
+	private void refreshAnimalTableOverview(Animal animal){
+		if ( animal != null ){
+			for (int index = 0; index < tableAnimais.getItems().size(); index++) {
+				Animal a = tableAnimais.getItems().get(index);
+				if (a.getId() == animal.getId()) {
+					tableAnimais.getItems().set(index, animal);
+					tableAnimais.getSelectionModel().select(animal);
+					break;
+				}
+			}
+		}
 	}
 	
 	//sobrescreve o método para carregar o objeto customizado para a tela de cadastro
@@ -333,6 +375,31 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
+	private void handleDesfazerOuEncerrarLactacao(){
+		
+		if ( tableAnimais.getSelectionModel().getSelectedItem() != null ){
+			
+			if ( femea.getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
+			
+				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da última lactação?");
+				if (result.get() == ButtonType.OK) {
+					lactacaoService.desfazerEncerramentoLactacao(femea);
+					refreshAnimalTableOverview(animalService.findById(femea.getId()));
+				}
+				
+			}else{
+				if ( femea.getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
+					lactacaoFormController.setObject(lactacaoService.findUltimaLactacaoAnimal(femea));
+					lactacaoFormController.showForm();
+					refreshAnimalTableOverview(animalService.findById(femea.getId()));
+				}
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		
+	};
+	
 	private void handleRegistrarParto(){
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){
@@ -340,27 +407,26 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			return;
 		}
 		if ( getObject().getParto() == null ){
-			if ( getObject().getSituacaoCobertura().matches(SituacaoCobertura.NAO_CONFIRMADA + "|" + SituacaoCobertura.PRENHA) ){
-				
-				partoFormController.setState(State.CREATE_TO_SELECT);
-				partoFormController.setObject(new Parto(getObject()));
-				partoFormController.showForm();
-				
-				if ( partoFormController.getObject() != null ){
-					getObject().setParto(partoFormController.getObject());
-					((CoberturaService)service).registrarParto(getObject());
-					refreshObjectInTableView.apply(getObject());
-				}	
-				
-			}else{
-				CustomAlert.mensagemAlerta("Regra de Negócio", "A cobertura selecionada tem situação igual a " + getObject().getSituacaoCobertura() + 
-						" não sendo possível registrar o parto.");
-			}
+			
+			CoberturaValidation.validaRegistroPartoCobertura(getObject(), lactacaoService.findUltimaLactacaoAnimal(getObject().getFemea()));
+			
+			partoFormController.setState(State.CREATE_TO_SELECT);
+			partoFormController.setObject(new Parto(getObject()));
+			partoFormController.showForm();
+			
+			if ( partoFormController.getObject() != null ){
+				getObject().setParto(partoFormController.getObject());
+				((CoberturaService)service).registrarParto(getObject());
+				refreshObjectInTableView.apply(getObject());
+				refreshAnimalTableOverview(animalService.findById(femea.getId()));
+			}	
+			
 		}else{
 			
 			partoFormController.setObject(getObject().getParto());
 			partoFormController.showForm();
 			refreshObjectInTableView.apply(getObject());
+			refreshAnimalTableOverview(animalService.findById(femea.getId()));
 			
 		}
 		

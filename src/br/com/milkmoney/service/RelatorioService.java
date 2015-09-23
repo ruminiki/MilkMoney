@@ -89,6 +89,8 @@ public class RelatorioService {
 					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
 					masterReport.getParameterValues().put("ano", Integer.parseInt(param[0].toString()));
+					masterReport.getParameterValues().put("centroCusto", Integer.parseInt(param[1].toString()));
+					masterReport.getParameterValues().put("nomeCentroCusto", param[2]);
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:

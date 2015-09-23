@@ -1,7 +1,6 @@
 package br.com.milkmoney.service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,13 +35,6 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 			if ( p != null ){
 				return true;
 			}
-		}
-		
-		int vacasOrdenhadas = entity.getNumeroVacasOrdenhadas();
-		BigDecimal volumeProduzido = entity.getVolumeProduzido();
-		
-		if ( vacasOrdenhadas > 0 && volumeProduzido.compareTo(BigDecimal.ZERO) > 0 ){
-			entity.setMediaProducao(volumeProduzido.divide(new BigDecimal(vacasOrdenhadas), 2, RoundingMode.HALF_UP));	
 		}
 		
 		PrecoLeite precoLeite = precoLeiteService.findByMesAno(entity.getMes(), entity.getAno());

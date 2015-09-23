@@ -186,13 +186,11 @@ public class MainApp extends Application {
 	        primaryStage = new Stage(StageStyle.DECORATED);
 	        primaryStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(APPLICATION_ICON)));
 	        primaryStage.setTitle("Milk Money");
-	       
+	        
 	        AnchorPane centeredMenu = (AnchorPane) load("view/root/CenteredMenu.fxml");
 	        VBox.setVgrow(centeredMenu, Priority.SOMETIMES);
 	        HBox.setHgrow(centeredMenu, Priority.SOMETIMES);
 	        rootLayout.setCenter(centeredMenu);
-	        
-	        primaryStage.setTitle("Milk Money");
 	        
 	        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {

@@ -2,6 +2,7 @@ package br.com.milkmoney.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,7 +45,6 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 	private StringProperty numeroVacasOrdenhadas = new SimpleStringProperty();
 	private StringProperty volumeProduzido = new SimpleStringProperty();
 	private StringProperty volumeEntregue = new SimpleStringProperty();
-	private StringProperty mediaProducao = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
 	@Transient
 	private BigDecimal valor;
@@ -59,7 +59,6 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 		this.numeroVacasOrdenhadas.set(String.valueOf(numeroVacasOrdenhadas));
 		this.volumeProduzido.set(NumberFormatUtil.decimalFormat(volumeProduzido));
 		this.volumeEntregue.set(NumberFormatUtil.decimalFormat(volumeEntregue));
-		this.mediaProducao.set(NumberFormatUtil.decimalFormat(mediaProducao));
 	}
 	
 	@Temporal(TemporalType.DATE)
@@ -86,7 +85,10 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getVolumeProduzido() {
-		return NumberFormatUtil.fromString(this.volumeProduzido.get());
+		if ( volumeProduzido.get().isEmpty() ){
+			setVolumeProduzido(BigDecimal.ZERO);
+		}
+		return NumberFormatUtil.intFromString(this.volumeProduzido.get());
 	}
 
 	public void setVolumeProduzido(BigDecimal volumeProduzido) {
@@ -97,9 +99,16 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 		return volumeProduzido;
 	}
 	
+	public String getVolumeProduzidoFormatado(){
+		return String.valueOf(NumberFormatUtil.intFormat(getVolumeProduzido()));
+	}
+	
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getVolumeEntregue() {
-		return NumberFormatUtil.fromString(this.volumeEntregue.get());
+		if ( volumeEntregue.get().isEmpty() ){
+			setVolumeEntregue(BigDecimal.ZERO);
+		}
+		return NumberFormatUtil.intFromString(this.volumeEntregue.get());
 	}
 
 	public void setVolumeEntregue(BigDecimal volumeEntregue) {
@@ -109,9 +118,16 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 	public StringProperty volumeEntregueProperty(){
 		return volumeEntregue;
 	}
+	
+	public String getVolumeEntregueFormatado(){
+		return String.valueOf(NumberFormatUtil.intFormat(getVolumeEntregue()));
+	}
 
 	@Access(AccessType.PROPERTY)
 	public int getNumeroVacasOrdenhadas() {
+		if ( numeroVacasOrdenhadas.getValue().isEmpty() ){
+			setNumeroVacasOrdenhadas(0);
+		}
 		return Integer.parseInt(numeroVacasOrdenhadas.getValue());
 	}
 
@@ -136,19 +152,17 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 		return observacao;
 	}
 	
-	@Access(AccessType.PROPERTY)
+	@Transient
 	public BigDecimal getMediaProducao() {
-		return NumberFormatUtil.fromString(this.mediaProducao.get());
+		
+		if ( getNumeroVacasOrdenhadas() > 0 && getVolumeProduzido().compareTo(BigDecimal.ZERO) > 0 ){
+			return getVolumeProduzido().divide(BigDecimal.valueOf(getNumeroVacasOrdenhadas()), RoundingMode.HALF_EVEN);
+		}
+		
+		return BigDecimal.ZERO;
+		
 	}
 
-	public void setMediaProducao(BigDecimal mediaProducao) {
-		this.mediaProducao.set(NumberFormatUtil.decimalFormat(mediaProducao));
-	}
-	
-	public StringProperty mediaProducaoProperty(){
-		return mediaProducao;
-	}
-	
 	@Transient
 	public BigDecimal getValor() {
 		return this.valor == null ? BigDecimal.ZERO : this.valor;

@@ -31,7 +31,6 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 		
 		LactacaoValidation.validate(entity);
 		LactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
-		
 		return dao.persist(entity);
 		
 	}

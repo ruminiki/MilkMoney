@@ -326,8 +326,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 	public BigInteger countAllFemeasSecas() {
 		Object result = entityManager.createNativeQuery("select count(*) from viewAnimaisAtivos a "
-				+ "inner join lactacao lc on (lc.animal = a.id) "
-				+ "WHERE not exists (select 1 from lactacao lc where lc.animal = a.id and lc.dataFim is null)").getSingleResult();
+				+ "WHERE (select lc.dataFim from lactacao lc where lc.animal = a.id order by lc.dataInicio desc limit 1) is not null").getSingleResult();
 		return (BigInteger) result;
 	}
 
@@ -421,7 +420,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 	public BigInteger countDiasLactacao(Animal animal) {
 		Query query = entityManager.createNativeQuery(
-				"select DATEDIFF(current_date(), l.dataInicio) from Lactacao l where l.animal = :animal");
+				"select DATEDIFF(current_date(), l.dataInicio) from Lactacao l where l.animal = :animal order by l.dataInicio desc limit 1");
 		query.setParameter("animal", animal);
 		return (BigInteger) query.getSingleResult();
 	}

@@ -23,7 +23,6 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
-import br.com.milkmoney.controller.lactacao.LactacaoFormController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milkmoney.controller.raca.RacaOverviewController;
@@ -38,7 +37,6 @@ import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.VendaAnimal;
 import br.com.milkmoney.service.IService;
-import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.MorteAnimalService;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
@@ -77,7 +75,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, Date> dataPrevisaoEncerramentoLactacaoColumn;
 	
 	//services
-	@Autowired private LactacaoService lactacaoService;
 	@Autowired private MorteAnimalService morteAnimalService;
 	@Autowired private VendaAnimalService vendaAnimalService;
 	@Autowired private RelatorioService relatorioService;
@@ -87,13 +84,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private AnimalReducedOverviewController animalReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
-	@Autowired private LactacaoFormController lactacaoFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private RootLayoutController rootLayoutController;
 	
-	private MenuItem encerramentoLactacaoMenuItem = new MenuItem("Encerrar Lactação");
 	private MenuItem registrarMorteMenuItem               = new MenuItem();
 	private MenuItem registrarVendaMenuItem               = new MenuItem();
 	private MenuItem registroProducaoIndividualMenuItem   = new MenuItem("Registro Produção Individual");
@@ -118,13 +113,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		situacaoUltimaCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
-		
-		encerramentoLactacaoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleDesfazerOuEncerrarLactacao();
-		    }
-		});
 		
 		registrarMorteMenuItem.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
@@ -154,7 +142,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    }
 		});
 		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), encerramentoLactacaoMenuItem, 
+		getContextMenu().getItems().addAll(new SeparatorMenuItem(), 
 				registrarMorteMenuItem, registrarVendaMenuItem, new SeparatorMenuItem(), registroProducaoIndividualMenuItem, fichaAnimalMenuItem);
 		
 	}
@@ -163,8 +151,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	protected void handleRightClick() {
 		super.handleRightClick();
 		
-		encerramentoLactacaoMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO) || !(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) || getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO)));
-		encerramentoLactacaoMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ? "Desfazer Encerramento Lactação" : "Encerrar Lactação");
 		registroProducaoIndividualMenuItem.setDisable(getObject().getSexo().equals(Sexo.MACHO));
 		registrarMorteMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
 		registrarVendaMenuItem.setText(getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Registro Venda" : "Registrar Venda");
@@ -199,31 +185,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		fichaAnimalOverviewController.showForm();
 		
 	}
-	
-	private void handleDesfazerOuEncerrarLactacao(){
-		
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
-			
-				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da última lactação?");
-				if (result.get() == ButtonType.OK) {
-					lactacaoService.desfazerEncerramentoLactacao(getObject());
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
-				
-			}else{
-				if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.EM_LACTACAO) ){
-					lactacaoFormController.setObject(lactacaoService.findUltimaLactacaoAnimal(getObject()));
-					lactacaoFormController.showForm();
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
-			}
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
-		}
-		
-	};
 	
 	private void handleDesfazerOuRegistrarMorte(){
 		
