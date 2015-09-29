@@ -70,6 +70,7 @@
                   <ToggleButton fx:id="tbDez" maxWidth="38.0" minHeight="30.0" minWidth="38.0" mnemonicParsing="false" text="Dez" HBox.hgrow="SOMETIMES" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#imprimir" text="Imprimir" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar">
                      <HBox.margin>
@@ -79,9 +80,9 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-border-width: 0;">
                      <items>
-                        <VBox prefHeight="150.0">
+                        <VBox>
                            <children>
                               <TableView fx:id="tableReceitas" cacheShape="false" focusTraversable="false" prefHeight="150.0" VBox.vgrow="SOMETIMES">
                                  <columns>
@@ -142,8 +143,11 @@
                            </children>
                         </VBox>
                      </items>
+                     <padding>
+                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                     </padding>
                   </SplitPane>
-                  <VBox minWidth="320.0" spacing="3.0" style="-fx-border-color: #CCC;" HBox.hgrow="SOMETIMES">
+                  <VBox minWidth="320.0" spacing="3.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <VBox fx:id="vbChart" minHeight="200.0" VBox.vgrow="SOMETIMES" />
                         <Separator prefWidth="200.0" />

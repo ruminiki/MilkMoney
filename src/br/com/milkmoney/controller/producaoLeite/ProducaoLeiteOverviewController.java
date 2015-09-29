@@ -8,12 +8,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -47,10 +48,7 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	@FXML private TableColumn<ProducaoLeite, String> mediaProducaoColumn;
 	@FXML private TableColumn<ProducaoLeite, String> valorColumn;
 	@FXML private TableColumn<ProducaoLeite, String> observacaoColumn;
-	
-	@FXML private ComboBox<String> inputMesReferencia;
-	@FXML private Button btnIncrease;
-	@FXML private Button btnDecrease;
+	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez, tbReceita, tbDespesa;
 	
 	@FXML private Label lblTotalEntregue;
 	@FXML private Label lblTotalProduzido;
@@ -70,6 +68,7 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
 	
 	private ObservableList<String> meses = Util.generateListMonths();
+	private ToggleGroup groupMes  = new ToggleGroup();
 	
 	@FXML
 	public void initialize() {
@@ -107,14 +106,17 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 			}
 		});
 
-		inputMesReferencia.setItems(meses);
-		inputMesReferencia.getSelectionModel().select(selectedMesReferencia-1);
-		inputMesReferencia.valueProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener(newValue));
+		groupMes.getToggles().clear();
+		groupMes.getToggles().addAll(tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez);
+		groupMes.selectedToggleProperty().addListener((observable, oldValue, newValue) -> changeMesReferenciaListener( newValue ));
+		groupMes.getToggles().get(selectedMesReferencia - 1).setSelected(true);
 		
 		super.service = this.service;
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		super.initialize((ProducaoLeiteFormController)MainApp.getBean(ProducaoLeiteFormController.class));
 		this.resume();
+		
+		
 		
 	}
 	
@@ -155,11 +157,20 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	 * Ao alterar o mês de referência carrega o respectivo calendário de entrega.
 	 * @param newValue
 	 */
-	private void changeMesReferenciaListener(String newValue) {
-		selectedMesReferencia = meses.indexOf(newValue) + 1;
+	private void changeMesReferenciaListener(Toggle newValue) {
+		
+		int index = 1;
+		for ( Toggle t : groupMes.getToggles() ){
+			if ( t.isSelected() ){
+				selectedMesReferencia = index;
+				break;
+			}
+			index ++;
+		}
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		refreshTableOverview();
 		this.resume();
+		
 	}    
 	
 	@Override

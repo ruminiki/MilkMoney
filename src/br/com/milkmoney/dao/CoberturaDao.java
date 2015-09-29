@@ -34,6 +34,25 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<Cobertura> defaultSearch(String param, Animal animal) {
+		
+		Query query = entityManager.createQuery(
+				"select c from Cobertura c "
+				+ "left join c.touroMontaNatural t "
+				+ "left join c.touroInseminacaoArtificial s "
+				+ "WHERE (c.situacaoCobertura like :param or "
+				+ "t.numero like :param or "
+				+ "t.nome like :param or "
+				+ "s.nome like :param or "
+				+ "s.codigo like :param or "
+				+ "c.tipoCobertura like :param) and c.femea = :animal order by c.data desc ");
+		query.setParameter("param", '%' + param + '%');
+		query.setParameter("animal", animal);
+		
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<Cobertura> findByAnimal(Animal femea) {
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea order by c.data desc");
 		query.setParameter("femea", femea);

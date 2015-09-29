@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="438.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="498.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController">
    <children>
       <VBox prefHeight="521.0" prefWidth="816.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -35,7 +35,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TableView fx:id="tableLactacoes" focusTraversable="false">
+                        <TableView fx:id="tableLactacoes" focusTraversable="false" maxHeight="350.0">
                                 <columns>
                               <TableColumn fx:id="numeroLactacaoColumn" maxWidth="25.0" minWidth="25.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº" />
                                   <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
@@ -79,12 +79,11 @@
                               <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Nova Marcação" />
                               <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                               <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
-                              <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="vBoxChart" prefHeight="200.0" prefWidth="100.0" spacing="5.0" style="-fx-border-color: ;" HBox.hgrow="SOMETIMES">
+                  <VBox fx:id="vBoxChart" prefHeight="453.0" prefWidth="537.0" spacing="5.0" style="-fx-border-color: ;" HBox.hgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>

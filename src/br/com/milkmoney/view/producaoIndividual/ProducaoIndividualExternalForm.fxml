@@ -74,7 +74,6 @@
                      </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#handleDelete" text="Remover" />
-                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
                </children>
                <VBox.margin>
                   <Insets right="5.0" top="5.0" />

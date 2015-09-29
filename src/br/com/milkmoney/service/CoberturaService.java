@@ -130,6 +130,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 
+	public ObservableList<Cobertura> defaultSearch(String param, Animal animal) {
+		return FXCollections.observableArrayList(dao.defaultSearch(param, animal));
+	}
+	
 	@Override
 	public void validate(Cobertura cobertura) {
 		CoberturaValidation.validate(cobertura);

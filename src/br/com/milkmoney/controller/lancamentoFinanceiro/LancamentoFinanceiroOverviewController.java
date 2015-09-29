@@ -2,6 +2,7 @@ package br.com.milkmoney.controller.lancamentoFinanceiro;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,24 +26,28 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellTipoLancamentoFinanceiroFactory;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
 import br.com.milkmoney.service.LancamentoFinanceiroService;
+import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
+import br.com.milkmoney.util.Util;
 
 
 @Controller
@@ -80,6 +85,7 @@ public class LancamentoFinanceiroOverviewController {
 	@FXML private TableColumn<SaldoCategoriaDespesa, String> saldoColumn;
 	@FXML private TableColumn<SaldoCategoriaDespesa, String> percentualColumn;
 	
+	@Autowired private RelatorioService relatorioService;
 	@Autowired private LancamentoFinanceiroService service;
 	@Autowired private LancamentoFinanceiroFormController formController;
 	
@@ -88,9 +94,9 @@ public class LancamentoFinanceiroOverviewController {
 
 	private ToggleGroup groupMes  = new ToggleGroup();
 	
-	private final CategoryAxis              yAxis     = new CategoryAxis();
-    private final NumberAxis                xAxis     = new NumberAxis();
-	private final BarChart<String, Number>  barChart  = new BarChart<>(yAxis,xAxis);
+	private final CategoryAxis              xAxis     = new CategoryAxis();
+    private final NumberAxis                yAxis     = new NumberAxis();
+	private final BarChart<String, Number>  barChart  = new BarChart<>(xAxis,yAxis);
 	
 	private ContextMenu contextMenu = new ContextMenu();
 	
@@ -131,13 +137,13 @@ public class LancamentoFinanceiroOverviewController {
 		groupMes.getToggles().get(selectedMes - 1).setSelected(true);
 		
 		lblAno.setText(String.valueOf(selectedAno));
-		xAxis.setCacheShape(true);
-		yAxis.setCenterShape(true);
+		
         barChart.setTitle("Receitas x Despesas");
         barChart.setLegendVisible(false);
-        VBox.setVgrow(barChart, Priority.SOMETIMES);
-        HBox.setHgrow(barChart, Priority.SOMETIMES);
+        barChart.setAnimated(false);
         
+        xAxis.setCategories(FXCollections.<String>observableArrayList(
+                Arrays.asList(TipoLancamentoFinanceiro.RECEITA, TipoLancamentoFinanceiro.DESPESA)));
         vbChart.getChildren().add(barChart);
         
 		editar.setOnAction(new EventHandler<ActionEvent>() {
@@ -196,12 +202,23 @@ public class LancamentoFinanceiroOverviewController {
 	
 	@FXML
 	private void clearFilter(){
-		
+		if ( inputPesquisa != null ){
+			inputPesquisa.clear();
+		}
+		refreshTableOverview();
 	}
 	
 	@FXML
 	private void closeForm(){
-		
+		if ( inputPesquisa != null ){
+			Stage stage = (Stage)inputPesquisa.getScene().getWindow();
+			// se for popup
+			if ( stage.getModality().equals(Modality.APPLICATION_MODAL) ){
+				((Stage)inputPesquisa.getScene().getWindow()).close();	
+			}else{
+				MainApp.resetLayout();
+			}
+		}
 	}
 	
 	private void refreshTela(){
@@ -466,6 +483,16 @@ public class LancamentoFinanceiroOverviewController {
 	
 	public String getFormName() {
 		return "view/cobertura/LancamentoFinanceiroOverview.fxml";
+	}
+	
+	@FXML
+	private void imprimir(){
+		Object[] params = new Object[]{
+				selectedMes, selectedAno, Util.generateListMonthsAbrev().get(selectedMes) + "/" + selectedAno
+		};
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.IMPRIMIR_LANCAMENTOS_FINANCEIROS, params);
+		
 	}
 
 }

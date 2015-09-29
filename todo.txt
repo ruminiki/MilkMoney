@@ -10,8 +10,19 @@
 --indicadores
 - período de serviço?? definir
 
+--categoria overview numero registros
+- colocar icone para financeiro na parte central
+
+- retornar encerramento lactação
+
 --Relatórios
 - animais para secar
+- imprimir coberturas do animal
+- lactações (com média e registro de produções + gráfico produção lactação)
+- imprimir ficha do animal com todas as informações da tela inicial de animal
+- relatório da produção (por mes e ano)
+- relatorio lancamentos financeiros (centro custo, periodo, categoria)
+
 
 - está permitindo deletar animal sem remover o parto.
 - não pode registrar cobertura do animal após a data de sua venda ou morte;

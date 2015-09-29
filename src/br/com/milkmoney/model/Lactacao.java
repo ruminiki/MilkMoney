@@ -1,6 +1,8 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -162,7 +164,7 @@ public class Lactacao extends AbstractEntity implements Serializable {
 	
 	@Transient
 	public Float getMediaProducao() {
-		return mediaProducao;
+		return mediaProducao != null ? BigDecimal.valueOf(mediaProducao.floatValue()).setScale(2, RoundingMode.HALF_EVEN).floatValue() : BigDecimal.ZERO.floatValue();
 	}
 
 	public void setMediaProducao(Float mediaProducao) {

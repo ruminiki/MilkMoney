@@ -71,7 +71,6 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		return FXCollections.observableArrayList(dao.findByMes(param, dataInicio, dataFim));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public ObservableList<Series<String, Number>> getDataChart(ObservableList<LancamentoFinanceiro> data){
 
     	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
@@ -90,12 +89,12 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
     	
 		serieReceitas = new XYChart.Series<String, Number>();
 		serieReceitas.getData().add(new XYChart.Data<String, Number>(TipoLancamentoFinanceiro.RECEITA, receitas));
+		series.add(serieReceitas);
 		
 		serieDespesas = new XYChart.Series<String, Number>();
 		serieDespesas.getData().add(new XYChart.Data<String, Number>(TipoLancamentoFinanceiro.DESPESA, despesas));
+		series.add(serieDespesas);
 		
-        series.addAll(serieReceitas, serieDespesas);
-        
     	return series;
     	
     }

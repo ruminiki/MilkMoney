@@ -13,7 +13,6 @@
          <children>
             <VBox fx:id="vBoxRebanho" maxHeight="128.0" minWidth="128.0" />
             <VBox fx:id="vBoxProducao" maxHeight="128.0" minWidth="128.0" />
-            <VBox fx:id="vBoxReproducao" maxHeight="128.0" minWidth="128.0" />
             <VBox fx:id="vBoxIndicadores" maxHeight="128.0" minWidth="128.0" />
          </children>
       </HBox>

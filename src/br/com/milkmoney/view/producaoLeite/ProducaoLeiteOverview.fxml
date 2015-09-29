@@ -17,52 +17,40 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" spacing="5.0">
                <children>
-                  <VBox alignment="CENTER" prefHeight="38.0" prefWidth="154.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="100.0">
                      <children>
-                        <ComboBox fx:id="inputMesReferencia" focusTraversable="false" minHeight="30.0" prefHeight="30.0" prefWidth="150.0" />
-                        <Label text="Mês Referência">
+                        <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
                            <font>
-                              <Font size="9.0" />
+                              <Font size="10.0" />
                            </font>
-                        </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
-                           <children>
-                              <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
-                                 <children>
-                                    <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font></Button>
-                                    <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font></Button>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <Label text="Ano Referência">
+                        </Button>
+                        <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
                            <font>
-                              <Font size="9.0" />
+                              <Font size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
                         </Label>
+                        <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
                      </children>
-                  </VBox>
+                  </HBox>
+                  <ToggleButton fx:id="tbJan" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Janeiro" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbFev" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Fevereiro" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbMar" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Março" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbAbr" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Abril" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbMai" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Maio" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbJun" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Junho" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbJul" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Julho" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbAgo" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Agosto" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbSet" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Setembro" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbOut" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Outubro" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbNov" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Novembro" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="tbDez" minHeight="30.0" mnemonicParsing="false" prefWidth="71.0" text="Dezembro" HBox.hgrow="ALWAYS" />
                   <VBox alignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" />
