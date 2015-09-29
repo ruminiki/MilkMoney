@@ -64,14 +64,14 @@
                <children>
                   <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" HBox.hgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                        <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                       <TableColumn fx:id="numeroColumn" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Número" />
-                        <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
+                        <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
                         <TableColumn fx:id="racaColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
                         <TableColumn fx:id="sexoColumn" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
                         <TableColumn fx:id="dataNascimentoColumn" editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
                         <TableColumn fx:id="idadeColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade (M)" />
-                        <TableColumn fx:id="opcoesColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" text="Opções" />
+                        <TableColumn fx:id="opcoesColumn" maxWidth="200.0" minWidth="200.0" prefWidth="75.0" text="Opções" />
                     </columns>
                   </TableView>
                   <VBox fx:id="sideBar" maxWidth="350.0" minWidth="350.0" style="-fx-border-color: #CCC;" HBox.hgrow="NEVER">
@@ -143,7 +143,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Data Ultima Cobertura: " GridPane.rowIndex="3" />
+                                    <Label text="Data Ultima Cobertura: " GridPane.rowIndex="4" />
                                     <Label text="Nº Serviços até Concepção: " GridPane.rowIndex="6" />
                                     <Label text="Data Próximo Serviço: " GridPane.rowIndex="7" />
                                     <Label text="Número de Partos: " GridPane.rowIndex="8" />
@@ -152,17 +152,7 @@
                                     <Label text="Dias em Lactação (DEL): " GridPane.rowIndex="11" />
                                     <Label text="Dias em Aberto (DEA): " GridPane.rowIndex="12" />
                                     <Label text="Intervalo Entre Partos (IEP): " GridPane.rowIndex="13" />
-                                    <Label fx:id="lblDataUltimaCobertura" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
                                     <Label fx:id="lblNumeroServicos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="lblProximoServico" text="--" GridPane.columnIndex="1" GridPane.rowIndex="7">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
@@ -197,28 +187,68 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Secar Em: " GridPane.rowIndex="5" />
-                                    <Label fx:id="lblDataSecar" text="--" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
+                                    <Label text="Secar Em (~305d pós parto): " GridPane.rowIndex="2" />
                                     <Label text="Último Procedimento: " GridPane.rowIndex="14" />
                                     <Label text="Lote: " GridPane.rowIndex="15" />
-                                    <Label text="Data Próximo Parto: " GridPane.rowIndex="2" />
+                                    <Label text="Data Próximo Parto: " GridPane.rowIndex="3" />
                                     <Label text="Data Último Parto: " GridPane.rowIndex="1" />
-                                    <Label fx:id="lblDataProximoParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label fx:id="lblDataUltimoParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                                     <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="15" />
-                                    <Label text="Situação Última Cobertura: " GridPane.rowIndex="4" />
-                                    <Label fx:id="lblSituacaoUltimaCobertura" text="--" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Situação Última Cobertura: " GridPane.rowIndex="5" />
                                     <Label text="Animal: " />
                                     <Label fx:id="lblAnimal" text="--" GridPane.columnIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label fx:id="lblDataUltimoParto" text="--" />
+                                          <Hyperlink fx:id="hlVisualizarUltimoParto" text="visualizar" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label fx:id="lblDataSecar" text="--">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Hyperlink fx:id="hlSecarAnimal" text="secar" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label fx:id="lblDataProximoParto" text="--" />
+                                          <Hyperlink fx:id="hlRegistrarParto" text="registrar" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                       <children>
+                                          <Label fx:id="lblProximoServico" text="--">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Hyperlink fx:id="hlRegistrarCobertura" text="registrar" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <children>
+                                          <Label fx:id="lblDataUltimaCobertura" text="--">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Hyperlink fx:id="hlEditarCobertura" text="visualizar" visible="false" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <children>
+                                          <Label fx:id="lblSituacaoUltimaCobertura" text="--" />
+                                          <Hyperlink fx:id="hlConfirmarPrenhes" text="confirmar" visible="false" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                               <Separator prefWidth="200.0" />

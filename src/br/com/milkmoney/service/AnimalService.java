@@ -84,7 +84,7 @@ public class AnimalService implements IService<Integer, Animal>{
 	public Long getNumeroPartos(Animal animal) {
 		return partoDao.countByAnimal(animal);
 	}
-
+	
 	public boolean isInLactacao(Date data, Animal animal) {
 		return dao.isInLactacao(data, animal);
 	}

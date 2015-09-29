@@ -138,6 +138,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public void validate(Cobertura cobertura) {
 		CoberturaValidation.validate(cobertura);
 	}
+	
+	public Cobertura findLastCoberturaAnimal(Animal animal){
+		return dao.findLastCoberturaAnimal(animal);
+	}
 
 	public Cobertura findCoberturaAtivaByAnimal(Animal animal){
 		return dao.findCoberturaAtivaByAnimal(animal);

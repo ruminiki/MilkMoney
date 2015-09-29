@@ -13,7 +13,7 @@
 --categoria overview numero registros
 - colocar icone para financeiro na parte central
 
-- retornar encerramento lactação
+- corrigir navegador anos preço leite
 
 --Relatórios
 - animais para secar

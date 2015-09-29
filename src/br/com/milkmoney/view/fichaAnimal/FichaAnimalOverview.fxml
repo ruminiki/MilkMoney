@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="476.0" prefWidth="955.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController">
+<AnchorPane prefHeight="437.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -20,44 +20,8 @@
             </HBox>
             <HBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-                           <children>
-                              <Label text="LACTAÇÕES">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TableView fx:id="tableLactacoes" focusTraversable="false" VBox.vgrow="ALWAYS">
-                          <columns>
-                              <TableColumn fx:id="numeroLactacaoColumn" maxWidth="25.0" minWidth="25.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº" />
-                            <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
-                            <TableColumn fx:id="dataTerminoLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Término" />
-                              <TableColumn prefWidth="75.0" text="Duração Lactação">
-                                 <columns>
-                                    <TableColumn fx:id="diasEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Dias" />
-                                    <TableColumn fx:id="mesesEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Meses" />
-                                 </columns>
-                              </TableColumn>
-                              <TableColumn fx:id="mediaProducaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Média (l)" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </VBox>
                   <VBox minWidth="412.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-                           <children>
-                              <Label text="EVENTOS">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
                         <UCTextField fx:id="inputPesquisaEventos" alignment="CENTER" promptText="pesquisar evento" />
                         <TableView fx:id="tableEventos" focusTraversable="false">
                           <columns>

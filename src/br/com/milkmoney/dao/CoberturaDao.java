@@ -186,5 +186,4 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		return (Long) query.getSingleResult();
 	}
 
-
 }
