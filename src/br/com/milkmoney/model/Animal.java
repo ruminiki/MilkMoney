@@ -64,22 +64,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
 	
-	@Formula("(SELECT MAX(p.data) FROM parto p inner join cobertura c ON (c.parto = p.id) "
-			+ "INNER JOIN animal a on (a.id = c.femea) WHERE a.id = id)")
-	private Date dataUltimoParto;
-
-	@Formula("(SELECT MAX(c.data) FROM cobertura c WHERE c.femea = id)")
-	private Date dataUltimaCobertura;
-	
-	@Formula("(SELECT MAX(c.previsaoParto) FROM cobertura c WHERE c.femea = id)")
-	private Date dataPrevisaoProximoParto;
-	
-	@Formula("(SELECT MAX(l.dataInicio) FROM lactacao l WHERE l.animal = id)")
-	private Date dataInicioUltimaLactacao;
-	
-	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
-	private String situacaoUltimaCobertura;
-	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 
@@ -295,83 +279,12 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Transient
-	public String getDiasUltimoParto() {
-		if ( getDataUltimoParto() != null )
-			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimoParto()), LocalDate.now()));
-		return "--";
-	}
-
-	@Transient
-	public Date getDataUltimoParto() {
-		return dataUltimoParto;
-	}
-
-	public void setDataUltimoParto(Date dataUltimoParto) {
-		this.dataUltimoParto = dataUltimoParto;
-	}
-
-	@Transient
-	public Date getDataUltimaCobertura() {
-		return dataUltimaCobertura;
-	}
-
-	public void setDataUltimaCobertura(Date dataUltimaCobertura) {
-		this.dataUltimaCobertura = dataUltimaCobertura;
-	}
-
-	@Transient
-	public Date getDataPrevisaoProximoParto() {
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return null;
-		}
-		return dataPrevisaoProximoParto;
-	}
-
-	public void setDataPrevisaoProximoParto(Date dataPrevisaoProximoParto) {
-		this.dataPrevisaoProximoParto = dataPrevisaoProximoParto;
-	}
-	
-	@Transient
-	public String getSituacaoUltimaCobertura() {
-		if ( situacaoUltimaCobertura == null || situacaoUltimaCobertura.isEmpty() )
-			return "--";
-		return situacaoUltimaCobertura;
-	}
-
-	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
-		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
-	}
-
-	@Transient
-	public String getDiasUltimaCobertura() {
-		
-		if ( situacaoUltimaCobertura != null && 
-				situacaoUltimaCobertura.equals(SituacaoCobertura.PARIDA)){
-			return "--";
-		}
-		
-		if ( getDataUltimaCobertura() != null )
-			return String.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataUltimaCobertura()), LocalDate.now()));
-		return "--";
-	}
-	
-	@Transient
 	public Boolean isNascimentoCadastrado() {
 		return nascimentoCadastrado != null ? nascimentoCadastrado : false;
 	}
 
 	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
 		this.nascimentoCadastrado = nascimentoCadastrado;
-	}
-	
-	@Transient
-	public Date getDataPrevisaoEncerramentoLactacao(){
-		if ( situacaoAnimal != null && situacaoAnimal.equals(SituacaoAnimal.EM_LACTACAO) 
-				&& dataInicioUltimaLactacao != null ){
-			return DateUtil.asDate(DateUtil.asLocalDate(dataInicioUltimaLactacao).plusDays(305));
-		}
-		return null;
 	}
 	
 	@Override

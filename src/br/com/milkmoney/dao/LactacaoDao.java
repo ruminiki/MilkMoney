@@ -75,4 +75,16 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		
 	}
 
+	public Long countAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT count(distinct l.animal) FROM Lactacao l "
+				+ "WHERE l.dataFim is null and ( (adddate(l.dataInicio, 305) between :dataInicio and :dataFim) or (adddate(l.dataInicio, 305) < :dataInicio) ) "
+				+ "order by l.dataInicio");
+		
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return (Long) query.getSingleResult();
+	}
+
 }

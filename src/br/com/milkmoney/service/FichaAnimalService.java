@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -11,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.FichaAnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
+import br.com.milkmoney.model.Lactacao;
+import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.util.DateUtil;
 
 @Service
 public class FichaAnimalService{
@@ -21,6 +26,7 @@ public class FichaAnimalService{
 	@Autowired private CoberturaService coberturaService;
 	@Autowired private PartoService partoService;
 	@Autowired private AnimalService animalService;
+	@Autowired private LactacaoService lactacaoService;
 
 	public ObservableList<FichaAnimal> findAllEventosByAnimal(Animal animal) {
 		return FXCollections.observableArrayList(dao.findAllByAnimal(animal));
@@ -56,9 +62,22 @@ public class FichaAnimalService{
 		fichaAnimal.setIdadePrimeiroParto(animalService.getIdadePrimeiroParto(animal));
 		//idade primeira cobertura
 		fichaAnimal.setIdadePrimeiraCobertura(animalService.getIdadePrimeiraCobertura(animal));
+		//proximo parto
+		Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(animal);
+		fichaAnimal.setDataProximoParto(cobertura != null ? cobertura.getPrevisaoParto() : null);
+		//ultimo parto
+		Parto parto = partoService.findLastParto(animal);
+		fichaAnimal.setDataUltimoParto(parto != null ? parto.getData() : null);
+		//situacao ultima cobertura
+		cobertura = coberturaService.findLastCoberturaAnimal(animal);
+		fichaAnimal.setSituacaoUltimaCobertura(cobertura != null ? cobertura.getSituacaoCobertura() : null);
+		//encerramento lactação
+		Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(animal);
+		Date dataEncerramentoLactacao = lactacao != null && lactacao.getDataFim() == null ? DateUtil.asDate(DateUtil.asLocalDate(lactacao.getDataInicio()).plusDays(305)) : null;
+		fichaAnimal.setDataPrevisaoEncerramentoLactacao(dataEncerramentoLactacao);
 		
 		dao.persist(fichaAnimal);
-		
+				
 		return fichaAnimal;
 	}
 	

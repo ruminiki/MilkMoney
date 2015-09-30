@@ -23,6 +23,7 @@ import br.com.milkmoney.model.MetodoConfirmacaoPrenhes;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.service.ConfirmacaoPrenhesService;
 import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.validation.ConfirmacaoPrenhesValidation;
 
 @Controller
 public class ConfirmacaoPrenhesFormController extends AbstractFormController<Integer, ConfirmacaoPrenhes> {
@@ -66,21 +67,26 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 		closePopUpAfterSave(false);
 	}
 	
-	@Override
-	protected void afterSave() {
-		getObject().getCobertura().getConfirmacoesPrenhes().add(getObject());
+	@FXML
+	protected void handleAdicionar() {
+		ConfirmacaoPrenhesValidation.validate(getObject());
 		table.getItems().add(getObject());
+	}
+	
+	@FXML
+	private void handleSalvar() {
+		getObject().getCobertura().getConfirmacoesPrenhes().clear();
+		getObject().getCobertura().getConfirmacoesPrenhes().addAll(table.getItems());
+		closeForm();
 	};
 	
 	Function<Integer, Boolean> removerDiagnosticoPrenhes = index -> {
 		
 		if ( index <= table.getItems().size() ){
 			
-			if ( !getObject().getCobertura().getConfirmacoesPrenhes().remove(index) ){
-				getObject().getCobertura().getConfirmacoesPrenhes().remove(table.getItems().get(index));
+			if ( !table.getItems().remove(index) ){
+				table.getItems().remove(table.getItems().get(index));
 			}
-			table.getItems().clear();
-			table.getItems().addAll(getObject().getCobertura().getConfirmacoesPrenhes());
 			return true;
 			
 		}

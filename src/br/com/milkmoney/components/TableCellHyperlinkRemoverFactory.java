@@ -40,7 +40,11 @@ public class TableCellHyperlinkRemoverFactory<S, String> implements Callback<Tab
 							});
 							hp.setDisable(disabled);
 							setGraphic(hp);
-						} 
+						}else{
+							setGraphic(null);
+						}
+					}else{
+						setGraphic(null);
 					}
 		            setStyle("-fx-alignment: CENTER");
 		        }

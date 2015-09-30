@@ -17,10 +17,6 @@ public class AnimalValidation extends Validator {
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de nascimento do animal não pode ser maior que a data atual.");
 		}
 		
-		if ( animal.getSexo().equals(Sexo.MACHO) && animal.getDataUltimoParto() != null ){
-			throw new ValidationException(VALIDACAO_FORMULARIO, "Animais machos não podem ter registrado a data de parto.");
-		}
-		
 		if ( animal.getPaiMontaNatural() != null && animal.getPaiEnseminacaoArtificial() != null ){
 			throw new ValidationException(REGRA_NEGOCIO, "Não é possível registrar o pai como monta natural e inseminação artificial ao mesmo tempo. Por favor, selecione apenas um deles.");
 		}

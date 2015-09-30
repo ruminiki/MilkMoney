@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
+import br.com.milkmoney.dao.LactacaoDao;
 import br.com.milkmoney.dao.PrecoLeiteDao;
 import br.com.milkmoney.model.PrecoLeite;
 import br.com.milkmoney.model.Projecao;
@@ -26,6 +27,7 @@ import br.com.milkmoney.util.DateUtil;
 @Service
 public class ProjecaoService{
 
+	@Autowired private LactacaoDao lactacaoDao;
 	@Autowired private CoberturaDao coberturaDao;
 	@Autowired private AnimalDao animalDao;
 	@Autowired private ProducaoLeiteService producaoLeiteService;
@@ -57,7 +59,7 @@ public class ProjecaoService{
 		int partosPrevistos = coberturaDao.countAllWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
 		
 		//desconta os encerramentos de lactação
-		int encerramentosPrevistos =  coberturaDao.countAllWithPrevisaoEncerramentoIn(dataInicio, dataFim).intValue();
+		int encerramentosPrevistos =  lactacaoDao.countAllWithPrevisaoEncerramentoIn(dataInicio, dataFim).intValue();
 		
 		//considera os animais já em lactação e que não serão encerrados no período
 		int lactacoes = animalDao.countAllFemeasEmLactacao().intValue();

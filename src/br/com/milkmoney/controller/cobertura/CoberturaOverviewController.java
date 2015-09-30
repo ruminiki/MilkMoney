@@ -25,6 +25,7 @@ import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCobertura
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.lactacao.LactacaoFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.ConfirmacaoPrenhes;
@@ -159,6 +160,16 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	public void setFemea(Animal femea) {
 		this.femea = femea;
+	}
+	
+	@FXML
+	private void imprimir(){
+		Object[] params = new Object[]{
+				femea.getId()
+		};
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.IMPRIMIR_COBERTURAS_ANIMAL, params);
+		
 	}
 	
 	//====CONTEXT MENUS =======

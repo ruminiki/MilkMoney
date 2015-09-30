@@ -63,7 +63,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 								btnSecar.setTooltip(new Tooltip("Secar Animal"));
 							}
 							btnSecar.setMaxHeight(12);
-							btnSecar.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO + "|" + SituacaoAnimal.SECO));
+							btnSecar.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO + "|" + SituacaoAnimal.NAO_DEFINIDA));
 							btnSecar.setCursor(Cursor.HAND);
 							btnSecar.setFocusTraversable(false);
 							btnSecar.setOnAction(new EventHandler<ActionEvent>() {

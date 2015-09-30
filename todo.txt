@@ -13,15 +13,14 @@
 --categoria overview numero registros
 - colocar icone para financeiro na parte central
 
-- corrigir navegador anos preço leite
+- FIXAR ALTURA DA LINHA TABELA ANIMAIS
 
 --Relatórios
 - animais para secar
-- imprimir coberturas do animal
-- lactações (com média e registro de produções + gráfico produção lactação)
-- imprimir ficha do animal com todas as informações da tela inicial de animal
 - relatório da produção (por mes e ano)
 - relatorio lancamentos financeiros (centro custo, periodo, categoria)
+- projeção do rebanho
+- ranking animais (produção, dias em lactação e dias em aberto, intervalo entre partos)
 
 
 - está permitindo deletar animal sem remover o parto.

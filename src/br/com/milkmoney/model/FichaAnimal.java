@@ -31,6 +31,8 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	private Date   dataUltimaCobertura;
 	private int    numeroServicosAtePrenhes;
 	private Date   proximoServico;
+	private Date   dataProximoParto;
+	private Date   dataUltimoParto;
 	private int    numeroPartos;
 	private int    numeroCriasMacho;
 	private int    numeroCriasFemea;
@@ -39,6 +41,8 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	private int    intervaloEntrePartos;
 	private int    idadePrimeiroParto;
 	private int    idadePrimeiraCobertura;
+	private String situacaoUltimaCobertura;
+	private Date   dataPrevisaoEncerramentoLactacao;
 	@Transient
 	private Date   data;
 	@Transient
@@ -177,4 +181,37 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 		this.evento = evento;
 	}
 
+	public Date getDataProximoParto() {
+		return dataProximoParto;
+	}
+
+	public void setDataProximoParto(Date dataProximoParto) {
+		this.dataProximoParto = dataProximoParto;
+	}
+
+	public Date getDataUltimoParto() {
+		return dataUltimoParto;
+	}
+
+	public void setDataUltimoParto(Date dataUltimoParto) {
+		this.dataUltimoParto = dataUltimoParto;
+	}
+
+	public String getSituacaoUltimaCobertura() {
+		return situacaoUltimaCobertura;
+	}
+
+	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
+		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
+	}
+
+	public Date getDataPrevisaoEncerramentoLactacao() {
+		return dataPrevisaoEncerramentoLactacao;
+	}
+
+	public void setDataPrevisaoEncerramentoLactacao(
+			Date dataPrevisaoEncerramentoLactacao) {
+		this.dataPrevisaoEncerramentoLactacao = dataPrevisaoEncerramentoLactacao;
+	}
+	
 }

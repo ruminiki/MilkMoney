@@ -14,46 +14,31 @@
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" spacing="5.0">
-               <children>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
-                           <children>
-                              <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
-                                 <children>
-                                    <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <Label text="Ano Referência">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
                <HBox.margin>
                   <Insets left="5.0" />
                </HBox.margin>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="100.0">
+               <children>
+                  <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Label>
+                  <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children>
             </HBox>
          </children>
          <padding>

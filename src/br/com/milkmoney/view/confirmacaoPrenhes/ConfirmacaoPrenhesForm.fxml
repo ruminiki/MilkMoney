@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="365.0" prefWidth="596.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
+<AnchorPane prefHeight="402.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -20,17 +20,12 @@
                      </font></Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;" VBox.vgrow="SOMETIMES">
-               <children>
-                  <Label text="NOVO DIANÓSTICO" />
-               </children>
-            </HBox>
             <VBox minHeight="160.0" style="-fx-border-color: #CCC;" VBox.vgrow="SOMETIMES">
                <children>
                   <GridPane alignment="CENTER_LEFT" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="95.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="435.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="92.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="485.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -55,12 +50,11 @@
                   </GridPane>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
                      <children>
-                        <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
+                        <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAdicionar" text="Adicionar">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
                      </children>
                      <VBox.margin>
                         <Insets right="5.0" />
@@ -73,12 +67,12 @@
             </VBox>
             <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                <children>
-                  <Label text="HISTÓRICO DIAGNÓSTICOS" />
+                  <Label text="DIAGNÓSTICOS" />
                </children>
             </HBox>
             <VBox VBox.vgrow="SOMETIMES">
                <children>
-                  <TableView fx:id="table" cacheShape="false" focusTraversable="false" VBox.vgrow="SOMETIMES">
+                  <TableView fx:id="table" cacheShape="false" focusTraversable="false" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
                         <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="100.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />
@@ -88,6 +82,19 @@
                   </TableView>
                </children>
             </VBox>
+            <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
+               <children>
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSalvar" text="Salvar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+               </children>
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding>
+            </HBox>
          </children>
       </VBox>
    </children>

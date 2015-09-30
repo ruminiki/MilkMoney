@@ -25,6 +25,8 @@ public class RelatorioService {
 	public static final String RELATORIO_PARTOS 				   = "report/relatorioPartos.prpt";
 	public static final String RESUMO_FINANCEIRO                   = "report/resumoFinanceiro.prpt";
 	public static final String IMPRIMIR_LANCAMENTOS_FINANCEIROS    = "report/lancamentoFinanceiroMes.prpt";
+	public static final String IMPRIMIR_COBERTURAS_ANIMAL          = "report/coberturasAnimal.prpt";
+	public static final String FICHA_COMPLETA_ANIMAL               = "report/fichaCompletaAnimal.prpt"; 
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		Thread t = new Thread(new Runnable() {
@@ -100,6 +102,18 @@ public class RelatorioService {
 					masterReport.getParameterValues().put("mes", Integer.parseInt(param[0].toString()));
 					masterReport.getParameterValues().put("ano", Integer.parseInt(param[1].toString()));
 					masterReport.getParameterValues().put("periodo", (param[2]));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case IMPRIMIR_COBERTURAS_ANIMAL:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("femea", Integer.parseInt(param[0].toString()));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case FICHA_COMPLETA_ANIMAL:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("femea", Integer.parseInt(param[0].toString()));
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:

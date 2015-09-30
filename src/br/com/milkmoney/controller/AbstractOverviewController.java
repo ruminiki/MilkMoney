@@ -77,7 +77,7 @@ public abstract class AbstractOverviewController<K, E>{
 	public void initialize(AbstractFormController<K, E> formController) {
 		
 		this.formController = formController;
-
+		table.setFixedCellSize(25);
 		this.refreshTableOverview();
 		table.setItems(data);
 		updateLabelNumRegistros();
@@ -243,7 +243,7 @@ public abstract class AbstractOverviewController<K, E>{
 				AbstractEntity o = (AbstractEntity) data.get(index);
 				if (o.getId() == ((AbstractEntity) object).getId()) {
 					data.set(index, (E) object);
-					table.layout();
+					//table.layout();
 				}
 			}
 		}

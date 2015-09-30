@@ -15,7 +15,7 @@
    <children>
       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="425.0" prefWidth="707.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" spacing="5.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="50.0" minHeight="50.0" spacing="3.0">
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="100.0">
                      <children>
@@ -39,18 +39,18 @@
                         </Button>
                      </children>
                   </HBox>
-                  <ToggleButton fx:id="tbJan" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Jan" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbFev" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Fev" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbMar" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Mar" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbAbr" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Abr" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbMai" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Mai" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbJun" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Jun" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbJul" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Jul" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbAgo" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Ago" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbSet" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Set" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbOut" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Out" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbNov" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Nov" HBox.hgrow="NEVER" />
-                  <ToggleButton fx:id="tbDez" minHeight="30.0" mnemonicParsing="false" prefWidth="50.0" text="Dez" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbJan" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Jan" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbFev" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Fev" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbMar" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Mar" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbAbr" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Abr" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbMai" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Mai" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbJun" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Jun" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbJul" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Jul" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbAgo" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Ago" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbSet" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Set" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbOut" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Out" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbNov" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Nov" HBox.hgrow="NEVER" />
+                  <ToggleButton fx:id="tbDez" minHeight="30.0" mnemonicParsing="false" prefWidth="40.0" text="Dez" HBox.hgrow="NEVER" />
                   <VBox alignment="CENTER">
                      <HBox.margin>
                         <Insets left="20.0" />

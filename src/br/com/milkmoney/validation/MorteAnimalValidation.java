@@ -15,7 +15,7 @@ public class MorteAnimalValidation extends Validator {
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data da morte não pode ser menor que a data de nascimento do animal.");
 		}
 		
-		if ( morteAnimal.getAnimal().getDataUltimaCobertura() != null &&
+		/*if ( morteAnimal.getAnimal().getDataUltimaCobertura() != null &&
 				morteAnimal.getDataMorte().before(morteAnimal.getAnimal().getDataUltimaCobertura())){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data da morte não pode ser menor que a data da última cobertura do animal.");
 		}
@@ -23,7 +23,7 @@ public class MorteAnimalValidation extends Validator {
 		if ( morteAnimal.getAnimal().getDataUltimoParto() != null &&
 				morteAnimal.getDataMorte().before(morteAnimal.getAnimal().getDataUltimoParto())){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data da morte não pode ser menor que a data do último parto do animal.");
-		}
+		}*/
 		
 	}
 	

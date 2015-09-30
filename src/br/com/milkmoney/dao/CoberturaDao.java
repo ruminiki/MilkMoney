@@ -173,17 +173,4 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
-	public Long countAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
-		
-		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
-				+ "WHERE (adddate(c.data, 210) between :dataInicio and :dataFim or datediff(c.previsaoParto, :dataFim) between 0 and 60 ) and "
-				+ "c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') "  
-				+ "order by c.data");
-		
-		query.setParameter("dataInicio", dataInicio);
-		query.setParameter("dataFim", dataFim);
-		
-		return (Long) query.getSingleResult();
-	}
-
 }
