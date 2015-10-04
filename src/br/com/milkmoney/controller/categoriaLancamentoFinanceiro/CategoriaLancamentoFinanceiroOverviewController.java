@@ -98,9 +98,12 @@ public class CategoriaLancamentoFinanceiroOverviewController {
             		newItem.getChildren().add(i);
                     return true;
             	}else{
-            		
+            		//entra dentro do ramo de uma arvore
             		if ( i.getChildren() != null && i.getChildren().size() > 0 ){
-            			return percorreArvore(i, newItem);
+            			percorreArvore(i, newItem);
+            		}else{
+            			//quando termina o ramo, deve passar para o próximo item
+            			System.out.println(i);
             		}
             		
             	}

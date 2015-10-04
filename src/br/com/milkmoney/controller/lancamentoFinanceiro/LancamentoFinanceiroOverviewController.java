@@ -488,7 +488,7 @@ public class LancamentoFinanceiroOverviewController {
 	@FXML
 	private void imprimir(){
 		Object[] params = new Object[]{
-				selectedMes, selectedAno, Util.generateListMonthsAbrev().get(selectedMes) + "/" + selectedAno
+				selectedMes-1, selectedAno, Util.generateListMonthsAbrev().get(selectedMes-1) + "/" + selectedAno
 		};
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.IMPRIMIR_LANCAMENTOS_FINANCEIROS, params);

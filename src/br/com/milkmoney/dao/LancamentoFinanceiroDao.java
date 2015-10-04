@@ -19,6 +19,7 @@ import br.com.milkmoney.model.LancamentoFinanceiro;
 import br.com.milkmoney.model.LancamentoFinanceiroChartModel;
 import br.com.milkmoney.model.SaldoCategoriaDespesa;
 import br.com.milkmoney.model.TipoLancamentoFinanceiro;
+import br.com.milkmoney.util.NumberFormatUtil;
 import br.com.milkmoney.util.Util;
 
 @Repository
@@ -89,7 +90,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		Collections.sort(list, new Comparator<SaldoCategoriaDespesa>() {
 		    @Override
 		    public int compare(SaldoCategoriaDespesa s1, SaldoCategoriaDespesa s2) {
-		        return s2.getPercentual().compareTo(s1.getPercentual());
+		        return NumberFormatUtil.fromString(s2.getPercentual()).compareTo(NumberFormatUtil.fromString(s1.getPercentual()));
 		    }
 		});
 		
@@ -151,7 +152,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 					if ( Integer.parseInt(row[0].toString()) == mes + 1 ){
 						existeMes = true;
 						LancamentoFinanceiroChartModel lancamento = new LancamentoFinanceiroChartModel(
-								meses.get(Integer.parseInt(row[0].toString())),
+								meses.get(mes),
 								BigDecimal.valueOf(Double.valueOf(row[1].toString())), 
 								BigDecimal.valueOf(Double.valueOf(row[2].toString())));
 						list.add(lancamento);
