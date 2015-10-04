@@ -105,9 +105,20 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowLactacaoTableHandler(newValue));
         
 		super.initialize(producaoIndividualFormController);
+		selecionaLactacaoAberta();
 		
 	}
 	
+	private void selecionaLactacaoAberta() {
+		int index = 0;
+		for ( Lactacao lactacao : tableLactacoes.getItems() ){
+			if ( lactacao.getDataFim() == null ){
+				tableLactacoes.getSelectionModel().clearAndSelect(index);
+			}
+			index++;
+		}
+	}
+
 	private void selectRowLactacaoTableHandler(Lactacao newValue) {
     	if ( newValue != null && data != null ){
     		lactacao = newValue;

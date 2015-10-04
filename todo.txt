@@ -13,11 +13,9 @@
 --categoria overview numero registros
 - colocar icone para financeiro na parte central
 
-- FIXAR ALTURA DA LINHA TABELA ANIMAIS
-
 --Relatórios
 - animais para secar
-- relatório da produção (por mes e ano)
+- relatório da produção (por mes e ano) (gráfico)
 - relatorio lancamentos financeiros (centro custo, periodo, categoria)
 - projeção do rebanho
 - ranking animais (produção, dias em lactação e dias em aberto, intervalo entre partos)

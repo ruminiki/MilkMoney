@@ -26,7 +26,9 @@ public class RelatorioService {
 	public static final String RESUMO_FINANCEIRO                   = "report/resumoFinanceiro.prpt";
 	public static final String IMPRIMIR_LANCAMENTOS_FINANCEIROS    = "report/lancamentoFinanceiroMes.prpt";
 	public static final String IMPRIMIR_COBERTURAS_ANIMAL          = "report/coberturasAnimal.prpt";
-	public static final String FICHA_COMPLETA_ANIMAL               = "report/fichaCompletaAnimal.prpt"; 
+	public static final String FICHA_COMPLETA_ANIMAL               = "report/fichaCompletaAnimal.prpt";
+	public static final String RELATORIO_PROCEDIMENTOS             = "report/relatorioProcedimentos.prpt";
+	public static final String RELATORIO_PRODUCAO                  = "report/relatorioProducao.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		Thread t = new Thread(new Runnable() {
@@ -114,6 +116,22 @@ public class RelatorioService {
 					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
 					masterReport.getParameterValues().put("femea", Integer.parseInt(param[0].toString()));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case RELATORIO_PROCEDIMENTOS:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("animais", param[0]);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("dataInicio", (Date) param[1]);
+					masterReport.getParameterValues().put("dataFim", (Date) param[2]);
+					masterReport.getParameterValues().put("tipoProcedimento", String.valueOf(param[3]));
+					masterReport.getParameterValues().put("observacao", String.valueOf(param[4]));
+					GenericPentahoReport.runReport(format, masterReport);
+					break;
+				case RELATORIO_PRODUCAO:
+					masterReport = GenericPentahoReport.getReportDefinition(report);
+					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+					masterReport.getParameterValues().put("ano", Integer.parseInt(param[0].toString()));
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				default:
