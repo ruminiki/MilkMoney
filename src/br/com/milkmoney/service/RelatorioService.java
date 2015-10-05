@@ -24,7 +24,7 @@ public class RelatorioService {
 	public static final String RELATORIO_INDICADORES               = "report/relatorioIndicadores.prpt";
 	public static final String RELATORIO_PARTOS 				   = "report/relatorioPartos.prpt";
 	public static final String RESUMO_FINANCEIRO                   = "report/resumoFinanceiro.prpt";
-	public static final String IMPRIMIR_LANCAMENTOS_FINANCEIROS    = "report/lancamentoFinanceiroMes.prpt";
+	public static final String RELATORIO_LANCAMENTOS_FINANCEIROS   = "report/relatorioFinanceiro.prpt";
 	public static final String IMPRIMIR_COBERTURAS_ANIMAL          = "report/coberturasAnimal.prpt";
 	public static final String FICHA_COMPLETA_ANIMAL               = "report/fichaCompletaAnimal.prpt";
 	public static final String RELATORIO_PROCEDIMENTOS             = "report/relatorioProcedimentos.prpt";
@@ -98,12 +98,14 @@ public class RelatorioService {
 					masterReport.getParameterValues().put("nomeCentroCusto", param[2]);
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
-				case IMPRIMIR_LANCAMENTOS_FINANCEIROS:
+				case RELATORIO_LANCAMENTOS_FINANCEIROS:
 					masterReport = GenericPentahoReport.getReportDefinition(report);
 					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
-					masterReport.getParameterValues().put("mes", Integer.parseInt(param[0].toString()));
-					masterReport.getParameterValues().put("ano", Integer.parseInt(param[1].toString()));
-					masterReport.getParameterValues().put("periodo", (param[2]));
+					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
+					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
+					masterReport.getParameterValues().put("descricao", param[2]);
+					masterReport.getParameterValues().put("categoria", Integer.parseInt(param[3].toString()));
+					masterReport.getParameterValues().put("centroCusto", Integer.parseInt(param[4].toString()));
 					GenericPentahoReport.runReport(format, masterReport);
 					break;
 				case IMPRIMIR_COBERTURAS_ANIMAL:

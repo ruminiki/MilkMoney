@@ -238,6 +238,10 @@ public class RootLayoutController {
     	openFormAsPopUp("view/reports/RelatorioProducao.fxml", "Relatório Produção");
     }
     
+    @FXML
+    protected void handleReportLancamentosFinanceiros(){
+    	openFormAsPopUp("view/reports/RelatorioFinanceiro.fxml", "Relatório Lançamentos Financeiros");
+    }
     
 	public void openFormAsPopUp(String formPath, String title){
     	

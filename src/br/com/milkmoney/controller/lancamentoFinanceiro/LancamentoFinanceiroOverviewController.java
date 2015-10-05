@@ -47,7 +47,6 @@ import br.com.milkmoney.service.LancamentoFinanceiroService;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
-import br.com.milkmoney.util.Util;
 
 
 @Controller
@@ -488,10 +487,14 @@ public class LancamentoFinanceiroOverviewController {
 	@FXML
 	private void imprimir(){
 		Object[] params = new Object[]{
-				selectedMes-1, selectedAno, Util.generateListMonthsAbrev().get(selectedMes-1) + "/" + selectedAno
+				DateUtil.asDate(dataInicioMes()),//dataInicio
+				DateUtil.asDate(dataFimMes()),//dataFim
+				"",//descricao
+				0,//categoria
+				0//centroCusto
 		};
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.IMPRIMIR_LANCAMENTOS_FINANCEIROS, params);
+				RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params);
 		
 	}
 

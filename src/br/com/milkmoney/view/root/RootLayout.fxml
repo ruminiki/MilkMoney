@@ -45,13 +45,22 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportResumoFinanceiro" text="Resumo Financeiro" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportProcedimentosSanitarios" text="Procedimentos Sanitários" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReportProducao" text="Produção" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportPartosPrevistos" text="Partos Previstos" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportPartosRealizados" text="Partos Realizados" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportCobertura" text="Coberturas" />
+                        <Menu mnemonicParsing="false" text="Financeiro">
+                          <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportResumoFinanceiro" text="Resumo Financeiro" />
+                            <MenuItem mnemonicParsing="false" onAction="#handleReportLancamentosFinanceiros" text="Relatório Lançamentos Financeiros" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Zootécnicos">
+                           <items>
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportProcedimentosSanitarios" text="Procedimentos Sanitários" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportPartosPrevistos" text="Partos Previstos" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportPartosRealizados" text="Partos Realizados" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportCobertura" text="Coberturas" />
+                           </items>
+                        </Menu>
                         <Menu mnemonicParsing="false" text="Formulários de Campo">
                           <items>
                             <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
