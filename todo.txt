@@ -15,8 +15,6 @@
 
 --Relatórios
 - animais para secar
-- relatório da produção (por mes e ano) (gráfico)
-- relatorio lancamentos financeiros (centro custo, periodo, categoria)
 - projeção do rebanho
 - ranking animais (produção, dias em lactação e dias em aberto, intervalo entre partos)
 

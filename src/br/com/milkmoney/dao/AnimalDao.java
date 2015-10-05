@@ -21,7 +21,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param");
 		query.setParameter("param", '%' + param + '%');
-		query.setMaxResults(30);
+		query.setMaxResults(15);
 		query.setHint("org.hibernate.cacheable", "false");
 		
 		return query.getResultList();
@@ -31,7 +31,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findFemeasByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param and a.sexo = '" + Sexo.FEMEA + "'");
 		query.setParameter("param", '%' + param + '%');
-		query.setMaxResults(30);
+		query.setMaxResults(15);
 		query.setHint("org.hibernate.cacheable", "false");
 		
 		return query.getResultList();
@@ -44,7 +44,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		query.setMaxResults(30);
 		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 
@@ -54,7 +53,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeas() {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' ");
-		query.setMaxResults(30);
 		query.setHint("org.hibernate.cacheable", "false");
 		return query.getResultList();
 	}
