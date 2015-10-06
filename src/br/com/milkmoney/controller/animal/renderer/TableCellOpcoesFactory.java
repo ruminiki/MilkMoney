@@ -56,26 +56,6 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.setSpacing(1);
 							cell.setMaxHeight(10);
 							
-							Button btnSecar = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/secar16.png"))));
-							if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
-								btnSecar.setTooltip(new Tooltip("Desfazer Encerramento Lactação"));
-							}else{
-								btnSecar.setTooltip(new Tooltip("Secar Animal"));
-							}
-							btnSecar.setMaxHeight(12);
-							btnSecar.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO + "|" + SituacaoAnimal.NAO_DEFINIDA));
-							btnSecar.setCursor(Cursor.HAND);
-							btnSecar.setFocusTraversable(false);
-							btnSecar.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
-							cell.getChildren().add(btnSecar);
-							
 							Button btnCobertura = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/reproducao16.png"))));
 							btnCobertura.setMaxHeight(12);
 							btnCobertura.setTooltip(new Tooltip("Registrar Cobertura"));
@@ -91,6 +71,42 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							});
 								
 							cell.getChildren().add(btnCobertura);
+							
+							Button btnSecar = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/secar16.png"))));
+							btnSecar.setTooltip(new Tooltip("Lactações"));
+							btnSecar.setMaxHeight(12);
+							btnSecar.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO + "|" + SituacaoAnimal.NAO_DEFINIDA));
+							btnSecar.setCursor(Cursor.HAND);
+							btnSecar.setFocusTraversable(false);
+							btnSecar.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+									encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
+								}
+							});
+								
+							cell.getChildren().add(btnSecar);
+							
+							Button btnRegistrarVenda = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/venda16.png"))));
+							btnRegistrarVenda.setMaxHeight(12);
+							btnRegistrarVenda.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
+							if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+								btnRegistrarVenda.setTooltip(new Tooltip("Desfazer Registro Venda"));
+							}else{
+								btnRegistrarVenda.setTooltip(new Tooltip("Registrar Venda"));
+							}
+							btnRegistrarVenda.setCursor(Cursor.HAND);
+							btnRegistrarVenda.setFocusTraversable(false);
+							btnRegistrarVenda.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent event) {
+									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+									registrarVendaFunction.apply(tableRowProperty().get().getIndex());
+								}
+							});
+								
+							cell.getChildren().add(btnRegistrarVenda);
 							
 							Button btnRegistrarMorte = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/morte16.png"))));
 							btnRegistrarMorte.setMaxHeight(12);
@@ -112,26 +128,6 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 								
 							cell.getChildren().add(btnRegistrarMorte);
 								
-							Button btnRegistrarVenda = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/venda16.png"))));
-							btnRegistrarVenda.setMaxHeight(12);
-							btnRegistrarVenda.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
-							if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-								btnRegistrarVenda.setTooltip(new Tooltip("Desfazer Registro Venda"));
-							}else{
-								btnRegistrarVenda.setTooltip(new Tooltip("Registrar Venda"));
-							}
-							btnRegistrarVenda.setCursor(Cursor.HAND);
-							btnRegistrarVenda.setFocusTraversable(false);
-							btnRegistrarVenda.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									registrarVendaFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
-							cell.getChildren().add(btnRegistrarVenda);
-							
 							Button btnProducao = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/producao16.png"))));
 							btnProducao.setMaxHeight(12);
 							btnProducao.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));

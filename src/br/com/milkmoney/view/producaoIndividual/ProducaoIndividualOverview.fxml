@@ -63,9 +63,10 @@
                             <TableColumn fx:id="dataColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Data" />
                               <TableColumn prefWidth="75.0" text="Ordenhas">
                                  <columns>
-                                    <TableColumn fx:id="primeiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Primeira" />
-                                    <TableColumn fx:id="segundaOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Segunda" />
-                                    <TableColumn fx:id="terceiraOrdenhaColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Terceira" />
+                                    <TableColumn fx:id="primeiraOrdenhaColumn" maxWidth="81.0" minWidth="81.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Primeira" />
+                                    <TableColumn fx:id="segundaOrdenhaColumn" maxWidth="81.0" minWidth="81.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Segunda" />
+                                    <TableColumn fx:id="terceiraOrdenhaColumn" maxWidth="81.0" minWidth="81.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Terceira" />
+                                    <TableColumn fx:id="totalColumn" maxWidth="81.0" minWidth="81.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Total" />
                                  </columns>
                               </TableColumn>
                               <TableColumn fx:id="valorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />

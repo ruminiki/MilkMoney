@@ -31,6 +31,10 @@ public class LactacaoValidation extends Validator {
 			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de encerramento deve ser maior que a data de início da lactação.");
 		}
 		
+		if ( lactacao.getDataFim().after(new Date()) ){
+			throw new ValidationException(VALIDACAO_FORMULARIO, "A data de encerramento não pode ser maior que a data atual.");
+		}
+		
 		if ( !lactacao.getAnimal().getSexo().equals(Sexo.FEMEA) ){
 			throw new ValidationException(VALIDACAO_FORMULARIO, "Somente animais fêmeas podem ter lactações cadastradas. "
 					+ "Por favor, selecione outro animal e tente novamente.");

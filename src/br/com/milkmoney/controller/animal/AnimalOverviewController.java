@@ -29,7 +29,7 @@ import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
-import br.com.milkmoney.controller.lactacao.LactacaoFormController;
+import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
@@ -41,9 +41,7 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.FichaAnimal;
-import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.MorteAnimal;
-import br.com.milkmoney.model.MotivoEncerramentoLactacao;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.Raca;
@@ -120,7 +118,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private AnimalReducedOverviewController animalReducedController;
 	@Autowired private MorteAnimalFormController morteAnimalFormController;
 	@Autowired private VendaAnimalFormController vendaAnimalFormController;
-	@Autowired private LactacaoFormController lactacaoFormController;
+	@Autowired private LactacaoOverviewController lactacaoOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private PartoFormController partoFormController;
@@ -208,7 +206,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
 							if ( cobertura != null && cobertura.getParto() == null ){
 								
-								CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findUltimaLactacaoAnimal(getObject()));
+								CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
 								
 								partoFormController.setState(State.CREATE_TO_SELECT);
 								partoFormController.setObject(new Parto(cobertura));
@@ -308,7 +306,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Integer, Boolean> encerrarLactacaoAnimal = index -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
-				Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(getObject());
+				/*Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(getObject());
 				if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
 					
 					Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da lactação?");
@@ -325,8 +323,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lactacaoFormController.showForm();
 						refreshObjectInTableView.apply(service.findById(getObject().getId()));
 					}
-				}
+				}*/
+				lactacaoOverviewController.setAnimal(getObject());
+				lactacaoOverviewController.showForm();
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 				table.getSelectionModel().select(index);
+				
 			}else{
 				CustomAlert.mensagemInfo("Somente animais fêmeas podem ter a lactação encerrada.");
 			}

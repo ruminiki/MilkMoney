@@ -182,7 +182,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		}
 		if ( getObject().getParto() == null ){
 			
-			CoberturaValidation.validaRegistroPartoCobertura(getObject(), lactacaoService.findUltimaLactacaoAnimal(getObject().getFemea()));
+			CoberturaValidation.validaRegistroPartoCobertura(getObject(), lactacaoService.findLastBeforeDate(getObject().getFemea(), getObject().getData()));
 			
 			partoFormController.setState(State.CREATE_TO_SELECT);
 			partoFormController.setObject(new Parto(getObject()));

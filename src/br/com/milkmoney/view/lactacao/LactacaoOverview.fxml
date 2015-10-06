@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="540.0" prefHeight="309.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lactacao.LactacaoOverviewController">
+   <children>
+      <VBox prefHeight="521.0" prefWidth="816.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="30.0" spacing="5.0" style="-fx-border-color: #CCC;">
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
+               <children>
+                  <Label fx:id="lblHeader" text="LACTAÇÕES " />
+               </children>
+            </HBox>
+            <VBox minWidth="510.0" spacing="5.0">
+               <children>
+                  <TableView fx:id="table" focusTraversable="false" maxHeight="350.0">
+                          <columns>
+                        <TableColumn fx:id="numeroLactacaoColumn" maxWidth="25.0" minWidth="25.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº" />
+                            <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
+                            <TableColumn fx:id="dataTerminoLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Término" />
+                              <TableColumn prefWidth="75.0" text="Duração Lactação">
+                                 <columns>
+                                    <TableColumn fx:id="diasEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Dias" />
+                                    <TableColumn fx:id="mesesEmLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Meses" />
+                                 </columns>
+                              </TableColumn>
+                        <TableColumn fx:id="mediaProducaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Média (l)" />
+                        <TableColumn fx:id="opcoesColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" text="Opções" />
+                          </columns>
+                        </TableView>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

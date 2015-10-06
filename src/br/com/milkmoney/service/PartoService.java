@@ -68,7 +68,7 @@ public class PartoService implements IService<Integer, Parto>{
 	public void validate(Parto parto) {
 		PartoValidation.validate(parto);
 		PartoValidation.validadeCrias(parto);
-		PartoValidation.validaEncerramentoLactacao(parto, lactacaoService.findUltimaLactacaoAnimal(parto.getCobertura().getFemea()));
+		PartoValidation.validaEncerramentoLactacao(parto, lactacaoService.findLastBeforeDate(parto.getCobertura().getFemea(), parto.getCobertura().getData()));
 	}
 
 	public Parto findLastParto(Animal animal) {

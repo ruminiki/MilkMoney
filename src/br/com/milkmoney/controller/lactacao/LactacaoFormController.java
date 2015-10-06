@@ -12,13 +12,11 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
-import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
-import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.MotivoEncerramentoLactacao;
-import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.service.IService;
+import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class LactacaoFormController extends AbstractFormController<Integer, Lactacao> {
@@ -43,27 +41,8 @@ public class LactacaoFormController extends AbstractFormController<Integer, Lact
 			inputAnimal.setText(getObject().getAnimal().toString());
 		}
 		
-	}
-	
-	@FXML
-	private void handleSelecionarAnimal() {
-		
-		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
-		
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
-
-		animalReducedOverviewController.showForm();
-		
-		if ( animalReducedOverviewController.getObject() != null && animalReducedOverviewController.getObject().getId() > 0 ){
-			getObject().setAnimal(animalReducedOverviewController.getObject());
-		}
-		
-		if ( getObject().getAnimal() != null ){
-			inputAnimal.textProperty().set(getObject().getAnimal().getNumeroNome());	
-		}else{
-			inputAnimal.textProperty().set("");
+		if ( getObject().getDataFim() == null ){
+			inputDataFim.setValue(DateUtil.asLocalDate(getObject().getDataInicio()).plusMonths(10));
 		}
 		
 	}

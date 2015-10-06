@@ -2,7 +2,6 @@ package br.com.milkmoney.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.function.Function;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.LactacaoDao;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.validation.LactacaoValidation;
 
@@ -30,17 +28,17 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	public boolean save(Lactacao entity) {
 		
 		LactacaoValidation.validate(entity);
-		LactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
+		//LactacaoValidation.validaFemeaCoberta(entity, isFemeaCoberta);
 		return dao.persist(entity);
 		
 	}
 	
-	private Function<Animal, Boolean> isFemeaCoberta = animal -> {
+	/*private Function<Lactacao, Boolean> isFemeaCoberta = lactacao -> {
 		
-		Cobertura coberturaAtiva = coberturaService.findCoberturaAtivaByAnimal(animal);
+		Cobertura coberturaAnteriorLactacao = coberturaService.findPrimeiraCoberturaNaoVaziaAposData(lactacao.getAnimal(), lactacao.getDataInicio());
 		return coberturaAtiva != null;
 		
-	};
+	};*/
 	
 	@Override
 	@Transactional
@@ -77,9 +75,7 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	}
 	
 	@Transactional
-	public void desfazerEncerramentoLactacao(Animal animal) {
-		
-		Lactacao lactacao = dao.findUltimaLactacaoAnimal(animal);
+	public void desfazerEncerramentoLactacao(Lactacao lactacao) {
 		
 		lactacao.setDataFim(null);
 		lactacao.setMotivoEncerramentoLactacao(null);
@@ -102,6 +98,10 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 
 	public Lactacao findLactacaoAnimal(Animal animal, Date data) {
 		return dao.findLactacaoAnimal(animal, data);
+	}
+
+	public Lactacao findLastBeforeDate(Animal animal, Date data) {
+		return dao.findLastBeforeDate(animal, data);
 	}
 	
 }

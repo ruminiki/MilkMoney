@@ -30,7 +30,7 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Lactacao> findByAnimal(Animal animal){
-		Query query = entityManager.createQuery("SELECT lc FROM Lactacao lc where lc.animal = :animal ");
+		Query query = entityManager.createQuery("SELECT lc FROM Lactacao lc where lc.animal = :animal order by lc.dataInicio ");
 		query.setParameter("animal", animal);
 		return query.getResultList();
 	}
@@ -85,6 +85,21 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		query.setParameter("dataFim", dataFim);
 		
 		return (Long) query.getSingleResult();
+	}
+
+	public Lactacao findLastBeforeDate(Animal animal, Date data) {
+		Query query = entityManager.createQuery(
+				"SELECT lc FROM Lactacao lc WHERE lc.animal = :animal and dataInicio < :data order by dataInicio desc");
+		query.setHint("org.hibernate.cacheable", "false");
+		query.setParameter("data", data);
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (Lactacao)query.getSingleResult();
+		}catch ( NoResultException e ){
+			return null;
+		}
 	}
 
 }

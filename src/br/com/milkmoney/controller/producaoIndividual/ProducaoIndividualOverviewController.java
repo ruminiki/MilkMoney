@@ -50,6 +50,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private TableColumn<ProducaoIndividual, String> primeiraOrdenhaColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> segundaOrdenhaColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> terceiraOrdenhaColumn;
+	@FXML private TableColumn<ProducaoIndividual, String> totalColumn;
 	@FXML private TableColumn<ProducaoIndividual, String> valorColumn;
 	
 	@FXML private Label lblHeader;
@@ -84,6 +85,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		primeiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("primeiraOrdenha"));
 		segundaOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("segundaOrdenha"));
 		terceiraOrdenhaColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("terceiraOrdenha"));
+		totalColumn.setCellValueFactory(new PropertyValueFactory<ProducaoIndividual,String>("totalProducaoDia"));
 		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoIndividual, String>("valor"));
 		
 		//gráfico
@@ -103,22 +105,12 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
         vBoxChart.getChildren().add(lineChart);
         
         tableLactacoes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> selectRowLactacaoTableHandler(newValue));
-        
 		super.initialize(producaoIndividualFormController);
-		selecionaLactacaoAberta();
+		//seleciona a ultima lactacao
+		tableLactacoes.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
 		
 	}
 	
-	private void selecionaLactacaoAberta() {
-		int index = 0;
-		for ( Lactacao lactacao : tableLactacoes.getItems() ){
-			if ( lactacao.getDataFim() == null ){
-				tableLactacoes.getSelectionModel().clearAndSelect(index);
-			}
-			index++;
-		}
-	}
-
 	private void selectRowLactacaoTableHandler(Lactacao newValue) {
     	if ( newValue != null && data != null ){
     		lactacao = newValue;

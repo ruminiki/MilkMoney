@@ -20,6 +20,7 @@
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="601.0" minWidth="10.0" prefWidth="200.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="601.0" minWidth="10.0" prefWidth="137.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="601.0" minWidth="10.0" prefWidth="60.0" />
+                  <ColumnConstraints />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -28,26 +29,22 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Animal: " GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputAnimal" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Button fx:id="btnBuscarAnimal" mnemonicParsing="false" onAction="#handleSelecionarAnimal" text="Buscar" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="3.0" />
-                     </GridPane.margin>
-                  </Button>
-                  <Label text="Motivo Encerramento: " GridPane.rowIndex="2" />
-                  <ComboBox fx:id="inputMotivoEncerramento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                  
                   <Label text="Data Início: " />
-                  <Label text="Observação: " GridPane.rowIndex="3" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
                      <children>
-                        
-                              <DatePicker fx:id="inputDataInicio" prefWidth="120.0" />
+                        <DatePicker fx:id="inputDataInicio" disable="true" prefWidth="120.0" />
                         <Label text="Data Fim: " />
                         <DatePicker fx:id="inputDataFim" prefWidth="120.0" />
                      </children>
                   </HBox>
+                  <Label text="Animal: " GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputAnimal" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <Label text="Motivo Encerramento: " GridPane.rowIndex="2" />
+                  <ComboBox fx:id="inputMotivoEncerramento" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                  <Label text="Observação: " GridPane.rowIndex="3" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
+
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">
