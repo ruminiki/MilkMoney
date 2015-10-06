@@ -3,90 +3,67 @@ package br.com.milkmoney.controller.root;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.controller.root.renderer.VBoxOption;
+
 
 @Controller
 public class CenteredMenuController {
 
-	@FXML private VBox vBoxRebanho, vBoxReproducao, vBoxIndicadores, vBoxProducao;
+	@FXML private VBox vBoxRebanho, vBoxReproducao, vBoxIndicadores, vBoxProducao, vBoxFinanceiro;
+	@FXML private HBox hBoxOptions;
 	
 	@Autowired private RootLayoutController rootLayoutController;
 	
 	private static final String ICON_REBANHO = "img/rebanho.png";
 	private static final String ICON_INDICADORES = "img/indicadores.png";
 	private static final String ICON_PRODUCAO = "img/reproducao.png";
+	private static final String ICON_FINANCEIRO = "img/financeiro.png";
 	
 	@FXML
 	private void initialize(){
 		
-        vBoxRebanho.setStyle(
-                "-fx-padding: 1; " +
-                "-fx-cursor: HAND; " +
-                "-fx-background-image: url('" + ICON_REBANHO + "'); " +		
-                "-fx-background-color: cornsilk; " +
-                "-fx-border-width:0; " +
-                "-fx-border-color: " +
-                    "linear-gradient(" +
-                        "to bottom, " +
-                        "chocolate, " +
-                        "derive(chocolate, 50%)" +
-                    ");"
-        );
-        vBoxRebanho.setEffect(new DropShadow());
+		VBoxOption vBoxRebanho = new VBoxOption(ICON_REBANHO, "Rebanho");
         vBoxRebanho.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
         		rootLayoutController.handleCadastroAnimal();
         	}
         });
-		
-        vBoxIndicadores.setStyle(
-                "-fx-padding: 1; " +
-                "-fx-cursor: HAND; " +
-                "-fx-background-image: url('" + ICON_INDICADORES + "'); " +		
-                "-fx-background-color: cornsilk; " +
-                "-fx-border-width:0; " +
-                "-fx-border-color: " +
-                    "linear-gradient(" +
-                        "to bottom, " +
-                        "chocolate, " +
-                        "derive(chocolate, 50%)" +
-                    ");"
-        );
-        vBoxIndicadores.setEffect(new DropShadow());
-        vBoxIndicadores.setOnMouseReleased(new EventHandler<Event>() {
-            @Override
-            public void handle(Event e) {
-            	rootLayoutController.handlePainel();
-            }
-		});
+        hBoxOptions.getChildren().add(vBoxRebanho);
         
-        vBoxProducao.setStyle(
-                "-fx-padding: 1; " +
-                "-fx-cursor: HAND; " +
-                "-fx-background-image: url('" + ICON_PRODUCAO + "'); " +		
-                "-fx-background-color: cornsilk; " +
-                "-fx-border-width:0; " +
-                "-fx-border-color: " +
-                    "linear-gradient(" +
-                        "to bottom, " +
-                        "chocolate, " +
-                        "derive(chocolate, 50%)" +
-                    ");"
-        );
-        vBoxProducao.setEffect(new DropShadow());
+        VBoxOption vBoxProducao = new VBoxOption(ICON_PRODUCAO, "Produção");
         vBoxProducao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
-        		rootLayoutController.handleCadastroProducaoLeite();
+        		rootLayoutController.handlePainel();
         	}
         });
+        hBoxOptions.getChildren().add(vBoxProducao);
         
+        VBoxOption vBoxFinanceiro = new VBoxOption(ICON_FINANCEIRO, "Financeiro");
+        vBoxFinanceiro.setOnMouseReleased(new EventHandler<Event>() {
+        	@Override
+        	public void handle(Event event) {
+        		rootLayoutController.handleCadastroLancamentoFinanceiro();
+        	}
+        });
+        hBoxOptions.getChildren().add(vBoxFinanceiro);
+        
+        VBoxOption vBoxIndicadores = new VBoxOption(ICON_INDICADORES, "Indicadores");
+        vBoxIndicadores.setOnMouseReleased(new EventHandler<Event>() {
+        	@Override
+        	public void handle(Event event) {
+        		rootLayoutController.handlePainel();
+        	}
+        });
+        hBoxOptions.getChildren().add(vBoxIndicadores);
+		
 	}
 	
 

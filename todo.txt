@@ -18,7 +18,6 @@
 - habilitar time line da vaca (eventos)
 - animais para secar
 - projeção do rebanho
-- ranking animais (produção, dias em lactação e dias em aberto, intervalo entre partos)
 
 
 - está permitindo deletar animal sem remover o parto.

@@ -2,16 +2,11 @@ package br.com.milkmoney.controller.animal.renderer;
 
 import java.util.function.Function;
 
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import br.com.milkmoney.model.Animal;
@@ -27,16 +22,18 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 	private Function<Integer, Boolean> registrarProducaoFunction;
 	private Function<Integer, Boolean> registrarCoberturaFunction;
 	private Function<Integer, Boolean> fichaAnimalFunction;
+	private Function<Integer, Boolean> linhaTempoAnimalFunction;
 	
 	public TableCellOpcoesFactory(Function<Integer, Boolean> registrarCoberturaFunction, Function<Integer, Boolean> encerrarLactacaoFunction,
 			Function<Integer, Boolean> registrarVendaFunction, Function<Integer, Boolean> registrarMorteFunction,
-			Function<Integer, Boolean> registrarProducaoFunction, Function<Integer, Boolean> fichaAnimalFunction) {
+			Function<Integer, Boolean> registrarProducaoFunction, Function<Integer, Boolean> fichaAnimalFunction, Function<Integer, Boolean> linhaTempoAnimalFunction) {
 		this.encerrarLactacaoFunction = encerrarLactacaoFunction;
 		this.registrarMorteFunction = registrarMorteFunction;
 		this.registrarVendaFunction = registrarVendaFunction;
 		this.registrarProducaoFunction = registrarProducaoFunction;
 		this.registrarCoberturaFunction = registrarCoberturaFunction;
 		this.fichaAnimalFunction = fichaAnimalFunction;
+		this.linhaTempoAnimalFunction = linhaTempoAnimalFunction;
 	}
 
 	@Override
@@ -53,112 +50,92 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		        			
 							HBox cell = new HBox();
 							cell.setAlignment(Pos.CENTER);
-							cell.setSpacing(1);
-							cell.setMaxHeight(10);
+							cell.setSpacing(8);
 							
-							Button btnCobertura = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/reproducao16.png"))));
-							btnCobertura.setMaxHeight(12);
-							btnCobertura.setTooltip(new Tooltip("Registrar Cobertura"));
-							btnCobertura.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
-							btnCobertura.setCursor(Cursor.HAND);
-							btnCobertura.setFocusTraversable(false);
-							btnCobertura.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+							VBoxOption btnCobertura = new VBoxOption("img/reproducao16.png", "Coberturas");
+							btnCobertura._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnCobertura.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnCobertura._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
 									registrarCoberturaFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+					        	}
+					        });
 							cell.getChildren().add(btnCobertura);
 							
-							Button btnSecar = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/secar16.png"))));
-							btnSecar.setTooltip(new Tooltip("Lactações"));
-							btnSecar.setMaxHeight(12);
-							btnSecar.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO + "|" + SituacaoAnimal.NAO_DEFINIDA));
-							btnSecar.setCursor(Cursor.HAND);
-							btnSecar.setFocusTraversable(false);
-							btnSecar.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+							VBoxOption btnSecar = new VBoxOption("img/secar16.png", "Lactações");
+							btnSecar._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnSecar.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnSecar._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
 							cell.getChildren().add(btnSecar);
 							
-							Button btnRegistrarVenda = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/venda16.png"))));
-							btnRegistrarVenda.setMaxHeight(12);
-							btnRegistrarVenda.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
-							if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-								btnRegistrarVenda.setTooltip(new Tooltip("Desfazer Registro Venda"));
-							}else{
-								btnRegistrarVenda.setTooltip(new Tooltip("Registrar Venda"));
-							}
-							btnRegistrarVenda.setCursor(Cursor.HAND);
-							btnRegistrarVenda.setFocusTraversable(false);
-							btnRegistrarVenda.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									registrarVendaFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+							
+							VBoxOption btnRegistrarVenda = new VBoxOption("img/venda16.png", 
+									animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Venda" : "Registrar Venda");
+							btnRegistrarVenda._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
+							btnRegistrarVenda.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnRegistrarVenda._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		registrarVendaFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
 							cell.getChildren().add(btnRegistrarVenda);
 							
-							Button btnRegistrarMorte = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/morte16.png"))));
-							btnRegistrarMorte.setMaxHeight(12);
-							btnRegistrarMorte.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO));
-							btnRegistrarMorte.setCursor(Cursor.HAND);
-							if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-								btnRegistrarMorte.setTooltip(new Tooltip("Desfazer Registro Morte"));
-							}else{
-								btnRegistrarMorte.setTooltip(new Tooltip("Registrar Morte"));
-							}
-							btnRegistrarMorte.setFocusTraversable(false);
-							btnRegistrarMorte.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									registrarMorteFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+							VBoxOption btnRegistrarMorte = new VBoxOption("img/morte16.png",
+									animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
+							btnRegistrarMorte._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO));
+							btnRegistrarMorte.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnRegistrarMorte._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		registrarMorteFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
 							cell.getChildren().add(btnRegistrarMorte);
 								
-							Button btnProducao = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/producao16.png"))));
-							btnProducao.setMaxHeight(12);
-							btnProducao.setDisable(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
-							btnProducao.setTooltip(new Tooltip("Registrar Produção"));
-							btnProducao.setCursor(Cursor.HAND);
-							btnProducao.setFocusTraversable(false);
-							btnProducao.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									registrarProducaoFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+							VBoxOption btnProducao = new VBoxOption("img/producao16.png", "Registro Produção");
+							btnProducao._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnProducao.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnProducao._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		registrarProducaoFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
 							cell.getChildren().add(btnProducao);
 							
-							Button btnFicha = new Button("", new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/ficha16.png"))));
-							btnFicha.setMaxHeight(12);
-							btnFicha.setTooltip(new Tooltip("Ficha Animal"));
-							btnFicha.setCursor(Cursor.HAND);
-							btnFicha.setFocusTraversable(false);
-							btnFicha.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									fichaAnimalFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
+							VBoxOption btnFicha = new VBoxOption("img/ficha16.png", "Ficha do Animal");
+							btnFicha.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnFicha._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		fichaAnimalFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
 							cell.getChildren().add(btnFicha);
 							
+							VBoxOption btnEventos = new VBoxOption("img/timeline16.png", "Linha do Tempo do Animal");
+							btnEventos.setOnMouseReleased(new EventHandler<Event>() {
+					        	@Override
+					        	public void handle(Event event) {
+					        		if ( btnEventos._isDisabled() ) return;
+					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+					        		linhaTempoAnimalFunction.apply(tableRowProperty().get().getIndex());
+					        	}
+					        });
+							cell.getChildren().add(btnEventos);
 							setGraphic(cell);
 						}else{
 							setGraphic(null);

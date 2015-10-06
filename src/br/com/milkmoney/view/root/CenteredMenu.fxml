@@ -9,12 +9,6 @@
 
 <AnchorPane minHeight="150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.CenteredMenuController">
    <children>
-      <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-         <children>
-            <VBox fx:id="vBoxRebanho" maxHeight="128.0" minWidth="128.0" />
-            <VBox fx:id="vBoxProducao" maxHeight="128.0" minWidth="128.0" />
-            <VBox fx:id="vBoxIndicadores" maxHeight="128.0" minWidth="128.0" />
-         </children>
-      </HBox>
+      <HBox fx:id="hBoxOptions" alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
    </children>
 </AnchorPane>

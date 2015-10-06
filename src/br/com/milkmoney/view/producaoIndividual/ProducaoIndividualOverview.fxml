@@ -84,7 +84,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox fx:id="vBoxChart" prefHeight="453.0" prefWidth="537.0" spacing="5.0" style="-fx-border-color: ;" HBox.hgrow="SOMETIMES">
+                  <VBox fx:id="vBoxChart" prefHeight="453.0" prefWidth="537.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                            <children>

@@ -27,6 +27,8 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
 	@FXML private TableColumn<FichaAnimal, String> eventoColumn;
 	@FXML private UCTextField inputPesquisaEventos;
 
+	//@FXML private VBox vBoxTimeLine;
+	
 	@FXML private Label lblHeader;
 	
 	@Autowired private FichaAnimalService fichaAnimalService;
@@ -54,7 +56,9 @@ public class FichaAnimalOverviewController extends AbstractOverviewController<In
         sortedData.comparatorProperty().bind(tableEventos.comparatorProperty());
 		tableEventos.setItems(sortedData);
 		
-		lblHeader.setText("FICHA ANIMAL " + animal.toString());
+		lblHeader.setText("LINHA DO TEMPO " + animal.toString());
+		
+		//vBoxTimeLine.getChildren().add(new TimeLineFichaAnimal((List<FichaAnimal>) filteredData.getSource()));
 		
 	}
 	

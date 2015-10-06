@@ -140,7 +140,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 		opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(registrarCoberturaAnimal, encerrarLactacaoAnimal, 
 																			  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
-																			  registrarProducaoAnimal, exibirFichaAnimal));
+																			  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
 		if ( table.getItems().size() > 0 )
@@ -388,7 +388,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		return true;
 	};
 	
-	Function<Integer, Boolean> historicoEventosAnimal = index -> {
+	Function<Integer, Boolean> linhaTempoAnimal = index -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			fichaAnimalOverviewController.setAnimal(getObject());
 			fichaAnimalOverviewController.showForm();

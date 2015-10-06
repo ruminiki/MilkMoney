@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="437.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController">
+<AnchorPane prefHeight="518.0" prefWidth="421.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -18,21 +18,17 @@
                   <Label fx:id="lblHeader" text="FICHA ANIMAL " />
                </children>
             </HBox>
-            <HBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+            <VBox spacing="5.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <VBox minWidth="412.0" spacing="5.0" HBox.hgrow="SOMETIMES">
-                     <children>
-                        <UCTextField fx:id="inputPesquisaEventos" alignment="CENTER" promptText="pesquisar evento" />
-                        <TableView fx:id="tableEventos" focusTraversable="false">
-                          <columns>
-                            <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                            <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="290.0" text="Evento" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </VBox>
+                  <UCTextField fx:id="inputPesquisaEventos" alignment="CENTER" promptText="pesquisar evento" />
+                  <TableView fx:id="tableEventos" focusTraversable="false" VBox.vgrow="SOMETIMES">
+                    <columns>
+                      <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                      <TableColumn fx:id="eventoColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="290.0" text="Evento" />
+                    </columns>
+                  </TableView>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </children>

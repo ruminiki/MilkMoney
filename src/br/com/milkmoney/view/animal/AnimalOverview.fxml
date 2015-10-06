@@ -67,11 +67,11 @@
                         <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                       <TableColumn fx:id="numeroColumn" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Número" />
                         <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nome" />
-                        <TableColumn fx:id="racaColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
+                        <TableColumn fx:id="racaColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Raça" />
                         <TableColumn fx:id="sexoColumn" editable="false" maxWidth="40.0" minWidth="40.0" prefWidth="75.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
                         <TableColumn fx:id="dataNascimentoColumn" editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nascimento" />
                         <TableColumn fx:id="idadeColumn" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Idade (M)" />
-                        <TableColumn fx:id="opcoesColumn" maxWidth="205.0" minWidth="205.0" prefWidth="75.0" text="Opções" />
+                        <TableColumn fx:id="opcoesColumn" maxWidth="240.0" minWidth="240.0" prefWidth="75.0" text="Opções" />
                     </columns>
                   </TableView>
                   <VBox fx:id="sideBar" maxWidth="350.0" minWidth="350.0" style="-fx-border-color: #CCC;" HBox.hgrow="NEVER">
