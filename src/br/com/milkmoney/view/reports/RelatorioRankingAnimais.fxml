@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="357.0" prefWidth="558.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.reports.RelatorioRankingAnimaisController">
+   <children>
+      <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <UCTextField fx:id="inputPesquisa" alignment="CENTER" promptText="pesquisar animais" />
+            <HBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <VBox spacing="3.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
+                           <children>
+                              <Label text="PESQUISAR ANIMAIS" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="listAnimais" focusTraversable="false" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" spacing="5.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Button fx:id="btnAdicionar" mnemonicParsing="false" text="&gt;" />
+                        <Button fx:id="btnAdicionarTodos" mnemonicParsing="false" text="&gt;&gt;" />
+                        <Button fx:id="btnRemover" mnemonicParsing="false" text="&lt;" />
+                        <Button fx:id="btnRemoverTodos" mnemonicParsing="false" text="&lt;&lt;" />
+                     </children>
+                  </VBox>
+                  <VBox spacing="3.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
+                           <children>
+                              <Label text="ANIMAIS SELECIONADOS" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="listSelecionados" focusTraversable="false" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
+               <children>
+                  <ToggleButton fx:id="btnPDF" mnemonicParsing="false" text="PDF" />
+                  <ToggleButton fx:id="btnXLS" mnemonicParsing="false" text="XLS" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Executar Relatório">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleClose" text="Cancelar" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

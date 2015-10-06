@@ -11,10 +11,10 @@
 - período de serviço?? definir
 
 --categoria overview numero registros
+- permitir pesquisar
 - colocar icone para financeiro na parte central
 
 --Relatórios
-- alterar relatório ficha animal (fazer um gráfico por lactação) (corrigir idade primeiro parto, ...)
 - habilitar time line da vaca (eventos)
 - animais para secar
 - projeção do rebanho
