@@ -65,7 +65,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.getChildren().add(btnCobertura);
 							
 							VBoxOption btnSecar = new VBoxOption("img/secar16.png", "Lactações");
-							btnSecar._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnSecar._setDisabled(animal.getSexo().equals(Sexo.MACHO));
 							btnSecar.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {
@@ -79,7 +79,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							
 							VBoxOption btnRegistrarVenda = new VBoxOption("img/venda16.png", 
 									animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ? "Desfazer Venda" : "Registrar Venda");
-							btnRegistrarVenda._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
+							btnRegistrarVenda._setDisabled(animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO));
 							btnRegistrarVenda.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {
@@ -92,7 +92,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							
 							VBoxOption btnRegistrarMorte = new VBoxOption("img/morte16.png",
 									animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ? "Desfazer Registro Morte" : "Registrar Morte");
-							btnRegistrarMorte._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO));
+							btnRegistrarMorte._setDisabled(animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO));
 							btnRegistrarMorte.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {
@@ -104,7 +104,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.getChildren().add(btnRegistrarMorte);
 								
 							VBoxOption btnProducao = new VBoxOption("img/producao16.png", "Registro Produção");
-							btnProducao._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnProducao._setDisabled(animal.getSexo().equals(Sexo.MACHO));
 							btnProducao.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {

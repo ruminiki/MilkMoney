@@ -51,12 +51,13 @@ public class VBoxOption extends VBox {
 		return  ("-fx-padding: 0; " +
 			    "-fx-min-height: 24; -fx-min-width: 24;" +
 			    "-fx-background-insets: 0;" +
-			    "-fx-effect: dropshadow(three-pass-box, white, 10, 0, 0, 0);" +
+			    "-fx-effect: dropshadow(three-pass-box, cornsilk, 10, 0, 0, 0);" +
                 "-fx-background-image: url('" + img + "'); " +	
 			    "-fx-background-repeat: no-repeat; " + 
 			    "-fx-background-position: center; " +
                 "-fx-cursor: HAND; " +
-                "-fx-border-width:0; ");
+                "-fx-border-color: cornsilk;" +
+                "-fx-border-width:0 0 2 0; ");
 	}
 	
 	public java.lang.String styleDefault(java.lang.String img){

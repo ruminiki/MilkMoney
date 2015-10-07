@@ -3,7 +3,6 @@ package br.com.milkmoney.components;
 import java.util.List;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

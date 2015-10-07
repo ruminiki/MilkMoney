@@ -2,7 +2,6 @@ package br.com.milkmoney.service;
 
 import java.util.Date;
 
-import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
 
@@ -40,8 +39,6 @@ public class RelatorioService {
 	public static final String RELATORIO_RANKING_ANIMAIS           = "report/rankingAnimais.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		@SuppressWarnings("rawtypes")
 		javafx.concurrent.Service service = new javafx.concurrent.Service() {
 	        @Override
@@ -162,24 +159,20 @@ public class RelatorioService {
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				}
-        		    	MainApp.setCursor(Cursor.DEFAULT);
+        				MainApp.rootLayout.getCenter().setCursor(Cursor.DEFAULT);
+        				MainApp.setCursor(Cursor.DEFAULT);
 	                    return null;
 	                }
 	            };
 	        }
 	    };
 		
-		MainApp.primaryStage.getScene()
-        .getRoot()
-        .cursorProperty()
-        .bind(
-                Bindings
-                    .when(service.runningProperty())
-                        .then(Cursor.WAIT)
-                        .otherwise(Cursor.DEFAULT)
-        );
-		
 		service.start();
+		
+		rootLayoutController.setMessage("O relatório está sendo executado...");
+
+		MainApp.rootLayout.getCenter().setCursor(Cursor.WAIT);
+		MainApp.setCursor(Cursor.WAIT);
 		
 	}
 	

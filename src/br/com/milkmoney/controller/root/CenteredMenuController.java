@@ -41,7 +41,7 @@ public class CenteredMenuController {
         vBoxProducao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
-        		rootLayoutController.handlePainel();
+        		rootLayoutController.handleCadastroProducaoLeite();
         	}
         });
         hBoxOptions.getChildren().add(vBoxProducao);

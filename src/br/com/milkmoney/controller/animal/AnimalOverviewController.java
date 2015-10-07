@@ -345,6 +345,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Integer, Boolean> registrarProducaoAnimal = index -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
+				
+				//se o animal tiver morto ou vendido habilita apenas consulta
+				if ( getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO) ){
+					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
+					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
+					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
+				}
+				
 				producaoIndividualOverviewController.setAnimal(getObject());
 				producaoIndividualOverviewController.showForm();
 			}else{
@@ -364,7 +372,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					table.getSelectionModel().getSelectedItem().getId()
 			};
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_COMPLETA_ANIMAL, params);
+					RelatorioService.FICHA_COMPLETA_ANIMAL, table.getScene().getCursor(), params);
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

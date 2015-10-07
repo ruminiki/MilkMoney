@@ -7,6 +7,8 @@ import java.util.Locale;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -59,6 +61,8 @@ public class MainApp extends Application {
 	private static final boolean      SPLASH           = false;
 	private static final boolean      START_DATABASE   = false;
 		
+	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
+	
 	public MainApp() {
 		if ( !SPLASH ){
 			context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
@@ -178,8 +182,6 @@ public class MainApp extends Application {
     private void showMainStage(Stage stage) {
     	try {
     		
-    		primaryStage = stage;
-    		
 	    	//FXMLLoader loader = new FXMLLoader();
 	       // loader.setLocation(MainApp.class.getResource());
 	        rootLayout = (BorderPane) load("view/root/RootLayout.fxml");
@@ -207,6 +209,7 @@ public class MainApp extends Application {
 	        scene.getStylesheets().add("css/style.css");
 	        
 	        primaryStage.setScene(scene);
+	        primaryStage.getScene().cursorProperty().bind(cursor);
 	        primaryStage.show();
 	        
 	    } catch (Exception e) {
@@ -256,8 +259,8 @@ public class MainApp extends Application {
 		}
 	}
 	
-	public static void setCursor(Cursor cursor) {
-		rootLayout.setCursor(cursor);
+	public static void setCursor(Cursor c) {
+		cursor.set(c);
 	}
 
 	public static void main(String[] args) {

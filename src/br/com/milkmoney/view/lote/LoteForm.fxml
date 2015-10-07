@@ -76,7 +76,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblTotalAnimais" text="30">
+                              <Label fx:id="lblTotalAnimais" text="0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -90,7 +90,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblMediaProducao" text="30,5">
+                              <Label fx:id="lblMediaProducao" text="0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -107,7 +107,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblMediaLactacoes" text="30,5">
+                              <Label fx:id="lblMediaLactacoes" text="0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
@@ -124,7 +124,7 @@
                                     <Font size="10.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="lblMediaIdade" text="30,5">
+                              <Label fx:id="lblMediaIdade" text="0">
                                  <font>
                                     <Font size="25.0" />
                                  </font>

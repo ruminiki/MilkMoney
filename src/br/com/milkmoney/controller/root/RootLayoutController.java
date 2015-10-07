@@ -1,6 +1,8 @@
 package br.com.milkmoney.controller.root;
 
-import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,6 +30,8 @@ public class RootLayoutController {
 	@FXML private Label lblHeader, lblMessage;
 	@FXML private Hyperlink hlPropriedade;
 	
+	private StringProperty message = new SimpleStringProperty();
+	
 	@FXML
 	protected void initialize(){
 		
@@ -50,22 +54,35 @@ public class RootLayoutController {
 		});
 		
 		lblHeader.setText("Milk Money® - Gestão de Rebanhos Leiteiros");
+		lblMessage.textProperty().bind(message);
 		
 	}
 	
-	public void setMessage(String message){
+	public void setMessage(String msg){
 		
-		Platform.runLater(() -> {
-            try {
-            	Thread.sleep(5000);
-                lblMessage.setText("");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        });
+		Task <Void> task = new Task<Void>() {
+		      @Override public Void call() throws InterruptedException {
+		        updateMessage(msg);
+		        // some actions
+		        Thread.sleep(5000);
+		        updateMessage(""); 
+		        return null;
+		      }
+		    };
+
+		    message.bind(task.messageProperty());
+
+		    // java 8 construct, replace with java 7 code if using java 7.
+		    task.setOnSucceeded(e -> {
+		    	message.unbind();
+		      // this message will be seen.
+		    	message.set("");
+		    });
+
+		    Thread thread = new Thread(task);
+		    thread.setDaemon(true);
+		    thread.start();
 		
-		if ( lblMessage != null )
-			lblMessage.setText(message);
 	}
 	
 	public void setTitle(String title){

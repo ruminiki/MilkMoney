@@ -44,8 +44,8 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							
 							Button btnSecar = new Button("Encerrar");
 							btnSecar.setTooltip(new Tooltip("Encerrar Lactação"));
-							btnSecar.setMaxHeight(12);
 							btnSecar.setDisable(lactacao.getDataFim() != null);
+							btnSecar.setMaxHeight(12);
 							btnSecar.setCursor(Cursor.HAND);
 							btnSecar.setFocusTraversable(false);
 							btnSecar.setOnAction(new EventHandler<ActionEvent>() {

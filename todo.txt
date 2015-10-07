@@ -12,7 +12,6 @@
 
 --categoria overview numero registros
 - permitir pesquisar
-- colocar icone para financeiro na parte central
 
 --Relatórios
 - habilitar time line da vaca (eventos)
