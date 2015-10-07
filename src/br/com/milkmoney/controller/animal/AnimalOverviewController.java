@@ -372,7 +372,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					table.getSelectionModel().getSelectedItem().getId()
 			};
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_COMPLETA_ANIMAL, table.getScene().getCursor(), params);
+					RelatorioService.FICHA_COMPLETA_ANIMAL, params);
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
