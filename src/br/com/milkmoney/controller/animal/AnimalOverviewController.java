@@ -35,7 +35,6 @@ import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milkmoney.controller.raca.RacaOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
-import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
@@ -122,7 +121,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private PartoFormController partoFormController;
-	@Autowired private RootLayoutController rootLayoutController;
 	
 	private PieChart chart;
 	private FichaAnimal fichaAnimal;
@@ -368,7 +366,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 					RelatorioService.FICHA_COMPLETA_ANIMAL, params);
 			
-			rootLayoutController.setMessage("O relatório está sendo executado...");
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -568,8 +565,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
 		
 	}
 	

@@ -13,6 +13,7 @@ import javafx.concurrent.Worker;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -254,6 +255,10 @@ public class MainApp extends Application {
 			throw new RuntimeException(ioException);
 		}
 	}
+	
+	public static void setCursor(Cursor cursor) {
+		rootLayout.setCursor(cursor);
+	}
 
 	public static void main(String[] args) {
 		
@@ -265,4 +270,5 @@ public class MainApp extends Application {
 		launch(args);
 		
 	}
+
 }
