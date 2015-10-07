@@ -53,7 +53,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.setSpacing(8);
 							
 							VBoxOption btnCobertura = new VBoxOption("img/reproducao16.png", "Coberturas");
-							btnCobertura._setDisabled(animal.getSexo().equals(Sexo.MACHO) || animal.getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO));
+							btnCobertura._setDisabled(animal.getSexo().equals(Sexo.MACHO));
 							btnCobertura.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {

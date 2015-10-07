@@ -306,24 +306,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Integer, Boolean> encerrarLactacaoAnimal = index -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
-				/*Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(getObject());
-				if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.SECO) ){
-					
-					Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Encerramento Lactação", "Tem certeza que deseja desfazer o encerramento da lactação?");
-					if (result.get() == ButtonType.OK) {
-						lactacaoService.desfazerEncerramentoLactacao(getObject());
-						refreshObjectInTableView.apply(service.findById(getObject().getId()));
-					}
-					
-				}else{
-					if ( lactacao != null ){
-						lactacao.setDataFim(fichaAnimal != null ? fichaAnimal.getDataPrevisaoEncerramentoLactacao() : new Date());
-						lactacao.setMotivoEncerramentoLactacao(MotivoEncerramentoLactacao.PREPARACAO_PARTO);
-						lactacaoFormController.setObject(lactacao);
-						lactacaoFormController.showForm();
-						refreshObjectInTableView.apply(service.findById(getObject().getId()));
-					}
-				}*/
 				lactacaoOverviewController.setAnimal(getObject());
 				lactacaoOverviewController.showForm();
 				refreshObjectInTableView.apply(service.findById(getObject().getId()));
@@ -343,6 +325,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				coberturaOverviewController.setObject(new Cobertura(getObject()));
 				coberturaOverviewController.setFemea(getObject());
+				//se o animal tiver morto ou vendido apenas consulta as coberturas
+				if ( getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO) ){
+					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
+					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
+					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
+				}
 				coberturaOverviewController.showForm();
 				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}else{

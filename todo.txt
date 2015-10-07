@@ -20,9 +20,7 @@
 - projeção do rebanho
 
 
-- está permitindo deletar animal sem remover o parto.
-- não pode registrar cobertura do animal após a data de sua venda ou morte;
+- está permitindo deletar o animal (cria) sem remover o parto.
 - três casas decimais valor do leite
-	
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
 cobertura -> parto -> cobertura -> encerramento -> parto
