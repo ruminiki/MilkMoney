@@ -187,17 +187,17 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			partoFormController.setObject(new Parto(getObject()));
 			partoFormController.showForm();
 			
-			if ( partoFormController.getObject() != null ){
+			if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
 				getObject().setParto(partoFormController.getObject());
 				((CoberturaService)service).registrarParto(getObject());
-				refreshObjectInTableView.apply(getObject());
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}	
 			
 		}else{
 			
 			partoFormController.setObject(getObject().getParto());
 			partoFormController.showForm();
-			refreshObjectInTableView.apply(getObject());
+			refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			
 		}
 		
@@ -213,6 +213,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		confirmacaoPrenhesFormController.setObject(getObject());
     	confirmacaoPrenhesFormController.showForm();
+    	
 		refreshObjectInTableView.apply(service.findById(getObject().getId()));
     	
 	}

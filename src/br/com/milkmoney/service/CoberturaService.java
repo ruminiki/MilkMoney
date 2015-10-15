@@ -66,6 +66,21 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
+	@Transactional
+	public void desfazerConfirmacaoPrenhes(Cobertura cobertura) {
+		
+		try{
+			cobertura.setDataConfirmacaoPrenhes(null);
+			cobertura.setMetodoConfirmacaoPrenhes(null);
+			cobertura.setObservacaoConfirmacaoPrenhes(null);
+			dao.persist(cobertura);
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+		
+	}
+	
+	
 	public List<Cobertura> findByAnimal(Animal animal){
 		return dao.findByAnimal(animal);
 	}

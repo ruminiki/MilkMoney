@@ -258,7 +258,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							if ( fichaAnimal.getSituacaoUltimaCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
 								hlConfirmarPrenhes.setText("confirmar");
 							}else{
-								hlConfirmarPrenhes.setText("visualizar");
+								if ( fichaAnimal.getSituacaoUltimaCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.VAZIA) ){
+									hlConfirmarPrenhes.setText("visualizar");
+								}else{
+									hlConfirmarPrenhes.setVisible(false);
+								}
 							}
 							hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
 								@Override

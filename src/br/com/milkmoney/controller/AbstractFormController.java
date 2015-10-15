@@ -14,6 +14,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -113,6 +114,13 @@ public abstract class AbstractFormController<K, E> {
 
 		});
 		
+		dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent we) {
+				onCloseForm();
+			}
+		});
+
 		dialogStage.setResizable(false);
 		dialogStage.showAndWait();
 		
@@ -186,7 +194,7 @@ public abstract class AbstractFormController<K, E> {
 	
 	protected void beforeSave(){}
 	protected void afterSave(){}
-	
+	protected void onCloseForm(){}
 	protected void closeForm(){
 		if ( dialogStage != null )
 			dialogStage.close();
