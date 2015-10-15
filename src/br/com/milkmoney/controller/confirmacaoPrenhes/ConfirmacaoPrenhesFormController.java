@@ -41,7 +41,7 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 		inputData.valueProperty().bindBidirectional(getObject().dataConfirmacaoPrenhesProperty());
 		inputData.setValue(DateUtil.asLocalDate(getObject().getData()).plusDays(30));
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoCoberturaProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhesProperty());
 		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhes.getItems());
 		inputMetodoConfirmacao.valueProperty().bindBidirectional(getObject().metodoConfirmacaoPrenhesProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
@@ -55,13 +55,15 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 	private void handleDesfazerConfirmacao(){
 		Optional<ButtonType> result = CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhes", "Tem certeza que deseja desfazer a confirmação de prenhes?");
 		if (result.get() == ButtonType.OK) {
-			((CoberturaService)service).desfazerConfirmacaoPrenhes(getObject());			
+			((CoberturaService)service).desfazerConfirmacaoPrenhes(getObject());
+			closeForm();
 		}
 	}
 	
 	@Override
 	protected void beforeSave() {
 		CoberturaValidation.validaConfirmacaoPrenhes(getObject());
+		getObject().setSituacaoCobertura(getObject().getSituacaoConfirmacaoPrenhes());
 	}
 	
 	@Override

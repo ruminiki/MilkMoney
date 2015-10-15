@@ -57,6 +57,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty              observacaoConfirmacaoPrenhes = new SimpleStringProperty();
 	private Parto                       parto;
 	private StringProperty              situacaoCobertura            = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
+	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty(SituacaoCobertura.PRENHA);
 	
 	public Cobertura() {
 	}
@@ -174,6 +175,19 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	public StringProperty situacaoCoberturaProperty(){
 		return situacaoCobertura;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getSituacaoConfirmacaoPrenhes() {
+		return situacaoConfirmacaoPrenhes.get() == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoConfirmacaoPrenhes.get();
+	}
+
+	public void setSituacaoConfirmacaoPrenhes(String situacaoConfirmacaoPrenhes) {
+		this.situacaoConfirmacaoPrenhes.set(situacaoConfirmacaoPrenhes);
+	}
+	
+	public StringProperty situacaoConfirmacaoPrenhesProperty(){
+		return situacaoConfirmacaoPrenhes;
 	}
 
 	@Access(AccessType.PROPERTY)

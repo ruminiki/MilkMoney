@@ -46,6 +46,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public void registrarParto(Cobertura cobertura) {
 		
 		try{
+			cobertura.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			dao.persist(cobertura);
 		}catch(Exception e){
 			cobertura.setParto(null);
@@ -59,6 +60,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		try{
 			cobertura.setParto(null);
+			cobertura.setSituacaoCobertura(cobertura.getSituacaoConfirmacaoPrenhes());
 			dao.persist(cobertura);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -73,6 +75,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			cobertura.setDataConfirmacaoPrenhes(null);
 			cobertura.setMetodoConfirmacaoPrenhes(null);
 			cobertura.setObservacaoConfirmacaoPrenhes(null);
+			cobertura.setSituacaoConfirmacaoPrenhes(null);
+			cobertura.setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
 			dao.persist(cobertura);
 		}catch(Exception e){
 			throw new RuntimeException(e);
