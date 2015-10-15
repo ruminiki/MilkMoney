@@ -28,7 +28,6 @@ import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
@@ -212,14 +211,9 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			return;
 		}
 		
-		confirmacaoPrenhesFormController.setState(State.CREATE_TO_SELECT);
-		confirmacaoPrenhesFormController.setObject(new ConfirmacaoPrenhes(getObject()));
+		confirmacaoPrenhesFormController.setObject(getObject());
     	confirmacaoPrenhesFormController.showForm();
-    	
-    	if ( !getObject().getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-    		((CoberturaService)service).saveConfirmacaoPrenhes(getObject());
-    		refreshObjectInTableView.apply(service.findById(getObject().getId()));
-    	}
+		refreshObjectInTableView.apply(service.findById(getObject().getId()));
     	
 	}
 	

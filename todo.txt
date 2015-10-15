@@ -7,8 +7,9 @@
 - parcelar lançamentos
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
---indicadores
-- período de serviço?? definir
+--CONFIRMACAO PRENHES
+- ao remover cobertura não atualiza a tabela
+- erro data confirmacao e situacao parida
 
 --categoria overview numero registros
 - permitir pesquisar

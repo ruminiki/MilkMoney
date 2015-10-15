@@ -2,9 +2,7 @@ package br.com.milkmoney.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -21,14 +19,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import org.hibernate.annotations.Formula;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -58,16 +52,11 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<Funcionario> funcionarioResponsavel       = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico>     servico                      = new SimpleObjectProperty<Servico>();
 	private StringProperty              observacao                   = new SimpleStringProperty();
-	//jpa
+	private ObjectProperty<LocalDate>   dataConfirmacaoPrenhes       = new SimpleObjectProperty<LocalDate>();  
+	private StringProperty              metodoConfirmacaoPrenhes     = new SimpleStringProperty();
+	private StringProperty              observacaoConfirmacaoPrenhes = new SimpleStringProperty();
 	private Parto                       parto;
-	private List<ConfirmacaoPrenhes>    confirmacoesPrenhes;
-	private String                      situacaoCobertura            = SituacaoCobertura.NAO_CONFIRMADA;
-	
-	@Formula("(SELECT c.data FROM confirmacaoPrenhes c WHERE c.cobertura = id order by data desc limit 1)")
-	private Date dataConfirmacaoPrenhes;
-	
-	@Formula("(SELECT c.metodoConfirmacao FROM confirmacaoPrenhes c WHERE c.cobertura = id order by data desc limit 1)")
-	private String metodoConfirmacaoPrenhes;
+	private StringProperty              situacaoCobertura            = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
 	
 	public Cobertura() {
 	}
@@ -171,16 +160,20 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return touroMontaNatural;
 	}
 	
+	@Access(AccessType.PROPERTY)
 	public String getSituacaoCobertura() {
 		if ( this.getParto() != null ){
 			return SituacaoCobertura.PARIDA; 
 		}
-		
-		return situacaoCobertura == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoCobertura;
+		return situacaoCobertura.get() == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoCobertura.get();
 	}
 
 	public void setSituacaoCobertura(String situacaoCobertura) {
-		this.situacaoCobertura = situacaoCobertura;
+		this.situacaoCobertura.set(situacaoCobertura);
+	}
+	
+	public StringProperty situacaoCoberturaProperty(){
+		return situacaoCobertura;
 	}
 
 	@Access(AccessType.PROPERTY)
@@ -267,35 +260,46 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		this.parto = parto;
 	}
 	
+	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfirmacaoPrenhes.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name="cobertura")
-	public List<ConfirmacaoPrenhes> getConfirmacoesPrenhes() {
-		return confirmacoesPrenhes == null ? new ArrayList<ConfirmacaoPrenhes>() : confirmacoesPrenhes;
-	}
-
-	public void setConfirmacoesPrenhes(List<ConfirmacaoPrenhes> confirmacoesPrenhes) {
-		this.confirmacoesPrenhes = confirmacoesPrenhes;
+	public Date getDataConfirmacaoPrenhes() {
+		return DateUtil.asDate(this.dataConfirmacaoPrenhes.get());
 	}
 	
-	@Transient
-	public Date getDataConfirmacaoPrenhes() {
+	public void setDataConfirmacaoPrenhes(Date dataConfirmacaoPrenhes) {
+		this.dataConfirmacaoPrenhes.set(DateUtil.asLocalDate(dataConfirmacaoPrenhes));
+	}
+	
+	public ObjectProperty<LocalDate> dataConfirmacaoPrenhesProperty(){
 		return dataConfirmacaoPrenhes;
 	}
-
-	public void setDataConfirmacaoPrenhes(Date dataConfirmacaoPrenhes) {
-		this.dataConfirmacaoPrenhes = dataConfirmacaoPrenhes;
-	}
-
-	@Transient
+	
+	@Access(AccessType.PROPERTY)
 	public String getMetodoConfirmacaoPrenhes() {
-		return metodoConfirmacaoPrenhes == null ? "--" : metodoConfirmacaoPrenhes;
+		return metodoConfirmacaoPrenhes.get();
 	}
 
 	public void setMetodoConfirmacaoPrenhes(String metodoConfirmacaoPrenhes) {
-		this.metodoConfirmacaoPrenhes = metodoConfirmacaoPrenhes;
+		this.metodoConfirmacaoPrenhes.set(metodoConfirmacaoPrenhes);
+	}
+	
+	public StringProperty metodoConfirmacaoPrenhesProperty(){
+		return metodoConfirmacaoPrenhes;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoConfirmacaoPrenhes() {
+		return observacaoConfirmacaoPrenhes.get();
 	}
 
+	public void setObservacaoConfirmacaoPrenhes(String observacaoConfirmacaoPrenhes) {
+		this.observacaoConfirmacaoPrenhes.set(observacaoConfirmacaoPrenhes);
+	}
+	
+	public StringProperty observacaoConfirmacaoPrenhesProperty(){
+		return observacaoConfirmacaoPrenhes;
+	}
+	
 	public String getReprodutor(){
 		if ( this.getTouroMontaNatural() != null )
 			return this.getTouroMontaNatural().getNumeroNome();

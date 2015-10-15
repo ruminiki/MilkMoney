@@ -71,7 +71,22 @@ public class CoberturaValidation extends Validator {
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [responsável pela inseminação] para continuar.");
 		}
-
+		
+	}
+	
+	public static void validaConfirmacaoPrenhes(Cobertura cobertura){
+		
+		if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			throw new ValidationException(REGRA_NEGOCIO, 
+					"A cobertura selecionada já teve parto cadastrado não sendo possível executar essa operação.");
+		}
+		
+		if ( cobertura.getDataConfirmacaoPrenhes().before(cobertura.getData()) ||
+				DateUtil.isSameDate(cobertura.getDataConfirmacaoPrenhes(), cobertura.getData()) ){
+			throw new ValidationException(CAMPO_OBRIGATORIO, 
+					"A data da confirmação não pode ser menor ou igual a data da cobertura.");
+		}
+		
 	}
 	
 	/*

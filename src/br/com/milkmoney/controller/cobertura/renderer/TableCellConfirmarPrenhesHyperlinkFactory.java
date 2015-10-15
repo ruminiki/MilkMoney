@@ -1,9 +1,7 @@
 package br.com.milkmoney.controller.cobertura.renderer;
 
-import java.sql.Timestamp;
 import java.util.function.Function;
 
-import br.com.milkmoney.util.DateUtil;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Hyperlink;
@@ -11,6 +9,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import br.com.milkmoney.util.DateUtil;
 
 public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
 	
@@ -35,7 +34,7 @@ public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements 
 			            if ( (item == null || empty) ) {
 			            	hpS.setText("Confirmar");
 			            } else {
-							hpS.setText( DateUtil.format(((Timestamp)item).toLocalDateTime().toLocalDate()) );
+							hpS.setText( DateUtil.format((java.time.LocalDate)item));
 						} 
 			            hpS.setFocusTraversable(false);
 						hpS.setOnAction(new EventHandler<ActionEvent>() {

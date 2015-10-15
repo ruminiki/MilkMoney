@@ -18,257 +18,69 @@
 		<delete dir="projectRefs" />
 	
 		<mkdir dir="externalLibs" />
-	
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libformat-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-commons-annotations-4.0.5.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-core-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libpixie-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="librepository-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="itext-2.1.7.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-websocket-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="log4j-1.2.17.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libsparkline-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="jboss-logging-3.1.3.GA.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="servlet-api-2.3.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="antlr-2.7.7.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="jandex-1.1.0.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="poi-3.9.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="poi-ooxml-3.9.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="dom4j-1.6.1.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-orm-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libfonts-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-context-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="itext-rtf-2.1.7.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="poi-ooxml-schemas-3.9.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-jpamodelgen-4.3.10.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="aspectjrt.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libbase-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-entitymanager-4.3.10.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="commons-logging-1.2.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-jdbc-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="aspectjweaver.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-jms-4.1.5.RELEASE-javadoc.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libformula-ui-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libloader-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-tx-4.1.6.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-web-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="javassist-3.18.1-GA.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-core-4.3.10.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libserializer-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-webmvc-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="aopalliance-1.0.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-aop-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libxml-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="pentaho-reporting-engine-classic-core-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-expression-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="hibernate-osgi-4.3.10.Final.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libdocbundle-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="libformula-5.4.0.1-130.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="mysql-connector-java-5.1.18-bin.jar"/>
-			</fileset>
-		</copy>
-		<copy todir="externalLibs">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\lib">
-				<filename name="spring-beans-4.1.5.RELEASE.jar"/>
-			</fileset>
-		</copy>
+		
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\antlr-2.7.7.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aopalliance-1.0.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aspectjrt.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aspectjweaver.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\commons-logging-1.2.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\dom4j-1.6.1.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-commons-annotations-4.0.5.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-core-4.3.10.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-entitymanager-4.3.10.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-jpa-2.1-api-1.0.0.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-jpamodelgen-4.3.10.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-osgi-4.3.10.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\itext-2.1.7.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\itext-rtf-2.1.7.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jandex-1.1.0.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\javassist-3.18.1-GA.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\javax.persistence_2.1.0.v201304241213.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-logging-3.1.3.GA.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-logging-annotations-1.2.0.Beta1.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-transaction-api_1.2_spec-1.0.0.Final.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jcommon-1.0.16.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jfreechart-1.0.13.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libbase-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libdocbundle-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libfonts-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformat-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformula-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformula-ui-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libloader-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libpensol-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libpixie-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\librepository-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libserializer-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libsparkline-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libswing-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libxml-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\log4j-1.2.17.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\mysql-connector-java-5.1.18-bin.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-classic-core-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-legacy-charts-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-legacy-functions-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-wizard-core-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-wizard-xul-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-3.9.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-ooxml-3.9.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-ooxml-schemas-3.9.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\report-designer-ext-legacy-charts-5.4.0.1-130.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\servlet-api-2.3.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-aop-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-beans-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-context-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-core-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-expression-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-jdbc-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-jms-4.1.5.RELEASE-javadoc.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-orm-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-tx-4.1.6.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-web-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-webmvc-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-websocket-4.1.5.RELEASE.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\bsf-2.4.0.jar" todir="externalLibs"/>
 	
 		<mkdir dir="project" />
 		<copy todir="project">
@@ -298,56 +110,68 @@
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
 			<fileset dir="externalLibs">
-				<include name="spring-context-4.1.5.RELEASE.jar"/>
-				<include name="hibernate-osgi-4.3.10.Final.jar"/>
-				<include name="poi-ooxml-schemas-3.9.jar"/>
-				<include name="servlet-api-2.3.jar"/>
-				<include name="libpixie-5.4.0.1-130.jar"/>
-				<include name="commons-logging-1.2.jar"/>
-				<include name="pentaho-reporting-engine-classic-core-5.4.0.1-130.jar"/>
-				<include name="spring-orm-4.1.5.RELEASE.jar"/>
-				<include name="spring-websocket-4.1.5.RELEASE.jar"/>
-				<include name="dom4j-1.6.1.jar"/>
-				<include name="libbase-5.4.0.1-130.jar"/>
-				<include name="hibernate-jpamodelgen-4.3.10.Final.jar"/>
-				<include name="pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar"/>
-				<include name="itext-rtf-2.1.7.jar"/>
-				<include name="libloader-5.4.0.1-130.jar"/>
-				<include name="libsparkline-5.4.0.1-130.jar"/>
-				<include name="aspectjweaver.jar"/>
-				<include name="spring-web-4.1.5.RELEASE.jar"/>
-				<include name="itext-2.1.7.jar"/>
-				<include name="mysql-connector-java-5.1.18-bin.jar"/>
-				<include name="libfonts-5.4.0.1-130.jar"/>
-				<include name="hibernate-commons-annotations-4.0.5.Final.jar"/>
-				<include name="hibernate-entitymanager-4.3.10.Final.jar"/>
-				<include name="javassist-3.18.1-GA.jar"/>
-				<include name="poi-3.9.jar"/>
-				<include name="spring-jms-4.1.5.RELEASE-javadoc.jar"/>
-				<include name="libserializer-5.4.0.1-130.jar"/>
-				<include name="libformula-5.4.0.1-130.jar"/>
-				<include name="spring-webmvc-4.1.5.RELEASE.jar"/>
+				<include name="antlr-2.7.7.jar"/>
+				<include name="aopalliance-1.0.jar"/>
 				<include name="aspectjrt.jar"/>
+				<include name="aspectjweaver.jar"/>
+				<include name="commons-logging-1.2.jar"/>
+				<include name="dom4j-1.6.1.jar"/>
+				<include name="hibernate-commons-annotations-4.0.5.Final.jar"/>
+				<include name="hibernate-core-4.3.10.Final.jar"/>
+				<include name="hibernate-entitymanager-4.3.10.Final.jar"/>
+				<include name="hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+				<include name="hibernate-jpamodelgen-4.3.10.Final.jar"/>
+				<include name="hibernate-osgi-4.3.10.Final.jar"/>
+				<include name="itext-2.1.7.jar"/>
+				<include name="itext-rtf-2.1.7.jar"/>
+				<include name="jandex-1.1.0.Final.jar"/>
+				<include name="javassist-3.18.1-GA.jar"/>
+				<include name="javax.persistence_2.1.0.v201304241213.jar"/>
+				<include name="jboss-logging-3.1.3.GA.jar"/>
+				<include name="jboss-logging-annotations-1.2.0.Beta1.jar"/>
+				<include name="jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
+				<include name="jcommon-1.0.16.jar"/>
+				<include name="jfreechart-1.0.13.jar"/>
+				<include name="libbase-5.4.0.1-130.jar"/>
 				<include name="libdocbundle-5.4.0.1-130.jar"/>
+				<include name="libfonts-5.4.0.1-130.jar"/>
+				<include name="libformat-5.4.0.1-130.jar"/>
+				<include name="libformula-5.4.0.1-130.jar"/>
+				<include name="libformula-ui-5.4.0.1-130.jar"/>
+				<include name="libloader-5.4.0.1-130.jar"/>
+				<include name="libpensol-5.4.0.1-130.jar"/>
+				<include name="libpixie-5.4.0.1-130.jar"/>
+				<include name="librepository-5.4.0.1-130.jar"/>
+				<include name="libserializer-5.4.0.1-130.jar"/>
+				<include name="libsparkline-5.4.0.1-130.jar"/>
+				<include name="libswing-5.4.0.1-130.jar"/>
+				<include name="libxml-5.4.0.1-130.jar"/>
+				<include name="log4j-1.2.17.jar"/>
+				<include name="mysql-connector-java-5.1.18-bin.jar"/>
+				<include name="pentaho-reporting-engine-classic-core-5.4.0.1-130.jar"/>
+				<include name="pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar"/>
+				<include name="pentaho-reporting-engine-legacy-charts-5.4.0.1-130.jar"/>
+				<include name="pentaho-reporting-engine-legacy-functions-5.4.0.1-130.jar"/>
+				<include name="pentaho-reporting-engine-wizard-core-5.4.0.1-130.jar"/>
+				<include name="pentaho-reporting-engine-wizard-xul-5.4.0.1-130.jar"/>
+				<include name="poi-3.9.jar"/>
+				<include name="poi-ooxml-3.9.jar"/>
+				<include name="poi-ooxml-schemas-3.9.jar"/>
+				<include name="report-designer-ext-legacy-charts-5.4.0.1-130.jar"/>
+				<include name="servlet-api-2.3.jar"/>
 				<include name="spring-aop-4.1.5.RELEASE.jar"/>
 				<include name="spring-beans-4.1.5.RELEASE.jar"/>
-				<include name="libxml-5.4.0.1-130.jar"/>
-				<include name="libformat-5.4.0.1-130.jar"/>
-				<include name="libformula-ui-5.4.0.1-130.jar"/>
-				<include name="hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
-				<include name="jboss-transaction-api_1.2_spec-1.0.0.Final.jar"/>
-				<include name="jandex-1.1.0.Final.jar"/>
-				<include name="jboss-logging-3.1.3.GA.jar"/>
-				<include name="log4j-1.2.17.jar"/>
-				<include name="aopalliance-1.0.jar"/>
-				<include name="hibernate-core-4.3.10.Final.jar"/>
-				<include name="spring-expression-4.1.5.RELEASE.jar"/>
-				<include name="poi-ooxml-3.9.jar"/>
-				<include name="antlr-2.7.7.jar"/>
-				<include name="spring-tx-4.1.6.RELEASE.jar"/>
-				<include name="spring-jdbc-4.1.5.RELEASE.jar"/>
+				<include name="spring-context-4.1.5.RELEASE.jar"/>
 				<include name="spring-core-4.1.5.RELEASE.jar"/>
-				<include name="librepository-5.4.0.1-130.jar"/>
+				<include name="spring-expression-4.1.5.RELEASE.jar"/>
+				<include name="spring-jdbc-4.1.5.RELEASE.jar"/>
+				<include name="spring-jms-4.1.5.RELEASE-javadoc.jar"/>
+				<include name="spring-orm-4.1.5.RELEASE.jar"/>
+				<include name="spring-tx-4.1.6.RELEASE.jar"/>
+				<include name="spring-web-4.1.5.RELEASE.jar"/>
+				<include name="spring-webmvc-4.1.5.RELEASE.jar"/>
+				<include name="spring-websocket-4.1.5.RELEASE.jar"/>
+				<include name="bsf-2.4.0.jar"/>
 			</fileset>
 		</copy>
 	

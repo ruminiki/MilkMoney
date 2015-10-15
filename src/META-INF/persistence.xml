@@ -33,7 +33,6 @@
 		<class>br.com.milkmoney.model.Touro</class>
 		<class>br.com.milkmoney.model.Indicador</class>
 		<class>br.com.milkmoney.model.Parametro</class>
-		<class>br.com.milkmoney.model.ConfirmacaoPrenhes</class>
 		<class>br.com.milkmoney.model.Lactacao</class>
 		<class>br.com.milkmoney.model.FichaAnimal</class>
 		<class>br.com.milkmoney.model.Propriedade</class>

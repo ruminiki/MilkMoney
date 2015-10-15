@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="402.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
+<AnchorPane prefHeight="211.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -50,51 +50,19 @@
                   </GridPane>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
                      <children>
-                        <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAdicionar" text="Adicionar">
+                        <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                      </children>
-                     <VBox.margin>
-                        <Insets right="5.0" />
-                     </VBox.margin>
                      <padding>
-                        <Insets bottom="5.0" />
+                        <Insets bottom="5.0" right="3.0" />
                      </padding>
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER" maxHeight="20.0" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
-               <children>
-                  <Label text="DIAGNÓSTICOS" />
-               </children>
-            </HBox>
-            <VBox VBox.vgrow="SOMETIMES">
-               <children>
-                  <TableView fx:id="table" cacheShape="false" focusTraversable="false" VBox.vgrow="ALWAYS">
-                    <columns>
-                      <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                        <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="100.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />
-                      <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="-1.0" minWidth="170.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
-                        <TableColumn fx:id="removerColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Remover" />
-                    </columns>
-                  </TableView>
-               </children>
-            </VBox>
-            <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
-               <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSalvar" text="Salvar">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
-               </children>
-               <padding>
-                  <Insets bottom="5.0" />
-               </padding>
-            </HBox>
          </children>
       </VBox>
    </children>

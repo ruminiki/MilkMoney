@@ -43,8 +43,6 @@
 	<classpathentry kind="lib" path="lib/libxml-5.4.0.1-130.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.18-bin.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.persistence.jpa.modelgen_2.5.2.v20140319-9ad6abd.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.persistence.jpars_2.5.2.v20140319-9ad6abd.jar"/>
 	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-core-5.4.0.1-130.jar"/>
 	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar"/>
 	<classpathentry kind="lib" path="lib/pentaho-reporting-engine-legacy-charts-5.4.0.1-130.jar"/>

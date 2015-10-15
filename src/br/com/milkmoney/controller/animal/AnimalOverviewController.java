@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -38,7 +39,6 @@ import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.Parametro;
@@ -153,134 +153,132 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Override
 	protected void selectRowTableHandler(Animal animal) {
 		super.selectRowTableHandler(animal);
-		if ( animal != null ){
-			
-			fichaAnimal = fichaAnimalService.generateFichaAnimal(animal);
-			
-			if ( fichaAnimal != null ){
-				lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());
-				lblDataUltimaCobertura.setText(fichaAnimal.getDataUltimaCobertura() != null ? DateUtil.format(fichaAnimal.getDataUltimaCobertura()) : "--"); 
-				lblProximoServico.setText(fichaAnimal.getProximoServico() != null ? DateUtil.format(fichaAnimal.getProximoServico()) : "--"); 
-				lblNumeroPartos.setText(""+fichaAnimal.getNumeroPartos() + " - "  + fichaAnimal.getNumeroCriasFemea() + "F" + " - " + fichaAnimal.getNumeroCriasMacho() + "M"); 
-				lblIdadePrimeiroParto.setText(""+fichaAnimal.getIdadePrimeiroParto());
-				lblIdadePrimeiraCobertura.setText(fichaAnimal.getIdadePrimeiraCobertura()); 
-				lblDiasEmLactacao.setText(fichaAnimal.getDiasEmLactacao()); 
-				lblDiasEmAberto.setText(fichaAnimal.getDiasEmAberto()); 
-				lblIntervaloPrimeiroParto.setText(fichaAnimal.getIntervaloEntrePartos());
-				lblDataSecar.setText(fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null ? DateUtil.format(fichaAnimal.getDataPrevisaoEncerramentoLactacao()) : "--");
-				lblDataProximoParto.setText(fichaAnimal.getDataProximoParto() != null ? DateUtil.format(fichaAnimal.getDataProximoParto()) : "--");	
-				lblDataUltimoParto.setText(fichaAnimal.getDataUltimoParto() != null ? DateUtil.format(fichaAnimal.getDataUltimoParto()) : "--");
-				lblSituacaoUltimaCobertura.setText(fichaAnimal.getSituacaoUltimaCobertura());
-				
-				//links
-				hlVisualizarUltimoParto.setVisible(fichaAnimal.getDataUltimoParto() != null);
-				if (fichaAnimal.getDataUltimoParto() != null){
-					hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							partoFormController.setObject(partoService.findLastParto(getObject()));
-							partoFormController.showForm();
-							setObject(service.findById(getObject().getId()));
-							table.getSelectionModel().select(getObject());
-						}
-					});
-				}
-				
-				hlSecarAnimal.setVisible(fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null);
-				if (fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null){
-					hlSecarAnimal.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							encerrarLactacaoAnimal.apply(table.getItems().indexOf(getObject()));
-						}
-					});
-				}
-				
-				hlRegistrarParto.setVisible(fichaAnimal.getDataProximoParto() != null);
-				if (fichaAnimal.getDataProximoParto() != null){
-					hlRegistrarParto.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
-							if ( cobertura != null && cobertura.getParto() == null ){
-								
-								CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
-								
-								partoFormController.setState(State.CREATE_TO_SELECT);
-								partoFormController.setObject(new Parto(cobertura));
-								partoFormController.showForm();
-								
-								if ( partoFormController.getObject() != null ){
-									cobertura.setParto(partoFormController.getObject());
-									coberturaService.registrarParto(cobertura);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if ( animal != null ){
+					
+					fichaAnimal = fichaAnimalService.generateFichaAnimal(animal);
+					
+					if ( fichaAnimal != null ){
+						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());
+						lblDataUltimaCobertura.setText(fichaAnimal.getDataUltimaCobertura() != null ? DateUtil.format(fichaAnimal.getDataUltimaCobertura()) : "--"); 
+						lblProximoServico.setText(fichaAnimal.getProximoServico() != null ? DateUtil.format(fichaAnimal.getProximoServico()) : "--"); 
+						lblNumeroPartos.setText(""+fichaAnimal.getNumeroPartos() + " - "  + fichaAnimal.getNumeroCriasFemea() + "F" + " - " + fichaAnimal.getNumeroCriasMacho() + "M"); 
+						lblIdadePrimeiroParto.setText(""+fichaAnimal.getIdadePrimeiroParto());
+						lblIdadePrimeiraCobertura.setText(fichaAnimal.getIdadePrimeiraCobertura()); 
+						lblDiasEmLactacao.setText(fichaAnimal.getDiasEmLactacao()); 
+						lblDiasEmAberto.setText(fichaAnimal.getDiasEmAberto()); 
+						lblIntervaloPrimeiroParto.setText(fichaAnimal.getIntervaloEntrePartos());
+						lblDataSecar.setText(fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null ? DateUtil.format(fichaAnimal.getDataPrevisaoEncerramentoLactacao()) : "--");
+						lblDataProximoParto.setText(fichaAnimal.getDataProximoParto() != null ? DateUtil.format(fichaAnimal.getDataProximoParto()) : "--");	
+						lblDataUltimoParto.setText(fichaAnimal.getDataUltimoParto() != null ? DateUtil.format(fichaAnimal.getDataUltimoParto()) : "--");
+						lblSituacaoUltimaCobertura.setText(fichaAnimal.getSituacaoUltimaCobertura());
+						
+						//links
+						hlVisualizarUltimoParto.setVisible(fichaAnimal.getDataUltimoParto() != null);
+						if (fichaAnimal.getDataUltimoParto() != null){
+							hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									partoFormController.setObject(partoService.findLastParto(getObject()));
+									partoFormController.showForm();
 									setObject(service.findById(getObject().getId()));
 									table.getSelectionModel().select(getObject());
-								}	
+								}
+							});
+						}
+						
+						hlSecarAnimal.setVisible(fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null);
+						if (fichaAnimal.getDataPrevisaoEncerramentoLactacao() != null){
+							hlSecarAnimal.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									encerrarLactacaoAnimal.apply(table.getItems().indexOf(getObject()));
+								}
+							});
+						}
+						
+						hlRegistrarParto.setVisible(fichaAnimal.getDataProximoParto() != null);
+						if (fichaAnimal.getDataProximoParto() != null){
+							hlRegistrarParto.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
+									if ( cobertura != null && cobertura.getParto() == null ){
+										
+										CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
+										
+										partoFormController.setState(State.CREATE_TO_SELECT);
+										partoFormController.setObject(new Parto(cobertura));
+										partoFormController.showForm();
+										
+										if ( partoFormController.getObject() != null ){
+											cobertura.setParto(partoFormController.getObject());
+											coberturaService.registrarParto(cobertura);
+											setObject(service.findById(getObject().getId()));
+											table.getSelectionModel().select(getObject());
+										}	
+									}
+								}
+							});
+						}
+						
+						hlEditarCobertura.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
+						if ( fichaAnimal.getDataUltimaCobertura() != null ){
+							hlEditarCobertura.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
+									if ( cobertura != null ){
+										coberturaFormController.setObject(cobertura);
+										coberturaFormController.showForm();
+										setObject(service.findById(getObject().getId()));
+										table.getSelectionModel().select(getObject());
+									}
+								}
+							});
+						}
+						
+						hlRegistrarCobertura.setVisible(fichaAnimal.getProximoServico() != null);
+						if ( fichaAnimal.getProximoServico() != null ){
+							hlRegistrarCobertura.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									coberturaFormController.setObject(new Cobertura(getObject()));
+									coberturaFormController.showForm();
+									setObject(service.findById(getObject().getId()));
+									table.getSelectionModel().select(getObject());
+								}
+							});
+						}
+						
+						hlConfirmarPrenhes.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
+						if ( fichaAnimal.getDataUltimaCobertura() != null ){
+							if ( fichaAnimal.getSituacaoUltimaCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
+								hlConfirmarPrenhes.setText("confirmar");
+							}else{
+								hlConfirmarPrenhes.setText("visualizar");
 							}
+							hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
+								@Override
+								public void handle(ActionEvent arg0) {
+									Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
+									if ( cobertura != null ){
+										confirmacaoPrenhesFormController.setObject(cobertura);
+								    	confirmacaoPrenhesFormController.showForm();
+							    		setObject(service.findById(getObject().getId()));
+							    		table.getSelectionModel().select(getObject());
+									}
+								}
+							});
 						}
-					});
-				}
-				
-				hlEditarCobertura.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
-				if ( fichaAnimal.getDataUltimaCobertura() != null ){
-					hlEditarCobertura.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
-							if ( cobertura != null ){
-								coberturaFormController.setObject(cobertura);
-								coberturaFormController.showForm();
-								setObject(service.findById(getObject().getId()));
-								table.getSelectionModel().select(getObject());
-							}
-						}
-					});
-				}
-				
-				hlRegistrarCobertura.setVisible(fichaAnimal.getProximoServico() != null);
-				if ( fichaAnimal.getProximoServico() != null ){
-					hlRegistrarCobertura.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							coberturaFormController.setObject(new Cobertura(getObject()));
-							coberturaFormController.showForm();
-							setObject(service.findById(getObject().getId()));
-							table.getSelectionModel().select(getObject());
-						}
-					});
-				}
-				
-				hlConfirmarPrenhes.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
-				if ( fichaAnimal.getDataUltimaCobertura() != null ){
-					if ( fichaAnimal.getSituacaoUltimaCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
-						hlConfirmarPrenhes.setText("confirmar");
-					}else{
-						hlConfirmarPrenhes.setText("visualizar");
 					}
-					hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
-						@Override
-						public void handle(ActionEvent arg0) {
-							Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
-							if ( cobertura != null ){
-								confirmacaoPrenhesFormController.setState(State.CREATE_TO_SELECT);
-								confirmacaoPrenhesFormController.setObject(new ConfirmacaoPrenhes(cobertura));
-						    	confirmacaoPrenhesFormController.showForm();
-						    	
-						    	if ( !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-						    		coberturaService.saveConfirmacaoPrenhes(cobertura);
-						    		setObject(service.findById(getObject().getId()));
-						    		table.getSelectionModel().select(getObject());
-						    	}
-							}
-						}
-					});
+					
+					lblAnimal.setText(animal.toString());
 				}
 			}
-			
-			lblAnimal.setText(animal.toString());
-			
-		}
-		
+		});
 	}
 	
 	@Override
@@ -324,11 +322,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				coberturaOverviewController.setObject(new Cobertura(getObject()));
 				coberturaOverviewController.setFemea(getObject());
 				//se o animal tiver morto ou vendido apenas consulta as coberturas
-				if ( getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO) ){
-					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
-					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
-					coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
-				}
+				boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, disabled);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
 				coberturaOverviewController.showForm();
 				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}else{
@@ -347,11 +344,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				
 				//se o animal tiver morto ou vendido habilita apenas consulta
-				if ( getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO) ){
-					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
-					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
-					producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);
-				}
+				boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);
+				producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, disabled);
+				producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
+				producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
 				
 				producaoIndividualOverviewController.setAnimal(getObject());
 				producaoIndividualOverviewController.showForm();

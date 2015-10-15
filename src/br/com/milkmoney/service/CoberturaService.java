@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.ConfirmacaoPrenhes;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -32,7 +29,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Autowired private CoberturaDao dao;
 	@Autowired private PartoService partoService;
 	@Autowired private ParametroService parametroService;
-	@Autowired private ConfirmacaoPrenhesService confirmacaoPrenhesService;
 
 	@Override
 	@Transactional
@@ -48,28 +44,22 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	
 	@Transactional
 	public void registrarParto(Cobertura cobertura) {
+		
 		try{
-			
-			cobertura.setSituacaoCobertura(SituacaoCobertura.PARIDA);
 			dao.persist(cobertura);
-			
 		}catch(Exception e){
 			cobertura.setParto(null);
 			throw new RuntimeException(e);
 		}
+		
 	}
 
 	@Transactional
 	public void removerParto(Cobertura cobertura) {
 		
 		try{
-			
 			cobertura.setParto(null);
-			//reconfigura situação cobertura
-			ConfirmacaoPrenhes cp = confirmacaoPrenhesService.findLastByCobertura(cobertura);
-			cobertura.setSituacaoCobertura(cp != null ? cp.getSituacaoCobertura() : SituacaoCobertura.NAO_CONFIRMADA);
 			dao.persist(cobertura);
-
 		}catch(Exception e){
 			throw new RuntimeException(e);
 		}
@@ -84,31 +74,6 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	@Transactional
 	public boolean remove(Cobertura cobertura) {
 		return dao.remove(cobertura);
-	}
-	
-	@Transactional
-	public void saveConfirmacaoPrenhes(Cobertura cobertura) {
-		
-		//ordena as confirmações pela data para recuperar a última situação
-		
-		Collections.sort(cobertura.getConfirmacoesPrenhes(), new Comparator<ConfirmacaoPrenhes>() {
-		    @Override
-		    public int compare(ConfirmacaoPrenhes cp1, ConfirmacaoPrenhes cp2) {
-		        return cp1.getData().compareTo(cp2.getData());
-		    }
-		});
-		
-		//recupera o último registro de confirmação (a maior data)
-		if ( cobertura.getConfirmacoesPrenhes() != null && cobertura.getConfirmacoesPrenhes().size() > 0 ){
-			ConfirmacaoPrenhes cp = cobertura.getConfirmacoesPrenhes().get(cobertura.getConfirmacoesPrenhes().size()-1);
-			cobertura.setSituacaoCobertura(cp.getSituacaoCobertura());
-		}else{
-			cobertura.setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
-		}
-		
-		//salva em cascata as confirmações registradas dentro da mesma transação
-		save(cobertura);
-		
 	}
 	
 	@Override
@@ -217,9 +182,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			}
 			
 			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) ){
-				ConfirmacaoPrenhes cp = confirmacaoPrenhesService.findLastByCobertura(cobertura);
-				if ( cp != null )
-					return DateUtil.asDate(DateUtil.asLocalDate(cp.getData()).plusDays(21));
+				if ( cobertura.getDataConfirmacaoPrenhes() != null )
+					return DateUtil.asDate(DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhes()).plusDays(21));
 			}
 		}
 		
@@ -240,10 +204,9 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			Cobertura primeiraCoberturaAposParto = dao.findFirstAfterDate(animal, ultimoParto.getData());
 			
 			if ( primeiraCoberturaAposParto != null ){
-				ConfirmacaoPrenhes confirmacao = confirmacaoPrenhesService.findLastByCobertura(primeiraCoberturaAposParto);
 				//A data da concepção das vacas gestantes
-				if ( confirmacao != null && confirmacao.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
-					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(confirmacao.getData()));
+				if ( primeiraCoberturaAposParto.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
+					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(primeiraCoberturaAposParto.getDataConfirmacaoPrenhes()));
 				}else{
 					//A data da última cobertura das vacas ainda não confirmadas gestantes
 					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(primeiraCoberturaAposParto.getData()));

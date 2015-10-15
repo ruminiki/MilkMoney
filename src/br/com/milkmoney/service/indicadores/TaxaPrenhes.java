@@ -19,6 +19,13 @@ import br.com.milkmoney.service.CoberturaService;
  * 2 - Taxa de detecção de cio ou taxa de serviço. 
  * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
  * 
+ * **Correção
+ * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=2394
+ * Então, Taxa de prenhez = Taxa de serviço x Taxa de concepção
+ * 
+ * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=1405
+ * 
+ * 
  * @author ruminiki
  */
 

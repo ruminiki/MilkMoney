@@ -75,10 +75,6 @@ SELECT * FROM (SELECT 'NÚMERO DE SERVIÇOS POR CONCEPÇÃO', 'NSPC', 19, '1', '3', 
 'Número de serviços necessários até que se atinja a concepção.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'NSPC');
 
 INSERT INTO INDICADOR (descricao, sigla, ordem, menorValorIdeal, maiorValorIdeal, classeCalculo, definicao) 
-SELECT * FROM (SELECT 'PERÍODO DE SERVIÇO', 'PS', 20, '85', '120', 'br.com.milkmoney.service.indicadores.PeriodoDeServico',
-'Para obter um intervalo entre partos entre 12 e 13 meses, é necessário que o Período de Serviço de um rebanho varie de 85 a 120 dias.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'PS');
-
-INSERT INTO INDICADOR (descricao, sigla, ordem, menorValorIdeal, maiorValorIdeal, classeCalculo, definicao) 
 SELECT * FROM (SELECT 'INTERVALO ENTRE PARTOS PROJETADO', 'IEPP', 21, '12', '15', 'br.com.milkmoney.service.indicadores.IntervaloEntrePartosProjetado',
 'O objetivo dessa comparação é saber se a eficiência reprodutiva da propriedade nos últimos 9 meses esta melhorando, se mantendo ou piorando.') AS T WHERE NOT EXISTS (SELECT 1 FROM INDICADOR WHERE SIGLA = 'IEPP');
 
