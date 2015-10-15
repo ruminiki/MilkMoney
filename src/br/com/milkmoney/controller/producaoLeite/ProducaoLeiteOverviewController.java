@@ -5,18 +5,14 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,9 +22,7 @@ import br.com.milkmoney.components.PropertyDecimalValueFactory;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.precoLeite.PrecoLeiteFormController;
-import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualExternalFormController;
 import br.com.milkmoney.model.PrecoLeite;
-import br.com.milkmoney.model.ProducaoIndividual;
 import br.com.milkmoney.model.ProducaoLeite;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.AnimalService;
@@ -62,7 +56,6 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	@Autowired private ProducaoLeiteService service;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	@Autowired private PrecoLeiteFormController precoLeiteFormController;
-	@Autowired private ProducaoIndividualExternalFormController producaoIndividualExternalFormController;
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private int selectedMesReferencia = LocalDate.now().getMonthValue();
@@ -81,30 +74,6 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("observacao"));
 		
 		numeroVacasOrdenhadasColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("numeroVacasOrdenhadas"));
-		numeroVacasOrdenhadasColumn.setCellFactory(new Callback<TableColumn<ProducaoLeite,String>, TableCell<ProducaoLeite,String>>(){
-			@Override
-			public TableCell<ProducaoLeite, String> call(TableColumn<ProducaoLeite, String> param) {
-				TableCell<ProducaoLeite, String> cell = new TableCell<ProducaoLeite, String>(){
-					@Override
-					public void updateItem(String item, boolean empty) {
-						if(item!=null){
-							Hyperlink link = new Hyperlink();
-							link.setText(item);
-							link.setFocusTraversable(false);
-							link.setOnAction(new EventHandler<ActionEvent>() {
-							    @Override
-							    public void handle(ActionEvent e) {
-							    	object = data.get(getTableRow().getIndex());
-							    	handleCadastrarProducaoIndividual();
-							    }
-							});
-							setGraphic(link);
-						} 
-					}
-				};                           
-				return cell;
-			}
-		});
 
 		groupMes.getToggles().clear();
 		groupMes.getToggles().addAll(tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez);
@@ -273,16 +242,6 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 			service.recarregaPrecoLeite(data, meses.get(selectedMesReferencia-1), selectedAnoReferencia);
 			this.resume();
 		}
-		
-	}
-	
-	/**
-	 * Abre formulário para cadastrar a produção individual de um animal
-	 */
-	protected void handleCadastrarProducaoIndividual() {
-		producaoIndividualExternalFormController.setObject(new ProducaoIndividual(getObject().getData()));
-		producaoIndividualExternalFormController.setSelectedDate(getObject().getData());
-		producaoIndividualExternalFormController.showForm();
 		
 	}
 

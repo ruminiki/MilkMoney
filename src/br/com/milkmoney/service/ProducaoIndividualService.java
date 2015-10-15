@@ -37,26 +37,16 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		ProducaoIndividual producaoIndividual = findByAnimalAndData(entity.getAnimal(), entity.getData());
 		
 		if ( producaoIndividual != null ){
-			producaoIndividual.setPrimeiraOrdenha(entity.getPrimeiraOrdenha());
+			/*producaoIndividual.setPrimeiraOrdenha(entity.getPrimeiraOrdenha());
 			producaoIndividual.setSegundaOrdenha(entity.getSegundaOrdenha());
 			producaoIndividual.setTerceiraOrdenha(entity.getTerceiraOrdenha());
-			entity.setId(producaoIndividual.getId());
+			entity.setId(producaoIndividual.getId());*/
 			
-			ProducaoIndividualValidation.validate(entity);
-			
-			return dao.persist(atualizaValor(producaoIndividual));	
-		}else{
-			//quando a produção é cadastrada pela tela de registro da produção diária do rebanho, não há a seleção da lactação
-			//por isso a seleção é feita aqui
-			if ( entity.getLactacao() == null ){
-				entity.setLactacao(lactacaoService.findLactacaoAnimal(entity.getAnimal(), entity.getData()));
-				ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), entity.getLactacao() != null);
-			}
-			
-			ProducaoIndividualValidation.validate(entity);
-			return dao.persist(entity);
-			
+			entity = producaoIndividual;
+			//ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.isInLactacao(entity.getData(), entity.getAnimal()));
 		}
+		ProducaoIndividualValidation.validate(entity);
+		return dao.persist(entity);
 		
 	}
 	

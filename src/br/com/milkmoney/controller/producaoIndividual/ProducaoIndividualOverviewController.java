@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.PropertyDecimalValueFactory;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellIndexFactory;
@@ -109,6 +110,8 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		//seleciona a ultima lactacao
 		tableLactacoes.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
 		
+		lactacao = null;
+		
 	}
 	
 	private void selectRowLactacaoTableHandler(Lactacao newValue) {
@@ -124,11 +127,15 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 
 	@Override
 	public void handleNew() {
-		setObject(new ProducaoIndividual(animal, lactacao));
-		producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
-		producaoIndividualFormController.setState(State.INSERT);
-		producaoIndividualFormController.setObject(getObject());
-		producaoIndividualFormController.showForm();
+		if ( lactacao != null && lactacao.getId() > 0 ){
+			setObject(new ProducaoIndividual(animal, lactacao));
+			producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
+			producaoIndividualFormController.setState(State.INSERT);
+			producaoIndividualFormController.setObject(getObject());
+			producaoIndividualFormController.showForm();
+		}else{
+			CustomAlert.mensagemInfo("É necessário selecionar uma lactação para o registro da produção do animal.");
+		}
 	}
 	
 	@Override

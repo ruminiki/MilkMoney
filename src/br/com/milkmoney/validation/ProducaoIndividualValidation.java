@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import br.com.milkmoney.exception.ValidationException;
-import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.ProducaoIndividual;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.util.DateUtil;
@@ -41,15 +40,10 @@ public class ProducaoIndividualValidation extends Validator {
 						+ "Verifique se o animal selecionado está em lactação no dia " + DateUtil.format(producaoIndividual.getData()) + ".");
 			}
 			
+		}else{
+			throw new ValidationException(REGRA_NEGOCIO, "Para registrar a produção do animal é necessário selecionar uma lactação. Por favor, selecione a lactação e tente novamente.");
 		}
 		 
 	}
 
-	public static void validateAnimal(Animal animal, Boolean animalEstaEmLactacao) {
-		if ( !animalEstaEmLactacao ){
-			throw new ValidationException(REGRA_NEGOCIO, "O animal " + animal.getNumeroNome() + " não estava em lactação na data selecionada. "
-					+ "Por favor, selecione outro animal, ou verifique se a data de lançamento está correta.");
-		}
-		
-	}
 }
