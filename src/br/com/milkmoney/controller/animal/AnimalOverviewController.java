@@ -1,15 +1,19 @@
 package br.com.milkmoney.controller.animal;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -41,7 +45,7 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.MorteAnimal;
-import br.com.milkmoney.model.Parametro;
+import br.com.milkmoney.model.OptionChoiceFilter;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
@@ -59,24 +63,19 @@ import br.com.milkmoney.service.ParametroService;
 import br.com.milkmoney.service.PartoService;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
-import br.com.milkmoney.service.searchers.Search;
 import br.com.milkmoney.service.searchers.SearchAnimaisDisponiveisParaCobertura;
 import br.com.milkmoney.service.searchers.SearchAnimaisMortos;
 import br.com.milkmoney.service.searchers.SearchAnimaisVendidos;
-import br.com.milkmoney.service.searchers.SearchFemeas30DiasLactacao;
-import br.com.milkmoney.service.searchers.SearchFemeas60DiasLactacao;
 import br.com.milkmoney.service.searchers.SearchFemeasASecar;
 import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 import br.com.milkmoney.service.searchers.SearchFemeasCobertas;
 import br.com.milkmoney.service.searchers.SearchFemeasEmLactacao;
 import br.com.milkmoney.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
-import br.com.milkmoney.service.searchers.SearchFemeasMais60DiasLactacao;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoCobertas;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasAposXDiasAposParto;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasXDiasAposParto;
 import br.com.milkmoney.service.searchers.SearchFemeasSecas;
 import br.com.milkmoney.service.searchers.SearchMachos;
-import br.com.milkmoney.service.searchers.SearchReprodutoresAtivos;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
 import br.com.milkmoney.validation.MorteAnimalValidation;
@@ -98,6 +97,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
 	@FXML private VBox vBoxChart, sideBar;
+	
+	@FXML ChoiceBox<OptionChoiceFilter> choiceFilter;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
@@ -139,10 +140,39 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(registrarCoberturaAnimal, encerrarLactacaoAnimal, 
 																			  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
 																			  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
+		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
 		if ( table.getItems().size() > 0 )
 			table.getSelectionModel().select(0);
+		
+		if ( choiceFilter.getItems().size() <= 0 ){
+			choiceFilter.getItems().addAll(Arrays.asList(new OptionChoiceFilter[] {
+					new OptionChoiceFilter("Todos", null),
+					new OptionChoiceFilter("Fêmeas", (SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class)), 
+					new OptionChoiceFilter("Machos", (SearchMachos)MainApp.getBean(SearchMachos.class)),
+					new OptionChoiceFilter("Em lactação", (SearchFemeasEmLactacao)MainApp.getBean(SearchFemeasEmLactacao.class)),
+					new OptionChoiceFilter("Secas", (SearchFemeasSecas)MainApp.getBean(SearchFemeasSecas.class)),
+					new OptionChoiceFilter("Vendidas", (SearchAnimaisVendidos)MainApp.getBean(SearchAnimaisVendidos.class)),
+					new OptionChoiceFilter("Mortas", (SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class)),
+					new OptionChoiceFilter("Cobertas", (SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class)),
+					new OptionChoiceFilter("Não cobertas", (SearchFemeasNaoCobertas)MainApp.getBean(SearchFemeasNaoCobertas.class)),
+					new OptionChoiceFilter("A secar", (SearchFemeasASecar)MainApp.getBean(SearchFemeasASecar.class)),
+					new OptionChoiceFilter("Disponíveis para cobrir", (SearchAnimaisDisponiveisParaCobertura)MainApp.getBean(SearchAnimaisDisponiveisParaCobertura.class)),
+					new OptionChoiceFilter("Em Período Voluntário de Espera (PVE)", (SearchFemeasEmPeriodoVoluntarioEspera)MainApp.getBean(SearchFemeasEmPeriodoVoluntarioEspera.class)),
+					new OptionChoiceFilter("Não cobertas até 40 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{40}),
+					new OptionChoiceFilter("Não cobertas até 60 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{60}),
+					new OptionChoiceFilter("Não cobertas até 85 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{85}),
+					new OptionChoiceFilter("Não cobertas + 85 dias após parto", (SearchFemeasNaoPrenhasAposXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasAposXDiasAposParto.class), new Object[]{85})
+			}));
+		}
+		choiceFilter.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<OptionChoiceFilter>() {
+			@Override
+			public void changed(ObservableValue<? extends OptionChoiceFilter> observable,	OptionChoiceFilter oldValue, OptionChoiceFilter newValue) {
+				doSearch(newValue);
+			}
+		});
+		
 		
 		chart = new PieChart(((AnimalService)service).getChartData());
 	    chart.setTitle("Situação Animais Rebanho");
@@ -451,110 +481,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	//-------------FILTRO RÁPIDO----------------------------------
 	
-	@FXML
-	private void handleFindFemeas(){
-		doSearchAnimais((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
-	}
-	
-	@FXML
-	private void handleFindMachos(){
-		doSearchAnimais((SearchMachos)MainApp.getBean(SearchMachos.class));
-	}
-	
-	@FXML
-	private void handleFindReprodutores(){
-		doSearchAnimais((SearchReprodutoresAtivos)MainApp.getBean(SearchReprodutoresAtivos.class));
-	}
-	
-	@FXML
-	private void handleFindFemeasEmLactacao(){
-		doSearchAnimais((SearchFemeasEmLactacao)MainApp.getBean(SearchFemeasEmLactacao.class));
-	}
-	
-	
-	@FXML
-	private void handleFindFemeasCobertas(){
-		doSearchAnimais((SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class));
-	}
-	
-	@FXML
-	private void handleFindFemeasNaoCobertas(){
-		doSearchAnimais((SearchFemeasNaoCobertas)MainApp.getBean(SearchFemeasNaoCobertas.class));
-	}
-	
-	@FXML
-	private void handleFindFemeas30DiasLactacao(){
-		doSearchAnimais((SearchFemeas30DiasLactacao)MainApp.getBean(SearchFemeas30DiasLactacao.class));
-	}
-	
-	@FXML
-	private void handleFindFemeas60DiasLactacao(){
-		doSearchAnimais((SearchFemeas60DiasLactacao)MainApp.getBean(SearchFemeas60DiasLactacao.class));
-	}
-	
-	@FXML
-	private void handleFindFemeasMais60DiasLactacao(){
-		doSearchAnimais((SearchFemeasMais60DiasLactacao)MainApp.getBean(SearchFemeasMais60DiasLactacao.class));
-	}
-	
-	@FXML
-	private void handleFindFemeasASecar(){
-		doSearchAnimais((SearchFemeasASecar)MainApp.getBean(SearchFemeasASecar.class));
-	}
-	
-	@FXML
-	private void handleFindFemeasSecas(){
-		doSearchAnimais((SearchFemeasSecas)MainApp.getBean(SearchFemeasSecas.class));
-	}
-	
-	@FXML
-	private void handleFindAnimaisVendidos(){
-		doSearchAnimais((SearchAnimaisVendidos)MainApp.getBean(SearchAnimaisVendidos.class));
-	}
-	
-	@FXML
-	private void handleFindAnimaisMortos(){
-		doSearchAnimais((SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class));
-	}
-	
-	//------FILTROS COBERTURA--
-	@FXML
-	private void handleBuscarFemeasDisponeisParaCobertura(){
-		doSearchAnimais((SearchAnimaisDisponiveisParaCobertura) MainApp.getBean(SearchAnimaisDisponiveisParaCobertura.class));
-	}
-	
-	@FXML
-	private void handleBuscarEmPeriodoVolutarioDeEspera(){
-		doSearchAnimais((SearchFemeasEmPeriodoVoluntarioEspera) MainApp.getBean(SearchFemeasEmPeriodoVoluntarioEspera.class));
-	}
-	
-	@FXML
-	private void handleBuscarNaoPrenhasPrimeiroCiclo(){
-		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),periodoVoluntarioEspera + 21);
-	}
-	
-	@FXML
-	private void handleBuscarNaoPrenhasSegundoCiclo(){
-		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),periodoVoluntarioEspera + 42);
-	}
-	
-	@FXML
-	private void handleBuscarNaoPrenhasTerceiroCiclo(){
-		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
-		doSearchAnimais((SearchFemeasNaoPrenhasXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class),periodoVoluntarioEspera + 63);
-	}
-	
-	@FXML
-	private void handleBuscarNaoPrenhasAposTerceiroCiclo(){
-		int periodoVoluntarioEspera = Integer.parseInt(parametroService.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
-		int primeiroCiclo = periodoVoluntarioEspera + 63;
-		doSearchAnimais((SearchFemeasNaoPrenhasAposXDiasAposParto) MainApp.getBean(SearchFemeasNaoPrenhasAposXDiasAposParto.class),primeiroCiclo);
-	}
-	
-	private void doSearchAnimais(Search<Integer, Animal> search, Object ...params){
-		setSearch(search, params);
+	@SuppressWarnings("unchecked")
+	private void doSearch(OptionChoiceFilter filter){
+		setSearch(filter.getSearch(), filter.getParams());
 		refreshTableOverview();
 	}
 	

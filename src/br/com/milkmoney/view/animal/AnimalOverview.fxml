@@ -20,10 +20,17 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="3.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="160.0">
+                     <children>
+                        <ChoiceBox fx:id="choiceFilter" minHeight="30.0" minWidth="180.0" prefHeight="30.0" prefWidth="177.0" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </VBox>
                   <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -36,6 +43,7 @@
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                      </children>
@@ -76,42 +84,7 @@
                   </TableView>
                   <VBox fx:id="sideBar" maxWidth="350.0" minWidth="350.0" style="-fx-border-color: #CCC;" HBox.hgrow="NEVER">
                      <children>
-                        <HBox VBox.vgrow="NEVER">
-                           <children>
-                              <MenuBar HBox.hgrow="ALWAYS">
-                                <menus>
-                                  <Menu mnemonicParsing="false" text="Filtro Animais">
-                                    <items>
-                                          <MenuItem mnemonicParsing="false" onAction="#clearFilter" text="Todos" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeas" text="Fêmeas" />
-                                      <MenuItem mnemonicParsing="false" onAction="#handleFindMachos" text="Machos" />
-                                          <SeparatorMenuItem mnemonicParsing="false" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasEmLactacao" text="Em Lactação" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasSecas" text="Secas" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindAnimaisVendidos" text="Vendidos" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindAnimaisMortos" text="Mortos" />
-                                          <SeparatorMenuItem mnemonicParsing="false" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasCobertas" text="Cobertas" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasNaoCobertas" text="Não Cobertas" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleFindFemeasASecar" text="Para Secar" />
-                                          <SeparatorMenuItem mnemonicParsing="false" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarFemeasDisponeisParaCobertura" text="Disponíveis para Cobrir" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarEmPeriodoVolutarioDeEspera" text="Em Período Voluntário de Espera (PVE)" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasPrimeiroCiclo" text="21 dias Após PVE" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasSegundoCiclo" text="42 dias Após PVE" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasTerceiroCiclo" text="63 dias Após PVE" />
-                                          <MenuItem mnemonicParsing="false" onAction="#handleBuscarNaoPrenhasAposTerceiroCiclo" text="Mais 63 dias Após PVE" />
-                                    </items>
-                                  </Menu>
-                                    <Menu mnemonicParsing="false" text="Opções">
-                                      <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />
-                                      </items>
-                                    </Menu>
-                                </menus>
-                              </MenuBar>
-                           </children>
-                        </HBox>
+                        <HBox VBox.vgrow="NEVER" />
                         <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
                            <children>
                               <Label text="Ficha Animal" />

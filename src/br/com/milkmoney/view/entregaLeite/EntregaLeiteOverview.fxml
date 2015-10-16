@@ -21,7 +21,12 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
                            <children>
-                              <Label fx:id="lblAno" alignment="CENTER" disable="true" text="0">
+                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -29,18 +34,11 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Label>
-                              <VBox alignment="CENTER" prefHeight="30.0" prefWidth="30.0">
-                                 <children>
-                                    <Button fx:id="btnIncrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="+" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font></Button>
-                                    <Button fx:id="btnDecrease" focusTraversable="false" maxHeight="15.0" maxWidth="25.0" minHeight="15.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="-" textAlignment="CENTER">
-                                       <font>
-                                          <Font size="8.0" />
-                                       </font></Button>
-                                 </children>
-                              </VBox>
+                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </HBox>
                         <Label text="Ano Referência">
@@ -52,8 +50,8 @@
                   </VBox>
                   <GridPane prefHeight="48.0" prefWidth="300.0">
                     <columnConstraints>
-                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="244.0" minWidth="200.0" prefWidth="200.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="300.0" minWidth="200.0" prefWidth="300.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -67,7 +65,7 @@
                            </font>
                         </Label>
                         <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="0.0" prefWidth="150.0" text="Valor Recebido (R$)" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label fx:id="lblTotalRecebido" alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="0.0" prefWidth="150.0" text="lblValorRecebido" textAlignment="CENTER" GridPane.columnIndex="1">
+                        <Label fx:id="lblTotalRecebido" alignment="CENTER" contentDisplay="CENTER" maxWidth="150.0" prefHeight="30.0" prefWidth="119.0" text="lblValorRecebido" textAlignment="CENTER" GridPane.columnIndex="1">
                            <font>
                               <Font size="20.0" />
                            </font>
