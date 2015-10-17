@@ -34,6 +34,7 @@ import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
+import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
@@ -121,6 +122,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private LactacaoOverviewController lactacaoOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
+	@Autowired private IndicadorOverviewController indicadorOverviewController;
 	@Autowired private PartoFormController partoFormController;
 	
 	private PieChart chart;
@@ -224,10 +226,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									partoFormController.setObject(partoService.findLastParto(getObject()));
-									partoFormController.showForm();
-									setObject(service.findById(getObject().getId()));
-									table.getSelectionModel().select(getObject());
+									if ( table.getSelectionModel().getSelectedIndex() < 0 ){
+										partoFormController.setObject(partoService.findLastParto(getObject()));
+										partoFormController.showForm();
+										setObject(service.findById(getObject().getId()));
+										table.getSelectionModel().select(getObject());
+									}else{
+										CustomAlert.nenhumRegistroSelecionado();
+									}
 								}
 							});
 						}
@@ -294,7 +300,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlRegistrarCobertura.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									coberturaFormController.setObject(new Cobertura(getObject()));
+									coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
 									coberturaFormController.showForm();
 									setObject(service.findById(getObject().getId()));
 									table.getSelectionModel().select(getObject());
@@ -503,6 +509,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private void doSearch(OptionChoiceFilter filter){
 		setSearch(filter.getSearch(), filter.getParams());
 		refreshTableOverview();
+	}
+	
+	@FXML 
+	private void handleOpenIndicadores(){
+		indicadorOverviewController.showForm();
 	}
 	
 	//------ANÁLISE REPORT----

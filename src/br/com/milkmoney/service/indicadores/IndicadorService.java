@@ -2,10 +2,10 @@ package br.com.milkmoney.service.indicadores;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +43,12 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		return dao.findAll(Indicador.class);
 	}
 	
-	public ObservableList<Indicador> findAllAsObservableList() {
-		return FXCollections.observableArrayList(dao.findAll(Indicador.class));
+	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos());
+	}
+	
+	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho());
 	}
 	
 	@Override
@@ -55,6 +59,11 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	@Override
 	public void validate(Indicador entity) {
 		IndicadorValidation.validate(entity);
+	}
+
+	@Override
+	public ObservableList<Indicador> findAllAsObservableList() {
+		return null;
 	}
 	
 	

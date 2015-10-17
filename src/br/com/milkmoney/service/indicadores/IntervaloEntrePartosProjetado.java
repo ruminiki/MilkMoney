@@ -24,14 +24,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class IntervaloEntrePartosProjetado extends AbstractCalculadorIndicador{
 
-	@Autowired private DiasEmAberto diasEmAbertoService;
+	@Autowired private IntervaloPartoAteConcepcao diasEmAbertoService;
 	
 	@Override
 	public BigDecimal getValue() {
 
 		BigDecimal diasEmAberto = diasEmAbertoService.getValue();
 		//TODO solicitar essa informação do usuário
-		BigDecimal periodoGestacaoRaca = BigDecimal.valueOf(279);
+		BigDecimal periodoGestacaoRaca = BigDecimal.valueOf(282);
 		
 		return diasEmAberto.add(periodoGestacaoRaca).divide(BigDecimal.valueOf(30.5),2,RoundingMode.HALF_EVEN);
 		

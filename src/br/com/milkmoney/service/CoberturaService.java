@@ -138,14 +138,25 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	public int getNumeroServicosAtePrenhes(Animal animal) {
+
+		Parto parto = partoService.findLastParto(animal);
+		if ( parto != null ){
+			List<Cobertura> coberturas = dao.findAllAfterDate(animal, parto.getData());
+			
+			//se o animal tem coberturas após o parto, conta elas, senão tenta buscar do parto anterior
+			if ( coberturas.size() > 0 ){
+				return coberturas.size();
+			}
+			
+		}
 		
 		List<Cobertura> coberturas = dao.findByAnimal(animal);
 		int index = 0;
 		
 		for (Cobertura cobertura : coberturas){
 			//conta quantas coberturas não tiveram parto, antes da última
-			if ( !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ) index++;
-			else break;
+			index++;
+			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ) break;
 		}
 		
 		return index;

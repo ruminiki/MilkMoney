@@ -17,6 +17,8 @@
 - Número de serviços
 - Dias em aberto / Período de Serviço;
 
+- verificar igualdade dos indicadores DEL e Media dias Pos Parto.
+- gerar relatório números do rebanho (para indicadores quantitativos)
 
 
 --Relatórios

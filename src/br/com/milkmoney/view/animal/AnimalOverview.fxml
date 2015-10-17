@@ -41,6 +41,7 @@
                   <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleOpenIndicadores" text="Indicadores" />
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />

@@ -4,11 +4,17 @@ import java.util.function.Function;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.BoxIndicador;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
@@ -21,7 +27,7 @@ import br.com.milkmoney.service.indicadores.IndicadorService;
 @Controller
 public class IndicadorOverviewController {
 
-	@FXML private GridPane grid;
+	@FXML private GridPane gridIndicadoresZootecnicos, gridQuantitativosRebanho;
 	@Autowired private IndicadorService service;
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RelatorioService relatorioService;
@@ -32,11 +38,10 @@ public class IndicadorOverviewController {
 	
 	@FXML
 	public void initialize() {
-		
-		data = service.findAllAsObservableList();
-		
-		int row = 0;
+		//zootécnicos
+		data = service.findAllIndicadoresZootecnicosAsObservableList();
 		int col = 0;
+		int row = 0;
 		
 		for ( Indicador indicador : data ){
 			
@@ -50,9 +55,31 @@ public class IndicadorOverviewController {
 				row++;
 			}
 			
-			grid.getChildren().add(box);
+			gridIndicadoresZootecnicos.getChildren().add(box);
 			
 		}
+		
+		//quantitativos
+		/*data = service.findAllQuantitativosRebanhoAsObservableList();
+		
+		int row = 0;
+		col = 0;
+		
+		for ( Indicador indicador : data ){
+			
+			BoxIndicador box = new BoxIndicador(indicador, editIndicador);
+			GridPane.setConstraints(box, col, row);
+			
+			col++;
+			
+			if ( col == 5 ){
+				col = 0;
+				row++;
+			}
+			
+			gridQuantitativosRebanho.getChildren().add(box);
+			
+		}*/
 		
 	}
 	
@@ -66,6 +93,22 @@ public class IndicadorOverviewController {
 		}
 		return true;
 	};
+	
+	public void showForm() {	
+		
+		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
+		Stage dialogStage = new Stage();
+		dialogStage.setTitle(getFormTitle());
+		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
+		dialogStage.initModality(Modality.APPLICATION_MODAL);
+		dialogStage.initOwner(MainApp.primaryStage);
+
+		Scene scene = new Scene(form);
+		dialogStage.setScene(scene);
+
+		dialogStage.setResizable(false);
+		dialogStage.showAndWait();
+	}
 	
 	@FXML
 	private void handleImprimirIndicadores(){

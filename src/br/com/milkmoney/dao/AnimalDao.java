@@ -442,4 +442,16 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return (BigInteger) query.getSingleResult();
 	}
 
+
+	@SuppressWarnings("unchecked")
+	public List<Animal> findFemeasCobertasSemParto() {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
+				+ "exists (select 1 from Cobertura c where c.femea.id = a.id ) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea.id = a.id )");
+		
+		return query.getResultList();
+	}
+	
 }

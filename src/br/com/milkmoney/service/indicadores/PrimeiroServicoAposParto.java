@@ -50,7 +50,7 @@ import br.com.milkmoney.util.DateUtil;
 
 
 @Service
-public class DiasPosPartoNoPrimeiroServico extends AbstractCalculadorIndicador{
+public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 
 	@Autowired private PartoDao partoDao;
 	@Autowired private AnimalDao animalDao;

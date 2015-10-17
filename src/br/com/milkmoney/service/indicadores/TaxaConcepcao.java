@@ -41,7 +41,7 @@ import br.com.milkmoney.service.CoberturaService;
 
 
 @Service
-public class TaxaPrenhes extends AbstractCalculadorIndicador{
+public class TaxaConcepcao extends AbstractCalculadorIndicador{
 
 	@Autowired private AnimalDao animalDao;
 	@Autowired private CoberturaService coberturaService;

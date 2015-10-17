@@ -2,6 +2,7 @@ package br.com.milkmoney.dao;
 
 import java.util.List;
 
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,20 +16,6 @@ import br.com.milkmoney.service.indicadores.AbstractCalculadorIndicador;
 public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 
 	@Autowired ParametroDao parametroDao;
-	
-	@Override
-	@Transactional
-	public List<Indicador> findAll(Class<Indicador> clazz) {
-		
-		List<Indicador> indicadores = super.findAll(Indicador.class);
-
-		for ( Indicador indicador : indicadores ){
-			refreshValorApurado(indicador);
-		}
-		
-		return indicadores;
-		
-	}
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
@@ -54,6 +41,36 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		refreshValorApurado(indicador);
 		return indicador;
 	}
+
+	@Transactional@SuppressWarnings("unchecked")
+	public List<Indicador> findAllIndicadoresZootecnicos() {
+		
+		Query query = entityManager.createQuery("SELECT i FROM Indicador i WHERE tipo = 'Z' order by ordem");
+		List<Indicador> indicadores = query.getResultList();
+
+		for ( Indicador indicador : indicadores ){
+			refreshValorApurado(indicador);
+		}
+		
+		return indicadores;
+		
+	}
+	
+	@Transactional@SuppressWarnings("unchecked")
+	public List<Indicador> findAllQuantitativosRebanho() {
+		
+		Query query = entityManager.createQuery("SELECT i FROM Indicador i WHERE tipo = 'R' order by ordem");
+		List<Indicador> indicadores = query.getResultList();
+
+		for ( Indicador indicador : indicadores ){
+			refreshValorApurado(indicador);
+		}
+		
+		return indicadores;
+		
+	}
+	
+	
 	
 	
 }

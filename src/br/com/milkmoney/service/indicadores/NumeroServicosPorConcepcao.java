@@ -1,18 +1,16 @@
 package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.math.RoundingMode;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
-import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.SituacaoCobertura;
+import br.com.milkmoney.service.CoberturaService;
 
 /**
 	A média de número de serviços por concepção do rebanho indica a 
@@ -50,46 +48,26 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 
 	@Autowired private PartoDao partoDao;
 	@Autowired private AnimalDao animalDao;
-	@Autowired private CoberturaDao coberturaDao;
+	@Autowired private CoberturaService coberturaService;
 	
 	@Override
 	public BigDecimal getValue() {
-		long numeroServicosPorConcepcao = 0;
 		
-		List<Animal> animais = animalDao.findFemeasPrenhas();
+		long numeroServicos = 0;
+		long concepcoes = 0;
+		
+		List<Animal> animais = animalDao.findAllFemeasAtivas();
 		
 		for ( Animal animal : animais ){
-			//recupera a cobertura mais recente
-			Cobertura coberturaPrenha = coberturaDao.findLastCoberturaAnimal(animal);
 			
-			if ( coberturaPrenha != null ){
-				//contabiliza a cobertura encontrada
-				numeroServicosPorConcepcao += 1;
-				//começa a percorrer as coberturas anteriores contando todas que não tiveram parto.
-				//ao encontrar uma com parto para a contagem.
-				numeroServicosPorConcepcao = countNumeroServicosAtePrenhes(animal, coberturaPrenha.getData(), numeroServicosPorConcepcao);
-			}
+			int servicos = coberturaService.getNumeroServicosAtePrenhes(animal);
+			numeroServicos += servicos;
+			
+			concepcoes += servicos > 0 ? 1 : 0;
 			
 		}
 		
-		if ( numeroServicosPorConcepcao > 0 ){
-			numeroServicosPorConcepcao = numeroServicosPorConcepcao / animais.size();
-		}
-		
-		return BigDecimal.valueOf(numeroServicosPorConcepcao).setScale(2);
+		return numeroServicos > 0 ? BigDecimal.valueOf(numeroServicos).divide(BigDecimal.valueOf(concepcoes), 1, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
 		
 	}
-
-	private long countNumeroServicosAtePrenhes(Animal femea, Date data, long numeroServicosPorConcepcao) {
-		
-		Cobertura coberturaAnterior = coberturaDao.findFirstBeforeDate(femea, data);
-		if ( coberturaAnterior.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-			return numeroServicosPorConcepcao;
-		}else{
-			numeroServicosPorConcepcao += 1;
-			return countNumeroServicosAtePrenhes(femea, coberturaAnterior.getData(), numeroServicosPorConcepcao);
-		}
-		
-	}
-	
 }

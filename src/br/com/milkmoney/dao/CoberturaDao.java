@@ -173,4 +173,12 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
+	public long countByAnimal(Animal animal) {
+		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
+				+ "WHERE c.femea = :animal order by c.data");
+		query.setParameter("animal", animal);
+		
+		return (Long) query.getSingleResult();
+	}
+
 }

@@ -66,6 +66,11 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		setFemea(femea);
 	}
 
+	public Cobertura(Animal femea, Date proximoServico) {
+		setFemea(femea);
+		setData(proximoServico);
+	}
+
 	public int getId() {
 		return this.id;
 	}

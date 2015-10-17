@@ -26,16 +26,16 @@
               </rowConstraints>
                <children>
                   <Label text="Descrição: " />
-                  <UCTextField fx:id="inputDescricao" editable="false" GridPane.columnIndex="1" />
+                  <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" />
                   <Label text="Valor Ideal Entre: " GridPane.rowIndex="3" />
                   <Label text="Valor Apurado: " GridPane.rowIndex="4" />
                   <Label text="Objetivo: " GridPane.rowIndex="5" />
                   <Label text="Definição: " GridPane.rowIndex="2" />
-                  <TextArea fx:id="inputDefinicao" editable="false" prefHeight="113.0" prefWidth="380.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextArea fx:id="inputDefinicao" prefHeight="113.0" prefWidth="380.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="inputValorApurado" editable="false" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <ComboBox fx:id="inputObjetivo" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="Sigla: " GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputSigla" editable="false" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputSigla" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <TextField fx:id="inputMenorValorIdeal" maxWidth="120.0" />
