@@ -7,12 +7,17 @@
 - parcelar lançamentos
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
---CONFIRMACAO PRENHES
-- ao remover cobertura não atualiza a tabela
-- erro data confirmacao e situacao parida
-
 --categoria overview numero registros
 - permitir pesquisar
+
+- Tela indicadores
+- Eficiência reprodutiva
+- Média dias ao primeiro serviço
+- Média dias parto até concepção
+- Número de serviços
+- Dias em aberto / Período de Serviço;
+
+
 
 --Relatórios
 - habilitar time line da vaca (eventos)

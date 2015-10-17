@@ -181,6 +181,19 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	}
 	
 	@Override
+	public void clearFilter() {
+		if ( inputPesquisa != null ){
+			inputPesquisa.clear();
+		}
+		setSearch(null);
+		if ( choiceFilter.getSelectionModel().getSelectedIndex() == 0 ){
+			refreshTableOverview();
+		}else{
+			choiceFilter.getSelectionModel().clearAndSelect(0);			
+		}
+	}
+	
+	@Override
 	protected void selectRowTableHandler(Animal animal) {
 		super.selectRowTableHandler(animal);
 		Platform.runLater(new Runnable() {
@@ -224,7 +237,13 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlSecarAnimal.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									encerrarLactacaoAnimal.apply(table.getItems().indexOf(getObject()));
+									int index = 0;
+									for ( Animal animal : table.getItems() ){
+										if ( animal.getId() == getObject().getId() ){
+											encerrarLactacaoAnimal.apply(index);
+											break;
+										}
+									}
 								}
 							});
 						}
@@ -339,14 +358,13 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				lactacaoOverviewController.setAnimal(getObject());
 				lactacaoOverviewController.showForm();
 				refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				table.getSelectionModel().select(index);
-				
 			}else{
 				CustomAlert.mensagemInfo("Somente animais fêmeas podem ter a lactação encerrada.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
+		table.getSelectionModel().select(index);
 		return true;
 	};
 	

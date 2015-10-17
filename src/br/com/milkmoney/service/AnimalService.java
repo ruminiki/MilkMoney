@@ -61,7 +61,7 @@ public class AnimalService implements IService<Integer, Animal>{
 	
 	@Override
 	public ObservableList<Animal> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.findAllByNumeroNome(param));
+		return FXCollections.observableArrayList(dao.defultSearch(param));
 	}
 
 	public ObservableList<Animal> findAllFemeasAtivasAsObservableList() {

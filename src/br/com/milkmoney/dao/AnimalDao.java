@@ -18,6 +18,21 @@ import br.com.milkmoney.model.SituacaoCobertura;
 public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	
 	@SuppressWarnings("unchecked")
+	public List<Animal> defultSearch(String param) {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE "
+				+ "a.nome like :param or a.numero like :param or "
+				+ "a.raca.descricao like :param or "
+				+ "a.sexo like :param or "
+				+ "a.finalidadeAnimal like :param or "
+				+ "a.situacaoAnimal like :param");
+		query.setParameter("param", '%' + param + '%');
+		query.setHint("org.hibernate.cacheable", "false");
+		
+		return query.getResultList();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
 	public List<Animal> findAllByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param");
 		query.setParameter("param", '%' + param + '%');
