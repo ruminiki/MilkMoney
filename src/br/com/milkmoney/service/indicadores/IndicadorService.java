@@ -43,6 +43,11 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		return dao.findAll(Indicador.class);
 	}
 	
+	@Override
+	public ObservableList<Indicador> findAllAsObservableList() {
+		return FXCollections.observableArrayList(dao.findAll(Indicador.class));
+	}
+	
 	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList() {
 		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos());
 	}
@@ -61,10 +66,4 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		IndicadorValidation.validate(entity);
 	}
 
-	@Override
-	public ObservableList<Indicador> findAllAsObservableList() {
-		return null;
-	}
-	
-	
 }

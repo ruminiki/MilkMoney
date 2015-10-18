@@ -20,8 +20,8 @@ public class NumberFormatUtil {
 		return number == null ? df.format(BigDecimal.ZERO) : df.format(number);
 	}
 	
-	public static BigDecimal intFormat(BigDecimal number) {
-		return number.setScale(0, BigDecimal.ROUND_HALF_EVEN);
+	public static String intFormat(BigDecimal number) {
+		return number.setScale(0, BigDecimal.ROUND_HALF_EVEN).toString();
 	}
 	
 	public static BigDecimal fromString(String value) {

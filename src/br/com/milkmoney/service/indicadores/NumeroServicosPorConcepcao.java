@@ -60,7 +60,7 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 		
 		for ( Animal animal : animais ){
 			
-			int servicos = coberturaService.getNumeroServicosAtePrenhes(animal);
+			int servicos = coberturaService.getNumeroServicosPorConcepcao(animal);
 			numeroServicos += servicos;
 			
 			concepcoes += servicos > 0 ? 1 : 0;
@@ -70,4 +70,10 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 		return numeroServicos > 0 ? BigDecimal.valueOf(numeroServicos).divide(BigDecimal.valueOf(concepcoes), 1, RoundingMode.HALF_EVEN) : BigDecimal.ZERO;
 		
 	}
+	
+	@Override
+	public String getFormat() {
+		return AbstractCalculadorIndicador.DECIMAL_FORMAT_UMA_CASA;
+	}
+	
 }

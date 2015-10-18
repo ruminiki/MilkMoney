@@ -153,6 +153,12 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
+        				case RELATORIO_INDICADORES:
+        					masterReport = GenericPentahoReport.getReportDefinition(report);
+        					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+        					masterReport.getParameterValues().put("indicadores", param[0]);
+        					GenericPentahoReport.runReport(format, masterReport);
+        					break;
         				default:
         					masterReport = GenericPentahoReport.getReportDefinition(report);
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());

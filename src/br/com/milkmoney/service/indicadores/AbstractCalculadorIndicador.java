@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 
 public abstract class AbstractCalculadorIndicador {
 	
+	public static final String DECIMAL_FORMAT_UMA_CASA = "DECIMAL_FORMAT_UMA_CASA";
+	public static final String DECIMAL_FORMAT_DUAS_CASAS = "DECIMAL_FORMAT_DUAS_CASAS";
+	public static final String INTEIRO_FORMAT = "INTEIRO_FORMAT";
+	
 	public abstract BigDecimal getValue();
+	public abstract String getFormat();
 
 }

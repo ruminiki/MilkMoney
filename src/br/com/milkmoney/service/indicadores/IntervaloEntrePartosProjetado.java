@@ -37,4 +37,10 @@ public class IntervaloEntrePartosProjetado extends AbstractCalculadorIndicador{
 		
 	}
 	
+	@Override
+	public String getFormat() {
+		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
+	}
+	
+	
 }

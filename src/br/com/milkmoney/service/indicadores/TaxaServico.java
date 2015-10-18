@@ -1,7 +1,7 @@
 package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.math.RoundingMode;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ import br.com.milkmoney.model.Parametro;
  */
 
 @Service
-public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
+public class TaxaServico extends AbstractCalculadorIndicador{
 
 	@Autowired private AnimalDao animalDao;
 	@Autowired private ParametroDao parametroDao;
@@ -51,19 +51,24 @@ public class TaxaDeteccaoCio extends AbstractCalculadorIndicador{
 		}
 		
 		//vacas inseminadas ultimos 21 dias
-		BigInteger vacasEnseminadas = coberturaDao.countCoberturasRealizadasUltimos21Dias();
+		long vacasEnseminadas = coberturaDao.countCoberturasRealizadasUltimos21Dias().longValue();
 		
 		//vacas disponíveis para serem cobertas:
 		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
-		BigInteger vacasDisponiveis = animalDao.countVacasDisponiveisParaCoberturaUltimos21Dias(diasIdadeMinimaParaCobertura, periodoVoluntarioEspera);
+		long vacasDisponiveis = animalDao.countVacasDisponiveisParaCoberturaUltimos21Dias(diasIdadeMinimaParaCobertura, periodoVoluntarioEspera).longValue();
 				
-		if ( vacasEnseminadas.compareTo(BigInteger.ZERO) <= 0 ||
-				vacasDisponiveis.compareTo(BigInteger.ZERO) <= 0 ){
+		if ( vacasEnseminadas <= 0 || vacasDisponiveis <= 0 ){
 			return BigDecimal.ZERO;
 		}
 		
-		return BigDecimal.valueOf(vacasEnseminadas.divide(vacasDisponiveis).multiply(BigInteger.valueOf(100)).intValue());
+		return BigDecimal.valueOf(vacasEnseminadas).divide(BigDecimal.valueOf(vacasDisponiveis), 2, RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
 		
 	}
+	
+	@Override
+	public String getFormat() {
+		return AbstractCalculadorIndicador.DECIMAL_FORMAT_UMA_CASA;
+	}
+	
 	
 }

@@ -43,7 +43,7 @@ public class FichaAnimalService{
 		//ultima cobertura
 		fichaAnimal.setDataUltimaCobertura(coberturaService.getDataUltimaCoberturaAnimal(animal));
 		//número serviços até prenhes, baseado na última cobertura
-		fichaAnimal.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosAtePrenhes(animal));
+		fichaAnimal.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosPorConcepcao(animal));
 		//próximo serviço
 		fichaAnimal.setProximoServico(coberturaService.getProximoServico(animal));
 		//número de partos

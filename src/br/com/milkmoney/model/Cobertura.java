@@ -69,6 +69,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	public Cobertura(Animal femea, Date proximoServico) {
 		setFemea(femea);
 		setData(proximoServico);
+		setPrevisaoParto(DateUtil.asDate(DateUtil.asLocalDate(proximoServico).plusDays(282)));
 	}
 
 	public int getId() {

@@ -53,5 +53,10 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 		return diasEmLactacao;
 		
 	}
+
+	@Override
+	public String getFormat() {
+		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
+	}
 	
 }

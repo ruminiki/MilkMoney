@@ -1,5 +1,6 @@
 package br.com.milkmoney.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -70,7 +71,13 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 	}
 	
-	
+	@Override @Transactional
+	public List<Indicador> findAll(Class<Indicador> clazz) {
+		List<Indicador> indicadores = new ArrayList<Indicador>();
+		indicadores.addAll(findAllIndicadoresZootecnicos());
+		indicadores.addAll(findAllQuantitativosRebanho());
+		return indicadores;
+	}
 	
 	
 }

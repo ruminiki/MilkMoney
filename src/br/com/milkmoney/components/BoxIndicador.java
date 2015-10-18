@@ -11,8 +11,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.ObjetivoIndicador;
+import br.com.milkmoney.service.indicadores.AbstractCalculadorIndicador;
 import br.com.milkmoney.util.NumberFormatUtil;
 
 public class BoxIndicador extends VBox {
@@ -32,13 +34,39 @@ public class BoxIndicador extends VBox {
 		this.buildBox();
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void buildBox(){
 		
 		this.setAlignment(Pos.CENTER);
 		
 		Label labelDescricao      = new Label(indicador.getDescricao());
-		Label labelValor          = new Label(""+indicador.getValorApurado());
+		Label labelValor          = new Label();
 		Label labelIntervaloIdeal = new Label("Ideal " + indicador.getMenorValorIdeal() + " e " + indicador.getMaiorValorIdeal());
+		
+		try {
+			
+			if ( indicador.getClasseCalculo() != null ){
+				Class<AbstractCalculadorIndicador> calculadorClass = (Class<AbstractCalculadorIndicador>) Class.forName(indicador.getClasseCalculo());
+				AbstractCalculadorIndicador calculador = (AbstractCalculadorIndicador) MainApp.getBean(calculadorClass);
+				
+				if ( calculador.getFormat().equals(AbstractCalculadorIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
+					labelValor.setText(NumberFormatUtil.decimalFormat(indicador.getValorApurado(), 2));
+				}
+				
+				if ( calculador.getFormat().equals(AbstractCalculadorIndicador.DECIMAL_FORMAT_UMA_CASA) ){
+					labelValor.setText(NumberFormatUtil.decimalFormat(indicador.getValorApurado(), 1));
+				}
+				
+				if ( calculador.getFormat().equals(AbstractCalculadorIndicador.INTEIRO_FORMAT) ){
+					labelValor.setText(NumberFormatUtil.intFormat(indicador.getValorApurado()));
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		vbValor.setAlignment(Pos.CENTER);
 		
@@ -52,7 +80,7 @@ public class BoxIndicador extends VBox {
 		
 		setStyle();
 		
-		labelValor.setFont(Font.font("System", 24));
+		labelValor.setFont(Font.font("System", 20));
 		labelDescricao.setFont(Font.font("System", 8));
 		
 		this.getChildren().clear();

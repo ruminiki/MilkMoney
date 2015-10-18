@@ -29,4 +29,10 @@ public class TotalNovilhas12Meses extends AbstractCalculadorIndicador{
 		
 	}
 	
+	@Override
+	public String getFormat() {
+		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
+	}
+	
+	
 }

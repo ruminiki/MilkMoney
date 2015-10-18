@@ -137,7 +137,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return cobertura != null ? cobertura.getData() : null;
 	}
 	
-	public int getNumeroServicosAtePrenhes(Animal animal) {
+	public int getNumeroServicosPorConcepcao(Animal animal) {
 
 		Parto parto = partoService.findLastParto(animal);
 		if ( parto != null ){
@@ -155,8 +155,21 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		for (Cobertura cobertura : coberturas){
 			//conta quantas coberturas não tiveram parto, antes da última
+			//se a ultima cobertura é a que gerou o parto, conta ela e continua voltando nas coberturas até encontrar
+			//uma cobertura parida, que não deverá ser contada
+			if ( index == 0 ){
+				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+					index++;
+					continue;
+				}
+			}
+			
+			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+				break;
+			}
+			
 			index++;
-			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ) break;
+			
 		}
 		
 		return index;
