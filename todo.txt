@@ -12,14 +12,11 @@
 
 - Tela indicadores
 - Eficiência reprodutiva
-- Média dias ao primeiro serviço
-- Média dias parto até concepção
-- Número de serviços
-- Dias em aberto / Período de Serviço;
-
+- taxa prenhes, concepcao
 - verificar igualdade dos indicadores DEL e Media dias Pos Parto.
-- gerar relatório números do rebanho (para indicadores quantitativos)
 
+- Ajustar ficha do animal para considerar todos os indicadores individuais
+- remover casas decimais formulario indicador
 
 --Relatórios
 - habilitar time line da vaca (eventos)

@@ -181,4 +181,14 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		return (Long) query.getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findCoberturasPeriodo(Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c "
+				+ "WHERE c.data between :dataInicio and :dataFim order by c.data");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
+	}
+
 }

@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.AbstractOverviewController;
@@ -47,7 +46,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	@FXML private ComboBox<String> inputSituacaoCobertura;
 	@FXML private UCTextField inputReprodutor;
 	@FXML private UCTextField inputSemen;
-	@FXML private UCTextField inputQuantidadeDosesSemen;
 	@FXML private UCTextField inputNomeResponsavel;
 	@FXML private ComboBox<String> inputResponsavelServico;
 	@FXML private ComboBox<String> inputTipoCobertura;
@@ -126,9 +124,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		inputResponsavelServico.setItems(ResponsavelServico.getItems());
 		inputNomeResponsavel.textProperty().bindBidirectional(getObject().nomeResponsavelProperty());
 		
-		MaskFieldUtil.numeroInteiro(inputQuantidadeDosesSemen);
-		inputQuantidadeDosesSemen.textProperty().bindBidirectional(getObject().quantidadeDosesUtilizadasProperty());
-		
 		if ( getObject().getSituacaoCobertura() == null || getObject().getSituacaoCobertura().isEmpty() ){
 			getObject().setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
 		}
@@ -168,9 +163,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			
 			inputSemen.setDisable(true);
 			inputSemen.setText(getObject().getTouroInseminacaoArtificial().toString());
-			
-			lblQuantidadeDosesSemen.setVisible(true);
-			inputQuantidadeDosesSemen.setVisible(true);
 			
 		}
 		
@@ -233,7 +225,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}
 
 		lblReprodutor.setText("Reprodutor: ");
-		inputQuantidadeDosesSemen.setDisable(true);
 		btnNovoReprodutor.setDisable(false);
 		inputReprodutor.setText("");
 		getObject().setTouroMontaNatural(null);
@@ -259,7 +250,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		}
 		
 		lblReprodutor.setText("Sêmen: ");
-		inputQuantidadeDosesSemen.setDisable(false);
 		inputSemen.setText("");
 		btnNovoReprodutor.setDisable(false);
 		getObject().setTouroInseminacaoArtificial(null);

@@ -47,7 +47,6 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<Animal>      femea                        = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Animal>      touroMontaNatural            = new SimpleObjectProperty<Animal>();
 	private ObjectProperty<Touro>       touroInseminacaoArtificial   = new SimpleObjectProperty<Touro>();
-	private StringProperty              quantidadeDosesUtilizadas    = new SimpleStringProperty();
 	private StringProperty              nomeResponsavel              = new SimpleStringProperty();
 	private ObjectProperty<Funcionario> funcionarioResponsavel       = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico>     servico                      = new SimpleObjectProperty<Servico>();
@@ -212,21 +211,6 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public int getQuantidadeDosesUtilizadas() {
-		if ( quantidadeDosesUtilizadas.get() != null )
-			return Integer.valueOf(this.quantidadeDosesUtilizadas.get());
-		return 0;
-	}
-	
-	public void setQuantidadeDosesUtilizadas(int quantidadeDosesUtilizadas) {
-		this.quantidadeDosesUtilizadas.set(String.valueOf(quantidadeDosesUtilizadas));
-	}
-	
-	public StringProperty quantidadeDosesUtilizadasProperty(){
-		return quantidadeDosesUtilizadas;
-	}
-	
-	@Access(AccessType.PROPERTY)
 	public String getNomeResponsavel() {
 		return this.nomeResponsavel.get();
 	}
@@ -296,7 +280,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public String getMetodoConfirmacaoPrenhes() {
-		return metodoConfirmacaoPrenhes.get();
+		return metodoConfirmacaoPrenhes.get() == null || metodoConfirmacaoPrenhes.get().isEmpty() ? "--" : metodoConfirmacaoPrenhes.get();
 	}
 
 	public void setMetodoConfirmacaoPrenhes(String metodoConfirmacaoPrenhes) {

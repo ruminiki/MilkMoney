@@ -25,7 +25,7 @@ import br.com.milkmoney.service.CoberturaService;
 
 
 @Service
-public class IntervaloPartoAteConcepcao extends AbstractCalculadorIndicador{
+public class PeriodoServico extends AbstractCalculadorIndicador{
 	
 	@Autowired CoberturaService coberturaService;
 	@Autowired AnimalDao animalDao;

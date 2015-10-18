@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class IntervaloEntrePartosProjetado extends AbstractCalculadorIndicador{
 
-	@Autowired private IntervaloPartoAteConcepcao diasEmAbertoService;
+	@Autowired private PeriodoServico diasEmAbertoService;
 	
 	@Override
 	public BigDecimal getValue() {

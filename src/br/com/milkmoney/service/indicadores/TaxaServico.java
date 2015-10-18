@@ -23,6 +23,8 @@ import br.com.milkmoney.model.Parametro;
  * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
  * 
  * PVE - Periodo voluntário de espera (dias após o parto em que a vaca não deve ser inseminada)
+ * 
+ * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=1002
  */
 
 @Service
@@ -55,6 +57,7 @@ public class TaxaServico extends AbstractCalculadorIndicador{
 		
 		//vacas disponíveis para serem cobertas:
 		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
+		//Vacas aptas são aquelas que passaram pelo período voluntário de espera e que não estão prenhes. Vacas inseminadas também são aptas já que podem repetir cio.
 		long vacasDisponiveis = animalDao.countVacasDisponiveisParaCoberturaUltimos21Dias(diasIdadeMinimaParaCobertura, periodoVoluntarioEspera).longValue();
 				
 		if ( vacasEnseminadas <= 0 || vacasDisponiveis <= 0 ){
