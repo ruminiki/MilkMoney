@@ -32,6 +32,13 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		validate(lancamentoFinanceiro);
 		return dao.persist(lancamentoFinanceiro);
 	}
+	
+	@Transactional
+	public void salvarParcelas(List<LancamentoFinanceiro> parcelas) {
+		for ( LancamentoFinanceiro lancamentoFinanceiro : parcelas ){
+			save(lancamentoFinanceiro);
+		}
+	}
 
 	@Override
 	@Transactional
@@ -126,5 +133,4 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 		return dao.getSaldoByCategoriaDespesa(dataInicio, dataFim);
 	}
 
-	
 }

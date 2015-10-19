@@ -17,8 +17,8 @@
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="106.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="80.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="177.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="169.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="47.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="197.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="31.0" />
                   <ColumnConstraints />
                   <ColumnConstraints />
               </columnConstraints>
@@ -49,15 +49,18 @@
                   
                   <Label text="Categoria: " GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputCategoria" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarCategoriaLancamento" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarCategoriaLancamento" text="..." GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <GridPane.margin>
-                        <Insets />
+                        <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
                   
                   <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="30.0" prefWidth="119.0" text="Centro de Custo: " textOverrun="WORD_ELLIPSIS" wrapText="true" GridPane.rowIndex="4" />
                    <UCTextField fx:id="inputCentroCusto" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarCentroCusto" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarCentroCusto" text="..." GridPane.columnIndex="4" GridPane.rowIndex="4">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin></Button>
                   
                   <Label text="Valor: " GridPane.rowIndex="5" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5">
@@ -84,6 +87,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#handleParcelar" text="Parcelar" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>

@@ -2,9 +2,15 @@
 - fazer log de acessos ao sistema
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
-- quando lança a produção diária e depois fecha a lactação, não podem haver marcações fora do período
+
 
 - parcelar lançamentos
+- gerar parcelas a partir de data (verificar se gera no mês corrente)
+- gerar as parcelas com intervalo de dias (10, 15 ou 30....)
+- Ao tentar remover uma, perguntar se deseja remover todas as parcelas (vincular as parcelas)
+- Atualizar a tabela de lançamentos após salvar as parcelas
+- movimentos já parcelados não podem ser parcelados novamente
+
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 --categoria overview numero registros
@@ -14,9 +20,6 @@
 - Eficiência reprodutiva
 - media idade ao primeiro parto
 
-- Ajustar ficha do animal para considerar todos os indicadores individuais
-- remover casas decimais formulario indicador
-
 --Relatórios
 - habilitar time line da vaca (eventos)
 - animais para secar
@@ -24,6 +27,5 @@
 
 
 - está permitindo deletar o animal (cria) sem remover o parto.
-- três casas decimais valor do leite
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
 cobertura -> parto -> cobertura -> encerramento -> parto

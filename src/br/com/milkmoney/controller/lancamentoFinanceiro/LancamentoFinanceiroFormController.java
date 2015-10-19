@@ -27,6 +27,7 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 	@FXML private ToggleButton tbReceita, tbDespesa;
 	@Autowired private CentroCustoReducedOverviewController centroCustoReducedOverviewController;
 	@Autowired private CategoriaLancamentoFinanceiroReducedOverviewController categoriaLancamentoFinanceiroReducedOverviewController;
+	@Autowired private ParcelaFormController parcelaFormController;
 	
 	private ToggleGroup groupTipo = new ToggleGroup();
 	
@@ -109,6 +110,18 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 			inputCentroCusto.textProperty().set(getObject().getCentroCusto().toString());	
 		}else{
 			inputCentroCusto.textProperty().set("");
+		}
+		
+	}
+	
+	@FXML
+	private void handleParcelar() {
+		
+		parcelaFormController.setObject(getObject());
+		parcelaFormController.showForm();
+		
+		if ( parcelaFormController.isGerouParcelas() ){
+			closeForm();
 		}
 		
 	}
