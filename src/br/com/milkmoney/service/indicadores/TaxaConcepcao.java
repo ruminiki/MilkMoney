@@ -9,11 +9,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.SituacaoCobertura;
-import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.util.DateUtil;
 
 /**
@@ -26,7 +24,7 @@ import br.com.milkmoney.util.DateUtil;
  * Logo precisa ser buscado as coberturas realizadas entre 42 e 21 dias atrás e verificar quantas ficaram prenhas
  * ou não vazias e dividir pelo total de coberturas realizadas naquele período.
  * 
- * Para obter a taxa de prenhez, devemos multiplicar a taxa de detecção de cio pela taxa de concepção. 
+ * A taxa de prenhez representa o número de vacas que ficaram prenhes em relação ao número de vacas APTAS a ficarem prenhes.
  * 
  * **Correção
  * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=2394
@@ -42,9 +40,7 @@ import br.com.milkmoney.util.DateUtil;
 @Service
 public class TaxaConcepcao extends AbstractCalculadorIndicador{
 
-	@Autowired private AnimalDao animalDao;
 	@Autowired private CoberturaDao coberturaDao;
-	@Autowired private CoberturaService coberturaService;
 	
 	@Override
 	public BigDecimal getValue() {

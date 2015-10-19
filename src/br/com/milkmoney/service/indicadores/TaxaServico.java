@@ -2,14 +2,18 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
-import br.com.milkmoney.dao.ParametroDao;
-import br.com.milkmoney.model.Parametro;
+import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.service.AnimalService;
+import br.com.milkmoney.util.DateUtil;
 
 /**
  * Taxa de serviço é definida como a porcentagem de vacas aptas a serem inseminadas no período de 21 dias que são realmente inseminadas. 
@@ -30,36 +34,24 @@ import br.com.milkmoney.model.Parametro;
 @Service
 public class TaxaServico extends AbstractCalculadorIndicador{
 
-	@Autowired private AnimalDao animalDao;
-	@Autowired private ParametroDao parametroDao;
 	@Autowired private CoberturaDao coberturaDao;
+	@Autowired private AnimalService animalService;
 	
 	@Override
 	public BigDecimal getValue() {
-
-		int diasIdadeMinimaParaCobertura = 0;
-		try{
-			//o parametro estara em meses, multiplicar por 30 para obter os dias
-			diasIdadeMinimaParaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)) * 30;
-		}catch(Exception e){
-			diasIdadeMinimaParaCobertura = 24 * 30;
-		}
 		
-		int periodoVoluntarioEspera = 0;
-		try{
-			periodoVoluntarioEspera = Integer.parseInt(parametroDao.findBySigla(Parametro.PERIODO_VOLUNTARIO_ESPERA));
-		}catch(Exception e){
-			periodoVoluntarioEspera = 40;//default 40 dias
-		}
+		//período últimos 21 dias
+		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(21));
+		Date dataFim = new Date();
 		
-		//vacas inseminadas ultimos 21 dias
-		long vacasEnseminadas = coberturaDao.countCoberturasRealizadasUltimos21Dias().longValue();
+		//busca os animais disponíveis no período
+		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);
+		long vacasDisponiveis = animaisDisponiveis != null ? animaisDisponiveis.size() : 0;
 		
-		//vacas disponíveis para serem cobertas:
-		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
-		//Vacas aptas são aquelas que passaram pelo período voluntário de espera e que não estão prenhes. Vacas inseminadas também são aptas já que podem repetir cio.
-		long vacasDisponiveis = animalDao.countVacasDisponiveisParaCoberturaUltimos21Dias(diasIdadeMinimaParaCobertura, periodoVoluntarioEspera).longValue();
-				
+		//busca todas as coberturas realizadas no periodo 
+		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
+		long vacasEnseminadas = coberturas != null ? coberturas.size() : 0;
+		
 		if ( vacasEnseminadas <= 0 || vacasDisponiveis <= 0 ){
 			return BigDecimal.ZERO;
 		}

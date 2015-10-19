@@ -352,7 +352,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
 		return (BigInteger) entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
-				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "')) and "
+				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and "
 				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
 	}
 
@@ -372,15 +372,16 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * (4) tem idade suficiente para cobertura
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisDisponiveisParaCobertura(int diasIdadeMinimaParaCobertura, int periodoVoluntarioEspera) {
-		
+	public List<Animal> findAnimaisAtivosComIdadeParaServicoNoPeriodo(int diasIdadeMinimaParaCobertura, Date dataInicio, Date dataFim) {
+				
+		//busca animais que tinha idade suficiente e não estavam mortos nem vendidos
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a where DATEDIFF(current_date(), a.dataNascimento) > " + diasIdadeMinimaParaCobertura + " and "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and "
-				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ") and "
+				"SELECT a FROM Animal a where DATEDIFF(:dataFim, a.dataNascimento) > " + diasIdadeMinimaParaCobertura + " and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :dataInicio) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :dataInicio) and "
 				+ "a.sexo = '" + Sexo.FEMEA + "'");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
 		
 		return query.getResultList();
 		

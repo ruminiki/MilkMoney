@@ -2,39 +2,29 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
+import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.service.CoberturaService;
+import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.SituacaoCobertura;
+import br.com.milkmoney.service.AnimalService;
+import br.com.milkmoney.util.DateUtil;
 
 /**
- * O intervalo da primeira IA até a concepção representa a taxa de prenhes, ou seja, 
- * a velocidade em que a vaca fica gestante. Esse intervalo varia muito entre vacas do mesmo rebanho.
- * Dois fatores determinam a taxa de prenhes:
- * 1 - Taxa de concepção;
- * 2 - Taxa de detecção de cio ou taxa de serviço. 
- * http://www.milkpoint.com.br/radar-tecnico/reproducao/estrategias-de-manejo-para-aumentar-a-eficiencia-reprodutiva-de-vacas-de-leite-28283n.aspx
- * 
- * **Correção
- * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=2394
- * Então, Taxa de prenhez = Taxa de serviço x Taxa de concepção
- * 
- * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=1405
- * 
- * 
- * http://www.milkpoint.com.br/radar-tecnico/reproducao/manejo-reprodutivo-do-rebanho-leiteiro-26245n.aspx
- * 
  * A taxa de detecção de cio (TDC) é calculada dividindo o número de vacas inseminadas no período de 21 dias 
  * pelo número de vacas disponíveis para serem inseminadas no mesmo período.
  * 
- * a taxa de concepção (TC) do rebanho, dividindo o número de vacas que ficaram gestantes no período de 21 dias 
+ * A taxa de concepção (TC) do rebanho, dividindo o número de vacas que ficaram gestantes no período de 21 dias 
  * pelo número de vacas inseminadas. 
  * 
- * para obter a taxa de prenhez, devemos multiplicar a taxa de detecção de cio pela taxa de concepção. 
+ * A taxa de prenhez representa o número de vacas que ficaram prenhes em relação ao número de vacas APTAS a ficarem prenhes.
  * 
  * @author ruminiki
  */
@@ -43,25 +33,37 @@ import br.com.milkmoney.service.CoberturaService;
 @Service
 public class TaxaPrenhes extends AbstractCalculadorIndicador{
 
+	@Autowired private CoberturaDao coberturaDao;
 	@Autowired private AnimalDao animalDao;
-	@Autowired private CoberturaService coberturaService;
+	@Autowired private AnimalService animalService;
 	
 	@Override
 	public BigDecimal getValue() {
 
-		List<Animal> animais = animalDao.findAnimaisComCobertura(); 
-		BigDecimal somaMediaIntervaloPrimeiraCoberturaAtePrenhes = BigDecimal.ZERO;
+		BigDecimal concepcoes = BigDecimal.ZERO;
 		
-		for ( Animal animal : animais ){
-			somaMediaIntervaloPrimeiraCoberturaAtePrenhes = somaMediaIntervaloPrimeiraCoberturaAtePrenhes.add(coberturaService.getMediaIntervaloPrimeiraCoberturaAtePrenhes(animal));
+		//período entre 42 e 21 dias atrás
+		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(42));
+		Date dataFim = DateUtil.asDate(LocalDate.now().minusDays(21));
+		
+		//busca os animais disponíveis no período
+		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);
+		
+		//busca todas as coberturas realizadas no periodo 
+		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
+		
+		for ( Cobertura cobertura : coberturas ){
+			if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+				//contabiliza todas as concepções
+				concepcoes = concepcoes.add(BigDecimal.ONE);
+			}
 		}
 		
-		if ( animais != null && animais.size() > 0 && somaMediaIntervaloPrimeiraCoberturaAtePrenhes.compareTo(BigDecimal.ZERO) > 0 ){
-			return somaMediaIntervaloPrimeiraCoberturaAtePrenhes.divide(BigDecimal.valueOf(animais.size()), 2, RoundingMode.HALF_EVEN);
-		}
+		BigDecimal disponiveis = animaisDisponiveis != null ? BigDecimal.valueOf(animaisDisponiveis.size()) : BigDecimal.ZERO;
 		
-		return BigDecimal.ZERO;
-		
+		return concepcoes.compareTo(BigDecimal.ZERO) > 0 && disponiveis.compareTo(BigDecimal.ZERO) > 0 ? 
+						concepcoes.divide(disponiveis, 2, RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100)) : BigDecimal.ZERO;
+
 	}
 	
 	@Override
