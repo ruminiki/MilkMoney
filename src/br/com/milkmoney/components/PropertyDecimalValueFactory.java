@@ -11,8 +11,11 @@ import br.com.milkmoney.util.NumberFormatUtil;
 public class PropertyDecimalValueFactory<S, T> extends
 		PropertyValueFactory<S, T> {
 
-	public PropertyDecimalValueFactory(String property) {
+	int precision = 2;
+	
+	public PropertyDecimalValueFactory(String property, int precision) {
 		super(property);
+		this.precision = precision;	
 	}
 
 	@Override
@@ -23,7 +26,7 @@ public class PropertyDecimalValueFactory<S, T> extends
 
 		if (a != null && a.getValue() instanceof BigDecimal) {
 			
-			((ObjectProperty) a).setValue(NumberFormatUtil.decimalFormat((BigDecimal) a.getValue()));
+			((ObjectProperty) a).setValue(NumberFormatUtil.decimalFormat((BigDecimal) a.getValue(), precision));
 
 		}
 

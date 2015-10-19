@@ -226,7 +226,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									if ( table.getSelectionModel().getSelectedIndex() < 0 ){
+									if ( table.getSelectionModel().getSelectedItem() != null ){
 										partoFormController.setObject(partoService.findLastParto(getObject()));
 										partoFormController.showForm();
 										setObject(service.findById(getObject().getId()));

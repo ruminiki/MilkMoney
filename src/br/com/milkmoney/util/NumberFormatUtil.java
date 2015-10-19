@@ -41,7 +41,7 @@ public class NumberFormatUtil {
 
 	public static String decimalFormat(BigDecimal number, int precision) {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
-		df.applyPattern("###,##0.00");
+		//df.applyPattern("###,##0.00");
 		df.setMinimumFractionDigits(precision);
 		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
@@ -59,6 +59,21 @@ public class NumberFormatUtil {
 		df.setDecimalFormatSymbols(symbols);
 		try {
 			return new BigDecimal(df.parse(value).doubleValue()).setScale(0, BigDecimal.ROUND_HALF_EVEN);
+		} catch (ParseException | NullPointerException e) {
+			return BigDecimal.ZERO;
+		}
+	}
+
+	public static BigDecimal fromString(String value, int precision) {
+		DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.getDefault());
+		//df.applyPattern("###,##0.00");
+		df.setMinimumFractionDigits(precision);
+		DecimalFormatSymbols symbols = df.getDecimalFormatSymbols();
+		symbols.setDecimalSeparator(',');
+		symbols.setGroupingSeparator('.');
+		df.setDecimalFormatSymbols(symbols);
+		try {
+			return new BigDecimal(df.parse(value).doubleValue()).setScale(precision, BigDecimal.ROUND_HALF_EVEN);
 		} catch (ParseException | NullPointerException e) {
 			return BigDecimal.ZERO;
 		}

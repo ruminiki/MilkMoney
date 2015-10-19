@@ -77,7 +77,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			inputSexo.setDisable(true);
 		}
 		
-		MaskFieldUtil.decimal(inputValor);
+		MaskFieldUtil.decimalWithoutMask(inputValor);
 		
 	}
 

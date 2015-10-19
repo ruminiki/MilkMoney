@@ -37,7 +37,7 @@ public class CompraOverviewController extends AbstractOverviewController<Integer
 		fornecedorColumn.setCellValueFactory(new PropertyValueFactory<Fornecedor,String>("fornecedor"));
 		notaFiscalColumn.setCellValueFactory(new PropertyValueFactory<Compra,String>("notaFiscal"));
 		formaPagamentoColumn.setCellValueFactory(new PropertyValueFactory<Compra,String>("formaPagamento"));
-		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<Compra,String>("valorTotal"));
+		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<Compra,String>("valorTotal", 2));
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<Compra,String>("observacao"));
 		
 		super.initialize((CompraFormController)MainApp.getBean(CompraFormController.class));

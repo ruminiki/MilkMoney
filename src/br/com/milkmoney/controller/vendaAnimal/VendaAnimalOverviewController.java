@@ -37,7 +37,7 @@ public class VendaAnimalOverviewController extends AbstractOverviewController<In
 		motivoVendaColumn.setCellValueFactory(new PropertyValueFactory<VendaAnimal,String>("motivoVendaAnimal"));
 		destinacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<VendaAnimal,String>("destinacaoAnimal"));
 		compradorColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("comprador"));
-		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<VendaAnimal,String>("valorAnimal"));
+		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<VendaAnimal,String>("valorAnimal", 2));
 		
 		super.initialize((VendaAnimalFormController)MainApp.getBean(VendaAnimalFormController.class));
 		

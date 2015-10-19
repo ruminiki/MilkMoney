@@ -36,8 +36,8 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 		inputObjetivo.setItems(ObjetivoIndicador.getItems());
 		inputObjetivo.valueProperty().bindBidirectional(getObject().objetivoProperty());
 		
-		MaskFieldUtil.decimal(inputMenorValorIdeal);
-		MaskFieldUtil.decimal(inputMaiorValorIdeal);
+		MaskFieldUtil.decimalWithoutMask(inputMenorValorIdeal);
+		MaskFieldUtil.decimalWithoutMask(inputMaiorValorIdeal);
 		
 	}
 

@@ -42,8 +42,8 @@ public class PrecoLeiteOverviewController extends AbstractOverviewController<Int
 		
 		mesReferenciaColumn.setCellValueFactory(new PropertyValueFactory<PrecoLeite,String>("mesReferencia"));
 		anoReferenciaColumn.setCellValueFactory(new PropertyValueFactory<PrecoLeite,String>("anoReferencia"));
-		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorMaximoPraticado"));
-		valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorRecebido"));
+		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorMaximoPraticado", 3));
+		valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<PrecoLeite, String>("valorRecebido", 3));
 		
 		super.service = this.service;
 		((PrecoLeiteService)service).configuraMesesAnoReferencia(selectedAnoReferencia);

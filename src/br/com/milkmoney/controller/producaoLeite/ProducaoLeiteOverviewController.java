@@ -69,8 +69,8 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 		dataColumn.setCellFactory(new TableCellDateFactory<ProducaoLeite, LocalDate>("data"));
 		volumeProduzidoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("volumeProduzidoFormatado"));
 		volumeEntregueColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("volumeEntregueFormatado"));
-		mediaProducaoColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("mediaProducao"));
-		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("valor"));
+		mediaProducaoColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("mediaProducao", 2));
+		valorColumn.setCellValueFactory(new PropertyDecimalValueFactory<ProducaoLeite, String>("valor", 3));
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("observacao"));
 		
 		numeroVacasOrdenhadasColumn.setCellValueFactory(new PropertyValueFactory<ProducaoLeite, String>("numeroVacasOrdenhadas"));

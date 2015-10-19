@@ -66,7 +66,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 			inputAnimal.setText(getObject().getAnimal().toString());
 		}
 		
-		MaskFieldUtil.decimal(inputValorAnimal);
+		MaskFieldUtil.decimalWithoutMask(inputValorAnimal);
 		
 		//para o caso de o form ter sido chamado a partir da tela de animais
 		//nesse caso ele já terá o animal informado

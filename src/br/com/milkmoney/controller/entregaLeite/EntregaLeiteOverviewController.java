@@ -63,10 +63,10 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		mesReferenciaColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("mesReferencia"));
 		dataInicioColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataInicio"));
 		dataFimColumn.setCellFactory(new TableCellDateFactory<EntregaLeite, LocalDate>("dataFim"));
-		volumeColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("volume"));
-		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado"));
-		valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorRecebido"));
-		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorTotal"));
+		volumeColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("volume", 2));
+		valorMaximoPraticadoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite,String>("valorMaximoPraticado", 3));
+		valorRecebidoColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorRecebido", 3));
+		valorTotalColumn.setCellValueFactory(new PropertyDecimalValueFactory<EntregaLeite, String>("valorTotal", 3));
 		observacaoColumn.setCellValueFactory(new PropertyValueFactory<EntregaLeite, String>("observacao"));
 		valorRecebidoColumn.setCellFactory(new Callback<TableColumn<EntregaLeite,String>, TableCell<EntregaLeite,String>>(){
 			@Override

@@ -33,7 +33,7 @@ public class MorteAnimalOverviewController extends AbstractOverviewController<In
 		dataMorteColumn.setCellFactory(new TableCellDateFactory<MorteAnimal,Date>("dataMorte"));
 		animalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("animal"));
 		causaMorteAnimalColumn.setCellValueFactory(new PropertyValueFactory<CausaMorteAnimal,String>("causaMorteAnimal"));
-		valorAnimalColumn.setCellValueFactory(new PropertyDecimalValueFactory<MorteAnimal,String>("valorAnimal"));
+		valorAnimalColumn.setCellValueFactory(new PropertyDecimalValueFactory<MorteAnimal,String>("valorAnimal", 2));
 		
 		super.initialize((MorteAnimalFormController)MainApp.getBean(MorteAnimalFormController.class));
 

@@ -33,8 +33,8 @@ public class PrecoLeiteFormController extends AbstractFormController<Integer, Pr
 		inputValorMaximoPraticado.textProperty().bindBidirectional(getObject().valorMaximoPraticadoProperty());
 		inputValorRecebido.textProperty().bindBidirectional(getObject().valorRecebidoProperty());
 		
-		MaskFieldUtil.decimal(inputValorMaximoPraticado);
-		MaskFieldUtil.decimal(inputValorRecebido);
+		MaskFieldUtil.decimalWithoutMask(inputValorMaximoPraticado);
+		MaskFieldUtil.decimalWithoutMask(inputValorRecebido);
 		
 	}
 

@@ -115,17 +115,15 @@ public abstract class MaskFieldUtil {
      * @param textField TextField
      */
     public static void numeroInteiro(final TextField textField) {
-        textField.lengthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (newValue.intValue() > oldValue.intValue()) {
-                    char ch = textField.getText().charAt(oldValue.intValue());
-                    if (!(ch >= '0' && ch <= '9')) {
-                        textField.setText(textField.getText().substring(0, textField.getText().length() - 1));
-                    }
-                }
-            }
-        });
+    	textField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				String value = textField.getText();
+				value = value.replaceAll("[^0-9]", "");
+				textField.setText(value);
+				positionCaret(textField);
+			}
+		});
     }
 
     /**
@@ -296,5 +294,20 @@ public abstract class MaskFieldUtil {
             }
         });
     }
+
+	public static void decimalWithoutMask(TextField textField) {
+		textField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable,
+				String oldValue, String newValue) {
+				String value = textField.getText();
+				value = value.replaceAll("[^0-9,]", "");
+				textField.setText(value);
+				positionCaret(textField);
+			}
+
+		});
+		
+	}
 
 }

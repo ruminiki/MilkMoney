@@ -47,7 +47,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 			inputAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());
 		}
 		
-		MaskFieldUtil.decimal(inputValorAnimal);
+		MaskFieldUtil.decimalWithoutMask(inputValorAnimal);
 		
 	}
 

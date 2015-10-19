@@ -44,7 +44,7 @@ public class FuncionarioOverviewController extends AbstractOverviewController<In
 		jornadaTrabalhoColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("jornadaTrabalho"));
 		dataContratacaoColumn.setCellFactory(new TableCellDateFactory<Funcionario,String>("dataContratacao"));
 		diaPagamentoColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("diaPagamento"));
-		salarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Funcionario,String>("salario"));
+		salarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Funcionario,String>("salario", 2));
 		super.initialize((FuncionarioFormController) MainApp.getBean(FuncionarioFormController.class));
 		
 	}

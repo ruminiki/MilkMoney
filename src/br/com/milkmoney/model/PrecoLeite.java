@@ -58,11 +58,11 @@ public class PrecoLeite extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getValorMaximoPraticado() {
-		return NumberFormatUtil.fromString(this.valorMaximoPraticado.get());
+		return NumberFormatUtil.fromString(this.valorMaximoPraticado.get(), 3);
 	}
 
 	public void setValorMaximoPraticado(BigDecimal valorMaximoPraticado) {
-		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado));
+		this.valorMaximoPraticado.set(NumberFormatUtil.decimalFormat(valorMaximoPraticado, 3));
 	}
 	
 	public StringProperty valorMaximoPraticadoProperty(){
@@ -71,11 +71,11 @@ public class PrecoLeite extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getValorRecebido() {
-		return NumberFormatUtil.fromString(this.valorRecebido.get());
+		return NumberFormatUtil.fromString(this.valorRecebido.get(), 3);
 	}
 
 	public void setValorRecebido(BigDecimal valorRecebido) {
-		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido));
+		this.valorRecebido.set(NumberFormatUtil.decimalFormat(valorRecebido, 3));
 	}
 	
 	public StringProperty valorRecebidoProperty(){

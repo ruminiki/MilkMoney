@@ -92,7 +92,7 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 	}
 
 	public void setVolumeProduzido(BigDecimal volumeProduzido) {
-		this.volumeProduzido.set(NumberFormatUtil.decimalFormat(volumeProduzido));
+		this.volumeProduzido.set(NumberFormatUtil.decimalFormat(volumeProduzido, 0));
 	}
 
 	public StringProperty volumeProduzidoProperty(){
@@ -112,7 +112,7 @@ public class ProducaoLeite extends AbstractEntity implements Serializable {
 	}
 
 	public void setVolumeEntregue(BigDecimal volumeEntregue) {
-		this.volumeEntregue.set(NumberFormatUtil.decimalFormat(volumeEntregue));
+		this.volumeEntregue.set(NumberFormatUtil.decimalFormat(volumeEntregue, 0));
 	}
 
 	public StringProperty volumeEntregueProperty(){

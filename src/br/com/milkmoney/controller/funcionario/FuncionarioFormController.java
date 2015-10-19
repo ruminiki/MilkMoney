@@ -40,7 +40,7 @@ public class FuncionarioFormController extends AbstractFormController<Integer, F
 		MaskFieldUtil.telefone(inputTelefoneSecundario);
 		MaskFieldUtil.jornada(inputJornadaTrabalho);
 		MaskFieldUtil.numeroInteiro(inputDiaPagamento);
-		MaskFieldUtil.decimal(inputSalario);
+		MaskFieldUtil.decimalWithoutMask(inputSalario);
 	
 	}
 	

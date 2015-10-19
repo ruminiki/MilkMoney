@@ -67,14 +67,14 @@ public class CompraFormController extends AbstractFormController<Integer, Compra
 		}
 		
 		//dados dos itens
-		MaskFieldUtil.decimal(inputQuantidade);
-		MaskFieldUtil.decimal(inputValorUnitario);
+		MaskFieldUtil.decimalWithoutMask(inputQuantidade);
+		MaskFieldUtil.decimalWithoutMask(inputValorUnitario);
 		
 		//table animais vendidos
 		insumoColumn.setCellValueFactory(new PropertyValueFactory<ItemCompra,String>("insumo"));
-		quantidadeColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("quantidade"));
-		valorUnitarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("valor"));
-		valorItemColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("valorItem"));
+		quantidadeColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("quantidade", 2));
+		valorUnitarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("valor", 2));
+		valorItemColumn.setCellValueFactory(new PropertyDecimalValueFactory<ItemCompra,String>("valorItem", 2));
 		removerColumn.setCellValueFactory(new PropertyValueFactory<ItemCompra,String>("insumo"));
 		removerColumn.setCellFactory(new TableCellHyperlinkRemoverFactory<ItemCompra, String>(removerItemCompra, false));
 		
