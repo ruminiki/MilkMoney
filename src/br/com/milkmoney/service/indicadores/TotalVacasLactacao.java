@@ -28,10 +28,4 @@ public class TotalVacasLactacao extends AbstractCalculadorIndicador{
 		
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
-	}
-	
-	
 }

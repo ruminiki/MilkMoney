@@ -35,10 +35,4 @@ public class PercentualVacasRebanho extends AbstractCalculadorIndicador{
 		
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.DECIMAL_FORMAT_UMA_CASA;
-	}
-	
-	
 }

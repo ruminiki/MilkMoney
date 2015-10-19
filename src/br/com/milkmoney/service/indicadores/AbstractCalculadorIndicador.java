@@ -9,6 +9,5 @@ public abstract class AbstractCalculadorIndicador {
 	public static final String INTEIRO_FORMAT = "INTEIRO_FORMAT";
 	
 	public abstract BigDecimal getValue();
-	public abstract String getFormat();
 
 }

@@ -66,10 +66,4 @@ public class TaxaPrenhes extends AbstractCalculadorIndicador{
 
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
-	}
-	
-	
 }

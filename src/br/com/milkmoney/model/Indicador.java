@@ -36,6 +36,8 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private StringProperty maiorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty valorApurado = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty definicao = new SimpleStringProperty();
+	private StringProperty formato = new SimpleStringProperty();
+	private StringProperty sufixo = new SimpleStringProperty();
 	private StringProperty classeCalculo = new SimpleStringProperty();
 	private StringProperty objetivo = new SimpleStringProperty(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL);
 	private int ordem;
@@ -176,6 +178,32 @@ public class Indicador extends AbstractEntity implements Serializable {
 	
 	public StringProperty objetivoProperty(){
 		return objetivo;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getFormato() {
+		return formato.get();
+	}
+
+	public void setFormato(String formato) {
+		this.formato.set(formato);
+	}
+	
+	public StringProperty formatoProperty(){
+		return formato;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getSufixo() {
+		return sufixo.get();
+	}
+
+	public void setSufixo(String sufixo) {
+		this.sufixo.set(sufixo);
+	}
+	
+	public StringProperty sufixoProperty(){
+		return sufixo;
 	}
 	
 	@Override

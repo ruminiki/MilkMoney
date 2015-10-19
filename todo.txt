@@ -12,8 +12,7 @@
 
 - Tela indicadores
 - Eficiência reprodutiva
-- taxa prenhes, concepcao
-- verificar igualdade dos indicadores DEL e Media dias Pos Parto.
+- media idade ao primeiro parto
 
 - Ajustar ficha do animal para considerar todos os indicadores individuais
 - remover casas decimais formulario indicador

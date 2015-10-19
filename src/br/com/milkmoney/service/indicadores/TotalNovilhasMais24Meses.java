@@ -29,10 +29,4 @@ public class TotalNovilhasMais24Meses extends AbstractCalculadorIndicador{
 		
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
-	}
-	
-	
 }

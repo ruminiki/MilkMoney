@@ -52,10 +52,4 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 		
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
-	}
-	
-	
 }

@@ -29,10 +29,4 @@ public class TotalVacas extends AbstractCalculadorIndicador{
 		
 	}
 	
-	@Override
-	public String getFormat() {
-		return AbstractCalculadorIndicador.INTEIRO_FORMAT;
-	}
-	
-	
 }
