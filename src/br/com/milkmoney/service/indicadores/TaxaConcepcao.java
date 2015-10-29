@@ -48,8 +48,8 @@ public class TaxaConcepcao extends AbstractCalculadorIndicador{
 		long coberturasRealizadas = 0;
 		long concepcoes = 0;
 		
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(42));
-		Date dataFim = DateUtil.asDate(LocalDate.now().minusDays(21));
+		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(21));
+		Date dataFim = new Date();
 		
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		

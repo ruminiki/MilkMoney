@@ -1,4 +1,3 @@
-- remover casas decimais volume produzido e volume entregue
 - fazer log de acessos ao sistema
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
