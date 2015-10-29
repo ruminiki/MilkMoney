@@ -1,0 +1,1 @@
+alter table lancamentoFinanceiro add column parcela varchar(45) null default null;

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
 
@@ -27,24 +28,32 @@ import br.com.milkmoney.util.NumberFormatUtil;
 @Controller
 public class ParcelaFormController extends AbstractFormController<Integer, LancamentoFinanceiro> {
 
-	@FXML private UCTextField inputNumeroParcelas, inputDiaVencimento, inputValorParcelas, inputDescricao, inputCategoria, inputCentroCusto;
+	@FXML private UCTextField inputNumeroParcelas, inputDiaVencimento, inputValorParcelas, 
+							  inputDescricao, inputCategoria, inputCentroCusto, inputIntervalo;
+	@FXML private DatePicker inputDataInicio;
 	@Autowired private CentroCustoReducedOverviewController centroCustoReducedOverviewController;
 	@Autowired private CategoriaLancamentoFinanceiroReducedOverviewController categoriaLancamentoFinanceiroReducedOverviewController;
 	private boolean gerouParcelas = false;
 
 	@FXML
 	public void initialize() {
+		
 		inputNumeroParcelas.setText(null);
-		inputDiaVencimento.setText(""+getObject().getDataVencimento().getDay());
+		inputDiaVencimento.setText(""+DateUtil.asLocalDate(getObject().getDataVencimento()).getDayOfMonth());
 		inputValorParcelas.setText(getObject().getValorTotal().toString());
 		inputDescricao.setText(getObject().getDescricao());
-		inputCategoria.setText(getObject().getCategoria().toString());
-		inputCentroCusto.setText(getObject().getCentroCusto().toString());
+		inputCategoria.setText(getObject().getCategoria() != null ? getObject().getCategoria().toString() : "");
+		inputCentroCusto.setText(getObject().getCentroCusto() != null ? getObject().getCentroCusto().toString() : "");
 		gerouParcelas = false;
 		
+		inputIntervalo.setText(String.valueOf(30));
+		inputDataInicio.setValue(LocalDate.now());
+		
+		MaskFieldUtil.numeroInteiro(inputIntervalo);
 		MaskFieldUtil.numeroInteiro(inputNumeroParcelas);
 		MaskFieldUtil.numeroInteiro(inputDiaVencimento);
 		MaskFieldUtil.decimalWithoutMask(inputValorParcelas);
+		
 	}
 
 	@FXML
@@ -53,22 +62,40 @@ public class ParcelaFormController extends AbstractFormController<Integer, Lanca
 		
 		int numeroParcelas = Integer.parseInt(inputNumeroParcelas.getText());
 		
+		String hashParcela = String.valueOf(Calendar.getInstance().getTimeInMillis());
+		Calendar dataVencimento = Calendar.getInstance();
+		
+		if ( inputDataInicio.getValue() != null ){
+			dataVencimento.setTime(DateUtil.asDate(inputDataInicio.getValue()));
+		}else{
+			dataVencimento.setTime(getObject().getDataVencimento() != null ? getObject().getDataVencimento() : new Date());	
+		}
+		
+		if ( !inputDiaVencimento.getText().isEmpty() ){
+			if ( dataVencimento.get(Calendar.DAY_OF_MONTH) > Integer.parseInt(inputDiaVencimento.getText()) ){
+				dataVencimento.add(Calendar.MONTH, 1);
+			}
+			dataVencimento.set(Calendar.DAY_OF_MONTH, Integer.parseInt(inputDiaVencimento.getText()));
+		}
+		
 		for ( int parcela = 1; parcela <= numeroParcelas; parcela++){
 			LancamentoFinanceiro lancamento = new LancamentoFinanceiro();
 			lancamento.setDescricao(inputDescricao.getText() + " (" + parcela + " de " + numeroParcelas + ")");
 			lancamento.setValor(NumberFormatUtil.fromString(inputValorParcelas.getText()));
 			
-			Calendar dataVencimento = Calendar.getInstance();
-			dataVencimento.setTime(getObject().getDataVencimento() != null ? getObject().getDataVencimento() : new Date());
-			dataVencimento.set(Calendar.DAY_OF_MONTH, Integer.parseInt(inputDiaVencimento.getText()));
-			dataVencimento.add(Calendar.MONTH, parcela);
-			
 			lancamento.setDataVencimento(dataVencimento.getTime());
-			
 			lancamento.setCentroCusto(getObject().getCentroCusto());
 			lancamento.setCategoria(getObject().getCategoria());
 			
+			lancamento.setParcela(hashParcela);
+			
 			parcelas.add(lancamento);
+			
+			if ( inputIntervalo.getText().isEmpty() || inputIntervalo.getText().equals("30") ){
+				dataVencimento.add(Calendar.MONTH, 1);
+			}else{
+				dataVencimento.add(Calendar.DAY_OF_MONTH, Integer.parseInt(inputIntervalo.getText()));
+			}
 			
 		}
 		
@@ -109,7 +136,7 @@ public class ParcelaFormController extends AbstractFormController<Integer, Lanca
 		
 	}
 	
-	public boolean isGerouParcelas() {
+	public boolean gerouParcelas() {
 		return gerouParcelas;
 	}
 

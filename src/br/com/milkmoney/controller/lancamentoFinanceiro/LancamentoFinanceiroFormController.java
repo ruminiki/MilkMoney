@@ -1,6 +1,7 @@
 package br.com.milkmoney.controller.lancamentoFinanceiro;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -25,10 +26,12 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 	@FXML private DatePicker inputDataEmissao, inputDataVencimento, inputDataPagamento;
 	@FXML private UCTextField inputCategoria, inputCentroCusto, inputValor, inputJuros, inputMulta, inputDescricao, inputObservacao;
 	@FXML private ToggleButton tbReceita, tbDespesa;
+	@FXML private Button btnParcelar;
 	@Autowired private CentroCustoReducedOverviewController centroCustoReducedOverviewController;
 	@Autowired private CategoriaLancamentoFinanceiroReducedOverviewController categoriaLancamentoFinanceiroReducedOverviewController;
 	@Autowired private ParcelaFormController parcelaFormController;
 	
+	private boolean gerouParcelas = false;
 	private ToggleGroup groupTipo = new ToggleGroup();
 	
 	@FXML
@@ -69,6 +72,8 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		tbReceita.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			tbDespesa.setSelected(!tbReceita.isSelected());
 		});
+		
+		btnParcelar.setDisable(getObject().getId() > 0);
 		
 	}
 	
@@ -119,13 +124,18 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		
 		parcelaFormController.setObject(getObject());
 		parcelaFormController.showForm();
+		gerouParcelas = parcelaFormController.gerouParcelas();
 		
-		if ( parcelaFormController.isGerouParcelas() ){
+		if ( gerouParcelas ){
 			closeForm();
 		}
-		
 	}
 	
+	
+	public boolean gerouParcelas() {
+		return gerouParcelas;
+	}
+
 	@Override
 	public String getFormName() {
 		return "view/lancamentoFinanceiro/LancamentoFinanceiroForm.fxml";

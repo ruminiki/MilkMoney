@@ -45,6 +45,11 @@ public class LancamentoFinanceiroService implements IService<Integer, Lancamento
 	public boolean remove(LancamentoFinanceiro lancamentoFinanceiro) {
 		return dao.remove(lancamentoFinanceiro);
 	}
+	
+	@Transactional
+	public void removeParcelas(String parcela) {
+		dao.removeParcelas(parcela);
+	}
 
 	@Override
 	public LancamentoFinanceiro findById(Integer id) {

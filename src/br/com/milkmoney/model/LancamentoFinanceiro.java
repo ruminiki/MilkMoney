@@ -50,6 +50,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	private StringProperty                                multa                 = new SimpleStringProperty();
 	private StringProperty                                descricao             = new SimpleStringProperty();
 	private StringProperty                                observacao            = new SimpleStringProperty();
+	private StringProperty								  parcela               = new SimpleStringProperty();
 	
 	public LancamentoFinanceiro() {
 	}
@@ -218,6 +219,19 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	
 	public StringProperty multaProperty(){
 		return multa;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getParcela() {
+		return this.parcela.get();
+	}
+
+	public void setParcela(String parcela) {
+		this.parcela.set(parcela);
+	}
+
+	public StringProperty parcelaProperty(){
+		return parcela;
 	}
 	
 	//--------------

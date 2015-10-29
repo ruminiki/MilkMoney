@@ -172,4 +172,10 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		
 	}
 
+	public void removeParcelas(String parcela) {
+		Query query = entityManager.createQuery("delete from LancamentoFinanceiro where parcela = :parcela");
+		query.setParameter("parcela", parcela);
+		query.executeUpdate();
+	}
+
 }

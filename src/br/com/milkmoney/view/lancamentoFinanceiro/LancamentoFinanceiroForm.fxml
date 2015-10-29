@@ -87,7 +87,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleParcelar" text="Parcelar" />
+                  <Button fx:id="btnParcelar" mnemonicParsing="false" onAction="#handleParcelar" text="Parcelar" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                </children>
                <VBox.margin>

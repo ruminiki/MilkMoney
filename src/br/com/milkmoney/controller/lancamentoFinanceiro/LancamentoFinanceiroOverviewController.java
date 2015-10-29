@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -231,7 +232,13 @@ public class LancamentoFinanceiroOverviewController {
 		formController.setState(State.INSERT);
 		formController.setObject(new LancamentoFinanceiro());
 		formController.showForm();
-		addObjectInTableView(formController.getObject());
+		
+		if ( formController.gerouParcelas() ){
+			//recarrega pois podem haver mais de um movimento para o mês corrente (parcelas de 10, 15 dias por exemplo)
+			refreshTableOverview();
+		}else{
+			addObjectInTableView(formController.getObject());			
+		}
 		
 	}
 	
@@ -252,24 +259,63 @@ public class LancamentoFinanceiroOverviewController {
 
 	protected void handleDelete() {
 		if ( lancamentoFinanceiroSelecionado != null ) {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-			if (result.get() == ButtonType.OK) {
+			
+			if ( lancamentoFinanceiroSelecionado.getParcela() != null && !lancamentoFinanceiroSelecionado.getParcela().isEmpty() ){
 				
-				try {
-					service.remove(lancamentoFinanceiroSelecionado);
-				} catch (Exception e) {
-					CustomAlert.mensagemAlerta("", e.getMessage());
-					return;
+				Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
+	            ButtonType btnApenasEsta = new ButtonType("Remover apenas esta");
+	            ButtonType btnTodas = new ButtonType("Remover todas as parcelas");
+	            ButtonType btnCancelar = new ButtonType("Cancelar");
+
+	            dialogoExe.setTitle("Atenção");
+	            dialogoExe.setHeaderText("Lançamento parcelado");
+	            dialogoExe.setContentText("O lançamento selecionado possui outras parcelas. Selecione a opção desejada:");
+	            dialogoExe.getButtonTypes().setAll(btnApenasEsta, btnTodas, btnCancelar);
+	            dialogoExe.showAndWait().ifPresent(b -> {
+	                if (b == btnApenasEsta) {
+	                	try {
+							service.remove(lancamentoFinanceiroSelecionado);
+							if ( lancamentoFinanceiroSelecionado.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
+								tableReceitas.getItems().remove(lancamentoFinanceiroSelecionado);
+							}else{
+								tableDespesas.getItems().remove(lancamentoFinanceiroSelecionado);
+							}
+							
+							lancamentoFinanceiroSelecionado = null;
+							refreshTela();
+						} catch (Exception e) {
+							CustomAlert.mensagemAlerta("", e.getMessage());
+							return;
+						}
+	                } else if (b == btnTodas) {
+	                	service.removeParcelas(lancamentoFinanceiroSelecionado.getParcela());
+	                	refreshTableOverview();
+	                } else if (b == btnCancelar) {
+	                	return;
+	                }
+	            });
+	            refreshTela();
+	        
+			}else{
+				Optional<ButtonType> result = CustomAlert.confirmarExclusao();
+				if (result.get() == ButtonType.OK) {
+					
+					try {
+						service.remove(lancamentoFinanceiroSelecionado);
+					} catch (Exception e) {
+						CustomAlert.mensagemAlerta("", e.getMessage());
+						return;
+					}
+					
+					if ( lancamentoFinanceiroSelecionado.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
+						tableReceitas.getItems().remove(lancamentoFinanceiroSelecionado);
+					}else{
+						tableDespesas.getItems().remove(lancamentoFinanceiroSelecionado);
+					}
+					
+					lancamentoFinanceiroSelecionado = null;
+					refreshTela();
 				}
-				
-				if ( lancamentoFinanceiroSelecionado.getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA) ){
-					tableReceitas.getItems().remove(lancamentoFinanceiroSelecionado);
-				}else{
-					tableDespesas.getItems().remove(lancamentoFinanceiroSelecionado);
-				}
-				
-				lancamentoFinanceiroSelecionado = null;
-				refreshTela();
 			}
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();		
