@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.ProducaoIndividual;
 
 @Repository
@@ -70,6 +71,15 @@ public class ProducaoIndividualDao extends AbstractGenericDao<Integer, ProducaoI
 		
 		return query.getResultList();
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<ProducaoIndividual> findByLactacao(Lactacao lactacao) {
+		Query query = entityManager.createQuery("SELECT c FROM ProducaoIndividual c WHERE c.lactacao = :lactacao order by data");
+		
+		query.setParameter("lactacao", lactacao);
+		
+		return query.getResultList();
 	}
 
 }

@@ -162,12 +162,12 @@
                                        </font>
                                     </Label>
                                     <Label text="Secar Em (~305d pós parto): " GridPane.rowIndex="2" />
-                                    <Label text="Último Procedimento: " GridPane.rowIndex="14" />
-                                    <Label text="Lote: " GridPane.rowIndex="15" />
+                                    <Label text="Pai: " GridPane.rowIndex="14" />
+                                    <Label text="Mãe: " GridPane.rowIndex="15" />
                                     <Label text="Data Próximo Parto: " GridPane.rowIndex="3" />
                                     <Label text="Data Último Parto: " GridPane.rowIndex="1" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-                                    <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="15" />
+                                    <Label fx:id="lblPai" text="--" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+                                    <Label fx:id="lblMae" text="--" GridPane.columnIndex="1" GridPane.rowIndex="15" />
                                     <Label text="Situação Última Cobertura: " GridPane.rowIndex="5" />
                                     <Label text="Animal: " />
                                     <Label fx:id="lblAnimal" text="--" GridPane.columnIndex="1">

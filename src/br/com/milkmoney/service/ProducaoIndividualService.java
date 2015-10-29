@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.ProducaoIndividualDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.PrecoLeite;
 import br.com.milkmoney.model.ProducaoIndividual;
 import br.com.milkmoney.util.DateUtil;
@@ -138,6 +139,10 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	public ObservableList<ProducaoIndividual> findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
 		return FXCollections.observableArrayList(dao.findByAnimalPeriodo(animal, dataInicio, dataFim));
 	}
+	
+	public ObservableList<ProducaoIndividual> findByLactacao(Lactacao lactacao) {
+		return FXCollections.observableArrayList(dao.findByLactacao(lactacao));
+	}
 
 	public ProducaoIndividual findByAnimalAndData(Animal animal, Date data) {
 		return dao.findByAnimalAndData(animal, data);
@@ -148,14 +153,14 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 		
 	}
 
-	public ObservableList<Series<String, Number>> getDataChart(Animal animal, Date dataInicio, Date dataFim) {
+	public ObservableList<Series<String, Number>> getDataChart(Lactacao lactacao) {
 		
 		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
     	XYChart.Series<String, Number> serie = new XYChart.Series<String, Number>();
     	
     	serie.setName("Produção Individual");
     	
-    	for ( ProducaoIndividual producao : dao.findByAnimalPeriodo(animal, dataInicio, dataFim) ){
+    	for ( ProducaoIndividual producao : dao.findByLactacao(lactacao) ){
     		serie.getData().add(new XYChart.Data<String, Number>(DateUtil.format(producao.getData()), producao.getTotalProducaoDia()));
     	}
     	

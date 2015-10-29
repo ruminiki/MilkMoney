@@ -118,10 +118,10 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
     	if ( newValue != null && data != null ){
     		lactacao = newValue;
     		data.clear();
-    		data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+    		data.addAll(((ProducaoIndividualService)service).findByLactacao(lactacao));
     		((ProducaoIndividualService)service).atualizaValorProducao(data);
     		lineChart.getData().clear();
-    		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+    		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(lactacao));
     	}
 	}
 
@@ -184,13 +184,13 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 				return;
 			}
 		}else{
-			data.addAll(((ProducaoIndividualService)service).findByAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+			data.addAll(((ProducaoIndividualService)service).findByLactacao(lactacao));
 		}
 		
 		((ProducaoIndividualService)service).atualizaValorProducao(data);
 		
 		lineChart.getData().clear();
-		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(animal, lactacao.getDataInicio(), lactacao.getDataFim()));
+		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(lactacao));
 		
 		//recarrega as lactações para atualizar a média de produção do período
 		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));

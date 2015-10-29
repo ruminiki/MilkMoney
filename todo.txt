@@ -3,13 +3,14 @@
 
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
-
 - parcelar lançamentos
 - gerar parcelas a partir de data (verificar se gera no mês corrente)
 - gerar as parcelas com intervalo de dias (10, 15 ou 30....)
 - Ao tentar remover uma, perguntar se deseja remover todas as parcelas (vincular as parcelas)
 - Atualizar a tabela de lançamentos após salvar as parcelas
 - movimentos já parcelados não podem ser parcelados novamente
+
+- fazer árvore genealógica
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
@@ -21,10 +22,13 @@
 - media idade ao primeiro parto
 
 --Relatórios
-- habilitar time line da vaca (eventos)
-- animais para secar
 - projeção do rebanho
 
+--Notificações
+- animais para secar
+- coberturas para confirmar
+- animais para cobrir
+- partos
 
 - está permitindo deletar o animal (cria) sem remover o parto.
 Obs: para os indicadores funcionarem é necessário cadastrar pelo menos

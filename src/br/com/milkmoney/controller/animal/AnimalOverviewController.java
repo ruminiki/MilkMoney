@@ -95,7 +95,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, String> opcoesColumn;
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
-						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura;
+						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
 	@FXML private VBox vBoxChart, sideBar;
 	
@@ -333,7 +333,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							});
 						}
 					}
-					
+					lblPai.setText(animal.getPaiEnseminacaoArtificial() != null ? animal.getPaiEnseminacaoArtificial().toString() : ( animal.getPaiMontaNatural() != null ? animal.getPaiMontaNatural().toString() : "--" ));
+					lblMae.setText(animal.getMae() != null ? animal.getMae().toString() : "--");
 					lblAnimal.setText(animal.toString());
 				}
 			}
