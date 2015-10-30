@@ -5,8 +5,6 @@
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
---categoria overview numero registros
-
 - Tela indicadores
 - Eficiência reprodutiva
 - media idade ao primeiro parto
@@ -21,5 +19,3 @@
 - partos
 
 - está permitindo deletar o animal (cria) sem remover o parto.
-Obs: para os indicadores funcionarem é necessário cadastrar pelo menos
-cobertura -> parto -> cobertura -> encerramento -> parto

@@ -1,5 +1,6 @@
 package br.com.milkmoney.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -97,6 +98,18 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 			return null;
 		}
 		
+	}
+
+	public Parto findPartoPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :animal and p.data between :dataInicio and :dataFim");
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (Parto) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
 	}
 	
 }

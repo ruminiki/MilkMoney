@@ -60,5 +60,19 @@ public class VendaAnimalDao extends AbstractGenericDao<Integer, VendaAnimal> {
 		
 		return query.getResultList();
 	}
+
+	public VendaAnimal findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va where v.animal = :animal and va.dataVenda between :dataInicio and :dataFim ");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (VendaAnimal) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
 	
 }

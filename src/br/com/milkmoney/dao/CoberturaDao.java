@@ -183,8 +183,26 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 
 	@SuppressWarnings("unchecked")
 	public List<Cobertura> findCoberturasPeriodo(Date dataInicio, Date dataFim) {
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c "
-				+ "WHERE c.data between :dataInicio and :dataFim order by c.data");
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.data between :dataInicio and :dataFim order by c.data");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
+	}
+
+	/**
+	 * Busca as coberturas que iniciaram ou tiveram parto no período selecionado.
+	 * @param animal
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findCoberturasIniciadasOuComPartoNoPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c left join c.parto p WHERE c.femea = :animal and "
+				+ "(c.data between :dataInicio and :dataFim or p.data between :dataInicio and :dataFim) "
+				+ "order by c.data");
+		query.setParameter("animal", animal);
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		

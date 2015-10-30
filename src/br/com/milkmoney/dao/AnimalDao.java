@@ -454,5 +454,24 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		return query.getResultList();
 	}
+	/**
+	 * Seleciona os animais que compõem o cálculo da eficiência reprodutiva
+	 * Fêmeas com partos ou coberturas no período
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAnimaisParaCalculoEficiencia(Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "exists (select 1 from Cobertura c where c.femea.id = a.id and c.data between :dataInicio and :dataFim ) or "
+				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data between :dataInicio and :dataFim )");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		return query.getResultList();
+
+	}
 	
 }

@@ -43,4 +43,18 @@ public class MorteAnimalDao extends AbstractGenericDao<Integer, MorteAnimal> {
 		}
 	}
 
+	public MorteAnimal findByAnimalPeriodo(Animal animal, Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT m FROM MorteAnimal m where m.animal = :animal and m.dataMorte between :dataInicio and :dataFim");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		query.setParameter("animal", animal);
+		query.setMaxResults(1);
+		
+		try{
+			return (MorteAnimal) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+
 }

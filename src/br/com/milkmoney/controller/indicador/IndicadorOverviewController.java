@@ -2,9 +2,11 @@ package br.com.milkmoney.controller.indicador;
 
 import java.util.function.Function;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -22,16 +24,20 @@ import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.RelatorioService;
+import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 
 @Controller
 public class IndicadorOverviewController {
 
 	@FXML private GridPane gridIndicadoresZootecnicos, gridQuantitativosRebanho;
+	@FXML private Label lblEficienciaReprodutiva;
 	@Autowired private IndicadorService service;
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RelatorioService relatorioService;
 	@Autowired private RootLayoutController rootLayoutController;
+	
+	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	
 	private ObservableList<Indicador> data;
 	
@@ -80,6 +86,13 @@ public class IndicadorOverviewController {
 			gridQuantitativosRebanho.getChildren().add(box);
 			
 		}*/
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				lblEficienciaReprodutiva.setText(eficienciaReprodutiva.getValue().toString() + "%");
+			}
+		});
 		
 	}
 	
