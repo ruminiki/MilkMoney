@@ -1,5 +1,4 @@
 - fazer log de acessos ao sistema
-
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
 - fazer árvore genealógica
@@ -7,7 +6,6 @@
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 --categoria overview numero registros
-- permitir pesquisar
 
 - Tela indicadores
 - Eficiência reprodutiva
