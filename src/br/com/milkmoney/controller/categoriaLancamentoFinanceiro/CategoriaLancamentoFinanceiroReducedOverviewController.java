@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
@@ -28,9 +32,12 @@ import br.com.milkmoney.service.CategoriaLancamentoFinanceiroService;
 public class CategoriaLancamentoFinanceiroReducedOverviewController {
 
 	@FXML private TreeView<CategoriaLancamentoFinanceiro> treeView;
+	@FXML private Label lblNumRegistros;
+	@FXML private TextField inputPesquisa;
 	@Autowired private CategoriaLancamentoFinanceiroFormController formController;
 	@Autowired private CategoriaLancamentoFinanceiroService service;
 	
+	private ObservableList<CategoriaLancamentoFinanceiro> data = FXCollections.observableArrayList();
 	private TreeItem<CategoriaLancamentoFinanceiro> rootNode = new TreeItem<CategoriaLancamentoFinanceiro>(new CategoriaLancamentoFinanceiro("Categorias"));
 	
 	private CategoriaLancamentoFinanceiro selectedCategoria;
@@ -39,7 +46,6 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 	public void initialize() {
 		
 		rootNode.setExpanded(true);
-		configuraTreeView();
 		
 		// captura o evento de double click da tree
 		treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -58,6 +64,25 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 			}
 
 		});
+
+		if ( inputPesquisa != null ){
+			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> refreshListOverview());
+		}
+		
+		data = service.findAllAsObservableList();
+		configuraTreeView();
+	}
+	
+	private void refreshListOverview(){
+		this.data.clear();
+		
+		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+				inputPesquisa.getText().length() > 0){
+			data.addAll(service.defaultSearch(inputPesquisa.getText()));
+		}else{
+			data = service.findAllAsObservableList();
+		}
+		configuraTreeView();
 	}
 	
 	private void configuraTreeView(){
@@ -65,7 +90,7 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 		rootNode.getChildren().clear();
 		List<TreeItem<CategoriaLancamentoFinanceiro>> itensSemPai = new ArrayList<TreeItem<CategoriaLancamentoFinanceiro>>();
 		
-		for ( CategoriaLancamentoFinanceiro categoria : service.findAllAsObservableList() ) {
+		for ( CategoriaLancamentoFinanceiro categoria : data ) {
 			
 			TreeItem<CategoriaLancamentoFinanceiro> newItem = new TreeItem<CategoriaLancamentoFinanceiro>(categoria);
 			newItem.setExpanded(true);
@@ -89,7 +114,12 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
             
         }
 		
+		if ( itensSemPai.size() > 0 ){
+			rootNode.getChildren().addAll(itensSemPai);	
+		}
+		
 		treeView.setRoot(rootNode);
+		lblNumRegistros.setText(String.valueOf(data.size()));
 		
 	}
 	

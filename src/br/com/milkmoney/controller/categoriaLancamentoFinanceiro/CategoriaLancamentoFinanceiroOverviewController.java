@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -25,11 +26,12 @@ import br.com.milkmoney.service.CategoriaLancamentoFinanceiroService;
 public class CategoriaLancamentoFinanceiroOverviewController {
 
 	@FXML private TreeView<CategoriaLancamentoFinanceiro> treeView;
+	@FXML private Label lblNumRegistros;
+	@FXML private TextField inputPesquisa;
 	@Autowired private CategoriaLancamentoFinanceiroFormController formController;
 	@Autowired private CategoriaLancamentoFinanceiroService service;
-	@FXML protected TextField inputPesquisa;
-	private ObservableList<CategoriaLancamentoFinanceiro> data = FXCollections.observableArrayList();
 	
+	private ObservableList<CategoriaLancamentoFinanceiro> data = FXCollections.observableArrayList();
 	private TreeItem<CategoriaLancamentoFinanceiro> rootNode = new TreeItem<CategoriaLancamentoFinanceiro>(new CategoriaLancamentoFinanceiro("Categorias"));
 	
 	@FXML
@@ -105,6 +107,7 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 		}
 		
 		treeView.setRoot(rootNode);
+		lblNumRegistros.setText(String.valueOf(data.size()));
 		
 	}
 	
