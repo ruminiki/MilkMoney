@@ -104,6 +104,23 @@ public class LoteService implements IService<Integer, Lote>{
 				.setScale(2, RoundingMode.HALF_EVEN)
 				.floatValue();
 	}
+
+	public String getNomeLotes(Animal animal) {
+		
+		List<Lote> lotes = dao.findByAnimal(animal);
+		String nomeLotes = "";
+		for ( Lote lote : lotes ){
+			nomeLotes += lote.getDescricao() + "|";
+		}
+		
+		if ( !nomeLotes.isEmpty() ) {
+			nomeLotes = nomeLotes.substring(0, (nomeLotes.length() - 1));
+		}else{
+			nomeLotes = "--";
+		}
+		
+		return nomeLotes;
+	}
 	
 	
 }

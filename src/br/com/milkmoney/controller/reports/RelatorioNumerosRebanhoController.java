@@ -113,7 +113,7 @@ public class RelatorioNumerosRebanhoController extends AbstractReport{
 		}
 		
 		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
+		super.handleClose();
 	}
 
 }

@@ -1,5 +1,6 @@
 package br.com.milkmoney.controller.animal;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -11,7 +12,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
@@ -95,9 +95,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, String> opcoesColumn;
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
-						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae;
+						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
+						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, lblUltimoTratamento, lblLote;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
-	@FXML private VBox vBoxChart, sideBar;
+	@FXML private VBox sideBar;
 	
 	@FXML ChoiceBox<OptionChoiceFilter> choiceFilter;
 	
@@ -125,7 +126,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private IndicadorOverviewController indicadorOverviewController;
 	@Autowired private PartoFormController partoFormController;
 	
-	private PieChart chart;
 	private FichaAnimal fichaAnimal;
 	
 	@FXML
@@ -175,11 +175,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			}
 		});
 		
-		
-		chart = new PieChart(((AnimalService)service).getChartData());
-	    chart.setTitle("Situação Animais Rebanho");
-        vBoxChart.getChildren().add(chart);
-       
 	}
 	
 	@Override
@@ -219,6 +214,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lblDataProximoParto.setText(fichaAnimal.getDataProximoParto() != null ? DateUtil.format(fichaAnimal.getDataProximoParto()) : "--");	
 						lblDataUltimoParto.setText(fichaAnimal.getDataUltimoParto() != null ? DateUtil.format(fichaAnimal.getDataUltimoParto()) : "--");
 						lblSituacaoUltimaCobertura.setText(fichaAnimal.getSituacaoUltimaCobertura());
+						lblLote.setText(fichaAnimal.getLote());
+						lblMediaProducao.setText(fichaAnimal.getMediaProducao() != null && fichaAnimal.getMediaProducao().compareTo(BigDecimal.ZERO) > 0 ? String.valueOf(fichaAnimal.getMediaProducao()) : "--");
+						lblUltimoTratamento.setText(fichaAnimal.getUltimoTratamento());
+						lblNumeroLactacoes.setText(fichaAnimal.getNumeroLactacoes() > 0 ? String.valueOf(fichaAnimal.getNumeroLactacoes()) : "--");
 						
 						//links
 						hlVisualizarUltimoParto.setVisible(fichaAnimal.getDataUltimoParto() != null);
@@ -336,6 +335,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					lblPai.setText(animal.getPaiEnseminacaoArtificial() != null ? animal.getPaiEnseminacaoArtificial().toString() : ( animal.getPaiMontaNatural() != null ? animal.getPaiMontaNatural().toString() : "--" ));
 					lblMae.setText(animal.getMae() != null ? animal.getMae().toString() : "--");
 					lblAnimal.setText(animal.toString());
+					
+					lblEmLactacao.setText( String.valueOf( ((AnimalService)service).countAllFemeasEmLactacao()) );
+					lblTotalVacas.setText( String.valueOf( ((AnimalService)service).countAllVacasAtivas()) );
+					lblSecas.setText( String.valueOf( ((AnimalService)service).countAllFemeasSecas()) );
+					lblNovilhas.setText( String.valueOf( ((AnimalService)service).countAllNovilhasAtivas()) );
+					
 				}
 			}
 		});

@@ -103,5 +103,9 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	public Lactacao findLastBeforeDate(Animal animal, Date data) {
 		return dao.findLastBeforeDate(animal, data);
 	}
+
+	public Long countLactacoesAnimal(Animal animal) {
+		return dao.countLactacoesAnimal(animal);
+	}
 	
 }

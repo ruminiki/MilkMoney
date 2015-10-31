@@ -27,26 +27,30 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	private int id;
 	@OneToOne(targetEntity=Animal.class, orphanRemoval=true, cascade={CascadeType.MERGE})
 	@JoinColumn(name="animal")
-	private Animal animal;
-	private Date   dataUltimaCobertura;
-	private int    numeroServicosAtePrenhes;
-	private Date   proximoServico;
-	private Date   dataProximoParto;
-	private Date   dataUltimoParto;
-	private int    numeroPartos;
-	private int    numeroCriasMacho;
-	private int    numeroCriasFemea;
-	private int    diasEmAberto;
-	private int    diasEmLactacao;
-	private int    intervaloEntrePartos;
-	private int    idadePrimeiroParto;
-	private int    idadePrimeiraCobertura;
-	private String situacaoUltimaCobertura;
-	private Date   dataPrevisaoEncerramentoLactacao;
+	private Animal     animal;
+	private Date       dataUltimaCobertura;
+	private int        numeroServicosAtePrenhes;
+	private Date       proximoServico;
+	private Date       dataProximoParto;
+	private Date       dataUltimoParto;
+	private int        numeroPartos;
+	private int        numeroLactacoes;
+	private String     lote;
+	private String     ultimoTratamento;
+	private BigDecimal mediaProducao;
+	private int        numeroCriasMacho;
+	private int        numeroCriasFemea;
+	private int        diasEmAberto;
+	private int        diasEmLactacao;
+	private int        intervaloEntrePartos;
+	private int        idadePrimeiroParto;
+	private int        idadePrimeiraCobertura;
+	private String     situacaoUltimaCobertura;
+	private Date       dataPrevisaoEncerramentoLactacao;
 	@Transient
-	private Date   data;
+	private Date       data;
 	@Transient
-	private String evento;
+	private String     evento;
 
 	public FichaAnimal() {
 	}
@@ -212,6 +216,38 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	public void setDataPrevisaoEncerramentoLactacao(
 			Date dataPrevisaoEncerramentoLactacao) {
 		this.dataPrevisaoEncerramentoLactacao = dataPrevisaoEncerramentoLactacao;
+	}
+
+	public int getNumeroLactacoes() {
+		return numeroLactacoes;
+	}
+
+	public void setNumeroLactacoes(int numeroLactacoes) {
+		this.numeroLactacoes = numeroLactacoes;
+	}
+
+	public String getLote() {
+		return lote;
+	}
+
+	public void setLote(String lote) {
+		this.lote = lote;
+	}
+
+	public String getUltimoTratamento() {
+		return ultimoTratamento;
+	}
+
+	public void setUltimoTratamento(String ultimoTratamento) {
+		this.ultimoTratamento = ultimoTratamento;
+	}
+
+	public BigDecimal getMediaProducao() {
+		return mediaProducao;
+	}
+
+	public void setMediaProducao(BigDecimal mediaProducao) {
+		this.mediaProducao = mediaProducao;
 	}
 	
 }

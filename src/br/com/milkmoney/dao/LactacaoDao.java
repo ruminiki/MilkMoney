@@ -102,4 +102,10 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		}
 	}
 
+	public Long countLactacoesAnimal(Animal animal) {
+		Query query = entityManager.createQuery("SELECT count(distinct l) FROM Lactacao l where l.animal = :animal");
+		query.setParameter("animal", animal);
+		return (Long) query.getSingleResult();
+	}
+
 }

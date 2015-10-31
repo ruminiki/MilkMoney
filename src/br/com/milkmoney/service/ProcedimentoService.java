@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.ProcedimentoDao;
+import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Procedimento;
 import br.com.milkmoney.validation.ProcedimentoValidation;
 
@@ -53,6 +54,10 @@ public class ProcedimentoService implements IService<Integer, Procedimento>{
 	@Override
 	public void validate(Procedimento procedimento) {
 		ProcedimentoValidation.validate(procedimento);
+	}
+
+	public Procedimento getUltimoTratamento(Animal animal) {
+		return dao.getUtimoTratamento(animal);
 	}
 	
 	

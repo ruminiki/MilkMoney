@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,7 @@ import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.Parto;
+import br.com.milkmoney.model.Procedimento;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.util.DateUtil;
 
@@ -27,6 +29,9 @@ public class FichaAnimalService{
 	@Autowired private PartoService partoService;
 	@Autowired private AnimalService animalService;
 	@Autowired private LactacaoService lactacaoService;
+	@Autowired private ProducaoIndividualService producaoIndividualService;
+	@Autowired private ProcedimentoService procedimentoService;
+	@Autowired private LoteService loteService;
 
 	public ObservableList<FichaAnimal> findAllEventosByAnimal(Animal animal) {
 		return FXCollections.observableArrayList(dao.findAllByAnimal(animal));
@@ -71,10 +76,20 @@ public class FichaAnimalService{
 		//situacao ultima cobertura
 		cobertura = coberturaService.findLastCoberturaAnimal(animal);
 		fichaAnimal.setSituacaoUltimaCobertura(cobertura != null ? cobertura.getSituacaoCobertura() : null);
+		
 		//encerramento lactação
 		Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(animal);
 		Date dataEncerramentoLactacao = lactacao != null && lactacao.getDataFim() == null ? DateUtil.asDate(DateUtil.asLocalDate(lactacao.getDataInicio()).plusDays(305)) : null;
 		fichaAnimal.setDataPrevisaoEncerramentoLactacao(dataEncerramentoLactacao);
+		fichaAnimal.setNumeroLactacoes(lactacaoService.countLactacoesAnimal(animal).intValue());
+		if ( lactacao != null ){
+			fichaAnimal.setMediaProducao(BigDecimal.valueOf(producaoIndividualService.getMediaAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim())));	
+		}
+		
+		Procedimento procedimento = procedimentoService.getUltimoTratamento(animal);
+		fichaAnimal.setUltimoTratamento(procedimento != null ? procedimento.getDescricao() : "--");
+		
+		fichaAnimal.setLote(loteService.getNomeLotes(animal));
 		
 		dao.persist(fichaAnimal);
 				

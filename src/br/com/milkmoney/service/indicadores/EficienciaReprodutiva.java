@@ -56,11 +56,11 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		double DG   = 280; //duração média da gestação
 		double R    = 85;  //período seco ideal
 		double N    = 0;   //número total de vacas consideradas
-		double P    = 1;   //intervalo em anos
+		double P    = 2;   //intervalo em anos
 		double DIAS = 365; //constante 
 		
 		//período de 1 ano
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(1));
+		Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(2));
 		Date dataFim = new Date();
 		
 		//seleciona os animais que compõem o cálculo

@@ -6,6 +6,7 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Lote;
 
 @Repository
@@ -21,6 +22,14 @@ public class LoteDao extends AbstractGenericDao<Integer, Lote> {
 		
 		return query.getResultList();
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Lote> findByAnimal(Animal animal) {
+		Query query = entityManager.createQuery("SELECT r FROM Lote r join r.animais a WHERE a = :animal and r.ativo = 'SIM' ");
+		query.setParameter("animal", animal);
+		
+		return query.getResultList();
 	}
 
 }

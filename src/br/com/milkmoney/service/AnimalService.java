@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.math.BigInteger;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -84,6 +85,22 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	public Long countAnimaisEmLactacao(Date data) {
 		return dao.contaAnimaisEmLactacao(data);
+	}
+	
+	public BigInteger countAllFemeasEmLactacao() {
+		return dao.countAllFemeasEmLactacao();
+	}
+	
+	public BigInteger countAllVacasAtivas() {
+		return dao.countAllVacasAtivas();
+	}
+	
+	public BigInteger countAllFemeasSecas() {
+		return dao.countAllFemeasSecas();
+	}
+	
+	public BigInteger countAllNovilhasAtivas() {
+		return dao.countAllNovilhasAtivas();
 	}
 	
 	public Long getNumeroPartos(Animal animal) {

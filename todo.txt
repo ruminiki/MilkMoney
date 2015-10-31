@@ -2,11 +2,11 @@
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
 - fazer árvore genealógica
+- backup do banco de dados
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 - Tela indicadores
-- Eficiência reprodutiva
 - media idade ao primeiro parto
 
 --Relatórios
