@@ -66,7 +66,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
-
+	
 	public Animal() {}
 
 	public Animal(String sexo) {

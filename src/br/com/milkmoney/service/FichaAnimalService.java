@@ -19,6 +19,7 @@ import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.Procedimento;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.util.DateUtil;
 
 @Service
@@ -32,6 +33,7 @@ public class FichaAnimalService{
 	@Autowired private ProducaoIndividualService producaoIndividualService;
 	@Autowired private ProcedimentoService procedimentoService;
 	@Autowired private LoteService loteService;
+	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 
 	public ObservableList<FichaAnimal> findAllEventosByAnimal(Animal animal) {
 		return FXCollections.observableArrayList(dao.findAllByAnimal(animal));
@@ -76,20 +78,23 @@ public class FichaAnimalService{
 		//situacao ultima cobertura
 		cobertura = coberturaService.findLastCoberturaAnimal(animal);
 		fichaAnimal.setSituacaoUltimaCobertura(cobertura != null ? cobertura.getSituacaoCobertura() : null);
-		
 		//encerramento lactação
 		Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(animal);
 		Date dataEncerramentoLactacao = lactacao != null && lactacao.getDataFim() == null ? DateUtil.asDate(DateUtil.asLocalDate(lactacao.getDataInicio()).plusDays(305)) : null;
 		fichaAnimal.setDataPrevisaoEncerramentoLactacao(dataEncerramentoLactacao);
+		//numero de lactacoes do animal
 		fichaAnimal.setNumeroLactacoes(lactacaoService.countLactacoesAnimal(animal).intValue());
+		//media de produção da última lactação
 		if ( lactacao != null ){
 			fichaAnimal.setMediaProducao(BigDecimal.valueOf(producaoIndividualService.getMediaAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim())));	
 		}
-		
+		//último procedimento/tratamento
 		Procedimento procedimento = procedimentoService.getUltimoTratamento(animal);
 		fichaAnimal.setUltimoTratamento(procedimento != null ? procedimento.getDescricao() : "--");
-		
+		//lotes que o animal faz parte
 		fichaAnimal.setLote(loteService.getNomeLotes(animal));
+		//eficiência reprodutiva do animal
+		fichaAnimal.setEficienciaReprodutiva(eficienciaReprodutiva.getValue(animal));
 		
 		dao.persist(fichaAnimal);
 				

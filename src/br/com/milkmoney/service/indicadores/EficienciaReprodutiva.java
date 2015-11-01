@@ -48,21 +48,23 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	@Autowired private AnimalDao animalDao;
 	@Autowired private AnimalService animalService;
 	
+	double DVG  = 0;   //dias de gestação do rebanho
+	double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
+	double DG   = 280; //duração média da gestação
+	double R    = 85;  //período seco ideal
+	double N    = 0;   //número total de vacas consideradas
+	int    P    = 1;   //intervalo em anos
+	double DIAS = 365; //constante 
+	
+	//período avaliado (em anos)
+	Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(P));
+	Date dataFim = new Date();
+	
 	@Override
 	public BigDecimal getValue() {
 
-		double DVG  = 0;   //dias de gestação do rebanho
-		double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
-		double DG   = 280; //duração média da gestação
-		double R    = 85;  //período seco ideal
-		double N    = 0;   //número total de vacas consideradas
-		double P    = 2;   //intervalo em anos
-		double DIAS = 365; //constante 
-		
-		//período de 1 ano
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(2));
-		Date dataFim = new Date();
-		
+		DVG = DVE = 0;
+
 		//seleciona os animais que compõem o cálculo
 		//fêmeas com partos ou coberturas no período
 		//a data de ingresso é contado a partir da primeira cobertura de novilhas
@@ -73,79 +75,96 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim);
 		
 		for ( Animal animal : animais ){
-			
-			List<Cobertura> coberturas = coberturaDao.findCoberturasIniciadasOuComPartoNoPeriodo(animal, dataInicio, dataFim);
-			
-			for ( Cobertura cobertura : coberturas ){
-				
-				//se tiver parto, conta os dias de gestação até a data do parto
-				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-					
-					//abortos não são contabilizados nos dias gestantes
-					if ( cobertura.getParto().getTipoParto().equals(TipoParto.ABORTO) ){
-						continue;
-					}
-					
-					//verifica se a cobertura foi realizada dentro do período
-					//|---------------------------|(período avaliado)
-					//    IC|************|Parto (cobertura com parto)
-					if ( cobertura.getData().compareTo(dataInicio) >= 0 &&  cobertura.getData().compareTo(dataFim) <= 0){
-						DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(cobertura.getParto().getData()));	
-					}else{
-						//      |---------------------------|(período avaliado)
-						//IC|---*********|Parto (cobertura com parto)
-						DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(cobertura.getParto().getData()));						
-					}
-					
-				}
-				
-				if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.NAO_CONFIRMADA + "|" + SituacaoCobertura.PRENHA) ){
-					//caso de cobertura que não foi registrado o parto e não foi confirmada vazia (já passado do tempo) não considerar como gestante
-					//       |---------------------------|(período avaliado)
-					// IC|---**************************** (cobertura não confirmada e sem parto)
-					
-					//se o parto já deveria ter ocorrido, não considera pois o produtor esqueceu de marcar
-					if ( cobertura.getPrevisaoParto().compareTo(dataFim) > 0 ){
-						DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(dataFim));						
-					}
-					
-				}
-				
-				//se for a primeira cobertura do animal - considera a entrada dele no rebanho
-				Cobertura primeiraCoberturaAnimal = coberturaDao.findFirstCobertura(animal);
-				if ( primeiraCoberturaAnimal.getId() == cobertura.getId() ){
-					//se a primeira cobertura do animal foi dentro do período avaliado, considera a entrada dele no rebanho
-					//a partir da data da primeira cobertura
-					if ( cobertura.getData().compareTo(dataInicio) >= 0 ){
-						DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(cobertura.getData()));	
-					}
-					
-				}
-				
-			}
-			
-			//calcula o período que o animal foi eliminado do rebanho
-			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				MorteAnimal morte = morteAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
-				DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(morte.getDataMorte()), DateUtil.asLocalDate(dataFim));
-			}
-			
-			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				VendaAnimal venda = vendaAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
-				DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(venda.getDataVenda()), DateUtil.asLocalDate(dataFim));
-			}
-			
+			getDVGAndDVEAnimal(animal);
 		}
 		
 		N = animais.size();
 		
+		return calculaIndice();
+		
+	}
+	
+	public BigDecimal getValue(Animal animal) {
+
+		DVG = DVE = 0;
+		N = 1;
+		
+		getDVGAndDVEAnimal(animal);
+		
+		return calculaIndice();
+		
+	}
+	
+	private void getDVGAndDVEAnimal(Animal animal){
+		List<Cobertura> coberturas = coberturaDao.findCoberturasIniciadasOuComPartoNoPeriodo(animal, dataInicio, dataFim);
+		
+		for ( Cobertura cobertura : coberturas ){
+			
+			//se tiver parto, conta os dias de gestação até a data do parto
+			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+				
+				//abortos não são contabilizados nos dias gestantes
+				if ( cobertura.getParto().getTipoParto().equals(TipoParto.ABORTO) ){
+					continue;
+				}
+				
+				//verifica se a cobertura foi realizada dentro do período
+				//|---------------------------|(período avaliado)
+				//    IC|************|Parto (cobertura com parto)
+				if ( cobertura.getData().compareTo(dataInicio) >= 0 &&  cobertura.getData().compareTo(dataFim) <= 0){
+					DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(cobertura.getParto().getData()));	
+				}else{
+					//      |---------------------------|(período avaliado)
+					//IC|---*********|Parto (cobertura com parto)
+					DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(cobertura.getParto().getData()));						
+				}
+				
+			}
+			
+			if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.NAO_CONFIRMADA + "|" + SituacaoCobertura.PRENHA) ){
+				//caso de cobertura que não foi registrado o parto e não foi confirmada vazia (já passado do tempo) não considerar como gestante
+				//       |---------------------------|(período avaliado)
+				// IC|---**************************** (cobertura não confirmada e sem parto)
+				
+				//se o parto já deveria ter ocorrido, não considera pois o produtor esqueceu de marcar
+				if ( cobertura.getPrevisaoParto().compareTo(dataFim) > 0 ){
+					DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(dataFim));						
+				}
+				
+			}
+			
+			//se for a primeira cobertura do animal - considera a entrada dele no rebanho
+			Cobertura primeiraCoberturaAnimal = coberturaDao.findFirstCobertura(animal);
+			if ( primeiraCoberturaAnimal.getId() == cobertura.getId() ){
+				//se a primeira cobertura do animal foi dentro do período avaliado, considera a entrada dele no rebanho
+				//a partir da data da primeira cobertura
+				if ( cobertura.getData().compareTo(dataInicio) >= 0 ){
+					DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(dataInicio), DateUtil.asLocalDate(cobertura.getData()));	
+				}
+				
+			}
+			
+		}
+		
+		//calcula o período que o animal foi eliminado do rebanho
+		if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+			MorteAnimal morte = morteAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(morte.getDataMorte()), DateUtil.asLocalDate(dataFim));
+		}
+		
+		if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+			VendaAnimal venda = vendaAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(venda.getDataVenda()), DateUtil.asLocalDate(dataFim));
+		}
+	}
+	
+	private BigDecimal calculaIndice(){
 		if ( N > 0 ){
 			double index = (  (( (DVG / DG) * R ) + DVG)  /  ((N * DIAS * P) - DVE)  ) * 100;
 			return BigDecimal.valueOf(index).setScale(0, RoundingMode.HALF_EVEN);			
 		}
-		
 		return BigDecimal.ZERO;
-
 	}
+	
 	
 }

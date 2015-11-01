@@ -96,7 +96,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
-						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, lblUltimoTratamento, lblLote;
+						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
+						lblUltimoTratamento, lblLote, lblEficienciaReprodutiva;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
 	@FXML private VBox sideBar;
 	
@@ -218,6 +219,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lblMediaProducao.setText(fichaAnimal.getMediaProducao() != null && fichaAnimal.getMediaProducao().compareTo(BigDecimal.ZERO) > 0 ? String.valueOf(fichaAnimal.getMediaProducao()) : "--");
 						lblUltimoTratamento.setText(fichaAnimal.getUltimoTratamento());
 						lblNumeroLactacoes.setText(fichaAnimal.getNumeroLactacoes() > 0 ? String.valueOf(fichaAnimal.getNumeroLactacoes()) : "--");
+						lblEficienciaReprodutiva.setText(fichaAnimal.getEficienciaReprodutiva() + "%");
 						
 						//links
 						hlVisualizarUltimoParto.setVisible(fichaAnimal.getDataUltimoParto() != null);

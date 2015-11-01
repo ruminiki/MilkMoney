@@ -4,6 +4,8 @@
 - fazer árvore genealógica
 - backup do banco de dados
 
+- criar parâmetro para numero de anos para cálculo da eficiência reprodutiva
+
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 - Tela indicadores
