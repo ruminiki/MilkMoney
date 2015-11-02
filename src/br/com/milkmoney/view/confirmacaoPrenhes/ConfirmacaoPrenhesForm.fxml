@@ -20,7 +20,7 @@
                      </font></Label>
                </children>
             </HBox>
-            <VBox minHeight="160.0" style="-fx-border-color: #CCC;" VBox.vgrow="SOMETIMES">
+            <VBox minHeight="160.0" VBox.vgrow="SOMETIMES">
                <children>
                   <GridPane alignment="CENTER_LEFT" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
