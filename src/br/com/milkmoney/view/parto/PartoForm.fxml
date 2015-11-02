@@ -114,7 +114,6 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="375.0" spacing="5.0">
                <children>
-                  <Button fx:id="btnRemover" mnemonicParsing="false" onAction="#handleRemover" text="Remover Parto" />
                   <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar Parto">
                      <HBox.margin>
                         <Insets />
