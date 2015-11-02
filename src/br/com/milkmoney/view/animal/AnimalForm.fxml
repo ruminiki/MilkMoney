@@ -37,7 +37,6 @@
                   <Label text="Nome: " GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
                   <Label text="Sexo: " GridPane.rowIndex="2" />
-                  <ComboBox fx:id="inputSexo" prefWidth="124.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Raça: " GridPane.rowIndex="5" />
                   <Label graphicTextGap="10.0" text="Data Nasc.: " GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
@@ -67,7 +66,6 @@
                   </Button>                 
 
                   <Label text="Finalidade Animal: " GridPane.rowIndex="6" />
-                  <ComboBox fx:id="inputFinalidadeAnimal" prefWidth="260.0" promptText="Selecione..." GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                   
                   <Label text="Valor: " GridPane.rowIndex="7" />
                   <UCTextField fx:id="inputValor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
@@ -76,6 +74,8 @@
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
+                  <ChoiceBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
 
                </children>
                <VBox.margin>

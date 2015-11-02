@@ -2,7 +2,7 @@ package br.com.milkmoney.controller.vendaAnimal;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -34,7 +34,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	@FXML private DatePicker inputDataVenda;
 	//dados do animal
 	@FXML private UCTextField inputAnimal, inputValorAnimal; 
-	@FXML private ComboBox<String> inputDestinacaoAnimal;
+	@FXML private ChoiceBox<String> inputDestinacaoAnimal;
 	@FXML private UCTextField inputMotivoVendaAnimal;
 	@FXML private Button btnBuscarAnimal;
 	

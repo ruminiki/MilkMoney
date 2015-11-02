@@ -33,7 +33,6 @@
                   <Label text="Definição: " GridPane.rowIndex="2" />
                   <TextArea fx:id="inputDefinicao" prefHeight="113.0" prefWidth="380.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="inputValorApurado" editable="false" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <ComboBox fx:id="inputObjetivo" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="Sigla: " GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputSigla" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -43,6 +42,7 @@
                         <TextField fx:id="inputMaiorValorIdeal" maxWidth="120.0" />
                      </children>
                   </HBox>
+                  <ChoiceBox fx:id="inputObjetivo" minWidth="253.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

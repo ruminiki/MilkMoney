@@ -59,9 +59,9 @@
                      </GridPane.margin>
                   </Button>
                   <Label text="Destinação Animal: " GridPane.rowIndex="4" />
-                  <ComboBox fx:id="inputDestinacaoAnimal" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="Valor: " GridPane.rowIndex="5" />
                   <UCTextField fx:id="inputValorAnimal" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <ChoiceBox fx:id="inputDestinacaoAnimal" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

@@ -36,7 +36,7 @@ public class VendaAnimalDao extends AbstractGenericDao<Integer, VendaAnimal> {
 
 	public VendaAnimal findByAnimalAfterDate(Date data, Animal animal) {
 		
-		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va where v.animal = :animal and va.dataVenda > :dataInicio order by va.dataVenda desc");
+		Query query = entityManager.createQuery("SELECT va FROM VendaAnimal va where va.animal = :animal and va.dataVenda > :dataInicio order by va.dataVenda desc");
 		query.setParameter("dataInicio", data);
 		query.setParameter("animal", animal);
 		query.setMaxResults(1);

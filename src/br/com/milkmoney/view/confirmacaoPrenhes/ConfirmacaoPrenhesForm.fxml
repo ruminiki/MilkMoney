@@ -38,11 +38,11 @@
                         <Label text="Situação: " GridPane.rowIndex="1" />
                         
                                                                                                 <DatePicker fx:id="inputData" maxWidth="100.0" GridPane.columnIndex="1" />
-                        <ComboBox fx:id="inputSituacaoCobertura" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Obsevação: " GridPane.rowIndex="3" />
                         <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Método: " GridPane.rowIndex="2" />
-                        <ComboBox fx:id="inputMetodoConfirmacao" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ChoiceBox fx:id="inputSituacaoCobertura" minWidth="180.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ChoiceBox fx:id="inputMetodoConfirmacao" minWidth="180.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

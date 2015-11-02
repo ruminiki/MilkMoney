@@ -1,7 +1,7 @@
 package br.com.milkmoney.controller.indicador;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -22,7 +22,7 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 	@FXML private UCTextField inputDescricao, inputSigla;
 	@FXML private TextField inputMenorValorIdeal, inputMaiorValorIdeal, inputValorApurado;
 	@FXML private TextArea inputDefinicao;
-	@FXML private ComboBox<String> inputObjetivo;
+	@FXML private ChoiceBox<String> inputObjetivo;
 
 	@FXML
 	public void initialize() {

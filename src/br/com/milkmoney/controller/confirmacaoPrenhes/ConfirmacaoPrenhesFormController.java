@@ -5,7 +5,7 @@ import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
@@ -29,7 +29,7 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 
 	@FXML private DatePicker       inputData;
 	@FXML private Label            lblCobertura;
-	@FXML private ComboBox<String> inputSituacaoCobertura, inputMetodoConfirmacao;
+	@FXML private ChoiceBox<String> inputSituacaoCobertura, inputMetodoConfirmacao;
 	@FXML private UCTextField      inputObservacao;
 	@FXML private Button           btnSalvar, btnRemover;
 	

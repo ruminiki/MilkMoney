@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -58,10 +58,10 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private UCTextField                inputCobertura;
 	@FXML private DatePicker                 inputData, inputDataInicioLactacao;
 	@FXML private UCTextField                inputObservacao;
-	@FXML private ComboBox<String>           inputSituacaoNascimento;
-	@FXML private ComboBox<String>           inputSexo;
-	@FXML private ComboBox<String>           inputIncorporadoAoRebanho;
-	@FXML private ComboBox<String>           inputTipoParto;
+	@FXML private ChoiceBox<String>          inputSituacaoNascimento;
+	@FXML private ChoiceBox<String>          inputSexo;
+	@FXML private ChoiceBox<String>          inputIncorporadoAoRebanho;
+	@FXML private ChoiceBox<String>          inputTipoParto;
 	@FXML private UCTextField                inputComplicacaoParto;
 	@FXML private UCTextField                inputPeso;
 	

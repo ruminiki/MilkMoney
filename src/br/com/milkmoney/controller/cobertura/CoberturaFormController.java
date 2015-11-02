@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -43,12 +43,11 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 
 	@FXML private DatePicker inputData;
 	@FXML private Label lblPrevisaoParto;
-	@FXML private ComboBox<String> inputSituacaoCobertura;
 	@FXML private UCTextField inputReprodutor;
 	@FXML private UCTextField inputSemen;
 	@FXML private UCTextField inputNomeResponsavel;
-	@FXML private ComboBox<String> inputResponsavelServico;
-	@FXML private ComboBox<String> inputTipoCobertura;
+	@FXML private ChoiceBox<String> inputResponsavelServico;
+	@FXML private ChoiceBox<String> inputTipoCobertura;
 	@FXML private UCTextField inputObservacao;
 	@FXML private Button btnNovoReprodutor;
 	@FXML private Button btnSalvar;
@@ -185,6 +184,9 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 		}
 		
+		inputTipoCobertura.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> changeTipoCobertura());
+		inputResponsavelServico.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> alterarResponsavelServico());
+		
 	}
 	
 	/**
@@ -202,7 +204,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 	 * Quando altera o tipo de cobertura 
 	 * carregam os semens ou os reprodutores
 	 */
-	@FXML
 	private void changeTipoCobertura(){
 		if ( inputTipoCobertura.getValue() != null ){
 			
@@ -264,7 +265,6 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 		btnNovoReprodutor.setOnAction(selectSemenEventHandler);
 	}
 	
-	@FXML
 	private void alterarResponsavelServico(){
 		switch (inputResponsavelServico.getSelectionModel().getSelectedIndex()) {
 			case 0:{

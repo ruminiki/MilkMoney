@@ -1,7 +1,7 @@
 package br.com.milkmoney.controller.animal;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -24,8 +24,8 @@ public class AnimalCriaFormController extends AbstractFormController<Integer, An
 
 	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai;
 	@FXML private DatePicker inputDataNascimento;
-	@FXML private ComboBox<Raca> inputRaca;
-	@FXML private ComboBox<String> inputFinalidadeAnimal, inputSexo;
+	@FXML private ChoiceBox<Raca> inputRaca;
+	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
 	
 	//services
 	@Autowired private RacaService racaService;

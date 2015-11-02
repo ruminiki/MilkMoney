@@ -2,7 +2,7 @@ package br.com.milkmoney.controller.animal;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -30,7 +30,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 
 	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai, inputValor, inputRaca;
 	@FXML private DatePicker inputDataNascimento;
-	@FXML private ComboBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
+	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
 
 	//controllers
