@@ -38,7 +38,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 		
 		for ( Animal femea : femeas ){
 			
-			intervaloEntrePartos = BigDecimal.valueOf(partoService.getIntervaloEntrePartos(femea));
+			intervaloEntrePartos = intervaloEntrePartos.add(BigDecimal.valueOf(partoService.getIntervaloEntrePartos(femea)));
 			
 		}
 		//divide a soma dos intervalos pelo número de partos para obter a média

@@ -18,7 +18,6 @@ import br.com.milkmoney.dao.VendaAnimalDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.MorteAnimal;
-import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.TipoParto;
 import br.com.milkmoney.model.VendaAnimal;
@@ -57,9 +56,12 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	double DIAS = 365; //constante 
 	
 	//período avaliado (em anos)
+	//Date dataInicio = new GregorianCalendar(2013,0,01).getTime();
+	//Date dataFim = new GregorianCalendar(2014,11,31).getTime();
+	
 	Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(P));
 	Date dataFim = new Date();
-	
+		
 	@Override
 	public BigDecimal getValue() {
 
@@ -96,6 +98,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	}
 	
 	private void getDVGAndDVEAnimal(Animal animal){
+		
 		List<Cobertura> coberturas = coberturaDao.findCoberturasIniciadasOuComPartoNoPeriodo(animal, dataInicio, dataFim);
 		
 		for ( Cobertura cobertura : coberturas ){
@@ -147,15 +150,14 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		}
 		
 		//calcula o período que o animal foi eliminado do rebanho
-		if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-			MorteAnimal morte = morteAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+		MorteAnimal morte = morteAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+		if ( morte != null )
 			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(morte.getDataMorte()), DateUtil.asLocalDate(dataFim));
-		}
 		
-		if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-			VendaAnimal venda = vendaAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+		VendaAnimal venda = vendaAnimalDao.findByAnimalPeriodo(animal, dataInicio, dataFim);
+		if ( venda != null )
 			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(venda.getDataVenda()), DateUtil.asLocalDate(dataFim));
-		}
+		
 	}
 	
 	private BigDecimal calculaIndice(){

@@ -457,6 +457,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	/**
 	 * Seleciona os animais que compõem o cálculo da eficiência reprodutiva
 	 * Fêmeas com partos ou coberturas no período
+	 * Fêmeas que já tinham partos ou coberturas e foram eliminadas no período
 	 * 
 	 * @param dataInicio
 	 * @param dataFim
@@ -466,8 +467,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAnimaisParaCalculoEficiencia(Date dataInicio, Date dataFim) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
+				+ "("
 				+ "exists (select 1 from Cobertura c where c.femea.id = a.id and c.data between :dataInicio and :dataFim ) or "
-				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data between :dataInicio and :dataFim )");
+				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data between :dataInicio and :dataFim )"
+				+ ") "
+				+ "or"
+				+ "(exists (select 1 from Cobertura c where c.femea.id = a.id and c.data < :dataInicio ) and "
+				+ "(exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda between :dataInicio and :dataFim ) or "
+				+ "exists (select 1 from MorteAnimal m where m.animal.id = a.id and m.dataMorte between :dataInicio and :dataFim )))");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		return query.getResultList();
