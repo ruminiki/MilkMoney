@@ -52,7 +52,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	double DG   = 280; //duração média da gestação
 	double R    = 85;  //período seco ideal
 	double N    = 0;   //número total de vacas consideradas
-	int    P    = 1;   //intervalo em anos
+	int    P    = 2;   //intervalo em anos
 	double DIAS = 365; //constante 
 	
 	//período avaliado (em anos)
