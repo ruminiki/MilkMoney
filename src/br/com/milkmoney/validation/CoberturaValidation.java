@@ -113,7 +113,7 @@ public class CoberturaValidation extends Validator {
 					"No entanto a idade mínima para cobertura está definida em " + idadeMinimaParaCobertura + " meses. Por favor, verifique se a data da cobertura e o cadastro do animal estão corretos e tente novamente.");
 		}
 		
-		if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
+		/*if ( coberturasAnimal != null && coberturasAnimal.size() > 0 ){
 			
 			for ( Cobertura c : coberturasAnimal ){
 				//se não for a mesma cobertura
@@ -133,7 +133,7 @@ public class CoberturaValidation extends Validator {
 					
 				}
 			}
-		}
+		}*/
 	}
 	
 	/**
