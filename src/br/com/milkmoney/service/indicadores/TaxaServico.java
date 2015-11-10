@@ -40,9 +40,9 @@ public class TaxaServico extends AbstractCalculadorIndicador{
 	@Override
 	public BigDecimal getValue() {
 		
-		//período últimos 21 dias
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(21));
-		Date dataFim = new Date();
+		//período últimos 42 dias
+		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(42));
+		Date dataFim = DateUtil.asDate(LocalDate.now().minusDays(21));
 		
 		//busca os animais disponíveis no período
 		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);

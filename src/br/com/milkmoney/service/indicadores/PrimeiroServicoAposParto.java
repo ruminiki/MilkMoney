@@ -59,7 +59,8 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 	@Override
 	public BigDecimal getValue() {
 		BigDecimal diasEntrePartoEPrimeiroServico = BigDecimal.ZERO;
-		
+		int animaisComServicoAposParto = 0;
+				
 		List<Animal> animais = animalDao.findAnimaisComParto();
 		
 		for ( Animal animal : animais ){
@@ -70,13 +71,14 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 				if ( cobertura != null ){
 					diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.add(
 							BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()))));
+					animaisComServicoAposParto++;
 				}
 			}
 			
 		}
 		
 		if ( diasEntrePartoEPrimeiroServico.compareTo(BigDecimal.ZERO) > 0 ){
-			diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.divide(BigDecimal.valueOf(animais.size()), 2, RoundingMode.HALF_EVEN);
+			diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.divide(BigDecimal.valueOf(animaisComServicoAposParto), 2, RoundingMode.HALF_EVEN);
 		}
 		
 		return diasEntrePartoEPrimeiroServico;
