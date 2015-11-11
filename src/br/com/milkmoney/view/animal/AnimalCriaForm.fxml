@@ -42,7 +42,7 @@
                   <UCTextField fx:id="inputMae" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputPai" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
                   <ChoiceBox fx:id="inputSexo" maxWidth="80.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ChoiceBox minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                  <ChoiceBox fx:id="inputFinalidadeAnimal" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                   <ChoiceBox fx:id="inputRaca" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />
                </children>
                <VBox.margin>
