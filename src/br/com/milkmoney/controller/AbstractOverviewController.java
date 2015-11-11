@@ -90,10 +90,6 @@ public abstract class AbstractOverviewController<K, E>{
 			@Override
 			public void handle(KeyEvent event) {
 
-				if (event.getCode().equals(KeyCode.ENTER)) {
-					formController.showForm();
-				}
-
 				if (event.getCode().equals(KeyCode.DELETE)) {
 					handleDelete();
 				}

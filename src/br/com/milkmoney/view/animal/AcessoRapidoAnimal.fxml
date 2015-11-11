@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="581.0" prefHeight="482.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AcessoRapidoAnimalController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" minHeight="15.0">
+               <children>
+                  <Label fx:id="lblHeader" text="Animal" />
+               </children>
+            </HBox>
+            <VBox alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <VBox fx:id="sideBar" maxWidth="350.0" minWidth="360.0" style="-fx-border-color: #CCC;">
+                           <children>
+                              <HBox VBox.vgrow="NEVER" />
+                              <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
+                                 <children>
+                                    <Label text="Ficha Animal" />
+                                 </children>
+                              </HBox>
+                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="350.0" style="-fx-focus-color: transparent;" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <GridPane>
+                                       <children>
+                                          <Label text="Data Ultima Cobertura: " GridPane.rowIndex="7" />
+                                          <Label text="Nº Serviços até Concepção: " GridPane.rowIndex="9" />
+                                          <Label text="Data Próximo Serviço: " GridPane.rowIndex="10" />
+                                          <Label text="Número de Partos: " GridPane.rowIndex="11" />
+                                          <Label text="Idade Primeiro Parto: " GridPane.rowIndex="12" />
+                                          <Label text="Idade Primeira Cobertura: " GridPane.rowIndex="13" />
+                                          <Label text="Dias em Lactação (DEL): " GridPane.rowIndex="14" />
+                                          <Label text="Dias em Aberto (DEA): " GridPane.rowIndex="15" />
+                                          <Label text="Intervalo Entre Partos (IEP): " GridPane.rowIndex="16" />
+                                          <Label fx:id="lblNumeroServicos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblNumeroPartos" text="--" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblIdadePrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblIdadePrimeiraCobertura" text="--" GridPane.columnIndex="1" GridPane.rowIndex="13">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblDiasEmLactacao" text="--" GridPane.columnIndex="1" GridPane.rowIndex="14">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblDiasEmAberto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="15">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="lblIntervaloPrimeiroParto" text="--" GridPane.columnIndex="1" GridPane.rowIndex="16">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Label text="Secar Em (~305d pós parto): " GridPane.rowIndex="5" />
+                                          <Label text="Pai: " GridPane.rowIndex="2" />
+                                          <Label text="Mãe: " GridPane.rowIndex="3" />
+                                          <Label text="Data Próximo Parto: " GridPane.rowIndex="6" />
+                                          <Label text="Data Último Parto: " GridPane.rowIndex="4" />
+                                          <Label fx:id="lblPai" text="--" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label fx:id="lblMae" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label text="Situação Última Cobertura: " GridPane.rowIndex="8" />
+                                          <Label text="Animal: " GridPane.rowIndex="1" />
+                                          <Label fx:id="lblAnimal" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                             <children>
+                                                <Label fx:id="lblDataUltimoParto" text="--" />
+                                                <Hyperlink fx:id="hlVisualizarUltimoParto" text="visualizar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                             <children>
+                                                <Label fx:id="lblDataSecar" text="--">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Hyperlink fx:id="hlSecarAnimal" text="secar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                                             <children>
+                                                <Label fx:id="lblDataProximoParto" text="--" />
+                                                <Hyperlink fx:id="hlRegistrarParto" text="registrar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                                             <children>
+                                                <Label fx:id="lblProximoServico" text="--">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Hyperlink fx:id="hlRegistrarCobertura" text="registrar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                                             <children>
+                                                <Label fx:id="lblDataUltimaCobertura" text="--">
+                                                   <font>
+                                                      <Font name="System Bold" size="12.0" />
+                                                   </font>
+                                                </Label>
+                                                <Hyperlink fx:id="hlEditarCobertura" text="visualizar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                                             <children>
+                                                <Label fx:id="lblSituacaoUltimaCobertura" text="--" />
+                                                <Hyperlink fx:id="hlConfirmarPrenhes" text="confirmar" visible="false" />
+                                             </children>
+                                          </HBox>
+                                          <Label text="Último Tratamento: " GridPane.rowIndex="19" />
+                                          <Label text="Lote: " GridPane.rowIndex="20" />
+                                          <Label text="Número Lactações: " GridPane.rowIndex="17" />
+                                          <Label text="Média Produção: " GridPane.rowIndex="18" />
+                                          <Label fx:id="lblNumeroLactacoes" text="--" GridPane.columnIndex="1" GridPane.rowIndex="17" />
+                                          <Label fx:id="lblMediaProducao" text="--" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+                                          <Label fx:id="lblUltimoTratamento" text="--" GridPane.columnIndex="1" GridPane.rowIndex="19" />
+                                          <Label fx:id="lblLote" text="--" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+                                          <Label text="Eficiência Reprodutiva: " />
+                                          <Label fx:id="lblEficienciaReprodutiva" text="--" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <columnConstraints>
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="168.0" minWidth="10.0" prefWidth="158.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0" minWidth="10.0" prefWidth="190.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                    </GridPane>
+                                 </content>
+                              </ScrollPane>
+                              <Separator prefWidth="200.0" />
+                           </children>
+                        </VBox>
+                        <VBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <HBox VBox.vgrow="ALWAYS">
+                                 <children>
+                                    <VBox maxWidth="380.0" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
+                                             <children>
+                                                <Label text="Coberturas / Inseminações" />
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="tableCoberturas" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="dataCoberturaColumn" maxWidth="80.0" prefWidth="75.0" text="Data" />
+                                                <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                                                <TableColumn fx:id="reprodutorColumn" maxWidth="150.0" prefWidth="75.0" text="Reprodutor" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
+                                             <children>
+                                                <Label text="Partos" />
+                                             </children>
+                                          </HBox>
+                                          <TableView fx:id="tablePartos" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                             <columns>
+                                                <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                                                <TableColumn fx:id="tipoPartoColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                                                <TableColumn fx:id="complicacaoPartoColumn" maxWidth="-Infinity" minWidth="250.0" prefWidth="75.0" text="Complicação" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
+                                       <children>
+                                          <Label text="Tratamentos " />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tableProcedimentos" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
+                                       <columnResizePolicy>
+                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                       </columnResizePolicy>
+                                       <columns>
+                                          <TableColumn fx:id="dataProcedimentoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                                          <TableColumn fx:id="tipoProcedimentoColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                                          <TableColumn fx:id="observacaoProcedimentoColumn" prefWidth="75.0" text="Observação" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

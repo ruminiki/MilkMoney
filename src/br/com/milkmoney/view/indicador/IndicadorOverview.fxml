@@ -30,7 +30,7 @@
                      <children>
                         <VBox alignment="CENTER" maxWidth="100.0" prefHeight="220.0" prefWidth="110.0" style="-fx-border-radius: 50; -fx-border-color: #CCC;">
                            <children>
-                              <Label fx:id="lblEficienciaReprodutiva" text="70%">
+                              <Label fx:id="lblEficienciaReprodutiva" text="0%">
                                  <font>
                                     <Font size="28.0" />
                                  </font>

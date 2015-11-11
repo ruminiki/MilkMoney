@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.root;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.concurrent.Task;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -10,6 +11,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,6 +20,8 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Propriedade;
@@ -29,6 +34,7 @@ public class RootLayoutController {
 	
 	@FXML private Label lblHeader, lblMessage;
 	@FXML private Hyperlink hlPropriedade;
+	@FXML private UCTextField inputNumeroAnimal;
 	
 	private StringProperty message = new SimpleStringProperty();
 	
@@ -55,6 +61,19 @@ public class RootLayoutController {
 		
 		lblHeader.setText("Milk Money® - Gestão de Rebanhos Leiteiros");
 		lblMessage.textProperty().bind(message);
+		
+		inputNumeroAnimal.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+
+				if (event.getCode().equals(KeyCode.ENTER)) {
+					handleAcessoRapidoAnimal();
+				}
+
+			}
+
+		});
 		
 	}
 	
@@ -204,6 +223,14 @@ public class RootLayoutController {
     protected void handleCadastroCategoriaLancamentoFinanceiro() {
     	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Lançamento Financeiro");
     }
+    
+    @FXML
+    protected void handleAcessoRapidoAnimal(){
+    	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
+    	controller.setNumeroDigitado(inputNumeroAnimal.getText());
+    	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
+    }
+    
     //-----reports------
     @FXML
     protected void handleReportFichaAnimal(){

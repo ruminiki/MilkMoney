@@ -59,6 +59,10 @@ public class ProcedimentoService implements IService<Integer, Procedimento>{
 	public Procedimento getUltimoTratamento(Animal animal) {
 		return dao.getUtimoTratamento(animal);
 	}
+
+	public List<Procedimento> findByAnimal(Animal animal) {
+		return dao.findByAnimal(animal);
+	}
 	
 	
 }

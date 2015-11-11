@@ -31,6 +31,18 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 	}
 	
+	public Animal findByNumero(String numero) {
+		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.numero = :numero ");
+		query.setParameter("numero", numero);
+		query.setHint("org.hibernate.cacheable", "false");
+		
+		try{
+			return (Animal)query.getSingleResult();
+		}catch ( NoResultException e ){
+			return null;
+		}
+		
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllByNumeroNome(String param) {
@@ -480,5 +492,5 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 
 	}
-	
+
 }

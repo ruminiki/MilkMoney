@@ -203,4 +203,8 @@ public class AnimalService implements IService<Integer, Animal>{
 		return idadePrimeiroCobertura;
 	}
 
+	public Animal findByNumero(String numero) {
+		return dao.findByNumero(numero);
+	}
+
 }

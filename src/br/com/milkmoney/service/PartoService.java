@@ -148,5 +148,9 @@ public class PartoService implements IService<Integer, Parto>{
 		}
 		return intervaloEntrePartos;
 	}
+
+	public List<Parto> findByAnimal(Animal animal) {
+		return dao.findByAnimal(animal);
+	}
 	
 }

@@ -39,4 +39,12 @@ public class ProcedimentoDao extends AbstractGenericDao<Integer, Procedimento> {
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Procedimento> findByAnimal(Animal animal) {
+		Query query = entityManager.createQuery("SELECT p FROM Procedimento p join p.animais a WHERE a = :animal order by p.dataRealizacao desc");
+		query.setParameter("animal", animal);
+		
+		return query.getResultList();
+	}
+
 }
