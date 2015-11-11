@@ -1,6 +1,7 @@
 package br.com.milkmoney.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +87,8 @@ public class FichaAnimalService{
 		fichaAnimal.setNumeroLactacoes(lactacaoService.countLactacoesAnimal(animal).intValue());
 		//media de produção da última lactação
 		if ( lactacao != null ){
-			fichaAnimal.setMediaProducao(BigDecimal.valueOf(producaoIndividualService.getMediaAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim())));	
+			fichaAnimal.setMediaProducao(BigDecimal.valueOf(producaoIndividualService.getMediaAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim())));
+			fichaAnimal.setMediaProducao(fichaAnimal.getMediaProducao().setScale(2, RoundingMode.HALF_EVEN));
 		}
 		//último procedimento/tratamento
 		Procedimento procedimento = procedimentoService.getUltimoTratamento(animal);

@@ -19,7 +19,6 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
-import br.com.milkmoney.model.TipoParto;
 import br.com.milkmoney.model.VendaAnimal;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.util.DateUtil;
@@ -103,13 +102,13 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		
 		for ( Cobertura cobertura : coberturas ){
 			
+			//abortos não são contabilizados nos dias gestantes
+			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.ABORTADA) ){
+				continue;
+			}
+				
 			//se tiver parto, conta os dias de gestação até a data do parto
 			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
-				
-				//abortos não são contabilizados nos dias gestantes
-				if ( cobertura.getParto().getTipoParto().equals(TipoParto.ABORTO) ){
-					continue;
-				}
 				
 				//verifica se a cobertura foi realizada dentro do período
 				//|---------------------------|(período avaliado)
