@@ -55,8 +55,9 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private StringProperty              metodoConfirmacaoPrenhes     = new SimpleStringProperty();
 	private StringProperty              observacaoConfirmacaoPrenhes = new SimpleStringProperty();
 	private Parto                       parto;
+	private Aborto                      aborto;
 	private StringProperty              situacaoCobertura            = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
-	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty();
+	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
 	
 	public Cobertura() {
 	}
@@ -264,6 +265,17 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		this.parto = parto;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@OneToOne(orphanRemoval=true, targetEntity=Aborto.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinColumn(name="aborto")
+	public Aborto getAborto() {
+		return aborto;
+	}
+
+	public void setAborto(Aborto aborto) {
+		this.aborto = aborto;
+	}
+	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
 	public Date getDataConfirmacaoPrenhes() {
@@ -320,6 +332,14 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		}
 		return null;
 	}
+	
+	public Date getDataAborto(){
+		if ( getAborto() != null ){
+			return getAborto().getData();	
+		}
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + 

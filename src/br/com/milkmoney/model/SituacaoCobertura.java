@@ -21,6 +21,10 @@ public class SituacaoCobertura {
 	 * Teve o parto registrado.
 	 */
 	public static final String PARIDA     = "PARIDA";
+	/**
+	 * Teve o parto registrado.
+	 */
+	public static final String ABORTADA     = "ABORTADA";
 	
 	public static ObservableList<String> getItems(){
 		return FXCollections.observableArrayList(NAO_CONFIRMADA, PRENHA, VAZIA);

@@ -100,8 +100,11 @@ public class CoberturaValidation extends Validator {
 	public static void validaFemeaSelecionada(Cobertura cobertura, List<Cobertura> coberturasAnimal, int idadeMinimaParaCobertura){
 		
 		if ( cobertura.getFemea() != null && !cobertura.getFemea().getSexo().equals(Sexo.FEMEA) ){
-			throw new ValidationException(REGRA_NEGOCIO, 
-					"O animal selecionado para a cobertura deve ser uma fêmea.");
+			throw new ValidationException(REGRA_NEGOCIO, "O animal selecionado para a cobertura deve ser uma fêmea. Por favor, tente novamente.");
+		}
+		
+		if ( cobertura.getFemea() != null && cobertura.getData().compareTo(cobertura.getFemea().getDataNascimento()) < 0 ){
+			throw new ValidationException(REGRA_NEGOCIO, "A data da cobertura não pode ser menor que a data de nascimento do animal. Por favor, tente novamente.");
 		}
 		
 		//calcula a idade da fêma na data da cobertura

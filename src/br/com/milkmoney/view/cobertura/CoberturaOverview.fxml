@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="469.0" prefWidth="1075.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="405.0" prefWidth="1195.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -74,6 +74,7 @@
                      <columns>
                         <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Data Prevista" />
                         <TableColumn fx:id="dataPartoColumn" maxWidth="110.0" minWidth="110.0" style="-fx-alignment: CENTER;" text="Data Parto" />
+                        <TableColumn fx:id="dataAbortoColumn" minWidth="110.0" prefWidth="75.0" text="Aborto" />
                      </columns>
                   </TableColumn>
               </columns>

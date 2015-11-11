@@ -8,8 +8,6 @@ import br.com.milkmoney.model.Cria;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
-import br.com.milkmoney.model.SituacaoNascimento;
-import br.com.milkmoney.model.TipoParto;
 import br.com.milkmoney.util.DateUtil;
 
 public class PartoValidation extends Validator {
@@ -48,18 +46,6 @@ public class PartoValidation extends Validator {
 		if ( parto.getCrias() == null || parto.getCrias().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"O parto deve ter pelo menos uma cria registrada.");
-		}
-		
-		if ( parto.getTipoParto().equals(TipoParto.ABORTO) ){
-			for ( Cria a : parto.getCrias() ){
-				
-				if ( a.getSituacaoNascimento().equals(SituacaoNascimento.NASCIDO_VIVO) ){
-					throw new ValidationException(REGRA_NEGOCIO, 
-							"Quando ocorre aborto, não podem ter animais nascidos vivos. Por favor, corrija a situação do nascimento "
-							+ "da cria e tente novamente.");
-				}
-				
-			}
 		}
 		
 		for ( Cria a : parto.getCrias() ){

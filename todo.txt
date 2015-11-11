@@ -1,18 +1,26 @@
 ERROS e REQUISITOS
 - Projeção com valores negativos
-- Relatório lactações com um gráfico a mais
+
 - Animal com uma cobertura e 130% de eficiência....
-- Taxa de concepção dos ultimos 21 dias não tem como ser porque não tem como estar confirmada ainda
-- Rever validação 21 dias a cada cobertura - http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=2087
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
+
 - Permitir lançar a produção do mês de uma única vez
+
 - Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos...)
+
 - Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
 - Fazer acesso rápido a ficha do animal (campo para digitar o número no rodapé do sistema, então abre uma tela com opções para parto, cobertura e confirmação de prenhez)
-- Tela de evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
+- Relatório da evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
+
+- Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
+- Relatório abortos, complicações do parto.
+
+- Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
+- Animal com aborto que se mantém em lactação?? como fazer?
+
 
 - fazer log de acessos ao sistema
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;

@@ -2,12 +2,8 @@ package br.com.milkmoney.controller.cobertura;
 
 import java.util.function.Function;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -19,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarAbortoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
@@ -29,7 +27,6 @@ import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.Parto;
-import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.CoberturaService;
@@ -49,6 +46,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String>        reprodutorColumn;
 	@FXML private TableColumn<Cobertura, String>        previsaoPartoColumn;
 	@FXML private TableColumn<Cobertura, String>        dataPartoColumn;
+	@FXML private TableColumn<Cobertura, String>        dataAbortoColumn;
 	@FXML private TableColumn<Cobertura, String>        tipoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String>        situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String>        statusColumn;
@@ -58,6 +56,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	
 	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private AbortoFormController             abortoFormController;
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private LactacaoFormController           lactacaoFormController;
 	@Autowired private AnimalService                    animalService;
@@ -66,9 +65,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Autowired private LactacaoService                  lactacaoService;
 	@Autowired private FichaAnimalService               fichaAnimalService;
 	
-	//menu context tabela cobertura
-	private MenuItem    registrarPartoMenuItem          = new MenuItem("Registrar Parto");
-	private MenuItem    confirmarPrenhesMenuItem        = new MenuItem("Confirmação de Prenhes");
 	private Animal                                      femea;
 	
 	@FXML
@@ -78,6 +74,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		previsaoPartoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		dataPartoColumn.setCellFactory(new TableCellRegistrarPartoHyperlinkFactory<Cobertura,String>("dataParto", registrarParto));
+		dataAbortoColumn.setCellFactory(new TableCellRegistrarAbortoHyperlinkFactory<Cobertura,String>("dataAborto", registrarAborto));
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
@@ -85,22 +82,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("metodoConfirmacaoPrenhes"));
 		
 		super.initialize(coberturaFormController);
-		
-		registrarPartoMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleRegistrarParto();
-		    }
-		});
-		
-		confirmarPrenhesMenuItem.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent event) {
-		    	handleConfirmarPrenhes();
-		    }
-		});
-		
-		getContextMenu().getItems().addAll(new SeparatorMenuItem(), registrarPartoMenuItem, confirmarPrenhesMenuItem);
 		
 		lblHeader.setText(femea != null ? femea.toString() : "ANIMAL NÃO SELECIOANDO");
 		
@@ -133,15 +114,6 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	}
 	
 	@Override
-	protected void handleRightClick() {
-		super.handleRightClick();
-		
-		registrarPartoMenuItem.setDisable(getObject().getSituacaoCobertura().equals(SituacaoCobertura.VAZIA));
-		registrarPartoMenuItem.setText(getObject().getParto() != null ? "Visualizar Parto" : "Registrar Parto");
-		
-	}
-	
-	@Override
 	public String getFormTitle() {
 		return "Cobertura";
 	}
@@ -171,13 +143,14 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 	}
 	
-	//====CONTEXT MENUS =======
+	//====FUNCTIONS
 	
-	private void handleRegistrarParto(){
+	Function<Integer, Boolean> registrarParto = index -> {
+		table.getSelectionModel().select(index);
 		
 		if ( table.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
-			return;
+			return false;
 		}
 		if ( getObject().getParto() == null ){
 			
@@ -201,34 +174,34 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 			
 		}
 		
-		
-	}
+		return true;
+	};
 	
-	private void handleConfirmarPrenhes(){
-		
+	Function<Integer, Boolean> registrarAborto = index -> {
+		table.getSelectionModel().select(index);
 		if ( table.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
-			return;
+			return false;
+		}
+		
+		abortoFormController.setObject(getObject());
+		abortoFormController.showForm();
+    	
+		refreshObjectInTableView.apply(service.findById(getObject().getId()));
+		return true;
+	};
+	
+	Function<Integer, Boolean> confirmarPrenhes = index -> {
+		table.getSelectionModel().select(index);
+		if ( table.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return false;
 		}
 		
 		confirmacaoPrenhesFormController.setObject(getObject());
     	confirmacaoPrenhesFormController.showForm();
     	
 		refreshObjectInTableView.apply(service.findById(getObject().getId()));
-    	
-	}
-	
-	//====FUNCTIONS
-	
-	Function<Integer, Boolean> registrarParto = index -> {
-		table.getSelectionModel().select(index);
-		handleRegistrarParto();
-		return true;
-	};
-	
-	Function<Integer, Boolean> confirmarPrenhes = index -> {
-		table.getSelectionModel().select(index);
-		handleConfirmarPrenhes();
 		return true;
 	};
 	

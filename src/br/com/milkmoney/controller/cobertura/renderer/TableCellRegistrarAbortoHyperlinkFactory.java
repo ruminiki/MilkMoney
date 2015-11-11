@@ -14,13 +14,13 @@ import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.util.DateUtil;
 
-public class TableCellRegistrarPartoHyperlinkFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
+public class TableCellRegistrarAbortoHyperlinkFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
 	
-	private Function<Integer, Boolean> registrarPartoFunction;
+	private Function<Integer, Boolean> registrarAbortoFunction;
 	private String property;
 	
-	public TableCellRegistrarPartoHyperlinkFactory(String property, Function<Integer, Boolean> confirmarPrenhesFunction) {
-		this.registrarPartoFunction = confirmarPrenhesFunction;
+	public TableCellRegistrarAbortoHyperlinkFactory(String property, Function<Integer, Boolean> registrarAbortoFunction) {
+		this.registrarAbortoFunction = registrarAbortoFunction;
 		this.property = property;
 	}
 
@@ -35,32 +35,35 @@ public class TableCellRegistrarPartoHyperlinkFactory<S, LocalDate> implements Ca
 		        		super.updateItem(item, empty);
 		        		
 		        		Cobertura cobertura = (Cobertura) tableViewProperty().get().getItems().get(tableRowProperty().get().getIndex());
-		        		if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.VAZIA + "|" + SituacaoCobertura.ABORTADA) ){
+		        		if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PARIDA + "|" + SituacaoCobertura.VAZIA) ){
 		        			Label lbl = new Label();
 				            lbl.setText("--");			            		
 				            setGraphic(lbl);
 		        		}else{
 		        			Hyperlink hpS = new Hyperlink();
 				            if ( (item == null || empty) ) {
-				            	hpS.setText("Registrar");
+				            	hpS.setText("Registrar");			            		
 				            } else {
-				            	hpS.setText( DateUtil.format((java.util.Date)item));
+								hpS.setText( DateUtil.format((java.util.Date)item));
 							} 
+				            
 				            hpS.setFocusTraversable(false);
-							hpS.setOnAction(new EventHandler<ActionEvent>() {
+			            	hpS.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {
-									registrarPartoFunction.apply(tableRowProperty().get().getIndex());
+									registrarAbortoFunction.apply(tableRowProperty().get().getIndex());
 									hpS.setUnderline(false);
 									hpS.setVisited(false);
 								}
 							});
+							
 				            setGraphic(hpS);
 		        		}
 		        		
+			            
 		        	}else{
-			        	setText("");
-			        	setGraphic(null);
+		        		setText("");
+		        		setGraphic(null);
 		        	}
 		            setStyle("-fx-alignment: CENTER");
 		        }
