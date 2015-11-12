@@ -23,7 +23,6 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
 --Relatórios
 	- Relatório da evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
-	- Relatório abortos, complicações do parto.
 	- Relatório animais com coberturas não confirmadas - campo aberto observação para levar para campo  
 	(adicionar filtro tela animais) (adicionar situação última cobertura)
 	- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).

@@ -70,6 +70,7 @@ import br.com.milkmoney.service.searchers.SearchAnimaisVendidos;
 import br.com.milkmoney.service.searchers.SearchFemeasASecar;
 import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 import br.com.milkmoney.service.searchers.SearchFemeasCobertas;
+import br.com.milkmoney.service.searchers.SearchFemeasCobertasNaoConfirmadas;
 import br.com.milkmoney.service.searchers.SearchFemeasEmLactacao;
 import br.com.milkmoney.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
 import br.com.milkmoney.service.searchers.SearchFemeasNaoCobertas;
@@ -159,6 +160,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					new OptionChoiceFilter("Vendidas", (SearchAnimaisVendidos)MainApp.getBean(SearchAnimaisVendidos.class)),
 					new OptionChoiceFilter("Mortas", (SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class)),
 					new OptionChoiceFilter("Cobertas", (SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class)),
+					new OptionChoiceFilter("Cobertas Não Confirmadas", (SearchFemeasCobertasNaoConfirmadas)MainApp.getBean(SearchFemeasCobertasNaoConfirmadas.class)),
 					new OptionChoiceFilter("Não cobertas", (SearchFemeasNaoCobertas)MainApp.getBean(SearchFemeasNaoCobertas.class)),
 					new OptionChoiceFilter("A secar", (SearchFemeasASecar)MainApp.getBean(SearchFemeasASecar.class)),
 					new OptionChoiceFilter("Disponíveis para cobrir", (SearchAnimaisDisponiveisParaCobertura)MainApp.getBean(SearchAnimaisDisponiveisParaCobertura.class)),
