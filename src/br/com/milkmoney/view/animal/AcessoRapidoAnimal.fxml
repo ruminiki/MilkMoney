@@ -9,15 +9,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="581.0" prefHeight="482.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AcessoRapidoAnimalController">
+<AnchorPane minWidth="581.0" prefHeight="532.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AcessoRapidoAnimalController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER" minHeight="15.0">
-               <children>
-                  <Label fx:id="lblHeader" text="Animal" />
-               </children>
-            </HBox>
             <VBox alignment="TOP_CENTER" spacing="5.0" VBox.vgrow="ALWAYS">
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -30,7 +25,7 @@
                                     <Label text="Ficha Animal" />
                                  </children>
                               </HBox>
-                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="350.0" style="-fx-focus-color: transparent;" VBox.vgrow="ALWAYS">
+                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" prefHeight="474.0" style="-fx-focus-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                                  <content>
                                     <GridPane>
                                        <children>
@@ -184,15 +179,17 @@
                                        </rowConstraints>
                                     </GridPane>
                                  </content>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
                               </ScrollPane>
-                              <Separator prefWidth="200.0" />
                            </children>
                         </VBox>
                         <VBox HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <VBox maxWidth="380.0" prefHeight="200.0" HBox.hgrow="ALWAYS">
+                              <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                <items>
+                                    <VBox prefHeight="200.0">
                                        <children>
                                           <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                                              <children>
@@ -201,9 +198,12 @@
                                           </HBox>
                                           <TableView fx:id="tableCoberturas" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
                                             <columns>
-                                                <TableColumn fx:id="dataCoberturaColumn" maxWidth="80.0" prefWidth="75.0" text="Data" />
+                                                <TableColumn fx:id="dataCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Data" />
                                                 <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
-                                                <TableColumn fx:id="reprodutorColumn" maxWidth="150.0" prefWidth="75.0" text="Reprodutor" />
+                                                <TableColumn fx:id="reprodutorColumn" maxWidth="150.0" minWidth="160.0" prefWidth="75.0" text="Reprodutor" />
+                                                <TableColumn fx:id="dataConfirmacaoCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
+                                                <TableColumn fx:id="dataPartoCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Parto" />
+                                                <TableColumn fx:id="dataAbortoCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Aborto" />
                                             </columns>
                                              <columnResizePolicy>
                                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -211,7 +211,7 @@
                                           </TableView>
                                        </children>
                                     </VBox>
-                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                    <VBox prefHeight="200.0" prefWidth="100.0">
                                        <children>
                                           <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                                              <children>
@@ -230,30 +230,28 @@
                                           </TableView>
                                        </children>
                                     </VBox>
-                                 </children>
-                              </HBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
-                                       <children>
-                                          <Label text="Tratamentos " />
-                                       </children>
-                                    </HBox>
-                                    <TableView fx:id="tableProcedimentos" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
-                                       <columnResizePolicy>
-                                          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                       </columnResizePolicy>
-                                       <columns>
-                                          <TableColumn fx:id="dataProcedimentoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                                          <TableColumn fx:id="tipoProcedimentoColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Tipo" />
-                                          <TableColumn fx:id="observacaoProcedimentoColumn" prefWidth="75.0" text="Observação" />
-                                       </columns>
-                                    </TableView>
-                                 </children>
-                              </VBox>
+                                </items>
+                              </SplitPane>
                            </children>
                         </VBox>
                      </children>
+                  </HBox>
+                  <HBox alignment="CENTER" minHeight="30.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#registrarCoberturaAnimal" text="Nova Cobertura">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleEncerrarLactacao" text="Lactações" />
+                        <Button mnemonicParsing="false" onAction="#registrarDesfazerRegistroVenda" text="Venda Animal" />
+                        <Button mnemonicParsing="false" onAction="#registrarDesfazerRegistroMorte" text="Morte Animal " />
+                        <Button mnemonicParsing="false" onAction="#registrarProducaoAnimal" text="Produção do Animal" />
+                        <Button mnemonicParsing="false" onAction="#exibirFichaAnimal" text="Imprimir Ficha" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" right="3.0" />
+                     </padding>
                   </HBox>
                </children>
             </VBox>

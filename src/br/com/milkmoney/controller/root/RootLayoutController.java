@@ -69,6 +69,8 @@ public class RootLayoutController {
 
 				if (event.getCode().equals(KeyCode.ENTER)) {
 					handleAcessoRapidoAnimal();
+					inputNumeroAnimal.setText("");
+					event.consume();
 				}
 
 			}

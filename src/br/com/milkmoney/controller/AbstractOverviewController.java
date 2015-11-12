@@ -92,6 +92,7 @@ public abstract class AbstractOverviewController<K, E>{
 
 				if (event.getCode().equals(KeyCode.DELETE)) {
 					handleDelete();
+					event.consume();
 				}
 
 			}

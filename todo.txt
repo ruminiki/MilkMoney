@@ -4,17 +4,28 @@ ERROS e REQUISITOS
 - Animal com uma cobertura e 130% de eficiência....
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
+- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
+
 - Permitir lançar a produção do mês de uma única vez
 
 - Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos...)
 
 
+- Relatório animais com coberturas não confirmadas - campo aberto observação para levar para campo  
+(adicionar filtro tela animais) (adicionar situação última cobertura)
 
-- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
+- Fazer tela para confirmação de prenhez em lote e encerramento lactação em lote.
+
+- Fazer relatório encerramento lactação (por motivo)
 
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
 - Fazer acesso rápido a ficha do animal (campo para digitar o número no rodapé do sistema, então abre uma tela com opções para parto, cobertura e confirmação de prenhez)
+	- refresh tabela cobertura
+	- permitir lançar parto, aborto, confirmação prenhez
+	- permitir remover e editar cobertura
+	
+
 - Relatório da evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
 - Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
 - Relatório abortos, complicações do parto.

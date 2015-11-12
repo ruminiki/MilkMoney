@@ -1,16 +1,23 @@
 package br.com.milkmoney.controller.animal;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Optional;
+import java.util.function.Function;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
@@ -20,8 +27,13 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractFormController;
+import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarAbortoHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
@@ -31,16 +43,19 @@ import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milkmoney.controller.raca.RacaOverviewController;
 import br.com.milkmoney.controller.raca.RacaReducedOverviewController;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.touro.TouroReducedOverviewController;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
+import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.Parto;
-import br.com.milkmoney.model.Procedimento;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
+import br.com.milkmoney.model.VendaAnimal;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.FichaAnimalService;
@@ -54,6 +69,8 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
+import br.com.milkmoney.validation.MorteAnimalValidation;
+import br.com.milkmoney.validation.VendaAnimalValidation;
 
 @Controller
 public class AcessoRapidoAnimalController extends AbstractFormController<Integer, Animal> {
@@ -62,16 +79,14 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 	@FXML private TableColumn<Cobertura, String> dataCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> situacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> reprodutorColumn;
+	@FXML private TableColumn<Cobertura, String> dataPartoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> dataAbortoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> dataConfirmacaoCoberturaColumn;
 	
 	@FXML private TableView<Parto> tablePartos;
 	@FXML private TableColumn<Parto, String> dataPartoColumn;
 	@FXML private TableColumn<Parto, String> tipoPartoColumn;
 	@FXML private TableColumn<Parto, String> complicacaoPartoColumn;
-	
-	@FXML private TableView<Procedimento> tableProcedimentos;
-	@FXML private TableColumn<Procedimento, String> dataProcedimentoColumn;
-	@FXML private TableColumn<Procedimento, String> tipoProcedimentoColumn;
-	@FXML private TableColumn<Procedimento, String> observacaoProcedimentoColumn;
 	
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 	lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
@@ -108,9 +123,15 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private IndicadorOverviewController indicadorOverviewController;
 	@Autowired private PartoFormController partoFormController;
+	@Autowired private AbortoFormController abortoFormController;
 	
 	private FichaAnimal fichaAnimal;
 	private String numeroDigitado;
+	
+	private ContextMenu coberturaContextMenu = new ContextMenu();
+	MenuItem atualizarCobertura = new MenuItem("Atualizar");
+	MenuItem editarCobertura = new MenuItem("Editar");
+	MenuItem removerCobertura = new MenuItem("Remover");
 	
 	@FXML
 	public void initialize() {
@@ -120,23 +141,71 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		dataCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
+		dataPartoCoberturaColumn.setCellFactory(new TableCellRegistrarPartoHyperlinkFactory<Cobertura,String>("dataParto", registrarParto));
+		dataAbortoCoberturaColumn.setCellFactory(new TableCellRegistrarAbortoHyperlinkFactory<Cobertura,String>("dataAborto", registrarAborto));
+		dataConfirmacaoCoberturaColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
 		
+		tableCoberturas.setFixedCellSize(25);
+		tableCoberturas.getItems().removeAll();
 		tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
 		
 		dataPartoColumn.setCellFactory(new TableCellDateFactory<Parto,String>("data"));
 		tipoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("tipoParto"));
 		complicacaoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("complicacaoParto"));
 		
+		tablePartos.setFixedCellSize(25);
+		tablePartos.getItems().removeAll();
 		tablePartos.getItems().addAll(partoService.findByAnimal(getObject()));
 		
-		dataProcedimentoColumn.setCellFactory(new TableCellDateFactory<Procedimento,String>("dataRealizacao"));
-		tipoProcedimentoColumn.setCellValueFactory(new PropertyValueFactory<Procedimento,String>("tipoProcedimento"));
-		observacaoProcedimentoColumn.setCellValueFactory(new PropertyValueFactory<Procedimento,String>("observacao"));
-		
-		tableProcedimentos.getItems().addAll(procedimentoService.findByAnimal(getObject()));
+		tablePartos.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
+					partoFormController.setObject(tablePartos.getSelectionModel().getSelectedItem());
+					partoFormController.showForm();
+				}
+			}
+
+		});
 		
 		handleFichaAnimal();
 		
+		atualizarCobertura.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	refreshTableCoberturas();
+		    }
+		});
+		
+		editarCobertura.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	coberturaFormController.setObject(tableCoberturas.getSelectionModel().getSelectedItem());
+				coberturaFormController.showForm();
+		    }
+		});
+		
+		removerCobertura.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	Optional<ButtonType> result = CustomAlert.confirmarExclusao();
+				if (result.get() == ButtonType.OK) {
+					coberturaService.remove(tableCoberturas.getSelectionModel().getSelectedItem());
+				}
+		    }
+		});
+		
+		coberturaContextMenu.getItems().clear();
+		coberturaContextMenu.getItems().addAll(atualizarCobertura, editarCobertura, removerCobertura);
+		coberturaContextMenu.setPrefWidth(120);
+		tableCoberturas.setContextMenu(coberturaContextMenu);
+		
+	}
+	
+	private void refreshTableCoberturas(){
+		tableCoberturas.getItems().removeAll();
+    	tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
 	}
 	
 	private void handleFichaAnimal(){
@@ -206,6 +275,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 										if ( partoFormController.getObject() != null ){
 											cobertura.setParto(partoFormController.getObject());
 											coberturaService.registrarParto(cobertura);
+											tablePartos.getItems().add(partoFormController.getObject());
 										}	
 									}
 								}
@@ -231,8 +301,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 							hlRegistrarCobertura.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
-									coberturaFormController.showForm();
+									registrarCoberturaAnimal();
 								}
 							});
 						}
@@ -269,12 +338,147 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		});
 	}
 	
+	Function<Integer, Boolean> registrarParto = index -> {
+		tableCoberturas.getSelectionModel().select(index);
+		
+		if ( tableCoberturas.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+		
+		Cobertura cobertura = tableCoberturas.getSelectionModel().getSelectedItem();
+		
+		if ( cobertura.getParto() == null ){
+			
+			CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
+			
+			partoFormController.setState(State.CREATE_TO_SELECT);
+			partoFormController.setObject(new Parto(cobertura));
+			partoFormController.showForm();
+			
+			if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
+				cobertura.setParto(partoFormController.getObject());
+				coberturaService.registrarParto(cobertura);
+			}	
+			
+		}else{
+			partoFormController.setObject(cobertura.getParto());
+			partoFormController.showForm();
+		}
+		
+		return true;
+	};
+	
+	Function<Integer, Boolean> registrarAborto = index -> {
+		tableCoberturas.getSelectionModel().select(index);
+		if ( tableCoberturas.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+		
+		Cobertura cobertura = tableCoberturas.getSelectionModel().getSelectedItem();
+		
+		abortoFormController.setObject(cobertura);
+		abortoFormController.showForm();
+		return true;
+	};
+	
+	Function<Integer, Boolean> confirmarPrenhes = index -> {
+		tableCoberturas.getSelectionModel().select(index);
+		if ( tableCoberturas.getSelectionModel().getSelectedItem() == null ){
+			CustomAlert.nenhumRegistroSelecionado();
+			return false;
+		}
+		
+		Cobertura cobertura = tableCoberturas.getSelectionModel().getSelectedItem();
+		
+		confirmacaoPrenhesFormController.setObject(cobertura);
+    	confirmacaoPrenhesFormController.showForm();
+    	
+		return true;
+	};
+	
+	@FXML
 	private void handleEncerrarLactacao() {
 		if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 			lactacaoOverviewController.setAnimal(getObject());
 			lactacaoOverviewController.showForm();
 		}else{
 			CustomAlert.mensagemInfo("Somente animais fêmeas podem ter a lactação encerrada.");
+		}
+	};
+	
+	@FXML
+	private void registrarCoberturaAnimal() {
+		if ( getObject().getSexo().equals(Sexo.FEMEA) ){
+			coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico() != null ? fichaAnimal.getProximoServico() : new Date() ));
+			coberturaFormController.showForm();
+			if ( coberturaFormController.getObject() != null && coberturaFormController.getObject().getId() > 0 )
+				tableCoberturas.getItems().add(coberturaFormController.getObject());
+		}else{
+			CustomAlert.mensagemInfo("Por favor, selecione um animal fêmea, para ter acesso as coberturas. "
+					+ "Selecione outro animal e tente novamente.");
+		}
+	};
+	
+	@FXML
+	private void registrarProducaoAnimal() {
+		if ( getObject().getSexo().equals(Sexo.FEMEA) ){
+			//se o animal tiver morto ou vendido habilita apenas consulta
+			boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);
+			producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, disabled);
+			producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
+			producaoIndividualOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
+			
+			producaoIndividualOverviewController.setAnimal(getObject());
+			producaoIndividualOverviewController.showForm();
+		}else{
+			CustomAlert.mensagemInfo("Somente podem ter registro de produção, animais fêmeas. "
+					+ "Por favor, selecione outro animal e tente novamente.");
+		}
+	};
+	
+	@FXML
+	private void exibirFichaAnimal() {
+		Object[] params = new Object[]{
+				getObject().getId()
+		};
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FICHA_COMPLETA_ANIMAL, params);
+			
+	};
+	
+	@FXML
+	private void registrarDesfazerRegistroMorte() {
+		if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+			
+			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
+			if (result.get() == ButtonType.OK) {
+				morteAnimalService.removeByAnimal(getObject());
+			}
+			
+		}else{
+			
+			MorteAnimalValidation.validaSituacaoAnimal(getObject());
+			
+			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
+			morteAnimalFormController.showForm();
+			
+		}
+	};
+	
+	@FXML
+	private void registrarDesfazerRegistroVenda() {
+		if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
+			if (result.get() == ButtonType.OK) {
+				vendaAnimalService.removeByAnimal(getObject());
+			}
+		}else{
+			VendaAnimalValidation.validaSituacaoAnimal(getObject());
+			vendaAnimalFormController.setAnimalVendido(getObject());
+			vendaAnimalFormController.setObject(new VendaAnimal());
+			vendaAnimalFormController.showForm();
 		}
 	};
 
