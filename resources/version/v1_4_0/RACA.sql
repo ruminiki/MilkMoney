@@ -1,0 +1,1 @@
+ALTER TABLE milkmoney.raca ADD COLUMN duracaoGestacao INT(11) NOT NULL DEFAULT 0 AFTER descricao;

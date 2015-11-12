@@ -29,7 +29,8 @@ public class Raca extends AbstractEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private StringProperty descricao = new SimpleStringProperty();
+	private StringProperty descricao       = new SimpleStringProperty();
+	private StringProperty duracaoGestacao = new SimpleStringProperty();
 	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="descrição")
@@ -43,6 +44,20 @@ public class Raca extends AbstractEntity implements Serializable {
 	
 	public StringProperty descricaoProperty(){
 		return descricao;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="duração gestação")
+	public Integer getDuracaoGestacao() {
+		return this.duracaoGestacao.get() != null ? Integer.parseInt(this.duracaoGestacao.get()) : 0;
+	}
+
+	public void setDuracaoGestacao(Integer duracaoGestacao) {
+		this.duracaoGestacao.set(String.valueOf(duracaoGestacao));
+	}
+	
+	public StringProperty duracaoGestacaoProperty(){
+		return duracaoGestacao;
 	}
 
 	public int getId() {

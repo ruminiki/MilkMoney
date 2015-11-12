@@ -17,13 +17,15 @@ import br.com.milkmoney.service.IService;
 public class RacaReducedOverviewController extends AbstractReducedOverviewController<Integer, Raca> {
 
 	@FXML private TableColumn<Raca, String> idColumn;
-	@FXML private TableColumn<Raca, String> descricaoColumn;
+	@FXML private TableColumn<Raca, String> descricaoColumn; 
+	@FXML private TableColumn<Raca, String> duracaoGestacaoColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("descricao"));
+		duracaoGestacaoColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("duracaoGestacao"));
 		super.initialize((RacaFormController) MainApp.getBean(RacaFormController.class));
 		
 	}

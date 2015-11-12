@@ -18,7 +18,8 @@ public class RacaOverviewController extends AbstractOverviewController<Integer, 
 
 	@FXML private TableColumn<Raca, String> idColumn;
 	@FXML private TableColumn<Raca, String> descricaoColumn;
-
+	@FXML private TableColumn<Raca, String> duracaoGestacaoColumn;
+	
 	@Autowired private RacaFormController formController;
 	
 	@FXML
@@ -26,6 +27,7 @@ public class RacaOverviewController extends AbstractOverviewController<Integer, 
 		
 		idColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("descricao"));
+		duracaoGestacaoColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("duracaoGestacao"));
 		super.initialize(formController);
 		
 	}
