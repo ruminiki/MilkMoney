@@ -91,7 +91,7 @@
                                     <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
                                     <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
                                     <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Recebimento" />
-                                    <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                                    <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
                                     <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
                                     <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
                                  </columns>
@@ -121,7 +121,7 @@
                                     <TableColumn fx:id="descricaoColumn1" minWidth="250.0" prefWidth="75.0" text="Descrição" />
                                     <TableColumn fx:id="dataEmissaoColumn1" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
                                     <TableColumn fx:id="dataVencimentoColumn1" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
-                                    <TableColumn fx:id="categoriaLancamentoColumn1" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Categoria" />
+                                    <TableColumn fx:id="categoriaLancamentoColumn1" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
                                     <TableColumn fx:id="centroCustoColumn1" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
                                     <TableColumn fx:id="valorColumn1" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
                                  </columns>
