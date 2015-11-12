@@ -14,18 +14,12 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
-- Fazer acesso rápido a ficha do animal (campo para digitar o número no rodapé do sistema, então abre uma tela com opções para parto, cobertura e confirmação de prenhez)
-	- botão direito mouse tabela partos (visualizar)
-	- clique duplo table coberturas (editar)
 	
 - Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
 --Relatórios
 	- Relatório da evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
-	- Relatório animais com coberturas não confirmadas - campo aberto observação para levar para campo  
-	(adicionar filtro tela animais) (adicionar situação última cobertura)
 	- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
-
 
 - fazer log de acessos ao sistema
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
@@ -34,16 +28,9 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - backup do banco de dados
 
 - criar parâmetro para numero de anos para cálculo da eficiência reprodutiva
-
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 - Tela indicadores
 - media idade ao primeiro parto
-
---Notificações
-- animais para secar
-- coberturas para confirmar
-- animais para cobrir
-- partos
 
 - está permitindo deletar o animal (cria) sem remover o parto.
