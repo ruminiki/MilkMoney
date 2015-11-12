@@ -134,6 +134,10 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	MenuItem editarCobertura = new MenuItem("Editar");
 	MenuItem removerCobertura = new MenuItem("Remover");
 	
+	private ContextMenu partoContextMenu = new ContextMenu();
+	MenuItem atualizarParto = new MenuItem("Atualizar");
+	MenuItem visualizarParto = new MenuItem("Visualizar");
+	
 	@FXML
 	public void initialize() {
 		
@@ -148,30 +152,22 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		previsaoPartoCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		
 		tableCoberturas.setFixedCellSize(25);
-		tableCoberturas.getItems().removeAll();
+		tableCoberturas.getItems().clear();
 		tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
 		
-		dataPartoColumn.setCellFactory(new TableCellDateFactory<Parto,String>("data"));
-		tipoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("tipoParto"));
-		complicacaoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("complicacaoParto"));
-		
-		tablePartos.setFixedCellSize(25);
-		tablePartos.getItems().removeAll();
-		tablePartos.getItems().addAll(partoService.findByAnimal(getObject()));
-		
-		tablePartos.setOnMousePressed(new EventHandler<MouseEvent>() {
+		tableCoberturas.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					partoFormController.setObject(tablePartos.getSelectionModel().getSelectedItem());
-					partoFormController.showForm();
+					coberturaFormController.setObject(tableCoberturas.getSelectionModel().getSelectedItem());
+					coberturaFormController.showForm();
+					refreshTableCoberturas();
+					handleFichaAnimal();
 				}
 			}
 
 		});
-		
-		handleFichaAnimal();
 		
 		atualizarCobertura.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
@@ -202,6 +198,51 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		coberturaContextMenu.getItems().addAll(atualizarCobertura, editarCobertura, removerCobertura);
 		coberturaContextMenu.setPrefWidth(120);
 		tableCoberturas.setContextMenu(coberturaContextMenu);
+		
+		dataPartoColumn.setCellFactory(new TableCellDateFactory<Parto,String>("data"));
+		tipoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("tipoParto"));
+		complicacaoPartoColumn.setCellValueFactory(new PropertyValueFactory<Parto,String>("complicacaoParto"));
+		
+		tablePartos.setFixedCellSize(25);
+		tablePartos.getItems().clear();
+		tablePartos.getItems().addAll(partoService.findByAnimal(getObject()));
+		
+		tablePartos.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
+					partoFormController.setObject(tablePartos.getSelectionModel().getSelectedItem());
+					partoFormController.showForm();
+				}
+			}
+
+		});
+		
+		atualizarParto.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+				tablePartos.getItems().clear();
+				tablePartos.getItems().addAll(partoService.findByAnimal(getObject()));
+		    }
+		});
+		
+		visualizarParto.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	partoFormController.setObject(tablePartos.getSelectionModel().getSelectedItem());
+				partoFormController.showForm();
+		    }
+		});
+		
+		partoContextMenu.getItems().clear();
+		partoContextMenu.getItems().addAll(atualizarParto, visualizarParto);
+		partoContextMenu.setPrefWidth(120);
+		tablePartos.setContextMenu(partoContextMenu);
+		
+		handleFichaAnimal();
+		
+		
 		
 	}
 	

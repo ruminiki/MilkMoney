@@ -15,9 +15,8 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
 - Fazer acesso rápido a ficha do animal (campo para digitar o número no rodapé do sistema, então abre uma tela com opções para parto, cobertura e confirmação de prenhez)
-	- refresh tabela cobertura
-	- permitir lançar parto, aborto, confirmação prenhez
-	- permitir remover e editar cobertura
+	- botão direito mouse tabela partos (visualizar)
+	- clique duplo table coberturas (editar)
 	
 - Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
