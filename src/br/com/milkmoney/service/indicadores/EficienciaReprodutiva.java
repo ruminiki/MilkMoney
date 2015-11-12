@@ -48,7 +48,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	
 	double DVG  = 0;   //dias de gestação do rebanho
 	double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
-	double DG   = 280; //duração média da gestação
+	double DG   = 0; //duração média da gestação
 	double R    = 85;  //período seco ideal
 	double N    = 0;   //número total de vacas consideradas
 	int    P    = 2;   //intervalo em anos
@@ -80,6 +80,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		}
 		
 		N = animais.size();
+		DG = DG / animais.size();
 		
 		return calculaIndice();
 		
@@ -157,6 +158,8 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		if ( venda != null )
 			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(venda.getDataVenda()), DateUtil.asLocalDate(dataFim));
 		
+		//adiciona a duração da gestação para fazer a média das raças do rebanho
+		DG += animal.getRaca().getDuracaoGestacao();
 	}
 	
 	private BigDecimal calculaIndice(){

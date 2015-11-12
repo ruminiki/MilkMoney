@@ -162,7 +162,7 @@ public class AnimalService implements IService<Integer, Animal>{
 				}
 				
 				//se não tiver confirmação, verificar se a data inicial + o tempo de gestação + pve fica antes ou dentro do periodo
-				if ( DateUtil.asLocalDate(cobertura.getData()).plusDays(282 + periodoVoluntarioEspera).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
+				if ( DateUtil.asLocalDate(cobertura.getData()).plusDays(animal.getRaca().getDuracaoGestacao() + periodoVoluntarioEspera).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
 					result.add(animal);
 				}
 				
