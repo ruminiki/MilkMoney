@@ -18,6 +18,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 import javax.annotation.Resource;
 
@@ -26,7 +27,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
-import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
@@ -73,7 +73,7 @@ import br.com.milkmoney.validation.MorteAnimalValidation;
 import br.com.milkmoney.validation.VendaAnimalValidation;
 
 @Controller
-public class AcessoRapidoAnimalController extends AbstractFormController<Integer, Animal> {
+public class AcessoRapidoAnimalController extends AbstractOverviewController<Integer, Animal> {
 
 	@FXML private TableView<Cobertura> tableCoberturas;
 	@FXML private TableColumn<Cobertura, String> dataCoberturaColumn;
@@ -82,6 +82,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 	@FXML private TableColumn<Cobertura, String> dataPartoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> dataAbortoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> dataConfirmacaoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> previsaoPartoCoberturaColumn;
 	
 	@FXML private TableView<Parto> tablePartos;
 	@FXML private TableColumn<Parto, String> dataPartoColumn;
@@ -144,6 +145,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		dataPartoCoberturaColumn.setCellFactory(new TableCellRegistrarPartoHyperlinkFactory<Cobertura,String>("dataParto", registrarParto));
 		dataAbortoCoberturaColumn.setCellFactory(new TableCellRegistrarAbortoHyperlinkFactory<Cobertura,String>("dataAborto", registrarAborto));
 		dataConfirmacaoCoberturaColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
+		previsaoPartoCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		
 		tableCoberturas.setFixedCellSize(25);
 		tableCoberturas.getItems().removeAll();
@@ -204,7 +206,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 	}
 	
 	private void refreshTableCoberturas(){
-		tableCoberturas.getItems().removeAll();
+		tableCoberturas.getItems().clear();
     	tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
 	}
 	
@@ -276,6 +278,8 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 											cobertura.setParto(partoFormController.getObject());
 											coberturaService.registrarParto(cobertura);
 											tablePartos.getItems().add(partoFormController.getObject());
+											refreshTableCoberturas();
+											handleFichaAnimal();
 										}	
 									}
 								}
@@ -291,6 +295,8 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 									if ( cobertura != null ){
 										coberturaFormController.setObject(cobertura);
 										coberturaFormController.showForm();
+										refreshTableCoberturas();
+										handleFichaAnimal();
 									}
 								}
 							});
@@ -324,6 +330,8 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 									if ( cobertura != null ){
 										confirmacaoPrenhesFormController.setObject(cobertura);
 								    	confirmacaoPrenhesFormController.showForm();
+								    	refreshTableCoberturas();
+								    	handleFichaAnimal();
 									}
 								}
 							});
@@ -332,7 +340,6 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 					lblPai.setText(getObject().getPaiEnseminacaoArtificial() != null ? getObject().getPaiEnseminacaoArtificial().toString() : ( getObject().getPaiMontaNatural() != null ? getObject().getPaiMontaNatural().toString() : "--" ));
 					lblMae.setText(getObject().getMae() != null ? getObject().getMae().toString() : "--");
 					lblAnimal.setText(getObject().toString());
-					
 				}
 			}
 		});
@@ -359,6 +366,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 			if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
 				cobertura.setParto(partoFormController.getObject());
 				coberturaService.registrarParto(cobertura);
+				tablePartos.getItems().add(cobertura.getParto());
 			}	
 			
 		}else{
@@ -380,6 +388,10 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		
 		abortoFormController.setObject(cobertura);
 		abortoFormController.showForm();
+		
+		refreshTableCoberturas();
+		handleFichaAnimal();
+		
 		return true;
 	};
 	
@@ -395,6 +407,9 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		confirmacaoPrenhesFormController.setObject(cobertura);
     	confirmacaoPrenhesFormController.showForm();
     	
+		refreshTableCoberturas();
+		handleFichaAnimal();
+    	
 		return true;
 	};
 	
@@ -403,23 +418,28 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 			lactacaoOverviewController.setAnimal(getObject());
 			lactacaoOverviewController.showForm();
+			
+			handleFichaAnimal();
+			
 		}else{
 			CustomAlert.mensagemInfo("Somente animais fêmeas podem ter a lactação encerrada.");
 		}
-	};
+	}
 	
 	@FXML
 	private void registrarCoberturaAnimal() {
 		if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 			coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico() != null ? fichaAnimal.getProximoServico() : new Date() ));
 			coberturaFormController.showForm();
-			if ( coberturaFormController.getObject() != null && coberturaFormController.getObject().getId() > 0 )
+			if ( coberturaFormController.getObject() != null && coberturaFormController.getObject().getId() > 0 ){
 				tableCoberturas.getItems().add(coberturaFormController.getObject());
+				handleFichaAnimal();
+			}
 		}else{
 			CustomAlert.mensagemInfo("Por favor, selecione um animal fêmea, para ter acesso as coberturas. "
 					+ "Selecione outro animal e tente novamente.");
 		}
-	};
+	}
 	
 	@FXML
 	private void registrarProducaoAnimal() {
@@ -436,7 +456,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 			CustomAlert.mensagemInfo("Somente podem ter registro de produção, animais fêmeas. "
 					+ "Por favor, selecione outro animal e tente novamente.");
 		}
-	};
+	}
 	
 	@FXML
 	private void exibirFichaAnimal() {
@@ -446,7 +466,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_COMPLETA_ANIMAL, params);
 			
-	};
+	}
 	
 	@FXML
 	private void registrarDesfazerRegistroMorte() {
@@ -465,7 +485,7 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 			morteAnimalFormController.showForm();
 			
 		}
-	};
+	}
 	
 	@FXML
 	private void registrarDesfazerRegistroVenda() {
@@ -480,7 +500,14 @@ public class AcessoRapidoAnimalController extends AbstractFormController<Integer
 			vendaAnimalFormController.setObject(new VendaAnimal());
 			vendaAnimalFormController.showForm();
 		}
-	};
+	}
+	
+	@FXML@Override
+	protected void closeForm(){
+		if ( tableCoberturas != null ){
+			((Stage)tableCoberturas.getScene().getWindow()).close();	
+		}
+	}
 
 	public void setNumeroDigitado(String numeroDigitado) {
 		this.numeroDigitado = numeroDigitado;

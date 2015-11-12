@@ -37,7 +37,11 @@ public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements 
 		        		Cobertura cobertura = (Cobertura) tableViewProperty().get().getItems().get(tableRowProperty().get().getIndex());
 		        		if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PARIDA + "|" + SituacaoCobertura.ABORTADA) ){
 		        			Label lbl = new Label();
-			            	lbl.setText("--");			            		
+		        			if ( (item == null || empty) ) {
+		        				lbl.setText("--");	
+		        			}else{
+		        				lbl.setText( DateUtil.format((java.time.LocalDate)item));
+		        			}
 				            setGraphic(lbl);
 		        		}else{
 		        			Hyperlink hpS = new Hyperlink();
