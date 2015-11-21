@@ -5,6 +5,7 @@ import java.util.function.Function;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -40,60 +41,75 @@ public class IndicadorOverviewController {
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	
 	private ObservableList<Indicador> data;
-	
+	private Scene scene;
 	
 	@FXML
 	public void initialize() {
 		//zootécnicos
-		data = service.findAllIndicadoresZootecnicosAsObservableList();
-		int col = 0;
-		int row = 0;
-		
-		for ( Indicador indicador : data ){
-			
-			BoxIndicador box = new BoxIndicador(indicador, editIndicador);
-			GridPane.setConstraints(box, col, row);
-			
-			col++;
-			
-			if ( col == 5 ){
-				col = 0;
-				row++;
-			}
-			
-			gridIndicadoresZootecnicos.getChildren().add(box);
-			
-		}
-		
-		//quantitativos
-		/*data = service.findAllQuantitativosRebanhoAsObservableList();
-		
-		int row = 0;
-		col = 0;
-		
-		for ( Indicador indicador : data ){
-			
-			BoxIndicador box = new BoxIndicador(indicador, editIndicador);
-			GridPane.setConstraints(box, col, row);
-			
-			col++;
-			
-			if ( col == 5 ){
-				col = 0;
-				row++;
-			}
-			
-			gridQuantitativosRebanho.getChildren().add(box);
-			
-		}*/
-		
+		data = service.findAllIndicadoresZootecnicosAsObservableList(false);
+	}
+	
+	private void carregaIndicadores(){
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				lblEficienciaReprodutiva.setText(eficienciaReprodutiva.getValue().toString() + "%");
+				int col = 0;
+				int row = 0;
+				
+				scene.setCursor(Cursor.WAIT);
+				
+				for (Indicador indicador : data) {
+	
+					indicador = service.refreshValorApurado(indicador);
+	
+					BoxIndicador box = new BoxIndicador(indicador, editIndicador);
+					GridPane.setConstraints(box, col, row);
+	
+					col++;
+	
+					if (col == 5) {
+						col = 0;
+						row++;
+					}
+	
+					gridIndicadoresZootecnicos.getChildren().add(box);
+	
+				}
+	
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						lblEficienciaReprodutiva.setText(eficienciaReprodutiva
+								.getValue().toString() + "%");
+					}
+				});
+				
+				scene.setCursor(Cursor.DEFAULT);
+				
 			}
 		});
 		
+		//quantitativos
+				/*data = service.findAllQuantitativosRebanhoAsObservableList();
+				
+				int row = 0;
+				col = 0;
+				
+				for ( Indicador indicador : data ){
+					
+					BoxIndicador box = new BoxIndicador(indicador, editIndicador);
+					GridPane.setConstraints(box, col, row);
+					
+					col++;
+					
+					if ( col == 5 ){
+						col = 0;
+						row++;
+					}
+					
+					gridQuantitativosRebanho.getChildren().add(box);
+					
+				}*/
 	}
 	
 	Function<Indicador, Boolean> editIndicador = indicador -> {
@@ -116,11 +132,15 @@ public class IndicadorOverviewController {
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
 
-		Scene scene = new Scene(form);
+		scene = new Scene(form);
 		dialogStage.setScene(scene);
-
 		dialogStage.setResizable(false);
-		dialogStage.showAndWait();
+		
+		scene.setCursor(Cursor.WAIT);
+		
+		dialogStage.show();
+		
+		carregaIndicadores();
 	}
 	
 	@FXML

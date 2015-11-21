@@ -20,7 +20,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	private void refreshValorApurado(Indicador indicador){
+	public Indicador refreshValorApurado(Indicador indicador){
 		try {
 			
 			if ( indicador.getClasseCalculo() != null ){
@@ -28,11 +28,13 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 				AbstractCalculadorIndicador calculador = (AbstractCalculadorIndicador) MainApp.getBean(calculadorClass);
 				indicador.setValorApurado( calculador.getValue() );
 				this.persist(indicador);
+				return indicador;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@Override
@@ -44,13 +46,15 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	}
 
 	@Transactional@SuppressWarnings("unchecked")
-	public List<Indicador> findAllIndicadoresZootecnicos() {
+	public List<Indicador> findAllIndicadoresZootecnicos(boolean refreshValorApurado) {
 		
 		Query query = entityManager.createQuery("SELECT i FROM Indicador i WHERE tipo = 'Z' order by ordem");
 		List<Indicador> indicadores = query.getResultList();
 
-		for ( Indicador indicador : indicadores ){
-			refreshValorApurado(indicador);
+		if ( refreshValorApurado ){
+			for ( Indicador indicador : indicadores ){
+				refreshValorApurado(indicador);
+			}
 		}
 		
 		return indicadores;
@@ -58,13 +62,15 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	}
 	
 	@Transactional@SuppressWarnings("unchecked")
-	public List<Indicador> findAllQuantitativosRebanho() {
+	public List<Indicador> findAllQuantitativosRebanho(boolean refreshValorApurado) {
 		
 		Query query = entityManager.createQuery("SELECT i FROM Indicador i WHERE tipo = 'R' order by ordem");
 		List<Indicador> indicadores = query.getResultList();
-
-		for ( Indicador indicador : indicadores ){
-			refreshValorApurado(indicador);
+		
+		if ( refreshValorApurado ){
+			for ( Indicador indicador : indicadores ){
+				refreshValorApurado(indicador);
+			}
 		}
 		
 		return indicadores;
@@ -74,8 +80,8 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	@Override @Transactional
 	public List<Indicador> findAll(Class<Indicador> clazz) {
 		List<Indicador> indicadores = new ArrayList<Indicador>();
-		indicadores.addAll(findAllIndicadoresZootecnicos());
-		indicadores.addAll(findAllQuantitativosRebanho());
+		indicadores.addAll(findAllIndicadoresZootecnicos(true));
+		indicadores.addAll(findAllQuantitativosRebanho(true));
 		return indicadores;
 	}
 	

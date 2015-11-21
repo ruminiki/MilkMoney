@@ -159,7 +159,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 			DVE += ChronoUnit.DAYS.between(DateUtil.asLocalDate(venda.getDataVenda()), DateUtil.asLocalDate(dataFim));
 		
 		//adiciona a duração da gestação para fazer a média das raças do rebanho
-		DG += animal.getRaca().getDuracaoGestacao();
+		DG += animal.getRaca().getDuracaoGestacao() > 0 ? animal.getRaca().getDuracaoGestacao() : 280;
 	}
 	
 	private BigDecimal calculaIndice(){

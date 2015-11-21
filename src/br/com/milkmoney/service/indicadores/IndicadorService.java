@@ -48,12 +48,16 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		return FXCollections.observableArrayList(dao.findAll(Indicador.class));
 	}
 	
-	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList() {
-		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos());
+	public Indicador refreshValorApurado(Indicador indicador){
+		return dao.refreshValorApurado(indicador);
 	}
 	
-	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList() {
-		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho());
+	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList(boolean refreshValorApurado) {
+		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos(refreshValorApurado));
+	}
+	
+	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList(boolean refreshValorApurado) {
+		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho(refreshValorApurado));
 	}
 	
 	@Override
