@@ -358,6 +358,48 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		query.setParameter("dias", dias);
 		return (BigInteger) query.getSingleResult();
 	}
+	
+	public BigInteger countAllNovilhasIdadeAcimaXMeses(int meses, Date data) {
+		int dias = meses * 30;
+		Query query = entityManager.createNativeQuery(
+				"select count(*) from viewAnimaisAtivos a " +
+				"where DATEDIFF(:data, a.dataNascimento) > :dias  " +
+				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
+				+ "(select 1 from lactacao lc where lc.animal = a.id)");
+		query.setParameter("dias", dias);
+		query.setParameter("data", data);
+		return (BigInteger) query.getSingleResult();
+	}
+	
+	public BigInteger countAllNovilhasIdadeAteXMeses(int meses, Date data) {
+		
+		int dias = meses * 30;
+		Query query = entityManager.createNativeQuery(
+				"select count(*) from viewAnimaisAtivos a " +
+				"where DATEDIFF(:data, a.dataNascimento) <= :dias  " +
+				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
+				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
+		query.setParameter("dias", dias);
+		query.setParameter("data", data);
+		
+		return (BigInteger) query.getSingleResult();
+		
+	}
+	
+	public BigInteger countAllNovilhasIdadeEntreMeses(int mesesIdadeMinima, int mesesIdadeMaxima, Date data) {
+		int diasIdadeMinima = mesesIdadeMinima * 30;
+		int diasIdadeMaxima = mesesIdadeMaxima * 30;
+		Query query = entityManager.createNativeQuery(
+				"select count(*) from viewAnimaisAtivos a " +
+				"where DATEDIFF(:data, a.dataNascimento) between :min and :max " +
+				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
+				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
+		query.setParameter("min", diasIdadeMinima);
+		query.setParameter("max", diasIdadeMaxima);
+		query.setParameter("data", data);
+		
+		return (BigInteger) query.getSingleResult();
+	}
 
 	public BigInteger countAllFemeasEmLactacao() {
 		Object result = entityManager.createNativeQuery(" select count(*) from viewAnimaisAtivos a "

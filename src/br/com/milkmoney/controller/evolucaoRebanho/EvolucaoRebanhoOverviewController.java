@@ -21,9 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.model.EvolucaoRebanho;
 import br.com.milkmoney.service.EvolucaoRebanhoService;
 import br.com.milkmoney.util.Util;
+
+import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
 @Controller
 public class EvolucaoRebanhoOverviewController{
@@ -41,14 +44,29 @@ public class EvolucaoRebanhoOverviewController{
 		
 		categoriaColumn.setCellValueFactory(new PropertyValueFactory<EvolucaoRebanho,String>("variavel"));
 		tableVariavel.getItems().addAll(EvolucaoRebanho.getItems());
+		tableVariavel.getSelectionModel().setCellSelectionEnabled(false);
 		
-		LocalDate dataInicio = LocalDate.now().minusYears(1);
-		LocalDate dataFim = LocalDate.now();
+		inputDataInicio.setValue(LocalDate.now().minusYears(1));
+		inputDataFim.setValue(LocalDate.now());
 		
-		inputDataInicio.setValue(dataInicio);
-		inputDataFim.setValue(dataFim);
+		inputDataInicio.valueProperty().addListener((observable, oldValue, newValue) -> configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue()));
+		inputDataFim.valueProperty().addListener((observable, oldValue, newValue) -> configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue()));
+		
+		configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue());
+		
+	}
+	
+	private void configureAndsearch(LocalDate dataInicio, LocalDate dataFim){
+		
+		if ( dataFim.compareTo(LocalDate.now()) > 0 ){
+			CustomAlert.mensagemInfo("A data final não pode ser maior que a data atual. Por favor, selecione uma nova data.");
+			return;
+		}
 		
 		List<String> meses = Util.generateListMonthsAbrev();
+		
+		table.getItems().clear();
+		table.getColumns().clear();
 		
 		//configura a tabela
 		while ( dataInicio.compareTo(dataFim) <= 0 ){
@@ -57,7 +75,7 @@ public class EvolucaoRebanhoOverviewController{
 			
 			TableColumn<EvolucaoRebanho, String> valorColumn = new TableColumn<EvolucaoRebanho, String>(header);
 			valorColumn.setCellValueFactory(new PropertyValueFactory<EvolucaoRebanho,String>(header));
-			// SETTING THE CELL FACTORY FOR THE RATINGS COLUMN         
+			valorColumn.setSortable(false);
 			valorColumn.setCellFactory(new Callback<TableColumn<EvolucaoRebanho,String>,TableCell<EvolucaoRebanho,String>>(){        
 				@Override
 				public TableCell<EvolucaoRebanho, String> call(TableColumn<EvolucaoRebanho, String> param) {                
@@ -74,8 +92,6 @@ public class EvolucaoRebanhoOverviewController{
 									columnIndex++;
 								}
 								
-								System.out.println("ROW> " + getIndex() + " COL> " + columnIndex );
-								
 								try{
 									setText(valoresPeriodo.get(getIndex()).get(columnIndex));	
 								}catch(Exception e ){
@@ -89,11 +105,15 @@ public class EvolucaoRebanhoOverviewController{
 			
 			valorColumn.setStyle("-fx-alignment:CENTER");
 			table.getColumns().add(valorColumn);
+			table.getSelectionModel().setCellSelectionEnabled(false);
 			
 			dataInicio = dataInicio.plusMonths(1);
 			
 		}
 		
+		table.getProperties().put(TableViewSkinBase.RECREATE, Boolean.TRUE);
+		
+		valoresPeriodo.clear();
 		for ( EvolucaoRebanho e : EvolucaoRebanho.getItems() ){
 			
 			valoresPeriodo.add(service.calculaEvolucaoRebanho(e.getVariavel(), 
@@ -104,8 +124,8 @@ public class EvolucaoRebanhoOverviewController{
 			
 		}
 		
+		table.getItems().clear();
 		table.getItems().addAll(EvolucaoRebanho.getItems());
-		
 	}
 	
 	public void showForm() {	

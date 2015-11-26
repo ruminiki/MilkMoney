@@ -60,6 +60,8 @@ public class EntregaLeiteFormController extends AbstractFormController<Integer, 
 				getObject().setVolume(((EntregaLeiteService)service).loadTotalEntreguePeriodo(getObject().getDataInicio(), getObject().getDataFim()));
 			}
 		});
+		
+		inputVolume.setDisable(getObject().getCarregaMarcacoesMes().equals(SimNao.SIM));
 	
 	}
 
