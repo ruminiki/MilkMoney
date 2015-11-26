@@ -18,6 +18,7 @@ import br.com.milkmoney.dao.EntregaLeiteDao;
 import br.com.milkmoney.model.EntregaLeite;
 import br.com.milkmoney.model.PrecoLeite;
 import br.com.milkmoney.model.ProducaoLeite;
+import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.util.Util;
 import br.com.milkmoney.validation.EntregaLeiteValidation;
 
@@ -31,26 +32,27 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
 	@Override
 	@Transactional
-	public boolean save(EntregaLeite entity) {
+	public boolean save(EntregaLeite entregaLeite) {
 		
-		BigDecimal totalEntregue = loadTotalEntreguePeriodo(entity.getDataInicio(), entity.getDataFim());
+		if ( entregaLeite.getCarregaMarcacoesMes().equals(SimNao.SIM) ){
+			BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
+			entregaLeite.setVolume(totalEntregue);
+		}
 		
-		entity.setVolume(totalEntregue);
-		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(entity.getMesReferencia(), entity.getAnoReferencia());
+		PrecoLeite precoLeite = precoLeiteService.findByMesAno(entregaLeite.getMesReferencia(), entregaLeite.getAnoReferencia());
 		if ( precoLeite != null ){
-			entity.setPrecoLeite(precoLeite);
+			entregaLeite.setPrecoLeite(precoLeite);
 		}
 
-		EntregaLeiteValidation.validate(entity);
+		EntregaLeiteValidation.validate(entregaLeite);
 		
-		return dao.persist(entity);	
+		return dao.persist(entregaLeite);	
 	}
 	
 	@Override
 	@Transactional
-	public boolean remove(EntregaLeite entity) {
-		return dao.remove(entity);
+	public boolean remove(EntregaLeite entregaLeite) {
+		return dao.remove(entregaLeite);
 	}
 
 	@Override
@@ -99,11 +101,11 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 			if ( entregaLeite == null ){
 				entregaLeite = new EntregaLeite(meses.get(i), ano, BigDecimal.ZERO);
 			}else{
-				BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
-				entregaLeite.setVolume(totalEntregue);
-				
+				if ( entregaLeite.getCarregaMarcacoesMes().equals(SimNao.SIM) ){
+					BigDecimal totalEntregue = loadTotalEntreguePeriodo(entregaLeite.getDataInicio(), entregaLeite.getDataFim());
+					entregaLeite.setVolume(totalEntregue);
+				}
 			}
-			
 			save(entregaLeite);
 		}
 
@@ -130,7 +132,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	 * @param dataFim
 	 * @return
 	 */
-	private BigDecimal loadTotalEntreguePeriodo(Date dataInicio, Date dataFim){
+	public BigDecimal loadTotalEntreguePeriodo(Date dataInicio, Date dataFim){
 		BigDecimal totalEntregue = BigDecimal.ZERO;
 		List<ProducaoLeite> producaoLeite = producaoLeiteService.findAllByPeriodoAsObservableList(dataInicio, dataFim);
 		
@@ -142,7 +144,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	}
 
 	@Override
-	public void validate(EntregaLeite entity) {
+	public void validate(EntregaLeite entregaLeite) {
 		// TODO Auto-generated method stub
 		
 	}

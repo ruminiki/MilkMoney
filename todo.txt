@@ -11,6 +11,7 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - Fazer tela para confirmação de prenhez em lote e encerramento lactação em lote.
 - Fazer relatório encerramento lactação (por motivo)
 
+- nos parâmetros dos relatórios aumentar os campos data
 
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.

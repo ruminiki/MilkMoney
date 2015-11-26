@@ -45,6 +45,8 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 	private ObjectProperty<LocalDate> dataFim = new SimpleObjectProperty<LocalDate>();  
 	private StringProperty volume = new SimpleStringProperty();
 	private StringProperty observacao = new SimpleStringProperty();
+	private StringProperty carregaMarcacoesMes = new SimpleStringProperty(SimNao.SIM);
+	
 	@Transient
 	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
 
@@ -99,11 +101,11 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getVolume() {
-		return NumberFormatUtil.fromString(this.volume.get());
+		return NumberFormatUtil.intFromString(this.volume.get());
 	}
 
 	public void setVolume(BigDecimal volume) {
-		this.volume.set(NumberFormatUtil.decimalFormat(volume));
+		this.volume.set(NumberFormatUtil.decimalFormat(volume, 0));
 	}
 
 	public StringProperty volumeProperty(){
@@ -149,6 +151,19 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 		return observacao;
 	}
 
+	@Access(AccessType.PROPERTY)
+	public String getCarregaMarcacoesMes() {
+		return this.carregaMarcacoesMes.get();
+	}
+
+	public void setCarregaMarcacoesMes(String carregaMarcacoesMes) {
+		this.carregaMarcacoesMes.set(carregaMarcacoesMes);
+	}
+	
+	public StringProperty carregaMarcacoesMesProperty(){
+		return carregaMarcacoesMes;
+	}
+	
 	@Transient
 	public BigDecimal getValorTotal() {
 		if ( getPrecoLeite() != null ){
