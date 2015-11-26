@@ -33,6 +33,7 @@ import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
@@ -127,6 +128,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private IndicadorOverviewController indicadorOverviewController;
 	@Autowired private PartoFormController partoFormController;
+	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	
 	private FichaAnimal fichaAnimal;
 	
@@ -543,6 +545,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 				RelatorioService.FICHA_ANIMAL, sb.toString());
 		
+	}
+	
+	@FXML
+	private void handleExibirEvolucaoRebanho(){
+		evolucaoRebanhoOverviewController.showForm();
 	}
 	
 }

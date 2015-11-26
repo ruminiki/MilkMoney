@@ -242,6 +242,26 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 	}
+
+	public Long contaAnimaisSecos(Date data) {
+		
+		Query query = entityManager.createQuery(
+				"SELECT count(a) FROM Animal a "
+				//deve existir uma lactação encerrando antes da data
+				+ "WHERE exists (select 1 from Lactacao l1 where l1.animal = a and l1.dataFim != null and l1.dataFim < :data) "
+				//e não deve existir nenhuma lactação na data
+				+ "and not exists (select 1 from Lactacao l2 where l2.animal = a and :data between l2.dataInicio and coalesce(l2.dataFim, current_date())) "
+				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
+				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
+		query.setParameter("data", data);
+		
+		try{
+			return (Long) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return 0L;
+		}
+	}
+
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisMortos() {

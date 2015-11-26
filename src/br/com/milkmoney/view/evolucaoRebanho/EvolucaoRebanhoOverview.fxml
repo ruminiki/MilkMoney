@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="365.0" prefWidth="1127.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController">
+   <children>
+      <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+               <children>
+                  <Label text="Data Início: " />
+                  <DatePicker fx:id="inputDataInicio" maxWidth="110.0" />
+                  <Label text="Data Fim: " />
+                  <DatePicker fx:id="inputDataFim" maxWidth="110.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="3.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox VBox.vgrow="ALWAYS">
+               <children>
+                  <TableView fx:id="tableVariavel" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="200.0" minWidth="260.0" prefHeight="325.0" prefWidth="250.0" scaleShape="false">
+                     <columns>
+                        <TableColumn fx:id="categoriaColumn" editable="false" maxWidth="100.0" minWidth="260.0" prefWidth="75.0" sortable="false" text="Categoria" />
+                     </columns>
+                  </TableView>
+                  <ScrollPane maxHeight="200.0" HBox.hgrow="ALWAYS">
+                     <content>
+                        <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="324.0" scaleShape="false" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
