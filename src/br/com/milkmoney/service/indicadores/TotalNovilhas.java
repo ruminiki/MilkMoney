@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.milkmoney.dao.AnimalDao;
+import br.com.milkmoney.service.AnimalService;
 
 /**
  * Calcula o total de fêmeas ativas no rebanho.
@@ -18,12 +18,12 @@ import br.com.milkmoney.dao.AnimalDao;
 @Service
 public class TotalNovilhas extends AbstractCalculadorIndicador{
 
-	@Autowired private AnimalDao animalDao;
+	@Autowired private AnimalService animalService;
 	
 	@Override
 	public BigDecimal getValue() {
 
-		BigInteger tamanho = animalDao.countAllNovilhasAtivas();
+		BigInteger tamanho = animalService.countAllNovilhas();
 		return (tamanho == null ? BigDecimal.ZERO : BigDecimal.valueOf(tamanho.intValue()));
 		
 	}

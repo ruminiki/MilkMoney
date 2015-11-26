@@ -1,0 +1,1 @@
+insert into parametro (descricao, sigla, valor) values ('IDADE MÁXIMA ANIMAL CONSIDERADO BEZERRO(A) (MESES)', 'IBZ', '10');

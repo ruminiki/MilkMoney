@@ -99,8 +99,28 @@ public class AnimalService implements IService<Integer, Animal>{
 		return dao.countAllFemeasSecas();
 	}
 	
-	public BigInteger countAllNovilhasAtivas() {
-		return dao.countAllNovilhasAtivas();
+	public BigInteger countAllNovilhas() {
+		int idadeMinima = 0;
+		
+		try{
+			idadeMinima = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MAXIMA_ANIMAL_CONSIDERADO_BEZERRO));
+		}catch(Exception e){
+			idadeMinima = 0;
+		}
+		
+		return dao.countAllNovilhasIdadeAcimaXMeses(idadeMinima);
+	}
+	
+	public BigInteger countAllBezerras() {
+		int idadeMinima = 0;
+		
+		try{
+			idadeMinima = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MAXIMA_ANIMAL_CONSIDERADO_BEZERRO));
+		}catch(Exception e){
+			idadeMinima = 0;
+		}
+		
+		return dao.countAllNovilhasIdadeAteXMeses(idadeMinima);
 	}
 	
 	public Long getNumeroPartos(Animal animal) {

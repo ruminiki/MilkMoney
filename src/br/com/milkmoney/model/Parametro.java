@@ -36,6 +36,7 @@ public class Parametro extends AbstractEntity implements Serializable {
 	public static final String PERIODO_VOLUNTARIO_ESPERA = "PVE";//período voluntário de espera (dias)
 	public static final String PERIODO_MINIMO_ENTRE_COBERTURAS = "PMEC";//período mínimo entre coberturas (dias)
 	public static final String IDADE_MINIMA_PARA_COBERTURA = "IDMC";//idade mínima para cobertua (meses)
+	public static final String IDADE_MAXIMA_ANIMAL_CONSIDERADO_BEZERRO = "IBZ";//idade máxima animal considerado bezerro(a)
 	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="sigla")

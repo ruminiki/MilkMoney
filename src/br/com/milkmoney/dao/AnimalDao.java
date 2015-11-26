@@ -361,13 +361,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
 	}
 
-	public BigInteger countAllNovilhasAtivas() {
+	public BigInteger countAllAnimaisSemLactacao() {
 		Query query = entityManager.createNativeQuery(
 				"select count(*) from viewAnimaisAtivos a " +
 				"where a.sexo = '" + Sexo.FEMEA + "' and not exists "
 				+ "(select 1 from lactacao lc where lc.animal = a.id)");
 		return (BigInteger) query.getSingleResult();
 	}
+	
 	/*
 	 * Vacas disponíveis para serem cobertas:
 	 * (1) não vendidas, 

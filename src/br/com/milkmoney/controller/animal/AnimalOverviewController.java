@@ -97,7 +97,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
-						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
+						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblBezerras, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
 						lblUltimoTratamento, lblLote, lblEficienciaReprodutiva;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
 	@FXML private VBox sideBar;
@@ -343,7 +343,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					lblEmLactacao.setText( String.valueOf( ((AnimalService)service).countAllFemeasEmLactacao()) );
 					lblTotalVacas.setText( String.valueOf( ((AnimalService)service).countAllVacasAtivas()) );
 					lblSecas.setText( String.valueOf( ((AnimalService)service).countAllFemeasSecas()) );
-					lblNovilhas.setText( String.valueOf( ((AnimalService)service).countAllNovilhasAtivas()) );
+					lblBezerras.setText( String.valueOf( ((AnimalService)service).countAllBezerras()) );
+					lblNovilhas.setText( String.valueOf( ((AnimalService)service).countAllNovilhas()) );
 					
 				}
 			}

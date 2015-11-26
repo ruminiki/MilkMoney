@@ -253,14 +253,14 @@
                                  <children>
                                     <VBox alignment="CENTER" style=": ;">
                                        <children>
-                                          <Label fx:id="lblTotalVacas" text="-">
+                                          <Label fx:id="lblBezerras" text="-">
                                              <font>
                                                 <Font size="30.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </VBox>
-                                    <Label text="Vacas">
+                                    <Label text="Bezerras">
                                        <font>
                                           <Font size="10.0" />
                                        </font>
@@ -269,7 +269,7 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="240.0" prefWidth="160.0">
                                  <children>
-                                    <VBox alignment="CENTER" maxHeight="50.0" prefHeight="220.0" prefWidth="110.0">
+                                    <VBox alignment="CENTER">
                                        <children>
                                           <Label fx:id="lblNovilhas" text="-">
                                              <font>
@@ -287,7 +287,25 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="240.0" prefWidth="160.0">
                                  <children>
-                                    <VBox alignment="CENTER" maxHeight="50.0" prefHeight="220.0" prefWidth="110.0">
+                                    <VBox alignment="CENTER" style=": ;">
+                                       <children>
+                                          <Label fx:id="lblTotalVacas" text="-">
+                                             <font>
+                                                <Font size="30.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label text="Vacas">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="240.0" prefWidth="160.0">
+                                 <children>
+                                    <VBox alignment="CENTER">
                                        <children>
                                           <Label fx:id="lblEmLactacao" text="-">
                                              <font>
@@ -305,7 +323,7 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="240.0" prefWidth="160.0">
                                  <children>
-                                    <VBox alignment="CENTER" maxHeight="50.0" prefHeight="220.0" prefWidth="110.0">
+                                    <VBox alignment="CENTER">
                                        <children>
                                           <Label fx:id="lblSecas" text="-">
                                              <font>
