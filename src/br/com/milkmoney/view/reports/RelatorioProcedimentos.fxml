@@ -47,8 +47,8 @@
             <GridPane>
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="311.0" minWidth="10.0" prefWidth="73.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="508.0" minWidth="10.0" prefWidth="249.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="508.0" minWidth="10.0" prefWidth="315.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="508.0" minWidth="10.0" prefWidth="271.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="508.0" minWidth="10.0" prefWidth="291.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -57,11 +57,11 @@
               </rowConstraints>
                <children>
                   <Label text="De: " />
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="273.0" GridPane.columnIndex="1">
                      <children>
-                        <DatePicker fx:id="inputDataInicio" maxWidth="110.0" />
+                        <DatePicker fx:id="inputDataInicio" maxWidth="110.0" minWidth="115.0" />
                         <Label text=" até: " />
-                        <DatePicker fx:id="inputDataFim" maxWidth="110.0" />
+                        <DatePicker fx:id="inputDataFim" maxWidth="110.0" minWidth="115.0" />
                      </children>
                   </HBox>
                   <Label text="Tipo: " GridPane.rowIndex="1" />

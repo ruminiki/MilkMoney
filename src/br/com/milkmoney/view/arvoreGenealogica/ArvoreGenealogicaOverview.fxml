@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import br.com.milkmoney.components.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="anchorPane" prefHeight="451.0" prefWidth="1013.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController">
+   <children>
+      <VBox spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="30.0" style="-fx-border-color: #CCC;">
+               <VBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </VBox.margin>
+               <children>
+                  <Label text="ARVORE GENEALOGICA" />
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxAvos" alignment="CENTER" prefHeight="60.0" prefWidth="200.0" spacing="10.0" />
+            <HBox fx:id="hBoxPais" alignment="CENTER" layoutX="10.0" layoutY="60.0" prefHeight="60.0" prefWidth="200.0" spacing="178.0" />
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="130.0" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="240.0" prefWidth="160.0" style="-fx-border-color: #CCC; -fx-background-color: #ccc;">
+                     <children>
+                        <Label fx:id="lblAnimal" text="Eficiência Reprodutiva">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxFilhos" alignment="CENTER" layoutX="10.0" layoutY="200.0" prefHeight="60.0" prefWidth="200.0" spacing="178.0" />
+            <HBox fx:id="hBoxNetos" alignment="CENTER" layoutX="10.0" layoutY="270.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0" />
+            <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="1003.0" spacing="3.0">
+               <children>
+                  <Label text="Animal: " />
+                  <TextField fx:id="inputAnimal" prefHeight="29.0" prefWidth="363.0" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarAnimal" text="Buscar" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

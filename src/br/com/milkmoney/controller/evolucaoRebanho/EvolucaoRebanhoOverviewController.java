@@ -72,7 +72,7 @@ public class EvolucaoRebanhoOverviewController{
         
         lineChart = new LineChart<String,Number>(xAxis,yAxis);
         
-        lineChart.setTitle("Rebanho");
+        lineChart.setTitle("Evolução do Rebanho");
         lineChart.setLegendVisible(true);
         
         VBox.setVgrow(lineChart, Priority.SOMETIMES);

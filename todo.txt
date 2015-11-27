@@ -5,7 +5,6 @@ ERROS e REQUISITOS
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
-- aumentar campos data nos parâmetros de relatórios
 - botão cancelar não está funcionando (parâmetros de relatórios)
 
 - Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos...)
@@ -16,9 +15,9 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - Adicionar informação CMT na pesagem do leite.
 	
 - Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
+
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
 --Relatórios
-	- Relatório da evolução do rebanho (http://www.controlezootecnico.com.br/scripts/index.php)
 	- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
 
 - fazer log de acessos ao sistema
@@ -27,7 +26,6 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - fazer árvore genealógica
 - backup do banco de dados
 
-- criar parâmetro para numero de anos para cálculo da eficiência reprodutiva
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
 - Tela indicadores

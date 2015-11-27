@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="113.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.reports.RelatorioEncerramentoLactacaoController">
+<AnchorPane prefHeight="113.0" prefWidth="481.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.reports.RelatorioEncerramentoLactacaoController">
    <children>
       <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -25,13 +25,13 @@
                   <Label text="Data de: " />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                      <children>
-                        <DatePicker fx:id="inputDataDe" maxWidth="100.0" />
+                        <DatePicker fx:id="inputDataDe" maxWidth="115.0" minWidth="115.0" />
                         <Label text="Data até:" />
-                        <DatePicker fx:id="inputDataAte" maxWidth="100.0" />
+                        <DatePicker fx:id="inputDataAte" maxWidth="115.0" minWidth="115.0" />
                      </children>
                   </HBox>
                   <Label text="Motivo Encerramento: " GridPane.rowIndex="1" />
-                  <ChoiceBox fx:id="inputMotivoEncerramentoLactacao" prefHeight="25.0" prefWidth="255.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="inputMotivoEncerramentoLactacao" prefHeight="29.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" spacing="5.0">

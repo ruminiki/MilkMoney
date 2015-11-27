@@ -175,11 +175,6 @@
                                     <Label fx:id="lblMae" text="--" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label text="Situação Última Cobertura: " GridPane.rowIndex="8" />
                                     <Label text="Animal: " GridPane.rowIndex="1" />
-                                    <Label fx:id="lblAnimal" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <children>
                                           <Label fx:id="lblDataUltimoParto" text="--" />
@@ -242,6 +237,16 @@
                                           <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label fx:id="lblAnimal" text="--">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Hyperlink onAction="#handleArvoreGenealogica" text="genealogia" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                            </content>
