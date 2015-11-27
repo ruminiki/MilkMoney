@@ -5,13 +5,12 @@ ERROS e REQUISITOS
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
-- Permitir lançar a produção do mês de uma única vez
+- aumentar campos data nos parâmetros de relatórios
+- botão cancelar não está funcionando (parâmetros de relatórios)
 
 - Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos...)
 - Fazer tela para confirmação de prenhez em lote e encerramento lactação em lote.
 - Fazer relatório encerramento lactação (por motivo)
-
-- nos parâmetros dos relatórios aumentar os campos data
 
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
