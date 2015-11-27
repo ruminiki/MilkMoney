@@ -4,8 +4,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -13,6 +21,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -23,6 +34,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.model.EvolucaoRebanho;
+import br.com.milkmoney.model.EvolucaoRebanhoValor;
 import br.com.milkmoney.service.EvolucaoRebanhoService;
 import br.com.milkmoney.util.Util;
 
@@ -34,10 +46,11 @@ public class EvolucaoRebanhoOverviewController{
 	@FXML private TableView<EvolucaoRebanho> table, tableVariavel;
 	@FXML private TableColumn<EvolucaoRebanho, String> categoriaColumn;
 	@FXML private DatePicker inputDataInicio, inputDataFim;
+	@FXML private VBox vbChart;
 	
 	@Autowired EvolucaoRebanhoService service;
-	
-	private List<List<String>> valoresPeriodo = new ArrayList<List<String>>();
+	private List<EvolucaoRebanho> valoresPeriodo = new ArrayList<EvolucaoRebanho>();
+	private LineChart<String, Number> lineChart;
 	
 	@FXML
 	public void initialize() {
@@ -52,14 +65,45 @@ public class EvolucaoRebanhoOverviewController{
 		inputDataInicio.valueProperty().addListener((observable, oldValue, newValue) -> configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue()));
 		inputDataFim.valueProperty().addListener((observable, oldValue, newValue) -> configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue()));
 		
+		final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        
+        xAxis.setLabel("Meses");
+        
+        lineChart = new LineChart<String,Number>(xAxis,yAxis);
+        
+        lineChart.setTitle("Rebanho");
+        lineChart.setLegendVisible(true);
+        
+        VBox.setVgrow(lineChart, Priority.SOMETIMES);
+        HBox.setHgrow(lineChart, Priority.SOMETIMES);
+        
+        vbChart.getChildren().clear();
+        vbChart.getChildren().add(lineChart);
+
 		configureAndsearch(inputDataInicio.getValue(), inputDataFim.getValue());
 		
 	}
 	
 	private void configureAndsearch(LocalDate dataInicio, LocalDate dataFim){
 		
+		if ( table.getScene() != null )
+			table.getScene().setCursor(Cursor.WAIT);
+		
 		if ( dataFim.compareTo(LocalDate.now()) > 0 ){
 			CustomAlert.mensagemInfo("A data final não pode ser maior que a data atual. Por favor, selecione uma nova data.");
+			return;
+		}
+		
+		LocalDate aux = dataInicio;
+		int periodoMeses = 0;
+		while ( aux.compareTo(dataFim) <= 0 ){
+			periodoMeses++;
+			aux = aux.plusMonths(1);
+		}
+		
+		if ( periodoMeses > 24 ){
+			CustomAlert.mensagemInfo("O intervalo selecionado deve ser de no máximo dois anos. Por favor, reduza o intervalo para novo cálculo.");
 			return;
 		}
 		
@@ -93,7 +137,8 @@ public class EvolucaoRebanhoOverviewController{
 								}
 								
 								try{
-									setText(valoresPeriodo.get(getIndex()).get(columnIndex));	
+									EvolucaoRebanho e = valoresPeriodo.get(getIndex());
+									setText(e.getValores().get(columnIndex).getValor());	
 								}catch(Exception e ){
 								}
 							}
@@ -116,7 +161,7 @@ public class EvolucaoRebanhoOverviewController{
 		valoresPeriodo.clear();
 		for ( EvolucaoRebanho e : EvolucaoRebanho.getItems() ){
 			
-			valoresPeriodo.add(service.calculaEvolucaoRebanho(e.getVariavel(), 
+			valoresPeriodo.add(service.calculaEvolucaoRebanho(e, 
 															inputDataInicio.getValue().getMonthValue(), 
 															inputDataInicio.getValue().getYear(),
 															inputDataFim.getValue().getMonthValue(),
@@ -126,6 +171,34 @@ public class EvolucaoRebanhoOverviewController{
 		
 		table.getItems().clear();
 		table.getItems().addAll(EvolucaoRebanho.getItems());
+		
+		configureChart();
+		
+		if ( table.getScene() != null )
+			table.getScene().setCursor(Cursor.DEFAULT);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void configureChart(){
+		ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
+		
+		for ( EvolucaoRebanho e : valoresPeriodo ){
+			
+			XYChart.Series<String, Number> serie = new XYChart.Series<String, Number>();
+			serie.setName(e.getVariavel());
+			
+			for ( EvolucaoRebanhoValor valor : e.getValores() ){
+				serie.getData().add(new XYChart.Data<String, Number>(valor.getMes(), Long.valueOf(valor.getValor())));	
+			}
+			series.addAll(serie);
+			
+		}
+		
+    	lineChart.getData().clear();
+    	lineChart.setData(series);
+    	
+    	lineChart.getProperties().put(TableViewSkinBase.RECREATE, Boolean.TRUE);
+    	
 	}
 	
 	public void showForm() {	
@@ -139,7 +212,8 @@ public class EvolucaoRebanhoOverviewController{
 
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
-		dialogStage.setResizable(false);
+		dialogStage.setResizable(true);
+		dialogStage.setMaximized(false);
 		
 		dialogStage.show();
 		

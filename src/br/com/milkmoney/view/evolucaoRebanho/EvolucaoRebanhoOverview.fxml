@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="486.0" prefWidth="1127.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -35,18 +35,7 @@
                   <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" minWidth="855.0" prefHeight="248.0" prefWidth="855.0" scaleShape="false" style="-fx-focus-color: transparent;" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <VBox fx:id="vbChart" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <LineChart>
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-               </children>
-            </VBox>
+            <VBox fx:id="vbChart" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

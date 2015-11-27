@@ -1,6 +1,7 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -14,8 +15,7 @@ public class EvolucaoRebanho implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String variavel;
-	private String mes;
-	private String valor;
+	private List<EvolucaoRebanhoValor> valores = new ArrayList<EvolucaoRebanhoValor>();
 	
 	public static final String EM_LACTACAO            = "Em Lactação";
 	public static final String SECAS                  = "Secas";
@@ -29,17 +29,15 @@ public class EvolucaoRebanho implements Serializable{
 	public EvolucaoRebanho() {
 	}
 
-	public EvolucaoRebanho(String variavel, String mes, String valor) {
+	public EvolucaoRebanho(String variavel) {
 		setVariavel(variavel);
-		setMes(mes);
-		setValor(valor);
 	}
 	
 	public static ObservableList<EvolucaoRebanho> getItems(){
 		ObservableList<EvolucaoRebanho> e = FXCollections.observableArrayList();
 		List<String> variaveis = FXCollections.observableArrayList(EM_LACTACAO, SECAS, RELACAO_LACTACAO_SECOS, ZERO_A_UM_ANO, UM_A_DOIS_ANOS, DOIS_A_TRES_ANOS, TRES_A_QUATRO_ANOS, MAIS_QUATRO_ANOS);
 		for ( String s : variaveis ){
-			e.add(new EvolucaoRebanho(s, null, null));
+			e.add(new EvolucaoRebanho(s));
 		}
 		return e;
 	}
@@ -52,20 +50,12 @@ public class EvolucaoRebanho implements Serializable{
 		this.variavel = variavel;
 	}
 
-	public String getMes() {
-		return mes;
+	public List<EvolucaoRebanhoValor> getValores() {
+		return valores;
 	}
 
-	public void setMes(String mes) {
-		this.mes = mes;
+	public void setValores(List<EvolucaoRebanhoValor> valores) {
+		this.valores = valores;
 	}
-
-	public String getValor() {
-		return valor;
-	}
-
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-
+	
 }
