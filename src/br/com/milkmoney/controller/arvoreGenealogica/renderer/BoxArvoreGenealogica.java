@@ -10,21 +10,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Touro;
 
 public class BoxArvoreGenealogica extends HBox {
 	
 	private Function<Animal, Boolean> functionSelecionaAnimal;
 	private VBox vBox = new VBox();
 	private String parentesco;
-	private Animal animal;
-	private Touro paiInseminacao;
+	private Object parente;
 	
-	public BoxArvoreGenealogica(String parentesco, Animal animal, Touro paiInseminacao, Function<Animal, Boolean> functionSelecionaAnimal) {
+	public BoxArvoreGenealogica(String parentesco, Object parente, Function<Animal, Boolean> functionSelecionaAnimal) {
 		this.parentesco = parentesco;
-		this.animal = animal;
+		this.parente = parente;
 		this.functionSelecionaAnimal = functionSelecionaAnimal;
-		this.paiInseminacao = paiInseminacao;
 		
 		this.setPrefWidth(160);
 		this.buildBox();
@@ -37,7 +34,7 @@ public class BoxArvoreGenealogica extends HBox {
 		this.setStyle("-fx-border-color: #CCC; -fx-border-width: 1");
 		
 		Label labelPaiMae = new Label(parentesco);
-		Label labelAnimal = new Label(animal != null ? animal.getNumeroNome() : paiInseminacao != null ? paiInseminacao.toString() : "--");
+		Label labelAnimal = new Label(parente != null ? parente.toString() : "--");
 		
 		vBox.setAlignment(Pos.CENTER);
 		
@@ -88,7 +85,9 @@ public class BoxArvoreGenealogica extends HBox {
 	}
 	
 	private void onMouseClicked(){
-		functionSelecionaAnimal.apply(animal);
-		buildBox();
+		if ( parente instanceof Animal ){
+			functionSelecionaAnimal.apply((Animal)parente);
+			buildBox();
+		}
 	}
 }

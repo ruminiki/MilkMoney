@@ -227,4 +227,16 @@ public class AnimalService implements IService<Integer, Animal>{
 		return dao.findByNumero(numero);
 	}
 
+	public Animal findMae(Animal animal) {
+		return dao.findMae(animal);
+	}
+	/**
+	 * Retorna um Touro (inseminação artificial) ou Animal (monta natural)
+	 * @param animal
+	 * @return
+	 */
+	public Object findPai(Animal animal) {
+		return dao.findPai(animal);
+	}
+
 }

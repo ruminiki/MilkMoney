@@ -3,9 +3,12 @@ package br.com.milkmoney.controller.arvoreGenealogica;
 import java.util.function.Function;
 
 import javafx.application.Platform;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -17,11 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.controller.AbstractOverviewController;
-import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
+import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.arvoreGenealogica.renderer.BoxArvoreGenealogica;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.service.AnimalService;
 
 @Controller
 public class ArvoreGenealogicaOverviewController {
@@ -29,17 +31,47 @@ public class ArvoreGenealogicaOverviewController {
 	@FXML private HBox hBoxFilhos, hBoxNetos, hBoxPais, hBoxAvos;
 	@FXML private TextField inputAnimal;
 	@FXML private Label lblAnimal;
+	@FXML protected ListView<Animal> listAnimais;
+	@FXML private UCTextField inputPesquisa;
 	
-	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
+	@Autowired private AnimalService animalService;
 	
 	private Animal selectedAnimal;
 	
 	@FXML
 	public void initialize() {
 		
+		//filter over table view eventos
+		FilteredList<Animal> filteredData = new FilteredList<>(animalService.findAllAsObservableList(), animal -> true);
+		inputPesquisa.textProperty().addListener(obs->{
+	        String filter = inputPesquisa.getText(); 
+	        if(filter == null || filter.length() == 0) {
+	            filteredData.setPredicate(animal -> true);
+	        }else {
+	            filteredData.setPredicate(animal -> animal.getNumeroNome().contains(filter));
+	        }
+	    });
+		
+        SortedList<Animal> sortedData = new SortedList<>(filteredData);
+        listAnimais.setItems(sortedData);
+		
+		/*listAnimais.getItems().clear();
+		listAnimais.getItems().addAll(animalService.findAllAsObservableList());*/
+		
+		listAnimais.getSelectionModel().selectedItemProperty()
+			.addListener((observable, oldValue, newValue) -> {
+				selectedAnimal = newValue;
+				montaArvoreGenealogica();	
+		});
+		
 	}
 	
 	private void montaArvoreGenealogica(){
+		
+		if ( selectedAnimal == null ){
+			return;
+		}
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -51,14 +83,28 @@ public class ArvoreGenealogicaOverviewController {
 				hBoxFilhos.getChildren().clear();
 				hBoxNetos.getChildren().clear();
 				
-				hBoxPais.getChildren().add(new BoxArvoreGenealogica ("Pai", selectedAnimal.getPaiMontaNatural(), selectedAnimal.getPaiEnseminacaoArtificial(), carregaArvoreGenealogica));
-				hBoxPais.getChildren().add(new BoxArvoreGenealogica ("Mãe", selectedAnimal.getMae(), null, carregaArvoreGenealogica));
+				Animal mae  = selectedAnimal.getMae();
+				Object pai  = selectedAnimal.getPaiEnseminacaoArtificial() != null ? selectedAnimal.getPaiEnseminacaoArtificial() : selectedAnimal.getPaiMontaNatural();
 				
-				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avô Materno", selectedAnimal, null, carregaArvoreGenealogica));
-				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avó Materna", selectedAnimal, null, carregaArvoreGenealogica));
+				hBoxPais.getChildren().add(new BoxArvoreGenealogica ("Pai", pai, carregaArvoreGenealogica));
+				hBoxPais.getChildren().add(new BoxArvoreGenealogica ("Mãe", mae, carregaArvoreGenealogica));
 				
-				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avó Paterna", selectedAnimal, null, carregaArvoreGenealogica));
-				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avô Paterno", selectedAnimal, null, carregaArvoreGenealogica));
+				Animal avoPaterna = null;
+				Object avoPaterno = null;
+				
+				if ( pai instanceof Animal ){
+					avoPaterna = pai != null ? animalService.findMae((Animal)pai) : null;
+					avoPaterno = pai != null ? animalService.findPai((Animal)pai) : null;
+				}
+				
+				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avó Paterna", avoPaterna, carregaArvoreGenealogica));
+				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avô Paterno", avoPaterno, carregaArvoreGenealogica));
+				
+				Animal avoMaterna   = mae != null ? animalService.findMae(mae) : null;
+				Object avoMaterno   = mae != null ? animalService.findPai(mae) : null;
+				
+				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avô Materno", avoMaterno, carregaArvoreGenealogica));
+				hBoxAvos.getChildren().add(new BoxArvoreGenealogica ("Avó Materna", avoMaterna, carregaArvoreGenealogica));
 				
 			}
 		});
@@ -68,6 +114,7 @@ public class ArvoreGenealogicaOverviewController {
 	Function<Animal, Boolean> carregaArvoreGenealogica = animal -> {
 		if ( animal != null && animal.getId() != selectedAnimal.getId() ){
 			selectedAnimal = animal;
+			listAnimais.getSelectionModel().select(selectedAnimal);
 			montaArvoreGenealogica();
 		}
 		return true;
@@ -91,26 +138,6 @@ public class ArvoreGenealogicaOverviewController {
 		dialogStage.show();
 		
 		montaArvoreGenealogica();
-		
-	}
-	
-	@FXML
-	private void handleSelecionarAnimal() {
-		
-		animalReducedOverviewController.setObject(new Animal(Sexo.FEMEA));
-		
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, false);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, false);
-		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);	
-		animalReducedOverviewController.showForm();
-		selectedAnimal = animalReducedOverviewController.getObject();
-		
-		if ( selectedAnimal != null ){
-			inputAnimal.textProperty().set(selectedAnimal.getNumeroNome());	
-			montaArvoreGenealogica();
-		}else{
-			inputAnimal.textProperty().set("");
-		}
 		
 	}
 	

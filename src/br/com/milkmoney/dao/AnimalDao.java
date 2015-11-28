@@ -549,4 +549,43 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 	}
 
+	public Animal findMae(Animal animal) {
+		
+		Query query = entityManager.createQuery("select a.mae from Animal a where a.id = :id");
+		query.setParameter("id", animal.getId());
+		
+		try{
+			return (Animal) query.getSingleResult();
+		}catch ( NoResultException e ){
+			return null;
+		}
+		
+	}
+	
+	public Object findPai(Animal animal) {
+		
+		Object pai  = null;
+		Query query = null;
+		
+		try{
+			query = entityManager.createQuery("select a.paiEnseminacaoArtificial from Animal a where a.id = :id");
+			query.setParameter("id", animal.getId());
+			
+			pai = query.getSingleResult();
+			return pai;
+		}catch ( NoResultException e ){
+			
+			query = entityManager.createQuery("select a.paiMontaNatural from Animal a where a.id = :id");
+			query.setParameter("id", animal.getId());
+			
+			try{
+				pai = query.getSingleResult();
+				return pai;
+			}catch ( NoResultException e1 ){
+				return null;
+			}
+		}
+		
+	}
+
 }
