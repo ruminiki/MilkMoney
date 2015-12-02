@@ -31,7 +31,7 @@
                      </children>
                   </HBox>
                   <Label text="Motivo Encerramento: " GridPane.rowIndex="1" />
-                  <ChoiceBox fx:id="inputMotivoEncerramentoLactacao" prefHeight="29.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="inputMotivoEncerramentoLactacao" prefHeight="25.0" prefWidth="285.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" spacing="5.0">

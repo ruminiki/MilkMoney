@@ -13,20 +13,21 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
+import br.com.milkmoney.controller.motivoEncerramentoLactacao.MotivoEncerramentoLactacaoReducedOverviewController;
 import br.com.milkmoney.model.Lactacao;
-import br.com.milkmoney.model.MotivoEncerramentoLactacao;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class LactacaoFormController extends AbstractFormController<Integer, Lactacao> {
 
-	@FXML private UCTextField inputObservacao, inputAnimal;
+	@FXML private UCTextField inputObservacao, inputAnimal, inputMotivoEncerramentoLactacao;
 	@FXML private DatePicker inputDataInicio, inputDataFim;
 	@FXML private ComboBox<String> inputMotivoEncerramento;
 	@FXML private Button btnBuscarAnimal;
 	
 	@Autowired AnimalReducedOverviewController animalReducedOverviewController;
+	@Autowired MotivoEncerramentoLactacaoReducedOverviewController motivoEncerramentoLactacaoReducedOverviewController;
 	
 	@FXML
 	public void initialize() {
@@ -34,8 +35,6 @@ public class LactacaoFormController extends AbstractFormController<Integer, Lact
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		inputDataInicio.valueProperty().bindBidirectional(getObject().dataInicioProperty());
 		inputDataFim.valueProperty().bindBidirectional(getObject().dataFimProperty());
-		inputMotivoEncerramento.setItems(MotivoEncerramentoLactacao.getItems());
-		inputMotivoEncerramento.valueProperty().bindBidirectional(getObject().motivoEncerramentoLactacaoProperty());
 		
 		if ( getObject().getAnimal() != null ){
 			inputAnimal.setText(getObject().getAnimal().toString());
@@ -43,6 +42,27 @@ public class LactacaoFormController extends AbstractFormController<Integer, Lact
 		
 		if ( getObject().getDataFim() == null ){
 			inputDataFim.setValue(DateUtil.asLocalDate(getObject().getDataInicio()).plusMonths(10));
+		}
+		
+		if ( getObject().getMotivoEncerramentoLactacao() != null ){
+			inputMotivoEncerramentoLactacao.setText(getObject().getMotivoEncerramentoLactacao().toString());
+		}
+		
+	}
+	
+	@FXML
+	private void handleSelecionarMotivoEncerramento() {
+		
+		motivoEncerramentoLactacaoReducedOverviewController.showForm();
+		
+		if ( motivoEncerramentoLactacaoReducedOverviewController.getObject() != null && motivoEncerramentoLactacaoReducedOverviewController.getObject().getId() > 0 ){
+			getObject().setMotivoEncerramentoLactacao(motivoEncerramentoLactacaoReducedOverviewController.getObject());
+		}
+		
+		if ( getObject().getMotivoEncerramentoLactacao() != null ){
+			inputMotivoEncerramentoLactacao.textProperty().set(getObject().getMotivoEncerramentoLactacao().toString());	
+		}else{
+			inputMotivoEncerramentoLactacao.textProperty().set("");
 		}
 		
 	}

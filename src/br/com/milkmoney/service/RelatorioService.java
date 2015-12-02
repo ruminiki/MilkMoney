@@ -173,7 +173,7 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
         					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
-        					masterReport.getParameterValues().put("motivoEncerramentoLactacao", param[2]);
+        					masterReport.getParameterValues().put("motivoEncerramentoLactacao", Integer.parseInt(param[2].toString()));
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				default:

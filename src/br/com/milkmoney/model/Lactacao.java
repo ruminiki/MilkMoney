@@ -40,14 +40,14 @@ public class Lactacao extends AbstractEntity implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	private ObjectProperty<LocalDate> dataInicio                 = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate> dataFim                    = new SimpleObjectProperty<LocalDate>();
-	private StringProperty            observacao                 = new SimpleStringProperty();
-	private ObjectProperty<Animal>    animal                     = new SimpleObjectProperty<Animal>();
-	private ObjectProperty<Parto>     parto                      = new SimpleObjectProperty<Parto>();
-	private StringProperty            motivoEncerramentoLactacao = new SimpleStringProperty(MotivoEncerramentoLactacao.PREPARACAO_PARTO);
+	private ObjectProperty<LocalDate>                  dataInicio                 = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>                  dataFim                    = new SimpleObjectProperty<LocalDate>();
+	private StringProperty                             observacao                 = new SimpleStringProperty();
+	private ObjectProperty<Animal>                     animal                     = new SimpleObjectProperty<Animal>();
+	private ObjectProperty<Parto>                      parto                      = new SimpleObjectProperty<Parto>();
+	private ObjectProperty<MotivoEncerramentoLactacao> motivoEncerramentoLactacao = new SimpleObjectProperty<MotivoEncerramentoLactacao>();
 	@Transient
-	private Float                     mediaProducao;
+	private Float                                      mediaProducao;
 	
 	public Lactacao() {
 	}
@@ -137,18 +137,19 @@ public class Lactacao extends AbstractEntity implements Serializable {
 	public ObjectProperty<Parto> partoProperty(){
 		return parto;
 	}
-	
-	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="motivo encerramento lactação")
-	public String getMotivoEncerramentoLactacao() {
-		return this.motivoEncerramentoLactacao.get();
-	}
 
-	public void setMotivoEncerramentoLactacao(String motivoEncerramentoLactacao) {
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(targetEntity=MotivoEncerramentoLactacao.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="motivoEncerramentoLactacao")
+	public MotivoEncerramentoLactacao getMotivoEncerramentoLactacao() {
+		return motivoEncerramentoLactacao.get();
+	}
+	
+	public void setMotivoEncerramentoLactacao(MotivoEncerramentoLactacao motivoEncerramentoLactacao) {
 		this.motivoEncerramentoLactacao.set(motivoEncerramentoLactacao);
 	}
 	
-	public StringProperty motivoEncerramentoLactacaoProperty(){
+	public ObjectProperty<MotivoEncerramentoLactacao> motivoEncerramentoLactacaoProperty(){
 		return motivoEncerramentoLactacao;
 	}
 	

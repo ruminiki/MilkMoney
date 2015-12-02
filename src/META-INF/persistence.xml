@@ -47,6 +47,7 @@
 		<class>br.com.milkmoney.model.CentroCusto</class>
 		<class>br.com.milkmoney.model.LancamentoFinanceiro</class>
 		<class>br.com.milkmoney.model.Aborto</class>
+		<class>br.com.milkmoney.model.MotivoEncerramentoLactacao</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<properties>
 			<!-- Configuring JDBC properties -->
