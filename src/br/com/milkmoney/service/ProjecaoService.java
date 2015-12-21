@@ -69,7 +69,10 @@ public class ProjecaoService{
 		//considera os animais já em lactação e que não serão encerrados no período
 		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
 		
-		projecao.setNumeroAnimaisSecos((animaisSecos + encerramentosPrevistos) - partosPrevistos);
+		int partosPrevistosDeAnimaisSecos = coberturaDao.countAllAnimaisSecosWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
+		int partosPrevistosDeAnimaisLactacao = coberturaDao.countAllAnimaisSecosWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
+		
+		projecao.setNumeroAnimaisSecos((animaisSecos + encerramentosPrevistos) - (partosPrevistosDeAnimaisSecos + partosPrevistosDeAnimaisLactacao));
 
 	}
 	

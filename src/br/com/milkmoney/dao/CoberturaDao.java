@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 
 @Repository
@@ -208,5 +209,34 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 		return query.getResultList();
 	}
+	
+	public Long countAllAnimaisSecosWithPrevisaoPartoIn(Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
+				+ "WHERE c.previsaoParto between :dataInicio and :dataFim and "
+				+ "c.femea.situacaoAnimal = '" + SituacaoAnimal.SECO + "' and "
+				+ "c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') "
+				+ "order by c.data");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return (Long) query.getSingleResult();
+		
+	}
+	
+	public Long countAllAnimaisLactacaoWithPrevisaoPartoIn(Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT count(c) FROM Cobertura c "
+				+ "WHERE c.previsaoParto between :dataInicio and :dataFim and "
+				+ "c.femea.situacaoAnimal = '" + SituacaoAnimal.EM_LACTACAO + "' and "
+				+ "c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') "
+				+ "order by c.data");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return (Long) query.getSingleResult();
+		
+	}
+
 
 }

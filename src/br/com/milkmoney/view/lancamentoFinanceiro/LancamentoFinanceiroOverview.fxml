@@ -78,9 +78,9 @@
                      </HBox.margin></Button>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0" VBox.vgrow="SOMETIMES">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-border-width: 0;">
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-border-width: 0;" HBox.hgrow="ALWAYS">
                      <items>
                         <VBox>
                            <children>
@@ -147,7 +147,7 @@
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                      </padding>
                   </SplitPane>
-                  <VBox minWidth="320.0" spacing="3.0" HBox.hgrow="SOMETIMES">
+                  <VBox maxWidth="380.0" minWidth="320.0" spacing="3.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <VBox fx:id="vbChart" minHeight="200.0" VBox.vgrow="SOMETIMES" />
                         <Separator prefWidth="200.0" />

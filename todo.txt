@@ -21,7 +21,6 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - fazer log de acessos ao sistema
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
-- fazer árvore genealógica
 - backup do banco de dados
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
