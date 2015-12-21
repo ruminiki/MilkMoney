@@ -207,7 +207,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			public void run() {
 				if ( animal != null ){
 					
-					fichaAnimal = fichaAnimalService.generateFichaAnimal(animal);
+					fichaAnimal = fichaAnimalService.generateFichaAnimal(animal, fichaAnimalService.getAllFields());
 					
 					if ( fichaAnimal != null ){
 						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());

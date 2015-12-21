@@ -275,4 +275,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return diasEmAberto;
 	}
 
+	public List<Cobertura> findAllNaoConfirmadas() {
+		return dao.findAllNaoConfirmadas();
+	}
+
 }

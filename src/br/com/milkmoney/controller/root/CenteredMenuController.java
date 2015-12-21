@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.controller.atividadesSemana.AtividadesSemanaOverviewController;
 import br.com.milkmoney.controller.root.renderer.VBoxOption;
 
 
@@ -19,6 +20,7 @@ public class CenteredMenuController {
 	@FXML private HBox hBoxOptions;
 	
 	@Autowired private RootLayoutController rootLayoutController;
+	@Autowired private AtividadesSemanaOverviewController atividadeSemanaOverviewController;
 	
 	private static final String ICON_REBANHO = "img/rebanho.png";
 	private static final String ICON_INDICADORES = "img/indicadores.png";
@@ -64,6 +66,11 @@ public class CenteredMenuController {
         });
         hBoxOptions.getChildren().add(vBoxIndicadores);
 		
+	}
+	
+	@FXML
+	private void handleShowAtividadesSemana(){
+		atividadeSemanaOverviewController.showForm();
 	}
 	
 

@@ -1,8 +1,7 @@
 package br.com.milkmoney.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -12,104 +11,121 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.dao.FichaAnimalDao;
 import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
-import br.com.milkmoney.model.Lactacao;
-import br.com.milkmoney.model.Parto;
-import br.com.milkmoney.model.Procedimento;
-import br.com.milkmoney.model.Sexo;
-import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
-import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.service.fichaAnimal.AbstractFichaAnimal;
+import br.com.milkmoney.service.fichaAnimal.DataUltimaCobertura;
+import br.com.milkmoney.service.fichaAnimal.DataUltimoParto;
+import br.com.milkmoney.service.fichaAnimal.DiasEmAbertoAnimal;
+import br.com.milkmoney.service.fichaAnimal.DiasEmLactacaoAnimal;
+import br.com.milkmoney.service.fichaAnimal.EficienciaReprodutivaAnimal;
+import br.com.milkmoney.service.fichaAnimal.EncerramentoLactacao;
+import br.com.milkmoney.service.fichaAnimal.IdadePrimeiraCobertura;
+import br.com.milkmoney.service.fichaAnimal.IdadePrimeiroParto;
+import br.com.milkmoney.service.fichaAnimal.IntervaloEntrePartosAnimal;
+import br.com.milkmoney.service.fichaAnimal.LoteAnimal;
+import br.com.milkmoney.service.fichaAnimal.MediaProducaoUltimaLactacao;
+import br.com.milkmoney.service.fichaAnimal.NumeroCriasFemea;
+import br.com.milkmoney.service.fichaAnimal.NumeroCriasMacho;
+import br.com.milkmoney.service.fichaAnimal.NumeroPartos;
+import br.com.milkmoney.service.fichaAnimal.NumeroServicosAtePrenhes;
+import br.com.milkmoney.service.fichaAnimal.ProximoParto;
+import br.com.milkmoney.service.fichaAnimal.ProximoServico;
+import br.com.milkmoney.service.fichaAnimal.SituacaoUltimaCobertura;
+import br.com.milkmoney.service.fichaAnimal.UltimoProcedimento;
 
 @Service
 public class FichaAnimalService{
 
 	@Autowired private FichaAnimalDao dao;
-	@Autowired private CoberturaService coberturaService;
-	@Autowired private PartoService partoService;
 	@Autowired private AnimalService animalService;
-	@Autowired private LactacaoService lactacaoService;
-	@Autowired private ProducaoIndividualService producaoIndividualService;
-	@Autowired private ProcedimentoService procedimentoService;
-	@Autowired private LoteService loteService;
-	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 
 	public ObservableList<FichaAnimal> findAllEventosByAnimal(Animal animal) {
 		return FXCollections.observableArrayList(dao.findAllByAnimal(animal));
 	}
 	
 	@Transactional
-	public FichaAnimal generateFichaAnimal(Animal animal){
+	public FichaAnimal generateFichaAnimal(Animal animal, List<AbstractFichaAnimal> fieldsToLoad){
 		
 		FichaAnimal fichaAnimal = dao.findFichaAnimal(animal);
 		
 		if (fichaAnimal == null){
 			fichaAnimal = new FichaAnimal(animal);
 		}
-		//ultima cobertura
-		fichaAnimal.setDataUltimaCobertura(coberturaService.getDataUltimaCoberturaAnimal(animal));
-		//número serviços até prenhes, baseado na última cobertura
-		fichaAnimal.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosPorConcepcao(animal));
-		//próximo serviço
-		fichaAnimal.setProximoServico(coberturaService.getProximoServico(animal));
-		//número de partos
-		fichaAnimal.setNumeroPartos(partoService.countByAnimal(animal));
-		//número de crias machos
-		fichaAnimal.setNumeroCriasMacho(partoService.countCriasByAnimalAndSexo(animal, Sexo.MACHO));
-		//número de crias fêmeas
-		fichaAnimal.setNumeroCriasFemea(partoService.countCriasByAnimalAndSexo(animal, Sexo.FEMEA));
-		//número de dias em aberto
-		fichaAnimal.setDiasEmAberto(coberturaService.getDiasEmAberto(animal));
-		//dias em lactação
-		fichaAnimal.setDiasEmLactacao(partoService.getDiasEmLactacao(animal));
-		//intervalo entre partos
-		fichaAnimal.setIntervaloEntrePartos(partoService.getIntervaloEntrePartos(animal));
-		//idade primeiro parto
-		fichaAnimal.setIdadePrimeiroParto(animalService.getIdadePrimeiroParto(animal));
-		//idade primeira cobertura
-		fichaAnimal.setIdadePrimeiraCobertura(animalService.getIdadePrimeiraCobertura(animal));
-		//proximo parto
-		Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(animal);
-		fichaAnimal.setDataProximoParto(cobertura != null ? cobertura.getPrevisaoParto() : null);
-		//ultimo parto
-		Parto parto = partoService.findLastParto(animal);
-		fichaAnimal.setDataUltimoParto(parto != null ? parto.getData() : null);
-		//situacao ultima cobertura
-		cobertura = coberturaService.findLastCoberturaAnimal(animal);
-		fichaAnimal.setSituacaoUltimaCobertura(cobertura != null ? cobertura.getSituacaoCobertura() : null);
-		//encerramento lactação
-		Lactacao lactacao = lactacaoService.findUltimaLactacaoAnimal(animal);
-		Date dataEncerramentoLactacao = lactacao != null && lactacao.getDataFim() == null ? DateUtil.asDate(DateUtil.asLocalDate(lactacao.getDataInicio()).plusDays(305)) : null;
-		fichaAnimal.setDataPrevisaoEncerramentoLactacao(dataEncerramentoLactacao);
-		//numero de lactacoes do animal
-		fichaAnimal.setNumeroLactacoes(lactacaoService.countLactacoesAnimal(animal).intValue());
-		//media de produção da última lactação
-		if ( lactacao != null ){
-			fichaAnimal.setMediaProducao(BigDecimal.valueOf(producaoIndividualService.getMediaAnimalPeriodo(animal, lactacao.getDataInicio(), lactacao.getDataFim())));
-			fichaAnimal.setMediaProducao(fichaAnimal.getMediaProducao().setScale(2, RoundingMode.HALF_EVEN));
+		
+		for (AbstractFichaAnimal field : fieldsToLoad) {
+
+			Object[] params = new Object[]{
+		    		fichaAnimal,
+		    		animal
+		    };
+		    
+		    field.load(params);
+		    
 		}
-		//último procedimento/tratamento
-		Procedimento procedimento = procedimentoService.getUltimoTratamento(animal);
-		fichaAnimal.setUltimoTratamento(procedimento != null ? procedimento.getDescricao() : "--");
-		//lotes que o animal faz parte
-		fichaAnimal.setLote(loteService.getNomeLotes(animal));
-		//eficiência reprodutiva do animal
-		fichaAnimal.setEficienciaReprodutiva(eficienciaReprodutiva.getValue(animal));
 		
 		dao.persist(fichaAnimal);
-				
 		return fichaAnimal;
+		
 	}
 	
 	@Transactional
-	public void generateFichaForAll(){
+	public void generateFichaForAll(Object ... params){
+		
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		List<AbstractFichaAnimal> fieldsToLoad = (List) params[0];
+		
+		if ( fieldsToLoad == null ){
+			fieldsToLoad = getAllFields();
+		}
 		
 		List<Animal> animais = animalService.findAll();
 		for ( Animal animal : animais ){
-			generateFichaAnimal(animal);
+			generateFichaAnimal(animal, fieldsToLoad);
 		}
+		
+	}
+	
+	public List<AbstractFichaAnimal> getAllFields(){
+		return Arrays.asList(new AbstractFichaAnimal[] {
+				(AbstractFichaAnimal)MainApp.getBean(DataUltimaCobertura.class),
+				(AbstractFichaAnimal)MainApp.getBean(DataUltimoParto.class),
+				(AbstractFichaAnimal)MainApp.getBean(DiasEmAbertoAnimal.class),
+				(AbstractFichaAnimal)MainApp.getBean(DiasEmLactacaoAnimal.class),
+				(AbstractFichaAnimal)MainApp.getBean(EficienciaReprodutivaAnimal.class),
+				(AbstractFichaAnimal)MainApp.getBean(EncerramentoLactacao.class),
+				(AbstractFichaAnimal)MainApp.getBean(IdadePrimeiraCobertura.class),
+				(AbstractFichaAnimal)MainApp.getBean(IdadePrimeiroParto.class),
+				(AbstractFichaAnimal)MainApp.getBean(IntervaloEntrePartosAnimal.class),
+				(AbstractFichaAnimal)MainApp.getBean(LoteAnimal.class),
+				(AbstractFichaAnimal)MainApp.getBean(MediaProducaoUltimaLactacao.class),
+				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasFemea.class),
+				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasMacho.class),
+				(AbstractFichaAnimal)MainApp.getBean(NumeroPartos.class),
+				(AbstractFichaAnimal)MainApp.getBean(NumeroServicosAtePrenhes.class),
+				(AbstractFichaAnimal)MainApp.getBean(ProximoParto.class),
+				(AbstractFichaAnimal)MainApp.getBean(ProximoServico.class),
+				(AbstractFichaAnimal)MainApp.getBean(SituacaoUltimaCobertura.class),
+				(AbstractFichaAnimal)MainApp.getBean(UltimoProcedimento.class)
+		});
+	}
+	
+	@Transactional
+	public List<FichaAnimal> generateFichaAnimal(List<Animal> animais, List<AbstractFichaAnimal> fieldsToLoad) {
+		
+		List<FichaAnimal> fichas = new ArrayList<FichaAnimal>();
+		
+		if ( fieldsToLoad == null ){
+			fieldsToLoad = getAllFields();
+		}
+		
+		for (Animal animal : animais){
+			fichas.add(generateFichaAnimal(animal, fieldsToLoad));
+		}
+		
+		return fichas;
 		
 		
 	}

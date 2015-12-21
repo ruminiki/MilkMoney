@@ -108,4 +108,18 @@ public class LactacaoDao extends AbstractGenericDao<Integer, Lactacao> {
 		return (Long) query.getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Lactacao> findAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery("SELECT l FROM Lactacao l "
+				+ "WHERE l.dataFim is null and ( (adddate(l.dataInicio, 305) between :dataInicio and :dataFim) ) "
+				+ "order by l.dataInicio");
+		
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
+		
+	}
+
 }

@@ -259,4 +259,8 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 		this.eficienciaReprodutiva = eficienciaReprodutiva;
 	}
 	
+	public String getSituacaoAnimal(){
+		return animal.getSituacaoAnimal();
+	}
+	
 }

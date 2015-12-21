@@ -7,8 +7,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="150.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.CenteredMenuController">
+<AnchorPane minHeight="150.0" prefHeight="150.0" prefWidth="167.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.CenteredMenuController">
    <children>
-      <HBox fx:id="hBoxOptions" alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+      <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox fx:id="hBoxOptions" alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <Hyperlink onAction="#handleShowAtividadesSemana" text="Atividades da Semana" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

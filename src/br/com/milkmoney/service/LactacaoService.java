@@ -107,5 +107,9 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	public Long countLactacoesAnimal(Animal animal) {
 		return dao.countLactacoesAnimal(animal);
 	}
+
+	public List<Lactacao> findAllWithPrevisaoEncerramentoIn(Date dataInicio, Date dataFim) {
+		return dao.findAllWithPrevisaoEncerramentoIn(dataInicio, dataFim);
+	}
 	
 }

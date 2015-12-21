@@ -238,5 +238,16 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findAllNaoConfirmadas() {
+		
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c where c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "') and "
+				+ "c.femea.situacaoAnimal not in ('" + SituacaoAnimal.MORTO + "','" + SituacaoAnimal.VENDIDO + "') "
+				+ "order by c.data");
+		
+		return query.getResultList();
+		
+	}
+
 
 }

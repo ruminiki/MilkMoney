@@ -258,7 +258,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 			public void run() {
 				if ( getObject() != null ){
 					
-					fichaAnimal = fichaAnimalService.generateFichaAnimal(getObject());
+					fichaAnimal = fichaAnimalService.generateFichaAnimal(getObject(), fichaAnimalService.getAllFields());
 					
 					if ( fichaAnimal != null ){
 						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());

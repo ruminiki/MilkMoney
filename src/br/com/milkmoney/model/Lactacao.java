@@ -163,6 +163,14 @@ public class Lactacao extends AbstractEntity implements Serializable {
 				DateUtil.asLocalDate(getDataFim() != null ? getDataFim() : new Date()));
 	}
 	
+	public Date getDataPrevistaEncerramento(){
+		if ( getDataFim() == null ){
+			return DateUtil.asDate(ChronoUnit.DAYS.addTo(DateUtil.asLocalDate(getDataInicio()), 305));
+		}
+		
+		return null;
+	}
+	
 	@Transient
 	public Float getMediaProducao() {
 		return mediaProducao != null ? BigDecimal.valueOf(mediaProducao.floatValue()).setScale(2, RoundingMode.HALF_EVEN).floatValue() : BigDecimal.ZERO.floatValue();

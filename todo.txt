@@ -5,7 +5,7 @@ ERROS e REQUISITOS
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
-- Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos...)
+- Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos, encerramentos...)
 - Fazer tela para confirmação de prenhez em lote e encerramento lactação em lote.
 
 - Fazer composição racial (PC...)

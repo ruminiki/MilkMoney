@@ -37,16 +37,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" style="-fx-background-color: #FF8D70;" text="Desligamento">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button minHeight="30.0" mnemonicParsing="false" style="-fx-background-color: #A3FFA3;" text="Recontratação">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
          </children>
          <padding>
             <Insets right="5.0" />
