@@ -174,7 +174,7 @@ public class RootLayoutController {
     @FXML
     protected void handlePainel() {
     	openForm("view/painel/PainelOverview.fxml");
-    	setTitle("Miscelânea > Indicadores");
+    	setTitle("Miscelânea > Gráficos");
     }
     
     @FXML

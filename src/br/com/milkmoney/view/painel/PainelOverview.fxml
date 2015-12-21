@@ -11,16 +11,10 @@
 
 <AnchorPane prefHeight="479.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.painel.PainelController">
    <children>
-      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
          <children>
             <VBox alignment="TOP_CENTER" maxWidth="105.0" spacing="5.0" HBox.hgrow="SOMETIMES">
                <children>
-                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleIndicadores" text="Indicadores">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Separator prefWidth="200.0" />
                   <Label text="Gráficos" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleFinanceiroChart" text="Financeiro" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
@@ -36,9 +30,6 @@
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleEntregaLeiteChart" text="Entrega Leite" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleCausaMorteAnimalChart" text="Causa Morte" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
-                  <Separator prefWidth="200.0" />
-                  <Hyperlink text="Notificações" />
-                  <Separator prefWidth="200.0" />
                </children>
                <padding>
                   <Insets top="5.0" />
@@ -49,6 +40,9 @@
                <children>
                   <VBox fx:id="group" HBox.hgrow="SOMETIMES" VBox.vgrow="SOMETIMES" />
                </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
          </children>
       </HBox>

@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 
 @Controller
 public class PainelController {
 	
 	//declarations
 	@FXML private VBox group;
-	@Autowired IndicadorOverviewController indicadorOverviewController;
 	@Autowired PrecoLeiteChartController precoLeiteChartController;
 	@Autowired ProducaoLeiteChartController producaoLeiteChartController;
 	@Autowired EntregaLeiteChartController entregaLeiteChartController;
@@ -28,7 +26,7 @@ public class PainelController {
 	
 	@FXML
 	public void initialize() {
-		handleIndicadores();
+		handleFinanceiroChart();
 	}
 	
 	private void changeItem(AnchorPane node){
@@ -54,11 +52,6 @@ public class PainelController {
 	}
 	
 	//handlers
-	@FXML
-	private void handleIndicadores(){
-		changeItem((AnchorPane) MainApp.load(indicadorOverviewController.getFormName()));
-	}
-	
 	@FXML
 	private void handleFinanceiroChart(){
 		changeItem((AnchorPane) MainApp.load(financeiroChartController.getFormName()));

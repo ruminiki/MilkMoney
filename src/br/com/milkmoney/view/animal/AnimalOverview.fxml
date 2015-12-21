@@ -348,7 +348,13 @@
                                     </VBox>
                                  </children>
                               </HBox>
-                              <Hyperlink onAction="#handleExibirEvolucaoRebanho" text="Evolução do Rebanho" />
+                              <HBox alignment="CENTER" maxHeight="27.0" minHeight="27.0">
+                                 <children>
+                                    <Hyperlink cacheShape="false" focusTraversable="false" onAction="#handleExibirEvolucaoRebanho" text="Evolução do Rebanho" />
+                                    <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                    <Hyperlink cacheShape="false" focusTraversable="false" onAction="#handleExibirProjecaoRebanho" text="Projeçao Rebanho" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children></VBox>
