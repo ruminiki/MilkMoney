@@ -13,7 +13,9 @@ import br.com.milkmoney.validation.Validator;
 
 @Controller
 public class FormularioRegistroCoberturaController extends AbstractSelectAnimalParametersReport {
+	
 	@Autowired private RootLayoutController rootLayoutController;
+	
 	@FXML
 	private void handleExecutar(){
 		
@@ -38,5 +40,5 @@ public class FormularioRegistroCoberturaController extends AbstractSelectAnimalP
 		
 		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
-
+	
 }

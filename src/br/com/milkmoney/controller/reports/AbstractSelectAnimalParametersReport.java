@@ -6,9 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.AnimalService;
@@ -88,6 +91,19 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 		
 		super.initialize();
 		
+	}
+	
+	@FXML
+	protected void handleClose(){
+		if ( listAnimais != null ){
+			Stage stage = (Stage)listAnimais.getScene().getWindow();
+			// se for popup
+			if ( stage.getModality().equals(Modality.APPLICATION_MODAL) ){
+				((Stage)listAnimais.getScene().getWindow()).close();	
+			}else{
+				MainApp.resetLayout();
+			}
+		}
 	}
 	
 }
