@@ -49,8 +49,6 @@ public class MainApp extends Application {
 	public  static final String       APPLICATION_ICON = "img/icon.png";
 	private static final String       SPLASH_IMAGE     = "img/splash.png";
     private static final int          SPLASH_HEIGHT    = 182;
-    //private static final String       DATABASE_START   = "D:\\MilkMoney\\database\\bin\\mysqld.exe";
-  	//private static final String       DATABASE_STOP    = "D:\\MilkMoney\\database\\bin\\mysqld.exe -u root shutdown";
   	private static final String       DATABASE_START   = "database\\bin\\mysqld.exe";
   	private static final String       DATABASE_STOP    = "database\\bin\\mysqld.exe -u root shutdown";
 

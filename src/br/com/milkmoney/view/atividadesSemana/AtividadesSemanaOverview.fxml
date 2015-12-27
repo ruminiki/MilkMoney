@@ -17,11 +17,11 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox fx:id="sideBar" maxWidth="340.0" minWidth="340.0" style="-fx-border-color: #CCC;">
+                        <VBox fx:id="sideBar" maxWidth="350.0" minWidth="350.0" style="-fx-border-color: #CCC;">
                            <children>
                               <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
                                  <children>
-                                    <Label text="Confirmaçoes Prenhes" />
+                                    <Label text="Confirmações Prenhes" />
                                  </children>
                               </HBox>
                               <TableView fx:id="tableConfirmacaoPrenhes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
@@ -62,7 +62,7 @@
                                        <children>
                                           <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                                              <children>
-                                                <Label text="Proximos Partos" />
+                                                <Label text="Próximos Partos" />
                                              </children>
                                           </HBox>
                                           <TableView fx:id="tablePartos" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
@@ -72,7 +72,7 @@
                                              <columns>
                                                 <TableColumn fx:id="animalPartoColumn" maxWidth="80.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animal" />
                                                 <TableColumn fx:id="dataCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Dt. Cob." />
-                                                <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="140.0" text="Previsao" />
+                                                <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="140.0" text="Previsão" />
                                                 <TableColumn fx:id="registrarPartoColumn" minWidth="120.0" prefWidth="75.0" text="Registrar" />
                                              </columns>
                                           </TableView>
@@ -82,7 +82,7 @@
                                        <children>
                                           <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;">
                                              <children>
-                                                <Label text="Proximos Encerramentos" />
+                                                <Label text="Próximos Encerramentos" />
                                              </children>
                                           </HBox>
                                           <TableView fx:id="tableEncerramentoLactacao" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
@@ -91,7 +91,7 @@
                                              </columnResizePolicy>
                                              <columns>
                                                 <TableColumn fx:id="animalEncerramentoColumn" maxWidth="80.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animal" />
-                                                <TableColumn fx:id="duracaoLactacaoColumn" maxWidth="-1.0" minWidth="90.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Duraçao Lac." />
+                                                <TableColumn fx:id="duracaoLactacaoColumn" maxWidth="-1.0" minWidth="90.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Duração Lac." />
                                                 <TableColumn fx:id="dataPrevistaEncerramentoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="140.0" text="Dt. Prevista" />
                                                 <TableColumn fx:id="registrarEncerramentoColumn" minWidth="120.0" prefWidth="61.0" text="Encerrar" />
                                              </columns>

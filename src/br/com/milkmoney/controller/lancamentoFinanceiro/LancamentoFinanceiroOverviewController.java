@@ -333,6 +333,7 @@ public class LancamentoFinanceiroOverviewController {
 				}else{
 					tableDespesas.getItems().add(lancamento);
 				}
+				refreshTela();
 			}
 		}
 	}
@@ -399,7 +400,6 @@ public class LancamentoFinanceiroOverviewController {
 			}
 			
 		}
-		
 		refreshTela();
 	}
 	

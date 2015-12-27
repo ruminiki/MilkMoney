@@ -192,6 +192,10 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		    	Optional<ButtonType> result = CustomAlert.confirmarExclusao();
 				if (result.get() == ButtonType.OK) {
 					coberturaService.remove(tableCoberturas.getSelectionModel().getSelectedItem());
+					if ( tableCoberturas.getSelectionModel().getSelectedItem().getParto() != null ){
+						tablePartos.getItems().clear();
+						tablePartos.getItems().addAll(partoService.findByAnimal(getObject()));
+					}
 					refreshTableCoberturas();
 					handleFichaAnimal();
 				}
@@ -415,6 +419,9 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 			partoFormController.setObject(cobertura.getParto());
 			partoFormController.showForm();
 		}
+		
+		refreshTableCoberturas();
+		handleFichaAnimal();
 		
 		return true;
 	};

@@ -1,12 +1,10 @@
 ERROS e REQUISITOS
-- Projeção com valores negativos
-
 - Animal com uma cobertura e 130% de eficiência....
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
 - Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos, encerramentos...)
-- Fazer tela para confirmação de prenhez em lote e encerramento lactação em lote.
+- permitir imprimir atividades da semana
 
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
@@ -22,6 +20,10 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
 - backup do banco de dados
+- não atualiza tela de acesso rápido ao cadastrar o parto
+- não atualiza ao remover categoria
+- não cobertas x dias após parto - traz vacas que já estão cobertas
+
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 

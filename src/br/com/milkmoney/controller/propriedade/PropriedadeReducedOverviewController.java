@@ -1,8 +1,10 @@
 package br.com.milkmoney.controller.propriedade;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
@@ -29,6 +31,21 @@ public class PropriedadeReducedOverviewController extends AbstractReducedOvervie
 		
 		super.initialize((PropriedadeFormController) MainApp.getBean(PropriedadeFormController.class));
 		
+	}
+	
+	@Override
+	protected void configureDoubleClickTable(){
+		// captura o evento de double click da table
+		table.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
+					handleEdit();
+				}
+			}
+
+		});
 	}
 
 	@Override

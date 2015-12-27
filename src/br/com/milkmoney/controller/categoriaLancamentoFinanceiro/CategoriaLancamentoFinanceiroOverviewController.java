@@ -146,7 +146,7 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 	private void handleNew(){
 		formController.setObject(new CategoriaLancamentoFinanceiro());
 		formController.showForm();
-		configuraTreeView();
+		refreshListOverview();
 	}
 	
 	@FXML 
@@ -154,7 +154,7 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 		if ( treeView.getSelectionModel().getSelectedItem() != null && treeView.getSelectionModel().getSelectedItem().getValue().getId() > 0 ){
 			formController.setObject(treeView.getSelectionModel().getSelectedItem().getValue());
 			formController.showForm();
-			configuraTreeView();
+			refreshListOverview();
 		}
 	}
 	
@@ -167,7 +167,7 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 				
 				try {
 					service.remove(treeView.getSelectionModel().getSelectedItem().getValue());
-					configuraTreeView();
+					refreshListOverview();
 				} catch (Exception e) {
 					CustomAlert.mensagemAlerta("", e.getMessage());
 					return;
