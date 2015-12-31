@@ -67,5 +67,6 @@
 	<classpathentry kind="lib" path="lib/spring-webmvc-4.1.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-websocket-4.1.5.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/bsf-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

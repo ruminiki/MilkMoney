@@ -1,6 +1,7 @@
 package br.com.milkmoney.service;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,5 +84,51 @@ public class ApplicationService{
 		}
 	}
 	
+	public boolean existeNovaVersao(){
+	
+		InputStream inputStream = null;
+		Properties prop = new Properties();
+		String propFileName = "system.properties";
+
+		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+		try {
+
+			if (inputStream != null) {
+
+				prop.load(inputStream);
+				String URL = prop.getProperty("system.url_check_version");
+
+				File f = new File("update.properties");
+
+				try {
+					URL urlUpdate = new URL(URL);
+					FileUtils.copyURLToFile(urlUpdate, f);
+					
+					if ( f != null ){
+						inputStream = new FileInputStream(f);
+
+						if (inputStream != null) {
+
+							prop.load(inputStream);
+							String update_version = prop.getProperty("update.version");
+
+							String currentVersion = dao.getVersaoSistema();
+							if (!update_version.equals(currentVersion)) {
+								System.out.println("Existe uma nova versão do sistema: " + update_version);
+								return true;
+							}
+						}
+					}
+
+				} catch (IOException ex) {
+					System.out.println("Não foi possível verificar a atualização do sistema.");
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 
 }

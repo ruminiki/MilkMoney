@@ -56,8 +56,8 @@ public class MainApp extends Application {
     //private ProgressBar               loadProgress;
     private Label                     progressText;
     
-	private static final boolean      SPLASH           = false;
-	private static final boolean      START_DATABASE   = false;
+	private static final boolean      SPLASH           = true;
+	private static final boolean      START_DATABASE   = true;
 		
 	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
 	
@@ -65,13 +65,15 @@ public class MainApp extends Application {
 		if ( !SPLASH ){
 			context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
 			
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-					applicationService.initilizeDatabase();
+			//ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
+			/*if ( applicationService.existeNovaVersao() ){
+				Optional<ButtonType> result = CustomAlert.confirmar("Nova versão do sistema", "Existe uma nova versão do sistema, deseja atualizar agora?");
+				if (result.get() == ButtonType.OK) {
+					//chamar a aplicaçao que faz a atualização do banco de dados e sistema
+					//...
+					System.exit(0);
 				}
-			});
+			}*/
 			
 		}
 	}
