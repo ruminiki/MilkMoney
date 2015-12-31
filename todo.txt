@@ -20,8 +20,6 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
 - backup do banco de dados
-- não atualiza tela de acesso rápido ao cadastrar o parto
-- não atualiza ao remover categoria
 - não cobertas x dias após parto - traz vacas que já estão cobertas
 
 

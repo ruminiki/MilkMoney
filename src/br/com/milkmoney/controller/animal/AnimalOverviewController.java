@@ -90,9 +90,9 @@ import br.com.milkmoney.validation.VendaAnimalValidation;
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
-	@FXML private TableColumn<Animal, String> numeroColumn;
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
+	@FXML private TableColumn<Animal, String> loteColumn;
 	@FXML private TableColumn<String, String> sexoColumn;
 	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, Long> idadeColumn;
@@ -140,8 +140,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	public void initialize() {
 		
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
-		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
-		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numeroNome"));
+		loteColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("lote"));
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));

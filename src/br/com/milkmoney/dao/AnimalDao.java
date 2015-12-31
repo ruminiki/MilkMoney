@@ -19,7 +19,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> defultSearch(String param) {
-		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE "
+		Query query = entityManager.createQuery("SELECT a FROM Animal a "
+				+ "WHERE "
 				+ "a.nome like :param or a.numero like :param or "
 				+ "a.raca.descricao like :param or "
 				+ "a.sexo like :param or "
@@ -490,7 +491,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
 				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
 				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) >= " + dias + ") and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
+				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "', '" + SituacaoCobertura.NAO_CONFIRMADA + "'))");
 		return query.getResultList();
 	}
 

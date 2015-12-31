@@ -67,6 +67,10 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 	
+	@Formula("(SELECT GROUP_CONCAT(l.descricao) FROM lote l inner join loteAnimal la on la.lote = l.id WHERE la.animal = id)")
+	private String lote;
+	
+	
 	public Animal() {}
 
 	public Animal(String sexo) {
@@ -287,6 +291,18 @@ public class Animal extends AbstractEntity implements Serializable {
 		this.nascimentoCadastrado = nascimentoCadastrado;
 	}
 	
+	@Transient
+	public String getLote() {
+		if ( lote == null || lote.isEmpty() ){
+			return "--";
+		}
+		return lote;
+	}
+
+	public void setLote(String lote) {
+		this.lote = lote;
+	}
+
 	@Override
 	public String toString() {
 		return getNumeroNome();
