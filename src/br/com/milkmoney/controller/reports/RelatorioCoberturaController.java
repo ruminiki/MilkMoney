@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class RelatorioCoberturaController extends AbstractReport{
 
 	@FXML private DatePicker inputDataDe, inputDataAte;
 	@FXML private UCTextField inputTouroInseminacaoArtificial, inputTouroMontaNatural;
-	@FXML private ComboBox<String> inputTipoCobertura, inputSituacaoCobertura;
+	@FXML private ChoiceBox<String> inputTipoCobertura, inputSituacaoCobertura;
 	
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;

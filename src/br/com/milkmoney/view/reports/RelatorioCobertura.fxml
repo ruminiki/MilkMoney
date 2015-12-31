@@ -49,8 +49,8 @@
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <ComboBox fx:id="inputTipoCobertura" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="inputSituacaoCobertura" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="inputTipoCobertura" prefHeight="25.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ChoiceBox fx:id="inputSituacaoCobertura" prefHeight="25.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" spacing="5.0">
