@@ -28,9 +28,13 @@ public class ApplicationService{
 		    File fileRun = new File(version + File.separator +  getFileRun());
 			
 			if ( fileRun != null ){
+				
+				System.out.println("Executando: " + fileRun.getAbsolutePath());
+				
 				ProcessBuilder update = new ProcessBuilder(fileRun.getAbsolutePath());
 				update.start();
 				FileUtils.forceDelete(destination);
+				
 			}
 			
 			CustomAlert.mensagemAlerta("Atualização", "Sistema atualizado com sucesso para a versão" + version + ". Por favor, inicie o sistema novamente." );
@@ -39,8 +43,8 @@ public class ApplicationService{
 			System.exit(0);
 			
 		} catch (IOException ex) {
-			System.err.println(ex.getMessage());
-			System.out.println("Não foi possível atualizar o sistema.");
+			ex.printStackTrace();
+			//System.out.println("Não foi possível atualizar o sistema.");
 		}
 	}
 	
@@ -107,6 +111,7 @@ public class ApplicationService{
 
 				prop.load(inputStream);
 				String URL = prop.getProperty("system.url_check_version");
+				String versaoAtual = prop.getProperty("system.version");
 
 				File f = new File("update.properties");
 
@@ -122,9 +127,8 @@ public class ApplicationService{
 							prop.load(inputStream);
 							String update_version = prop.getProperty("update.version");
 
-							if ( update_version != null ) {
+							if ( !update_version.equals(versaoAtual) ) {
 								System.out.println("Existe uma nova versão do sistema: " + update_version);
-								FileUtils.forceDelete(f);
 								return update_version;
 							}
 						}
