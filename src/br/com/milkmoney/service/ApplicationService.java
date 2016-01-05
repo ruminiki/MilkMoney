@@ -5,86 +5,96 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.apache.hadoop.fs.FileUtil;
 
-import br.com.milkmoney.dao.ApplicationDao;
+import br.com.milkmoney.components.CustomAlert;
 
-@Service
 public class ApplicationService{
 
-	@Autowired
-	private ApplicationDao dao;
-
-	public void initilizeDatabase(){
-		//atualização de versão
-		InputStream inputStream = null;
+	public void update(String version){
+		
 		try {
-			Properties prop = new Properties();
-			String propFileName = "system.properties";
- 
-			inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
- 
-			if (inputStream != null) {
-				prop.load(inputStream);
-				String novaVersao = prop.getProperty("system.version");
-				
-				String versaoAtual = dao.getVersaoSistema();
-				
-				if ( novaVersao != null && !novaVersao.equals(versaoAtual) ){
+			
+			File destination = new File(version);
+			
+			FileUtils.forceMkdir(destination);
+			File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  "update.zip");
+			FileUtils.copyURLToFile(new URL(getUrlUpdate()), fileUpdate);
 					
-					String diretorioVersao = "version/v" + novaVersao.replaceAll("\\.", "_");
-				    File directory = getFile(getClass().getClassLoader().getResource(diretorioVersao));
-				    // get all the files from a directory
-				    File[] sqlFiles = directory.listFiles();
-				    
-				    //ordena os arquivos de acordo com a ordem de execução
-				    Arrays.sort(sqlFiles, new Comparator<File>() {
-					    @Override
-					    public int compare(File f1, File f2) {
-					        return f1.getName().substring(0, 2).compareTo(f2.getName().substring(0, 2));
-					    }
-				    });
-				    
-				    for ( File f : sqlFiles ){
-						if ( f != null )
-							dao.executeSqlFile(f);	
-				    }
-					
-					dao.setSystemVersion(novaVersao);
-					
-				}
-				
+			FileUtil.unZip(fileUpdate, destination);
+		    File fileRun = new File(version + File.separator +  getFileRun());
+			
+			if ( fileRun != null ){
+				ProcessBuilder update = new ProcessBuilder(fileRun.getAbsolutePath());
+				update.start();
+				FileUtils.forceDelete(destination);
 			}
 			
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
-			try {
-				inputStream.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			CustomAlert.mensagemAlerta("Atualização", "Sistema atualizado com sucesso para a versão" + version + ". Por favor, inicie o sistema novamente." );
+			
+	        //fecha o sistema
+			System.exit(0);
+			
+		} catch (IOException ex) {
+			System.err.println(ex.getMessage());
+			System.out.println("Não foi possível atualizar o sistema.");
+		}
+	}
+	
+	private String getUrlUpdate(){
+		
+		InputStream inputStream = null;
+		Properties prop = new Properties();
+		String propFileName = "system.properties";
+		
+		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+		
+		try {
+			if (inputStream != null) {
+				prop.load(inputStream);
+				String OS = System.getProperty("os.name").toLowerCase();
+				if ( OS.indexOf("win") >= 0 ){
+					return prop.getProperty("system.url_update_version_windows");
+				}else{
+					return prop.getProperty("system.url_update_version_linux");
+				}
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
+		return null;
 	}
 	
-	private File getFile(URL urlFile){
-		try{
-			File file = new File(urlFile.getPath());
-			return file;
-		}catch(Exception e){
-			System.out.println(e);
-			return null;
+	private String getFileRun(){
+		
+		InputStream inputStream = null;
+		Properties prop = new Properties();
+		String propFileName = "system.properties";
+		
+		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+		
+		try {
+			if (inputStream != null) {
+				prop.load(inputStream);
+				String OS = System.getProperty("os.name").toLowerCase();
+				if ( OS.indexOf("win") >= 0 ){
+					return prop.getProperty("system.update_file_run_windows");
+				}else{
+					return prop.getProperty("system.update_file_run_linux");
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
+		return null;
 	}
-	
-	public boolean existeNovaVersao(){
+
+	public String getNumeroNovaVersao(){
 	
 		InputStream inputStream = null;
 		Properties prop = new Properties();
@@ -112,10 +122,10 @@ public class ApplicationService{
 							prop.load(inputStream);
 							String update_version = prop.getProperty("update.version");
 
-							String currentVersion = dao.getVersaoSistema();
-							if (!update_version.equals(currentVersion)) {
+							if ( update_version != null ) {
 								System.out.println("Existe uma nova versão do sistema: " + update_version);
-								return true;
+								FileUtils.forceDelete(f);
+								return update_version;
 							}
 						}
 					}
@@ -128,7 +138,7 @@ public class ApplicationService{
 			e.printStackTrace();
 		}
 		
-		return false;
+		return null;
 	}
 
 }

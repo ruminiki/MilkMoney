@@ -3,10 +3,10 @@ package br.com.milkmoney;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.Optional;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -37,6 +38,7 @@ import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.exception.GlobalExceptionHandler;
 import br.com.milkmoney.service.ApplicationService;
 
@@ -62,20 +64,20 @@ public class MainApp extends Application {
 	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
 	
 	public MainApp() {
-		if ( !SPLASH ){
-			context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
+		
+		ApplicationService applicationService = new ApplicationService();
+		String novaVersao = applicationService.getNumeroNovaVersao();
+		
+		if ( novaVersao != null ){
 			
-			//ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-			/*if ( applicationService.existeNovaVersao() ){
-				Optional<ButtonType> result = CustomAlert.confirmar("Nova versão do sistema", "Existe uma nova versão do sistema, deseja atualizar agora?");
-				if (result.get() == ButtonType.OK) {
-					//chamar a aplicaçao que faz a atualização do banco de dados e sistema
-					//...
-					System.exit(0);
-				}
-			}*/
+			Optional<ButtonType> result = CustomAlert.confirmar("Nova versão do sistema", "Existe uma nova versão do sistema, deseja atualizar agora?");
+			if (result.get() == ButtonType.OK) {
+				//chama a aplicaçao que faz a atualização do banco de dados e sistema
+				applicationService.update(novaVersao);
+			}
 			
 		}
+		
 	}
 	
 	@Override
@@ -100,16 +102,6 @@ public class MainApp extends Application {
 	            	updateMessage("Carregando aplicação . . .");
 	            	context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
 	            	
-	            	//INICIALIZAÇÃO BANCO DE DADOS
-	            	Platform.runLater(new Runnable() {
-	    				@Override
-	    				public void run() {
-	    					updateMessage("Inicializando banco de dados . . .");
-	    	            	ApplicationService applicationService = (ApplicationService)getBean(ApplicationService.class);
-	    	        		applicationService.initilizeDatabase();
-	    				}
-	    			});
-	            	
 	                updateMessage("Todos os arquivos foram carregados.");
 	                return null;
 	            }
@@ -119,6 +111,7 @@ public class MainApp extends Application {
 	        
 	        new Thread(task).start();
 		}else{
+			context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});
 			showMainStage(primaryStage);			
 		}
 		

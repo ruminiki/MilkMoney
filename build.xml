@@ -82,6 +82,7 @@
 		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-websocket-4.1.5.RELEASE.jar" todir="externalLibs"/>
 		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\bsf-2.4.0.jar" todir="externalLibs"/>
 		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\commons-io-2.4.jar" todir="externalLibs"/>
+		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hadoop-core-1.1.2.jar" todir="externalLibs"/>
 	
 		<mkdir dir="project" />
 		<copy todir="project">
@@ -174,6 +175,7 @@
 				<include name="spring-websocket-4.1.5.RELEASE.jar"/>
 				<include name="bsf-2.4.0.jar"/>
 				<include name="commons-io-2.4.jar"/>
+				<include name="hadoop-core-1.1.2.jar"/>
 			</fileset>
 		</copy>
 	
