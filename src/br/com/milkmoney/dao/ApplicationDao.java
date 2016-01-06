@@ -1,55 +1,50 @@
 package br.com.milkmoney.dao;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Properties;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Repository;
-
-@Repository
 public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 	
-	@Transactional
-	public void executeSqlFile(File file){
-		try {
-			Scanner scanner = new Scanner(file);
-			scanner.useDelimiter(";");
-			while(scanner.hasNext()) {
-			    String sql = scanner.next();
-			    if ( sql != null && !sql.trim().isEmpty() ){
-			    	Query query = entityManager.createNativeQuery(sql);
-			    	try{
-			    		query.executeUpdate();
-			    	}catch(Exception e){
-			    		System.out.println(e.getMessage());
-			    	}
-			    }
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
-		    
-	}
-	
 	public String getVersaoSistema() {
-		Query query = entityManager.createQuery("select versao from Sistema");
-		try{
-			return (String) query.getSingleResult();
-		}catch(NoResultException e){
-			return null;
-		}
 		
-	}
+		InputStream inputStream = null;
+		Properties prop = new Properties();
+		String propFileName = "project.properties";
+		String versao = null;
+		
+		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+		try {
 
-	@Transactional
-	public void setSystemVersion(String novaVersao) {
-		Query query = entityManager.createQuery("update Sistema set versao = '" + novaVersao + "'");
-		query.executeUpdate();
+			if (inputStream != null) {
+
+				prop.load(inputStream);
+				
+				String URL    = prop.getProperty("jdbc.url");
+				String user   = prop.getProperty("jdbc.username");
+				String passwd = prop.getProperty("jdbc.password");
+		
+				Class.forName("com.mysql.jdbc.Driver").newInstance();
+				Connection conn = DriverManager.getConnection(URL, user, passwd);
+		
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery("SELECT versao FROM SISTEMA");
+				
+				if ( rs.next() ){
+					versao = rs.getString("versao");
+				}
+				
+				stmt.close();
+				conn.close();
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return versao;
 	}
 	
 }

@@ -6,14 +6,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
+import java.util.Scanner;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.fs.FileUtil;
 
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.dao.ApplicationDao;
 
 public class ApplicationService{
 
+	@SuppressWarnings({ "resource" })
 	public void update(String version){
 		
 		try {
@@ -22,6 +25,9 @@ public class ApplicationService{
 			
 			FileUtils.forceMkdir(destination);
 			File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  "update.zip");
+			
+			//CRIAR PROGRESS BAR
+			//CASO A EXECUÇÃO DO COMANDO RETORNE ERRO INDICAR QUE NÃO FOI POSSÍVEL ATUALIZAR O SISTEMA
 			FileUtils.copyURLToFile(new URL(getUrlUpdate()), fileUpdate);
 					
 			FileUtil.unZip(fileUpdate, destination);
@@ -31,20 +37,24 @@ public class ApplicationService{
 				
 				System.out.println("Executando: " + fileRun.getAbsolutePath());
 				
-				ProcessBuilder update = new ProcessBuilder(fileRun.getAbsolutePath());
-				update.start();
-				FileUtils.forceDelete(destination);
+				Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
+				
+				Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
+		        System.out.println(s.hasNext() ? s.next() : "");
+		        
+		        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
+		        System.out.println(s.hasNext() ? s.next() : "");
+		        
+		        FileUtils.forceDelete(destination);
 				
 			}
 			
-			CustomAlert.mensagemAlerta("Atualização", "Sistema atualizado com sucesso para a versão" + version + ". Por favor, inicie o sistema novamente." );
-			
+			CustomAlert.mensagemAlerta("Atualização", "Sistema atualizado com sucesso para a versão" + version + ". Por favor, reinicie a aplicação." );
 	        //fecha o sistema
 			System.exit(0);
 			
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			//System.out.println("Não foi possível atualizar o sistema.");
 		}
 	}
 	
@@ -111,7 +121,7 @@ public class ApplicationService{
 
 				prop.load(inputStream);
 				String URL = prop.getProperty("system.url_check_version");
-				String versaoAtual = prop.getProperty("system.version");
+				String versaoAtual = new ApplicationDao().getVersaoSistema();
 
 				File f = new File("update.properties");
 
