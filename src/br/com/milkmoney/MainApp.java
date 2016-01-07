@@ -3,7 +3,6 @@ package br.com.milkmoney;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
-import java.util.Optional;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
@@ -17,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -38,7 +36,7 @@ import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController;
 import br.com.milkmoney.exception.GlobalExceptionHandler;
 import br.com.milkmoney.service.ApplicationService;
 
@@ -65,15 +63,36 @@ public class MainApp extends Application {
 	
 	public MainApp() {
 		
+		//INICIA O BANCO DE DADOS
+    	if ( START_DATABASE ){
+    		try{
+    			ProcessBuilder databaseProcess = new ProcessBuilder(DATABASE_START);
+    			databaseProcess.start();
+    		}catch (IOException e){
+    		    e.printStackTrace();
+    		}
+    	}
+		
 		ApplicationService applicationService = new ApplicationService();
 		String novaVersao = applicationService.getNumeroNovaVersao();
 		
 		if ( novaVersao != null ){
 			
-			Optional<ButtonType> result = CustomAlert.confirmar("Nova versão do sistema", "Existe uma nova versão do sistema, deseja atualizar agora?");
-			if (result.get() == ButtonType.OK) {
-				//chama a aplicaçao que faz a atualização do banco de dados e sistema
-				applicationService.update(novaVersao);
+			try (InputStream fxmlStream = MainApp.class.getResourceAsStream("view/applicationUpdate/ApplicationUpdateForm.fxml")) {
+				FXMLLoader loader = new FXMLLoader();
+				AnchorPane applicationUpdate = (AnchorPane) loader.load(fxmlStream);
+				Stage s = new Stage();
+				s.setTitle("Milk Money - Atualização");
+				Scene scene = new Scene(applicationUpdate);
+				s.setScene(scene);
+				
+				ApplicationUpdateController controller = loader.getController();
+				controller.setService(applicationService);
+				controller.setVersao(novaVersao);
+				
+				s.showAndWait();
+			} catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 			
 		}
@@ -87,17 +106,6 @@ public class MainApp extends Application {
 			final Task<ObservableList<String>> task = new Task<ObservableList<String>>() {
 	            @Override
 	            protected ObservableList<String> call() throws InterruptedException {
-	            	//INICIA O BANCO DE DADOS
-	            	if ( START_DATABASE ){
-	            		try{
-	            			updateMessage("Iniciando banco de dados . . .");
-		        			ProcessBuilder databaseProcess = new ProcessBuilder(DATABASE_START);
-		        			databaseProcess.start();
-		        		}catch (IOException e){
-		        		    e.printStackTrace();
-		        		}
-	            	}
-	            	
 	            	//INJEÇÃO DE DEPENDÊNCIA
 	            	updateMessage("Carregando aplicação . . .");
 	            	context = new ClassPathXmlApplicationContext(new String[] {"applicationContext.xml", "services.xml", "controllers.xml", "daos.xml"});

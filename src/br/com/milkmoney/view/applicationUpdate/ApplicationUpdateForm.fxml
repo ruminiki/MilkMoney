@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="281.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController">
+   <children>
+      <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0">
+               <children>
+                  <Label fx:id="lblCobertura" text="Atualização do Sistema">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+               </children>
+            </HBox>
+            <ScrollPane cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="181.0" prefWidth="589.0" scaleShape="false" style="-fx-focus-color: transparent;" VBox.vgrow="ALWAYS">
+              <content>
+                <AnchorPane cacheShape="false" centerShape="false" minHeight="179.0" minWidth="587.0" scaleShape="false">
+                     <children>
+                        <VBox fx:id="vbMessages" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </ScrollPane>
+            <ProgressBar fx:id="progressBar" focusTraversable="false" prefHeight="18.0" prefWidth="591.0" progress="0.0" visible="false" />
+            <VBox minHeight="27.0" prefHeight="27.0" prefWidth="589.0" VBox.vgrow="NEVER">
+               <children>
+                  <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="btnAtualizar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAtualizar" text="Atualizar">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" right="3.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

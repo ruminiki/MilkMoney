@@ -8,54 +8,89 @@ import java.net.URL;
 import java.util.Properties;
 import java.util.Scanner;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.fs.FileUtil;
 
-import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.dao.ApplicationDao;
 
 public class ApplicationService{
 
+	public StringProperty message = new SimpleStringProperty();
+	
 	@SuppressWarnings({ "resource" })
-	public void update(String version){
+	public Task<Void> update(String version){
 		
-		try {
+		Task<Void> task = new Task<Void>() {
 			
-			File destination = new File(version);
-			
-			FileUtils.forceMkdir(destination);
-			File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  "update.zip");
-			
-			//CRIAR PROGRESS BAR
-			//CASO A EXECUÇÃO DO COMANDO RETORNE ERRO INDICAR QUE NÃO FOI POSSÍVEL ATUALIZAR O SISTEMA
-			FileUtils.copyURLToFile(new URL(getUrlUpdate()), fileUpdate);
+			@Override
+			public Void call() throws InterruptedException {
+				try {
 					
-			FileUtil.unZip(fileUpdate, destination);
-		    File fileRun = new File(version + File.separator +  getFileRun());
-			
-			if ( fileRun != null ){
+					updateMessage("Iniciando a atualização");
+					Thread.sleep(1000);
+					
+					File destination = new File(version);
+					
+					FileUtils.forceMkdir(destination);
+					File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  "update.zip");
+					
+					String URL = getUrlUpdate();
+					
+					updateMessage("Fazendo o download de " + URL);
+					Thread.sleep(1000);
+					//CHECAR CONEXAO COM A INTERNET
+					//VERIFICAR QUANDO SE TENTA ATUALIZAR VARIAS VERSOES DE UMA UNICA VEZ...
+					FileUtils.copyURLToFile(new URL(URL), fileUpdate);
+					
+					updateMessage("Descompactando arquivos");
+					Thread.sleep(1000);
+					FileUtil.unZip(fileUpdate, destination);
+				    File fileRun = new File(version + File.separator +  getFileRun());
+					
+					if ( fileRun != null ){
+						
+						updateMessage("Executando " + fileRun.getAbsolutePath());
+						Thread.sleep(1000);
+						
+						Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
+						
+						Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
+						updateMessage(s.hasNext() ? s.next() : "");
+						Thread.sleep(1000);
+						updateMessage("Removendo arquivos temporários");
+						Thread.sleep(1000);
+				        FileUtils.forceDelete(destination);
+				        updateMessage("Arquivos removidos com sucesso.\n\n");
+				        Thread.sleep(1000);
+
+				        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
+				        if ( s.hasNext() ){
+				        	updateMessage("---ERROS ENCONTRADOS---\n");
+				        	Thread.sleep(1000);
+				        	updateMessage(s.next());
+				        	Thread.sleep(1000);
+				        	updateMessage("Atualização NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente.");
+				        	Thread.sleep(1000);
+				        }else{
+				        	updateMessage("Atualização concluída com SUCESSO! Por favor, reinicie a aplicação!");
+				        }
+				        
+					}
+					
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 				
-				System.out.println("Executando: " + fileRun.getAbsolutePath());
-				
-				Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
-				
-				Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
-		        System.out.println(s.hasNext() ? s.next() : "");
-		        
-		        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
-		        System.out.println(s.hasNext() ? s.next() : "");
-		        
-		        FileUtils.forceDelete(destination);
-				
+				return null;
 			}
-			
-			CustomAlert.mensagemAlerta("Atualização", "Sistema atualizado com sucesso para a versão" + version + ". Por favor, reinicie a aplicação." );
-	        //fecha o sistema
-			System.exit(0);
-			
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
+		};
+		
+		return task;
+		
 	}
 	
 	private String getUrlUpdate(){
