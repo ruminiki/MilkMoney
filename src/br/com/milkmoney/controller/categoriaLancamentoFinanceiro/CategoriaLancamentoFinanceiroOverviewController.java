@@ -183,7 +183,7 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 	}
 	
 	public String getFormName() {
-		return "view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroReducedOverview.fxml";
+		return "view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml";
 	}
 	
 }

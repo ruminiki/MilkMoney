@@ -56,8 +56,8 @@ public class MainApp extends Application {
     //private ProgressBar               loadProgress;
     private Label                     progressText;
     
-	private static final boolean      SPLASH           = true;
-	private static final boolean      START_DATABASE   = true;
+	private static final boolean      SPLASH           = false;
+	private static final boolean      START_DATABASE   = false;
 		
 	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
 	
