@@ -56,7 +56,7 @@
                   <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
                      <children>
-                        <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="100.0" onAction="#updateDataPrevisaoParto" />
+                        <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" onAction="#updateDataPrevisaoParto" />
                         <Label prefHeight="17.0" prefWidth="82.0" text="Previsão Parto:" />
                         <Label fx:id="lblPrevisaoParto" text="Label">
                            <font>

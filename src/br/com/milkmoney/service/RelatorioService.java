@@ -82,9 +82,12 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
         					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
         					masterReport.getParameterValues().put("situacaoCobertura", String.valueOf(param[2]));
-        					masterReport.getParameterValues().put("tipoCobertura", String.valueOf(param[3]));
-        					masterReport.getParameterValues().put("touroInseminacaoArtificial", Integer.parseInt(param[4].toString()));
-        					masterReport.getParameterValues().put("touroMontaNatural", Integer.parseInt(param[5].toString()));
+        					masterReport.getParameterValues().put("lote", Integer.parseInt(param[3].toString()));
+        					masterReport.getParameterValues().put("idadeDe", Integer.parseInt(param[4].toString()));
+        					masterReport.getParameterValues().put("idadeAte", Integer.parseInt(param[5].toString()));
+        					masterReport.getParameterValues().put("tipoCobertura", String.valueOf(param[6]));
+        					masterReport.getParameterValues().put("touroInseminacaoArtificial", Integer.parseInt(param[7].toString()));
+        					masterReport.getParameterValues().put("touroMontaNatural", Integer.parseInt(param[8].toString()));
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				case RELATORIO_ABORTOS:
