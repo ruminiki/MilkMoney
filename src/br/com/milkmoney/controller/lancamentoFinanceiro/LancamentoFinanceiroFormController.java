@@ -63,18 +63,32 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		
 		tbDespesa.setSelected(getObject().getTipoLancamento().equals(TipoLancamentoFinanceiro.DESPESA));
 		tbReceita.setSelected(getObject().getTipoLancamento().equals(TipoLancamentoFinanceiro.RECEITA));
+		this.setStyleButtonReceitaDespesa();
 		
 		tbDespesa.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			tbReceita.setSelected(!tbDespesa.isSelected());
-			
+			setStyleButtonReceitaDespesa();
 		});
 		
 		tbReceita.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			tbDespesa.setSelected(!tbReceita.isSelected());
+			setStyleButtonReceitaDespesa();
 		});
 		
 		btnParcelar.setDisable(getObject().getId() > 0);
 		
+	}
+	
+	private void setStyleButtonReceitaDespesa(){
+		if ( tbDespesa.isSelected() ){
+			tbDespesa.setStyle("-fx-background-color: #FF3333");
+			tbReceita.setStyle(null);
+		}
+		
+		if ( tbReceita.isSelected() ){
+			tbReceita.setStyle("-fx-background-color: #00CC66");
+			tbDespesa.setStyle(null);
+		}
 	}
 	
 	@Override
