@@ -7,14 +7,16 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
+import br.com.milkmoney.model.Sistema;
+
 public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 	
-	public String getVersaoSistema() {
+	public Sistema getVersaoSistema() {
 		
 		InputStream inputStream = null;
 		Properties prop = new Properties();
 		String propFileName = "project.properties";
-		String versao = null;
+		Sistema sistema = new Sistema();
 		
 		inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 		try {
@@ -34,7 +36,7 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 				ResultSet rs = stmt.executeQuery("SELECT versao FROM SISTEMA");
 				
 				if ( rs.next() ){
-					versao = rs.getString("versao");
+					sistema.setVersao(rs.getString("versao"));
 				}
 				
 				stmt.close();
@@ -44,7 +46,7 @@ public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return versao;
+		return sistema;
 	}
 	
 }

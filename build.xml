@@ -287,5 +287,11 @@
 			<fileset dir="build/classes" includes="**/*.css"/>
 		</fx:csstobin>
 	
+		<delete dir="build" />
+		<delete dir="externalLibs" />
+		<delete dir="project" />
+		<delete dir="projectRefs" />
+		<delete dir="deploy" />
+		
 	</target>
 </project>

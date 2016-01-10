@@ -2,9 +2,11 @@ package br.com.milkmoney.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -16,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.fs.FileUtil;
 
 import br.com.milkmoney.dao.ApplicationDao;
+import br.com.milkmoney.model.Sistema;
 
 public class ApplicationService{
 
@@ -30,55 +33,76 @@ public class ApplicationService{
 			public Void call() throws InterruptedException {
 				try {
 					
-					updateMessage("Iniciando a atualização");
-					Thread.sleep(1000);
+					String[] versoes = version.split("\\,");
 					
-					File destination = new File(version);
+					String URL_UPDATE = getUrlUpdate();
 					
-					FileUtils.forceMkdir(destination);
-					File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  "update.zip");
-					
-					String URL = getUrlUpdate();
-					
-					updateMessage("Fazendo o download de " + URL);
-					Thread.sleep(1000);
-					//CHECAR CONEXAO COM A INTERNET
-					//VERIFICAR QUANDO SE TENTA ATUALIZAR VARIAS VERSOES DE UMA UNICA VEZ...
-					FileUtils.copyURLToFile(new URL(URL), fileUpdate);
-					
-					updateMessage("Descompactando arquivos");
-					Thread.sleep(1000);
-					FileUtil.unZip(fileUpdate, destination);
-				    File fileRun = new File(version + File.separator +  getFileRun());
-					
-					if ( fileRun != null ){
+					//caso existam mais de uma versão para atualizar, atualiza todas de uma vez
+					for ( int i = 0; i < versoes.length; i++ ){
 						
-						updateMessage("Executando " + fileRun.getAbsolutePath());
+						String versao = versoes[i].replace(" ", "");
+						
+						updateMessage("Iniciando a atualização para versão " + versao);
 						Thread.sleep(1000);
 						
-						Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
+						File destination = new File(versao);
 						
-						Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
-						updateMessage(s.hasNext() ? s.next() : "");
+						FileUtils.forceMkdir(destination);
+						File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  versao + ".zip");
+						
+						String URL = URL_UPDATE + versao + ".zip";
+						
+						updateMessage("Fazendo o download de " + URL);
 						Thread.sleep(1000);
-						updateMessage("Removendo arquivos temporários");
+						
+						try{
+							FileUtils.copyURLToFile(new URL(URL), fileUpdate);
+						}catch(FileNotFoundException ex){
+							updateMessage("Arquivo " + URL + " não encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.");
+							return null;
+						}
+						
+						updateMessage("Descompactando arquivos");
 						Thread.sleep(1000);
-				        FileUtils.forceDelete(destination);
-				        updateMessage("Arquivos removidos com sucesso.\n\n");
-				        Thread.sleep(1000);
+						FileUtil.unZip(fileUpdate, destination);
+					    File fileRun = new File(versao + File.separator +  getFileRun());
+						
+						if ( fileRun != null ){
+							//executa script de atualização
+							updateMessage("Executando " + fileRun.getAbsolutePath());
+							Thread.sleep(1000);
+							
+							Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
+							
+							//recupera resultado da execução no terminal
+							Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
+							updateMessage(s.hasNext() ? s.next() : "");
+							
+							//remove arquivos temporários
+							Thread.sleep(1000);
+							updateMessage("Removendo arquivos temporários");
+							Thread.sleep(1000);
+					        FileUtils.forceDelete(destination);
+					        updateMessage("Arquivos removidos com sucesso.\n\n");
+					        Thread.sleep(1000);
 
-				        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
-				        if ( s.hasNext() ){
-				        	updateMessage("---ERROS ENCONTRADOS---\n");
-				        	Thread.sleep(1000);
-				        	updateMessage(s.next());
-				        	Thread.sleep(1000);
-				        	updateMessage("Atualização NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente.");
-				        	Thread.sleep(1000);
-				        }else{
-				        	updateMessage("Atualização concluída com SUCESSO! Por favor, reinicie a aplicação!");
-				        }
-				        
+					        //exibe o resultado da execução do script no log de atualização
+					        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
+					        if ( s.hasNext() ){
+					        	updateMessage("---ERROS ENCONTRADOS---\n");
+					        	Thread.sleep(1000);
+					        	updateMessage(s.next());
+					        	Thread.sleep(1000);
+					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n");
+					        	Thread.sleep(1000);
+					        	return null;
+					        }else{
+					        	updateMessage("Atualização para a versão ["+versao+"] concluída com SUCESSO! \n");
+					        }
+					        
+					        Thread.sleep(1000);
+					        
+						}
 					}
 					
 				} catch (IOException ex) {
@@ -156,30 +180,52 @@ public class ApplicationService{
 
 				prop.load(inputStream);
 				String URL = prop.getProperty("system.url_check_version");
-				String versaoAtual = new ApplicationDao().getVersaoSistema();
+				Sistema sistema = new ApplicationDao().getVersaoSistema();
 
 				File f = new File("update.properties");
 
 				try {
 					URL urlUpdate = new URL(URL);
-					FileUtils.copyURLToFile(urlUpdate, f);
+					
+			        final URLConnection conn = urlUpdate.openConnection();                                                                                                                                                                                  
+			        conn.connect();                          
+			        if(conn.getContentLength() == -1){
+			        	System.out.println("Erro de conexão. Não foi possível verificar a atualização do sistema.");   
+			        	return null;
+			        }
+			        
+			        FileUtils.copyURLToFile(urlUpdate, f);
 					
 					if ( f != null ){
 						inputStream = new FileInputStream(f);
 
 						if (inputStream != null) {
 
-							prop.load(inputStream);
-							String update_version = prop.getProperty("update.version");
-
-							if ( !update_version.equals(versaoAtual) ) {
-								System.out.println("Existe uma nova versão do sistema: " + update_version);
-								return update_version;
-							}
+							@SuppressWarnings("resource")
+							Scanner s = new Scanner(inputStream);
+							String updateVersion = "";
+							
+					        while ( s.hasNext() ){
+					        	String version = s.next();
+					        	//verifica se existe versão mais atual que a do sistema instalado
+					        	if ( Integer.parseInt(version.replace(".", "")) > Integer.parseInt(sistema.getVersao().replace(".", "")) ) {
+					        		updateVersion += version + ", ";
+					        	}
+					        }
+					        
+					        if ( updateVersion.length() > 0 ){
+					        	if ( updateVersion.endsWith(", ") ){
+					        		updateVersion = updateVersion.substring(0, updateVersion.length() - 2);
+					        		return updateVersion;
+					        	}
+					        	System.out.println("Existem nova versão do sistema: " + updateVersion);	
+					        }
+							
 						}
 					}
 
 				} catch (IOException ex) {
+					ex.printStackTrace();
 					System.out.println("Não foi possível verificar a atualização do sistema.");
 				}
 			}
