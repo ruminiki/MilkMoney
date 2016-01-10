@@ -1,5 +1,7 @@
 package br.com.milkmoney.controller.reports;
 
+import java.time.LocalDate;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -9,21 +11,21 @@ import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.service.RelatorioService;
 
 @Controller
-public class RelatorioPartosPrevistosController extends AbstractReport{
+public class RelatorioResumoAtividadeController extends AbstractReport{
 
-	@FXML private TextField inputQuantidadeDias;
+	@FXML private TextField inputAno;
 	
 	@FXML
 	public void initialize(){
 		super.initialize();
-		inputQuantidadeDias.setText("30");
-		MaskFieldUtil.numeroInteiro(inputQuantidadeDias);
+		inputAno.setText(String.valueOf(LocalDate.now().getYear()));
+		MaskFieldUtil.numeroInteiro(inputAno);
 	}
 	
 	@FXML
 	private void handleExecutar(){
 		
-		Object[] params = new Object[]{inputQuantidadeDias.getText() != "" ? Integer.parseInt(inputQuantidadeDias.getText()) : 30 };
+		Object[] params = new Object[]{inputAno.getText() != "" ? Integer.parseInt(inputAno.getText()) : LocalDate.now().getYear() };
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 

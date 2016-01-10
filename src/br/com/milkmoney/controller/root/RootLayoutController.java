@@ -300,6 +300,11 @@ public class RootLayoutController {
     }
     
     @FXML
+    protected void handleReportResumoAtividade(){
+    	openFormAsPopUp("view/reports/RelatorioResumoAtividade.fxml", "Relatório Resumo Atividade");
+    }
+    
+    @FXML
     protected void handleReportAbortos(){
     	openFormAsPopUp("view/reports/RelatorioAbortos.fxml", "Relatório de Abortos");
     }

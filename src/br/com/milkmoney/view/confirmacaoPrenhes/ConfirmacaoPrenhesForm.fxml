@@ -37,7 +37,7 @@
                      	  <Label text="Data: " />
                         <Label text="Situação: " GridPane.rowIndex="1" />
                         
-                                                                                                <DatePicker fx:id="inputData" maxWidth="100.0" GridPane.columnIndex="1" />
+                                                                                                <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" GridPane.columnIndex="1" />
                         <Label text="Obsevação: " GridPane.rowIndex="3" />
                         <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <Label text="Método: " GridPane.rowIndex="2" />

@@ -47,6 +47,7 @@
                   <Menu mnemonicParsing="false" text="Relatórios">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#handleReportNumerosRebanho" text="Números do Rebanho" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleReportResumoAtividade" text="Resumo da Atividade" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReportRankingAnimais" text="Ranking Animais" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReportProducao" text="Produção" />
                         <Menu mnemonicParsing="false" text="Financeiro">

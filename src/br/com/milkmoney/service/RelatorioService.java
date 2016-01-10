@@ -39,6 +39,7 @@ public class RelatorioService {
 	public static final String RELATORIO_RANKING_ANIMAIS           = "report/rankingAnimais.prpt";
 	public static final String RELATORIO_ABORTOS                   = "report/relatorioAbortos.prpt";
 	public static final String RELATORIO_ENCERRAMENTO_LACTACAO     = "report/relatorioEncerramentoLactacao.prpt";
+	public static final String RELATORIO_RESUMO_ATIVIDADE          = "report/resumoAtividade.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		@SuppressWarnings("rawtypes")
@@ -110,6 +111,12 @@ public class RelatorioService {
         					masterReport = GenericPentahoReport.getReportDefinition(report);
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					masterReport.getParameterValues().put("quantidadeDias", Integer.parseInt(param[0].toString()));
+        					GenericPentahoReport.runReport(format, masterReport);
+        					break;
+        				case RELATORIO_RESUMO_ATIVIDADE:
+        					masterReport = GenericPentahoReport.getReportDefinition(report);
+        					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+        					masterReport.getParameterValues().put("ano", Integer.parseInt(param[0].toString()));
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				case RESUMO_FINANCEIRO:

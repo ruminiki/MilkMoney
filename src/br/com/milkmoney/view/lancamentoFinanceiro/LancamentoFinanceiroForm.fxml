@@ -37,11 +37,11 @@
                	  <Label text="Emissão: " GridPane.rowIndex="1" />
                	  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="1">
                      <children>
-                        <DatePicker fx:id="inputDataEmissao" maxWidth="100.0" minWidth="100.0" />
+                        <DatePicker fx:id="inputDataEmissao" maxWidth="100.0" minWidth="110.0" />
                         <Label text="Vencimento: " />
-                        <DatePicker fx:id="inputDataVencimento" maxWidth="100.0" minWidth="100.0" />
+                        <DatePicker fx:id="inputDataVencimento" maxWidth="100.0" minWidth="110.0" />
                         <Label text="Pagamento: " />
-                        <DatePicker fx:id="inputDataPagamento" maxWidth="100.0" minWidth="100.0" />
+                        <DatePicker fx:id="inputDataPagamento" maxWidth="100.0" minWidth="110.0" />
                      </children>
                   </HBox>
                   
@@ -75,8 +75,8 @@
                
                   <Label text="Observação: " GridPane.rowIndex="6" />
                   <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6" />
-                  <ToggleButton fx:id="tbReceita" minWidth="80.0" mnemonicParsing="false" text="Receita" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ToggleButton fx:id="tbDespesa" minWidth="80.0" mnemonicParsing="false" text="Despesa" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="tbReceita" focusTraversable="false" minWidth="80.0" mnemonicParsing="false" text="Receita" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ToggleButton fx:id="tbDespesa" focusTraversable="false" minWidth="80.0" mnemonicParsing="false" text="Despesa" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                   
                </children>
             </GridPane>
