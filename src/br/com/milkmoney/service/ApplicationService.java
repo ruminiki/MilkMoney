@@ -42,7 +42,7 @@ public class ApplicationService{
 						
 						String versao = versoes[i].replace(" ", "");
 						
-						updateMessage("Iniciando a atualização para versão " + versao);
+						updateMessage("Iniciando a atualização para versão " + versao+"\n");
 						Thread.sleep(1000);
 						
 						File destination = new File(versao);
@@ -52,24 +52,24 @@ public class ApplicationService{
 						
 						String URL = URL_UPDATE + versao + ".zip";
 						
-						updateMessage("Fazendo o download de " + URL);
+						updateMessage("Fazendo o download de " + URL+"\n");
 						Thread.sleep(1000);
 						
 						try{
 							FileUtils.copyURLToFile(new URL(URL), fileUpdate);
 						}catch(FileNotFoundException ex){
-							updateMessage("Arquivo " + URL + " não encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.");
+							updateMessage("Arquivo " + URL + " não encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.\n");
 							return null;
 						}
 						
-						updateMessage("Descompactando arquivos");
+						updateMessage("Descompactando arquivos\n");
 						Thread.sleep(1000);
 						FileUtil.unZip(fileUpdate, destination);
 					    File fileRun = new File(versao + File.separator +  getFileRun());
 						
 						if ( fileRun != null ){
 							//executa script de atualização
-							updateMessage("Executando " + fileRun.getAbsolutePath());
+							updateMessage("Executando " + fileRun.getAbsolutePath()+"\n");
 							Thread.sleep(1000);
 							
 							Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
@@ -80,7 +80,7 @@ public class ApplicationService{
 							
 							//remove arquivos temporários
 							Thread.sleep(1000);
-							updateMessage("Removendo arquivos temporários");
+							updateMessage("Removendo arquivos temporários\n");
 							Thread.sleep(1000);
 					        FileUtils.forceDelete(destination);
 					        updateMessage("Arquivos removidos com sucesso.\n\n");
@@ -93,11 +93,11 @@ public class ApplicationService{
 					        	Thread.sleep(1000);
 					        	updateMessage(s.next());
 					        	Thread.sleep(1000);
-					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n");
+					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n\n");
 					        	Thread.sleep(1000);
 					        	return null;
 					        }else{
-					        	updateMessage("Atualização para a versão ["+versao+"] concluída com SUCESSO! \n");
+					        	updateMessage("Atualização para a versão ["+versao+"] concluída com SUCESSO! \n\n");
 					        }
 					        
 					        Thread.sleep(1000);

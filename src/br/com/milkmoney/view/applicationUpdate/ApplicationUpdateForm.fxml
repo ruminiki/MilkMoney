@@ -20,16 +20,8 @@
                      </font></Label>
                </children>
             </HBox>
-            <ScrollPane cacheShape="false" centerShape="false" focusTraversable="false" prefHeight="181.0" prefWidth="589.0" scaleShape="false" style="-fx-focus-color: transparent;" VBox.vgrow="ALWAYS">
-              <content>
-                <AnchorPane cacheShape="false" centerShape="false" minHeight="179.0" minWidth="587.0" scaleShape="false">
-                     <children>
-                        <VBox fx:id="vbMessages" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </ScrollPane>
-            <ProgressBar fx:id="progressBar" focusTraversable="false" prefHeight="18.0" prefWidth="591.0" progress="0.0" visible="false" />
+            <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" scaleShape="false" style="-fx-focus-color: transparent;" />
+            <ProgressBar fx:id="progressBar" focusTraversable="false" minWidth="589.0" prefHeight="18.0" prefWidth="589.0" progress="0.0" visible="false" />
             <VBox minHeight="27.0" prefHeight="27.0" prefWidth="589.0" VBox.vgrow="NEVER">
                <children>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">

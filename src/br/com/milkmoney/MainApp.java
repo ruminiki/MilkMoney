@@ -86,6 +86,8 @@ public class MainApp extends Application {
 				Scene scene = new Scene(applicationUpdate);
 				s.setScene(scene);
 				
+				s.setResizable(false);
+				
 				ApplicationUpdateController controller = loader.getController();
 				controller.setService(applicationService);
 				controller.setVersao(novaVersao);

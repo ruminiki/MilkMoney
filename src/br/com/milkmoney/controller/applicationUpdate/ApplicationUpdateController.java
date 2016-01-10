@@ -5,13 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.service.ApplicationService;
 
 @Controller
@@ -19,7 +20,7 @@ public class ApplicationUpdateController {
 
 	@FXML private ProgressBar progressBar;
 	@FXML private Button btnFinalizar, btnAtualizar;
-	@FXML private VBox vbMessages;
+	@FXML private TextArea taLog;
 	
 	private ApplicationService applicationService;
 	private String novaVersao;
@@ -30,6 +31,17 @@ public class ApplicationUpdateController {
 		
 		btnAtualizar.setDisable(true);
 		btnFinalizar.setDisable(true);
+		
+		((Stage)progressBar.getScene().getWindow()).setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent arg0) {
+				if ( btnFinalizar.isDisable() ){
+					CustomAlert.mensagemInfo("Por favor, aguarde enquanto a atualização é concluída.");					
+				}
+			}
+			
+		});
 		
 		Task<Void> task = applicationService.update(novaVersao);
 		
@@ -48,12 +60,12 @@ public class ApplicationUpdateController {
 	    	
 	    	progressBar.progressProperty().unbind();
 	    	progressBar.setProgress(100);
+	    	
 		});
 		
 		progressBar.progressProperty().bind(task.progressProperty());
 		task.messageProperty().addListener((observable, oldValue, newValue) -> {
-			vbMessages.getChildren().add(new Label(newValue));
-			//vbMessages.layout();
+			taLog.appendText(newValue);
 		});
 		
 		Thread thread = new Thread(task);
@@ -73,7 +85,7 @@ public class ApplicationUpdateController {
 	
 	public void setVersao(String novaVersao){
 		this.novaVersao = novaVersao;
-		vbMessages.getChildren().add(new Label("Nova versão encontrada: " + novaVersao));
+		taLog.appendText("Nova versão encontrada: " + novaVersao + "\n");
 	}
 	
 }
