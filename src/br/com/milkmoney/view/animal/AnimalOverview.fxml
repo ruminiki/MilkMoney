@@ -65,55 +65,59 @@
                <children>
                   <VBox minWidth="930.0" prefHeight="200.0" prefWidth="100.0" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <GridPane maxHeight="85.0" minHeight="85.0">
-                          <columnConstraints>
-                            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="166.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="53.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="147.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="119.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="49.0" />
-                              <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="148.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="150.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
+                        <HBox onKeyPressed="#handleEnterFilter" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="Situação Animal: " />
-                              <Label text="Situação Reprodução: " GridPane.rowIndex="1" />
-                              <Label text="Idade de: " GridPane.rowIndex="2" />
-                              <Label text="Lote: " GridPane.columnIndex="2" />
-                              <Label text="Raça: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label text="Sexo: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <ChoiceBox prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
-                              <ChoiceBox prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="3" />
-                              <ChoiceBox prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                              <ChoiceBox prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                              <Label text="Dias Pós Parto: " GridPane.columnIndex="4" />
-                              <Label text="Dias Pós Cobertura: " GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                              <TextField prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
-                              <TextField GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <GridPane maxHeight="85.0" minHeight="85.0">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="166.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="53.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="147.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="119.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="49.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="148.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="150.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <TextField prefHeight="25.0" prefWidth="50.0" />
-                                    <Label text="até: " />
-                                    <TextField prefHeight="25.0" prefWidth="50.0" />
+                                    <Label text="Situação Animal: " />
+                                    <Label text="Situação Reprodução: " GridPane.rowIndex="1" />
+                                    <Label text="Idade de: " GridPane.rowIndex="2" />
+                                    <Label text="Lote: " GridPane.columnIndex="2" />
+                                    <Label text="Raça: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Label text="Sexo: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputSituacaoAnimal" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
+                                    <ChoiceBox fx:id="inputSituacaoCobertura" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="inputLote" prefWidth="150.0" GridPane.columnIndex="3" />
+                                    <ChoiceBox fx:id="inputRaca" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Label text="Dias Pós Parto: " GridPane.columnIndex="4" />
+                                    <Label text="Dias Pós Cobertura: " GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <TextField fx:id="inputDiasPosParto" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
+                                    <TextField fx:id="inputDiasPosCobertura" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <TextField fx:id="inputIdadeDe" prefHeight="25.0" prefWidth="50.0" />
+                                          <Label text="até: " />
+                                          <TextField fx:id="inputIdadeAte" prefHeight="25.0" prefWidth="50.0" />
+                                       </children>
+                                    </HBox>
+                                    <Label text="Nº Partos: " GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <TextField fx:id="inputNumeroPartos" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Label minWidth="145.0" text="Não Cobertas (x dias) DPP: " GridPane.columnIndex="6" />
+                                    <Label text="Secar em (x dias): " GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                                    <TextField fx:id="inputSecarEmXDias" maxWidth="80.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
+                                    <TextField fx:id="inputNaoCobertasXDias" maxWidth="80.0" GridPane.columnIndex="7" />
+                                    <Label text="Finalidade: " GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
                                  </children>
-                              </HBox>
-                              <Label text="Nº Partos: " GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                              <Label minWidth="145.0" text="Não Cobertas (x dias) DPP: " GridPane.columnIndex="6" />
-                              <Label text="Secar em (x dias): " GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                              <TextField maxWidth="80.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                              <TextField maxWidth="80.0" GridPane.columnIndex="7" />
-                              <Label text="Gerais: " GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                              <ChoiceBox fx:id="choiceFilter" prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                              </GridPane>
                            </children>
-                        </GridPane>
+                        </HBox>
                         <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />

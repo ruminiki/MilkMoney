@@ -21,9 +21,8 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 - criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
 
 - backup do banco de dados
-- Permitir filtrar coberturas por idade do animal e lote
-- Permitir filtrar a ficha do animal por lote
 - Fazer ficha igual a do Anderson...
+- Impressão da ficha do animal não está funcionando
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 

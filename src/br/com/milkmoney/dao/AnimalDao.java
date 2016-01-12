@@ -2,6 +2,7 @@ package br.com.milkmoney.dao;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Repository;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeAnimal;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
+import br.com.milkmoney.service.AnimalService;
 
 @Repository
 public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
@@ -30,6 +33,84 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Animal> superSearch(HashMap<String, String> params) {
+		
+		StringBuilder SQL = new StringBuilder("SELECT a FROM Animal a WHERE ");
+		
+		if ( params.get(AnimalService.FILTER_FINALIDADE_ANIMAL) != null ){
+			SQL.append("a.finalidadeAnimal = '" + params.get(AnimalService.FILTER_FINALIDADE_ANIMAL) + "' and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null ){
+			SQL.append("a.situacaoAnimal = '" + params.get(AnimalService.FILTER_SITUACAO_ANIMAL) + "' and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_SITUACAO_COBERTURA) != null ){
+			SQL.append("exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura = '" + params.get(AnimalService.FILTER_SITUACAO_COBERTURA) + "' and c.femea = a ) and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_LOTE) != null ){
+			SQL.append("exists (SELECT 1 FROM Lote l inner join l.animais la where l.ativo = 'SIM' and la.id = a.id and l.id = " + params.get(AnimalService.FILTER_LOTE) + ") and ");
+		}
+
+		if ( params.get(AnimalService.FILTER_SEXO) != null ){
+			SQL.append("a.sexo = '" + params.get(AnimalService.FILTER_SEXO) + "' and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_RACA) != null ){
+			SQL.append("a.raca.id = " + params.get(AnimalService.FILTER_RACA) + " and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_IDADE_DE) != null && params.get(AnimalService.FILTER_IDADE_ATE) != null ){
+			SQL.append("(DATEDIFF(current_date(), a.dataNascimento)/30) between " + params.get(AnimalService.FILTER_IDADE_DE) + " and " + params.get(AnimalService.FILTER_IDADE_ATE) + " and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_DIAS_POS_PARTO) != null ){
+			SQL.append("exists (select 1 from Parto p where p.cobertura.femea = a) and ");
+			SQL.append("DATEDIFF(current_date(), (select max(p1.data) from Parto p1 where p1.cobertura.femea = a)) " + params.get(AnimalService.FILTER_DIAS_POS_PARTO) + " and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) != null ){
+			SQL.append("exists (select 1 from Cobertura c where c.femea = a) and ");
+			SQL.append("DATEDIFF(current_date(), (select max(c1.data) from Cobertura c1 where c1.femea = a)) " + params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) + " and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_NUMERO_PARTOS) != null ){
+			SQL.append("(select count(*) from Parto p where p.cobertura.femea = a) " + params.get(AnimalService.FILTER_NUMERO_PARTOS) + " and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) != null ){
+			SQL.append("not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) + " and c.situacaoCobertura not in ('" + SituacaoCobertura.VAZIA + "','" + SituacaoCobertura.PARIDA + "') and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) != null ){
+			SQL.append("exists (select 1 from Lactacao l where l.animal = a) and ");
+			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and (DATEDIFF(current_date(), lc.dataInicio) + " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") >= 305 and lc.dataFim is null) and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null && !params.get(AnimalService.FILTER_SITUACAO_ANIMAL).equals(SituacaoAnimal.MORTO) ){
+			SQL.append("not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal = a) and ");
+		}
+			
+		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null && !params.get(AnimalService.FILTER_SITUACAO_ANIMAL).equals(SituacaoAnimal.VENDIDO) ){
+			SQL.append("not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal = a) ");
+		}
+		
+		if ( SQL.toString().endsWith("and ") ){
+			SQL.setLength(SQL.length() - 4);
+		}
+		
+		if ( SQL.toString().endsWith("WHERE ") ){
+			SQL.setLength(SQL.length() - 6);
+		} 
+		
+		Query query = entityManager.createQuery(SQL.toString());
+		return query.getResultList();
+	}
+	
+	
 	
 	public Animal findByNumero(String numero) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.numero = :numero ");
@@ -153,7 +234,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllFemeasASecar() {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Animal a "
-				+ "WHERE exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and DATEDIFF(current_date(), lc.dataInicio) >= 210 and lc.dataFim is null) "
+				+ "WHERE exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and DATEDIFF(current_date(), lc.dataInicio) >= 305 and lc.dataFim is null) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
 		return query.getResultList();

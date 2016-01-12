@@ -1,14 +1,12 @@
 package br.com.milkmoney.controller.animal;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,6 +15,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
@@ -48,6 +47,8 @@ import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
+import br.com.milkmoney.model.FinalidadeAnimal;
+import br.com.milkmoney.model.Lote;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.OptionChoiceFilter;
 import br.com.milkmoney.model.Parto;
@@ -62,25 +63,13 @@ import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.FichaAnimalService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.LactacaoService;
+import br.com.milkmoney.service.LoteService;
 import br.com.milkmoney.service.MorteAnimalService;
 import br.com.milkmoney.service.ParametroService;
 import br.com.milkmoney.service.PartoService;
+import br.com.milkmoney.service.RacaService;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
-import br.com.milkmoney.service.searchers.SearchAnimaisDisponiveisParaCobertura;
-import br.com.milkmoney.service.searchers.SearchAnimaisMortos;
-import br.com.milkmoney.service.searchers.SearchAnimaisVendidos;
-import br.com.milkmoney.service.searchers.SearchFemeasASecar;
-import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
-import br.com.milkmoney.service.searchers.SearchFemeasCobertas;
-import br.com.milkmoney.service.searchers.SearchFemeasCobertasNaoConfirmadas;
-import br.com.milkmoney.service.searchers.SearchFemeasEmLactacao;
-import br.com.milkmoney.service.searchers.SearchFemeasEmPeriodoVoluntarioEspera;
-import br.com.milkmoney.service.searchers.SearchFemeasNaoCobertas;
-import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasAposXDiasAposParto;
-import br.com.milkmoney.service.searchers.SearchFemeasNaoPrenhasXDiasAposParto;
-import br.com.milkmoney.service.searchers.SearchFemeasSecas;
-import br.com.milkmoney.service.searchers.SearchMachos;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
 import br.com.milkmoney.validation.MorteAnimalValidation;
@@ -106,7 +95,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
 	@FXML private VBox sideBar;
 	
-	@FXML ChoiceBox<OptionChoiceFilter> choiceFilter;
+	//filters
+	@FXML private ChoiceBox<OptionChoiceFilter> choiceFilter;
+	@FXML private ChoiceBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
+	@FXML private ChoiceBox<String> inputSituacaoCobertura;
+	@FXML private ChoiceBox<Lote> inputLote;
+	@FXML private ChoiceBox<Raca> inputRaca;
+	@FXML private TextField inputIdadeDe, inputIdadeAte, inputDiasPosParto, inputDiasPosCobertura, inputNumeroPartos, 
+							inputNaoCobertasXDias, inputSecarEmXDias;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
@@ -117,6 +113,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private ParametroService parametroService;
 	@Autowired private PartoService partoService;
 	@Autowired private CoberturaService coberturaService;
+	@Autowired private LoteService loteService;
+	@Autowired private RacaService racaService;
 	
 	//controllers
 	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
@@ -153,52 +151,68 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 																			  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
 																			  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
 		
+		//filters
+		if ( inputSituacaoAnimal.getItems().size() <= 0 )
+			inputSituacaoAnimal.getItems().setAll(SituacaoAnimal.getItems());
+		if ( inputSituacaoCobertura.getItems().size() <= 0 )
+			inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getItems());
+		if ( inputLote.getItems().size() <= 0 )
+			inputLote.getItems().setAll(loteService.findAll());
+		if ( inputRaca.getItems().size() <= 0 )
+			inputRaca.getItems().setAll(racaService.findAll());
+		if ( inputSexo.getItems().size() <= 0 )
+			inputSexo.getItems().setAll(Sexo.getItems());
+		if ( inputFinalidadeAnimal.getItems().size() <= 0 ){
+			inputFinalidadeAnimal.getItems().setAll(FinalidadeAnimal.getItems());
+		}
+		
 		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 		
 		if ( table.getItems().size() > 0 )
 			table.getSelectionModel().select(0);
 		
-		if ( choiceFilter.getItems().size() <= 0 ){
-			choiceFilter.getItems().addAll(Arrays.asList(new OptionChoiceFilter[] {
-					new OptionChoiceFilter("Todos", null),
-					new OptionChoiceFilter("Fêmeas", (SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class)), 
-					new OptionChoiceFilter("Machos", (SearchMachos)MainApp.getBean(SearchMachos.class)),
-					new OptionChoiceFilter("Em lactação", (SearchFemeasEmLactacao)MainApp.getBean(SearchFemeasEmLactacao.class)),
-					new OptionChoiceFilter("Secas", (SearchFemeasSecas)MainApp.getBean(SearchFemeasSecas.class)),
-					new OptionChoiceFilter("Vendidas", (SearchAnimaisVendidos)MainApp.getBean(SearchAnimaisVendidos.class)),
-					new OptionChoiceFilter("Mortas", (SearchAnimaisMortos)MainApp.getBean(SearchAnimaisMortos.class)),
-					new OptionChoiceFilter("Cobertas", (SearchFemeasCobertas)MainApp.getBean(SearchFemeasCobertas.class)),
-					new OptionChoiceFilter("Cobertas Não Confirmadas", (SearchFemeasCobertasNaoConfirmadas)MainApp.getBean(SearchFemeasCobertasNaoConfirmadas.class)),
-					new OptionChoiceFilter("Não cobertas", (SearchFemeasNaoCobertas)MainApp.getBean(SearchFemeasNaoCobertas.class)),
-					new OptionChoiceFilter("A secar", (SearchFemeasASecar)MainApp.getBean(SearchFemeasASecar.class)),
-					new OptionChoiceFilter("Disponíveis para cobrir", (SearchAnimaisDisponiveisParaCobertura)MainApp.getBean(SearchAnimaisDisponiveisParaCobertura.class)),
-					new OptionChoiceFilter("Em Período Voluntário de Espera (PVE)", (SearchFemeasEmPeriodoVoluntarioEspera)MainApp.getBean(SearchFemeasEmPeriodoVoluntarioEspera.class)),
-					new OptionChoiceFilter("Não cobertas até 40 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{40}),
-					new OptionChoiceFilter("Não cobertas até 60 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{60}),
-					new OptionChoiceFilter("Não cobertas até 85 dias após parto", (SearchFemeasNaoPrenhasXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasXDiasAposParto.class), new Object[]{85}),
-					new OptionChoiceFilter("Não cobertas + 85 dias após parto", (SearchFemeasNaoPrenhasAposXDiasAposParto)MainApp.getBean(SearchFemeasNaoPrenhasAposXDiasAposParto.class), new Object[]{85})
-			}));
-		}
-		choiceFilter.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<OptionChoiceFilter>() {
-			@Override
-			public void changed(ObservableValue<? extends OptionChoiceFilter> observable,	OptionChoiceFilter oldValue, OptionChoiceFilter newValue) {
-				doSearch(newValue);
-			}
-		});
-		
+	}
+	
+	@FXML
+	private void handleEnterFilter(){
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
+		params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);
+		params.put(AnimalService.FILTER_IDADE_DE, !inputIdadeDe.getText().isEmpty() ? inputIdadeDe.getText() : null);
+		params.put(AnimalService.FILTER_IDADE_ATE, !inputIdadeAte.getText().isEmpty() ? inputIdadeAte.getText() : null);
+		params.put(AnimalService.FILTER_LOTE, inputLote.getValue() != null ? String.valueOf(inputLote.getValue().getId()) : null);
+		params.put(AnimalService.FILTER_RACA, inputRaca.getValue() != null ? String.valueOf(inputRaca.getValue().getId()) : null);
+		params.put(AnimalService.FILTER_SEXO, inputSexo.getValue() != null ? inputSexo.getValue() : null);
+		params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
+		params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
+		params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
+		params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, !inputNaoCobertasXDias.getText().isEmpty() ? inputNaoCobertasXDias.getText() : null);
+		params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
+		params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
+		table.getItems().setAll( ((AnimalService)service).fill(params) );
 	}
 	
 	@Override
 	public void clearFilter() {
+		
+		inputSituacaoAnimal.getSelectionModel().clearSelection();
+		inputLote.getSelectionModel().clearSelection();
+		inputSexo.getSelectionModel().clearSelection();
+		inputSituacaoCobertura.getSelectionModel().clearSelection();
+		inputRaca.getSelectionModel().clearSelection();
+		inputFinalidadeAnimal.getSelectionModel().clearSelection();
+		inputIdadeDe.clear();
+		inputIdadeAte.clear();
+		inputDiasPosParto.clear();
+		inputDiasPosCobertura.clear();
+		inputNumeroPartos.clear(); 
+		inputNaoCobertasXDias.clear();
+		inputSecarEmXDias.clear();
+
 		if ( inputPesquisa != null ){
 			inputPesquisa.clear();
 		}
-		setSearch(null);
-		if ( choiceFilter.getSelectionModel().getSelectedIndex() == 0 ){
-			refreshTableOverview();
-		}else{
-			choiceFilter.getSelectionModel().clearAndSelect(0);			
-		}
+
 	}
 	
 	@Override
@@ -523,12 +537,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	};
 	
 	//-------------FILTRO RÁPIDO----------------------------------
-	
-	@SuppressWarnings("unchecked")
-	private void doSearch(OptionChoiceFilter filter){
-		setSearch(filter.getSearch(), filter.getParams());
-		refreshTableOverview();
-	}
 	
 	@FXML 
 	private void handleOpenIndicadores(){
