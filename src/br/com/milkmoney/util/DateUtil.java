@@ -40,7 +40,7 @@ public class DateUtil {
 	 */
 	public static String format(Date date) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 	    if (date == null) {
 	        return "";
 	    }
@@ -103,7 +103,7 @@ public class DateUtil {
 	 */
 	public static boolean isSameDate(Date data1, Date data2) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("ddMMYYYY");
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 		if ( sdf.format(data1).equals(sdf.format(data2)) )
 			return true;
 		return false;
@@ -118,7 +118,7 @@ public class DateUtil {
 	 */
 	public static boolean after(Date data1, Date data2) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		try{
 			return Integer.parseInt(sdf.format(data1)) > Integer.parseInt(sdf.format(data2));
@@ -130,7 +130,7 @@ public class DateUtil {
 	
 	public static boolean before(Date data1, Date data2) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
 		try{
 			return Integer.parseInt(sdf.format(data1)) < Integer.parseInt(sdf.format(data2));
