@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeAnimal;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.service.AnimalService;
@@ -68,7 +69,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_PARTO) != null ){
-			if ( !params.get(AnimalService.FILTER_DIAS_POS_PARTO).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+			if ( !params.get(AnimalService.FILTER_DIAS_POS_PARTO).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_DIAS_POS_PARTO, "= " + params.get(AnimalService.FILTER_DIAS_POS_PARTO).replaceAll("[^0-9]", ""));
 			}
 			SQL.append("exists (select 1 from Parto p where p.cobertura.femea = a) and ");
@@ -76,7 +77,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) != null ){
-			if ( !params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+			if ( !params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, "= " + params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).replaceAll("[^0-9]", ""));
 			}
 			SQL.append("exists (select 1 from Cobertura c where c.femea = a) and ");
@@ -84,25 +85,23 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_NUMERO_PARTOS) != null ){
-			if ( !params.get(AnimalService.FILTER_NUMERO_PARTOS).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+			if ( !params.get(AnimalService.FILTER_NUMERO_PARTOS).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_NUMERO_PARTOS, "= " + params.get(AnimalService.FILTER_NUMERO_PARTOS).replaceAll("[^0-9]", ""));
 			}
 			SQL.append("(select count(*) from Parto p where p.cobertura.femea = a) " + params.get(AnimalService.FILTER_NUMERO_PARTOS) + " and ");
 		}
 		
-		if ( params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) != null ){
-			if ( !params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO).matches(">=.*|<=.*|<.*|>.*|=.*") ){
-				params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, "= " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO).replaceAll("[^0-9]", ""));
+		if ( params.get(AnimalService.FILTER_COBERTAS) != null ){
+			if ( params.get(AnimalService.FILTER_COBERTAS).equals(SimNao.NAO) ){
+				SQL.append("not ");
 			}
-			SQL.append("not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) + " and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and ");
+			SQL.append("exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) != null ){
-			if ( !params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).matches(">=.*|<=.*|<.*|>.*|=.*") ){
-				params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, "= " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).replaceAll("[^0-9]", ""));
-			}
-			SQL.append("exists (select 1 from Lactacao l where l.animal = a) and ");
-			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and (DATEDIFF(current_date(), lc.dataInicio) + " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") >= 305 and lc.dataFim is null) and ");
+			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).replaceAll("[^0-9]", ""));
+			SQL.append("exists (select 1 from Lactacao l where l.animal = a and l.dataFim is null) and ");
+			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and ADDDATE(lc.dataInicio, 305) between current_date() and ADDDATE(current_date(), " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") and lc.dataFim is null) and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null && !params.get(AnimalService.FILTER_SITUACAO_ANIMAL).equals(SituacaoAnimal.MORTO) ){

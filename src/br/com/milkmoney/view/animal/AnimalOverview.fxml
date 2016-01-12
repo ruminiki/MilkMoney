@@ -86,7 +86,7 @@
                                  <children>
                                     <Label text="Situação Animal: " />
                                     <Label text="Situação Reprodução: " GridPane.rowIndex="1" />
-                                    <Label text="Idade de: " GridPane.rowIndex="2" />
+                                    <Label text="Idade de: " GridPane.columnIndex="6" />
                                     <Label text="Lote: " GridPane.columnIndex="2" />
                                     <Label text="Raça: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     <Label text="Sexo: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -94,26 +94,26 @@
                                     <ChoiceBox fx:id="inputSituacaoCobertura" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <ChoiceBox fx:id="inputLote" prefWidth="150.0" GridPane.columnIndex="3" />
                                     <ChoiceBox fx:id="inputRaca" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="79.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="80.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     <Label text="Dias Pós Parto: " GridPane.columnIndex="4" />
                                     <Label text="Dias Pós Cobertura: " GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <TextField fx:id="inputDiasPosParto" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
-                                    <TextField fx:id="inputDiasPosCobertura" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <TextField fx:id="inputDiasPosParto" maxWidth="60.0" minWidth="60.0" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
+                                    <TextField fx:id="inputDiasPosCobertura" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="7">
                                        <children>
-                                          <TextField fx:id="inputIdadeDe" prefHeight="25.0" prefWidth="50.0" />
+                                          <TextField fx:id="inputIdadeDe" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" />
                                           <Label text="até: " />
-                                          <TextField fx:id="inputIdadeAte" prefHeight="25.0" prefWidth="50.0" />
+                                          <TextField fx:id="inputIdadeAte" prefHeight="25.0" prefWidth="60.0" />
                                        </children>
                                     </HBox>
                                     <Label text="Nº Partos: " GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <TextField fx:id="inputNumeroPartos" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                    <Label minWidth="145.0" text="Não Cobertas (x dias) DPP: " GridPane.columnIndex="6" />
+                                    <TextField fx:id="inputNumeroPartos" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                                     <Label text="Secar em (x dias): " GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                                    <TextField fx:id="inputSecarEmXDias" maxWidth="80.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                                    <TextField fx:id="inputNaoCobertasXDias" maxWidth="80.0" GridPane.columnIndex="7" />
+                                    <TextField fx:id="inputSecarEmXDias" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                                     <Label text="Finalidade: " GridPane.columnIndex="6" GridPane.rowIndex="2" />
                                     <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                                    <Label text="Cobertas/Inseminadas: " GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputCobertaInseminada" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                               </GridPane>
                            </children>

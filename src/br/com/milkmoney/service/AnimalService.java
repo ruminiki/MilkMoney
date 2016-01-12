@@ -47,7 +47,7 @@ public class AnimalService implements IService<Integer, Animal>{
 	public static final String FILTER_DIAS_POS_PARTO                 = "FILTER_DIAS_POS_PARTO";
 	public static final String FILTER_DIAS_POS_COBERTURA             = "FILTER_DIAS_POS_COBERTURA";
 	public static final String FILTER_NUMERO_PARTOS                  = "FILTER_NUMERO_PARTOS";
-	public static final String FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO = "FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO";
+	public static final String FILTER_COBERTAS 						 = "FILTER_COBERTAS";
 	public static final String FILTER_SECAR_EM_X_DIAS                = "FILTER_SECAR_EM_X_DIAS";
 	public static final String FILTER_FINALIDADE_ANIMAL              = "FILTER_FINALIDADE_ANIMAL";
 	

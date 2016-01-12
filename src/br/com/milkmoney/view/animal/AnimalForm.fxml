@@ -52,7 +52,7 @@
                   </Button>
                   <Label text="Pai: " GridPane.rowIndex="4" />
                   <UCTextField fx:id="inputPai" disable="true" editable="false" prefWidth="240.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  <Button fx:id="btnBuscarPaiEnseminacaoArtificial" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="E" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                  <Button fx:id="btnBuscarPaiEnseminacaoArtificial" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="IA" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
@@ -69,7 +69,7 @@
                   
                   <Label text="Valor: " GridPane.rowIndex="7" />
                   <UCTextField fx:id="inputValor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" prefWidth="28.0" text="M" GridPane.columnIndex="5" GridPane.rowIndex="4">
+                  <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" prefWidth="28.0" text="MN" GridPane.columnIndex="5" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

@@ -56,6 +56,7 @@ import br.com.milkmoney.model.OptionChoiceFilter;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.model.State;
@@ -99,12 +100,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	//filters
 	@FXML private ChoiceBox<OptionChoiceFilter> choiceFilter;
-	@FXML private ChoiceBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo;
+	@FXML private ChoiceBox<String> inputSituacaoAnimal, inputFinalidadeAnimal, inputSexo, inputCobertaInseminada;
 	@FXML private ChoiceBox<String> inputSituacaoCobertura;
 	@FXML private ChoiceBox<Lote> inputLote;
 	@FXML private ChoiceBox<Raca> inputRaca;
-	@FXML private TextField inputIdadeDe, inputIdadeAte, inputDiasPosParto, inputDiasPosCobertura, inputNumeroPartos, 
-							inputNaoCobertasXDias, inputSecarEmXDias;
+	@FXML private TextField inputIdadeDe, inputIdadeAte, inputDiasPosParto, inputDiasPosCobertura, inputNumeroPartos, inputSecarEmXDias;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
@@ -166,9 +166,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					inputRaca.getItems().setAll(racaService.findAll());
 				if ( inputSexo.getItems().size() <= 0 )
 					inputSexo.getItems().setAll(Sexo.getItems());
-				if ( inputFinalidadeAnimal.getItems().size() <= 0 ){
+				if ( inputFinalidadeAnimal.getItems().size() <= 0 )
 					inputFinalidadeAnimal.getItems().setAll(FinalidadeAnimal.getItems());
-				}
+				if ( inputCobertaInseminada.getItems().size() <= 0 )
+					inputCobertaInseminada.getItems().setAll(SimNao.getItems());
 				
 				initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 				
@@ -195,7 +196,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
 			params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
 			params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
-			params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, !inputNaoCobertasXDias.getText().isEmpty() ? inputNaoCobertasXDias.getText() : null);
+			params.put(AnimalService.FILTER_COBERTAS, inputCobertaInseminada.getValue() != null ? inputCobertaInseminada.getValue() : null);
 			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
 			params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
 			table.getItems().setAll( ((AnimalService)service).fill(params) );
@@ -217,12 +218,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		inputSituacaoCobertura.getSelectionModel().clearSelection();
 		inputRaca.getSelectionModel().clearSelection();
 		inputFinalidadeAnimal.getSelectionModel().clearSelection();
+		inputCobertaInseminada.getSelectionModel().clearSelection();
 		inputIdadeDe.clear();
 		inputIdadeAte.clear();
 		inputDiasPosParto.clear();
 		inputDiasPosCobertura.clear();
 		inputNumeroPartos.clear(); 
-		inputNaoCobertasXDias.clear();
 		inputSecarEmXDias.clear();
 
 		if ( inputPesquisa != null ){
