@@ -31,7 +31,7 @@
                </children>
             </HBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
          </children>
          <padding>
             <Insets right="5.0" />

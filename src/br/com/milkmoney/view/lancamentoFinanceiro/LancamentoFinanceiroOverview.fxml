@@ -69,7 +69,7 @@
                   <ToggleButton fx:id="tbNov" maxWidth="38.0" minHeight="30.0" minWidth="38.0" mnemonicParsing="false" text="Nov" HBox.hgrow="SOMETIMES" />
                   <ToggleButton fx:id="tbDez" maxWidth="38.0" minHeight="30.0" minWidth="38.0" mnemonicParsing="false" text="Dez" HBox.hgrow="SOMETIMES" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button minHeight="30.0" mnemonicParsing="false" onAction="#imprimir" text="Imprimir" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar">

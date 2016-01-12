@@ -17,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
@@ -137,59 +139,73 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML
 	public void initialize() {
-		
-		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
-		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-		nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
-		loteColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("lote"));
-		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
-		idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
-		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
-		sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-		opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(registrarCoberturaAnimal, encerrarLactacaoAnimal, 
-																			  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
-																			  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
-		
-		//filters
-		if ( inputSituacaoAnimal.getItems().size() <= 0 )
-			inputSituacaoAnimal.getItems().setAll(SituacaoAnimal.getItems());
-		if ( inputSituacaoCobertura.getItems().size() <= 0 )
-			inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getItems());
-		if ( inputLote.getItems().size() <= 0 )
-			inputLote.getItems().setAll(loteService.findAll());
-		if ( inputRaca.getItems().size() <= 0 )
-			inputRaca.getItems().setAll(racaService.findAll());
-		if ( inputSexo.getItems().size() <= 0 )
-			inputSexo.getItems().setAll(Sexo.getItems());
-		if ( inputFinalidadeAnimal.getItems().size() <= 0 ){
-			inputFinalidadeAnimal.getItems().setAll(FinalidadeAnimal.getItems());
-		}
-		
-		super.initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
-		
-		if ( table.getItems().size() > 0 )
-			table.getSelectionModel().select(0);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
+				numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+				nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
+				loteColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("lote"));
+				dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
+				idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
+				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
+				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
+				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(registrarCoberturaAnimal, encerrarLactacaoAnimal, 
+																					  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
+																					  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
+				
+				//filters
+				if ( inputSituacaoAnimal.getItems().size() <= 0 )
+					inputSituacaoAnimal.getItems().setAll(SituacaoAnimal.getItems());
+				if ( inputSituacaoCobertura.getItems().size() <= 0 )
+					inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getItems());
+				if ( inputLote.getItems().size() <= 0 )
+					inputLote.getItems().setAll(loteService.findAll());
+				if ( inputRaca.getItems().size() <= 0 )
+					inputRaca.getItems().setAll(racaService.findAll());
+				if ( inputSexo.getItems().size() <= 0 )
+					inputSexo.getItems().setAll(Sexo.getItems());
+				if ( inputFinalidadeAnimal.getItems().size() <= 0 ){
+					inputFinalidadeAnimal.getItems().setAll(FinalidadeAnimal.getItems());
+				}
+				
+				initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
+				
+				if ( table.getItems().size() > 0 )
+					table.getSelectionModel().select(0);
+				
+			}
+		});
 		
 	}
 	
 	@FXML
-	private void handleEnterFilter(){
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
-		params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);
-		params.put(AnimalService.FILTER_IDADE_DE, !inputIdadeDe.getText().isEmpty() ? inputIdadeDe.getText() : null);
-		params.put(AnimalService.FILTER_IDADE_ATE, !inputIdadeAte.getText().isEmpty() ? inputIdadeAte.getText() : null);
-		params.put(AnimalService.FILTER_LOTE, inputLote.getValue() != null ? String.valueOf(inputLote.getValue().getId()) : null);
-		params.put(AnimalService.FILTER_RACA, inputRaca.getValue() != null ? String.valueOf(inputRaca.getValue().getId()) : null);
-		params.put(AnimalService.FILTER_SEXO, inputSexo.getValue() != null ? inputSexo.getValue() : null);
-		params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
-		params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
-		params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
-		params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, !inputNaoCobertasXDias.getText().isEmpty() ? inputNaoCobertasXDias.getText() : null);
-		params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
-		params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
-		table.getItems().setAll( ((AnimalService)service).fill(params) );
+	private void handleEnterFilter(KeyEvent event){
+		
+		if (event.getCode().equals(KeyCode.ENTER)) {
+			HashMap<String, String> params = new HashMap<String, String>();
+			params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
+			params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);
+			params.put(AnimalService.FILTER_IDADE_DE, !inputIdadeDe.getText().isEmpty() ? inputIdadeDe.getText() : null);
+			params.put(AnimalService.FILTER_IDADE_ATE, !inputIdadeAte.getText().isEmpty() ? inputIdadeAte.getText() : null);
+			params.put(AnimalService.FILTER_LOTE, inputLote.getValue() != null ? String.valueOf(inputLote.getValue().getId()) : null);
+			params.put(AnimalService.FILTER_RACA, inputRaca.getValue() != null ? String.valueOf(inputRaca.getValue().getId()) : null);
+			params.put(AnimalService.FILTER_SEXO, inputSexo.getValue() != null ? inputSexo.getValue() : null);
+			params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
+			params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
+			params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
+			params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, !inputNaoCobertasXDias.getText().isEmpty() ? inputNaoCobertasXDias.getText() : null);
+			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
+			params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
+			table.getItems().setAll( ((AnimalService)service).fill(params) );
+			updateLabelNumRegistros();	
+		}
+		
+		if (event.getCode().equals(KeyCode.ESCAPE)) {
+			clearFilter();
+		}
+		
 	}
 	
 	@Override

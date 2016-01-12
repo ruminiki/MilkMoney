@@ -28,7 +28,7 @@
                </cursor>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+            <Button mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
             <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
             <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">

@@ -32,10 +32,10 @@
                <children>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button defaultButton="true" layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                  <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
                </children>
             </HBox>
             <Separator orientation="VERTICAL" prefHeight="200.0" />

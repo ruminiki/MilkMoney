@@ -115,7 +115,7 @@
                         <UCTextField fx:id="inputValorUnitario" maxWidth="109.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                          <Label text="Observação: " GridPane.rowIndex="3" />
                         <UCTextField fx:id="inputObservacaoInsumo" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#adicionarItemCompra" text="Adicionar Insumo" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                        <Button mnemonicParsing="false" onAction="#adicionarItemCompra" text="Adicionar Insumo" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>

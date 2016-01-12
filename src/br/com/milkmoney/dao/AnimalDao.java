@@ -68,24 +68,39 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_PARTO) != null ){
+			if ( !params.get(AnimalService.FILTER_DIAS_POS_PARTO).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+				params.put(AnimalService.FILTER_DIAS_POS_PARTO, "= " + params.get(AnimalService.FILTER_DIAS_POS_PARTO).replaceAll("[^0-9]", ""));
+			}
 			SQL.append("exists (select 1 from Parto p where p.cobertura.femea = a) and ");
 			SQL.append("DATEDIFF(current_date(), (select max(p1.data) from Parto p1 where p1.cobertura.femea = a)) " + params.get(AnimalService.FILTER_DIAS_POS_PARTO) + " and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) != null ){
+			if ( !params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+				params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, "= " + params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).replaceAll("[^0-9]", ""));
+			}
 			SQL.append("exists (select 1 from Cobertura c where c.femea = a) and ");
 			SQL.append("DATEDIFF(current_date(), (select max(c1.data) from Cobertura c1 where c1.femea = a)) " + params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) + " and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_NUMERO_PARTOS) != null ){
+			if ( !params.get(AnimalService.FILTER_NUMERO_PARTOS).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+				params.put(AnimalService.FILTER_NUMERO_PARTOS, "= " + params.get(AnimalService.FILTER_NUMERO_PARTOS).replaceAll("[^0-9]", ""));
+			}
 			SQL.append("(select count(*) from Parto p where p.cobertura.femea = a) " + params.get(AnimalService.FILTER_NUMERO_PARTOS) + " and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) != null ){
-			SQL.append("not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) + " and c.situacaoCobertura not in ('" + SituacaoCobertura.VAZIA + "','" + SituacaoCobertura.PARIDA + "') and ");
+			if ( !params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+				params.put(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO, "= " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO).replaceAll("[^0-9]", ""));
+			}
+			SQL.append("not exists (select 1 from Cobertura c where c.femea = a and DATEDIFF(current_date(), c.data) " + params.get(AnimalService.FILTER_NAO_COBERTAS_X_DIAS_APOS_PARTO) + " and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) != null ){
+			if ( !params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).matches(">=.*|<=.*|<.*|>.*|=.*") ){
+				params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, "= " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).replaceAll("[^0-9]", ""));
+			}
 			SQL.append("exists (select 1 from Lactacao l where l.animal = a) and ");
 			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and (DATEDIFF(current_date(), lc.dataInicio) + " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") >= 305 and lc.dataFim is null) and ");
 		}
@@ -98,11 +113,11 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 			SQL.append("not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal = a) ");
 		}
 		
-		if ( SQL.toString().endsWith("and ") ){
+		if ( SQL.toString().toLowerCase().endsWith("and ") ){
 			SQL.setLength(SQL.length() - 4);
 		}
 		
-		if ( SQL.toString().endsWith("WHERE ") ){
+		if ( SQL.toString().toLowerCase().endsWith("where ") ){
 			SQL.setLength(SQL.length() - 6);
 		} 
 		

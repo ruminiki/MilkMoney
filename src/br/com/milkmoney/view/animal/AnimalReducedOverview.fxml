@@ -33,7 +33,7 @@
                   <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button defaultButton="true" minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
                   <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">

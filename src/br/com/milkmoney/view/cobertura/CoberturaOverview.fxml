@@ -26,7 +26,7 @@
                      </cursor>
                   </Button>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button fx:id="btnNew" defaultButton="true" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button fx:id="btnNew" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button fx:id="btnEdit" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button fx:id="btnRemove" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />

@@ -26,7 +26,7 @@
             <Separator orientation="VERTICAL" prefHeight="200.0" />
             <HBox alignment="CENTER_LEFT" spacing="5.0">
                <children>
-                  <Button defaultButton="true" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
