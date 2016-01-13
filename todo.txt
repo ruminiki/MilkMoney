@@ -1,6 +1,5 @@
 ERROS e REQUISITOS
 
-- Animal com uma cobertura e 130% de eficiência....
 - Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
 http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
@@ -22,7 +21,8 @@ http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
 
 - backup do banco de dados
 - Fazer ficha igual a do Anderson...
-- Impressão da ficha do animal não está funcionando
+- Fazer relatório de controle leiteiro
+
 
 - permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
 
