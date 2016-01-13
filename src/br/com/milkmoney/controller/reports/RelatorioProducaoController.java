@@ -22,8 +22,8 @@ public class RelatorioProducaoController extends AbstractReport{
 		MaskFieldUtil.numeroInteiro(inputAno);
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		Object[] params = new Object[]{inputAno.getText() != "" ? Integer.parseInt(inputAno.getText()) : LocalDate.now().getYear()};
 		

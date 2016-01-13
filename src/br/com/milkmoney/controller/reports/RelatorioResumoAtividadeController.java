@@ -17,13 +17,15 @@ public class RelatorioResumoAtividadeController extends AbstractReport{
 	
 	@FXML
 	public void initialize(){
-		super.initialize();
+		
 		inputAno.setText(String.valueOf(LocalDate.now().getYear()));
 		MaskFieldUtil.numeroInteiro(inputAno);
+		
+		super.initialize();
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		Object[] params = new Object[]{inputAno.getText() != "" ? Integer.parseInt(inputAno.getText()) : LocalDate.now().getYear() };
 		
@@ -38,7 +40,6 @@ public class RelatorioResumoAtividadeController extends AbstractReport{
 		super.handleClose();
 		
 		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		
 	}
 

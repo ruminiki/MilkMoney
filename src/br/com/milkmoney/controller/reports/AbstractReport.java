@@ -1,8 +1,13 @@
 package br.com.milkmoney.controller.reports;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -12,9 +17,10 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.service.RelatorioService;
 
-public class AbstractReport {
+public abstract class AbstractReport {
 	
 	@FXML protected ToggleButton btnPDF, btnXLS;
+	@FXML protected Button btnExecutar;
 	@Autowired protected RelatorioService relatorioService;
 	@Autowired protected RootLayoutController rootLayoutController;
 	
@@ -39,7 +45,28 @@ public class AbstractReport {
 			
 		}
 		
+		if ( btnExecutar != null ){
+			
+			Scene scene = btnExecutar.getScene();
+			if ( scene != null ){
+				scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+					@Override
+					public void handle(KeyEvent event) {
+						if ( event.getCode().equals(KeyCode.ENTER) ){
+							handleExecutar();
+						}
+					}
+					
+				});
+			}
+			
+		}
+		
 	}
+	
+	@FXML
+	protected abstract void handleExecutar();
 	
 	@FXML
 	protected void handleClose(){

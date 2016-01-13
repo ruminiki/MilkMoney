@@ -45,8 +45,8 @@ public class RelatorioProcedimentosController extends AbstractSelectAnimalParame
 		
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		if ( listSelecionados.getItems().size() <= 0 ){
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");

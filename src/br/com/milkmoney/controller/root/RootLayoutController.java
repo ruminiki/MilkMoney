@@ -314,6 +314,11 @@ public class RootLayoutController {
     	openFormAsPopUp("view/reports/RelatorioEncerramentoLactacao.fxml", "Relatório Encerramento Lactações");
     }
     
+    @FXML
+    protected void handleReportControleLeiteiro(){
+    	openFormAsPopUp("view/reports/RelatorioControleLeiteiro.fxml", "Relatório Controle Leiteiro");
+    }
+    
 	public void openFormAsPopUp(String formPath, String title){
     	
     	AnchorPane form = (AnchorPane) MainApp.load(formPath);

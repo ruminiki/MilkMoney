@@ -184,7 +184,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML
 	private void handleEnterFilter(KeyEvent event){
 		
-		if (event.getCode().equals(KeyCode.ENTER)) {
+		if ( event.getCode().equals(KeyCode.ENTER) ) {
 			HashMap<String, String> params = new HashMap<String, String>();
 			params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
 			params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);

@@ -75,8 +75,8 @@ public class ApplicationService{
 							Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
 							
 							//recupera resultado da execução no terminal
-							Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
-							updateMessage(s.hasNext() ? s.next() : "");
+							//Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
+							//updateMessage(s.hasNext() ? s.next() : "");
 							
 							//remove arquivos temporários
 							Thread.sleep(1000);
@@ -87,7 +87,7 @@ public class ApplicationService{
 					        Thread.sleep(1000);
 
 					        //exibe o resultado da execução do script no log de atualização
-					        s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
+					        Scanner s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
 					        if ( s.hasNext() ){
 					        	updateMessage("---ERROS ENCONTRADOS---\n");
 					        	Thread.sleep(1000);

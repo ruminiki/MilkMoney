@@ -46,7 +46,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Executar Relatório">
+                  <Button fx:id="btnExecutar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Executar Relatório">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

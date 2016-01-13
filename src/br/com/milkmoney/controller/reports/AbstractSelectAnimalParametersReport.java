@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.model.Animal;
@@ -104,6 +105,11 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 				MainApp.resetLayout();
 			}
 		}
+	}
+	
+	@Override
+	protected void handleExecutar(){
+		throw new NotImplementedException();
 	}
 	
 }

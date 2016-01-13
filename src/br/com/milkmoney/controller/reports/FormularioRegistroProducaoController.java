@@ -16,7 +16,7 @@ import br.com.milkmoney.util.Util;
 import br.com.milkmoney.validation.Validator;
 
 @Controller
-public class FormularioRegistroProducaoController{
+public class FormularioRegistroProducaoController extends AbstractReport{
 
 	@FXML private ListView<String> listMeses;
 	@Autowired private RelatorioService relatorioService;
@@ -27,8 +27,8 @@ public class FormularioRegistroProducaoController{
 		listMeses.setItems(Util.generateListMonths());
 	}
 	
-	@FXML
-	private void handleClose(){
+	@Override
+	protected void handleClose(){
 		if ( listMeses != null ){
 			Stage stage = (Stage)listMeses.getScene().getWindow();
 			// se for popup
@@ -40,8 +40,8 @@ public class FormularioRegistroProducaoController{
 		}
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		if ( listMeses.getItems().size() <= 0 ){
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione um mês para executar o relatório.");

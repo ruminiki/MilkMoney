@@ -1,15 +1,32 @@
 package br.com.milkmoney.controller.reports;
 
+import java.time.LocalDate;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
+
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.RelatorioService;
+import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.Validator;
 
 @Controller
-public class RelatorioFichaAnimalController extends AbstractSelectAnimalParametersReport {
+public class RelatorioControleLeiteiroController extends AbstractSelectAnimalParametersReport {
 
+	@FXML private DatePicker inputDataInicio, inputDataFim;
+	
+	@FXML
+	public void initialize() {
+		super.initialize();
+		
+		inputDataInicio.setValue(LocalDate.now().minusYears(1));
+		inputDataFim.setValue(LocalDate.now());
+		
+	}
+	
 	@Override
 	protected void handleExecutar(){
 		
@@ -25,14 +42,21 @@ public class RelatorioFichaAnimalController extends AbstractSelectAnimalParamete
 			sb.append(",");
 		}
 		
-		sb.replace(sb.length(), sb.length(), "");
+		sb.setLength(sb.length() - 1);
+		
+		Object[] params = new Object[]{
+				sb.toString(),
+				inputDataInicio.getValue() != null ? DateUtil.asDate(inputDataInicio.getValue()) : null,
+				inputDataFim.getValue() != null ? DateUtil.asDate(inputDataFim.getValue()) : null
+		};
+		
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_ANIMAL, sb.toString());
+				RelatorioService.RELATORIO_CONTROLE_LEITEIRO, params);
 		}else{
 			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_ANIMAL, sb.toString());
+					RelatorioService.RELATORIO_CONTROLE_LEITEIRO, params);
 		}
 		
 		super.handleClose();

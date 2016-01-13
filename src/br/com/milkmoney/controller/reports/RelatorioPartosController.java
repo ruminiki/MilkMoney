@@ -37,8 +37,8 @@ public class RelatorioPartosController extends AbstractReport{
 		super.initialize();
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		Object[] params = new Object[]{
 				inputDataDe.getValue() == null ? new Date() : DateUtil.asDate(inputDataDe.getValue()),

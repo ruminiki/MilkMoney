@@ -20,8 +20,8 @@ public class RelatorioPartosPrevistosController extends AbstractReport{
 		MaskFieldUtil.numeroInteiro(inputQuantidadeDias);
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		Object[] params = new Object[]{inputQuantidadeDias.getText() != "" ? Integer.parseInt(inputQuantidadeDias.getText()) : 30 };
 		

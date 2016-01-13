@@ -55,8 +55,8 @@ public class RelatorioFinanceiroController extends AbstractReport{
 		
 	}
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		Object[] params = new Object[]{
 				DateUtil.asDate(inputDataDe.getValue()),

@@ -1,7 +1,5 @@
 package br.com.milkmoney.controller.reports;
 
-import javafx.fxml.FXML;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -16,8 +14,8 @@ public class FormularioRegistroCoberturaController extends AbstractSelectAnimalP
 	
 	@Autowired private RootLayoutController rootLayoutController;
 	
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		if ( listSelecionados.getItems().size() <= 0 ){
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");

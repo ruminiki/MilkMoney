@@ -1,7 +1,5 @@
 package br.com.milkmoney.controller.reports;
 
-import javafx.fxml.FXML;
-
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.exception.ValidationException;
@@ -12,8 +10,8 @@ import br.com.milkmoney.validation.Validator;
 @Controller
 public class RelatorioRankingAnimaisController extends AbstractSelectAnimalParametersReport {
 
-	@FXML
-	private void handleExecutar(){
+	@Override
+	protected void handleExecutar(){
 		
 		if ( listSelecionados.getItems().size() <= 0 ){
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");
