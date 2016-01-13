@@ -25,6 +25,7 @@ import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Propriedade;
+import br.com.milkmoney.service.ApplicationService;
 import br.com.milkmoney.service.PropriedadeService;
 import br.com.milkmoney.validation.Validator;
 
@@ -32,7 +33,7 @@ import br.com.milkmoney.validation.Validator;
 @Controller
 public class RootLayoutController {
 	
-	@FXML private Label lblHeader, lblMessage;
+	@FXML private Label lblHeader, lblMessage, lblSistema;
 	@FXML private Hyperlink hlPropriedade;
 	@FXML private UCTextField inputNumeroAnimal;
 	
@@ -59,7 +60,9 @@ public class RootLayoutController {
 			}
 		});
 		
-		lblHeader.setText("Milk Money® - Gestão de Rebanhos Leiteiros");
+		String versao = new ApplicationService().getVersaoSistema();
+		
+		lblSistema.setText("Milk Money® - Gestão de Rebanhos Leiteiros - v" + versao);
 		lblMessage.textProperty().bind(message);
 		
 		inputNumeroAnimal.setOnKeyPressed(new EventHandler<KeyEvent>() {

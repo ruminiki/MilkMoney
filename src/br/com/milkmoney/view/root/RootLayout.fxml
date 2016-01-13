@@ -106,13 +106,14 @@
       		</MenuBar>
             <HBox fx:id="hBoxBreadCrumbs" alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #C2D1B2;" VBox.vgrow="SOMETIMES">
                <children>
-                  <Label fx:id="lblHeader" text="Label">
+                  <Label fx:id="lblSistema" text="Label">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin></Label>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" HBox.hgrow="SOMETIMES">
                      <children>
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <Label fx:id="lblHeader" />
                         <Label fx:id="lblMessage">
                            <HBox.margin>
                               <Insets left="5.0" />

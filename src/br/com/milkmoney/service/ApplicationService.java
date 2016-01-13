@@ -16,10 +16,12 @@ import javafx.concurrent.Task;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.hadoop.fs.FileUtil;
+import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.ApplicationDao;
 import br.com.milkmoney.model.Sistema;
 
+@Service
 public class ApplicationService{
 
 	public StringProperty message = new SimpleStringProperty();
@@ -239,6 +241,11 @@ public class ApplicationService{
 		}
 		
 		return null;
+	}
+	
+	public String getVersaoSistema(){
+		Sistema sistema = new ApplicationDao().getVersaoSistema();
+		return sistema != null ? sistema.getVersao() : null;
 	}
 
 }

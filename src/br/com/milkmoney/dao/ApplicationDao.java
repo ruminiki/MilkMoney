@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;
 
+import org.springframework.stereotype.Repository;
+
 import br.com.milkmoney.model.Sistema;
 
+@Repository
 public class ApplicationDao extends AbstractGenericDao<Integer, Object> {
 	
 	public Sistema getVersaoSistema() {
