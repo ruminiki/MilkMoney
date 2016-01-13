@@ -169,9 +169,9 @@ public class RelatorioService {
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				case RELATORIO_RANKING_ANIMAIS:
-        					fichaAnimalService.generateFichaForAll();
+        					fichaAnimalService.generateFichaAnimal((List<Animal>)param[0], null);
         					masterReport = GenericPentahoReport.getReportDefinition(report);
-        					masterReport.getParameterValues().put("animais", param[0]);
+        					masterReport.getParameterValues().put("animais", param[1]);
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					GenericPentahoReport.runReport(format, masterReport);
         					break;

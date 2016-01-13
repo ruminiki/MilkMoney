@@ -27,14 +27,20 @@ public class RelatorioRankingAnimaisController extends AbstractSelectAnimalParam
 			sb.append(",");
 		}
 		
-		sb.replace(sb.length(), sb.length(), "");
+		sb.setLength(sb.length() - 1);
+		
+		Object[] params = new Object[]{
+			listSelecionados.getItems(),
+			sb.toString()
+		};
+
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_RANKING_ANIMAIS, sb.toString());
+				RelatorioService.RELATORIO_RANKING_ANIMAIS, params);
 		}else{
 			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_RANKING_ANIMAIS, sb.toString());
+					RelatorioService.RELATORIO_RANKING_ANIMAIS, params);
 		}
 		
 		super.handleClose();
