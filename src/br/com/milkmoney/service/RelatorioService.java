@@ -1,6 +1,7 @@
 package br.com.milkmoney.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javafx.concurrent.Task;
 import javafx.scene.Cursor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
+import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Propriedade;
 
 @Service
@@ -47,15 +49,16 @@ public class RelatorioService {
 	        @Override
 	        protected Task createTask() {
 	            return new Task<Void>() {
-	                @Override protected Void call() throws Exception {
+	                @SuppressWarnings("unchecked")
+					@Override protected Void call() throws Exception {
 	                	//deve ter cadastrado a propriedade
 	        			Propriedade propriedade = propriedadeService.findAll().get(0);
 	        			MasterReport masterReport;
         		    	switch (report) {
         				case FICHA_ANIMAL:
-        					fichaAnimalService.generateFichaForAll();
+        					fichaAnimalService.generateFichaAnimal((List<Animal>)param[0], null);
         					masterReport = GenericPentahoReport.getReportDefinition(report);
-        					masterReport.getParameterValues().put("animais", param[0]);
+        					masterReport.getParameterValues().put("animais", param[1]);
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					GenericPentahoReport.runReport(format, masterReport);
         					break;

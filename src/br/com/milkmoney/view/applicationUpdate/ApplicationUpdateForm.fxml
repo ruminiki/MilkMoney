@@ -31,7 +31,7 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Agora Não" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" right="3.0" />

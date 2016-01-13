@@ -229,6 +229,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( inputPesquisa != null ){
 			inputPesquisa.clear();
 		}
+		
+		super.refreshTableOverview();
 
 	}
 	
@@ -566,15 +568,20 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		//os ids dos animais selecionados são passados como parâmetro
 		StringBuilder sb = new StringBuilder();
 		
-		for ( Animal animal :table.getItems() ){
+		for ( Animal animal : table.getItems() ){
 			sb.append(animal.getId());
 			sb.append(",");
 		}
 		
-		sb.replace(sb.length(), sb.length(), "");
+		sb.setLength(sb.length() - 1);
+		
+		Object[] params = new Object[]{
+			table.getItems(),
+			sb.toString()
+		};
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_ANIMAL, sb.toString());
+				RelatorioService.FICHA_ANIMAL, params);
 		
 	}
 	

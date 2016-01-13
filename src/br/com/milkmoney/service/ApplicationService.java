@@ -58,7 +58,7 @@ public class ApplicationService{
 						try{
 							FileUtils.copyURLToFile(new URL(URL), fileUpdate);
 						}catch(FileNotFoundException ex){
-							updateMessage("Arquivo " + URL + " não encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.\n");
+							updateMessage("O arquivo " + URL + " não foi encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.\n");
 							return null;
 						}
 						
@@ -184,6 +184,11 @@ public class ApplicationService{
 
 				File f = new File("update.properties");
 
+				if ( sistema == null ){
+					System.out.println("Verificação de atualização não pôde ser concluída. Não foi possível recuperar a versão atual do sistema.");   
+					return null;
+				}
+				
 				try {
 					URL urlUpdate = new URL(URL);
 					
@@ -218,7 +223,7 @@ public class ApplicationService{
 					        		updateVersion = updateVersion.substring(0, updateVersion.length() - 2);
 					        		return updateVersion;
 					        	}
-					        	System.out.println("Existem nova versão do sistema: " + updateVersion);	
+					        	System.out.println("Existe nova versão do sistema: " + updateVersion);	
 					        }
 							
 						}
