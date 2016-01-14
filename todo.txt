@@ -1,32 +1,15 @@
 ERROS e REQUISITOS
 
-- Fazer a taxa de prenhez, concepção e detecção de cio por períodos de 21 dias ao longo de um ano;http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/dhiashet.htm
-http://cal.vet.upenn.edu/projects/fieldservice/Dairy/REPRO/REPPROG/EVALREPR.htm
-
-- Fazer tela para mostrar as atividades da semana (confirmações de prenhez, vacas a inseminar, partos, encerramentos...)
-- permitir imprimir atividades da semana
-
+- backup do banco de dados
+- Não aparece na impressão mensal lançamentos fin que vencem em outros meses e foram pagos no mes atual;
+- Ajustar form de campo (repetição do cabeçalho...)
+- corrigir pesquisa por idade do animal (erro calculo meses de idade)
+- no lote quando remove todos os animais não recalcula nem salva
+- colocar gráfico do preço do leite na tela de cadastro
+- Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
-	
-- Alterar a tela de eventos para ser no formato de relatório (tipo a planilha do butendieck)
-
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
 
---Relatórios
-	- Fazer relatório com índices mes a mes (taxa prenhez, taxa detec., Taxa concep. IEP, ER).
-
-- fazer log de acessos ao sistema
-- criar barra para exibição de mensagens. EX: exibir que o relatório está sendo executado;
-
-- backup do banco de dados
-- Fazer ficha igual a do Anderson...
-- Fazer relatório de controle leiteiro
-
-
-- permitir digitar o nome do animal nos campos de seleção (fazer o full text search)
-
-- Tela indicadores
-- media idade ao primeiro parto
 
 - está permitindo deletar o animal (cria) sem remover o parto.

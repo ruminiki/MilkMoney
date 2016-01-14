@@ -36,8 +36,8 @@ public class ApplicationService{
 				try {
 					
 					String[] versoes = version.split("\\,");
-					
 					String URL_UPDATE = getUrlUpdate();
+					String FILE_RUN = getFileRun();
 					
 					//caso existam mais de uma versão para atualizar, atualiza todas de uma vez
 					for ( int i = 0; i < versoes.length; i++ ){
@@ -67,7 +67,7 @@ public class ApplicationService{
 						updateMessage("Descompactando arquivos\n");
 						Thread.sleep(1000);
 						FileUtil.unZip(fileUpdate, destination);
-					    File fileRun = new File(versao + File.separator +  getFileRun());
+					    File fileRun = new File(versao + File.separator +  FILE_RUN);
 						
 						if ( fileRun != null ){
 							//executa script de atualização
@@ -85,7 +85,7 @@ public class ApplicationService{
 							updateMessage("Removendo arquivos temporários\n");
 							Thread.sleep(1000);
 					        FileUtils.forceDelete(destination);
-					        updateMessage("Arquivos removidos com sucesso.\n\n");
+					        updateMessage("Arquivos removidos com sucesso\n");
 					        Thread.sleep(1000);
 
 					        //exibe o resultado da execução do script no log de atualização
@@ -95,7 +95,7 @@ public class ApplicationService{
 					        	Thread.sleep(1000);
 					        	updateMessage(s.next());
 					        	Thread.sleep(1000);
-					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n\n");
+					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n");
 					        	Thread.sleep(1000);
 					        	return null;
 					        }else{

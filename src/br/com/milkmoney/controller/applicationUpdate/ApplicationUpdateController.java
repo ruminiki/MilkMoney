@@ -59,7 +59,7 @@ public class ApplicationUpdateController {
 			});
 	    	
 	    	progressBar.progressProperty().unbind();
-	    	progressBar.setProgress(100);
+	    	progressBar.setProgress(1);
 	    	
 		});
 		

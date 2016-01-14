@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="281.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController">
+<AnchorPane prefHeight="281.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController">
    <children>
-      <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0">
                <children>
@@ -20,9 +20,9 @@
                      </font></Label>
                </children>
             </HBox>
-            <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" scaleShape="false" style="-fx-focus-color: transparent;" />
-            <ProgressBar fx:id="progressBar" focusTraversable="false" minWidth="589.0" prefHeight="18.0" prefWidth="589.0" progress="0.0" visible="false" />
-            <VBox minHeight="27.0" prefHeight="27.0" prefWidth="589.0" VBox.vgrow="NEVER">
+            <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxWidth="580.0" minWidth="580.0" scaleShape="false" style="-fx-focus-color: transparent;" />
+            <ProgressBar fx:id="progressBar" focusTraversable="false" maxWidth="580.0" minWidth="580.0" prefHeight="18.0" progress="0.0" visible="false" />
+            <VBox minHeight="27.0" prefHeight="27.0" prefWidth="589.0">
                <children>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
                      <children>
@@ -31,7 +31,10 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Agora Não" />
+                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Agora Não">
+                           <HBox.margin>
+                              <Insets right="2.0" />
+                           </HBox.margin></Button>
                      </children>
                      <padding>
                         <Insets bottom="5.0" right="3.0" />
