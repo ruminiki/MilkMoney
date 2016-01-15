@@ -155,29 +155,57 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 																					  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
 																					  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
 				
+				table.widthProperty().addListener((observable, oldValue, newValue) -> resizeColunaTabela(newValue));
+				
 				//filters
-				if ( inputSituacaoAnimal.getItems().size() <= 0 )
+				if ( inputSituacaoAnimal.getItems().size() <= 0 ){
 					inputSituacaoAnimal.getItems().setAll(SituacaoAnimal.getItems());
-				if ( inputSituacaoCobertura.getItems().size() <= 0 )
+				}
+				
+				if ( inputSituacaoCobertura.getItems().size() <= 0 ){
 					inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getItems());
-				if ( inputLote.getItems().size() <= 0 )
+				}
+				
+				if ( inputLote.getItems().size() <= 0 ){
 					inputLote.getItems().setAll(loteService.findAll());
-				if ( inputRaca.getItems().size() <= 0 )
+				}
+				
+				if ( inputRaca.getItems().size() <= 0 ){
 					inputRaca.getItems().setAll(racaService.findAll());
-				if ( inputSexo.getItems().size() <= 0 )
+				}
+				
+				if ( inputSexo.getItems().size() <= 0 ){
 					inputSexo.getItems().setAll(Sexo.getItems());
-				if ( inputFinalidadeAnimal.getItems().size() <= 0 )
+				}
+				
+				if ( inputFinalidadeAnimal.getItems().size() <= 0 ){
 					inputFinalidadeAnimal.getItems().setAll(FinalidadeAnimal.getItems());
-				if ( inputCobertaInseminada.getItems().size() <= 0 )
+				}
+				
+				if ( inputCobertaInseminada.getItems().size() <= 0 ){
 					inputCobertaInseminada.getItems().setAll(SimNao.getItems());
+				}
 				
 				initialize((AnimalFormController)MainApp.getBean(AnimalFormController.class));
 				
-				if ( table.getItems().size() > 0 )
+				if ( table.getItems().size() > 0 ){
 					table.getSelectionModel().select(0);
+				}
 				
 			}
 		});
+		
+	}
+	
+	private void resizeColunaTabela(Number newWidth){
+		
+		double width = newWidth.doubleValue();
+		
+		if ( width >= 590 ){
+			nomeColumn.minWidthProperty().set((width - 590) * 0.50);
+			loteColumn.minWidthProperty().set((width - 590) * 0.25);
+			racaColumn.minWidthProperty().set((width - 590) * 0.25);
+		}
 		
 	}
 	
