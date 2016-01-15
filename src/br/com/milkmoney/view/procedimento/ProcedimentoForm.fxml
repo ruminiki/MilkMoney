@@ -16,8 +16,8 @@
               <columnConstraints>
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="137.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="129.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="96.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="115.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="103.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="649.0" minWidth="10.0" prefWidth="276.0" />
               </columnConstraints>
               <rowConstraints>
@@ -41,9 +41,9 @@
                      </GridPane.margin>
                   </Button>
                   <Label text="Data Agendada: " GridPane.rowIndex="1" />
-                  <DatePicker fx:id="inputDataAgendada" maxWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="inputDataAgendada" maxWidth="110.0" minWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Data Realização:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <DatePicker fx:id="inputDataRealizacao" maxWidth="110.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                  <DatePicker fx:id="inputDataRealizacao" maxWidth="110.0" minWidth="110.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

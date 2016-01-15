@@ -1,5 +1,6 @@
 package br.com.milkmoney.controller.lote;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -38,11 +39,18 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 	protected void handleSelectItemTable() {
 		super.handleSelectItemTable();
 		if ( getObject() != null ){
-			listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
-			lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-			lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
-			lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
-			lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
+			
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
+					lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
+					lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
+					lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
+					lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));						
+				}
+			});
+			
 		}
 	}
 	

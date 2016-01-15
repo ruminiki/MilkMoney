@@ -1,15 +1,9 @@
 ERROS e REQUISITOS
 
 - backup do banco de dados
-- Não aparece na impressão mensal lançamentos fin que vencem em outros meses e foram pagos no mes atual;
 - Ajustar form de campo (repetição do cabeçalho...)
-- corrigir pesquisa por idade do animal (erro calculo meses de idade)
-- no lote quando remove todos os animais não recalcula nem salva
-- colocar gráfico do preço do leite na tela de cadastro
 - Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
-
-
 - está permitindo deletar o animal (cria) sem remover o parto.

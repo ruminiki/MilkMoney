@@ -65,7 +65,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_IDADE_DE) != null && params.get(AnimalService.FILTER_IDADE_ATE) != null ){
-			SQL.append("(DATEDIFF(current_date(), a.dataNascimento)/30) between " + params.get(AnimalService.FILTER_IDADE_DE) + " and " + params.get(AnimalService.FILTER_IDADE_ATE) + " and ");
+			SQL.append("TIMESTAMPDIFF(MONTH, a.dataNascimento, current_date()) between " + params.get(AnimalService.FILTER_IDADE_DE) + " and " + params.get(AnimalService.FILTER_IDADE_ATE) + " and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_PARTO) != null ){

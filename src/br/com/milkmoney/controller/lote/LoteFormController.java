@@ -103,6 +103,8 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 		
 		btnRemoverTodos.setOnAction(action -> {
 			listAnimaisSelecionados.getItems().clear();
+			getObject().getAnimais().clear();
+			atualizaResumo();
 		});
 		
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
