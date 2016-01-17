@@ -98,6 +98,7 @@
       			</Menu>
                   <Menu mnemonicParsing="false" text="Sistema">
                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleBackupBancoDados" text="Cópia do Banco de Dados" />
       					<MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
       				  <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
                     </items>

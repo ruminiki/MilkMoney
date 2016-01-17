@@ -1,0 +1,6 @@
+- backup do banco de dados
+- Não aparece na impressão mensal lançamentos fin que vencem em outros meses e foram pagos no mes atual;
+- Ajustar form de campo (repetição do cabeçalho...)
+- corrigir pesquisa por idade do animal (erro calculo meses de idade)
+- no lote quando remove todos os animais não recalcula nem salva
+- colocar gráfico do preço do leite na tela de cadastro

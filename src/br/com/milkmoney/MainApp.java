@@ -38,7 +38,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController;
 import br.com.milkmoney.exception.GlobalExceptionHandler;
-import br.com.milkmoney.service.ApplicationService;
+import br.com.milkmoney.service.ApplicationUpdateService;
 
 public class MainApp extends Application {
 	
@@ -73,7 +73,7 @@ public class MainApp extends Application {
     		}
     	}
 		
-		ApplicationService applicationService = new ApplicationService();
+		ApplicationUpdateService applicationService = new ApplicationUpdateService();
 		String novaVersao = applicationService.getNumeroNovaVersao();
 		
 		if ( novaVersao != null ){

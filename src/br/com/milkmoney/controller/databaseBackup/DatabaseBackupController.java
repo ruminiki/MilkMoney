@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.applicationUpdate;
+package br.com.milkmoney.controller.databaseBackup;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -6,27 +6,29 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
-import br.com.milkmoney.service.ApplicationUpdateService;
+import br.com.milkmoney.service.DatabaseBackupService;
 
 @Controller
-public class ApplicationUpdateController {
+public class DatabaseBackupController {
 
-	@FXML private Button btnFinalizar, btnAtualizar;
+	@FXML private Button btnFinalizar, btnIniciar;
 	@FXML private TextArea taLog;
 	
-	private ApplicationUpdateService applicationService;
-	private String novaVersao;
+	@Autowired private DatabaseBackupService databaseBackupService;
 	
 	@FXML
-	private void handleAtualizar() {
+	private void handleIniciar() {
 		
-		btnAtualizar.setDisable(true);
+		btnIniciar.setDisable(true);
 		btnFinalizar.setDisable(true);
 		
 		((Stage)taLog.getScene().getWindow()).setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -34,13 +36,13 @@ public class ApplicationUpdateController {
 			@Override
 			public void handle(WindowEvent arg0) {
 				if ( btnFinalizar.isDisable() ){
-					CustomAlert.mensagemInfo("Por favor, aguarde enquanto a atualização é concluída.");					
+					CustomAlert.mensagemInfo("Por favor, aguarde enquanto o backup é concluído.");					
 				}
 			}
 			
 		});
 		
-		Task<Void> task = applicationService.update(novaVersao);
+		Task<Void> task = databaseBackupService.backup();
 		
 		task.setOnSucceeded(e -> {
 			btnFinalizar.setDisable(false);
@@ -51,7 +53,7 @@ public class ApplicationUpdateController {
 	    	btnFinalizar.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent arg0) {
-					System.exit(0);
+					handleCancel();
 				}
 			});
 	    	
@@ -69,16 +71,13 @@ public class ApplicationUpdateController {
 	
 	@FXML
 	private void handleCancel() {
-		((Stage)taLog.getScene().getWindow()).close();	
-	}
-	
-	public void setService(ApplicationUpdateService service){
-		this.applicationService = service;
-	}
-	
-	public void setVersao(String novaVersao){
-		this.novaVersao = novaVersao;
-		taLog.appendText("Nova versão encontrada: " + novaVersao + "\n");
+		Stage window = ((Stage)taLog.getScene().getWindow());
+		// se for popup
+		if ( window.getModality().equals(Modality.APPLICATION_MODAL) ){
+			window.close();	
+		}else{
+			MainApp.resetLayout();
+		}
 	}
 	
 }

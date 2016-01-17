@@ -25,7 +25,7 @@ import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Propriedade;
-import br.com.milkmoney.service.ApplicationService;
+import br.com.milkmoney.service.ApplicationUpdateService;
 import br.com.milkmoney.service.PropriedadeService;
 import br.com.milkmoney.validation.Validator;
 
@@ -60,7 +60,7 @@ public class RootLayoutController {
 			}
 		});
 		
-		String versao = new ApplicationService().getVersaoSistema();
+		String versao = new ApplicationUpdateService().getVersaoSistema();
 		
 		lblSistema.setText("Milk Money® - Gestão de Rebanhos Leiteiros - v" + versao);
 		lblMessage.textProperty().bind(message);
@@ -234,6 +234,11 @@ public class RootLayoutController {
     	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
     	controller.setNumeroDigitado(inputNumeroAnimal.getText());
     	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
+    }
+    
+    @FXML
+    protected void handleBackupBancoDados() {
+    	openFormAsPopUp("view/databaseBackup/DatabaseBackupForm.fxml", "Cópia do Banco de Dados");
     }
     
     //-----reports------

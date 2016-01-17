@@ -22,7 +22,7 @@ import br.com.milkmoney.dao.ApplicationDao;
 import br.com.milkmoney.model.Sistema;
 
 @Service
-public class ApplicationService{
+public class ApplicationUpdateService{
 
 	public StringProperty message = new SimpleStringProperty();
 	
@@ -61,11 +61,13 @@ public class ApplicationService{
 							FileUtils.copyURLToFile(new URL(URL), fileUpdate);
 						}catch(FileNotFoundException ex){
 							updateMessage("O arquivo " + URL + " não foi encontrado. \nA atualização será interrompida, por favor, contate o administrador do sistema.\n");
+							updateProgress(100, 100);
 							return null;
 						}
 						
 						updateMessage("Descompactando arquivos\n");
 						Thread.sleep(1000);
+						
 						FileUtil.unZip(fileUpdate, destination);
 					    File fileRun = new File(versao + File.separator +  FILE_RUN);
 						
@@ -76,10 +78,6 @@ public class ApplicationService{
 							
 							Process p = Runtime.getRuntime().exec(fileRun.getAbsolutePath());
 							
-							//recupera resultado da execução no terminal
-							//Scanner s = new Scanner(p.getInputStream()).useDelimiter("\\A");
-							//updateMessage(s.hasNext() ? s.next() : "");
-							
 							//remove arquivos temporários
 							Thread.sleep(1000);
 							updateMessage("Removendo arquivos temporários\n");
@@ -87,7 +85,7 @@ public class ApplicationService{
 					        FileUtils.forceDelete(destination);
 					        updateMessage("Arquivos removidos com sucesso\n");
 					        Thread.sleep(1000);
-
+					        
 					        //exibe o resultado da execução do script no log de atualização
 					        Scanner s = new Scanner(p.getErrorStream()).useDelimiter("\\A");
 					        if ( s.hasNext() ){
@@ -97,13 +95,13 @@ public class ApplicationService{
 					        	Thread.sleep(1000);
 					        	updateMessage("Atualização para a versão[" + versao + "] NÃO CONCLUÍDA. Por favor, contate o administrador ou tente novamente. \n");
 					        	Thread.sleep(1000);
+					        	updateProgress(100, 100);
 					        	return null;
 					        }else{
 					        	updateMessage("Atualização para a versão ["+versao+"] concluída com SUCESSO! \n\n");
 					        }
 					        
 					        Thread.sleep(1000);
-					        
 						}
 					}
 					

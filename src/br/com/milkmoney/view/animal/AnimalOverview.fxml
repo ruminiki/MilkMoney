@@ -120,9 +120,9 @@
                         </HBox>
                         <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                           <columns>
-                              <TableColumn fx:id="numeroColumn" maxWidth="-Infinity" minWidth="60.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Nº" />
-                              <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="-1.0" text="Nome" />
                               <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Situação" />
+                              <TableColumn fx:id="numeroColumn" maxWidth="-Infinity" minWidth="60.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Nº" />
+                              <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="200.0" text="Nome" />
                               <TableColumn fx:id="loteColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Lote" />
                               <TableColumn fx:id="racaColumn" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Raça" />
                               <TableColumn fx:id="sexoColumn" editable="false" maxWidth="-1.0" minWidth="45.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />

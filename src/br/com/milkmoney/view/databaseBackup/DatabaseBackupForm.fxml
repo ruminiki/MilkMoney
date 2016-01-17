@@ -8,29 +8,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="281.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController">
+<AnchorPane prefHeight="233.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.databaseBackup.DatabaseBackupController">
    <children>
       <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0">
                <children>
-                  <Label fx:id="lblCobertura" text="Atualização do Sistema">
+                  <Label fx:id="lblCobertura" text="Backup do Banco de Dados">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
                </children>
             </HBox>
-            <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxWidth="580.0" minWidth="580.0" scaleShape="false" style="-fx-focus-color: transparent;" />
+            <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxWidth="580.0" minWidth="580.0" prefHeight="142.0" prefWidth="580.0" scaleShape="false" style="-fx-focus-color: transparent;" />
             <VBox minHeight="27.0" prefHeight="27.0" prefWidth="589.0">
                <children>
                   <HBox alignment="BOTTOM_RIGHT" minHeight="30.0" spacing="5.0">
                      <children>
-                        <Button fx:id="btnAtualizar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAtualizar" text="Atualizar">
+                        <Button fx:id="btnIniciar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleIniciar" text="Iniciar">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Agora Não">
+                        <Button fx:id="btnFinalizar" mnemonicParsing="false" onAction="#handleCancel" text="Cancelar">
                            <HBox.margin>
                               <Insets right="2.0" />
                            </HBox.margin></Button>

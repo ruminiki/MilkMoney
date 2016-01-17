@@ -86,7 +86,7 @@ public class Lote extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	@FieldRequired(message="ativo")
-	public String isAtivo() {
+	public String getAtivo() {
 		return this.ativo.get();
 	}
 
