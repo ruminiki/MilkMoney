@@ -1,6 +1,10 @@
 ERROS e REQUISITOS
 
-- backup do banco de dados
+- bug cadastro parto. se fechar a tela cadastra igual...
+- ao selecionar algum animal não consegue se emitir as fichas (pelos relatórios)
+- no relatório ficha completa animal dar espaço entre 1F2M (crias)
+- colocar cor nos indicadores (verde e vermelho)
+- indicador taxa de serviço errada
 - Ajustar form de campo (repetição do cabeçalho...)
 - Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)

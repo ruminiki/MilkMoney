@@ -21,10 +21,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Nome: " />
-                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" />
-                  <Label text="Código: " GridPane.rowIndex="1" />
-                  <UCTextField fx:id="inputCodigo" maxWidth="180.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Nome: " GridPane.rowIndex="1" />
+                  <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Código: " />
+                  <UCTextField fx:id="inputCodigo" maxWidth="100.0" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
