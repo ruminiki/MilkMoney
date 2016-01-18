@@ -46,9 +46,9 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		
-		MaskFieldUtil.decimalWithoutMask(inputValor);
-		MaskFieldUtil.decimalWithoutMask(inputJuros);
-		MaskFieldUtil.decimalWithoutMask(inputMulta);
+		MaskFieldUtil.decimal(inputValor);
+		MaskFieldUtil.decimal(inputJuros);
+		MaskFieldUtil.decimal(inputMulta);
 		
 		if ( getObject().getCategoria() != null ){
 			inputCategoria.setText(getObject().getCategoria().toString());

@@ -140,7 +140,32 @@ public abstract class MaskFieldUtil {
             			!oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
             		String value = textField.getText();
                     value = value.replaceAll("[^0-9]", "");
-                    value = value.replaceAll("([0-9]{1})([0-9]{2})$", "$1,$2");
+                    
+                    if ( value.length() > 2 ){
+                    	switch (value.length()) {
+						case 3:
+							value = value.substring(0,1) + "," + value.substring(1,3);
+							break;
+						case 4:
+							value = value.substring(0,2) + "," + value.substring(2,4);
+							break;
+						case 5:
+							value = value.substring(0,3) + "," + value.substring(3,5);
+							break;
+						case 6:
+							value = value.substring(0,1) + "." + value.substring(1,4) + "," + value.substring(4,6);
+							break;
+						case 7:
+							value = value.substring(0,2) + "." + value.substring(2,5) + "," + value.substring(5,7);
+							break;
+						case 8:
+							value = value.substring(0,3) + "." + value.substring(3,6) + "," + value.substring(6,8);
+							break;
+						default:
+							value = value.substring(0,1) + "." + value.substring(1,4) + "." + value.substring(4,7) + "," + value.substring(7,9);
+							break;
+						}
+                    }
                     textField.setText(value);
                     positionCaret(textField);
                 }
