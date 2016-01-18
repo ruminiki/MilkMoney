@@ -2,12 +2,12 @@ ERROS e REQUISITOS
 
 X bug cadastro parto. se fechar a tela cadastra igual...
 X ao selecionar algum animal não consegue se emitir as fichas (pelos relatórios)
+X no relatório ficha completa animal dar espaço entre 1F2M (crias)
+X indicador taxa de serviço errada
+X colocar cor nos indicadores (verde e vermelho)
 
-- no relatório ficha completa animal dar espaço entre 1F2M (crias)
 
 
-- colocar cor nos indicadores (verde e vermelho)
-- indicador taxa de serviço errada
 - Ajustar form de campo (repetição do cabeçalho...)
 - Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)

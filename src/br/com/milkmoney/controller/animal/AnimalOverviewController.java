@@ -191,7 +191,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				if ( table.getItems().size() > 0 ){
 					table.getSelectionModel().select(0);
 				}
-				
+				resizeColunaTabela(table.getWidth());
 			}
 		});
 		

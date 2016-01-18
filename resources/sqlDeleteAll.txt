@@ -1,0 +1,17 @@
+delete from cobertura;
+delete from parto;
+delete from lactacao;
+delete from lote;
+delete from vendaAnimal;
+delete from morteAnimal;
+delete from producaoIndividual;
+delete from producaoLeite;
+delete from entregaLeite;
+delete from lancamentoFinanceiro;
+delete from centroCusto;
+update categoriaLancamentoFinanceiro set categoriaSuperiora = null;
+delete from categoriaLancamentoFinanceiro;
+update animal set paiEnseminacaoArtificial = null;
+update animal set paiMontaNatural = null;
+update animal set mae = null;
+delete from animal;

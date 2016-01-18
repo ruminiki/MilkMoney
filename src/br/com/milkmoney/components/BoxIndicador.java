@@ -67,7 +67,7 @@ public class BoxIndicador extends VBox {
 		
 		setStyle();
 		
-		labelValor.setFont(Font.font("System", 18));
+		labelValor.setFont(Font.font("System", 15));
 		labelDescricao.setFont(Font.font("System", 8));
 		
 		this.getChildren().clear();
@@ -143,15 +143,15 @@ public class BoxIndicador extends VBox {
 	}
 	
 	private String styleAbaixo(){
-		return "-fx-border-color: #CCC; -fx-border-radius: 50;";
+		return "-fx-border-color: #FF0000; -fx-border-radius: 50; -fx-border-width: 3";
 	}
 	
 	private String styleIdeal(){
-		return "-fx-border-color: #CCC; -fx-border-radius: 50;";
+		return "-fx-border-color: #33CC33; -fx-border-radius: 50; -fx-border-width: 3";
 	}
 	
 	private String styleAlerta(){
-		return "-fx-border-color: #CCC; -fx-border-radius: 50;";
+		return "-fx-border-color: #FFFF00; -fx-border-radius: 50; -fx-border-width: 3";
 	}
 	
 	private void onMouseHover(){

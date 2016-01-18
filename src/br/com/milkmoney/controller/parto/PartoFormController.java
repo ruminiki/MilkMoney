@@ -199,8 +199,6 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML
 	protected void handleAdicionarCria() {
 		
-		PartoValidation.validate(getObject());
-		
 		if ( inputIncorporadoAoRebanho.getValue() != null && 
 				inputIncorporadoAoRebanho.getValue().equals(SimNao.SIM) ){
 			
