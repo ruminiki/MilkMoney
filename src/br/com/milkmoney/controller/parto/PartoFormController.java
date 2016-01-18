@@ -156,6 +156,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	protected void beforeSave() {
 		super.beforeSave();
 		
+		PartoValidation.validate(getObject());
+		
 		Lactacao lactacao = new Lactacao();
 		lactacao.setParto(getObject());
 		lactacao.setAnimal(getObject().getCobertura().getFemea());

@@ -25,14 +25,19 @@ public class RelatorioFichaAnimalController extends AbstractSelectAnimalParamete
 			sb.append(",");
 		}
 		
-		sb.replace(sb.length(), sb.length(), "");
+		sb.setLength(sb.length() - 1);
+		
+		Object[] params = new Object[]{
+			listSelecionados.getItems(),
+			sb.toString()
+		};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_ANIMAL, sb.toString());
+				RelatorioService.FICHA_ANIMAL, params);
 		}else{
 			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_ANIMAL, sb.toString());
+					RelatorioService.FICHA_ANIMAL, params);
 		}
 		
 		super.handleClose();

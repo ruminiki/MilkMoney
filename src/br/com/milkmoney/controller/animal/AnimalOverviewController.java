@@ -340,7 +340,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 										partoFormController.setObject(new Parto(cobertura));
 										partoFormController.showForm();
 										
-										if ( partoFormController.getObject() != null ){
+										if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
 											cobertura.setParto(partoFormController.getObject());
 											coberturaService.registrarParto(cobertura);
 											setObject(service.findById(getObject().getId()));

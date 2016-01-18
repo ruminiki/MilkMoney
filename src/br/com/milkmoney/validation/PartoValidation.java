@@ -39,10 +39,6 @@ public class PartoValidation extends Validator {
 			throw new ValidationException(REGRA_NEGOCIO, "A data informada " + DateUtil.format(parto.getData()) + " é incompatível com a data da cobertura e previsão do parto. Por favor, atualize a data do parto e tente novamente.");
 		}
 		
-	}
-	
-	public static void validadeCrias(Parto parto){
-		
 		if ( parto.getCrias() == null || parto.getCrias().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"O parto deve ter pelo menos uma cria registrada.");
@@ -57,8 +53,9 @@ public class PartoValidation extends Validator {
 			}
 			
 		}
+		
 	}
-
+	
 	public static void validaEncerramentoLactacao(Parto parto, Lactacao lactacao) {
 		if ( lactacao != null ){
 			

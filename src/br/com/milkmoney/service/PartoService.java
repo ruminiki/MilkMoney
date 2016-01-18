@@ -67,7 +67,6 @@ public class PartoService implements IService<Integer, Parto>{
 	@Override
 	public void validate(Parto parto) {
 		PartoValidation.validate(parto);
-		PartoValidation.validadeCrias(parto);
 		PartoValidation.validaEncerramentoLactacao(parto, lactacaoService.findLastBeforeDate(parto.getCobertura().getFemea(), parto.getCobertura().getData()));
 	}
 

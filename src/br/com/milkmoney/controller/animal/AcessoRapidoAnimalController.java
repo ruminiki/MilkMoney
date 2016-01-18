@@ -320,7 +320,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 										partoFormController.setObject(new Parto(cobertura));
 										partoFormController.showForm();
 										
-										if ( partoFormController.getObject() != null ){
+										if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
 											cobertura.setParto(partoFormController.getObject());
 											coberturaService.registrarParto(cobertura);
 											tablePartos.getItems().add(partoFormController.getObject());
