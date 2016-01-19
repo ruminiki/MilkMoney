@@ -234,7 +234,6 @@
 			</fileset>
 		</copy>
 	
-	
 		<fx:resources id="appRes">
 			<fx:fileset dir="dist" includes="MilkMoney.jar"/>
 			<fx:fileset dir="dist" includes="libs/*"/>
@@ -248,12 +247,9 @@
 	
 		<mkdir dir="build/classes/META-INF" />
 	
-	
-	
 		<fx:jar destfile="dist/MilkMoney.jar">
 			<fx:application refid="fxApplication"/>
-			<fileset dir="build/classes">
-			</fileset>
+			<fileset dir="build/classes"></fileset>
 			<fx:resources refid="appRes"/>
 	
 			<manifest>
