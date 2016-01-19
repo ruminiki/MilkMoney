@@ -56,15 +56,15 @@ public class MainApp extends Application {
     //private ProgressBar               loadProgress;
     private Label                     progressText;
     
-	private static final boolean      SPLASH           = false;
-	private static final boolean      START_DATABASE   = false;
+	private static final boolean      SPLASH           = true;
+	private static final boolean      START_DATABASE   = true;
 		
 	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
 	
 	public MainApp() {
 		
 		//INICIA O BANCO DE DADOS
-    	/*if ( START_DATABASE ){
+    	if ( START_DATABASE ){
     		try{
     			ProcessBuilder databaseProcess = new ProcessBuilder(DATABASE_START);
     			databaseProcess.start();
@@ -97,7 +97,7 @@ public class MainApp extends Application {
 				throw new RuntimeException(ioException);
 			}
 			
-		}*/
+		}
 		
 	}
 	
