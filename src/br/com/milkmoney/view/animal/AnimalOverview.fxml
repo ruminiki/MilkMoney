@@ -20,7 +20,7 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets />
+                        <Insets left="3.0" />
                      </HBox.margin>
                   </TextField>
                   <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="581.0" prefHeight="532.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AcessoRapidoAnimalController">
+<AnchorPane minWidth="581.0" prefHeight="540.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AcessoRapidoAnimalController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -17,14 +17,14 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox fx:id="sideBar" maxWidth="350.0" minWidth="360.0" style="-fx-border-color: #CCC;">
+                        <VBox fx:id="sideBar" maxWidth="350.0" minWidth="360.0">
                            <children>
                               <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
                                  <children>
                                     <Label text="Ficha Animal" />
                                  </children>
                               </HBox>
-                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" prefHeight="474.0" style="-fx-focus-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
+                              <ScrollPane focusTraversable="false" hbarPolicy="NEVER" style="-fx-focus-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                                  <content>
                                     <GridPane>
                                        <children>
@@ -184,7 +184,7 @@
                               </ScrollPane>
                            </children>
                         </VBox>
-                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" HBox.hgrow="ALWAYS">
+                        <SplitPane dividerPositions="0.46153846153846156" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" style="-fx-focus-color: transparent; -fx-border-color: transparent;" HBox.hgrow="ALWAYS">
                            <items>
                               <VBox prefHeight="200.0">
                                  <children>
@@ -195,8 +195,9 @@
                                     </HBox>
                                     <TableView fx:id="tableCoberturas" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
                                       <columns>
+                                          <TableColumn fx:id="statusColumn" maxWidth="10.0" prefWidth="10.0" text="Column X" />
+                                          <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: ;" text="Situação" />
                                           <TableColumn fx:id="dataCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Data" />
-                                          <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="130.0" minWidth="130.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                                           <TableColumn fx:id="reprodutorColumn" maxWidth="150.0" minWidth="160.0" prefWidth="75.0" text="Reprodutor" />
                                           <TableColumn fx:id="dataConfirmacaoCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Confirmação" />
                                           <TableColumn fx:id="previsaoPartoCoberturaColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Prev. Parto" />
@@ -216,7 +217,7 @@
                                           <Label text="Partos" />
                                        </children>
                                     </HBox>
-                                    <TableView fx:id="tablePartos" focusTraversable="false" prefHeight="319.0" prefWidth="512.0" VBox.vgrow="ALWAYS">
+                                    <TableView fx:id="tablePartos" focusTraversable="false" VBox.vgrow="ALWAYS">
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                        </columnResizePolicy>
@@ -234,6 +235,7 @@
                   </HBox>
                   <HBox alignment="CENTER" minHeight="30.0" spacing="5.0">
                      <children>
+                        <Button mnemonicParsing="false" onAction="#atualizarCadastroAnimal" text="Editar Cadastro" />
                         <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#registrarCoberturaAnimal" text="Nova Cobertura">
                            <HBox.margin>
                               <Insets />

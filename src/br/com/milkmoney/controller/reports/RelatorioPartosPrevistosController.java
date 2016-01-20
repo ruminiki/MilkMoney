@@ -27,10 +27,10 @@ public class RelatorioPartosPrevistosController extends AbstractReport{
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params);
+				RelatorioService.RELATORIO_PARTOS_PREVISTOS, params);
 		}else{
 			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params);
+					RelatorioService.RELATORIO_PARTOS_PREVISTOS, params);
 		}
 		
 		super.handleClose();

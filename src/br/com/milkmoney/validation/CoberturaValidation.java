@@ -67,10 +67,10 @@ public class CoberturaValidation extends Validator {
 			
 		}
 		
-		if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
+		/*if ( cobertura.getNomeResponsavel() == null || cobertura.getNomeResponsavel().isEmpty() ){
 			throw new ValidationException(CAMPO_OBRIGATORIO, 
 					"Por favor, infome o campo [responsável pela inseminação] para continuar.");
-		}
+		}*/
 		
 	}
 	

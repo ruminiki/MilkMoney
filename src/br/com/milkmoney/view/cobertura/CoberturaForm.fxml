@@ -41,19 +41,6 @@
               </rowConstraints>
               <children>
                	  <Label text="Data: " />
-                  <Label text="Observação: " GridPane.rowIndex="5" />
-                  <Label text="Tipo Cobertura: " GridPane.rowIndex="1" />
-                  <Label fx:id="lblReprodutor" text="Reprodutor: " GridPane.rowIndex="2" />
-                  <Label text="Responsável Serviço: " GridPane.rowIndex="3" />
-                  <Label text="Responsável: " GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputSemen" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
-                  <Button fx:id="btnNovoReprodutor" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </Button>
-                  <UCTextField fx:id="inputNomeResponsavel" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
-                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.columnSpan="3">
                      <children>
                         <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" onAction="#updateDataPrevisaoParto" />
@@ -65,8 +52,21 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Label text="Tipo Cobertura: " GridPane.rowIndex="1" />
                   <ChoiceBox fx:id="inputTipoCobertura" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                  <Label fx:id="lblReprodutor" text="Reprodutor: " GridPane.rowIndex="2" />
+                  <UCTextField fx:id="inputSemen" disable="true" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                  <Button fx:id="btnNovoReprodutor" mnemonicParsing="false" text="Buscar" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </Button>
+                  <Label text="Responsável Serviço: " GridPane.rowIndex="3" />
                   <ChoiceBox fx:id="inputResponsavelServico" minWidth="200.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+                  <Label text="Responsável: " GridPane.rowIndex="4" />
+                  <UCTextField fx:id="inputNomeResponsavel" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="4" />
+                  <Label text="Observação: " GridPane.rowIndex="5" />
+                  <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" spacing="5.0">

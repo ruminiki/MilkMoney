@@ -165,7 +165,11 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	private BigDecimal calculaIndice(){
 		if ( N > 0 ){
 			double index = (  (( (DVG / DG) * R ) + DVG)  /  ((N * DIAS * P) - DVE)  ) * 100;
-			return BigDecimal.valueOf(index).setScale(0, RoundingMode.HALF_EVEN);			
+			try{
+				return BigDecimal.valueOf(index).setScale(0, RoundingMode.HALF_EVEN);
+			}catch(Exception e){
+				return BigDecimal.ZERO;  
+			}
 		}
 		return BigDecimal.ZERO;
 	}

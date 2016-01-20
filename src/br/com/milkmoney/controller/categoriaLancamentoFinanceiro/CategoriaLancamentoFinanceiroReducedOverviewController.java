@@ -98,6 +98,7 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 			for ( TreeItem<CategoriaLancamentoFinanceiro> itemSemPai : itensSemPai ){
 				if ( itemSemPai.getValue().getCategoriaSuperiora().getId() == newItem.getValue().getId() ){
 					newItem.getChildren().add(itemSemPai);
+					itensSemPai.remove(itemSemPai);
 					break;
 				}
 			}
@@ -142,15 +143,12 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
             		newItem.getChildren().add(i);
                     return true;
             	}else{
-            		
+            		//entra dentro do ramo de uma arvore
             		if ( i.getChildren() != null && i.getChildren().size() > 0 ){
-            			return percorreArvore(i, newItem);
+            			percorreArvore(i, newItem);
             		}
-            		
             	}
-                    
             }
-            
         }
         
         return false;

@@ -5,16 +5,10 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
-
-
 import javax.annotation.Resource;
-
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-
 
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.NumberTextField;
@@ -66,8 +60,14 @@ public class EntregaLeiteFormController extends AbstractFormController<Integer, 
 		});
 		
 		inputVolume.setDisable(getObject().getCarregaMarcacoesMes().equals(SimNao.SIM));
-		MaskFieldUtil.decimal(inputVolume);
+		MaskFieldUtil.numeroInteiro(inputVolume);
 	
+	}
+	
+	@Override
+	public void handleCancel() {
+		super.getDialogStage().close();
+		setObject(null); 
 	}
 
 	@Override

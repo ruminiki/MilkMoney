@@ -239,6 +239,29 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 				if ( cobertura.getDataConfirmacaoPrenhes() != null )
 					return DateUtil.asDate(DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhes()).plusDays(21));
 			}
+			
+			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.ABORTADA) ){
+				if ( cobertura.getAborto() != null )
+					return DateUtil.asDate(DateUtil.asLocalDate(cobertura.getAborto().getData()).plusDays(21));
+			}
+		}else{
+			//se o animal nunca teve coberturas verifica a idade
+			String idadeMinimaCobertura = parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA);
+			
+			if ( idadeMinimaCobertura != null ){
+				try{
+					long idadeMinima = Long.parseLong(idadeMinimaCobertura);
+					//o animal já deveria ter sido coberto
+					if ( (animal.getIdade() - idadeMinima) >= 0 ){
+						return DateUtil.asDate(LocalDate.now().minusMonths(animal.getIdade() - idadeMinima));
+					}else{
+						//o próximo serviço é futuro
+						return DateUtil.asDate(LocalDate.now().plusMonths(idadeMinima - animal.getIdade()));
+					}
+				}catch(Exception e){
+					System.out.println("Parâmetro idade mínima para cobertura cadastrado no formato errado.");
+				}
+			}
 		}
 		
 		return null;

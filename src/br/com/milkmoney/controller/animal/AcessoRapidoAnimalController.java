@@ -34,6 +34,7 @@ import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarAbortoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
@@ -83,6 +84,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@FXML private TableColumn<Cobertura, String> dataAbortoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> dataConfirmacaoCoberturaColumn;
 	@FXML private TableColumn<Cobertura, String> previsaoPartoCoberturaColumn;
+	@FXML private TableColumn<Cobertura, String> statusColumn;
 	
 	@FXML private TableView<Parto> tablePartos;
 	@FXML private TableColumn<Parto, String> dataPartoColumn;
@@ -107,9 +109,11 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@Autowired private PartoService partoService;
 	@Autowired private CoberturaService coberturaService;
 	@Autowired private ProcedimentoService procedimentoService;
+	@Autowired private AnimalService animalService;
 	
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
+	@Autowired private AnimalFormController animalFormController;
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private RacaReducedOverviewController racaReducedOverviewController;
 	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
@@ -127,7 +131,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@Autowired private AbortoFormController abortoFormController;
 	
 	private FichaAnimal fichaAnimal;
-	private String numeroDigitado;
+	private String numeroAnimal;
 	
 	private ContextMenu coberturaContextMenu = new ContextMenu();
 	MenuItem atualizarCobertura = new MenuItem("Atualizar");
@@ -141,8 +145,9 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@FXML
 	public void initialize() {
 		
-		setObject(((AnimalService)service).findByNumero(numeroDigitado));
+		setObject(((AnimalService)service).findByNumero(numeroAnimal));
 		
+		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
 		dataCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
@@ -551,6 +556,20 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		}
 	}
 	
+	@FXML
+	private void atualizarCadastroAnimal() {
+		
+		Animal animal = animalService.findByNumero(numeroAnimal);
+		
+		if ( animal != null ){
+			animalFormController.setObject(animal);
+			animalFormController.showForm();
+		}else{
+			CustomAlert.mensagemInfo("Nenhum animal encontrado com o número [" + numeroAnimal + "]. Por favor, tente selecionar o animal novamente.");
+		}
+		
+	}
+	
 	@FXML@Override
 	protected void closeForm(){
 		if ( tableCoberturas != null ){
@@ -559,7 +578,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	}
 
 	public void setNumeroDigitado(String numeroDigitado) {
-		this.numeroDigitado = numeroDigitado;
+		this.numeroAnimal = numeroDigitado;
 	}
 
 	@Override

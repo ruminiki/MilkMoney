@@ -134,6 +134,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
+	@Autowired private AcessoRapidoAnimalController acessoRapidoAnimalController;
 	
 	private FichaAnimal fichaAnimal;
 	
@@ -207,6 +208,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			racaColumn.minWidthProperty().set((width - 590) * 0.25);
 		}
 		
+	}
+	
+	@Override
+	protected void handleDoubleClick() {
+		acessoRapidoAnimalController.setNumeroDigitado(getObject().getNumero());
+		acessoRapidoAnimalController.showForm();
 	}
 	
 	@FXML

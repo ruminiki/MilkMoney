@@ -34,15 +34,21 @@
                <children>
                   <Label text="Número: " />
                   <UCTextField fx:id="inputNumero" maxWidth="120.0" prefWidth="100.0" GridPane.columnIndex="1" />
+                  
                   <Label text="Nome: " GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
+                  
                   <Label text="Sexo: " GridPane.rowIndex="2" />
-                  <Label text="Raça: " GridPane.rowIndex="5" />
+                  <ChoiceBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  
+                                   
+                  
                   <Label graphicTextGap="10.0" text="Data Nasc.: " GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="5.0" />
                      </GridPane.margin></Label>
                   <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  
                   <Label text="Mãe: " GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputMae" disable="true" editable="false" onMouseClicked="#handleSelecionarMae" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                   <Button fx:id="btnBuscarMae" maxWidth="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#handleSelecionarMae" prefWidth="56.0" text="..." GridPane.columnIndex="4" GridPane.rowIndex="3">
@@ -52,20 +58,6 @@
                   </Button>
                   <Label text="Pai: " GridPane.rowIndex="4" />
                   <UCTextField fx:id="inputPai" disable="true" editable="false" prefWidth="240.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="4" />
-                  
-                  <UCTextField fx:id="inputRaca" disable="true" onMouseClicked="#handleSelecionarRaca" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />                  
-                  <Button maxWidth="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#handleSelecionarRaca" prefHeight="25.0" prefWidth="61.0" text="..." GridPane.columnIndex="4" GridPane.rowIndex="5">
-                     <GridPane.margin>
-                        <Insets left="3.0" />
-                     </GridPane.margin>
-                  </Button>                 
-
-                  <Label text="Finalidade Animal: " GridPane.rowIndex="6" />
-                  
-                  <Label text="Valor: " GridPane.rowIndex="7" />
-                  <UCTextField fx:id="inputValor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <ChoiceBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <children>
                         <Button fx:id="btnBuscarPaiEnseminacaoArtificial" maxWidth="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#handleSelecionarPaiEnseminacaoArtificial" text="IA">
@@ -75,7 +67,20 @@
                         <Button fx:id="btnBuscarPaiMontaNatural" mnemonicParsing="false" onAction="#handleSelecionarPaiMontaNatural" prefHeight="25.0" prefWidth="42.0" text="MN" />
                      </children>
                   </HBox>
-
+                  
+                  <Label text="Raça: " GridPane.rowIndex="5" />
+                  <UCTextField fx:id="inputRaca" disable="true" onMouseClicked="#handleSelecionarRaca" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5" />                  
+                  <Button maxWidth="28.0" minWidth="28.0" mnemonicParsing="false" onAction="#handleSelecionarRaca" prefHeight="25.0" prefWidth="61.0" text="..." GridPane.columnIndex="4" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin>
+                  </Button>
+                  
+                  <Label text="Finalidade Animal: " GridPane.rowIndex="6" />
+                  <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6" />
+                  
+                  <Label text="Valor: " GridPane.rowIndex="7" />
+                  <UCTextField fx:id="inputValor" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

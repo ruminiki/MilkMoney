@@ -157,7 +157,7 @@ public abstract class AbstractOverviewController<K, E>{
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					handleEdit();
+					handleDoubleClick();
 				}
 				
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 1) {
@@ -178,6 +178,10 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	protected void handleRightClick(){
 		
+	}
+	
+	protected void handleDoubleClick(){
+		handleEdit();
 	}
 
 	protected void updateLabelNumRegistros(){

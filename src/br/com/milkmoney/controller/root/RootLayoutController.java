@@ -71,7 +71,7 @@ public class RootLayoutController {
 			public void handle(KeyEvent event) {
 
 				if (event.getCode().equals(KeyCode.ENTER)) {
-					handleAcessoRapidoAnimal();
+					handleAcessoRapidoAnimal(inputNumeroAnimal.getText());
 					inputNumeroAnimal.setText("");
 					event.consume();
 				}
@@ -230,9 +230,9 @@ public class RootLayoutController {
     }
     
     @FXML
-    protected void handleAcessoRapidoAnimal(){
+    protected void handleAcessoRapidoAnimal(String numero){
     	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
-    	controller.setNumeroDigitado(inputNumeroAnimal.getText());
+    	controller.setNumeroDigitado(numero);
     	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
     }
     

@@ -27,7 +27,7 @@
             </HBox>
             <HBox maxHeight="250.0" minHeight="250.0" VBox.vgrow="ALWAYS">
                <children>
-                  <TableView fx:id="tableVariavel" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="255.0" maxWidth="250.0" minWidth="250.0" prefHeight="248.0" prefWidth="278.0" scaleShape="false" style="-fx-focus-color: transparent;">
+                  <TableView fx:id="tableVariavel" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="255.0" maxWidth="250.0" minWidth="253.0" prefHeight="248.0" prefWidth="282.0" scaleShape="false" style="-fx-focus-color: transparent;">
                      <columns>
                         <TableColumn fx:id="categoriaColumn" editable="false" maxWidth="1.7976931348623157E308" minWidth="250.0" prefWidth="-1.0" sortable="false" text="Categoria" />
                      </columns>

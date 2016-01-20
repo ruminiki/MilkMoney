@@ -1,15 +1,5 @@
 ERROS e REQUISITOS
 
-X Não está editando marcações
-- Cobertura que teve aborto não sugere próximo serviço
-- Relatório ficha animal não está mostrando último parto
-X Colocar máscara de milhar na entrega do leite
-- Ao cancelar edição da entrega do leite está zerando os valores do preço
-- Árvore categoria financeira aparece duas vezes
-X Carregando despesas que vencem no mês corrente e foram pagas em outro
-X Scroll principais despesas, tela financeiro
-- Erro relatório parto previsto
-
 - Ajustar form de campo (repetição do cabeçalho...)
 - Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)

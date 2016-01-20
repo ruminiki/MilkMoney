@@ -114,7 +114,7 @@ public abstract class MaskFieldUtil {
      *
      * @param textField TextField
      */
-    public static void numeroInteiro(final TextField textField) {
+    public static void numeroInteiroWithouMask(final TextField textField) {
     	textField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -173,7 +173,7 @@ public abstract class MaskFieldUtil {
                 
         });
         
-        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+       /* textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable,
@@ -195,7 +195,65 @@ public abstract class MaskFieldUtil {
 				}
 			}
 
+		});*/
+        
+		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+	
+			@Override
+			public void handle(KeyEvent event) {
+	
+				if (event.getCode().equals(KeyCode.BACK_SPACE) || event.getCode().equals(KeyCode.DELETE) ) {
+					textField.setText("");
+				}
+	
+			}
+	
 		});
+
+    }
+    
+    /**
+     * Monta a mascara para Moeda.
+     *
+     * @param textField TextField
+     */
+    public static void numeroInteiro(final TextField textField) {
+    	
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            	if ( oldValue != null && newValue != null && !oldValue.replace(",", "").equals(newValue.replace(",", "")) ){
+            		String value = textField.getText();
+                    value = value.replaceAll("[^0-9]", "");
+                    
+                    if ( value.length() > 3 ){
+                    	switch (value.length()) {
+						case 4:
+							value = value.substring(0,1) + "." + value.substring(1,4);
+							break;
+						case 5:
+							value = value.substring(0,2) + "." + value.substring(2,5);
+							break;
+						case 6:
+							value = value.substring(0,3) + "." + value.substring(3,6);
+							break;
+						case 7:
+							value = value.substring(0,1) + "." + value.substring(1,4) + "." + value.substring(4,7);
+							break;
+						case 8:
+							value = value.substring(0,2) + "." + value.substring(2,5) + "." + value.substring(5,8);
+							break;
+						default:
+							value = value.substring(0,3) + "." + value.substring(3,6) + "." + value.substring(6,9);
+							break;
+						}
+                    }
+                    textField.setText(value);
+                    positionCaret(textField);
+                }
+            }
+                
+        });
         
 		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	
