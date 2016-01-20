@@ -41,7 +41,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 	@SuppressWarnings("unchecked")
 	public List<LancamentoFinanceiro> findByMes(Date dataInicio, Date dataFim, String tipoLancamento) {
 		Query query = entityManager.createQuery("SELECT c FROM LancamentoFinanceiro c WHERE "
-				+ "(c.dataVencimento between :inicio and :fim or c.dataPagamento between :inicio and :fim) and "
+				+ "coalesce(c.dataPagamento, c.dataVencimento) between :inicio and :fim and "
 				+ "(:tipoLancamento is null or c.tipoLancamento = :tipoLancamento)");
 		query.setParameter("inicio", dataInicio);
 		query.setParameter("fim", dataFim);
@@ -56,7 +56,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		Query query = entityManager.createQuery(
 				"SELECT categoria.descricao, sum(juros + multa + valor) as total "
 				+ "FROM LancamentoFinanceiro l "
-				+ "WHERE (l.dataVencimento between :inicio and :fim or l.dataPagamento between :inicio and :fim)  "
+				+ "WHERE coalesce(l.dataPagamento, l.dataVencimento) between :inicio and :fim  "
 				+ "and l.tipoLancamento = '" + TipoLancamentoFinanceiro.DESPESA + "' group by 1 order by 2");
 		
 		query.setParameter("inicio", dataInicio);
@@ -101,7 +101,7 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 	@SuppressWarnings("unchecked")
 	public List<LancamentoFinanceiro> findByMes(String param, Date dataInicio, Date dataFim) {
 		Query query = entityManager.createQuery("SELECT r FROM LancamentoFinanceiro r WHERE "
-				+ "(r.dataVencimento between :inicio and :fim or r.dataPagamento between :inicio and :fim) and "
+				+ "coalesce(r.dataPagamento, r.dataVencimento) between :inicio and :fim and "
 				+ "(r.descricao like :param or "
 				+ "r.tipoLancamento like :param or "
 				+ "r.categoria.descricao like :param or "

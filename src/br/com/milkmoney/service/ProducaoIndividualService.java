@@ -35,20 +35,16 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	@Transactional
 	public boolean save(ProducaoIndividual entity) {
 		
+		ProducaoIndividualValidation.validate(entity);
 		ProducaoIndividual producaoIndividual = findByAnimalAndData(entity.getAnimal(), entity.getData());
 		
 		if ( producaoIndividual != null ){
-			/*producaoIndividual.setPrimeiraOrdenha(entity.getPrimeiraOrdenha());
+			producaoIndividual.setPrimeiraOrdenha(entity.getPrimeiraOrdenha());
 			producaoIndividual.setSegundaOrdenha(entity.getSegundaOrdenha());
 			producaoIndividual.setTerceiraOrdenha(entity.getTerceiraOrdenha());
-			entity.setId(producaoIndividual.getId());*/
-			
-			entity = producaoIndividual;
-			//ProducaoIndividualValidation.validateAnimal(entity.getAnimal(), animalDao.isInLactacao(entity.getData(), entity.getAnimal()));
+			return dao.persist(producaoIndividual);
 		}
-		ProducaoIndividualValidation.validate(entity);
 		return dao.persist(entity);
-		
 	}
 	
 	/**
