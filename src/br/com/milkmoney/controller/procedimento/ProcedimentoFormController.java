@@ -118,7 +118,7 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		}
 		
 		if ( getObject() != null && getObject().getServico() != null ){
-			inputServico.setText(getObject().getServico().getDescricao());
+			inputServico.setText(getObject().getServico().toString());
 		}
 		
 		habilitaDesabilitaBotoesCadastroServico();
