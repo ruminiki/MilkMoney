@@ -47,14 +47,14 @@ public class Servico extends AbstractEntity implements Serializable {
 	private StringProperty historico = new SimpleStringProperty();
 	private StringProperty valor = new SimpleStringProperty();
 	private ObjectProperty<PrestadorServico> prestadorServico = new SimpleObjectProperty<PrestadorServico>();
-	//private ObjectProperty<Despesa> despesa = new SimpleObjectProperty<Despesa>();
 
 	public Servico() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Servico(String descricao) {
-		this.descricao.set(descricao);
+	public Servico(String descricao, String historico) {
+		setDescricao(descricao);
+		setHistorico(historico);
 	}
 
 	@Temporal(TemporalType.DATE)

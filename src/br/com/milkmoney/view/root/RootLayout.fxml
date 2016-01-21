@@ -48,7 +48,8 @@
                         <MenuItem mnemonicParsing="false" onAction="#handleReportNumerosRebanho" text="Números do Rebanho" />
                       <MenuItem mnemonicParsing="false" onAction="#handleReportResumoAtividade" text="Resumo da Atividade" />
                         <MenuItem mnemonicParsing="false" onAction="#handleReportRankingAnimais" text="Ranking Animais" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportProducao" text="Produção" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportProducao" text="Produção Mensal" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleReportServicos" text="Serviços" />
                         <Menu mnemonicParsing="false" text="Financeiro">
                           <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleReportResumoFinanceiro" text="Resumo Financeiro" />

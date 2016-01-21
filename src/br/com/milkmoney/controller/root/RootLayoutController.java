@@ -261,6 +261,11 @@ public class RootLayoutController {
     	openFormAsPopUp("view/reports/RelatorioControleLeiteiro.fxml", "Relatório Controle Leiteiro");
     }
     
+    @FXML
+    protected void handleReportServicos(){
+    	openFormAsPopUp("view/reports/RelatorioServicos.fxml", "Relatório de Serviços");
+    }
+    
     //MISCELÂNEA - GRÁFICOS
     @FXML
     protected void handlePainel() {

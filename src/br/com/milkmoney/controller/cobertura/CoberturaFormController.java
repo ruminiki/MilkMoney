@@ -304,7 +304,7 @@ public class CoberturaFormController extends AbstractFormController<Integer, Cob
 			}case 2:{
 				
 				servicoFormController.setState(State.CREATE_TO_SELECT);
-				servicoFormController.setObject(new Servico("COBERTURA " + getObject().getFemea().getNumeroNome()));
+				servicoFormController.setObject(new Servico("COBERTURA " + getObject().getFemea().getNumeroNome(), "COBERTURA"));
 				servicoFormController.showForm();
 				
 				if ( servicoFormController.getObject() != null ){

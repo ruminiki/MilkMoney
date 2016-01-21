@@ -168,7 +168,7 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		
 		servicoFormController.setState(State.CREATE_TO_SELECT);
 		servicoFormController.setObject(new Servico("PROCEDIMENTO " +
-				(getObject().getTipoProcedimento() != null ? getObject().getDescricao() : getObject().getTipoProcedimento()) ));
+				(getObject().getTipoProcedimento() != null ? getObject().getDescricao() : getObject().getTipoProcedimento()), "PROCEDIMENTO ZOOTÉCNICO"));
 		servicoFormController.showForm();
 		
 		getObject().setServico(servicoFormController.getObject());

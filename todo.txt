@@ -1,7 +1,8 @@
 ERROS e REQUISITOS
 
-- Relatório de Serviços Realizados
 - Atribuir a entrega de leite ao fornecedor
+- Verificar situação de serviços realizados (marcar como pago)
+- Emitir recibo de pagamento de serviço
 
 - Ajustar form de campo (repetição do cabeçalho...)
 - Fazer ficha igual a do Anderson...
