@@ -114,6 +114,7 @@ public class RootLayoutController {
 			lblHeader.setText(title);
 	}
 	
+	//REBANHO
     @FXML
     protected void handleCadastroAnimal() {
     	openForm("view/animal/AnimalOverview.fxml");
@@ -127,10 +128,17 @@ public class RootLayoutController {
     }
     
     @FXML
-    protected void handleCadastroFinalidadeLote() {
-    	openFormAsPopUp("view/finalidadeLote/FinalidadeLoteOverview.fxml", "Finalidade Lote");
+    protected void handleCadastroLote() {
+    	openFormAsPopUp("view/lote/LoteOverview.fxml", "Lote Animal");
     }
-       
+    
+    @FXML
+    protected void handleCadastroProcedimento() {
+    	openForm("view/procedimento/ProcedimentoOverview.fxml");
+    	setTitle("Rebanho > Procedimento");
+    }
+    
+    //PRODUÇÃO
     @FXML
     protected void handleCadastroPrecoLeite() {
     	openFormAsPopUp("view/precoLeite/PrecoLeiteOverview.fxml", "Preço Leite");
@@ -148,64 +156,7 @@ public class RootLayoutController {
     	setTitle("Produção > Entrega de Leite");
     }
 
-    @FXML
-    protected void handleCadastroTouro() {
-    	openFormAsPopUp("view/touro/TouroOverview.fxml", "Touro");
-    }
-    
-    @FXML
-    protected void handleCadastroCobertura() {
-    	openForm("view/cobertura/CoberturaOverview.fxml");
-    	setTitle("Rebanho > Reprodução");
-    }
-    
-    @FXML
-    protected void handleCadastroFuncionario() {
-    	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml", "Funcionário");
-    }
-    
-    @FXML
-    protected void handleCadastroServico() {
-    	openFormAsPopUp("view/servico/ServicoOverview.fxml", "Serviço");
-    }
-    
-    @FXML
-    protected void handleCadastroFornecedor() {
-    	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml", "Fornecedor");
-    }
-    
-    @FXML
-    protected void handlePainel() {
-    	openForm("view/painel/PainelOverview.fxml");
-    	setTitle("Miscelânea > Gráficos");
-    }
-    
-    @FXML
-    protected void handleCadastroParametro() {
-    	openFormAsPopUp("view/parametro/ParametroOverview.fxml", "Parâmetros");
-    }
-    
-    @FXML
-    protected void  handleCadastroPropriedade() {
-    	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml", "Propriedade");
-    }
-    
-    @FXML
-    protected void handleCadastroLote() {
-    	openFormAsPopUp("view/lote/LoteOverview.fxml", "Lote Animal");
-    }
-    
-    @FXML
-    protected void handleCadastroProcedimento() {
-    	openForm("view/procedimento/ProcedimentoOverview.fxml");
-    	setTitle("Rebanho > Procedimento");
-    }
-    
-    @FXML
-    protected void handleProjecao() {
-    	openForm("view/projecao/ProjecaoOverview.fxml");
-    	setTitle("Miscelânea > Projeção");
-    }
+    //FINANCEIRO
     
     @FXML
     protected void handleCadastroInsumo() {
@@ -224,24 +175,7 @@ public class RootLayoutController {
     	setTitle("Financeiro > Lançamentos");
     }
     
-    @FXML
-    protected void handleCadastroCategoriaLancamentoFinanceiro() {
-    	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Lançamento Financeiro");
-    }
-    
-    @FXML
-    protected void handleAcessoRapidoAnimal(String numero){
-    	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
-    	controller.setNumeroDigitado(numero);
-    	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
-    }
-    
-    @FXML
-    protected void handleBackupBancoDados() {
-    	openFormAsPopUp("view/databaseBackup/DatabaseBackupForm.fxml", "Cópia do Banco de Dados");
-    }
-    
-    //-----reports------
+    //RELATÓRIOS
     @FXML
     protected void handleReportFichaAnimal(){
     	openFormAsPopUp("view/reports/RelatorioFichaAnimal.fxml", "Relatório Ficha Animal");
@@ -326,6 +260,134 @@ public class RootLayoutController {
     protected void handleReportControleLeiteiro(){
     	openFormAsPopUp("view/reports/RelatorioControleLeiteiro.fxml", "Relatório Controle Leiteiro");
     }
+    
+    //MISCELÂNEA - GRÁFICOS
+    @FXML
+    protected void handlePainel() {
+    	openForm("view/painel/PainelOverview.fxml");
+    	setTitle("Miscelânea > Gráficos");
+    }
+    
+    @FXML
+    protected void handleProjecao() {
+    	openForm("view/projecao/ProjecaoOverview.fxml");
+    	setTitle("Miscelânea > Projeção");
+    }
+    
+    //MISCELÂNEA - CADASTROS
+    
+    @FXML
+    protected void handleCadastroRaca() {
+    	openFormAsPopUp("view/raca/RacaOverview.fxml", "Raça");
+    }
+    
+    @FXML
+    protected void handleCadastroTouro() {
+    	openFormAsPopUp("view/touro/TouroOverview.fxml", "Touro");
+    }
+    
+    @FXML
+    protected void handleCadastroFinalidadeLote() {
+    	openFormAsPopUp("view/finalidadeLote/FinalidadeLoteOverview.fxml", "Finalidade Lote");
+    }
+
+    @FXML
+    protected void handleCadastroComplicacaoParto() {
+    	openFormAsPopUp("view/complicacaoParto/ComplicacaoPartoOverview.fxml", "Complicação Parto");
+    }
+    
+    @FXML
+    protected void handleCadastroMotivoEncerramentoLactacao() {
+    	openFormAsPopUp("view/motivoEncerramentoLactacao/MotivoEncerramentoLactacaoOverview.fxml", "Motivo Encerramento Lactação");
+    }
+    
+    @FXML
+    protected void handleCadastroCausaMorte() {
+    	openFormAsPopUp("view/causaMorteAnimal/CausaMorteAnimalOverview.fxml", "Causa Morte");
+    }
+    
+    @FXML
+    protected void handleCadastroTipoProcedimento() {
+    	openFormAsPopUp("view/tipoProcedimento/TipoProcedimentoOverview.fxml", "Tipo Procedimento");
+    }
+    
+    @FXML
+    protected void handleCadastroComprador() {
+    	openFormAsPopUp("view/comprador/CompradorOverview.fxml", "Comprador");
+    }
+    
+    @FXML
+    protected void handleCadastroMotivoVendaAnimal() {
+    	openFormAsPopUp("view/motivoVendaAnimal/MotivoVendaAnimalOverview.fxml", "Motivo Venda Animal");
+    }
+    
+    @FXML
+    protected void handleCadastroCategoriaLancamentoFinanceiro() {
+    	openFormAsPopUp("view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml", "Categoria de Lançamento Financeiro");
+    }   
+
+    @FXML
+    protected void handleCadastroCentroCusto() {
+    	openFormAsPopUp("view/centroCusto/CentroCustoOverview.fxml", "Centro Custo");
+    }
+
+    @FXML
+    protected void handleCadastroTipoInsumo() {
+    	openFormAsPopUp("view/tipoInsumo/TipoInsumoOverview.fxml", "Centro Custo");
+    }
+    
+    @FXML
+    protected void handleCadastroUnidadeMedida() {
+    	openFormAsPopUp("view/unidadeMedida/UnidadeMedidaOverview.fxml", "Unidade de Medida");
+    }
+    
+    @FXML
+    protected void handleCadastroFornecedor() {
+    	openFormAsPopUp("view/fornecedor/FornecedorOverview.fxml", "Fornecedor");
+    }
+
+    @FXML
+    protected void handleCadastroPrestadorServico() {
+    	openFormAsPopUp("view/prestadorServico/PrestadorServicoOverview.fxml", "Prestador de Serviço");
+    }
+    
+    @FXML
+    protected void handleCadastroFuncionario() {
+    	openFormAsPopUp("view/funcionario/FuncionarioOverview.fxml", "Funcionário");
+    }
+    
+    @FXML
+    protected void handleCadastroMotivoOcorrenciaFuncionario() {
+    	openFormAsPopUp("view/motivoOcorrenciaFuncionario/MotivoOcorrenciaFuncionarioOverview.fxml", "Motivo Ocorrência Funcionário");
+    }
+    
+    @FXML
+    protected void  handleCadastroPropriedade() {
+    	openFormAsPopUp("view/propriedade/PropriedadeOverview.fxml", "Propriedade");
+    }
+
+    @FXML
+    protected void handleCadastroParametro() {
+    	openFormAsPopUp("view/parametro/ParametroOverview.fxml", "Parâmetros");
+    }
+    
+    //SISTEMA
+    
+    @FXML
+    protected void handleAcessoRapidoAnimal(String numero){
+    	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
+    	controller.setNumeroDigitado(numero);
+    	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
+    }
+    
+    @FXML
+    protected void handleBackupBancoDados() {
+    	openFormAsPopUp("view/databaseBackup/DatabaseBackupForm.fxml", "Cópia do Banco de Dados");
+    }
+  
+    
+    
+ 
     
 	public void openFormAsPopUp(String formPath, String title){
     	

@@ -131,7 +131,6 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@Autowired private AbortoFormController abortoFormController;
 	
 	private FichaAnimal fichaAnimal;
-	private String numeroAnimal;
 	
 	private ContextMenu coberturaContextMenu = new ContextMenu();
 	MenuItem atualizarCobertura = new MenuItem("Atualizar");
@@ -144,8 +143,6 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	
 	@FXML
 	public void initialize() {
-		
-		setObject(((AnimalService)service).findByNumero(numeroAnimal));
 		
 		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
 		dataCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
@@ -558,15 +555,17 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	
 	@FXML
 	private void atualizarCadastroAnimal() {
-		
-		Animal animal = animalService.findByNumero(numeroAnimal);
-		
-		if ( animal != null ){
-			animalFormController.setObject(animal);
-			animalFormController.showForm();
-		}else{
-			CustomAlert.mensagemInfo("Nenhum animal encontrado com o número [" + numeroAnimal + "]. Por favor, tente selecionar o animal novamente.");
-		}
+		animalFormController.setObject(getObject());
+		animalFormController.showForm();
+	}
+	
+	@FXML
+	private void imprimirCoberturas(){
+		Object[] params = new Object[]{
+				getObject().getId()
+		};
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.IMPRIMIR_COBERTURAS_ANIMAL, params);
 		
 	}
 	
@@ -577,8 +576,11 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		}
 	}
 
-	public void setNumeroDigitado(String numeroDigitado) {
-		this.numeroAnimal = numeroDigitado;
+	public void setNumeroDigitado(String numeroAnimal) {
+		setObject(animalService.findByNumero(numeroAnimal));
+		if ( getObject() == null ){
+			CustomAlert.mensagemInfo("Nenhum animal encontrado com o número [" + numeroAnimal + "]. Por favor, tente selecionar o animal novamente.");
+		}
 	}
 
 	@Override

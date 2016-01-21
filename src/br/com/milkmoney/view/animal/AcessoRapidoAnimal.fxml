@@ -235,7 +235,7 @@
                   </HBox>
                   <HBox alignment="CENTER" minHeight="30.0" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#atualizarCadastroAnimal" text="Editar Cadastro" />
+                        <Button mnemonicParsing="false" onAction="#atualizarCadastroAnimal" style="-fx-border-color: #33CC66; -fx-border-radius: 3;" text="Editar Cadastro" />
                         <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#registrarCoberturaAnimal" text="Nova Cobertura">
                            <HBox.margin>
                               <Insets />
@@ -245,6 +245,7 @@
                         <Button mnemonicParsing="false" onAction="#registrarDesfazerRegistroVenda" text="Venda Animal" />
                         <Button mnemonicParsing="false" onAction="#registrarDesfazerRegistroMorte" text="Morte Animal " />
                         <Button mnemonicParsing="false" onAction="#registrarProducaoAnimal" text="Produção do Animal" />
+                        <Button mnemonicParsing="false" onAction="#imprimirCoberturas" text="Imprimir Coberturas" />
                         <Button mnemonicParsing="false" onAction="#exibirFichaAnimal" text="Imprimir Ficha" />
                         <Button mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                      </children>

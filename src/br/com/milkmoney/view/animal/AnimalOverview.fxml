@@ -128,7 +128,6 @@
                               <TableColumn fx:id="sexoColumn" editable="false" maxWidth="-1.0" minWidth="45.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Sexo" />
                               <TableColumn fx:id="dataNascimentoColumn" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Nascimento" />
                               <TableColumn fx:id="idadeColumn" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Idade (M)" />
-                              <TableColumn fx:id="opcoesColumn" maxWidth="-1.0" minWidth="215.0" prefWidth="-1.0" resizable="false" text="Opções" />
                           </columns>
                         </TableView>
                      </children>

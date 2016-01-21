@@ -30,7 +30,6 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
-import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
 import br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
@@ -89,7 +88,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<String, String> sexoColumn;
 	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, Long> idadeColumn;
-	@FXML private TableColumn<Animal, String> opcoesColumn;
+	//@FXML private TableColumn<Animal, String> opcoesColumn;
 	@FXML private Label lblNumeroServicos, lblDataUltimaCobertura, lblProximoServico, lblNumeroPartos, lblIdadePrimeiroParto, 
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
@@ -151,11 +150,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
-				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
+				/*opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(registrarCoberturaAnimal, encerrarLactacaoAnimal, 
 																					  registrarDesfazerRegistroVenda, registrarDesfazerRegistroMorte,
 																					  registrarProducaoAnimal, exibirFichaAnimal, linhaTempoAnimal));
-				
+				*/
 				table.widthProperty().addListener((observable, oldValue, newValue) -> resizeColunaTabela(newValue));
 				
 				//filters
@@ -203,9 +202,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		double width = newWidth.doubleValue();
 		
 		if ( width >= 590 ){
-			nomeColumn.minWidthProperty().set((width - 590) * 0.50);
-			loteColumn.minWidthProperty().set((width - 590) * 0.25);
-			racaColumn.minWidthProperty().set((width - 590) * 0.25);
+			nomeColumn.minWidthProperty().set((width - 380) * 0.50);
+			loteColumn.minWidthProperty().set((width - 380) * 0.25);
+			racaColumn.minWidthProperty().set((width - 380) * 0.25);
 		}
 		
 	}

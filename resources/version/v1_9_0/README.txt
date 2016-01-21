@@ -9,3 +9,4 @@ X Carregando despesas que vencem no mês corrente e foram pagas em outro
 X Scroll principais despesas, tela financeiro
 X Erro relatório parto previsto
 X Alterado fluxo double click animal (agora vai para a tela de acesso rápido onde é possível executar todas as operações)
+X Cadastros básicos no menu

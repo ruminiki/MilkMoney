@@ -16,7 +16,6 @@ public abstract class AbstractReducedOverviewController<K, E> extends AbstractOv
 	public void initialize(AbstractFormController<K, E> formController) {
 		
 		super.initialize(formController);
-		configureDoubleClickTable();
 		
 	}
 	

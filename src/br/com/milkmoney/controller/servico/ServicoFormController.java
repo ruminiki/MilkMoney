@@ -35,7 +35,7 @@ public class ServicoFormController extends AbstractFormController<Integer, Servi
 		}
 		
 		inputValor.textProperty().bindBidirectional(getObject().valorProperty());
-		MaskFieldUtil.decimalWithoutMask(inputValor);
+		MaskFieldUtil.decimal(inputValor);
 		
 	}
 	

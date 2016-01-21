@@ -20,7 +20,6 @@ public class PrestadorServicoOverviewController extends AbstractOverviewControll
 	@FXML private TableColumn<PrestadorServico, String> telefonePrincipalColumn;
 	@FXML private TableColumn<PrestadorServico, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<PrestadorServico, String> emailColumn;
-	@FXML private TableColumn<PrestadorServico, String> enderecoColumn;
 	
 	@FXML
 	public void initialize() {
@@ -29,7 +28,6 @@ public class PrestadorServicoOverviewController extends AbstractOverviewControll
 		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefonePrincipal"));
 		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefoneSecundario"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("email"));
-		enderecoColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("endereco"));
 		super.initialize((PrestadorServicoFormController)MainApp.getBean(PrestadorServicoFormController.class));
 		
 	}

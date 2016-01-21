@@ -1,5 +1,8 @@
 ERROS e REQUISITOS
 
+- Relatório de Serviços Realizados
+- Atribuir a entrega de leite ao fornecedor
+
 - Ajustar form de campo (repetição do cabeçalho...)
 - Fazer ficha igual a do Anderson...
 - Fazer composição racial (PC...)

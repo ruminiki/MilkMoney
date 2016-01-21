@@ -21,8 +21,6 @@ public class CompradorOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Comprador, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<Comprador, String> emailColumn;
 	@FXML private TableColumn<Comprador, String> cpfCnpjColumn;
-	@FXML private TableColumn<Comprador, String> enderecoColumn;
-	@FXML private TableColumn<Comprador, String> siteColumn;
 
 	@FXML
 	public void initialize() {
@@ -32,9 +30,7 @@ public class CompradorOverviewController extends AbstractOverviewController<Inte
 		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("telefonePrincipal"));
 		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("telefoneSecundario"));
 		cpfCnpjColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("cpfCnpf"));
-		enderecoColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("endereco"));
-		siteColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("site"));
-		
+
 		super.initialize((CompradorFormController) MainApp.getBean(CompradorFormController.class));
 		
 	}

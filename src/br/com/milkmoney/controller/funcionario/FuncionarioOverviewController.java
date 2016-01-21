@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
-import br.com.milkmoney.components.PropertyDecimalValueFactory;
-import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.ocorrenciaFuncionario.OcorrenciaFuncionarioOverviewController;
 import br.com.milkmoney.model.Funcionario;
@@ -24,13 +22,8 @@ import br.com.milkmoney.service.IService;
 public class FuncionarioOverviewController extends AbstractOverviewController<Integer, Funcionario> {
 
 	@FXML private TableColumn<Funcionario, String> nomeColumn;
-	@FXML private TableColumn<Funcionario, String> telefonePrincipalColumn;
-	@FXML private TableColumn<Funcionario, String> telefoneSecundarioColumn;
+	@FXML private TableColumn<Funcionario, String> telefoneColumn;
 	@FXML private TableColumn<Funcionario, String> emailColumn;
-	@FXML private TableColumn<Funcionario, String> jornadaTrabalhoColumn;
-	@FXML private TableColumn<Funcionario, String> dataContratacaoColumn;
-	@FXML private TableColumn<Funcionario, String> diaPagamentoColumn;
-	@FXML private TableColumn<Funcionario, String> salarioColumn;
 	
 	@Autowired private OcorrenciaFuncionarioOverviewController ocorrenciaFuncionarioOverviewController;
 
@@ -38,13 +31,8 @@ public class FuncionarioOverviewController extends AbstractOverviewController<In
 	public void initialize() {
 		
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
-		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefonePrincipal"));
-		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefoneSecundario"));
+		telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefonePrincipal"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
-		jornadaTrabalhoColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("jornadaTrabalho"));
-		dataContratacaoColumn.setCellFactory(new TableCellDateFactory<Funcionario,String>("dataContratacao"));
-		diaPagamentoColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("diaPagamento"));
-		salarioColumn.setCellValueFactory(new PropertyDecimalValueFactory<Funcionario,String>("salario", 2));
 		super.initialize((FuncionarioFormController) MainApp.getBean(FuncionarioFormController.class));
 		
 	}

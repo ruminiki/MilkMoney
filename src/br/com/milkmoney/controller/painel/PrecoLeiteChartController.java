@@ -34,7 +34,7 @@ public class PrecoLeiteChartController {
 	@FXML
 	public void initialize() {
 
-		MaskFieldUtil.numeroInteiro(inputAno);
+		MaskFieldUtil.numeroInteiroWithouMask(inputAno);
 		inputAno.setText(String.valueOf(LocalDate.now().getYear()));
 		
 		final CategoryAxis xAxis = new CategoryAxis();
