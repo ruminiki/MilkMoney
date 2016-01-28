@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="311.0" prefWidth="672.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.servico.ServicoOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="311.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.servico.ServicoOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -33,30 +33,42 @@
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
             </HBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button minHeight="30.0" mnemonicParsing="false" onAction="#emitirRecibo" text="Emitir Recibo" />
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <Button fx:id="btnGerarFinanceiro" minHeight="30.0" mnemonicParsing="false" onAction="#gerarLancamentoFinanceiro" text="Integrar Financeiro" />
+            <Button fx:id="btnRemoverFinanceiro" minHeight="30.0" mnemonicParsing="false" onAction="#removerLancamentoFinanceiro" text="Remover Financeiro" />
+            <HBox alignment="CENTER_RIGHT" spacing="3.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
+                  <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
+                     <children>
+                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Registros">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets right="5.0" />
          </padding>
       </HBox>
-      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Registros">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
       <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
-          <TableColumn fx:id="descricaoColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="97.0" resizable="false" text="Descricao" />
+            <TableColumn fx:id="integradoFinanceiroColumn" maxWidth="10.0" prefWidth="10.0" style="-fx-alignment: CENTER;" />
+          <TableColumn fx:id="descricaoColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="97.0" text="Descricão" />
           <TableColumn fx:id="dataColumn" maxWidth="75.0" minWidth="75.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Data" />
-          <TableColumn fx:id="prestadorServicoColumn" maxWidth="120.0" minWidth="250.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Prestador Serviço" />
+            <TableColumn fx:id="dataVencimentoColumn" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Vencimento" />
+          <TableColumn fx:id="prestadorServicoColumn" maxWidth="120.0" minWidth="250.0" prefWidth="75.0" text="Prestador Serviço" />
           <TableColumn fx:id="valorColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
           <TableColumn fx:id="historicoColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Histórico" />
         </columns>

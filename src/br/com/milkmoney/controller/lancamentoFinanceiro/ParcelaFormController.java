@@ -86,6 +86,7 @@ public class ParcelaFormController extends AbstractFormController<Integer, Lanca
 			lancamento.setDataVencimento(dataVencimento.getTime());
 			lancamento.setCentroCusto(getObject().getCentroCusto());
 			lancamento.setCategoria(getObject().getCategoria());
+			lancamento.setServico(getObject().getServico());
 			
 			lancamento.setParcela(hashParcela);
 			

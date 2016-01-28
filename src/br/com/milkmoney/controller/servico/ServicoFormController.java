@@ -1,6 +1,7 @@
 package br.com.milkmoney.controller.servico;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -20,7 +21,8 @@ import br.com.milkmoney.service.IService;
 public class ServicoFormController extends AbstractFormController<Integer, Servico> {
 
 	@FXML private UCTextField inputDescricao, inputPrestadorServico, inputValor;
-	@FXML private DatePicker inputData;
+	@FXML private DatePicker inputData, inputDataVencimento;
+	@FXML private Button btnSalvar, btnBuscarPrestadorServico;
 
 	@Autowired private PrestadorServicoReducedOverviewController prestadorServicoReducedOverviewController;
 	
@@ -29,9 +31,19 @@ public class ServicoFormController extends AbstractFormController<Integer, Servi
 		
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
+		inputDataVencimento.valueProperty().bindBidirectional(getObject().dataVencimentoProperty());
 		
 		if ( getObject().getPrestadorServico() != null ){
 			inputPrestadorServico.setText(getObject().getPrestadorServico().toString());
+		}
+		
+		if ( getObject().getLancamentoFinanceiro() != null ){
+			inputData.setDisable(true);
+			inputDataVencimento.setDisable(true);
+			inputValor.setDisable(true);
+			inputDescricao.setDisable(true);
+			btnSalvar.setDisable(true);
+			btnBuscarPrestadorServico.setDisable(true);
 		}
 		
 		inputValor.textProperty().bindBidirectional(getObject().valorProperty());

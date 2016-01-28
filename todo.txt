@@ -1,11 +1,16 @@
 ERROS e REQUISITOS
 
+
+X Abrir tela para cadastramento de serviços (- Emitir recibo de pagamento de serviço)
+X Verificar situação de serviços realizados (marcar como pago)
+X Sincronizar serviço com o financeiro
+
 - Atribuir a entrega de leite ao fornecedor
-- Verificar situação de serviços realizados (marcar como pago)
-- Emitir recibo de pagamento de serviço
+- Associar o financeiro ao fornecedor
+- Fazer ficha igual a do Anderson...(confirmações de prenhes)
 
 - Ajustar form de campo (repetição do cabeçalho...)
-- Fazer ficha igual a do Anderson...
+
 - Fazer composição racial (PC...)
 - Adicionar informação CMT na pesagem do leite.
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)

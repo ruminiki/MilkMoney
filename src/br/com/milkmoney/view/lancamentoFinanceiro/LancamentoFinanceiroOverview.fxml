@@ -80,11 +80,11 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0" VBox.vgrow="ALWAYS">
                <children>
-                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-border-width: 0;" HBox.hgrow="ALWAYS">
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" style="-fx-box-border: transparent;" HBox.hgrow="ALWAYS">
                      <items>
                         <VBox>
                            <children>
-                              <TableView fx:id="tableReceitas" cacheShape="false" focusTraversable="false" prefHeight="150.0" VBox.vgrow="SOMETIMES">
+                              <TableView fx:id="tableReceitas" cacheShape="false" focusTraversable="false" prefHeight="150.0" style="-fx-box-border: #CCC;" VBox.vgrow="SOMETIMES">
                                  <columns>
                                     <TableColumn fx:id="situacaoLancamentoFinanceiroColumn" maxWidth="10.0" prefWidth="75.0" />
                                     <TableColumn fx:id="tipoLancamentoFinanceiroColumn" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
@@ -114,7 +114,7 @@
                         </VBox>
                         <VBox>
                            <children>
-                              <TableView fx:id="tableDespesas" cacheShape="false" focusTraversable="false" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="tableDespesas" cacheShape="false" focusTraversable="false" style="-fx-box-border: #CCC;" VBox.vgrow="ALWAYS">
                                  <columns>
                                     <TableColumn fx:id="situacaoLancamentoFinanceiroColumn1" maxWidth="10.0" prefWidth="75.0" />
                                     <TableColumn fx:id="tipoLancamentoFinanceiroColumn1" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
@@ -125,6 +125,9 @@
                                     <TableColumn fx:id="centroCustoColumn1" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Centro Custo" />
                                     <TableColumn fx:id="valorColumn1" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
                                  </columns>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
                               </TableView>
                               <HBox alignment="CENTER_RIGHT" maxHeight="40.0" minHeight="40.0" VBox.vgrow="NEVER">
                                  <children>

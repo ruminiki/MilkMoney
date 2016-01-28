@@ -175,6 +175,13 @@ public class RootLayoutController {
     	setTitle("Financeiro > Lançamentos");
     }
     
+    @FXML
+    protected void handleCadastroServico() {
+    	openForm("view/servico/ServicoOverview.fxml");
+    	setTitle("Financeiro > Serviços");    	
+    }
+        
+    
     //RELATÓRIOS
     @FXML
     protected void handleReportFichaAnimal(){

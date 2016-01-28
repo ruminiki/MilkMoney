@@ -28,14 +28,20 @@
                   <Label text="Descrição: " GridPane.rowIndex="1" />
                   <Label text="Prestador Serviço: " GridPane.rowIndex="2" />
                   <Label text="Valor: " GridPane.rowIndex="3" />
-                  <DatePicker fx:id="inputData" maxWidth="100.0" GridPane.columnIndex="1" />
                   <UCTextField fx:id="inputDescricao" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#handleSelecionarPrestadorServico" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                  <Button fx:id="btnBuscarPrestadorServico" mnemonicParsing="false" onAction="#handleSelecionarPrestadorServico" text="Buscar" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin></Button>
                   <UCTextField fx:id="inputValor" maxWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <UCTextField fx:id="inputPrestadorServico" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1">
+                     <children>
+                        <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" />
+                        <Label text="Vcto: " />
+                        <DatePicker fx:id="inputDataVencimento" maxWidth="110.0" />
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -43,7 +49,7 @@
             </GridPane>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="13.0" prefWidth="447.0" spacing="5.0">
                <children>
-                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
+                  <Button fx:id="btnSalvar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

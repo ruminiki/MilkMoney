@@ -1,5 +1,6 @@
 package br.com.milkmoney.service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class RelatorioService {
 	public static final String RELATORIO_RESUMO_ATIVIDADE          = "report/resumoAtividade.prpt";
 	public static final String RELATORIO_CONTROLE_LEITEIRO         = "report/relatorioControleLeiteiro.prpt";
 	public static final String RELATORIO_SERVICOS                  = "report/relatorioServicos.prpt";
+	public static final String RECIBO_SERVICO                      = "report/reciboServico.prpt";
+	
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		@SuppressWarnings("rawtypes")
@@ -205,6 +208,14 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
         					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
         					masterReport.getParameterValues().put("prestadorServico", Integer.parseInt(param[2].toString()));
+        					GenericPentahoReport.runReport(format, masterReport);
+        					break;
+        				case RECIBO_SERVICO:
+        					masterReport = GenericPentahoReport.getReportDefinition(report);
+        					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+        					masterReport.getParameterValues().put("servico", param[0]);
+        					masterReport.getParameterValues().put("valor", (BigDecimal) param[1]);
+        					masterReport.getParameterValues().put("prestadorServico", param[2]);
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				default:

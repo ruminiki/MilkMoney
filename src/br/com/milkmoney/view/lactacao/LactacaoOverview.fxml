@@ -14,14 +14,6 @@
    <children>
       <VBox prefHeight="521.0" prefWidth="816.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="30.0" spacing="5.0" style="-fx-border-color: #CCC;">
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-               <children>
-                  <Label fx:id="lblHeader" text="LACTAÇÕES " />
-               </children>
-            </HBox>
             <VBox minWidth="510.0" spacing="5.0">
                <children>
                   <TableView fx:id="table" focusTraversable="false" maxHeight="350.0">
@@ -41,6 +33,13 @@
                         </TableView>
                </children>
             </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+               <children>
+                  <Label fx:id="lblHeader" text="Label" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

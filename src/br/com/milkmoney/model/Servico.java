@@ -20,9 +20,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
@@ -43,11 +45,15 @@ public class Servico extends AbstractEntity implements Serializable {
 	private int id;
 	
 	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private ObjectProperty<LocalDate> dataVencimento = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
 	private StringProperty descricao = new SimpleStringProperty();
 	private StringProperty historico = new SimpleStringProperty();
 	private StringProperty valor = new SimpleStringProperty();
 	private ObjectProperty<PrestadorServico> prestadorServico = new SimpleObjectProperty<PrestadorServico>();
-
+	private ObjectProperty<LancamentoFinanceiro> lancamentoFinanceiro = new SimpleObjectProperty<LancamentoFinanceiro>();
+	@Transient
+	private String integradoFinanceiro = SimNao.NAO;
+	
 	public Servico() {
 		// TODO Auto-generated constructor stub
 	}
@@ -72,6 +78,21 @@ public class Servico extends AbstractEntity implements Serializable {
 		return data;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="data de vencimento")
+	public Date getDataVencimento() {
+		return DateUtil.asDate(this.dataVencimento.get());
+	}
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento.set(DateUtil.asLocalDate(dataVencimento));
+	}
+	
+	public ObjectProperty<LocalDate> dataVencimentoProperty(){
+		return dataVencimento;
+	}
+	
 	public int getId() {
 		return this.id;
 	}
@@ -123,6 +144,26 @@ public class Servico extends AbstractEntity implements Serializable {
 		return prestadorServico;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@OneToOne(targetEntity = LancamentoFinanceiro.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+	@JoinColumn(name="lancamentoFinanceiro")
+	public LancamentoFinanceiro getLancamentoFinanceiro() {
+		return lancamentoFinanceiro.get();
+	}
+	
+	public void setLancamentoFinanceiro(LancamentoFinanceiro lancamentoFinanceiro) {
+		this.lancamentoFinanceiro.set(lancamentoFinanceiro);
+	}
+	
+	public ObjectProperty<LancamentoFinanceiro> lancamentoFinanceiroProperty(){
+		return lancamentoFinanceiro;
+	}
+	
+	@Transient
+	public String isIntegradoFinanceiro() {
+		return getLancamentoFinanceiro() == null ? SimNao.NAO : SimNao.SIM;
+	}
+
 	@Access(AccessType.PROPERTY)
 	public BigDecimal getValor() {
 		return NumberFormatUtil.fromString(this.valor.get());

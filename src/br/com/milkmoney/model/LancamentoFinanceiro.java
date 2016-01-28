@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -51,6 +52,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	private StringProperty                                descricao             = new SimpleStringProperty();
 	private StringProperty                                observacao            = new SimpleStringProperty();
 	private StringProperty								  parcela               = new SimpleStringProperty();
+	private Servico                                       servico               = null;
 	
 	public LancamentoFinanceiro() {
 	}
@@ -234,6 +236,17 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 		return parcela;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@OneToOne(targetEntity=Servico.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = false)
+	@JoinColumn(name="servico")
+	public Servico getServico() {
+		return servico;
+	}
+
+	public void setServico(Servico servico) {
+		this.servico = servico;
+	}
+
 	//--------------
 	@Transient
 	public String getTipoLancamentoFormatado(){

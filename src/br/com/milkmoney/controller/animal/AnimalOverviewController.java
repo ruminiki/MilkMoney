@@ -201,10 +201,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		
 		double width = newWidth.doubleValue();
 		
-		if ( width >= 590 ){
-			nomeColumn.minWidthProperty().set((width - 380) * 0.50);
-			loteColumn.minWidthProperty().set((width - 380) * 0.25);
-			racaColumn.minWidthProperty().set((width - 380) * 0.25);
+		if ( width >= 655 ){
+			nomeColumn.minWidthProperty().set((width - 370) * 0.50);
+			loteColumn.minWidthProperty().set((width - 370) * 0.25);
+			racaColumn.minWidthProperty().set((width - 370) * 0.25);
 		}
 		
 	}

@@ -1,0 +1,3 @@
+- Abrir tela para cadastramento de serviços (- Emitir recibo de pagamento de serviço)
+- Verificar situação de serviços realizados (marcar como pago)
+- Sincronizar serviço com o financeiro

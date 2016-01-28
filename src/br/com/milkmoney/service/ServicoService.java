@@ -11,22 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.ServicoDao;
 import br.com.milkmoney.model.Servico;
+import br.com.milkmoney.validation.ServicoValidation;
 
 @Service
 public class ServicoService implements IService<Integer, Servico>{
 
 	@Autowired private ServicoDao dao;
-
+	@Autowired private LancamentoFinanceiroService lancamentoFinanceiroService;
+	
 	@Override
 	@Transactional
-	public boolean save(Servico entity) {
-		return dao.persist(entity);
+	public boolean save(Servico servico) {
+		validate(servico);
+		return dao.persist(servico);
 	}
 
 	@Override
 	@Transactional
-	public boolean remove(Servico entity) {
-		return dao.remove(entity);
+	public boolean remove(Servico servico) {
+		return dao.remove(servico);
 	}
 
 	@Override
@@ -49,10 +52,14 @@ public class ServicoService implements IService<Integer, Servico>{
 	}
 
 	@Override
-	public void validate(Servico entity) {
-		// TODO Auto-generated method stub
-		
+	public void validate(Servico servico) {
+		ServicoValidation.validate(servico);
 	}
-	
-	
+
+	@Transactional
+	public void removerLancamentoFinanceiroIntegrado(Servico servico) {
+		servico.setLancamentoFinanceiro(null);
+		save(servico);
+	}
+
 }

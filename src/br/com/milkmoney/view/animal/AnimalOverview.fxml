@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="517.0" prefWidth="1320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalOverviewController">
+<AnchorPane prefHeight="550.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.AnimalOverviewController">
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -20,22 +20,25 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="3.0" />
+                        <Insets left="20.0" right="10.0" />
                      </HBox.margin>
                   </TextField>
                   <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#clearFilter" style="-fx-background-color: #FFF;" text="Limpar Filtro">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
                   </Button>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <Button mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
                   <Button mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
                   <Button mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleOpenIndicadores" text="Indicadores" />
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleOpenIndicadores" text="Indicadores" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -60,23 +63,26 @@
                   </VBox>
                  <!--  <Button maxHeight="30.0" minHeight="30.0" mnemonicParsing="false" onAction="#encerrarLactacao" text="Secar" /> -->
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </HBox>
-            <HBox spacing="3.0" VBox.vgrow="ALWAYS">
+            <HBox spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox minWidth="930.0" prefHeight="200.0" prefWidth="100.0" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox onKeyPressed="#handleEnterFilter" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_LEFT" onKeyPressed="#handleEnterFilter" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <GridPane maxHeight="85.0" minHeight="85.0">
+                              <GridPane maxHeight="85.0" minHeight="85.0" prefHeight="85.0" prefWidth="944.0">
                                 <columnConstraints>
-                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="166.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="53.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="147.0" />
+                                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="131.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="170.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="42.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="316.0" minWidth="10.0" prefWidth="171.0" />
                                     <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="119.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="49.0" />
-                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="148.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="63.0" />
+                                    <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="79.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="172.0" />
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -84,39 +90,47 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Situação Animal: " />
-                                    <Label text="Situação Cob/Ins: " GridPane.rowIndex="2" />
-                                    <Label text="Idade de: " GridPane.columnIndex="6" />
-                                    <Label text="Lote: " GridPane.columnIndex="2" />
-                                    <Label text="Raça: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <Label text="Sexo: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="inputSituacaoAnimal" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
-                                    <ChoiceBox fx:id="inputSituacaoCobertura" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="inputLote" prefWidth="150.0" GridPane.columnIndex="3" />
-                                    <ChoiceBox fx:id="inputRaca" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="80.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                    <Label text="Dias Pós Parto: " GridPane.columnIndex="4" />
-                                    <Label text="Dias Pós Cobertura: " GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                                    <TextField fx:id="inputDiasPosParto" maxWidth="60.0" minWidth="60.0" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
-                                    <TextField fx:id="inputDiasPosCobertura" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                                    <Label text="Situação Animal " />
+                                    <Label text="Situação Cob/Ins. " GridPane.rowIndex="2" />
+                                    <Label text="Idade de " GridPane.columnIndex="6" />
+                                    <Label text="Lote " GridPane.columnIndex="2" />
+                                    <Label text="Raça " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <Label text="Sexo " GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputSituacaoAnimal" prefHeight="0.0" prefWidth="170.0" GridPane.columnIndex="1" />
+                                    <ChoiceBox fx:id="inputSituacaoCobertura" prefHeight="0.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputLote" prefWidth="170.0" GridPane.columnIndex="3" />
+                                    <ChoiceBox fx:id="inputRaca" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="170.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    <Label text="Dias Pós Parto " GridPane.columnIndex="4" />
+                                    <Label text="Dias Pós Cobertura " GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                                    <TextField fx:id="inputDiasPosParto" maxWidth="60.0" minWidth="72.0" prefHeight="25.0" prefWidth="89.0" GridPane.columnIndex="5" />
+                                    <TextField fx:id="inputDiasPosCobertura" maxWidth="60.0" minWidth="72.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="7">
                                        <children>
-                                          <TextField fx:id="inputIdadeDe" minWidth="60.0" prefHeight="25.0" prefWidth="60.0" />
-                                          <Label text="até: " />
-                                          <TextField fx:id="inputIdadeAte" prefHeight="25.0" prefWidth="60.0" />
+                                          <TextField fx:id="inputIdadeDe" minWidth="72.0" prefHeight="25.0" prefWidth="72.0" />
+                                          <Label text="até " />
+                                          <TextField fx:id="inputIdadeAte" minWidth="72.0" prefHeight="25.0" prefWidth="72.0" />
                                        </children>
                                     </HBox>
-                                    <Label text="Nº Partos: " GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                                    <TextField fx:id="inputNumeroPartos" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-                                    <Label text="Secar em (x dias): " GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                                    <TextField fx:id="inputSecarEmXDias" maxWidth="60.0" minWidth="60.0" GridPane.columnIndex="7" GridPane.rowIndex="1" />
-                                    <Label text="Finalidade: " GridPane.columnIndex="6" GridPane.rowIndex="2" />
-                                    <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
-                                    <Label text="Cobertas/Inseminadas: " GridPane.rowIndex="1" />
-                                    <ChoiceBox fx:id="inputCobertaInseminada" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Nº Partos " GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                                    <TextField fx:id="inputNumeroPartos" maxWidth="60.0" minWidth="72.0" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                                    <Label text="Secar em " GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                                    <Label text="Finalidade " GridPane.columnIndex="6" GridPane.rowIndex="2" />
+                                    <ChoiceBox fx:id="inputFinalidadeAnimal" prefWidth="170.0" GridPane.columnIndex="7" GridPane.rowIndex="2" />
+                                    <Label text="Cobertas/Inseminadas " GridPane.rowIndex="1" />
+                                    <ChoiceBox fx:id="inputCobertaInseminada" prefHeight="0.0" prefWidth="170.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+                                       <children>
+                                          <TextField fx:id="inputSecarEmXDias" maxWidth="60.0" minWidth="72.0" />
+                                          <Label text="dias" />
+                                       </children>
+                                    </HBox>
                                  </children>
                               </GridPane>
                            </children>
+                           <VBox.margin>
+                              <Insets right="1.0" top="10.0" />
+                           </VBox.margin>
                         </HBox>
                         <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                           <columns>
@@ -129,10 +143,13 @@
                               <TableColumn fx:id="dataNascimentoColumn" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Nascimento" />
                               <TableColumn fx:id="idadeColumn" editable="false" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Idade (M)" />
                           </columns>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </TableView>
                      </children>
                   </VBox>
-                  <VBox fx:id="sideBar" maxWidth="350.0" minWidth="360.0" style="-fx-border-color: #CCC;" HBox.hgrow="NEVER">
+                  <VBox fx:id="sideBar" maxWidth="350.0" minWidth="360.0" HBox.hgrow="NEVER">
                      <children>
                         <HBox VBox.vgrow="NEVER" />
                         <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
@@ -140,7 +157,7 @@
                               <Label text="Ficha Animal" />
                            </children>
                         </HBox>
-                        <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="350.0" style="-fx-focus-color: transparent;" VBox.vgrow="ALWAYS">
+                        <ScrollPane focusTraversable="false" hbarPolicy="NEVER" minHeight="350.0" style="-fx-focus-color: transparent; -fx-border-color: transparent; -fx-border-style: none;" VBox.vgrow="ALWAYS">
                            <content>
                               <GridPane>
                                 <columnConstraints>
@@ -406,7 +423,10 @@
                               </HBox>
                            </children>
                         </VBox>
-                     </children></VBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin></VBox>
                </children>
             </HBox>
          </children>
