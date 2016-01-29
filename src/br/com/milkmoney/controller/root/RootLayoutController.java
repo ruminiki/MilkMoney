@@ -388,18 +388,15 @@ public class RootLayoutController {
     @FXML
     protected void handleAcessoRapidoAnimal(String numero){
     	AcessoRapidoAnimalController controller = (AcessoRapidoAnimalController) MainApp.getBean(AcessoRapidoAnimalController.class);
-    	controller.setNumeroDigitado(numero);
-    	openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");
+    	if ( controller.setNumeroDigitado(numero) ){
+    		openFormAsPopUp("view/animal/AcessoRapidoAnimal.fxml", "Dados do Animal");	
+    	}
     }
     
     @FXML
     protected void handleBackupBancoDados() {
     	openFormAsPopUp("view/databaseBackup/DatabaseBackupForm.fxml", "Cópia do Banco de Dados");
     }
-  
-    
-    
- 
     
 	public void openFormAsPopUp(String formPath, String title){
     	

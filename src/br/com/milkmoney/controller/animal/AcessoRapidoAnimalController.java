@@ -576,11 +576,13 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		}
 	}
 
-	public void setNumeroDigitado(String numeroAnimal) {
+	public boolean setNumeroDigitado(String numeroAnimal) {
 		setObject(animalService.findByNumero(numeroAnimal));
 		if ( getObject() == null ){
 			CustomAlert.mensagemInfo("Nenhum animal encontrado com o número [" + numeroAnimal + "]. Por favor, tente selecionar o animal novamente.");
+			return false;
 		}
+		return true;
 	}
 
 	@Override
