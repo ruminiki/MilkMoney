@@ -4,6 +4,13 @@ ERROS e REQUISITOS
 X Abrir tela para cadastramento de serviços (- Emitir recibo de pagamento de serviço)
 X Verificar situação de serviços realizados (marcar como pago)
 X Sincronizar serviço com o financeiro
+X colocar botão na tabela de animal para carregar a tela geral
+
+X Detalhes de valores ideais na tela de lactação
+- Gerar relatório com valores de tempo de produção ideal por animal
+
+- se nao existe o animal nao abrir tela no acesso rápido
+- recibo pgto
 
 - Atribuir a entrega de leite ao fornecedor
 - Associar o financeiro ao fornecedor

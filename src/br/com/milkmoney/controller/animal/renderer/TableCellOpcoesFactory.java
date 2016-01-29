@@ -9,31 +9,22 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import br.com.milkmoney.model.Animal;
-import br.com.milkmoney.model.Sexo;
-import br.com.milkmoney.model.SituacaoAnimal;
 
 @SuppressWarnings("hiding")
 public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
-	private Function<Integer, Boolean> encerrarLactacaoFunction;
+	/*private Function<Integer, Boolean> encerrarLactacaoFunction;
 	private Function<Integer, Boolean> registrarVendaFunction;
 	private Function<Integer, Boolean> registrarMorteFunction;
 	private Function<Integer, Boolean> registrarProducaoFunction;
 	private Function<Integer, Boolean> registrarCoberturaFunction;
 	private Function<Integer, Boolean> fichaAnimalFunction;
-	private Function<Integer, Boolean> linhaTempoAnimalFunction;
+	private Function<Integer, Boolean> linhaTempoAnimalFunction;*/
 	
-	public TableCellOpcoesFactory(Function<Integer, Boolean> registrarCoberturaFunction, Function<Integer, Boolean> encerrarLactacaoFunction,
-			Function<Integer, Boolean> registrarVendaFunction, Function<Integer, Boolean> registrarMorteFunction,
-			Function<Integer, Boolean> registrarProducaoFunction, Function<Integer, Boolean> fichaAnimalFunction, Function<Integer, Boolean> linhaTempoAnimalFunction) {
-		this.encerrarLactacaoFunction = encerrarLactacaoFunction;
-		this.registrarMorteFunction = registrarMorteFunction;
-		this.registrarVendaFunction = registrarVendaFunction;
-		this.registrarProducaoFunction = registrarProducaoFunction;
-		this.registrarCoberturaFunction = registrarCoberturaFunction;
-		this.fichaAnimalFunction = fichaAnimalFunction;
-		this.linhaTempoAnimalFunction = linhaTempoAnimalFunction;
+	private Function<Integer, Boolean> painelControleAnimalFunction;
+	
+	public TableCellOpcoesFactory(Function<Integer, Boolean> painelControleAnimalFunction) {
+		this.painelControleAnimalFunction = painelControleAnimalFunction;
 	}
 
 	@Override
@@ -46,25 +37,23 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		        	if ( tableRowProperty().getValue().getItem() != null ){
 		        		if(item!=null){
 		        			
-		        			Animal animal = (Animal) tableViewProperty().get().getItems().get(tableRowProperty().get().getIndex());
+		        			//Animal animal = (Animal) tableViewProperty().get().getItems().get(tableRowProperty().get().getIndex());
 		        			
 							HBox cell = new HBox();
 							cell.setAlignment(Pos.CENTER);
 							cell.setSpacing(8);
 							
-							VBoxOption btnCobertura = new VBoxOption("img/reproducao16.png", "Coberturas");
-							btnCobertura._setDisabled(animal.getSexo().equals(Sexo.MACHO));
-							btnCobertura.setOnMouseReleased(new EventHandler<Event>() {
+							VBoxOption btnOpcoes = new VBoxOption("img/reproducao16.png", "Painel Controle Animal");
+							btnOpcoes.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {
-					        		if ( btnCobertura._isDisabled() ) return;
 					        		tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									registrarCoberturaFunction.apply(tableRowProperty().get().getIndex());
+					        		painelControleAnimalFunction.apply(tableRowProperty().get().getIndex());
 					        	}
 					        });
-							cell.getChildren().add(btnCobertura);
+							cell.getChildren().add(btnOpcoes);
 							
-							VBoxOption btnSecar = new VBoxOption("img/secar16.png", "Lactações");
+							/*VBoxOption btnSecar = new VBoxOption("img/secar16.png", "Lactações");
 							btnSecar._setDisabled(animal.getSexo().equals(Sexo.MACHO));
 							btnSecar.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
@@ -135,7 +124,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 					        		linhaTempoAnimalFunction.apply(tableRowProperty().get().getIndex());
 					        	}
 					        });
-							cell.getChildren().add(btnEventos);
+							cell.getChildren().add(btnEventos);*/
 							setGraphic(cell);
 						}else{
 							setGraphic(null);
