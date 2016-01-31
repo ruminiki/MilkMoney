@@ -1,15 +1,26 @@
 ERROS e REQUISITOS
 
 
-X Abrir tela para cadastramento de serviços (- Emitir recibo de pagamento de serviço)
-X Verificar situação de serviços realizados (marcar como pago)
-X Sincronizar serviço com o financeiro
-X colocar botão na tabela de animal para carregar a tela geral
-X se nao existe o animal nao abrir tela no acesso rápido
-X Detalhes de valores ideais na tela de lactação03
+X Entrega de leite, selecionar o default SIM
 - Gerar relatório com valores de tempo de produção ideal por animal
-
 - recibo pgto
+- Corrigir busca pelo número quando existirem animais com mesmo número
+- Reformular tela do painel de controle do animal
+	- Coberturas
+	- partos
+	- abortos
+	- repetições de cio
+- Indicadores, corrigir cores quando ultrapassar o limite
+- Indicadores, formatar casas decimais, permitir ao usuário configurar
+- Criar objetivo dentro do valor ideal
+- Reformular procedimento técnico de acordo com planilha Daieli
+- Filtrar número de serviços tela animal
+X Erro valor das parcelas
+- Exibir tela com lista de parcelas quando o movimento for parcelado
+X Alinhar a esquerda colunas lanc financeiro
+- Projeção, permitir informar média e valor do litro
+
+
 
 - Atribuir a entrega de leite ao fornecedor
 - Associar o financeiro ao fornecedor

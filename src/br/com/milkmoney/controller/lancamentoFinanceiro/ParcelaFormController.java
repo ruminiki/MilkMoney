@@ -38,7 +38,12 @@ public class ParcelaFormController extends AbstractFormController<Integer, Lanca
 	@FXML
 	public void initialize() {
 		
-		inputNumeroParcelas.setText(null);
+		MaskFieldUtil.numeroInteiroWithouMask(inputIntervalo);
+		MaskFieldUtil.numeroInteiroWithouMask(inputNumeroParcelas);
+		MaskFieldUtil.numeroInteiroWithouMask(inputDiaVencimento);
+		MaskFieldUtil.decimal(inputValorParcelas);
+		
+		inputNumeroParcelas.setText("");
 		inputDiaVencimento.setText(""+DateUtil.asLocalDate(getObject().getDataVencimento()).getDayOfMonth());
 		inputValorParcelas.setText(getObject().getValorTotal().toString());
 		inputDescricao.setText(getObject().getDescricao());
@@ -48,11 +53,6 @@ public class ParcelaFormController extends AbstractFormController<Integer, Lanca
 		
 		inputIntervalo.setText(String.valueOf(30));
 		inputDataInicio.setValue(LocalDate.now());
-		
-		MaskFieldUtil.numeroInteiro(inputIntervalo);
-		MaskFieldUtil.numeroInteiro(inputNumeroParcelas);
-		MaskFieldUtil.numeroInteiro(inputDiaVencimento);
-		MaskFieldUtil.decimalWithoutMask(inputValorParcelas);
 		
 	}
 

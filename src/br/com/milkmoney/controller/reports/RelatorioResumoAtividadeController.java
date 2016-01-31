@@ -19,7 +19,7 @@ public class RelatorioResumoAtividadeController extends AbstractReport{
 	public void initialize(){
 		
 		inputAno.setText(String.valueOf(LocalDate.now().getYear()));
-		MaskFieldUtil.numeroInteiro(inputAno);
+		MaskFieldUtil.numeroInteiroWithouMask(inputAno);
 		
 		super.initialize();
 	}

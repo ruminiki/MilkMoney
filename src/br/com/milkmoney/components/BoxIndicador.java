@@ -1,7 +1,6 @@
 package br.com.milkmoney.components;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.function.Function;
 
 import javafx.event.EventHandler;
@@ -110,10 +109,10 @@ public class BoxIndicador extends VBox {
 				//se o indicador estiver até apenas 5% acima do valor mínimo - liga o alerta
 				if ( indicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
 						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getMenorValorIdeal()
-						.multiply(BigDecimal.valueOf(100))
-						.divide(indicador.getValorApurado(), RoundingMode.HALF_EVEN)
-						.subtract(BigDecimal.valueOf(100)).compareTo(BigDecimal.valueOf(5)) <= 0 ){
+						indicador.getMenorValorIdeal().add(
+									indicador.getMenorValorIdeal()
+									.multiply(BigDecimal.valueOf(0.05)))
+									.compareTo(indicador.getValorApurado()) >= 0 ){
 					vbValor.setStyle(styleAlerta());	
 				}else{
 					vbValor.setStyle(styleIdeal());					
@@ -128,10 +127,10 @@ public class BoxIndicador extends VBox {
 				//se o indicador estiver até apenas 5% abaixo do valor máximo - liga o alerta
 				if ( indicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
 						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getValorApurado()
-						.multiply(BigDecimal.valueOf(100))
-						.divide(indicador.getMaiorValorIdeal(), RoundingMode.HALF_EVEN)
-						.compareTo(BigDecimal.valueOf(95)) >= 0 ){
+						indicador.getMenorValorIdeal().add(
+								indicador.getMenorValorIdeal()
+								.multiply(BigDecimal.valueOf(0.05)))
+								.compareTo(indicador.getValorApurado()) >= 0 ){
 					vbValor.setStyle(styleAlerta());	
 				}else{
 					vbValor.setStyle(styleIdeal());					

@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
 
@@ -152,6 +153,7 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 	}
 
 	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="carrega marcações")
 	public String getCarregaMarcacoesMes() {
 		return this.carregaMarcacoesMes.get();
 	}

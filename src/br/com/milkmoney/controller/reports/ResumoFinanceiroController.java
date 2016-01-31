@@ -28,7 +28,7 @@ public class ResumoFinanceiroController extends AbstractReport{
 	public void initialize(){
 		super.initialize();
 		inputAno.setText(""+LocalDate.now().getYear());
-		MaskFieldUtil.numeroInteiro(inputAno);
+		MaskFieldUtil.numeroInteiroWithouMask(inputAno);
 		centroCusto = null;
 	}
 	

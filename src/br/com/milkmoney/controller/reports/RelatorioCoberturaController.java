@@ -55,8 +55,8 @@ public class RelatorioCoberturaController extends AbstractReport{
 		
 		inputLote.setItems(loteService.findAllAsObservableList());
 		
-		MaskFieldUtil.numeroInteiro(inputIdadeDe);
-		MaskFieldUtil.numeroInteiro(inputIdadeAte);
+		MaskFieldUtil.numeroInteiroWithouMask(inputIdadeDe);
+		MaskFieldUtil.numeroInteiroWithouMask(inputIdadeAte);
 		
 		super.initialize();
 	}

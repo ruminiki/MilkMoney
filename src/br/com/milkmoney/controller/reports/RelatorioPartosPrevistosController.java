@@ -17,7 +17,7 @@ public class RelatorioPartosPrevistosController extends AbstractReport{
 	public void initialize(){
 		super.initialize();
 		inputQuantidadeDias.setText("30");
-		MaskFieldUtil.numeroInteiro(inputQuantidadeDias);
+		MaskFieldUtil.numeroInteiroWithouMask(inputQuantidadeDias);
 	}
 	
 	@Override
