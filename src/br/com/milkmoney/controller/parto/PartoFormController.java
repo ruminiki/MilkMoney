@@ -78,7 +78,6 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 
 	@FXML
 	public void initialize() {
-		
 		//parto
 		inputCobertura.setText(getObject().getCobertura().toString());
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());

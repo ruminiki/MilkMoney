@@ -55,7 +55,6 @@ public class VBoxOption extends VBox {
                 "-fx-background-image: url('" + img + "'); " +	
 			    "-fx-background-repeat: no-repeat; " + 
 			    "-fx-background-position: center; " +
-                "-fx-cursor: HAND; " +
                 "-fx-border-color: cornsilk;" +
                 "-fx-border-width:0 0 2 0; ");
 	}
@@ -67,7 +66,6 @@ public class VBoxOption extends VBox {
 			    "-fx-background-image: url('" + img + "'); " +	
 			    "-fx-background-repeat: no-repeat; " + 
 			    "-fx-background-position: center; " +
-			    "-fx-cursor: HAND; " +
 			    "-fx-border-width:0; ");
 	}
 	

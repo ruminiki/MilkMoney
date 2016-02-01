@@ -130,7 +130,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
-	@Autowired private PainelControleAnimalController painelControleAnimalController;
 	
 	private FichaAnimal fichaAnimal;
 	
@@ -148,8 +147,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(painelControleAnimal, 
-																					  novaCobertura, 
+				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(novaCobertura, 
 																					  confirmarPrenhes,
 																					  novoParto,
 																					  ultimaCobertura,
@@ -213,12 +211,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			racaColumn.minWidthProperty().set((width - 420) * 0.25);
 		}
 		
-	}
-	
-	@Override
-	protected void handleDoubleClick() {
-		painelControleAnimalController.setAnimal(getObject());
-		painelControleAnimalController.showForm();
 	}
 	
 	@FXML
@@ -559,17 +551,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		return true;
-	};
-	
-	Function<Animal, Boolean> painelControleAnimal = animal -> {
-		if ( animal != null ){
-			painelControleAnimalController.setAnimal(getObject());
-			painelControleAnimalController.showForm();
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
-		}
-		refreshObjectInTableView.apply(service.findById(getObject().getId()));
 		return true;
 	};
 	

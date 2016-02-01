@@ -15,8 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
 import javafx.util.Callback;
+
+import org.controlsfx.control.PopOver;
+
 import br.com.milkmoney.model.Animal;
 
 @SuppressWarnings("hiding")
@@ -32,13 +34,11 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 	private Function<Animal, Boolean> ultimaCoberturaFunction;
 	private Function<Animal, Boolean> fichaAnimalFunction;
 	private Function<Animal, Boolean> linhaTempoAnimalFunction;
-	private Function<Animal, Boolean> painelControleAnimalFunction;
 	private Function<Animal, Boolean> confirmarPrenhesFunction;
 	
 	private CustomMenuButton menu;
 	
-	public TableCellOpcoesFactory(Function<Animal, Boolean> painelControleAnimalFunction,
-									Function<Animal, Boolean> novaCoberturaFunction,	
+	public TableCellOpcoesFactory(Function<Animal, Boolean> novaCoberturaFunction,	
 									Function<Animal, Boolean> confirmarPrenhesFunction,
 									Function<Animal, Boolean> novoPartoFunction,
 									Function<Animal, Boolean> ultimaCoberturaFunction,
@@ -50,7 +50,6 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 									Function<Animal, Boolean> linhaTempoAnimalFunction,  
 									Function<Animal, Boolean> fichaAnimalFunction) {
 		
-		this.painelControleAnimalFunction = painelControleAnimalFunction;
 		this.lactacoesFunction = lactacoesFunction;
 		this.vendaFunction = vendaFunction;
 		this.morteFunction = morteFunction;
@@ -83,13 +82,14 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.setAlignment(Pos.CENTER);
 							cell.setSpacing(8);
 							
-							VBoxOption btnOpcoes = new VBoxOption("img/reproducao16.png", "Painel Controle Animal");
+							VBoxOption btnOpcoes = new VBoxOption("img/options24.png", "Opções");
 							btnOpcoes.setOnMouseReleased(new EventHandler<Event>() {
 					        	@Override
 					        	public void handle(Event event) {
+					        		menu.hide();
 					        		Bounds sourceNodeBounds = btnOpcoes.localToScreen(btnOpcoes.getBoundsInLocal());
-					        		menu.setX(sourceNodeBounds.getMinX() - 5.0);
-					        		menu.setY(sourceNodeBounds.getMaxY() + 5.0);
+					        		menu.setX(sourceNodeBounds.getMinX() + 20);
+					        		menu.setY(sourceNodeBounds.getMaxY() - 55);
 					        		menu.show(tableViewProperty().get().getScene().getWindow());
 					        		menu.show(animal);
 					        	}
@@ -110,39 +110,34 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		    return cell;
 	}
 	
-	public class CustomMenuButton extends Popup {
+	public class CustomMenuButton extends PopOver {
 		
 		private Animal animal;
+		HBox container = new HBox();
 		
 		public CustomMenuButton() {
 			
-			this.setAutoHide(true);
-			this.setAutoFix(true);
-			  
-			HBox container = new HBox();
-			
-			container.setSpacing(3);
+			container.setSpacing(5);
 			container.setAlignment(Pos.TOP_LEFT);
 			container.setStyle("-fx-background-color: #FFF");
 			
 			VBox column = new VBox();
 			column.setSpacing(3);
 			column.setStyle("-fx-background-color: #FFF");
-			
-			column.getChildren().add(createItem("Gerenciar Animal", painelControleAnimalFunction));
-			column.getChildren().add(createItem("Nova Cobertura", novaCoberturaFunction));
-			column.getChildren().add(createItem("Última Cobertura", ultimaCoberturaFunction));
-			column.getChildren().add(createItem("Confirmar Prenhes", confirmarPrenhesFunction));
+			column.getChildren().add(createItem("Nova Cobertura", novaCoberturaFunction, "img/novacobertura16.png"));
+			column.getChildren().add(createItem("Confirmar Prenhes", confirmarPrenhesFunction, "img/confirmarprenhes16.png"));
+			column.getChildren().add(createItem("Novo Parto", novoPartoFunction, "img/novoparto16.png"));
+			column.getChildren().add(createItem("Lactações", lactacoesFunction, "img/encerrarlactacao16.png"));
 			container.getChildren().add(column);
 
 			column = new VBox();
 			column.setSpacing(3);
 			column.setStyle("-fx-background-color: #FFF");
 
-			column.getChildren().add(createItem("Novo Parto", novoPartoFunction));
-			column.getChildren().add(createItem("Último Parto", ultimoPartoFunction));
-			column.getChildren().add(createItem("Lactações", lactacoesFunction));
-			column.getChildren().add(createItem("Controle Leiteiro", controleLeiteiroFunction));
+			column.getChildren().add(createItem("Última Cobertura", ultimaCoberturaFunction, "img/ultimacobertura16.png"));
+			column.getChildren().add(createItem("Último Parto", ultimoPartoFunction, "img/ultimoparto16.png"));
+			column.getChildren().add(createItem("Controle Leiteiro", controleLeiteiroFunction, "img/producao16.png"));
+			column.getChildren().add(createItem("Registrar Venda", vendaFunction, "img/venda16.png"));
 			container.getChildren().add(new Separator(Orientation.VERTICAL));
 			container.getChildren().add(column);
 			
@@ -150,29 +145,45 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 			column.setSpacing(5);
 			column.setStyle("-fx-background-color: #FFF");
 			
-			column.getChildren().add(createItem("Registrar Venda", vendaFunction));
-			column.getChildren().add(createItem("Registrar Morte", morteFunction));
-			column.getChildren().add(createItem("Linha do Tempo", linhaTempoAnimalFunction));
-			column.getChildren().add(createItem("Imprimir Ficha", fichaAnimalFunction));
+			column.getChildren().add(createItem("Registrar Morte", morteFunction, "img/morte16.png"));
+			column.getChildren().add(createItem("Linha do Tempo", linhaTempoAnimalFunction, "img/timeline16.png"));
+			column.getChildren().add(createItem("Imprimir Ficha", fichaAnimalFunction, "img/ficha16.png"));
 			container.getChildren().add(new Separator(Orientation.VERTICAL));
 			container.getChildren().add(column);
 
-			getContent().add(container);
-					
+			this.setDetached(false);
+			this.setDetachable(false);
+			this.setCornerRadius(3);
+			this.setAutoHide(true);
+			this.setAutoFix(true);
+			
+			this.setContentNode(container);
+			
 		}
 			
-		private HBox createItem(java.lang.String string, Function<Animal, Boolean> function){
+		private HBox createItem(java.lang.String string, Function<Animal, Boolean> function, java.lang.String icon){
 			HBox itemRow = new HBox();
 			itemRow.setMinWidth(120);
 			itemRow.setMinHeight(25);
+			itemRow.setSpacing(3);
+			
+			VBox c = new VBox();
+			c.setStyle("-fx-padding: 0; " +
+					"-fx-min-height: 24; -fx-min-width: 24;" +
+					"-fx-background-insets: 0;" +
+				    "-fx-background-image: url('" + icon + "'); " +	
+				    "-fx-background-repeat: no-repeat; " + 
+				    "-fx-background-position: center; " +
+				    "-fx-cursor: HAND; " +
+				    "-fx-border-width:0; ");
 			
 			Label l = new Label(string.toString());
 			
 			VBox.setVgrow(l, Priority.SOMETIMES);
 	        HBox.setHgrow(l, Priority.SOMETIMES);
 			
-			itemRow.getChildren().add(l);
-			itemRow.setAlignment(Pos.CENTER);
+			itemRow.getChildren().addAll(c,l);
+			itemRow.setAlignment(Pos.CENTER_LEFT);
 			
 			//criar listener ao passar mouse
 			itemRow.addEventHandler(MouseEvent.MOUSE_ENTERED,
