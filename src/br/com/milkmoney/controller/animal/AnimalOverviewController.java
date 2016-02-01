@@ -492,17 +492,15 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Animal, Boolean> novaCobertura = animal -> {
 		if ( animal != null ){
 			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
-			if ( cobertura == null ){
+			if ( cobertura == null || !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
 				coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
 				coberturaFormController.showForm();
 				setObject(service.findById(getObject().getId()));
 				table.getSelectionModel().select(getObject());
 			}else{
-				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
-					CustomAlert.mensagemInfo("A última cobertura do animal NÃO foi confirmada. "
-							+ "\nConfirme como VAZIA caso o animal tenha repetido o cio.");
-					coberturas.apply(animal);
-				}
+				CustomAlert.mensagemInfo("A última cobertura do animal NÃO foi confirmada. "
+						+ "\nConfirme como VAZIA caso o animal tenha repetido o cio.");
+				coberturas.apply(animal);
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

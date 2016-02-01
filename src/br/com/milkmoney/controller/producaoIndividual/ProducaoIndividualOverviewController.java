@@ -1,6 +1,7 @@
 package br.com.milkmoney.controller.producaoIndividual;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
@@ -26,6 +27,7 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellIndexFactory;
 import br.com.milkmoney.components.events.ActionEvent;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.model.ProducaoIndividual;
@@ -33,6 +35,7 @@ import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ProducaoIndividualService;
+import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 
 @Controller
@@ -59,6 +62,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@FXML private VBox vBoxChart;
 	private AreaChart<String, Number> lineChart;
 	
+	@Autowired private RelatorioService relatorioService;
 	@Autowired private LactacaoService lactacaoService;
 	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
 	@Autowired private ProducaoIndividualFormController producaoIndividualFormController;
@@ -195,6 +199,30 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		//recarrega as lactações para atualizar a média de produção do período
 		tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
 		//tableLactacoes.getSelectionModel().select(lactacao);
+		
+	}
+	
+	@FXML
+	private void imprimir(){
+		
+		Lactacao lactacao = null;
+		if ( tableLactacoes.getItems().size() > 0 ){
+			lactacao = tableLactacoes.getItems().get(0);	
+		}
+		
+		if ( lactacao == null ){
+			CustomAlert.mensagemInfo("O animal selecionado não tem nenhum registro de controle leiteiro.");
+			return;
+		}
+		
+		Object[] params = new Object[]{
+				String.valueOf(lactacao.getAnimal().getId()),
+				lactacao.getDataInicio(),
+				new Date()
+		};
+		
+		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+			RelatorioService.RELATORIO_CONTROLE_LEITEIRO, params);
 		
 	}
 	

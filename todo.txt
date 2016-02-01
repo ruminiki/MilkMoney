@@ -1,10 +1,11 @@
 ERROS e REQUISITOS
 
-- Imprimir controle leiteiro do animal
+X Imprimir controle leiteiro do animal
 X Entrega de leite, selecionar o default SIM
 - Gerar relatório com valores de tempo de produção ideal por animal (atualizar relatório ranking)
 X recibo pgto
 - Cadastro do animal com foto
+- Cadastro a foto do animal na tela de cadastro de cria (salvar o diretorio no banco)
 - Corrigir busca pelo número quando existirem animais com mesmo número
 X Indicadores, corrigir cores quando ultrapassar o limite
 - Indicadores, formatar casas decimais, permitir ao usuário configurar
