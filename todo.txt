@@ -21,6 +21,7 @@ X Reformular menu de acesso as opções do animal
 - Melhorar atualização do sistema (fazer download em background)
 - Reposicionar botão selecionar nas telas de pesquisa
 - Na nova versão adicionar o novo jar na libs
+X Permitir remover parto
 
 - Fazer mapa de pontos do trajeto da pesquisa
 

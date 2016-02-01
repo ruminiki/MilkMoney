@@ -119,6 +119,7 @@
                         <Insets />
                      </HBox.margin>
                   </Button>
+                  <Button fx:id="btnRemover" mnemonicParsing="false" onAction="#handleRemover" text="Remover" />
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Fechar" />
                </children>
                <VBox.margin>

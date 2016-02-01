@@ -64,7 +64,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private UCTextField                inputComplicacaoParto;
 	@FXML private UCTextField                inputPeso;
 	
-	@FXML private Button btnSalvar, btnAdicionarCria;
+	@FXML private Button btnSalvar, btnAdicionarCria, btnRemover;
 	
 	private Cria cria;
 	
@@ -115,7 +115,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		inputData.setDisable(getObject().getId() > 0 );
 		inputObservacao.setDisable(getObject().getId() > 0);
 		
-		//btnRemover.setVisible(getObject().getId() > 0);
+		btnRemover.setDisable(getObject().getId() <= 0);
 		
 		data.clear();
 		data.addAll(getObject().getCrias());
