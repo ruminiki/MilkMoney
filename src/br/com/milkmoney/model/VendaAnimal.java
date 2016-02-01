@@ -48,6 +48,10 @@ public class VendaAnimal extends AbstractEntity implements Serializable {
 	public VendaAnimal() {
 	}
 	
+	public VendaAnimal(Animal animal) {
+		setAnimal(animal);
+	}
+
 	public int getId() {
 		return this.id;
 	}

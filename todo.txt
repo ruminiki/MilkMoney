@@ -1,9 +1,10 @@
 ERROS e REQUISITOS
 
-
+- Imprimir controle leiteiro do animal
 X Entrega de leite, selecionar o default SIM
 - Gerar relatório com valores de tempo de produção ideal por animal
 X recibo pgto
+- Cadastro do animal com foto
 - Corrigir busca pelo número quando existirem animais com mesmo número
 - Reformular tela do painel de controle do animal
 	- Coberturas
@@ -19,8 +20,11 @@ X Erro valor das parcelas
 - Exibir tela com lista de parcelas quando o movimento for parcelado
 X Alinhar a esquerda colunas lanc financeiro
 - Projeção, permitir informar média e valor do litro
+- Quando o animal já está morto/vendido abrir o form com botão desfazer
+- Add effect ao trocar de tela painel controle
+- Melhorar atualização do sistema (fazer download em background)
 
-
+- Fazer mapa de pontos do trajeto da pesquisa
 
 - Atribuir a entrega de leite ao fornecedor
 - Associar o financeiro ao fornecedor

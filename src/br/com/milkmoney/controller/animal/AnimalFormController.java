@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.annotation.Resource;
 
@@ -32,6 +34,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
+	@FXML private ImageView inputImage;
 
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -40,6 +43,8 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	
 	@FXML
 	public void initialize() {
+		
+		inputImage.setImage(new Image(getClass().getClassLoader().getResourceAsStream("img/cow-256.png")));
 		
 		inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
 		inputNome.textProperty().bindBidirectional(getObject().nomeProperty());

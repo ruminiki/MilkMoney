@@ -1,7 +1,10 @@
 package br.com.milkmoney.controller.morteAnimal;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 
 import javax.annotation.Resource;
@@ -9,6 +12,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
@@ -26,7 +30,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 
 	@FXML private UCTextField inputAnimal, inputObservacao, inputValorAnimal, inputCausaMorteAnimal;
 	@FXML private DatePicker inputDataMorte;
-	@FXML private Button btnBuscarAnimal;
+	@FXML private Button btnBuscarAnimal, btnRemoverRegistro;
 	
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private CausaMorteAnimalReducedOverviewController causaMorteReducedOverviewController;
@@ -44,10 +48,11 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 		}
 		
 		if ( getObject().getCausaMorteAnimal() != null ){
-			inputAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());
+			inputCausaMorteAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());
 		}
 		
 		MaskFieldUtil.decimalWithoutMask(inputValorAnimal);
+		btnRemoverRegistro.setDisable(getObject().getId() <= 0);
 		
 	}
 
@@ -89,6 +94,19 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 			inputCausaMorteAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());	
 		}else{
 			inputCausaMorteAnimal.textProperty().set("");
+		}
+		
+	}
+	
+	@FXML
+	private void remover(){
+
+		if ( getObject().getId() > 0 ){
+			
+			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
+			if (result.get() == ButtonType.OK) {
+				service.remove(getObject());
+			}
 		}
 		
 	}

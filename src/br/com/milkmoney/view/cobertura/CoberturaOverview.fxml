@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="405.0" prefWidth="1195.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="405.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -60,21 +60,21 @@
             <TableView fx:id="table" focusTraversable="false" VBox.vgrow="SOMETIMES">
               <columns>
                   <TableColumn fx:id="statusColumn" maxWidth="10.0" prefWidth="75.0" />
-                <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="120.0" minWidth="120.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
+                <TableColumn fx:id="situacaoCoberturaColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Situação" />
                 <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
                 <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
-                <TableColumn fx:id="reprodutorColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodutor" />
+                <TableColumn fx:id="reprodutorColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodutor" />
                   <TableColumn prefWidth="75.0" text="Diagnóstico Prenhes">
                      <columns>
-                        <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="110.0" minWidth="110.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                        <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />
+                        <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
+                        <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />
                      </columns>
                   </TableColumn>
                   <TableColumn prefWidth="75.0" text="Parto">
                      <columns>
-                        <TableColumn fx:id="previsaoPartoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Data Prevista" />
-                        <TableColumn fx:id="dataPartoColumn" maxWidth="110.0" minWidth="110.0" style="-fx-alignment: CENTER;" text="Data Parto" />
-                        <TableColumn fx:id="dataAbortoColumn" minWidth="110.0" prefWidth="75.0" text="Aborto" />
+                        <TableColumn fx:id="previsaoPartoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Data Prevista" />
+                        <TableColumn fx:id="dataPartoColumn" maxWidth="80.0" minWidth="80.0" style="-fx-alignment: CENTER;" text="Data Parto" />
+                        <TableColumn fx:id="dataAbortoColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Aborto" />
                      </columns>
                   </TableColumn>
               </columns>

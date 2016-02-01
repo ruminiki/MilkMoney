@@ -42,36 +42,38 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 							cell.setSpacing(1);
 							cell.setMaxHeight(10);
 							
-							Button btnSecar = new Button("Encerrar");
-							btnSecar.setTooltip(new Tooltip("Encerrar Lactação"));
-							btnSecar.setDisable(lactacao.getDataFim() != null);
-							btnSecar.setMaxHeight(12);
-							btnSecar.setCursor(Cursor.HAND);
-							btnSecar.setFocusTraversable(false);
-							btnSecar.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
-							cell.getChildren().add(btnSecar);
-							Button btnDesfazer = new Button("Reabrir");
-							btnDesfazer.setTooltip(new Tooltip("Desfazer Encerramento Lactação"));
-							btnDesfazer.setMaxHeight(12);
-							btnDesfazer.setDisable(lactacao.getDataFim() == null);
-							btnDesfazer.setCursor(Cursor.HAND);
-							btnDesfazer.setFocusTraversable(false);
-							btnDesfazer.setOnAction(new EventHandler<ActionEvent>() {
-								@Override
-								public void handle(ActionEvent event) {
-									tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
-									desfazerEncerramentoLactacaoFunction.apply(tableRowProperty().get().getIndex());
-								}
-							});
-								
-							cell.getChildren().add(btnDesfazer);
+							if ( lactacao.getDataFim() == null ){
+								Button btnSecar = new Button("Encerrar");
+								btnSecar.setTooltip(new Tooltip("Encerrar Lactação"));
+								btnSecar.setMaxHeight(12);
+								btnSecar.setCursor(Cursor.HAND);
+								btnSecar.setFocusTraversable(false);
+								btnSecar.setOnAction(new EventHandler<ActionEvent>() {
+									@Override
+									public void handle(ActionEvent event) {
+										tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+										encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
+									}
+								});
+									
+								cell.getChildren().add(btnSecar);
+							}else{
+								Button btnDesfazer = new Button("Reabrir");
+								btnDesfazer.setTooltip(new Tooltip("Reabrir Lactação"));
+								btnDesfazer.setMaxHeight(12);
+								btnDesfazer.setCursor(Cursor.HAND);
+								btnDesfazer.setFocusTraversable(false);
+								btnDesfazer.setOnAction(new EventHandler<ActionEvent>() {
+									@Override
+									public void handle(ActionEvent event) {
+										tableViewProperty().get().getSelectionModel().select(tableRowProperty().get().getIndex());
+										desfazerEncerramentoLactacaoFunction.apply(tableRowProperty().get().getIndex());
+									}
+								});
+									
+								cell.getChildren().add(btnDesfazer);
+							}
+							
 							setGraphic(cell);
 						}else{
 							setGraphic(null);

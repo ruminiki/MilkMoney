@@ -60,8 +60,11 @@ public class VendaAnimalService implements IService<Integer, VendaAnimal>{
 	
 	@Override
 	public void validate(VendaAnimal entity) {
-		// TODO Auto-generated method stub
-		
+		VendaAnimalValidation.validate(entity);
+	}
+
+	public VendaAnimal findByAnimal(Animal animal) {
+		return dao.findByAnimal(animal);
 	}
 	
 	

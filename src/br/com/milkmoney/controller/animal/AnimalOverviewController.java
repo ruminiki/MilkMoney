@@ -3,14 +3,12 @@ package br.com.milkmoney.controller.animal;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -75,8 +73,6 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
-import br.com.milkmoney.validation.MorteAnimalValidation;
-import br.com.milkmoney.validation.VendaAnimalValidation;
 
 @Controller
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
@@ -152,7 +148,18 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(painelControleAnimal));
+				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(painelControleAnimal, 
+																					  novaCobertura, 
+																					  confirmarPrenhes,
+																					  novoParto,
+																					  ultimaCobertura,
+																					  ultimoParto,
+																					  lactacoes,
+																					  controleLeiteiro,
+																					  vendaAnimal,
+																					  morteAnimal,
+																					  linhaTempoAnimal,
+																					  exibirFichaAnimal));
 
 				table.widthProperty().addListener((observable, oldValue, newValue) -> resizeColunaTabela(newValue));
 				
@@ -303,14 +310,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									if ( table.getSelectionModel().getSelectedItem() != null ){
-										partoFormController.setObject(partoService.findLastParto(getObject()));
-										partoFormController.showForm();
-										setObject(service.findById(getObject().getId()));
-										table.getSelectionModel().select(getObject());
-									}else{
-										CustomAlert.nenhumRegistroSelecionado();
-									}
+									ultimoParto.apply(getObject());
 								}
 							});
 						}
@@ -320,13 +320,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlSecarAnimal.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									int index = 0;
-									for ( Animal animal : table.getItems() ){
-										if ( animal.getId() == getObject().getId() ){
-											encerrarLactacaoAnimal.apply(index);
-											break;
-										}
-									}
+									lactacoes.apply(getObject());
 								}
 							});
 						}
@@ -336,22 +330,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlRegistrarParto.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
-									if ( cobertura != null && cobertura.getParto() == null ){
-										
-										CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
-										
-										partoFormController.setState(State.CREATE_TO_SELECT);
-										partoFormController.setObject(new Parto(cobertura));
-										partoFormController.showForm();
-										
-										if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
-											cobertura.setParto(partoFormController.getObject());
-											coberturaService.registrarParto(cobertura);
-											setObject(service.findById(getObject().getId()));
-											table.getSelectionModel().select(getObject());
-										}	
-									}
+									novoParto.apply(getObject());
 								}
 							});
 						}
@@ -361,13 +340,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlEditarCobertura.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
-									if ( cobertura != null ){
-										coberturaFormController.setObject(cobertura);
-										coberturaFormController.showForm();
-										setObject(service.findById(getObject().getId()));
-										table.getSelectionModel().select(getObject());
-									}
+									ultimaCobertura.apply(getObject());
 								}
 							});
 						}
@@ -377,10 +350,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlRegistrarCobertura.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
-									coberturaFormController.showForm();
-									setObject(service.findById(getObject().getId()));
-									table.getSelectionModel().select(getObject());
+									novaCobertura.apply(getObject());
 								}
 							});
 						}
@@ -399,13 +369,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
-									if ( cobertura != null ){
-										confirmacaoPrenhesFormController.setObject(cobertura);
-								    	confirmacaoPrenhesFormController.showForm();
-							    		setObject(service.findById(getObject().getId()));
-							    		table.getSelectionModel().select(getObject());
-									}
+									confirmarPrenhes.apply(getObject());
 								}
 							});
 						}
@@ -443,8 +407,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	//------FUNCTIONS---
 	
-	Function<Integer, Boolean> encerrarLactacaoAnimal = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
+	Function<Animal, Boolean> lactacoes = animal -> {
+		if ( animal != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				lactacaoOverviewController.setAnimal(getObject());
 				lactacaoOverviewController.showForm();
@@ -455,35 +419,12 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(index);
+		table.getSelectionModel().select(animal);
 		return true;
 	};
 	
-	Function<Integer, Boolean> registrarCoberturaAnimal = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
-				coberturaOverviewController.setObject(new Cobertura(getObject()));
-				coberturaOverviewController.setFemea(getObject());
-				//se o animal tiver morto ou vendido apenas consulta as coberturas
-				boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);
-				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, disabled);
-				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
-				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
-				coberturaOverviewController.showForm();
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
-			}else{
-				CustomAlert.mensagemInfo("Por favor, selecione um animal fêmea, para ter acesso as coberturas. "
-						+ "Selecione outro animal e tente novamente.");
-			}
-			table.getSelectionModel().select(index);
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
-		}
-		return true;
-	};
-	
-	Function<Integer, Boolean> registrarProducaoAnimal = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
+	Function<Animal, Boolean> controleLeiteiro = animal -> {
+		if ( animal != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				
 				//se o animal tiver morto ou vendido habilita apenas consulta
@@ -498,15 +439,16 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				CustomAlert.mensagemInfo("Somente podem ter registro de produção, animais fêmeas. "
 						+ "Por favor, selecione outro animal e tente novamente.");
 			}
-			table.getSelectionModel().select(index);
+			table.getSelectionModel().select(animal);
+			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
 		return true;
 	};
 	
-	Function<Integer, Boolean> exibirFichaAnimal = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
+	Function<Animal, Boolean> exibirFichaAnimal = animal -> {
+		if ( animal != null ){
 			Object[] params = new Object[]{
 					table.getSelectionModel().getSelectedItem().getId()
 			};
@@ -516,85 +458,151 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(index);
+		table.getSelectionModel().select(animal);
 		return true;
 	};
 	
-	Function<Integer, Boolean> linhaTempoAnimal = index -> {
+	Function<Animal, Boolean> linhaTempoAnimal = animal -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
 			fichaAnimalOverviewController.setAnimal(getObject());
 			fichaAnimalOverviewController.showForm();
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(index);
+		table.getSelectionModel().select(animal);
 		return true;
 	};
 	
-	Function<Integer, Boolean> painelControleAnimal = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
+	Function<Animal, Boolean> novaCobertura = animal -> {
+		if ( animal != null ){
+			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
+				coberturaOverviewController.setObject(new Cobertura(getObject()));
+				coberturaOverviewController.setFemea(getObject());
+				//se o animal tiver morto ou vendido apenas consulta as coberturas
+				boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, disabled);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
+				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
+				coberturaOverviewController.showForm();
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+			}else{
+				CustomAlert.mensagemInfo("Por favor, selecione um animal fêmea, para ter acesso as coberturas. "
+						+ "Selecione outro animal e tente novamente.");
+			}
+			table.getSelectionModel().select(getObject());
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<Animal, Boolean> ultimaCobertura = animal -> {
+		if ( animal != null ){
+			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
+			if ( cobertura != null ){
+				coberturaFormController.setObject(cobertura);
+				coberturaFormController.showForm();
+				setObject(service.findById(getObject().getId()));
+				table.getSelectionModel().select(getObject());
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<Animal, Boolean> ultimoParto = animal -> {
+		if ( animal != null ){
+			partoFormController.setObject(partoService.findLastParto(getObject()));
+			partoFormController.showForm();
+			setObject(service.findById(getObject().getId()));
+			table.getSelectionModel().select(getObject());
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<Animal, Boolean> confirmarPrenhes = animal -> {
+		if ( animal != null ){
+			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
+			if ( cobertura != null ){
+				confirmacaoPrenhesFormController.setObject(cobertura);
+		    	confirmacaoPrenhesFormController.showForm();
+				setObject(service.findById(getObject().getId()));
+				table.getSelectionModel().select(getObject());
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<Animal, Boolean> novoParto = animal -> {
+		if ( animal != null ){
+			Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
+			if ( cobertura != null && cobertura.getParto() == null ){
+				
+				CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
+				
+				partoFormController.setState(State.CREATE_TO_SELECT);
+				partoFormController.setObject(new Parto(cobertura));
+				partoFormController.showForm();
+				
+				if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
+					cobertura.setParto(partoFormController.getObject());
+					coberturaService.registrarParto(cobertura);
+					setObject(service.findById(getObject().getId()));
+					table.getSelectionModel().select(getObject());
+				}	
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<Animal, Boolean> painelControleAnimal = animal -> {
+		if ( animal != null ){
 			painelControleAnimalController.setAnimal(getObject());
 			painelControleAnimalController.showForm();
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(index);
+		refreshObjectInTableView.apply(service.findById(getObject().getId()));
 		return true;
 	};
 	
-	Function<Integer, Boolean> registrarDesfazerRegistroMorte = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-				
-				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
-				if (result.get() == ButtonType.OK) {
-					morteAnimalService.removeByAnimal(getObject());
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
-				
+	Function<Animal, Boolean> morteAnimal = animal -> {
+		if ( animal != null ){
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				CustomAlert.mensagemInfo("O animal já foi vendido, não é possível registrar a morte.");
 			}else{
-				
-				MorteAnimalValidation.validaSituacaoAnimal(getObject());
-				
-				morteAnimalFormController.setObject(new MorteAnimal(getObject()));
-				morteAnimalFormController.showForm();
-				if ( morteAnimalFormController.getObject() != null && morteAnimalFormController.getObject().getId() > 0 ){
-					getObject().setSituacaoAnimal(SituacaoAnimal.MORTO);
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				MorteAnimal morteAnimal = morteAnimalService.findByAnimal(animal);
+				if ( morteAnimal == null ){
+					morteAnimal = new MorteAnimal(animal);
 				}
-				
+				morteAnimalFormController.setObject(morteAnimal);
+				morteAnimalFormController.showForm();
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}
-			table.getSelectionModel().select(index);
-			
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
 		}
 		return true;
 	};
 	
-	Function<Integer, Boolean> registrarDesfazerRegistroVenda = index -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
-			
-			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-				Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
-				if (result.get() == ButtonType.OK) {
-					vendaAnimalService.removeByAnimal(getObject());
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
-				}
+	Function<Animal, Boolean> vendaAnimal = animal -> {
+		if ( animal != null ){
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				CustomAlert.mensagemInfo("O animal está morto, não é possível registrar a venda.");
 			}else{
-				VendaAnimalValidation.validaSituacaoAnimal(getObject());
-				vendaAnimalFormController.setAnimalVendido(getObject());
-				vendaAnimalFormController.setObject(new VendaAnimal());
-				vendaAnimalFormController.showForm();
-				if ( vendaAnimalFormController.getObject() != null && vendaAnimalFormController.getObject().getId() > 0 ){
-					getObject().setSituacaoAnimal(SituacaoAnimal.VENDIDO);
-					refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				VendaAnimal vendaAnimal = vendaAnimalService.findByAnimal(animal);
+				if ( vendaAnimal == null ){
+					vendaAnimal = new VendaAnimal(animal);
 				}
+				vendaAnimalFormController.setObject(vendaAnimal);
+				vendaAnimalFormController.showForm();
+				refreshObjectInTableView.apply(service.findById(getObject().getId()));
 			}
-			table.getSelectionModel().select(index);
-		}else{
-			CustomAlert.nenhumRegistroSelecionado();
 		}
 		return true;
 	};

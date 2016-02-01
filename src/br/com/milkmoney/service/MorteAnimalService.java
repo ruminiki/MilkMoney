@@ -16,6 +16,7 @@ import br.com.milkmoney.dao.MorteAnimalDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.CausaMorteAnimal;
 import br.com.milkmoney.model.MorteAnimal;
+import br.com.milkmoney.validation.MorteAnimalValidation;
 
 @Service
 public class MorteAnimalService implements IService<Integer, MorteAnimal>{
@@ -74,8 +75,11 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 
 	@Override
 	public void validate(MorteAnimal entity) {
-		// TODO Auto-generated method stub
-		
+		MorteAnimalValidation.validate(entity);
+	}
+
+	public MorteAnimal findByAnimal(Animal animal) {
+		return dao.findByAnimal(animal);
 	}
 	
 	

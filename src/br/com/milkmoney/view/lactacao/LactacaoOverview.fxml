@@ -10,18 +10,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="540.0" prefHeight="309.0" prefWidth="664.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lactacao.LactacaoOverviewController">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lactacao.LactacaoOverviewController">
    <children>
-      <VBox prefHeight="521.0" prefWidth="816.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <VBox minWidth="510.0" spacing="5.0">
+            <VBox minWidth="510.0" spacing="5.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER">
                      <children>
                         <Label fx:id="lblHeader" text="Label" />
                      </children>
                   </HBox>
-                  <TableView fx:id="table" focusTraversable="false" maxHeight="350.0">
+                  <TableView fx:id="table" focusTraversable="false" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                           <columns>
                         <TableColumn fx:id="numeroLactacaoColumn" maxWidth="25.0" minWidth="25.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Nº" />
                             <TableColumn fx:id="dataInicioLactacaoColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="75.0" resizable="false" sortable="false" style="-fx-alignment: CENTER;" text="Início" />
@@ -38,60 +38,54 @@
                         </TableView>
                </children>
             </VBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+            <VBox maxHeight="50.0" spacing="5.0">
                <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
-                           <children>
-                              <Label text="Lactações: " textAlignment="RIGHT">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblLactacoes" text="Label" />
-                              <Label text="Nº Ideal de Lactações: ">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblLactacoesIdeal" text="Label" />
-                              <Label text="Meses em idade produtiva:  ">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblIdadeProdutiva" text="Label" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label text="Meses em produção: " textAlignment="RIGHT">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblMesesProduzindo" text="Label" />
-                              <Label text="Meses de produção ideal: ">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblMesesProducaoIdeal" text="Label" />
-                              <Label text="Resultado: ">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="lblResultado" text="Label" />
-                           </children>
-                        </HBox>
+                        <Label text="Lactações: " textAlignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblLactacoes" text="Label" />
+                        <Label text="Nº Ideal de Lactações: ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblLactacoesIdeal" text="Label" />
+                        <Label text="Meses em idade produtiva:  ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblIdadeProdutiva" text="Label" />
                      </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label text="Meses em produção: " textAlignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblMesesProduzindo" text="Label" />
+                        <Label text="Meses de produção ideal: ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblMesesProducaoIdeal" text="Label" />
+                        <Label text="Resultado: ">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblResultado" text="Label" />
+                     </children>
+                  </HBox>
                </children>
-            </HBox>
+            </VBox>
          </children>
       </VBox>
    </children>

@@ -11,7 +11,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -29,7 +28,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
@@ -50,7 +48,7 @@ public class MainApp extends Application {
 	private static final String       SPLASH_IMAGE     = "img/splash.png";
     private static final int          SPLASH_HEIGHT    = 182;
   	private static final String       DATABASE_START   = "database\\bin\\mysqld.exe";
-  	private static final String       DATABASE_STOP    = "database\\bin\\mysqld.exe -u root shutdown";
+  	//private static final String       DATABASE_STOP    = "database\\bin\\mysqld.exe -u root shutdown";
 
     private Pane                      splashLayout;
     //private ProgressBar               loadProgress;
@@ -196,7 +194,7 @@ public class MainApp extends Application {
 	        HBox.setHgrow(centeredMenu, Priority.SOMETIMES);
 	        rootLayout.setCenter(centeredMenu);
 	        
-	        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	        /*primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 				public void handle(WindowEvent we) {
         			if ( START_DATABASE ){
         				try {
@@ -206,7 +204,7 @@ public class MainApp extends Application {
 						}
         			}
 				}
-		    }); 
+		    });*/ 
 	        
 	        Scene scene = new Scene(rootLayout);
 	        scene.getStylesheets().add("css/style.css");

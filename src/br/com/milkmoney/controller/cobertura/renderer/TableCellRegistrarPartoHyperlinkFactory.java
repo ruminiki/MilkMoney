@@ -31,7 +31,7 @@ public class TableCellRegistrarPartoHyperlinkFactory<S, LocalDate> implements Ca
 			  
 		        @Override
 		        protected void updateItem(LocalDate item, boolean empty) {
-		        	if ( tableRowProperty().getValue().getItem() != null ){
+		        	if ( tableRowProperty().getValue() != null && tableRowProperty().getValue().getItem() != null ){
 		        		super.updateItem(item, empty);
 		        		
 		        		Cobertura cobertura = (Cobertura) tableViewProperty().get().getItems().get(tableRowProperty().get().getIndex());

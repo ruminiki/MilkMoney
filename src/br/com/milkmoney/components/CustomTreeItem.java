@@ -8,10 +8,11 @@ import javafx.scene.input.MouseEvent;
 
 public class CustomTreeItem extends TreeItem<String> {
 
-	@SuppressWarnings("rawtypes")
-	public CustomTreeItem(String label, boolean colapse, Function function) {
-		
+	private Function<Integer, Boolean> function;
+	
+	public CustomTreeItem(String label, boolean colapse, Function<Integer, Boolean> function) {
 		super(label);
+		this.function = function;
 		
 		addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 
@@ -36,9 +37,10 @@ public class CustomTreeItem extends TreeItem<String> {
 	
 		}
 		
+		//get//.setStyle("-fx-text-fill: #00cc00; -fx-font-weight: bold");
+		
 		addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(MouseEvent arg0) {
 				function.apply(null);
@@ -47,7 +49,13 @@ public class CustomTreeItem extends TreeItem<String> {
 		});
 		
 	}
-	
-	
+
+	public Function<Integer, Boolean> getFunction() {
+		return function;
+	}
+
+	public void setFunction(Function<Integer, Boolean> function) {
+		this.function = function;
+	}
 	
 }

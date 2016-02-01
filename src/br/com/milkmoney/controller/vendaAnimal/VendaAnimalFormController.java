@@ -1,7 +1,10 @@
 package br.com.milkmoney.controller.vendaAnimal;
 
+import java.util.Optional;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 
@@ -10,6 +13,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
@@ -36,7 +40,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 	@FXML private UCTextField inputAnimal, inputValorAnimal; 
 	@FXML private ChoiceBox<String> inputDestinacaoAnimal;
 	@FXML private UCTextField inputMotivoVendaAnimal;
-	@FXML private Button btnBuscarAnimal;
+	@FXML private Button btnBuscarAnimal, btnRemoverRegistro;
 	
 	@Autowired private CompradorReducedOverviewController compradorReducedOverviewController;
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -75,6 +79,8 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 			inputAnimal.setText(animalVendido.toString());
 			inputValorAnimal.setText(NumberFormatUtil.decimalFormat(animalVendido.getValor()));
 		}
+		
+		btnRemoverRegistro.setDisable(getObject().getId() <= 0);
 		
 	}
 
@@ -126,6 +132,19 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 			inputMotivoVendaAnimal.textProperty().set(getObject().getMotivoVendaAnimal().toString());	
 		}else{
 			inputMotivoVendaAnimal.textProperty().set("");
+		}
+		
+	}
+	
+	@FXML
+	private void remover(){
+
+		if ( getObject().getId() > 0 ){
+			
+			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
+			if (result.get() == ButtonType.OK) {
+				service.remove(getObject());
+			}
 		}
 		
 	}
