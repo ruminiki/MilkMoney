@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="581.0" prefHeight="540.0" prefWidth="1216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.animal.PainelControleAnimalController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="495.0" prefWidth="202.0">
+                     <children>
+                        <TreeView fx:id="menu" focusTraversable="false" prefHeight="509.0" prefWidth="202.0" style="-fx-border-color: transparent;" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vbMain" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -134,7 +134,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
-	@Autowired private AcessoRapidoAnimalController acessoRapidoAnimalController;
+	@Autowired private PainelControleAnimalController painelControleAnimalController;
 	
 	private FichaAnimal fichaAnimal;
 	
@@ -210,8 +210,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@Override
 	protected void handleDoubleClick() {
-		acessoRapidoAnimalController.setNumeroDigitado(getObject().getNumero());
-		acessoRapidoAnimalController.showForm();
+		painelControleAnimalController.setAnimal(getObject());
+		painelControleAnimalController.showForm();
 	}
 	
 	@FXML
@@ -533,8 +533,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	Function<Integer, Boolean> painelControleAnimal = index -> {
 		if ( table.getSelectionModel().getSelectedItem() != null ){
-			acessoRapidoAnimalController.setNumeroDigitado(getObject().getNumero());
-			acessoRapidoAnimalController.showForm();
+			painelControleAnimalController.setAnimal(getObject());
+			painelControleAnimalController.showForm();
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}

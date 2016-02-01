@@ -3,14 +3,14 @@ ERROS e REQUISITOS
 
 X Entrega de leite, selecionar o default SIM
 - Gerar relatório com valores de tempo de produção ideal por animal
-- recibo pgto
+X recibo pgto
 - Corrigir busca pelo número quando existirem animais com mesmo número
 - Reformular tela do painel de controle do animal
 	- Coberturas
 	- partos
 	- abortos
 	- repetições de cio
-- Indicadores, corrigir cores quando ultrapassar o limite
+X Indicadores, corrigir cores quando ultrapassar o limite
 - Indicadores, formatar casas decimais, permitir ao usuário configurar
 - Criar objetivo dentro do valor ideal
 - Reformular procedimento técnico de acordo com planilha Daieli
