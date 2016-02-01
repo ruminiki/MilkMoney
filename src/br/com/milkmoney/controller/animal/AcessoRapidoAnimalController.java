@@ -191,8 +191,8 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		removerCobertura.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent event) {
-		    	Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-				if (result.get() == ButtonType.OK) {
+		    	CustomAlert.confirmarExclusao();
+		    	if (CustomAlert.response == ButtonType.OK) {
 					coberturaService.remove(tableCoberturas.getSelectionModel().getSelectedItem());
 					if ( tableCoberturas.getSelectionModel().getSelectedItem().getParto() != null ){
 						tablePartos.getItems().clear();

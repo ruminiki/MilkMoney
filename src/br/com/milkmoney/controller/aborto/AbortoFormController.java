@@ -2,7 +2,6 @@ package br.com.milkmoney.controller.aborto;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -61,8 +60,8 @@ public class AbortoFormController extends AbstractFormController<Integer, Cobert
 	
 	@FXML
 	private void handleDesfazerRegistro(){
-		Optional<ButtonType> result = CustomAlert.confirmarExclusao("Desfazer registro de aborto", "Tem certeza que deseja desfazer o registro do aborto?");
-		if (result.get() == ButtonType.OK) {
+		CustomAlert.confirmarExclusao("Desfazer registro de aborto", "Tem certeza que deseja desfazer o registro do aborto?");
+		if (CustomAlert.response == ButtonType.OK) {
 			coberturaService.desfazerRegistroAborto(getObject());
 			closeForm();
 		}

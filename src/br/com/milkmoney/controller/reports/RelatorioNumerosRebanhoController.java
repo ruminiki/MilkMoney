@@ -91,7 +91,7 @@ public class RelatorioNumerosRebanhoController extends AbstractReport{
 	protected void handleExecutar(){
 		
 		if ( listSelecionados.getItems().size() <= 0 ){
-			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");
+			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os indicadores para executar o relatório.");
 		}
 		
 		//os ids dos animais selecionados são passados como parâmetro

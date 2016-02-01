@@ -2,7 +2,6 @@ package br.com.milkmoney.controller.root;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -20,6 +19,7 @@ import javafx.stage.Stage;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
@@ -84,7 +84,7 @@ public class RootLayoutController {
 	
 	public void setMessage(String msg){
 		
-		Task <Void> task = new Task<Void>() {
+		/*Task <Void> task = new Task<Void>() {
 		      @Override public Void call() throws InterruptedException {
 		        updateMessage(msg);
 		        // some actions
@@ -105,7 +105,9 @@ public class RootLayoutController {
 
 		    Thread thread = new Thread(task);
 		    thread.setDaemon(true);
-		    thread.start();
+		    thread.start();*/
+		
+		CustomAlert.mensagemInfo(msg);
 		
 	}
 	

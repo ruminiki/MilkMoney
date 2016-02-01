@@ -45,7 +45,6 @@ public class RelatorioAbortosController extends AbstractReport{
 		
 		rootLayoutController.setMessage("O relatório está sendo executado...");
 		
-		
 	}
 
 }

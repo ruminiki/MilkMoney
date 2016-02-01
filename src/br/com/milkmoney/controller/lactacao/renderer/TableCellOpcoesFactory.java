@@ -6,11 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import br.com.milkmoney.model.Lactacao;
 
@@ -39,12 +39,11 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		        			
 							HBox cell = new HBox();
 							cell.setAlignment(Pos.CENTER);
-							cell.setSpacing(1);
+							cell.setSpacing(3);
 							cell.setMaxHeight(10);
 							
 							if ( lactacao.getDataFim() == null ){
-								Button btnSecar = new Button("Encerrar");
-								btnSecar.setTooltip(new Tooltip("Encerrar Lactação"));
+								Hyperlink btnSecar = new Hyperlink("Encerrar");
 								btnSecar.setMaxHeight(12);
 								btnSecar.setCursor(Cursor.HAND);
 								btnSecar.setFocusTraversable(false);
@@ -55,11 +54,19 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 										encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
 									}
 								});
-									
+								VBox c = new VBox();
+								c.setStyle("-fx-padding: 0; " +
+										"-fx-min-height: 24; -fx-min-width: 24;" +
+										"-fx-background-insets: 0;" +
+									    "-fx-background-image: url('img/reabrir20.png'); " +	
+									    "-fx-background-repeat: no-repeat; " + 
+									    "-fx-background-position: center; " +
+									    "-fx-cursor: HAND; " +
+									    "-fx-border-width:0; ");
+								cell.getChildren().add(c);
 								cell.getChildren().add(btnSecar);
 							}else{
-								Button btnDesfazer = new Button("Reabrir");
-								btnDesfazer.setTooltip(new Tooltip("Reabrir Lactação"));
+								Hyperlink btnDesfazer = new Hyperlink("Reabrir");
 								btnDesfazer.setMaxHeight(12);
 								btnDesfazer.setCursor(Cursor.HAND);
 								btnDesfazer.setFocusTraversable(false);
@@ -70,7 +77,16 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 										desfazerEncerramentoLactacaoFunction.apply(tableRowProperty().get().getIndex());
 									}
 								});
-									
+								VBox c = new VBox();
+								c.setStyle("-fx-padding: 0; " +
+										"-fx-min-height: 24; -fx-min-width: 24;" +
+										"-fx-background-insets: 0;" +
+									    "-fx-background-image: url('img/fechar20.png'); " +	
+									    "-fx-background-repeat: no-repeat; " + 
+									    "-fx-background-position: center; " +
+									    "-fx-cursor: HAND; " +
+									    "-fx-border-width:0; ");
+								cell.getChildren().add(c);
 								cell.getChildren().add(btnDesfazer);
 							}
 							

@@ -24,6 +24,7 @@ import br.com.milkmoney.model.Animal;
 @SuppressWarnings("hiding")
 public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S, String>, TableCell<S, String>>{
 	
+	private Function<Animal, Boolean> coberturasFunction;
 	private Function<Animal, Boolean> lactacoesFunction;
 	private Function<Animal, Boolean> vendaFunction;
 	private Function<Animal, Boolean> morteFunction;
@@ -38,7 +39,8 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 	
 	private CustomMenuButton menu;
 	
-	public TableCellOpcoesFactory(Function<Animal, Boolean> novaCoberturaFunction,	
+	public TableCellOpcoesFactory(Function<Animal, Boolean> coberturasFunction, 
+									Function<Animal, Boolean> novaCoberturaFunction,	
 									Function<Animal, Boolean> confirmarPrenhesFunction,
 									Function<Animal, Boolean> novoPartoFunction,
 									Function<Animal, Boolean> ultimaCoberturaFunction,
@@ -50,6 +52,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 									Function<Animal, Boolean> linhaTempoAnimalFunction,  
 									Function<Animal, Boolean> fichaAnimalFunction) {
 		
+		this.coberturasFunction = coberturasFunction;
 		this.lactacoesFunction = lactacoesFunction;
 		this.vendaFunction = vendaFunction;
 		this.morteFunction = morteFunction;
@@ -62,7 +65,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		this.linhaTempoAnimalFunction = linhaTempoAnimalFunction;
 		this.confirmarPrenhesFunction = confirmarPrenhesFunction;
 		
-		menu = new CustomMenuButton();
+		this.menu = new CustomMenuButton();
 		
 	}
 
@@ -124,10 +127,10 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 			VBox column = new VBox();
 			column.setSpacing(3);
 			column.setStyle("-fx-background-color: #FFF");
+			column.getChildren().add(createItem("Coberturas", coberturasFunction, "img/lista16.png"));
 			column.getChildren().add(createItem("Nova Cobertura", novaCoberturaFunction, "img/novacobertura16.png"));
 			column.getChildren().add(createItem("Confirmar Prenhes", confirmarPrenhesFunction, "img/confirmarprenhes16.png"));
 			column.getChildren().add(createItem("Novo Parto", novoPartoFunction, "img/novoparto16.png"));
-			column.getChildren().add(createItem("Lactações", lactacoesFunction, "img/encerrarlactacao16.png"));
 			container.getChildren().add(column);
 
 			column = new VBox();
@@ -136,8 +139,8 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 
 			column.getChildren().add(createItem("Última Cobertura", ultimaCoberturaFunction, "img/ultimacobertura16.png"));
 			column.getChildren().add(createItem("Último Parto", ultimoPartoFunction, "img/ultimoparto16.png"));
+			column.getChildren().add(createItem("Lactações/Encerrar", lactacoesFunction, "img/encerrarlactacao16.png"));
 			column.getChildren().add(createItem("Controle Leiteiro", controleLeiteiroFunction, "img/producao16.png"));
-			column.getChildren().add(createItem("Registrar Venda", vendaFunction, "img/venda16.png"));
 			container.getChildren().add(new Separator(Orientation.VERTICAL));
 			container.getChildren().add(column);
 			
@@ -145,6 +148,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 			column.setSpacing(5);
 			column.setStyle("-fx-background-color: #FFF");
 			
+			column.getChildren().add(createItem("Registrar Venda", vendaFunction, "img/venda16.png"));
 			column.getChildren().add(createItem("Registrar Morte", morteFunction, "img/morte16.png"));
 			column.getChildren().add(createItem("Linha do Tempo", linhaTempoAnimalFunction, "img/timeline16.png"));
 			column.getChildren().add(createItem("Imprimir Ficha", fichaAnimalFunction, "img/ficha16.png"));
@@ -162,6 +166,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 		}
 			
 		private HBox createItem(java.lang.String string, Function<Animal, Boolean> function, java.lang.String icon){
+			
 			HBox itemRow = new HBox();
 			itemRow.setMinWidth(120);
 			itemRow.setMinHeight(25);

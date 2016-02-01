@@ -6,23 +6,20 @@ X Entrega de leite, selecionar o default SIM
 X recibo pgto
 - Cadastro do animal com foto
 - Corrigir busca pelo número quando existirem animais com mesmo número
-- Reformular tela do painel de controle do animal
-	- Coberturas
-	- partos
-	- abortos
-	- repetições de cio
 X Indicadores, corrigir cores quando ultrapassar o limite
 - Indicadores, formatar casas decimais, permitir ao usuário configurar
 - Criar objetivo dentro do valor ideal
 - Reformular procedimento técnico de acordo com planilha Daieli
-- Filtrar número de serviços tela animal
+- Filtrar número de serviços tela animals
 X Erro valor das parcelas
 - Exibir tela com lista de parcelas quando o movimento for parcelado
 X Alinhar a esquerda colunas lanc financeiro
 - Projeção, permitir informar média e valor do litro
-- Quando o animal já está morto/vendido abrir o form com botão desfazer
-- Add effect ao trocar de tela painel controle
+X Quando o animal já está morto/vendido abrir o form com botão desfazer
+X Reformular menu de acesso as opções do animal
 - Melhorar atualização do sistema (fazer download em background)
+- Reposicionar botão selecionar nas telas de pesquisa
+- Na nova versão adicionar o novo jar na libs
 
 - Fazer mapa de pontos do trajeto da pesquisa
 

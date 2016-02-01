@@ -1,6 +1,5 @@
 package br.com.milkmoney.controller.parto;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.collections.FXCollections;
@@ -251,8 +250,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	
 	@FXML
 	private void handleRemover(){
-		Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-		if (result.get() == ButtonType.OK) {
+		CustomAlert.confirmarExclusao();
+		if (CustomAlert.response == ButtonType.OK) {
 			coberturaService.removerParto(getObject().getCobertura());
 			closeForm();
 		}

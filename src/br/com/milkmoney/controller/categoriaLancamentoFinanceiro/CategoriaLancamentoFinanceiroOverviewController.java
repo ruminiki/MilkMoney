@@ -2,7 +2,6 @@ package br.com.milkmoney.controller.categoriaLancamentoFinanceiro;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -162,8 +161,8 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 	private void handleDelete(){
 		if ( treeView.getSelectionModel().getSelectedItem() != null && treeView.getSelectionModel().getSelectedItem().getValue().getId() > 0 ){
 			
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-			if (result.get() == ButtonType.OK) {
+			CustomAlert.confirmarExclusao();
+			if (CustomAlert.response == ButtonType.OK) {
 				
 				try {
 					service.remove(treeView.getSelectionModel().getSelectedItem().getValue());

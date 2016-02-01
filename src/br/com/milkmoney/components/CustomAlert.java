@@ -1,81 +1,60 @@
 package br.com.milkmoney.components;
 
 
-import java.util.Hashtable;
-import java.util.Map;
 import java.util.Optional;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-public class CustomAlert extends Alert {
+import org.controlsfx.control.Notifications;
 
-	public CustomAlert(AlertType arg0) {
-		super(arg0);
-	}
+public class CustomAlert {
 
+	public static ButtonType response = ButtonType.CANCEL;
+	
 	public static void nenhumRegistroSelecionado(){
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Nenhuma Seleção");
-		alert.setHeaderText("Nenhum registro selecionado.");
-		alert.setContentText("Ok podemos tentar novamente! Por favor, selecione um registro na tabela para continuar.");
-		alert.showAndWait();
+		 Notifications.create()
+         .title("Nenhuma Seleção")
+         .text("Por favor, selecione um registro na tabela para continuar.")
+         .showInformation();
 	}
 
-	public static Optional<ButtonType> confirmarExclusao() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmação");
-		alert.setHeaderText("Por favor, confirme a exclusão do registro.");
-		alert.setContentText("Tem certeza que deseja remover o registro selecionado?");
-		return alert.showAndWait();
+	public static void confirmarExclusao() {
+		Alert alert = new Alert(AlertType.CONFIRMATION,
+					"Tem certeza que deseja remover o registro selecionado?", 
+					ButtonType.OK, ButtonType.CANCEL);
+		alert.showAndWait();
+		response = alert.getResult();
 	}
 	
-	public static Optional<ButtonType> confirmarExclusao(String header, String text) {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirmação");
-		alert.setHeaderText(header);
-		alert.setContentText(text);
-		return alert.showAndWait();
+	public static void confirmarExclusao(String header, String text) {
+		Alert alert = new Alert(AlertType.CONFIRMATION,
+				"Tem certeza que deseja remover o registro selecionado?", 
+				ButtonType.OK, ButtonType.CANCEL);
+		alert.showAndWait();
+		response = alert.getResult();
 	}
 
 	public static void campoObrigatorio(String field) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Campo Requerido");
-		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
-		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
-		alert.showAndWait();
+		 Notifications.create()
+         .title("Ooops!! Precisamos rever alguma coisa!")
+         .text("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.")
+         .showInformation();
 	}
 
 	public static void mensagemAlerta(String tipo, String mensagem) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Atenção");
-		alert.setHeaderText(tipo);
-		alert.setContentText(mensagem);
-		alert.showAndWait();
+		 Notifications.create()
+         .title(tipo)
+         .text(mensagem)
+         .showWarning();
 	}
 
 	public static void mensagemInfo(String string) {
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Atenção");
-		alert.setHeaderText("Olhe, uma informação importante!");
-		alert.setContentText(string);
-		alert.showAndWait();
-		
-	}
-
-	public static void showMessage(Hashtable<String, String> erros) {
-		
-		//o hastable só terá um item a cada validação para não encher de mensagem de 
-		//uma única vez
-		for ( Map.Entry<String, String> entry : erros.entrySet() ) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Atenção");
-			alert.setHeaderText(entry.getKey());
-			alert.setContentText(entry.getValue());
-			alert.showAndWait();
-			return;
-		}
-		
+		Notifications.create()
+        .title("Atenção")
+        .text(string)
+        .showInformation();
 	}
 
 	public static Optional<ButtonType> confirmar(String header, String message) {

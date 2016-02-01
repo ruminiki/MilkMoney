@@ -3,7 +3,6 @@ package br.com.milkmoney.controller;
 import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.collections.FXCollections;
@@ -345,8 +344,8 @@ public abstract class AbstractOverviewController<K, E>{
 	protected void handleDelete() {
 		int selectedIndex = table.getSelectionModel().getSelectedIndex();
 		if (selectedIndex >= 0) {
-			Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-			if (result.get() == ButtonType.OK) {
+			CustomAlert.confirmarExclusao();
+			if ( CustomAlert.response == ButtonType.OK ) {
 				
 				try {
 					service.remove(data.get(selectedIndex));

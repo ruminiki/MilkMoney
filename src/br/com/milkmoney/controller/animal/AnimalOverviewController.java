@@ -147,7 +147,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(novaCobertura, 
+				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(coberturas,
+																					  novaCobertura, 
 																					  confirmarPrenhes,
 																					  novoParto,
 																					  ultimaCobertura,
@@ -465,7 +466,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		return true;
 	};
 	
-	Function<Animal, Boolean> novaCobertura = animal -> {
+	Function<Animal, Boolean> coberturas = animal -> {
 		if ( animal != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				coberturaOverviewController.setObject(new Cobertura(getObject()));
@@ -488,6 +489,27 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		return true;
 	};
 	
+	Function<Animal, Boolean> novaCobertura = animal -> {
+		if ( animal != null ){
+			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
+			if ( cobertura == null ){
+				coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
+				coberturaFormController.showForm();
+				setObject(service.findById(getObject().getId()));
+				table.getSelectionModel().select(getObject());
+			}else{
+				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
+					CustomAlert.mensagemInfo("A última cobertura do animal NÃO foi confirmada. "
+							+ "\nConfirme como VAZIA caso o animal tenha repetido o cio.");
+					coberturas.apply(animal);
+				}
+			}
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
 	Function<Animal, Boolean> ultimaCobertura = animal -> {
 		if ( animal != null ){
 			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
@@ -496,6 +518,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				coberturaFormController.showForm();
 				setObject(service.findById(getObject().getId()));
 				table.getSelectionModel().select(getObject());
+			}else{
+				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -505,10 +529,16 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	Function<Animal, Boolean> ultimoParto = animal -> {
 		if ( animal != null ){
-			partoFormController.setObject(partoService.findLastParto(getObject()));
-			partoFormController.showForm();
-			setObject(service.findById(getObject().getId()));
-			table.getSelectionModel().select(getObject());
+			Parto parto = partoService.findLastParto(getObject());
+			if ( parto != null ){
+				partoFormController.setObject(parto);
+				partoFormController.showForm();
+				setObject(service.findById(getObject().getId()));
+				table.getSelectionModel().select(getObject());
+			}else{
+				CustomAlert.mensagemInfo("O animal selecionado ainda não teve nenhum parto registrado.");
+			}
+		
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -523,6 +553,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    	confirmacaoPrenhesFormController.showForm();
 				setObject(service.findById(getObject().getId()));
 				table.getSelectionModel().select(getObject());
+			}else{
+				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. \nPrimeiro registre a cobertura para então registrar a confirmação de prenhes.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -533,20 +565,27 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Animal, Boolean> novoParto = animal -> {
 		if ( animal != null ){
 			Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
-			if ( cobertura != null && cobertura.getParto() == null ){
-				
-				CoberturaValidation.validaRegistroPartoCobertura(cobertura, lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
-				
-				partoFormController.setState(State.CREATE_TO_SELECT);
-				partoFormController.setObject(new Parto(cobertura));
-				partoFormController.showForm();
-				
-				if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
-					cobertura.setParto(partoFormController.getObject());
-					coberturaService.registrarParto(cobertura);
-					setObject(service.findById(getObject().getId()));
-					table.getSelectionModel().select(getObject());
-				}	
+			if ( cobertura != null ){
+				if ( cobertura.getParto() == null ){
+					CoberturaValidation.validaRegistroPartoCobertura(cobertura, 
+							lactacaoService.findLastBeforeDate(cobertura.getFemea(), cobertura.getData()));
+					
+					partoFormController.setState(State.CREATE_TO_SELECT);
+					partoFormController.setObject(new Parto(cobertura));
+					partoFormController.showForm();
+					
+					if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
+						cobertura.setParto(partoFormController.getObject());
+						coberturaService.registrarParto(cobertura);
+						setObject(service.findById(getObject().getId()));
+						table.getSelectionModel().select(getObject());
+					}	
+				}else{
+					CustomAlert.mensagemInfo("A última cobertura do animal já teve o parto registrado no dia " + cobertura.getParto().getData() + ".");
+				}
+			}else{
+				CustomAlert.mensagemInfo("O animal selecionado ainda não possui cobertura/inseminação registrada. "
+						+ "\nCadastre a cobertura/inseminação e então registre o parto.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

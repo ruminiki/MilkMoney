@@ -1,7 +1,5 @@
 package br.com.milkmoney.controller.confirmacaoPrenhes;
 
-import java.util.Optional;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -53,8 +51,8 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 	
 	@FXML
 	private void handleDesfazerConfirmacao(){
-		Optional<ButtonType> result = CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhes", "Tem certeza que deseja desfazer a confirmação de prenhes?");
-		if (result.get() == ButtonType.OK) {
+		CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhes", "Tem certeza que deseja desfazer a confirmação de prenhes?");
+		if (CustomAlert.response == ButtonType.OK) {
 			((CoberturaService)service).desfazerConfirmacaoPrenhes(getObject());
 			closeForm();
 		}

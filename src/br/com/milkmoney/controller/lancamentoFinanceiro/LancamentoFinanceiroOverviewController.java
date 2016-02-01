@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -297,8 +296,8 @@ public class LancamentoFinanceiroOverviewController {
 	            refreshTela();
 	        
 			}else{
-				Optional<ButtonType> result = CustomAlert.confirmarExclusao();
-				if (result.get() == ButtonType.OK) {
+				CustomAlert.confirmarExclusao();
+				if (CustomAlert.response == ButtonType.OK) {
 					
 					try {
 						service.remove(lancamentoFinanceiroSelecionado);
