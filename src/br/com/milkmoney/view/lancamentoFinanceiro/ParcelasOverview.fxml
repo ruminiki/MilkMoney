@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minWidth="590.0" prefHeight="350.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lancamentoFinanceiro.ParcelasOverviewController">
+   <children>
+      <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <TableView fx:id="table" cacheShape="false" focusTraversable="false" prefHeight="150.0" style="-fx-box-border: #CCC;" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="situacaoLancamentoFinanceiroColumn" maxWidth="10.0" prefWidth="75.0" />
+                  <TableColumn fx:id="tipoLancamentoFinanceiroColumn" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
+                  <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
+                  <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
+                  <TableColumn fx:id="dataPagamentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Pagamento" />
+                  <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Recebimento" />
+                  <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
+                  <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" text="Centro Custo" />
+                  <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />
+               </columns>
+            </TableView>
+            <HBox alignment="CENTER_RIGHT" maxHeight="20.0" prefHeight="50.0" spacing="5.0">
+               <children>
+                  <Label text="Valor Total: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTotal" text="Label" />
+                  <Label text="Valor Pago: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblPago" text="Label" />
+                  <Label text="Saldo a Pagar: ">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblSaldo" text="Label" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -178,4 +178,11 @@ public class LancamentoFinanceiroDao extends AbstractGenericDao<Integer, Lancame
 		query.executeUpdate();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<LancamentoFinanceiro> findByParcela(String parcela) {
+		Query query = entityManager.createQuery("SELECT l FROM LancamentoFinanceiro l WHERE parcela is not null and parcela = :parcela");
+		query.setParameter("parcela", parcela);
+		return query.getResultList();
+	}
+
 }

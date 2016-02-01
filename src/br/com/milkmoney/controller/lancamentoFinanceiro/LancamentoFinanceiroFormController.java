@@ -1,5 +1,7 @@
 package br.com.milkmoney.controller.lancamentoFinanceiro;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -29,7 +31,8 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 	@FXML private Button btnParcelar;
 	@Autowired private CentroCustoReducedOverviewController centroCustoReducedOverviewController;
 	@Autowired private CategoriaLancamentoFinanceiroReducedOverviewController categoriaLancamentoFinanceiroReducedOverviewController;
-	@Autowired private ParcelaFormController parcelaFormController;
+	@Autowired private ParcelasFormController parcelasFormController;
+	@Autowired private ParcelasOverviewController parcelasOverviewController;
 	
 	private boolean gerouParcelas = false;
 	private ToggleGroup groupTipo = new ToggleGroup();
@@ -75,7 +78,18 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 			setStyleButtonReceitaDespesa();
 		});
 		
-		btnParcelar.setDisable(getObject().getId() > 0);
+		if ( getObject().getId() > 0 && getObject().getParcela() != null && !getObject().getParcela().isEmpty() ){
+			btnParcelar.setText("Visualizar Parcelas");
+			btnParcelar.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					parcelasOverviewController.setParcela(getObject().getParcela());
+					parcelasOverviewController.showForm();
+				}
+			});
+		}else{
+			btnParcelar.setDisable(getObject().getId() > 0);
+		}
 		
 	}
 	
@@ -136,9 +150,9 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 	@FXML
 	private void handleParcelar() {
 		
-		parcelaFormController.setObject(getObject());
-		parcelaFormController.showForm();
-		gerouParcelas = parcelaFormController.gerouParcelas();
+		parcelasFormController.setObject(getObject());
+		parcelasFormController.showForm();
+		gerouParcelas = parcelasFormController.gerouParcelas();
 		
 		if ( gerouParcelas ){
 			closeForm();

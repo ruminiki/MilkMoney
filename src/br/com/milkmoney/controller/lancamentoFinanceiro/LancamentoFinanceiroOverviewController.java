@@ -526,7 +526,7 @@ public class LancamentoFinanceiroOverviewController {
 	}
 	
 	public String getFormName() {
-		return "view/cobertura/LancamentoFinanceiroOverview.fxml";
+		return "view/lancamentoFinanceiro/LancamentoFinanceiroOverview.fxml";
 	}
 	
 	@FXML

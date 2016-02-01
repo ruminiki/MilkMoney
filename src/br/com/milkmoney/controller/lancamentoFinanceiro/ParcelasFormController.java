@@ -26,7 +26,7 @@ import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
 
 @Controller
-public class ParcelaFormController extends AbstractFormController<Integer, LancamentoFinanceiro> {
+public class ParcelasFormController extends AbstractFormController<Integer, LancamentoFinanceiro> {
 
 	@FXML private UCTextField inputNumeroParcelas, inputDiaVencimento, inputValorParcelas, 
 							  inputDescricao, inputCategoria, inputCentroCusto, inputIntervalo;
