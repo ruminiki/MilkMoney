@@ -1,11 +1,16 @@
 package br.com.milkmoney.controller.animal;
 
+import java.io.File;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 
 import javax.annotation.Resource;
 
@@ -13,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
@@ -23,9 +29,11 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeAnimal;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
+import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.searchers.SearchFemeas;
 import br.com.milkmoney.service.searchers.SearchMachos;
+import br.com.milkmoney.util.ImageUtil;
 
 @Controller
 public class AnimalFormController extends AbstractFormController<Integer, Animal> {
@@ -35,6 +43,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
 	@FXML private ImageView inputImage;
+	@FXML private Label lblControle;
 
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -80,6 +89,16 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			btnBuscarPaiMontaNatural.setDisable(true);
 			inputDataNascimento.setDisable(true);
 			inputSexo.setDisable(true);
+		}
+		
+		//carrega a imagem
+		if ( getObject().getImagem() != null ){
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					inputImage.setImage(getObject().getImage());					
+				}
+			});
 		}
 		
 		MaskFieldUtil.decimal(inputValor);
@@ -171,6 +190,55 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 			inputRaca.textProperty().set("");
 		}
 		
+	}
+	
+	@FXML
+	private void selecionarImagem(){
+		
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Carregar foto do animal");
+		
+		fileChooser.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("All Images", "*.*"),
+            new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+            new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+		
+		File file = fileChooser.showOpenDialog(getDialogStage());
+		
+		lblControle.setText("Aguarde...");
+		
+		if (file != null) {
+			try {
+				String destination = ImageUtil.reduceImageQualityAndSave(ImageUtil.UM_MB, file);
+				getObject().setImagem(destination);
+				inputImage.setImage(getObject().getImage());
+			} catch (Exception e) {
+				CustomAlert.mensagemErro("Ocorreu um erro ao tentar carregar a imagem. \nPor favor, tente novamente.");
+			}
+		}
+		
+		lblControle.setText("");
+	}
+	
+	@Override
+	protected void beforeSave() {
+		super.beforeSave();
+		//remove a imagem antiga do disco, caso tenha sido alterada
+		String image = ((AnimalService)service).getImagePath(getObject());
+		if ( image != null && !image.equals(getObject().getImagem()) ){
+			new File(image).delete();
+		}
+	}
+	
+	@Override
+	public void handleCancel() {
+		//remove a imagem carregada caso o usuário cancele a operação
+		String image = ((AnimalService)service).getImagePath(getObject());
+		if ( getObject().getImagem() != null && !getObject().getImagem().equals(image) ){
+			new File(getObject().getImagem()).deleteOnExit();
+		}
+		super.handleCancel();
 	}
 	
 	@Override

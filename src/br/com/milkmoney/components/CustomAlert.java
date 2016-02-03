@@ -65,4 +65,11 @@ public class CustomAlert {
 		return alert.showAndWait();
 	}
 
+	public static void mensagemErro(String string) {
+		Notifications.create()
+        .title("Erro")
+        .text(string)
+        .showError();
+	}
+
 }

@@ -1,5 +1,7 @@
 package br.com.milkmoney.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -60,6 +63,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
+	private StringProperty            imagem                   = new SimpleStringProperty();
 	
 	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
@@ -134,6 +138,19 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public StringProperty numeroProperty(){
 		return numero;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getImagem() {
+		return this.imagem.get();
+	}
+
+	public void setImagem(String imagem) {
+		this.imagem.set(imagem);
+	}
+	
+	public StringProperty imagemProperty(){
+		return imagem;
 	}
 	
 	@Access(AccessType.PROPERTY)
@@ -313,6 +330,15 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
 		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
+	}
+	
+	public Image getImage(){
+		try {
+			return new Image(new FileInputStream(getImagem()));
+		} catch (FileNotFoundException e) {
+			System.out.println("Erro ao carregar imagem do animal.");
+		}
+		return null;
 	}
 
 	@Override

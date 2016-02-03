@@ -258,4 +258,8 @@ public class AnimalService implements IService<Integer, Animal>{
 		return FXCollections.observableArrayList(dao.superSearch(params));
 	}
 
+	public String getImagePath(Animal animal) {
+		return dao.getImagePath(animal);
+	}
+
 }

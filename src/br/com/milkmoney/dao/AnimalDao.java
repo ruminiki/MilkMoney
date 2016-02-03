@@ -685,4 +685,9 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 	}
 
+	public String getImagePath(Animal animal) {
+		Query query = entityManager.createNativeQuery("select imagem from animal a where a.id = " + animal.getId());
+		return (String) query.getSingleResult();
+	}
+
 }
