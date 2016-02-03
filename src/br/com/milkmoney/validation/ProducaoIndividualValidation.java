@@ -37,7 +37,7 @@ public class ProducaoIndividualValidation extends Validator {
 			if ( !(producaoIndividual.getData().compareTo(producaoIndividual.getLactacao().getDataInicio()) >= 0 &&
 					producaoIndividual.getData().compareTo(dataFinal) <= 0) ){
 				throw new ValidationException(REGRA_NEGOCIO, "O lançamento da produção deve ocorrer dentro do período de lactação do animal. "
-						+ "Verifique se o animal selecionado está em lactação no dia " + DateUtil.format(producaoIndividual.getData()) + ".");
+						+ "Verifique se o dia " + DateUtil.format(producaoIndividual.getData()) + " está dentro do período da lactação selecionada.");
 			}
 			
 		}else{

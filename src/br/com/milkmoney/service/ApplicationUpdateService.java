@@ -213,9 +213,12 @@ public class ApplicationUpdateService{
 					        while ( s.hasNext() ){
 					        	String version = s.next();
 					        	//verifica se existe versão mais atual que a do sistema instalado
-					        	if ( Integer.parseInt(version.replace(".", "")) > Integer.parseInt(sistema.getVersao().replace(".", "")) ) {
-					        		updateVersion += version + ", ";
+					        	if ( sistema != null && sistema.getVersao() != null ){
+					        		if ( Integer.parseInt(version.replace(".", "")) > Integer.parseInt(sistema.getVersao().replace(".", "")) ) {
+						        		updateVersion += version + ", ";
+						        	}
 					        	}
+					        	
 					        }
 					        
 					        if ( updateVersion.length() > 0 ){

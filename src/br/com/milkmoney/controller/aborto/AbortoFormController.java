@@ -48,7 +48,7 @@ public class AbortoFormController extends AbstractFormController<Integer, Cobert
 		
 		inputData.valueProperty().bindBidirectional(getObject().getAborto().dataProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().getAborto().observacaoProperty());
-		inputSexo.setItems(Sexo.getItems());
+		inputSexo.setItems(Sexo.getAllItems());
 		inputSexo.valueProperty().bindBidirectional(getObject().getAborto().sexoCriaProperty());
 		
 		btnSalvar.setDisable(getObject().getParto() != null);

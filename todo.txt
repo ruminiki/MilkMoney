@@ -1,8 +1,9 @@
 ERROS e REQUISITOS
 
+X Erro filtro situação da cobertura (está pegando qualquer cobertura, deve pegar a última)
 X Imprimir controle leiteiro do animal
 X Entrega de leite, selecionar o default SIM
-- Gerar relatório com valores de tempo de produção ideal por animal (atualizar relatório ranking)
+X Gerar relatório com valores de tempo de produção ideal por animal (atualizar relatório ranking)
 X recibo pgto
 - Cadastro do animal com foto
 - Cadastro a foto do animal na tela de cadastro de cria (salvar o diretorio no banco)
@@ -22,6 +23,9 @@ X Reformular menu de acesso as opções do animal
 - Reposicionar botão selecionar nas telas de pesquisa
 - Na nova versão adicionar o novo jar na libs
 X Permitir remover parto
+X Permitir sexo indefinido no aborto
+X Exibir na tela de animais a situação última cobertura
+X Erro backup
 
 - Fazer mapa de pontos do trajeto da pesquisa
 

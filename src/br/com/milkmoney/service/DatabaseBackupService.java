@@ -26,7 +26,7 @@ public class DatabaseBackupService{
 			public Void call() throws InterruptedException {
 				try {
 					
-					String CMD_RUN = "database\\bin\\mysqldump.exe -u root -d milkMoney --result-file ";
+					String CMD_RUN = "database\\bin\\mysqldump.exe -u root milkMoney --result-file ";
 					String PATH_BACKUP = "backup\\";
 							
 					updateMessage("Iniciando backup do banco de dados\n");

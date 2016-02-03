@@ -30,4 +30,8 @@ public class SituacaoCobertura {
 		return FXCollections.observableArrayList(NAO_CONFIRMADA, PRENHA, VAZIA);
 	}
 	
+	public static ObservableList<String> getAllItems(){
+		return FXCollections.observableArrayList(NAO_CONFIRMADA, PRENHA, VAZIA, PARIDA, ABORTADA);
+	}
+	
 }

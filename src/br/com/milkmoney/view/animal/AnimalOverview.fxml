@@ -135,6 +135,7 @@
                         <TableView fx:id="table" focusTraversable="false" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
                           <columns>
                               <TableColumn fx:id="situacaoAnimalColumn" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Situação" />
+                              <TableColumn fx:id="situacaoUltimaCobertura" maxWidth="115.0" minWidth="115.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Reprodução" />
                               <TableColumn fx:id="numeroColumn" maxWidth="-Infinity" minWidth="60.0" prefWidth="-1.0" resizable="false" style="-fx-alignment: CENTER;" text="Nº" />
                               <TableColumn fx:id="nomeColumn" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="200.0" text="Nome" />
                               <TableColumn fx:id="loteColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Lote" />

@@ -1,9 +1,6 @@
 package br.com.milkmoney.controller.lactacao;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -22,11 +19,11 @@ import br.com.milkmoney.components.TableCellIndexFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.lactacao.renderer.TableCellOpcoesFactory;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.Lactacao;
-import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ParametroService;
-import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.service.fichaAnimal.EficienciaTempoProducao;
 
 @Controller
 public class LactacaoOverviewController extends AbstractOverviewController<Integer, Lactacao> {
@@ -45,7 +42,10 @@ public class LactacaoOverviewController extends AbstractOverviewController<Integ
 	@Autowired ParametroService parametroService;
 	@Autowired LactacaoService service;
 	@Autowired LactacaoFormController formController;
+	@Autowired EficienciaTempoProducao eficienciaTempoProducao;
+	
 	private Animal animal;
+	private FichaAnimal fichaAnimal = new FichaAnimal();
 	
 	@FXML
 	public void initialize() {
@@ -109,7 +109,7 @@ public class LactacaoOverviewController extends AbstractOverviewController<Integ
 	
 	private void sumarize(){
 		
-		long idadePrimeiraCobertura = Integer.parseInt(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA));
+		/*long idadePrimeiraCobertura = Integer.parseInt(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA));
 		long idadeProdutiva = animal.getIdade() - idadePrimeiraCobertura;
 		long lactacoesIdeal = 0;
 		long mesesProducaoIdeal = 0;
@@ -131,12 +131,16 @@ public class LactacaoOverviewController extends AbstractOverviewController<Integ
 		lblMesesProducaoIdeal.setText(String.valueOf(mesesProducaoIdeal));
 		BigDecimal resultado = BigDecimal.valueOf(mesesProduzindo)
 				   						 .divide(BigDecimal.valueOf(mesesProducaoIdeal), 2, RoundingMode.HALF_EVEN)
-				   						 .multiply(BigDecimal.valueOf(100));
-		lblResultado.setText(resultado.toString() + "%");
-		if ( resultado.compareTo(BigDecimal.valueOf(80)) >= 0 ){
+				   						 .multiply(BigDecimal.valueOf(100));*/
+		
+		eficienciaTempoProducao.load(new Object[]{fichaAnimal, animal});
+		
+		lblResultado.setText(fichaAnimal.getEficienciaTempoProducao() + "%");
+		if ( fichaAnimal.getEficienciaTempoProducao().compareTo(BigDecimal.valueOf(80)) >= 0 ){
 			lblResultado.setStyle("-fx-text-fill: #00cc00; -fx-font-weight: bold");
 		}else{
-			if ( resultado.compareTo(BigDecimal.valueOf(80)) < 0 && resultado.compareTo(BigDecimal.valueOf(50)) >= 0 ){
+			if ( fichaAnimal.getEficienciaTempoProducao().compareTo(BigDecimal.valueOf(80)) < 0 
+					&& fichaAnimal.getEficienciaTempoProducao().compareTo(BigDecimal.valueOf(50)) >= 0 ){
 				lblResultado.setStyle("-fx-text-fill: #ff9933; -fx-font-weight: bold");
 			}else{
 				lblResultado.setStyle("-fx-text-fill: #ff0000; -fx-font-weight: bold");

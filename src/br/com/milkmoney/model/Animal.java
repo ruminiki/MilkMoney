@@ -64,6 +64,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
 	
+	@Formula("(SELECT c.situacaoCobertura FROM cobertura c WHERE c.femea = id order by c.data desc limit 1)")
+	private String situacaoUltimaCobertura;
+	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 	
@@ -274,10 +277,10 @@ public class Animal extends AbstractEntity implements Serializable {
 		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
 	}
 	
-	public long getIdade() {
+	public int getIdade() {
 		
 		if ( this.dataNascimento != null && this.dataNascimento.get() != null )
-			return ChronoUnit.MONTHS.between(this.dataNascimento.get(), LocalDate.now());
+			return (int)ChronoUnit.MONTHS.between(this.dataNascimento.get(), LocalDate.now());
 		return 0;
 		
 	}
@@ -301,6 +304,15 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public void setLote(String lote) {
 		this.lote = lote;
+	}
+	
+	@Transient
+	public String getSituacaoUltimaCobertura() {
+		return situacaoUltimaCobertura == null ? "--" : situacaoUltimaCobertura;
+	}
+
+	public void setSituacaoUltimaCobertura(String situacaoUltimaCobertura) {
+		this.situacaoUltimaCobertura = situacaoUltimaCobertura;
 	}
 
 	@Override

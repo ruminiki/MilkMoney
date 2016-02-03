@@ -41,7 +41,7 @@
                               
                                                                                                       <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" />
                               <Label text="Sexo Cria: " />
-                              <ChoiceBox fx:id="inputSexo" maxWidth="80.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="inputSexo" maxWidth="130.0" prefHeight="25.0" prefWidth="106.0" />
                            </children>
                         </HBox>
                         <Label text="Duração Gestação: " />

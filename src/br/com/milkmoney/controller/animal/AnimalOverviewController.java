@@ -78,6 +78,7 @@ import br.com.milkmoney.validation.CoberturaValidation;
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
 
 	@FXML private TableColumn<Animal, String> nomeColumn;
+	@FXML private TableColumn<Animal, String> situacaoUltimaCobertura;
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
@@ -139,6 +140,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			@Override
 			public void run() {
 				situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
+				situacaoUltimaCobertura.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 				numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 				nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
 				loteColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("lote"));
@@ -168,7 +170,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				}
 				
 				if ( inputSituacaoCobertura.getItems().size() <= 0 ){
-					inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getItems());
+					inputSituacaoCobertura.getItems().setAll(SituacaoCobertura.getAllItems());
 				}
 				
 				if ( inputLote.getItems().size() <= 0 ){
@@ -207,9 +209,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		double width = newWidth.doubleValue();
 		
 		if ( width >= 655 ){
-			nomeColumn.minWidthProperty().set((width - 420) * 0.50);
-			loteColumn.minWidthProperty().set((width - 420) * 0.25);
-			racaColumn.minWidthProperty().set((width - 420) * 0.25);
+			nomeColumn.minWidthProperty().set((width - 535) * 0.50);
+			loteColumn.minWidthProperty().set((width - 535) * 0.25);
+			racaColumn.minWidthProperty().set((width - 535) * 0.25);
 		}
 		
 	}
@@ -496,6 +498,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
 				coberturaFormController.showForm();
 				setObject(service.findById(getObject().getId()));
+				refreshObjectInTableView(getObject());
 				table.getSelectionModel().select(getObject());
 			}else{
 				CustomAlert.mensagemInfo("A última cobertura do animal NÃO foi confirmada. "
@@ -515,6 +518,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				coberturaFormController.setObject(cobertura);
 				coberturaFormController.showForm();
 				setObject(service.findById(getObject().getId()));
+				refreshObjectInTableView(getObject());
 				table.getSelectionModel().select(getObject());
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada.");
@@ -532,6 +536,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				partoFormController.setObject(parto);
 				partoFormController.showForm();
 				setObject(service.findById(getObject().getId()));
+				refreshObjectInTableView(getObject());
 				table.getSelectionModel().select(getObject());
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não teve nenhum parto registrado.");
@@ -550,6 +555,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				confirmacaoPrenhesFormController.setObject(cobertura);
 		    	confirmacaoPrenhesFormController.showForm();
 				setObject(service.findById(getObject().getId()));
+				refreshObjectInTableView(getObject());
 				table.getSelectionModel().select(getObject());
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. \nPrimeiro registre a cobertura para então registrar a confirmação de prenhes.");
@@ -576,6 +582,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						cobertura.setParto(partoFormController.getObject());
 						coberturaService.registrarParto(cobertura);
 						setObject(service.findById(getObject().getId()));
+						refreshObjectInTableView(getObject());
 						table.getSelectionModel().select(getObject());
 					}	
 				}else{

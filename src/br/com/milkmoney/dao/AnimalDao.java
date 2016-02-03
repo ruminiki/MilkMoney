@@ -49,7 +49,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_SITUACAO_COBERTURA) != null ){
-			SQL.append("exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura = '" + params.get(AnimalService.FILTER_SITUACAO_COBERTURA) + "' and c.femea = a ) and ");
+			//SQL.append("exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura = '" + params.get(AnimalService.FILTER_SITUACAO_COBERTURA) + "' and c.femea = a order by c.data desc limit 1) and ");
+			SQL.append("a.situacaoUltimaCobertura = '" + params.get(AnimalService.FILTER_SITUACAO_COBERTURA) + "' and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_LOTE) != null ){

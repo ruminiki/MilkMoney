@@ -159,7 +159,6 @@ public class LancamentoFinanceiroFormController extends AbstractFormController<I
 		}
 	}
 	
-	
 	public boolean gerouParcelas() {
 		return gerouParcelas;
 	}

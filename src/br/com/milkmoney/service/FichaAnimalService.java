@@ -21,6 +21,7 @@ import br.com.milkmoney.service.fichaAnimal.DataUltimoParto;
 import br.com.milkmoney.service.fichaAnimal.DiasEmAbertoAnimal;
 import br.com.milkmoney.service.fichaAnimal.DiasEmLactacaoAnimal;
 import br.com.milkmoney.service.fichaAnimal.EficienciaReprodutivaAnimal;
+import br.com.milkmoney.service.fichaAnimal.EficienciaTempoProducao;
 import br.com.milkmoney.service.fichaAnimal.EncerramentoLactacao;
 import br.com.milkmoney.service.fichaAnimal.IdadePrimeiraCobertura;
 import br.com.milkmoney.service.fichaAnimal.IdadePrimeiroParto;
@@ -108,7 +109,8 @@ public class FichaAnimalService{
 				(AbstractFichaAnimal)MainApp.getBean(ProximoParto.class),
 				(AbstractFichaAnimal)MainApp.getBean(ProximoServico.class),
 				(AbstractFichaAnimal)MainApp.getBean(SituacaoUltimaCobertura.class),
-				(AbstractFichaAnimal)MainApp.getBean(UltimoProcedimento.class)
+				(AbstractFichaAnimal)MainApp.getBean(UltimoProcedimento.class),
+				(AbstractFichaAnimal)MainApp.getBean(EficienciaTempoProducao.class)
 		});
 	}
 	
