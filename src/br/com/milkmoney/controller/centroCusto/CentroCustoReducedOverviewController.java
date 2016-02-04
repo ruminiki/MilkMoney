@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.CentroCusto;
 import br.com.milkmoney.service.IService;
@@ -18,12 +19,16 @@ public class CentroCustoReducedOverviewController extends AbstractReducedOvervie
 
 	@FXML private TableColumn<CentroCusto, String> idColumn;
 	@FXML private TableColumn<CentroCusto, String> descricaoColumn;
+	@FXML private TableColumn<CentroCusto, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<CentroCusto,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<CentroCusto,String>("descricao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<CentroCusto,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<CentroCusto,String>(selecionar));
+
 		super.initialize((CentroCustoFormController) MainApp.getBean(CentroCustoFormController.class));
 		
 	}

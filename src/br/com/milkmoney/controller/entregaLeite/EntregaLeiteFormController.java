@@ -50,8 +50,9 @@ public class EntregaLeiteFormController extends AbstractFormController<Integer, 
 		inputCarregaMarcacoesMes.getItems().addAll(SimNao.getItems());
 		inputCarregaMarcacoesMes.valueProperty().bindBidirectional(getObject().carregaMarcacoesMesProperty());
 
-		if ( inputCarregaMarcacoesMes.getSelectionModel().getSelectedItem() == null ){
+		if ( getObject().getCarregaMarcacoesMes() == null || getObject().getCarregaMarcacoesMes().isEmpty() ){
 			getObject().setCarregaMarcacoesMes(SimNao.SIM);
+			service.save(getObject());
 		}
 		
 		inputCarregaMarcacoesMes.valueProperty().addListener((observable, oldValue, newValue) -> {

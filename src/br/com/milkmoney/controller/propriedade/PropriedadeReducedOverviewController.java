@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Propriedade;
 import br.com.milkmoney.service.IService;
@@ -21,6 +22,7 @@ public class PropriedadeReducedOverviewController extends AbstractReducedOvervie
 	@FXML private TableColumn<Propriedade, String> descricaoColumn;
 	@FXML private TableColumn<Propriedade, String> enderecoColumn;
 	@FXML private TableColumn<Propriedade, String> areaColumn;
+	@FXML private TableColumn<Propriedade, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
@@ -28,6 +30,8 @@ public class PropriedadeReducedOverviewController extends AbstractReducedOvervie
 		enderecoColumn.setCellValueFactory(new PropertyValueFactory<Propriedade,String>("endereco"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Propriedade,String>("descricao"));
 		areaColumn.setCellValueFactory(new PropertyValueFactory<Propriedade,String>("area"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Propriedade,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Propriedade,String>(selecionar));
 		
 		super.initialize((PropriedadeFormController) MainApp.getBean(PropriedadeFormController.class));
 		

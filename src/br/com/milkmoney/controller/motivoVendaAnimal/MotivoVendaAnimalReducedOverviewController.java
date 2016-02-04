@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.MotivoVendaAnimal;
 import br.com.milkmoney.service.IService;
@@ -18,12 +19,15 @@ public class MotivoVendaAnimalReducedOverviewController extends AbstractReducedO
 
 	@FXML private TableColumn<MotivoVendaAnimal, String> idColumn;
 	@FXML private TableColumn<MotivoVendaAnimal, String> descricaoColumn;
+	@FXML private TableColumn<MotivoVendaAnimal, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<MotivoVendaAnimal,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<MotivoVendaAnimal,String>("descricao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<MotivoVendaAnimal,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<MotivoVendaAnimal,String>(selecionar));
 		super.initialize((MotivoVendaAnimalFormController) MainApp.getBean(MotivoVendaAnimalFormController.class));
 		
 	}

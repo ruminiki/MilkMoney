@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.PrestadorServico;
 import br.com.milkmoney.service.IService;
@@ -20,6 +21,7 @@ public class PrestadorServicoReducedOverviewController extends AbstractReducedOv
 	@FXML private TableColumn<PrestadorServico, String> telefonePrincipalColumn;
 	@FXML private TableColumn<PrestadorServico, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<PrestadorServico, String> emailColumn;
+	@FXML private TableColumn<PrestadorServico, String> opcoesColumn;
 	
 	@FXML
 	public void initialize() {
@@ -28,6 +30,8 @@ public class PrestadorServicoReducedOverviewController extends AbstractReducedOv
 		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefonePrincipal"));
 		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("telefoneSecundario"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("email"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<PrestadorServico,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<PrestadorServico,String>(selecionar));
 		super.initialize((PrestadorServicoFormController)MainApp.getBean(PrestadorServicoFormController.class));
 	
 	}

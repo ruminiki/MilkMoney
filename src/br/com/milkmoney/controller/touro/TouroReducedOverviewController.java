@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Touro;
 import br.com.milkmoney.service.IService;
@@ -18,6 +19,7 @@ public class TouroReducedOverviewController extends AbstractReducedOverviewContr
 
 	@FXML private TableColumn<Touro, String> codigoColumn;
 	@FXML private TableColumn<Touro, String> nomeColumn;
+	@FXML private TableColumn<Touro, String> opcoesColumn;
 	
 	@Autowired private TouroFormController touroFormController;
 	
@@ -26,6 +28,8 @@ public class TouroReducedOverviewController extends AbstractReducedOverviewContr
 		
 		codigoColumn.setCellValueFactory(new PropertyValueFactory<Touro,String>("codigo"));
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Touro, String>("nome"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Touro,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Touro,String>(selecionar));
 		
 		super.initialize(touroFormController);
 		

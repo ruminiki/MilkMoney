@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Insumo;
 import br.com.milkmoney.model.TipoInsumo;
@@ -21,6 +22,7 @@ public class InsumoReducedOverviewController extends AbstractReducedOverviewCont
 	@FXML private TableColumn<Insumo, String>        descricaoColumn;
 	@FXML private TableColumn<TipoInsumo, String>    tipoInsumoColumn;
 	@FXML private TableColumn<UnidadeMedida, String> unidadeMedidaColumn;
+	@FXML private TableColumn<Insumo, String> opcoesColumn;
 	
 	@FXML
 	public void initialize() {
@@ -28,6 +30,8 @@ public class InsumoReducedOverviewController extends AbstractReducedOverviewCont
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<Insumo,String>("descricao"));
 		tipoInsumoColumn.setCellValueFactory(new PropertyValueFactory<TipoInsumo,String>("tipoInsumo"));
 		unidadeMedidaColumn.setCellValueFactory(new PropertyValueFactory<UnidadeMedida,String>("unidadeMedida"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Insumo,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Insumo,String>(selecionar));
 		super.initialize((InsumoFormController) MainApp.getBean(InsumoFormController.class));
 		
 	}

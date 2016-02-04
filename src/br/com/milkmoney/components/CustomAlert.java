@@ -16,6 +16,7 @@ public class CustomAlert {
 		alert.setTitle("Nenhum registro selecionado");
 		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
 		alert.setContentText("Por favor, selecione um registro na tabela para continuar.");
+		alert.show();
 	}
 
 	public static void confirmarExclusao() {
@@ -39,6 +40,7 @@ public class CustomAlert {
 		alert.setTitle("Campo obrigatório");
 		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
 		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
+		alert.show();
 	}
 
 	public static void mensagemAlerta(String tipo, String mensagem) {
@@ -46,6 +48,7 @@ public class CustomAlert {
 		alert.setTitle(tipo);
 		alert.setHeaderText("Ooops!! Alguma coisa não parece bem.");
 		alert.setContentText(mensagem);
+		alert.show();
 	}
 
 	public static void mensagemInfo(String string) {
@@ -53,6 +56,7 @@ public class CustomAlert {
 		alert.setTitle("Importante");
 		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
 		alert.setContentText(string);
+		alert.show();
 	}
 
 	public static Optional<ButtonType> confirmar(String header, String message) {
@@ -68,6 +72,7 @@ public class CustomAlert {
 		alert.setTitle("Erro");
 		alert.setHeaderText("Ooops!! Um erro aconteceu :(");
 		alert.setContentText(string);
+		alert.show();
 	}
 
 }

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.CausaMorteAnimal;
 import br.com.milkmoney.service.IService;
@@ -18,12 +19,16 @@ public class CausaMorteAnimalReducedOverviewController extends AbstractReducedOv
 
 	@FXML private TableColumn<CausaMorteAnimal, String> idColumn;
 	@FXML private TableColumn<CausaMorteAnimal, String> descricaoColumn;
+	@FXML private TableColumn<CausaMorteAnimal, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<CausaMorteAnimal,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<CausaMorteAnimal,String>("descricao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<CausaMorteAnimal,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<CausaMorteAnimal,String>(selecionar));
+
 		super.initialize((CausaMorteAnimalFormController) MainApp.getBean(CausaMorteAnimalFormController.class));
 		
 	}

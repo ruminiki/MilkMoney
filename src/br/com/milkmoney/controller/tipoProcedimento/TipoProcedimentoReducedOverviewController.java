@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.TipoProcedimento;
 import br.com.milkmoney.service.IService;
@@ -18,12 +19,15 @@ public class TipoProcedimentoReducedOverviewController extends AbstractReducedOv
 
 	@FXML private TableColumn<TipoProcedimento, String> idColumn;
 	@FXML private TableColumn<TipoProcedimento, String> descricaoColumn;
+	@FXML private TableColumn<TipoProcedimento, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<TipoProcedimento,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<TipoProcedimento,String>("descricao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<TipoProcedimento,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<TipoProcedimento,String>(selecionar));
 		super.initialize((TipoProcedimentoFormController) MainApp.getBean(TipoProcedimentoFormController.class));
 		
 	}

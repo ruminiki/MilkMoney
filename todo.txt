@@ -21,7 +21,7 @@ X Alinhar a esquerda colunas lanc financeiro
 - Projeção, permitir informar média e valor do litro
 X Quando o animal já está morto/vendido abrir o form com botão desfazer
 X Reformular menu de acesso as opções do animal
-- Reposicionar botão selecionar nas telas de pesquisa
+X Reposicionar botão selecionar nas telas de pesquisa
 - Na nova versão adicionar o novo jar na libs
 X Permitir remover parto
 X Permitir sexo indefinido no aborto

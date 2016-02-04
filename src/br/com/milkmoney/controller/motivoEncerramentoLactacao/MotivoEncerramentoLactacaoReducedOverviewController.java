@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.MotivoEncerramentoLactacao;
 import br.com.milkmoney.service.IService;
@@ -18,12 +19,16 @@ public class MotivoEncerramentoLactacaoReducedOverviewController extends Abstrac
 
 	@FXML private TableColumn<MotivoEncerramentoLactacao, String> idColumn;
 	@FXML private TableColumn<MotivoEncerramentoLactacao, String> descricaoColumn; 
+	@FXML private TableColumn<MotivoEncerramentoLactacao, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<MotivoEncerramentoLactacao,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<MotivoEncerramentoLactacao,String>("descricao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<MotivoEncerramentoLactacao,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<MotivoEncerramentoLactacao,String>(selecionar));
+
 		super.initialize((MotivoEncerramentoLactacaoFormController) MainApp.getBean(MotivoEncerramentoLactacaoFormController.class));
 		
 	}

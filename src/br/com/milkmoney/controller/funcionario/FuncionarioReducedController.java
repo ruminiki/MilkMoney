@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Funcionario;
 import br.com.milkmoney.service.IService;
@@ -19,6 +20,7 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 	@FXML private TableColumn<Funcionario, String> nomeColumn;
 	@FXML private TableColumn<Funcionario, String> telefoneColumn;
 	@FXML private TableColumn<Funcionario, String> emailColumn;
+	@FXML private TableColumn<Funcionario, String> opcoesColumn;
 	
 	@Autowired private FuncionarioFormController funcionarioFormController;
 	
@@ -28,6 +30,8 @@ public class FuncionarioReducedController extends AbstractReducedOverviewControl
 		nomeColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("nome"));
 		telefoneColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("telefone"));
 		emailColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("email"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Funcionario,String>("id"));
+		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Funcionario,String>(selecionar));
 		
 		super.initialize(funcionarioFormController);
 		

@@ -1,5 +1,7 @@
 package br.com.milkmoney.controller;
 
+import java.util.function.Function;
+
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -19,14 +21,15 @@ public abstract class AbstractReducedOverviewController<K, E> extends AbstractOv
 		
 	}
 	
-	@FXML
-	public void selecionar(){
+	protected Function<Object, Boolean> selecionar = obj -> {
 		if ( table != null && table.getSelectionModel().getSelectedItem() != null ){
 			super.closeForm();
+			return true;
 		}else{
 			CustomAlert.mensagemInfo("Por favor, selecione um registro na tabela.");
+			return false;
 		}
-	}
+	};
 	
 	@FXML
 	private void handleLimparSelecao(){
@@ -42,7 +45,11 @@ public abstract class AbstractReducedOverviewController<K, E> extends AbstractOv
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					selecionar();
+					//selecionar();
+					if ( !getFormConfig().get(EDIT_DISABLED) ){
+						handleEdit();
+					}
+					
 				}
 			}
 

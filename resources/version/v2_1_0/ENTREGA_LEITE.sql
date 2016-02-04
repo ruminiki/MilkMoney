@@ -1,0 +1,2 @@
+UPDATE milkmoney.entregaLeite SET carregaMarcacoesMes = 'NÃO' where carregaMarcacoesMes = 'N';
+UPDATE milkmoney.entregaLeite SET carregaMarcacoesMes = 'SIM' where (carregaMarcacoesMes = 'S' or carregaMarcacoesMes is null);
