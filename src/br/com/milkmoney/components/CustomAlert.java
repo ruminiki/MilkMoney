@@ -7,17 +7,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-import org.controlsfx.control.Notifications;
-
 public class CustomAlert {
 
 	public static ButtonType response = ButtonType.CANCEL;
 	
 	public static void nenhumRegistroSelecionado(){
-		 Notifications.create()
-         .title("Nenhuma Seleção")
-         .text("Por favor, selecione um registro na tabela para continuar.")
-         .showInformation();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Nenhum registro selecionado");
+		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
+		alert.setContentText("Por favor, selecione um registro na tabela para continuar.");
 	}
 
 	public static void confirmarExclusao() {
@@ -37,24 +35,24 @@ public class CustomAlert {
 	}
 
 	public static void campoObrigatorio(String field) {
-		 Notifications.create()
-         .title("Ooops!! Precisamos rever alguma coisa!")
-         .text("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.")
-         .showInformation();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Campo obrigatório");
+		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
+		alert.setContentText("O campo obrigatório [" + field + "] não foi preenchido. Por favor, informe-o para prosseguir.");
 	}
 
 	public static void mensagemAlerta(String tipo, String mensagem) {
-		 Notifications.create()
-         .title(tipo)
-         .text(mensagem)
-         .showWarning();
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle(tipo);
+		alert.setHeaderText("Ooops!! Alguma coisa não parece bem.");
+		alert.setContentText(mensagem);
 	}
 
 	public static void mensagemInfo(String string) {
-		Notifications.create()
-        .title("Atenção")
-        .text(string)
-        .showInformation();
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Importante");
+		alert.setHeaderText("Ooops!! Precisamos rever alguma coisa!");
+		alert.setContentText(string);
 	}
 
 	public static Optional<ButtonType> confirmar(String header, String message) {
@@ -66,10 +64,10 @@ public class CustomAlert {
 	}
 
 	public static void mensagemErro(String string) {
-		Notifications.create()
-        .title("Erro")
-        .text(string)
-        .showError();
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Erro");
+		alert.setHeaderText("Ooops!! Um erro aconteceu :(");
+		alert.setContentText(string);
 	}
 
 }

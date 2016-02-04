@@ -28,6 +28,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.animal.renderer.PopUpMenu;
 import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
 import br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
@@ -133,12 +134,29 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
 	
 	private FichaAnimal fichaAnimal;
+	private PopUpMenu popUpMenu = null;
 	
 	@FXML
 	public void initialize() {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
+				if ( popUpMenu == null ){
+					popUpMenu = new PopUpMenu(coberturas,
+							  novaCobertura, 
+							  confirmarPrenhes,
+							  novoParto,
+							  ultimaCobertura,
+							  ultimoParto,
+							  lactacoes,
+							  controleLeiteiro,
+							  vendaAnimal,
+							  morteAnimal,
+							  linhaTempoAnimal,
+							  exibirFichaAnimal);
+				}
+			
+				
 				situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoAnimal"));
 				situacaoUltimaCobertura.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 				numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
@@ -149,18 +167,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
 				sexoColumn.setCellValueFactory(new PropertyValueFactory<String,String>("sexoFormatado"));
 				opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(coberturas,
-																					  novaCobertura, 
-																					  confirmarPrenhes,
-																					  novoParto,
-																					  ultimaCobertura,
-																					  ultimoParto,
-																					  lactacoes,
-																					  controleLeiteiro,
-																					  vendaAnimal,
-																					  morteAnimal,
-																					  linhaTempoAnimal,
-																					  exibirFichaAnimal));
+				opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Animal,String>(popUpMenu));
 
 				table.widthProperty().addListener((observable, oldValue, newValue) -> resizeColunaTabela(newValue));
 				
@@ -407,14 +414,13 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
 				lactacaoOverviewController.setAnimal(getObject());
 				lactacaoOverviewController.showForm();
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("Somente animais fêmeas podem ter a lactação encerrada.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(animal);
 		return true;
 	};
 	
@@ -430,11 +436,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				
 				producaoIndividualOverviewController.setAnimal(getObject());
 				producaoIndividualOverviewController.showForm();
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("Somente podem ter registro de produção, animais fêmeas. "
 						+ "Por favor, selecione outro animal e tente novamente.");
 			}
-			table.getSelectionModel().select(animal);
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -453,14 +459,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
-		table.getSelectionModel().select(animal);
 		return true;
 	};
 	
 	Function<Animal, Boolean> linhaTempoAnimal = animal -> {
-		if ( table.getSelectionModel().getSelectedItem() != null ){
+		if ( animal != null ){
 			fichaAnimalOverviewController.setAnimal(getObject());
 			fichaAnimalOverviewController.showForm();
+			selecionaAnimal(animal);
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -479,12 +485,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, disabled);
 				coberturaOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, disabled);
 				coberturaOverviewController.showForm();
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("Por favor, selecione um animal fêmea, para ter acesso as coberturas. "
 						+ "Selecione outro animal e tente novamente.");
 			}
-			table.getSelectionModel().select(getObject());
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -497,9 +502,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( cobertura == null || !cobertura.getSituacaoCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
 				coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
 				coberturaFormController.showForm();
-				setObject(service.findById(getObject().getId()));
-				refreshObjectInTableView(getObject());
-				table.getSelectionModel().select(getObject());
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("A última cobertura do animal NÃO foi confirmada. "
 						+ "\nConfirme como VAZIA caso o animal tenha repetido o cio.");
@@ -517,9 +520,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( cobertura != null ){
 				coberturaFormController.setObject(cobertura);
 				coberturaFormController.showForm();
-				setObject(service.findById(getObject().getId()));
-				refreshObjectInTableView(getObject());
-				table.getSelectionModel().select(getObject());
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada.");
 			}
@@ -535,9 +536,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( parto != null ){
 				partoFormController.setObject(parto);
 				partoFormController.showForm();
-				setObject(service.findById(getObject().getId()));
-				refreshObjectInTableView(getObject());
-				table.getSelectionModel().select(getObject());
+				selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não teve nenhum parto registrado.");
 			}
@@ -554,9 +553,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			if ( cobertura != null ){
 				confirmacaoPrenhesFormController.setObject(cobertura);
 		    	confirmacaoPrenhesFormController.showForm();
-				setObject(service.findById(getObject().getId()));
-				refreshObjectInTableView(getObject());
-				table.getSelectionModel().select(getObject());
+		    	selecionaAnimal(animal);
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. \nPrimeiro registre a cobertura para então registrar a confirmação de prenhes.");
 			}
@@ -568,6 +565,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	Function<Animal, Boolean> novoParto = animal -> {
 		if ( animal != null ){
+			
 			Cobertura cobertura = coberturaService.findCoberturaAtivaByAnimal(getObject());
 			if ( cobertura != null ){
 				if ( cobertura.getParto() == null ){
@@ -581,9 +579,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					if ( partoFormController.getObject() != null && partoFormController.getObject().getLactacao() != null ){
 						cobertura.setParto(partoFormController.getObject());
 						coberturaService.registrarParto(cobertura);
-						setObject(service.findById(getObject().getId()));
-						refreshObjectInTableView(getObject());
-						table.getSelectionModel().select(getObject());
+						selecionaAnimal(animal);
 					}	
 				}else{
 					CustomAlert.mensagemInfo("A última cobertura do animal já teve o parto registrado no dia " + cobertura.getParto().getData() + ".");
@@ -609,7 +605,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				}
 				morteAnimalFormController.setObject(morteAnimal);
 				morteAnimalFormController.showForm();
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				selecionaAnimal(animal);
 			}
 		}
 		return true;
@@ -626,11 +622,18 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				}
 				vendaAnimalFormController.setObject(vendaAnimal);
 				vendaAnimalFormController.showForm();
-				refreshObjectInTableView.apply(service.findById(getObject().getId()));
+				selecionaAnimal(animal);
 			}
 		}
 		return true;
 	};
+	
+	private void selecionaAnimal(Animal animal){
+		animal = service.findById(animal.getId());
+		refreshObjectInTableView(animal);
+		table.getSelectionModel().select(animal);
+		setObject(animal);
+	}
 	
 	//-------------FILTRO RÁPIDO----------------------------------
 	

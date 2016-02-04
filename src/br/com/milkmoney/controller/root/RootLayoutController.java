@@ -16,10 +16,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import org.controlsfx.control.Notifications;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
@@ -83,32 +83,7 @@ public class RootLayoutController {
 	}
 	
 	public void setMessage(String msg){
-		
-		/*Task <Void> task = new Task<Void>() {
-		      @Override public Void call() throws InterruptedException {
-		        updateMessage(msg);
-		        // some actions
-		        Thread.sleep(5000);
-		        updateMessage(""); 
-		        return null;
-		      }
-		    };
-
-		    message.bind(task.messageProperty());
-
-		    // java 8 construct, replace with java 7 code if using java 7.
-		    task.setOnSucceeded(e -> {
-		    	message.unbind();
-		      // this message will be seen.
-		    	message.set("");
-		    });
-
-		    Thread thread = new Thread(task);
-		    thread.setDaemon(true);
-		    thread.start();*/
-		
-		CustomAlert.mensagemInfo(msg);
-		
+		Notifications.create().text(msg).showInformation();
 	}
 	
 	public void setTitle(String title){

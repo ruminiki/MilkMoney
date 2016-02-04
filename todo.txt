@@ -1,5 +1,7 @@
 ERROS e REQUISITOS
 
+
+- Está permitindo deletar o animal (cria) sem remover o parto.
 X Erro filtro situação da cobertura (está pegando qualquer cobertura, deve pegar a última)
 X Imprimir controle leiteiro do animal
 X Entrega de leite, selecionar o default SIM
@@ -25,8 +27,8 @@ X Permitir remover parto
 X Permitir sexo indefinido no aborto
 X Exibir na tela de animais a situação última cobertura
 X Erro backup
-- Tá sendo permitido cadastrar parto de animal vendido
-- Está permitindo deletar o animal (cria) sem remover o parto.
+- Tá sendo permitido cadastrar parto de animal vendido/morto
+
 
 - Fazer mapa de pontos do trajeto da pesquisa
 

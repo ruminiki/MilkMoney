@@ -4,7 +4,6 @@ import java.io.File;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -201,8 +200,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		
 		File file = fileChooser.showOpenDialog(getDialogStage());
 		
-		inputImage.getScene().setCursor(Cursor.WAIT);
-		
 		if (file != null) {
 			try {
 				String destination = ImageUtil.reduceImageQualityAndSave(ImageUtil.LIMIT, file);
@@ -213,7 +210,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 				CustomAlert.mensagemErro("Ocorreu um erro ao tentar carregar a imagem. \nPor favor, tente novamente.");
 			}
 		}
-		inputImage.getScene().setCursor(Cursor.DEFAULT);
+		
 	}
 	
 	@FXML

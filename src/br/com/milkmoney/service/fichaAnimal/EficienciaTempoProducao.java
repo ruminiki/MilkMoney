@@ -53,6 +53,8 @@ public class EficienciaTempoProducao extends AbstractFichaAnimal {
 					BigDecimal.valueOf(mesesProduzindo)
 					.divide(mesesProducaoIdeal, 2, RoundingMode.HALF_EVEN)
 					.multiply(BigDecimal.valueOf(100)).setScale(0, RoundingMode.HALF_EVEN));
+		}else{
+			ficha.setEficienciaTempoProducao(BigDecimal.ZERO);
 		}
 		
 	}

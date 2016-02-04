@@ -343,6 +343,14 @@ public class Animal extends AbstractEntity implements Serializable {
 		}
 		return null;
 	}
+	
+	@Transient
+	public boolean situacaoPermiteParto(){
+		if ( getSituacaoAnimal() != null && getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO) ){
+			return false;
+		}
+		return true;
+	}
 
 	@Override
 	public String toString() {
