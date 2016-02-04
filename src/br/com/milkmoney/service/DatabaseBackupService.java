@@ -72,10 +72,8 @@ public class DatabaseBackupService{
 			        	updateMessage("Copiando arquivos de imagens\n");
 						Thread.sleep(1000);
 						
-						System.out.println("copy images " + TMP_DIR_BACKUP);
-						
 						//copia a pasta de imagens para dentro da pasta do backup
-						Runtime.getRuntime().exec("copy images " + TMP_DIR_BACKUP);
+						Runtime.getRuntime().exec("cmd.exe /C images " + TMP_DIR_BACKUP);
 						
 						updateMessage("Compactando arquivo de backup\n");
 						Thread.sleep(1000);
@@ -127,10 +125,10 @@ public class DatabaseBackupService{
 	        if (file.isDirectory()) {
 	            compressDirectoryToZipfile(rootDir, sourceDir + file.getName() + File.separator, out);
 	        } else {
-	            ZipEntry entry = new ZipEntry(sourceDir.replace(rootDir, "") + file.getName());
+	            ZipEntry entry = new ZipEntry(sourceDir.replace(rootDir, "") + File.separator + file.getName());
 	            out.putNextEntry(entry);
 
-	            FileInputStream in = new FileInputStream(sourceDir + file.getName());
+	            FileInputStream in = new FileInputStream(sourceDir + File.separator + file.getName());
 	            IOUtils.copy(in, out);
 	            IOUtils.closeQuietly(in);
 	        }
