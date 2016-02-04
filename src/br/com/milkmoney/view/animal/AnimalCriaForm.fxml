@@ -12,7 +12,7 @@
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER_LEFT" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                <children>
                   <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="130.0" prefWidth="420.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -82,11 +82,14 @@
                      </children>
                   </VBox>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <ImageView fx:id="inputImage" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true">
+                  <VBox alignment="CENTER" minHeight="266.0" minWidth="266.0">
+                     <children>
+                        <ImageView fx:id="inputImage" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
                      <HBox.margin>
-                        <Insets right="10.0" top="10.0" />
+                        <Insets right="5.0" />
                      </HBox.margin>
-                  </ImageView>
+                  </VBox>
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="41.0" prefWidth="375.0" spacing="5.0">
@@ -97,9 +100,10 @@
                      </HBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
-                  <HBox alignment="CENTER" minWidth="275.0" prefHeight="100.0" prefWidth="200.0">
+                  <HBox alignment="CENTER" minWidth="275.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Carregar Imagem" />
+                        <Button mnemonicParsing="false" onAction="#selecionarImagem" text="Carregar Imagem" />
+                        <Button fx:id="btnRemoverImagem" mnemonicParsing="false" onAction="#removerImagem" text="Remover" disable="true" />
                      </children>
                   </HBox>
                </children>

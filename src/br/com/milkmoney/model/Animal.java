@@ -334,6 +334,9 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public Image getImage(){
 		try {
+			if ( this.getImagem() == null || this.getImagem().isEmpty() ){
+				return new Image(ClassLoader.getSystemResourceAsStream("img/cow-256.png"));
+			}
 			return new Image(new FileInputStream(getImagem()));
 		} catch (FileNotFoundException e) {
 			System.out.println("Erro ao carregar imagem do animal.");

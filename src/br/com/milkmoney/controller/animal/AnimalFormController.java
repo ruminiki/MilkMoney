@@ -4,11 +4,10 @@ import java.io.File;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -41,9 +40,8 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai, inputValor, inputRaca;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
-	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial;
+	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial, btnRemoverImagem;
 	@FXML private ImageView inputImage;
-	@FXML private Label lblControle;
 
 	//controllers
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
@@ -52,8 +50,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	
 	@FXML
 	public void initialize() {
-		
-		inputImage.setImage(new Image(getClass().getClassLoader().getResourceAsStream("img/cow-256.png")));
 		
 		inputNumero.textProperty().bindBidirectional(getObject().numeroProperty());
 		inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
@@ -92,15 +88,14 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		}
 		
 		//carrega a imagem
-		if ( getObject().getImagem() != null ){
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					inputImage.setImage(getObject().getImage());					
-				}
-			});
-		}
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				inputImage.setImage(getObject().getImage());	
+			}
+		});
 		
+		btnRemoverImagem.setDisable(getObject().getImagem() == null || getObject().getImagem().isEmpty());
 		MaskFieldUtil.decimal(inputValor);
 		
 	}
@@ -206,19 +201,26 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		
 		File file = fileChooser.showOpenDialog(getDialogStage());
 		
-		lblControle.setText("Aguarde...");
+		inputImage.getScene().setCursor(Cursor.WAIT);
 		
 		if (file != null) {
 			try {
-				String destination = ImageUtil.reduceImageQualityAndSave(ImageUtil.UM_MB, file);
+				String destination = ImageUtil.reduceImageQualityAndSave(ImageUtil.LIMIT, file);
 				getObject().setImagem(destination);
 				inputImage.setImage(getObject().getImage());
+				btnRemoverImagem.setDisable(false);
 			} catch (Exception e) {
 				CustomAlert.mensagemErro("Ocorreu um erro ao tentar carregar a imagem. \nPor favor, tente novamente.");
 			}
 		}
-		
-		lblControle.setText("");
+		inputImage.getScene().setCursor(Cursor.DEFAULT);
+	}
+	
+	@FXML
+	private void removerImagem(){
+		getObject().setImagem(null);
+		inputImage.setImage(getObject().getImage());
+		btnRemoverImagem.setDisable(true);
 	}
 	
 	@Override
@@ -227,7 +229,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		//remove a imagem antiga do disco, caso tenha sido alterada
 		String image = ((AnimalService)service).getImagePath(getObject());
 		if ( image != null && !image.equals(getObject().getImagem()) ){
-			new File(image).delete();
+			new File(image).deleteOnExit();
 		}
 	}
 	

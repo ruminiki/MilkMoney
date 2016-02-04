@@ -170,6 +170,8 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		animalCriaFormController.setState(State.CREATE_TO_SELECT);
 		Animal animal = new Animal(cria.getSexo());
 		animal.setPeso(cria.getPeso());
+		animal.setSexo(inputSexo.getSelectionModel().getSelectedItem());
+		animal.setRaca(getObject().getCobertura().getFemea().getRaca());
 		animal.setDataNascimento(DateUtil.asDate(inputData.getValue()));
 		
 		Cobertura cobertura = getObject().getCobertura();

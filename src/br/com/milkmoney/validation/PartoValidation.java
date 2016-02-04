@@ -36,7 +36,7 @@ public class PartoValidation extends Validator {
 		
 		long mesesPartoAposCobertura = ChronoUnit.MONTHS.between(DateUtil.asLocalDate(parto.getCobertura().getData()), DateUtil.asLocalDate(parto.getData()));
 		if ( mesesPartoAposCobertura > 10 ){
-			throw new ValidationException(REGRA_NEGOCIO, "A data informada " + DateUtil.format(parto.getData()) + " é incompatível com a data da cobertura e previsão do parto. Por favor, atualize a data do parto e tente novamente.");
+			throw new ValidationException(REGRA_NEGOCIO, "A data informada " + DateUtil.format(parto.getData()) + " é incompatível \ncom a data da cobertura e previsão do parto. \nPor favor, atualize a data do parto e tente novamente.");
 		}
 		
 		if ( parto.getCrias() == null || parto.getCrias().isEmpty() ){
@@ -60,15 +60,12 @@ public class PartoValidation extends Validator {
 		if ( lactacao != null ){
 			
 			if ( lactacao.getDataFim() == null ){
-				throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. Por favor, registre o encerramento "
-						+ "para então registrar o novo parto e iniciar uma nova lactação.");	
+				throw new ValidationException(REGRA_NEGOCIO, "O animal não teve a última lactação encerrada. \nPor favor, registre o encerramento "
+						+ "para então registrar o novo parto e \niniciar uma nova lactação.");	
 			}
 			
 			if ( parto.getData().compareTo(lactacao.getDataFim()) <= 0 ){
-				throw new ValidationException(REGRA_NEGOCIO, "A última lactação registrada para o animal " + parto.getCobertura().getFemea().toString() + " foi do dia "
-						+ DateUtil.format(lactacao.getDataInicio()) + " à " + DateUtil.format(lactacao.getDataFim()) + ". Você está tentando registrar o parto para o dia " + 
-						DateUtil.format(parto.getData()) + ". Isso ocasionará a sobreposição de lactações. Por favor, corrija a data do parto, ou se necessário desfaça o encerramento "
-								+ "da lactação e encerre-a na data correta. Feito isso, será possível o registro do parto.");	
+				throw new ValidationException(REGRA_NEGOCIO, "O animal estava em lactação no dia " + DateUtil.format(parto.getData()) + ". \nPor favor, corrija a data do parto ou a data de encerramento da lactação.");	
 			}
 			
 		}

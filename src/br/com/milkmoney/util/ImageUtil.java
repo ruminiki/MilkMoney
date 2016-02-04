@@ -19,7 +19,7 @@ import br.com.milkmoney.exception.ValidationException;
 
 public class ImageUtil {
 
-	public final static int UM_MB = 1000000;
+	public final static int LIMIT = 1000000;
 	
 	public static String reduceImageQualityAndSave(int maxSize, File src) throws Exception {
 		
@@ -44,7 +44,7 @@ public class ImageUtil {
             return destination;  
         }  
 		
-		float quality = 0.3f;
+		float quality = 0.4f;
 		
 		@SuppressWarnings("rawtypes")
 		Iterator iter = ImageIO.getImageWritersByFormatName(fileExtension);

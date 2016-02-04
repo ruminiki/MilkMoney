@@ -99,7 +99,6 @@
                   <VBox alignment="CENTER" minHeight="-Infinity" minWidth="266.0" HBox.hgrow="NEVER">
                      <children>
                         <ImageView fx:id="inputImage" fitHeight="256.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="lblControle" />
                      </children>
                      <HBox.margin>
                         <Insets right="5.0" />
@@ -118,7 +117,7 @@
                   <HBox alignment="CENTER" minWidth="275.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#selecionarImagem" text="Carregar Imagem" />
-                        <Button mnemonicParsing="false" text="Remover" />
+                        <Button fx:id="btnRemoverImagem" disable="true" mnemonicParsing="false" onAction="#removerImagem" text="Remover" />
                      </children>
                   </HBox>
                </children>
