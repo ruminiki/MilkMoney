@@ -55,6 +55,10 @@ public class CategoriaLancamentoFinanceiroService implements IService<Integer, C
 	public void validate(CategoriaLancamentoFinanceiro categoriaLancamentoFinanceiro) {
 		CategoriaLancamentoFinanceiroValidation.validate(categoriaLancamentoFinanceiro);
 	}
+
+	public ObservableList<CategoriaLancamentoFinanceiro> findAllAsObservableListOrderly() {
+		return FXCollections.observableArrayList(dao.findAllOrderly(CategoriaLancamentoFinanceiro.class));
+	}
 	
 	
 }

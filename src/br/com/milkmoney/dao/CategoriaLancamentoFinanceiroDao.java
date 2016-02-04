@@ -30,4 +30,10 @@ public class CategoriaLancamentoFinanceiroDao extends AbstractGenericDao<Integer
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<CategoriaLancamentoFinanceiro> findAllOrderly(Class<CategoriaLancamentoFinanceiro> class1) {
+		Query query = entityManager.createQuery("SELECT r FROM CategoriaLancamentoFinanceiro r order by descricao");
+		return query.getResultList();
+	}
+
 }

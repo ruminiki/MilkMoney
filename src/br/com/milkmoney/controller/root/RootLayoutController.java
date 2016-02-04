@@ -191,6 +191,11 @@ public class RootLayoutController {
     }
     
     @FXML
+    protected void handleReportConfirmacaoPrenhes(){
+    	openFormAsPopUp("view/reports/RelatorioConfirmacaoPrenhes.fxml", "Relatório Confirmação de Prenhes");
+    }
+    
+    @FXML
     protected void handleReportPartosRealizados(){
     	openFormAsPopUp("view/reports/RelatorioPartos.fxml", "Relatório de Partos");
     }

@@ -133,10 +133,9 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	@Override
 	public void handleNew() {
 		if ( lactacao != null && lactacao.getId() > 0 ){
-			setObject(new ProducaoIndividual(animal, lactacao));
 			producaoIndividualFormController.setRefreshObjectInTableView(refreshObjectInTableView);
 			producaoIndividualFormController.setState(State.INSERT);
-			producaoIndividualFormController.setObject(getObject());
+			producaoIndividualFormController.setObject(new ProducaoIndividual(animal, lactacao));
 			producaoIndividualFormController.showForm();
 		}else{
 			CustomAlert.mensagemInfo("É necessário selecionar uma lactação para o registro da produção do animal.");

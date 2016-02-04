@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.producaoIndividual;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javax.annotation.Resource;
@@ -28,6 +29,7 @@ public class ProducaoIndividualFormController extends AbstractFormController<Int
 	@FXML private TextField inputPrimeiraOrdenha;
 	@FXML private TextField inputSegundaOrdenha;
 	@FXML private TextField inputTerceiraOrdenha;
+	@FXML private Label lblLactacao;
 	
 	@FXML private ComboBox<Animal> inputAnimalComboBox;
 	
@@ -37,6 +39,7 @@ public class ProducaoIndividualFormController extends AbstractFormController<Int
 	@FXML
 	public void initialize() {
 		
+		lblLactacao.setText(getObject().getLactacao().toString());
 		inputData.valueProperty().bindBidirectional(getObject().dataProperty());
 		inputAnimal.setText(getObject().getAnimal().getNumeroNome());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());

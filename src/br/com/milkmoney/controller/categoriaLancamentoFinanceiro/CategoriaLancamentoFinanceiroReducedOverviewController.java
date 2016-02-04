@@ -57,8 +57,7 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 					}
 				}
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					selectedCategoria = treeView.getSelectionModel().getSelectedItem().getValue();
-					closeForm();
+					handleEdit();
 				}
 			}
 
@@ -159,10 +158,17 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 		if ( treeView != null && treeView.getSelectionModel().getSelectedItem() != null ){
 			closeForm();
 		}else{
-			CustomAlert.mensagemInfo("Por favor, selecione um registro na tabela.");
+			CustomAlert.mensagemInfo("Por favor, selecione um registro.");
 		}
 	}
 	
+	@FXML
+	private void handleLimparSelecao(){
+		selectedCategoria = null;
+		closeForm();
+	}
+	
+	@FXML
 	private void closeForm(){
 		if ( treeView != null ){
 			Stage stage = (Stage)treeView.getScene().getWindow();

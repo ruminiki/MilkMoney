@@ -71,7 +71,7 @@ public class Touro extends AbstractEntity implements Serializable {
 	public String toString() {
 		
 		if ( getCodigo() != null && !getCodigo().isEmpty() )
-			return getNome() + " [" + getCodigo()+"]";
+			return getCodigo() + " - " + getNome();
 		return getNome();
 	}
 	

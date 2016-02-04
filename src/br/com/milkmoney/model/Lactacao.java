@@ -182,7 +182,7 @@ public class Lactacao extends AbstractEntity implements Serializable {
 
 	@Override
 	public String toString() {
-		return DateUtil.format(getDataInicio()) + " - " + DateUtil.format(getDataFim());
+		return DateUtil.format(getDataInicio()) + " - " + (getDataFim() == null ? "Aberto" : DateUtil.format(getDataFim()));
 	}
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.model.CategoriaLancamentoFinanceiro;
+import br.com.milkmoney.service.CategoriaLancamentoFinanceiroService;
 import br.com.milkmoney.service.IService;
 
 @Controller
@@ -27,7 +28,7 @@ public class CategoriaLancamentoFinanceiroFormController extends AbstractFormCon
 	public void initialize() {
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		data = FXCollections.observableArrayList(categoriaNull);
-		data.addAll(service.findAllAsObservableList());
+		data.addAll(((CategoriaLancamentoFinanceiroService)service).findAllAsObservableListOrderly());
 		inputCategoriaLancamentoFinanceiroSuperiora.setItems(data);
 		inputCategoriaLancamentoFinanceiroSuperiora.valueProperty().bindBidirectional(getObject().categoriaSuperioraProperty());
 	}
