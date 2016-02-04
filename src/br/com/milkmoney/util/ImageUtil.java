@@ -29,9 +29,9 @@ public class ImageUtil {
 	    }
 	    
     	String fileExtension = FilenameUtils.getExtension(src.getName());
-    	String destination = "imageOutput/" + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "." + fileExtension;
+    	String destination = "images/" + String.valueOf(Calendar.getInstance().getTimeInMillis()) + "." + fileExtension;
     	File fileOutput = new File(destination);
-    	File dirOutput = new File("imageOutput");
+    	File dirOutput = new File("images");
 		
 		if ( !dirOutput.exists() ){
 			dirOutput.mkdir();
