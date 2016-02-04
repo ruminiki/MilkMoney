@@ -20,6 +20,7 @@ import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.dao.ParametroDao;
 import br.com.milkmoney.dao.PartoDao;
+import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.Parametro;
@@ -61,6 +62,12 @@ public class AnimalService implements IService<Integer, Animal>{
 	@Override
 	@Transactional
 	public boolean remove(Animal entity) {
+		
+		if ( entity.isNascimentoCadastrado() ){
+			throw new ValidationException("Validação", "O animal não pode ser excluído pois ele está associado a um nascimento. "
+					+ "Remova o parto que deu origem ao animal e ele também será excluído.");
+		}
+		
 		return dao.remove(entity);
 	}
 

@@ -17,7 +17,7 @@ public class NumeroServicosAtePrenhes extends AbstractFichaAnimal {
 		
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
-		ficha.setDataUltimaCobertura(coberturaService.getDataUltimaCoberturaAnimal(animal));
+		ficha.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosPorConcepcao(animal));
 		
 	}
 

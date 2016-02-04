@@ -103,7 +103,8 @@ public class BoxIndicador extends VBox {
 	}
 	
 	private void setStyle(){
-		if ( indicador.getObjetivo() != null && indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
+		if ( indicador.getObjetivo() != null && 
+				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
 			
 			if ( indicador.getValorApurado().compareTo(indicador.getMenorValorIdeal()) >= 0 ){
 				//se o indicador estiver até apenas 5% acima do valor mínimo - liga o alerta
@@ -121,16 +122,19 @@ public class BoxIndicador extends VBox {
 				vbValor.setStyle(styleAbaixo());
 			}
 			
-		}else{
+		}
+		
+		if ( indicador.getObjetivo() != null && 
+				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ABAIXO_DO_INTERVALO_IDEAL) ){
 			//nesse caso o objetivo é manter dentrou ou abaixo do intervalo ideal
 			if ( indicador.getValorApurado().compareTo(indicador.getMaiorValorIdeal()) <= 0 ){
 				//se o indicador estiver até apenas 5% abaixo do valor máximo - liga o alerta
 				if ( indicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
 						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getMenorValorIdeal().add(
-								indicador.getMenorValorIdeal()
+						indicador.getMaiorValorIdeal().subtract(
+								indicador.getMaiorValorIdeal()
 								.multiply(BigDecimal.valueOf(0.05)))
-								.compareTo(indicador.getValorApurado()) >= 0 ){
+								.compareTo(indicador.getValorApurado()) <= 0 ){
 					vbValor.setStyle(styleAlerta());	
 				}else{
 					vbValor.setStyle(styleIdeal());					
@@ -139,6 +143,40 @@ public class BoxIndicador extends VBox {
 				vbValor.setStyle(styleAbaixo());
 			}
 		}
+		
+		if ( indicador.getObjetivo() != null && 
+				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL) ){
+			//nesse caso o objetivo é manter dentrou do intervalo ideal
+			if ( indicador.getValorApurado().compareTo(indicador.getMenorValorIdeal()) >= 0 &&
+					indicador.getValorApurado().compareTo(indicador.getMaiorValorIdeal()) <= 0 ){
+				
+				//se o indicador estiver até apenas 5% da margem inferior - liga o alerta
+				if ( indicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
+						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
+						indicador.getMenorValorIdeal().add(
+								indicador.getMenorValorIdeal()
+								.multiply(BigDecimal.valueOf(0.05)))
+								.compareTo(indicador.getValorApurado()) >= 0 ){
+					vbValor.setStyle(styleAlerta());	
+				}else{
+					//se o indicador estiver até apenas 5% da margem superior - liga o alerta
+					if ( indicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
+							indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
+							indicador.getMaiorValorIdeal().subtract(
+										indicador.getMaiorValorIdeal()
+										.multiply(BigDecimal.valueOf(0.05)))
+										.compareTo(indicador.getValorApurado()) <= 0 ){
+						vbValor.setStyle(styleAlerta());	
+					}else{
+						vbValor.setStyle(styleIdeal());		
+					}
+				}
+				
+			}else{
+				vbValor.setStyle(styleAbaixo());
+			}
+		}
+		
 	}
 	
 	private String styleAbaixo(){
