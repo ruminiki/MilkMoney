@@ -551,7 +551,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		    	confirmacaoPrenhesFormController.showForm();
 		    	selecionaAnimal(animal);
 			}else{
-				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. \nPrimeiro registre a cobertura para então registrar a confirmação de prenhes.");
+				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. Primeiro registre a cobertura para então registrar a confirmação de prenhes.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -582,7 +582,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				}
 			}else{
 				CustomAlert.mensagemInfo("O animal selecionado ainda não possui cobertura/inseminação registrada. "
-						+ "\nCadastre a cobertura/inseminação e então registre o parto.");
+						+ "Cadastre a cobertura/inseminação e então registre o parto.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

@@ -35,9 +35,10 @@ public class ApplicationUpdateService{
 			public Void call() throws InterruptedException {
 				try {
 					
-					String[] versoes = version.split("\\,");
+					String[] versoes  = version.split("\\,");
 					String URL_UPDATE = getUrlUpdate();
-					String FILE_RUN = getFileRun();
+					String FILE_RUN   = getFileRun();
+					String DIR_UPDATE = "update";
 					
 					//caso existam mais de uma versão para atualizar, atualiza todas de uma vez
 					for ( int i = 0; i < versoes.length; i++ ){
@@ -47,11 +48,10 @@ public class ApplicationUpdateService{
 						updateMessage("Iniciando a atualização para versão " + versao+"\n");
 						Thread.sleep(1000);
 						
-						File destination = new File(versao);
-						
+						File destination = new File(DIR_UPDATE + File.separator + versao);
 						FileUtils.forceMkdir(destination);
-						File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  versao + ".zip");
 						
+						File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  versao + ".zip");
 						String URL = URL_UPDATE + versao + ".zip";
 						
 						updateMessage("Fazendo o download de " + URL+"\n");
@@ -69,7 +69,7 @@ public class ApplicationUpdateService{
 						Thread.sleep(1000);
 						
 						FileUtil.unZip(fileUpdate, destination);
-					    File fileRun = new File(versao + File.separator +  FILE_RUN);
+					    File fileRun = new File(destination + File.separator +  FILE_RUN);
 						
 						if ( fileRun != null ){
 							//executa script de atualização
@@ -82,7 +82,7 @@ public class ApplicationUpdateService{
 							Thread.sleep(1000);
 							updateMessage("Removendo arquivos temporários\n");
 							Thread.sleep(1000);
-					        FileUtils.forceDelete(destination);
+					        FileUtils.forceDelete(fileUpdate);
 					        updateMessage("Arquivos removidos com sucesso\n");
 					        Thread.sleep(1000);
 					        

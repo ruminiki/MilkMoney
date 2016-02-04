@@ -44,7 +44,7 @@ public class DatabaseBackupService{
 					String TMP_DIR_BACKUP = DIR_BACKUP + File.separator + sdf.format(new Date());
 					String FINAL_FILE_BACKUP = TMP_DIR_BACKUP + ".zip";
 					
-					File dirBackup = new File(DIR_BACKUP);
+					File dirBackup = new File(TMP_DIR_BACKUP);
 					
 					if ( !dirBackup.exists() ){
 						dirBackup.mkdir();
@@ -71,6 +71,8 @@ public class DatabaseBackupService{
 			        	
 			        	updateMessage("Copiando arquivos de imagens\n");
 						Thread.sleep(1000);
+						
+						System.out.println("copy images " + TMP_DIR_BACKUP);
 						
 						//copia a pasta de imagens para dentro da pasta do backup
 						Runtime.getRuntime().exec("copy images " + TMP_DIR_BACKUP);

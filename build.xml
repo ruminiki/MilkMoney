@@ -12,98 +12,9 @@
 			uri="javafx:com.sun.javafx.tools.ant"
 			classpathref="fxant"/>
 	</target>
-	<target name="setup-staging-area">
-		<delete dir="externalLibs" />
-		<delete dir="project" />
-		<delete dir="projectRefs" />
-	
-		<mkdir dir="externalLibs" />
 		
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\antlr-2.7.7.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aopalliance-1.0.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aspectjrt.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\aspectjweaver.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\commons-logging-1.2.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\dom4j-1.6.1.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-commons-annotations-4.0.5.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-core-4.3.10.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-entitymanager-4.3.10.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-jpa-2.1-api-1.0.0.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-jpamodelgen-4.3.10.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hibernate-osgi-4.3.10.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\itext-2.1.7.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\itext-rtf-2.1.7.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jandex-1.1.0.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\javassist-3.18.1-GA.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\javax.persistence_2.1.0.v201304241213.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-logging-3.1.3.GA.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-logging-annotations-1.2.0.Beta1.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jboss-transaction-api_1.2_spec-1.0.0.Final.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jcommon-1.0.16.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\jfreechart-1.0.13.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libbase-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libdocbundle-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libfonts-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformat-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformula-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libformula-ui-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libloader-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libpensol-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libpixie-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\librepository-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libserializer-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libsparkline-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libswing-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\libxml-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\log4j-1.2.17.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\mysql-connector-java-5.1.18-bin.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-classic-core-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-classic-extensions-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-legacy-charts-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-legacy-functions-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-wizard-core-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\pentaho-reporting-engine-wizard-xul-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-3.9.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-ooxml-3.9.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\poi-ooxml-schemas-3.9.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\report-designer-ext-legacy-charts-5.4.0.1-130.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\servlet-api-2.3.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-aop-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-beans-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-context-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-core-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-expression-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-jdbc-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-jms-4.1.5.RELEASE-javadoc.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-orm-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-tx-4.1.6.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-web-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-webmvc-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\spring-websocket-4.1.5.RELEASE.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\bsf-2.4.0.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\commons-io-2.4.jar" todir="externalLibs"/>
-		<copy file="C:\Users\ruminiki\workspace\MilkMoney\lib\hadoop-core-1.1.2.jar" todir="externalLibs"/>
-	
-		<mkdir dir="project" />
-		<copy todir="project">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney">
-				<include name="src/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney">
-				<include name="resources/**" />
-			</fileset>
-		</copy>
-		<copy todir="project">
-			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney">
-				<include name="assets/**" />
-			</fileset>
-		</copy>
-	
-		<mkdir dir="projectRefs" />
-	</target>
 	<target name='do-compile'>
+		
 		<delete dir="build" />
 		<mkdir dir="build/src" />
 		<mkdir dir="build/libs" />
@@ -111,7 +22,7 @@
 	
 		<!-- Copy project-libs references -->
 		<copy todir="build/libs">
-			<fileset dir="externalLibs">
+			<fileset dir="lib">
 				<include name="antlr-2.7.7.jar"/>
 				<include name="aopalliance-1.0.jar"/>
 				<include name="aspectjrt.jar"/>
@@ -176,24 +87,22 @@
 				<include name="bsf-2.4.0.jar"/>
 				<include name="commons-io-2.4.jar"/>
 				<include name="hadoop-core-1.1.2.jar"/>
+				<include name="controlsfx-8.40.10.jar"/>
 			</fileset>
 		</copy>
 	
-		<!-- Copy project references -->
-	
-		<!-- Copy project sources itself -->
 		<copy todir="build/src">
-			<fileset dir="project/assets">
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\assets">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
 		<copy todir="build/src">
-			<fileset dir="project/src">
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\src">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
 		<copy todir="build/src">
-			<fileset dir="project/resources">
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\resources">
 				<include name="**/*"/>
 			</fileset>
 		</copy>
@@ -208,28 +117,26 @@
 	
 		<!-- Copy over none Java-Files -->
 		<copy todir="build/classes">
-		<fileset dir="project/assets">
-			<exclude name="**/*.java"/>
-		</fileset>
-		<fileset dir="project/src">
-			<exclude name="**/*.java"/>
-		</fileset>
-		<fileset dir="project/resources">
-			<exclude name="**/*.java"/>
-		</fileset>
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\assets">
+				<exclude name="**/*.java"/>
+			</fileset>
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\src">
+				<exclude name="**/*.java"/>
+			</fileset>
+			<fileset dir="C:\Users\ruminiki\workspace\MilkMoney\resources">
+				<exclude name="**/*.java"/>
+			</fileset>
 		</copy>
 	
 	
 	</target>
-	<target name="do-deploy" depends="setup-staging-area, do-compile, init-fx-tasks">
-		<delete file="dist"/>
-		<delete file="deploy" />
-	
+		
+	<target name="do-deploy" depends="do-compile, init-fx-tasks">
 		<mkdir dir="dist" />
 		<mkdir dir="dist/libs" />
 	
 		<copy todir="dist/libs">
-			<fileset dir="externalLibs">
+			<fileset dir="lib">
 				<include name="*" />
 			</fileset>
 		</copy>
@@ -255,39 +162,11 @@
 			<manifest>
 				<attribute name="Implementation-Vendor" value="Milk Money"/>
 				<attribute name="Implementation-Title" value="Milk Money"/>
-				<attribute name="Implementation-Version" value="1.0"/>
+				<attribute name="Implementation-Version" value="2.1.0"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>
 	
-	
-		<mkdir dir="deploy" />
-		<!-- Need to use ${basedir} because somehow the ant task is calculating the directory differently -->
-		<fx:deploy
-			embedJNLP="false"
-			extension="false"
-			includeDT="false"
-			offlineAllowed="true"
-			outdir="${basedir}/deploy"
-			outfile="MilkMoney" nativeBundles="exe"
-			updatemode="background" >
-	
-			<fx:platform basedir="${java.home}"/>
-			<fx:info title="MilkMoney" vendor="Milk Money"/>
-	
-			<fx:application refId="fxApplication"/>
-			<fx:resources refid="appRes"/>
-		</fx:deploy>
-	
-		<fx:csstobin outdir="build/classes">
-			<fileset dir="build/classes" includes="**/*.css"/>
-		</fx:csstobin>
-	
-		<delete dir="build" />
-		<delete dir="externalLibs" />
-		<delete dir="project" />
-		<delete dir="projectRefs" />
-		<delete dir="deploy" />
-		
 	</target>
+		
 </project>
