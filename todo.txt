@@ -21,3 +21,16 @@ ERROS e REQUISITOS
 - Adicionar informação CMT na pesagem do leite.
 - Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
 
+------------------
+- Porcentagem de vacas em lactação (%VL): obtida dividindo-se o número de vacas em lactação pelo número total de vacas do rebanho, 
+multiplicado por 100. A %VL ideal é de 83%, o que somente pode ser obtido com IP de 12 meses e duração da lactação de 305 dias. 
+Valores abaixo de 80% são representativos de uma indicação de desempenho reprodutivo inadequado ou baixa persistência de lactação.
+
+
+- Período Seco: através do controle zootécnico, pode-se controlar o período seco das vacas, o ideal é de 60 dias antes da data prevista do parto, 
+90 dias ainda é aceitável, no entanto, quando esse período atinge 120 dias devem ser realizadas algumas mudanças no manejo,
+ afim de diminuir este período.
+ 
+ - Porcentagem de Prenhez (%P): representa o número de vacas prenhes dividido pelo número total de vacas do rebanho (vacas prenhes mais vacas vazias), 
+ multiplicado por 100. Este índice deverá ser medido todo mês, para depois se tirar a média anual. Se ficar entre 75% e 80% há uma boa indicação da 
+ boa eficiência reprodutiva.

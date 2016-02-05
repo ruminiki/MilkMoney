@@ -68,38 +68,46 @@
                   </Label>
                </children>
             </HBox>
-      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="95.0" prefWidth="592.0">
+      <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="618.0">
         <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="231.0" minWidth="51.0" prefWidth="103.0" />
-          <ColumnConstraints maxWidth="378.0" minWidth="0.0" prefWidth="152.0" />
-            <ColumnConstraints halignment="RIGHT" maxWidth="378.0" minWidth="0.0" prefWidth="34.0" />
-            <ColumnConstraints halignment="CENTER" maxWidth="378.0" minWidth="0.0" prefWidth="75.0" />
-            <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="202.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="231.0" minWidth="51.0" prefWidth="182.0" />
+          <ColumnConstraints maxWidth="378.0" minWidth="0.0" prefWidth="156.0" />
+            <ColumnConstraints halignment="RIGHT" maxWidth="378.0" minWidth="0.0" prefWidth="48.0" />
+            <ColumnConstraints halignment="LEFT" maxWidth="378.0" minWidth="0.0" prefWidth="51.0" />
+            <ColumnConstraints maxWidth="378.0" minWidth="10.0" prefWidth="181.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Sexo: " GridPane.rowIndex="1" />
+            <Label text="Sexo: " GridPane.columnIndex="2" />
             <Label text="Situação Nascimento: " />
-            <Label text="Incorporado ao Rebanho: " GridPane.rowIndex="2" />
-            <Label text="Peso: " GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <UCTextField fx:id="inputPeso" maxWidth="67.0" prefHeight="25.0" prefWidth="67.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Button fx:id="btnAdicionarCria" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAdicionarCria" text="Adicionar Cria" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Label text="Incorporado ao Rebanho: " GridPane.rowIndex="1" />
+            <Label text="Peso: " GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <UCTextField fx:id="inputPeso" maxWidth="67.0" prefHeight="25.0" prefWidth="56.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button fx:id="btnAdicionarCria" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleAdicionarCria" prefHeight="25.0" prefWidth="95.0" style="-fx-background-color: #99cc00;" text="Adicionar Cria" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
                   <ChoiceBox fx:id="inputSituacaoNascimento" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" />
-                  <ChoiceBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ChoiceBox fx:id="inputIncorporadoAoRebanho" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="inputSexo" prefHeight="25.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.columnSpan="2" />
+                  <ChoiceBox fx:id="inputIncorporadoAoRebanho" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
       </GridPane>
+            <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
+               <children>
+                  <Label text="CRIAS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
             <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" maxHeight="120.0" prefHeight="90.0" prefWidth="592.0" scaleShape="false">
               <columns>
                 <TableColumn fx:id="animalColumn" maxWidth="210.0" minWidth="210.0" prefWidth="75.0" text="Animal" />

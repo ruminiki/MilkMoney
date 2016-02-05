@@ -500,7 +500,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( animal != null ){
 			//Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
 			
-			coberturaFormController.setObject(new Cobertura(getObject(), fichaAnimal.getProximoServico()));
+			coberturaFormController.setObject(new Cobertura(getObject(), 
+					fichaAnimal.getProximoServico() == null ? new Date() : fichaAnimal.getProximoServico()));
 			coberturaFormController.showForm();
 			selecionaAnimal(animal);
 			
