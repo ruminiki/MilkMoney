@@ -86,6 +86,11 @@
                   </HBox>
                </children>
             </VBox>
+            <HBox alignment="CENTER_RIGHT" minHeight="30.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
+               </children>
+            </HBox>
          </children>
       </VBox>
    </children>

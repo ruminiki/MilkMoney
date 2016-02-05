@@ -48,7 +48,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	
 	double DVG  = 0;   //dias de gestação do rebanho
 	double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
-	double DG   = 0; //duração média da gestação
+	double DG   = 0;   //duração média da gestação
 	double R    = 85;  //período seco ideal
 	double N    = 0;   //número total de vacas consideradas
 	int    P    = 1;   //intervalo em anos
@@ -64,7 +64,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	@Override
 	public BigDecimal getValue() {
 
-		DVG = DVE = 0;
+		DG = DVG = DVE = 0;
 
 		//seleciona os animais que compõem o cálculo
 		//fêmeas com partos ou coberturas no período
@@ -88,7 +88,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	
 	public BigDecimal getValue(Animal animal) {
 
-		DVG = DVE = 0;
+		DG = DVG = DVE = 0;
 		N = 1;
 		
 		getDVGAndDVEAnimal(animal);

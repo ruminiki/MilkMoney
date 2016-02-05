@@ -1,6 +1,7 @@
 package br.com.milkmoney.controller.lactacao;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -21,9 +22,11 @@ import br.com.milkmoney.controller.lactacao.renderer.TableCellOpcoesFactory;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.Lactacao;
+import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ParametroService;
 import br.com.milkmoney.service.fichaAnimal.EficienciaTempoProducao;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 @Controller
 public class LactacaoOverviewController extends AbstractOverviewController<Integer, Lactacao> {
@@ -109,7 +112,22 @@ public class LactacaoOverviewController extends AbstractOverviewController<Integ
 	
 	private void sumarize(){
 		
+		long idadePrimeiraCobertura = Integer.parseInt(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA));
+		long idadeProdutiva = animal.getIdade() - idadePrimeiraCobertura;
+		BigDecimal lactacoesIdeal = BigDecimal.ZERO;
+		
+		if ( idadeProdutiva > 0 ){
+			lactacoesIdeal = BigDecimal.valueOf(idadeProdutiva).divide(BigDecimal.valueOf(12), 0, RoundingMode.HALF_EVEN);
+		}
+		
+		lblLactacoes.setText(String.valueOf(data.size()));
+		lblLactacoesIdeal.setText(NumberFormatUtil.intFormat(lactacoesIdeal));
+		lblIdadeProdutiva.setText(String.valueOf(idadeProdutiva));
+		
 		eficienciaTempoProducao.load(new Object[]{fichaAnimal, animal});
+		
+		lblMesesProduzindo.setText(String.valueOf(fichaAnimal.getMesesProduzindo()));
+		lblMesesProducaoIdeal.setText(NumberFormatUtil.intFormat(fichaAnimal.getMesesProducaoIdeal()));
 		
 		lblResultado.setText(fichaAnimal.getEficienciaTempoProducao() + "%");
 		if ( fichaAnimal.getEficienciaTempoProducao().compareTo(BigDecimal.valueOf(80)) >= 0 ){

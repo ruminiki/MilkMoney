@@ -208,9 +208,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		Lactacao lactacao = null;
 		if ( tableLactacoes.getItems().size() > 0 ){
 			lactacao = tableLactacoes.getItems().get(0);	
-		}
-		
-		if ( lactacao == null ){
+		}else{
 			CustomAlert.mensagemInfo("O animal selecionado não tem nenhum registro de controle leiteiro.");
 			return;
 		}

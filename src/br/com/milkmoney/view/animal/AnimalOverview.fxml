@@ -420,7 +420,7 @@
                                  <children>
                                     <Hyperlink cacheShape="false" focusTraversable="false" onAction="#handleExibirEvolucaoRebanho" text="Evolução do Rebanho" />
                                     <Separator orientation="VERTICAL" prefHeight="200.0" />
-                                    <Hyperlink cacheShape="false" focusTraversable="false" onAction="#handleExibirProjecaoRebanho" text="Projeçao Rebanho" />
+                                    <Hyperlink cacheShape="false" focusTraversable="false" onAction="#handleExibirProjecaoRebanho" text="Projeção do Rebanho" />
                                  </children>
                               </HBox>
                            </children>

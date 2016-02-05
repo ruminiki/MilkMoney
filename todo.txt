@@ -1,15 +1,11 @@
 ERROS e REQUISITOS
 
 - Fazer backup das imagens dos animais
-X Padronizar seleção categoria despesa
-X Exibir lactação selecionada no controle leiteiro
-- Fazer relatório confirmação de prenhes
-X Mudar forma exibição touros
-X Relatorio resumo da atividade vendas não consideradas
 
 
 - Fazer mapa de pontos do trajeto da pesquisa
 
+- Refatorar navegação meses/anos gráficos
 - Reformular procedimento técnico de acordo com planilha Daieli
 - Tá sendo permitido cadastrar parto de animal vendido/morto
 - Projeção, permitir informar média e valor do litro
