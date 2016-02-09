@@ -1,15 +1,17 @@
 ERROS e REQUISITOS
 
 - Fazer backup das imagens dos animais
-
-
-- Fazer mapa de pontos do trajeto da pesquisa
-
+- Relatório próximos animais para secar
 - Refatorar navegação meses/anos gráficos
 - Reformular procedimento técnico de acordo com planilha Daieli
-- Tá sendo permitido cadastrar parto de animal vendido/morto
 - Projeção, permitir informar média e valor do litro
 - Filtrar número de serviços tela animals
+- Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
+- Ao imprimir controle leiteiro, selecionar a lactação e imprimir com o gráfico
+
+- Fazer mapa de pontos do trajeto da pesquisa
+- Tá sendo permitido cadastrar parto de animal vendido/morto
+
 - Atribuir a entrega de leite ao fornecedor
 - Associar o financeiro ao fornecedor
 - Fazer ficha igual a do Anderson...(confirmações de prenhes)

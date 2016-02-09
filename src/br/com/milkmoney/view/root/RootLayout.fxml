@@ -68,6 +68,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleReportConfirmacaoPrenhes" text="Confirmação Prenhes" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportAbortos" text="Abortos" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportEncerramentoLactacao" text="Encerramento Lactação" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportProximosEncerramentosLactacao" text="Próximos Encerramentos" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Formulários de Campo">

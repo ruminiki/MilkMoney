@@ -48,7 +48,7 @@ public class RootLayoutController {
 		try{
 			PropriedadeService propriedadeService = (PropriedadeService)MainApp.getBean(PropriedadeService.class);
 			Propriedade propriedade = propriedadeService.findAll().get(0);
-			hlPropriedade.setText("PROPRIEDADE "+propriedade.getDescricao());
+			hlPropriedade.setText(propriedade.getDescricao());
 		}catch(Exception e){
 			throw new ValidationException(Validator.VALIDACAO_FORMULARIO, "Houve um erro ao recuperar a propriedade. Por favor, verifique se foi executa a inicialização do banco de dados.");
 		}
@@ -243,6 +243,11 @@ public class RootLayoutController {
     @FXML
     protected void handleReportEncerramentoLactacao(){
     	openFormAsPopUp("view/reports/RelatorioEncerramentoLactacao.fxml", "Relatório Encerramento Lactações");
+    }
+    
+    @FXML
+    protected void handleReportProximosEncerramentosLactacao(){
+    	openFormAsPopUp("view/reports/RelatorioProximosEncerramentosLactacao.fxml", "Relatório Próximos Encerramentos de Lactação");
     }
     
     @FXML

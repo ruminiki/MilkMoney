@@ -25,28 +25,29 @@ public class RelatorioService {
 	
 	@Autowired RootLayoutController rootLayoutController;
 	
-	public static final String FICHA_ANIMAL                        = "report/fichaAnimal.prpt"; 
-	public static final String FORMULARIO_CAMPO_REGISTRO_COBERTURA = "report/formularioCobertura.prpt"; 
-	public static final String FORMULARIO_CAMPO_REGISTRO_PARTO     = "report/formularioParto.prpt"; 
-	public static final String FORMULARIO_CAMPO_REGISTRO_PRODUCAO  = "report/formularioRegistroProducao.prpt"; 
-	public static final String RELATORIO_COBERTURA                 = "report/relatorioCobertura.prpt";
-	public static final String RELATORIO_PARTOS_PREVISTOS          = "report/relatorioPartosPrevistos.prpt";
-	public static final String RELATORIO_INDICADORES               = "report/relatorioIndicadores.prpt";
-	public static final String RELATORIO_PARTOS 				   = "report/relatorioPartos.prpt";
-	public static final String RESUMO_FINANCEIRO                   = "report/resumoFinanceiro.prpt";
-	public static final String RELATORIO_LANCAMENTOS_FINANCEIROS   = "report/relatorioFinanceiro.prpt";
-	public static final String IMPRIMIR_COBERTURAS_ANIMAL          = "report/coberturasAnimal.prpt";
-	public static final String FICHA_COMPLETA_ANIMAL               = "report/fichaCompletaAnimal.prpt";
-	public static final String RELATORIO_PROCEDIMENTOS             = "report/relatorioProcedimentos.prpt";
-	public static final String RELATORIO_PRODUCAO                  = "report/relatorioProducao.prpt";
-	public static final String RELATORIO_RANKING_ANIMAIS           = "report/rankingAnimais.prpt";
-	public static final String RELATORIO_ABORTOS                   = "report/relatorioAbortos.prpt";
-	public static final String RELATORIO_ENCERRAMENTO_LACTACAO     = "report/relatorioEncerramentoLactacao.prpt";
-	public static final String RELATORIO_RESUMO_ATIVIDADE          = "report/resumoAtividade.prpt";
-	public static final String RELATORIO_CONTROLE_LEITEIRO         = "report/relatorioControleLeiteiro.prpt";
-	public static final String RELATORIO_SERVICOS                  = "report/relatorioServicos.prpt";
-	public static final String RECIBO_SERVICO                      = "report/reciboServico.prpt";
-	public static final String RELATORIO_CONFIMACAO_PRENHES        = "report/relatorioConfirmacaoPrenhes.prpt";
+	public static final String FICHA_ANIMAL                              = "report/fichaAnimal.prpt"; 
+	public static final String FORMULARIO_CAMPO_REGISTRO_COBERTURA       = "report/formularioCobertura.prpt"; 
+	public static final String FORMULARIO_CAMPO_REGISTRO_PARTO           = "report/formularioParto.prpt"; 
+	public static final String FORMULARIO_CAMPO_REGISTRO_PRODUCAO        = "report/formularioRegistroProducao.prpt"; 
+	public static final String RELATORIO_COBERTURA                       = "report/relatorioCobertura.prpt";
+	public static final String RELATORIO_PARTOS_PREVISTOS                = "report/relatorioPartosPrevistos.prpt";
+	public static final String RELATORIO_INDICADORES                     = "report/relatorioIndicadores.prpt";
+	public static final String RELATORIO_PARTOS 				         = "report/relatorioPartos.prpt";
+	public static final String RESUMO_FINANCEIRO                         = "report/resumoFinanceiro.prpt";
+	public static final String RELATORIO_LANCAMENTOS_FINANCEIROS         = "report/relatorioFinanceiro.prpt";
+	public static final String IMPRIMIR_COBERTURAS_ANIMAL                = "report/coberturasAnimal.prpt";
+	public static final String FICHA_COMPLETA_ANIMAL                     = "report/fichaCompletaAnimal.prpt";
+	public static final String RELATORIO_PROCEDIMENTOS                   = "report/relatorioProcedimentos.prpt";
+	public static final String RELATORIO_PRODUCAO                        = "report/relatorioProducao.prpt";
+	public static final String RELATORIO_RANKING_ANIMAIS                 = "report/rankingAnimais.prpt";
+	public static final String RELATORIO_ABORTOS                         = "report/relatorioAbortos.prpt";
+	public static final String RELATORIO_ENCERRAMENTO_LACTACAO           = "report/relatorioEncerramentoLactacao.prpt";
+	public static final String RELATORIO_RESUMO_ATIVIDADE                = "report/resumoAtividade.prpt";
+	public static final String RELATORIO_CONTROLE_LEITEIRO               = "report/relatorioControleLeiteiro.prpt";
+	public static final String RELATORIO_SERVICOS                        = "report/relatorioServicos.prpt";
+	public static final String RECIBO_SERVICO                            = "report/reciboServico.prpt";
+	public static final String RELATORIO_CONFIMACAO_PRENHES              = "report/relatorioConfirmacaoPrenhes.prpt";
+	public static final String RELATORIO_PROXIMOS_ENCERRAMENTOS_LACTACAO = "report/relatorioProximosEncerramentosLactacao.prpt";;
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		@SuppressWarnings("rawtypes")
@@ -201,6 +202,13 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
         					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
         					masterReport.getParameterValues().put("motivoEncerramentoLactacao", Integer.parseInt(param[2].toString()));
+        					GenericPentahoReport.runReport(format, masterReport);
+        					break;
+        				case RELATORIO_PROXIMOS_ENCERRAMENTOS_LACTACAO:
+        					masterReport = GenericPentahoReport.getReportDefinition(report);
+        					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+        					masterReport.getParameterValues().put("dataInicio", (Date) param[0]);
+        					masterReport.getParameterValues().put("dataFim", (Date) param[1]);
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				case RELATORIO_CONTROLE_LEITEIRO:

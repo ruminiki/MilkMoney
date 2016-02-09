@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="113.0" prefWidth="389.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.reports.RelatorioProximosEncerramentosLactacaoController">
+   <children>
+      <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="57.0" prefWidth="379.0" spacing="3.0">
+               <children>
+                  <Label text="Próximos" />
+                  <UCTextField fx:id="inputDias" alignment="CENTER" prefHeight="25.0" prefWidth="65.0" />
+                  <Label text="dias." />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" maxHeight="30.0" minHeight="30.0" spacing="5.0">
+               <children>
+                  <ToggleButton fx:id="btnPDF" mnemonicParsing="false" text="PDF" />
+                  <ToggleButton fx:id="btnXLS" mnemonicParsing="false" text="XLS" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Button fx:id="btnExecutar" alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleExecutar" text="Executar Relatório">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleClose" text="Cancelar" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
