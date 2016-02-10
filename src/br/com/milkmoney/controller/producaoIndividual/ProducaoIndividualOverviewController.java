@@ -1,7 +1,6 @@
 package br.com.milkmoney.controller.producaoIndividual;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
@@ -18,14 +17,12 @@ import javafx.scene.layout.VBox;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.PropertyDecimalValueFactory;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellIndexFactory;
-import br.com.milkmoney.components.events.ActionEvent;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
@@ -39,7 +36,7 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 
 @Controller
-public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual> implements ApplicationListener<ActionEvent>{
+public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual>{
 
 	//lactacoes
 	@FXML private TableView<Lactacao> tableLactacoes;
@@ -137,6 +134,7 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 			producaoIndividualFormController.setState(State.INSERT);
 			producaoIndividualFormController.setObject(new ProducaoIndividual(animal, lactacao));
 			producaoIndividualFormController.showForm();
+			refreshTableOverview();
 		}else{
 			CustomAlert.mensagemInfo("É necessário selecionar uma lactação para o registro da produção do animal.");
 		}
@@ -153,26 +151,12 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		}
 	}
 	
+	
+	
 	@Override
 	protected void handleDelete() {
 		super.handleDelete();
 		refreshTableOverview();
-	}
-	
-	/*
-	 * Recupera o evento disparado pelo form ao salvar o objeto
-	 * para ser possível atualizar o gráfico.
-	 */
-	@Override
-	public void onApplicationEvent(ActionEvent event) {
-		if ( event != null ){
-			if ( ( event.getEventType().equals(ActionEvent.EVENT_INSERT) || event.getEventType().equals(ActionEvent.EVENT_UPDATE)) ){
-				
-				if ( event.getSource().getClass().isInstance(getObject()) ){
-					refreshTableOverview();
-				}
-			}
-		}
 	}
 	
 	@Override
@@ -209,18 +193,16 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		if ( tableLactacoes.getItems().size() > 0 ){
 			lactacao = tableLactacoes.getItems().get(0);	
 		}else{
-			CustomAlert.mensagemInfo("O animal selecionado não tem nenhum registro de controle leiteiro.");
+			CustomAlert.mensagemInfo("Nenhuma lactação selecionada.");
 			return;
 		}
 		
 		Object[] params = new Object[]{
-				String.valueOf(lactacao.getAnimal().getId()),
-				lactacao.getDataInicio(),
-				new Date()
+				String.valueOf(lactacao.getId())
 		};
 		
 		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-			RelatorioService.RELATORIO_CONTROLE_LEITEIRO, params);
+			RelatorioService.RELATORIO_CONTROLE_LEITEIRO_INDIVIDUAL, params);
 		
 	}
 	

@@ -47,7 +47,8 @@ public class RelatorioService {
 	public static final String RELATORIO_SERVICOS                        = "report/relatorioServicos.prpt";
 	public static final String RECIBO_SERVICO                            = "report/reciboServico.prpt";
 	public static final String RELATORIO_CONFIMACAO_PRENHES              = "report/relatorioConfirmacaoPrenhes.prpt";
-	public static final String RELATORIO_PROXIMOS_ENCERRAMENTOS_LACTACAO = "report/relatorioProximosEncerramentosLactacao.prpt";;
+	public static final String RELATORIO_PROXIMOS_ENCERRAMENTOS_LACTACAO = "report/relatorioProximosEncerramentosLactacao.prpt";
+	public static final String RELATORIO_CONTROLE_LEITEIRO_INDIVIDUAL    = "report/relatorioControleLeiteiroIndividual.prpt";
 	
 	public void executeRelatorio(String format, String report, Object ...param){
 		@SuppressWarnings("rawtypes")
@@ -217,6 +218,12 @@ public class RelatorioService {
         					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
         					masterReport.getParameterValues().put("dataInicio", (Date) param[1]);
         					masterReport.getParameterValues().put("dataFim", (Date) param[2]);
+        					GenericPentahoReport.runReport(format, masterReport);
+        					break;
+        				case RELATORIO_CONTROLE_LEITEIRO_INDIVIDUAL:
+        					masterReport = GenericPentahoReport.getReportDefinition(report);
+        					masterReport.getParameterValues().put("nomePropriedade", propriedade.getDescricao());
+        					masterReport.getParameterValues().put("lactacao", Integer.parseInt(String.valueOf(param[0])));
         					GenericPentahoReport.runReport(format, masterReport);
         					break;
         				case RELATORIO_SERVICOS:
