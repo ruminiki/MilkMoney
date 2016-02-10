@@ -1,0 +1,1 @@
+X Correção bug seleção comprador, tela venda animal.
