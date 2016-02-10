@@ -70,7 +70,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 			inputAnimal.setText(getObject().getAnimal().toString());
 		}
 		
-		MaskFieldUtil.decimalWithoutMask(inputValorAnimal);
+		MaskFieldUtil.decimal(inputValorAnimal);
 		
 		//para o caso de o form ter sido chamado a partir da tela de animais
 		//nesse caso ele já terá o animal informado
@@ -144,6 +144,7 @@ public class VendaAnimalFormController extends AbstractFormController<Integer, V
 			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
 			if (result.get() == ButtonType.OK) {
 				service.remove(getObject());
+				closeForm();
 			}
 		}
 		

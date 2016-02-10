@@ -34,6 +34,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 	
 	@Autowired private AnimalReducedOverviewController animalReducedOverviewController;
 	@Autowired private CausaMorteAnimalReducedOverviewController causaMorteReducedOverviewController;
+	@Autowired private MorteAnimalOverviewController morteAnimalOverviewController;
 
 	@FXML
 	public void initialize() {
@@ -51,7 +52,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 			inputCausaMorteAnimal.textProperty().set(getObject().getCausaMorteAnimal().toString());
 		}
 		
-		MaskFieldUtil.decimalWithoutMask(inputValorAnimal);
+		MaskFieldUtil.decimal(inputValorAnimal);
 		btnRemoverRegistro.setDisable(getObject().getId() <= 0);
 		
 	}
@@ -106,6 +107,7 @@ public class MorteAnimalFormController extends AbstractFormController<Integer, M
 			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
 			if (result.get() == ButtonType.OK) {
 				service.remove(getObject());
+				closeForm();
 			}
 		}
 		
