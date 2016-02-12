@@ -1,4 +1,4 @@
-package br.com.milkmoney.components;
+package br.com.milkmoney.controller.indicador.renderer;
 
 import java.math.BigDecimal;
 import java.util.function.Function;

@@ -56,7 +56,7 @@ public class RootLayoutController {
 		hlPropriedade.setOnAction(action -> {
 			propriedadeReducedOverviewController.showForm();
 			if ( propriedadeReducedOverviewController.getObject() != null ){
-				hlPropriedade.setText("PROPRIEDADE "+propriedadeReducedOverviewController.getObject().getDescricao());
+				hlPropriedade.setText(propriedadeReducedOverviewController.getObject().getDescricao());
 			}
 		});
 		
