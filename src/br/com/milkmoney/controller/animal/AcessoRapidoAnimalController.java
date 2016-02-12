@@ -155,7 +155,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		
 		tableCoberturas.setFixedCellSize(25);
 		tableCoberturas.getItems().clear();
-		tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
+		tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject(), DateUtil.today));
 		
 		tableCoberturas.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -255,7 +255,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	
 	private void refreshTableCoberturas(){
 		tableCoberturas.getItems().clear();
-    	tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject()));
+    	tableCoberturas.getItems().addAll(coberturaService.findByAnimal(getObject(), DateUtil.today));
 	}
 	
 	private void handleFichaAnimal(){
@@ -292,7 +292,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 							hlVisualizarUltimoParto.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									partoFormController.setObject(partoService.findLastParto(getObject()));
+									partoFormController.setObject(partoService.findLastParto(getObject(), DateUtil.today));
 									partoFormController.showForm();
 								}
 							});

@@ -381,11 +381,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					lblMae.setText(animal.getMae() != null ? animal.getMae().toString() : "--");
 					lblAnimal.setText(animal.toString());
 					
-					lblEmLactacao.setText( String.valueOf( ((AnimalService)service).countAllFemeasEmLactacao()) );
-					lblTotalVacas.setText( String.valueOf( ((AnimalService)service).countAllVacasAtivas()) );
-					lblSecas.setText( String.valueOf( ((AnimalService)service).countAllFemeasSecas()) );
-					lblBezerras.setText( String.valueOf( ((AnimalService)service).countAllBezerras()) );
-					lblNovilhas.setText( String.valueOf( ((AnimalService)service).countAllNovilhas()) );
+					lblEmLactacao.setText( String.valueOf( ((AnimalService)service).countAllFemeasEmLactacao(DateUtil.today)) );
+					lblTotalVacas.setText( String.valueOf( ((AnimalService)service).countAllVacasAtivas(DateUtil.today)) );
+					lblSecas.setText( String.valueOf( ((AnimalService)service).countAllFemeasSecas(DateUtil.today)) );
+					lblBezerras.setText( String.valueOf( ((AnimalService)service).countAllBezerras(DateUtil.today)) );
+					lblNovilhas.setText( String.valueOf( ((AnimalService)service).countAllNovilhas(DateUtil.today)) );
 					
 				}
 			}
@@ -530,7 +530,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	Function<Animal, Boolean> ultimoParto = animal -> {
 		if ( animal != null ){
-			Parto parto = partoService.findLastParto(getObject());
+			Parto parto = partoService.findLastParto(getObject(), DateUtil.today);
 			if ( parto != null ){
 				partoFormController.setObject(parto);
 				partoFormController.showForm();

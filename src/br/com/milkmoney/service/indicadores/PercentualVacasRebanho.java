@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,10 @@ public class PercentualVacasRebanho extends AbstractCalculadorIndicador{
 	@Autowired AnimalDao animalDao;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 
-		BigDecimal rebanho = BigDecimal.valueOf(animalDao.countAllAtivos().longValue());
-		BigDecimal vacas   = BigDecimal.valueOf(animalDao.countAllVacasAtivas().longValue());
+		BigDecimal rebanho = BigDecimal.valueOf(animalDao.countAllAtivos(data).longValue());
+		BigDecimal vacas   = BigDecimal.valueOf(animalDao.countAllVacasAtivas(data).longValue());
 		BigDecimal result  = BigDecimal.ZERO;
 		
 		if ( rebanho.compareTo(BigDecimal.ZERO) > 0 && vacas.compareTo(BigDecimal.ZERO) > 0 ){

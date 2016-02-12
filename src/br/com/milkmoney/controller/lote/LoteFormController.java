@@ -25,6 +25,7 @@ import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.LoteService;
+import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class LoteFormController extends AbstractFormController<Integer, Lote>  {
@@ -47,7 +48,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList());
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		listAnimaisSelecionados.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
 		

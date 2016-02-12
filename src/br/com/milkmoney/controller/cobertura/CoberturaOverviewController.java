@@ -35,6 +35,7 @@ import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ParametroService;
 import br.com.milkmoney.service.RelatorioService;
+import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
 
 
@@ -104,7 +105,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 				data.addAll(((CoberturaService)service).defaultSearch(inputPesquisa.getText(), femea));
 				setSearch(null);
 			}else{
-				this.data.addAll( ((CoberturaService)service).findByAnimal(femea));
+				this.data.addAll( ((CoberturaService)service).findByAnimal(femea, DateUtil.today));
 			}
 			
 			table.setItems(data);

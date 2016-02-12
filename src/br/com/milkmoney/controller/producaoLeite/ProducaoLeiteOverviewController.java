@@ -1,6 +1,7 @@
 package br.com.milkmoney.controller.producaoLeite;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
@@ -92,7 +93,7 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	@Override
 	public void handleEdit() {
 		//localiza o número de animais em lactação e popula o objeto
-		Long animaisEmLactacaoData = animalService.countAnimaisEmLactacao(getObject().getData());
+		BigInteger animaisEmLactacaoData = animalService.countAnimaisEmLactacao(getObject().getData());
 		getObject().setNumeroVacasOrdenhadas(animaisEmLactacaoData.intValue());
 		
 		super.handleEdit();

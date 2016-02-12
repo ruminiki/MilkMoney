@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,9 @@ public class IntervaloEntrePartosProjetado extends AbstractCalculadorIndicador{
 	@Autowired private PeriodoServico diasEmAbertoService;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 
-		BigDecimal diasEmAberto = diasEmAbertoService.getValue();
+		BigDecimal diasEmAberto = diasEmAbertoService.getValue(data);
 		//TODO solicitar essa informação do usuário
 		BigDecimal periodoGestacaoRaca = BigDecimal.valueOf(282);
 		

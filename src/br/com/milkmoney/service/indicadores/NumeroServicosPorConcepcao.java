@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,16 +52,16 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 	@Autowired private CoberturaService coberturaService;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		
 		long numeroServicos = 0;
 		long concepcoes = 0;
 		
-		List<Animal> animais = animalDao.findAllFemeasAtivas();
+		List<Animal> animais = animalDao.findAllFemeasAtivas(data);
 		
 		for ( Animal animal : animais ){
 			
-			int servicos = coberturaService.getNumeroServicosPorConcepcao(animal);
+			int servicos = coberturaService.getNumeroServicosPorConcepcao(animal, data);
 			numeroServicos += servicos;
 			
 			concepcoes += servicos > 0 ? 1 : 0;

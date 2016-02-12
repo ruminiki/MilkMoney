@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.service.PartoService;
+import br.com.milkmoney.util.DateUtil;
 
 @Service
 public class IntervaloEntrePartosAnimal extends AbstractFichaAnimal {
@@ -17,7 +18,7 @@ public class IntervaloEntrePartosAnimal extends AbstractFichaAnimal {
 		
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
-		ficha.setIntervaloEntrePartos(partoService.getIntervaloEntrePartos(animal));
+		ficha.setIntervaloEntrePartos(partoService.getIntervaloEntrePartos(animal, DateUtil.today));
 		
 	}
 

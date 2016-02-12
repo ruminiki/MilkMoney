@@ -62,12 +62,12 @@ public class ProjecaoService{
 		int encerramentosPrevistos =  lactacaoDao.countAllWithPrevisaoEncerramentoIn(dataInicio, dataFim).intValue();
 		
 		//considera os animais já em lactação e que não serão encerrados no período
-		int lactacoes = animalDao.countAllFemeasEmLactacao().intValue();
+		int lactacoes = animalDao.countAllFemeasEmLactacao(DateUtil.today).intValue();
 		
 		projecao.setNumeroAnimaisLactacao((lactacoes - encerramentosPrevistos) + partosPrevistos);
 		
 		//considera os animais já em lactação e que não serão encerrados no período
-		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
+		int animaisSecos = animalDao.countAllFemeasSecas(DateUtil.today).intValue();
 		
 		int partosPrevistosDeAnimaisSecos = coberturaDao.countAllAnimaisSecosWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
 		int partosPrevistosDeAnimaisLactacao = coberturaDao.countAllAnimaisSecosWithPrevisaoPartoIn(dataInicio, dataFim).intValue();
@@ -131,7 +131,7 @@ public class ProjecaoService{
 
 	@SuppressWarnings("unused")
 	private BigDecimal calculaPercentualVariacaoNumeroAnimaisSecos(int numeroAnimaisSecosPrevistos){
-		int animaisSecos = animalDao.countAllFemeasSecas().intValue();
+		int animaisSecos = animalDao.countAllFemeasSecas(DateUtil.today).intValue();
 		
 		if ( animaisSecos > 0 )
 			return BigDecimal.valueOf((( numeroAnimaisSecosPrevistos - animaisSecos ) * 100) / animaisSecos);
@@ -142,7 +142,7 @@ public class ProjecaoService{
 
 	@SuppressWarnings("unused")
 	private BigDecimal calculaPercentualVariacaoNumeroAnimaisLactacao(int numeroAnimaisLactacaoPrevistos){
-		int animaisLactacao = animalDao.countAllFemeasEmLactacao().intValue();
+		int animaisLactacao = animalDao.countAllFemeasEmLactacao(DateUtil.today).intValue();
 		
 		if ( animaisLactacao > 0 )
 			return BigDecimal.valueOf((( numeroAnimaisLactacaoPrevistos - animaisLactacao ) * 100) / animaisLactacao);
@@ -224,7 +224,7 @@ public class ProjecaoService{
     	
     	for ( Projecao projecao : projecoes ){
     		
-    		serieAnimaisLactacaoAtual.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), animalDao.countAllFemeasEmLactacao()));
+    		serieAnimaisLactacaoAtual.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), animalDao.countAllFemeasEmLactacao(DateUtil.today)));
         	serieAnimaisLactacaoPrevisto.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), projecao.getNumeroAnimaisLactacao()));
         	//serieVariacaoAnimaisLactacao.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), projecao.getPercentualVariacaoNumeroAnimaisLactacao()));
         	
@@ -251,7 +251,7 @@ public class ProjecaoService{
     	
     	for ( Projecao projecao : projecoes ){
     		
-        	serieAnimaisSecosAtual.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), animalDao.countAllFemeasSecas()));
+        	serieAnimaisSecosAtual.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), animalDao.countAllFemeasSecas(DateUtil.today)));
         	serieAnimaisSecosPrevisto.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), projecao.getNumeroAnimaisSecos()));
         	//serieVariacaoAnimaisSecos.getData().add(new XYChart.Data<String, Number>(projecao.getPeriodo(), projecao.getPercentualVariacaoNumeroAnimaisSecos()));
         	

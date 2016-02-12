@@ -40,12 +40,12 @@ public class EvolucaoRebanhoService{
 			
 			if ( EvolucaoRebanho.EM_LACTACAO.equals(evolucaoRebanho.getVariavel()) ){
 				valores.add(new EvolucaoRebanhoValor(meses.get(cDataInicio.get(Calendar.MONTH)) + "/" + cDataInicio.get(Calendar.YEAR), 
-						String.valueOf(animalDao.contaAnimaisEmLactacao(cDataInicio.getTime()))));
+						String.valueOf(animalDao.countAllFemeasEmLactacao(cDataInicio.getTime()))));
 			}
 			
 			if ( EvolucaoRebanho.SECAS.equals(evolucaoRebanho.getVariavel()) ){
 				valores.add(new EvolucaoRebanhoValor(meses.get(cDataInicio.get(Calendar.MONTH)) + "/" + cDataInicio.get(Calendar.YEAR), 
-						String.valueOf(animalDao.contaAnimaisSecos(cDataInicio.getTime()))));
+						String.valueOf(animalDao.countAllFemeasSecas(cDataInicio.getTime()))));
 			}
 			
 			if ( EvolucaoRebanho.ZERO_A_UM_ANO.equals(evolucaoRebanho.getVariavel()) ){

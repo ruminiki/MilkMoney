@@ -9,7 +9,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.PieChart;
 
 import javax.transaction.Transactional;
 
@@ -25,7 +24,6 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
-import br.com.milkmoney.model.SituacaoAnimal;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.AnimalValidation;
@@ -92,8 +90,8 @@ public class AnimalService implements IService<Integer, Animal>{
 		return FXCollections.observableArrayList(dao.defultSearch(param));
 	}
 
-	public ObservableList<Animal> findAllFemeasAtivasAsObservableList() {
-		return FXCollections.observableArrayList(dao.findAllFemeasAtivas());
+	public ObservableList<Animal> findAllFemeasAtivasAsObservableList(Date data) {
+		return FXCollections.observableArrayList(dao.findAllFemeasAtivas(data));
 	}
 
 	public ObservableList<Animal> findAllReprodutoresAsObservableList() {
@@ -105,23 +103,23 @@ public class AnimalService implements IService<Integer, Animal>{
 		AnimalValidation.validate(entity);
 	}
 
-	public Long countAnimaisEmLactacao(Date data) {
-		return dao.contaAnimaisEmLactacao(data);
+	public BigInteger countAnimaisEmLactacao(Date data) {
+		return dao.countAllFemeasEmLactacao(data);
 	}
 	
-	public BigInteger countAllFemeasEmLactacao() {
-		return dao.countAllFemeasEmLactacao();
+	public BigInteger countAllFemeasEmLactacao(Date data) {
+		return dao.countAllFemeasEmLactacao(data);
 	}
 	
-	public BigInteger countAllVacasAtivas() {
-		return dao.countAllVacasAtivas();
+	public BigInteger countAllVacasAtivas(Date data) {
+		return dao.countAllVacasAtivas(data);
 	}
 	
-	public BigInteger countAllFemeasSecas() {
-		return dao.countAllFemeasSecas();
+	public BigInteger countAllFemeasSecas(Date data) {
+		return dao.countAllFemeasSecas(data);
 	}
 	
-	public BigInteger countAllNovilhas() {
+	public BigInteger countAllNovilhas(Date data) {
 		int idadeMinima = 0;
 		
 		try{
@@ -130,10 +128,10 @@ public class AnimalService implements IService<Integer, Animal>{
 			idadeMinima = 0;
 		}
 		
-		return dao.countAllNovilhasIdadeAcimaXMeses(idadeMinima);
+		return dao.countAllNovilhasIdadeAcimaXMeses(idadeMinima, data);
 	}
 	
-	public BigInteger countAllBezerras() {
+	public BigInteger countAllBezerras(Date data) {
 		int idadeMinima = 0;
 		
 		try{
@@ -142,7 +140,7 @@ public class AnimalService implements IService<Integer, Animal>{
 			idadeMinima = 0;
 		}
 		
-		return dao.countAllNovilhasIdadeAteXMeses(idadeMinima);
+		return dao.countAllNovilhasIdadeAteXMeses(idadeMinima, data);
 	}
 	
 	public Long getNumeroPartos(Animal animal) {
@@ -219,14 +217,6 @@ public class AnimalService implements IService<Integer, Animal>{
 		return result;
 	}
 
-	public ObservableList<PieChart.Data> getChartData(){
-		ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                new PieChart.Data(SituacaoAnimal.EM_LACTACAO, dao.countAllFemeasEmLactacao().doubleValue()),
-                new PieChart.Data(SituacaoAnimal.SECO, dao.countAllFemeasSecas().doubleValue()));
-        return pieChartData;
-	}
-	
 	public int getIdadePrimeiroParto(Animal animal) {
 		Parto parto = partoDao.findFirstParto(animal);
 		int idadePrimeiroParto = 0;

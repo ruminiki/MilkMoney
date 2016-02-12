@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +33,15 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 	@Autowired private PartoService partoService;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		int        totalPartos    = 0;
 		
-		List<Parto> partos = partoDao.findAllOrderByDataDesc();
+		List<Parto> partos = partoDao.findAllOrderByDataDesc(data);
 		
 		for ( Parto parto : partos ){
 			
-			BigDecimal diasLactacaoParto = BigDecimal.valueOf(partoService.contaDiasLactacaoParto(parto));
+			BigDecimal diasLactacaoParto = BigDecimal.valueOf(partoService.contaDiasLactacaoParto(parto, data));
 			diasEmLactacao = diasEmLactacao.add(diasLactacaoParto);
 			totalPartos++;
 			

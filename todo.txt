@@ -5,6 +5,7 @@ ERROS e REQUISITOS
 - Criar tabela acompanhamento indicador (indicador, mes, ano, valorInferior, valorSuperior, obetivo, valorApurado);
 - Criar thread para carregar os valores dos indicadores ao iniciar o sistema. Colocar um botão para atualizar...
 - Ao passar o mouse sobre o valor, exibir o objetivo
+- Permitir ao usuário informar o formato decimal
 
 
 - Imprimir tela de indicadores, dar print

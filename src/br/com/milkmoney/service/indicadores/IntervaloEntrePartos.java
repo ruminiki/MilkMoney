@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +31,15 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 	
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		BigDecimal intervaloEntrePartos = BigDecimal.ZERO;
 		
 		//vacas com mais de um parto
-		List<Animal> femeas = animalDao.findAnimaisComMaisDeUmParto();
+		List<Animal> femeas = animalDao.findAnimaisComMaisDeUmParto(data);
 		
 		for ( Animal femea : femeas ){
 			
-			intervaloEntrePartos = intervaloEntrePartos.add(BigDecimal.valueOf(partoService.getIntervaloEntrePartos(femea)));
+			intervaloEntrePartos = intervaloEntrePartos.add(BigDecimal.valueOf(partoService.getIntervaloEntrePartos(femea, data)));
 			
 		}
 		//divide a soma dos intervalos pelo número de partos para obter a média

@@ -16,6 +16,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.AnimalService;
+import br.com.milkmoney.util.DateUtil;
 
 public class AbstractSelectAnimalParametersReport extends AbstractReport{
 	
@@ -33,7 +34,7 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList());
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		// captura o evento de double click da table

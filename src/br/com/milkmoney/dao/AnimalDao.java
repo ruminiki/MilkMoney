@@ -158,12 +158,15 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasAtivas() {
+	public List<Animal> findAllFemeasAtivas(Date data) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
-						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
+						+ "and not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal.id = a.id and m.dataMorte <= :data)");
+		
+		query.setParameter("data", data);
+		
 		return query.getResultList();
 
 	}
@@ -286,10 +289,8 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 *Se não for passado parâmetro, considera a data atual.
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasEmLactacao(Object ...params) {
+	public List<Animal> findAllFemeasEmLactacao(Date data) {
 		
-		Date   data   = (params != null && params.length > 0) ? (Date)   params[0] : new Date();
-
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Lactacao lc inner join lc.animal a WHERE :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
@@ -324,26 +325,27 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * Utilizado para popular o campo animais ordenhados, na tela de produção diária.
 	 * 
 	 */
-	public Long contaAnimaisEmLactacao(Date data) {
+	public BigInteger countAllFemeasEmLactacao(Date data) {
 		
 		Query query = entityManager.createQuery(
-				"SELECT count(a) FROM Lactacao lc inner join lc.animal a WHERE :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
+				"SELECT count(*) FROM Lactacao lc "
+				+ "inner join lc.animal a WHERE :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
 		query.setParameter("data", data);
 		
 		try{
-			return (Long) query.getSingleResult();
+			return BigInteger.valueOf((Long)query.getSingleResult());
 		}catch ( NoResultException e ){
-			return 0L;
+			return BigInteger.ZERO;
 		}
 		
 	}
 
-	public Long contaAnimaisSecos(Date data) {
+	public BigInteger countAllFemeasSecas(Date data) {
 		
 		Query query = entityManager.createQuery(
-				"SELECT count(a) FROM Animal a "
+				"SELECT count(*) FROM Animal a "
 				//deve existir uma lactação encerrando antes da data
 				+ "WHERE exists (select 1 from Lactacao l1 where l1.animal = a and l1.dataFim != null and l1.dataFim < :data) "
 				//e não deve existir nenhuma lactação na data
@@ -353,13 +355,12 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		query.setParameter("data", data);
 		
 		try{
-			return (Long) query.getSingleResult();
+			return BigInteger.valueOf((Long)query.getSingleResult());
 		}catch ( NoResultException e ){
-			return 0L;
+			return BigInteger.ZERO;
 		}
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllAnimaisMortos() {
 		Query query = entityManager.createQuery("SELECT a FROM MorteAnimal m inner join m.animal a ");
@@ -373,142 +374,105 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisComCobertura() {
+	public List<Animal> findAnimaisComParto(Date data) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Cobertura c where c.femea.id = a.id ) ");
-		
-		return query.getResultList();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisComParto() {
-		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id ) ");
-		
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
+				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data <= :data) ");
+		query.setParameter("data", data);
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisComMaisDeUmParto() {
+	public List<Animal> findAnimaisComMaisDeUmParto(Date data) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) "
-				+ "group by a having (select count(p) from Parto p where p.cobertura.femea.id = a.id ) > 1 ");
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) "
+				+ "group by a having (select count(p) from Parto p where p.cobertura.femea.id = a.id and p.data <= :data ) > 1 ");
+		query.setParameter("data", data);
 		
 		return query.getResultList();
 		
 	}
 
-	public BigInteger countAllAtivos() {
-		Object result = entityManager.createNativeQuery("select count(*) from viewAnimaisAtivos a").getSingleResult();
-		return (BigInteger) result;
+	public BigInteger countAllAtivos(Date data) {
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data)");
+		query.setParameter("data", data);
+		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
 
-	public BigInteger countAllFemeasAtivas() {
-		Object result = entityManager.createNativeQuery("select count(*) from viewAnimaisAtivos where sexo = '" + Sexo.FEMEA + "'").getSingleResult();
-		return (BigInteger) result;
+	public BigInteger countAllFemeasAtivas(Date data) {
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where a.sexo = '" + Sexo.FEMEA + "' and " 
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data)");
+		query.setParameter("data", data);
+		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
 
-	public BigInteger countAllVacasAtivas() {
-		Object result = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a where a.sexo = '" + Sexo.FEMEA + "' and exists  " +
-				"(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)").getSingleResult();
-		return (BigInteger) result;
+	public BigInteger countAllVacasAtivas(Date data) {
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where a.sexo = '" + Sexo.FEMEA + "' and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
+				+ "exists (select 1 from Parto p where p.cobertura.femea = a and p.data <= :data)");
+		query.setParameter("data", data);
+		
+		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
 
-	public BigInteger countAllNovilhasIdadeAteXMeses(int meses) {
-		int dias = meses * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(current_date(), a.dataNascimento) <= :dias  " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
-		query.setParameter("dias", dias);
-		return (BigInteger) query.getSingleResult();
-	}
-
-	public BigInteger countAllNovilhasIdadeEntreMeses(int mesesIdadeMinima, int mesesIdadeMaxima) {
-		int diasIdadeMinima = mesesIdadeMinima * 30;
-		int diasIdadeMaxima = mesesIdadeMaxima * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(current_date(), a.dataNascimento) between :min and :max " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
-		query.setParameter("min", diasIdadeMinima);
-		query.setParameter("max", diasIdadeMaxima);
-		return (BigInteger) query.getSingleResult();
-	}
-
-	public BigInteger countAllNovilhasIdadeAcimaXMeses(int meses) {
-		int dias = meses * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(current_date(), a.dataNascimento) > :dias  " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from lactacao lc where lc.animal = a.id)");
-		query.setParameter("dias", dias);
-		return (BigInteger) query.getSingleResult();
-	}
-	
 	public BigInteger countAllNovilhasIdadeAcimaXMeses(int meses, Date data) {
 		int dias = meses * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(:data, a.dataNascimento) > :dias  " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from lactacao lc where lc.animal = a.id)");
+		
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where a.sexo = '" + Sexo.FEMEA + "' and DATEDIFF(:data, a.dataNascimento) > :dias and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and p.data <= :data) ");
+		
 		query.setParameter("dias", dias);
 		query.setParameter("data", data);
-		return (BigInteger) query.getSingleResult();
+
+		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
 	
 	public BigInteger countAllNovilhasIdadeAteXMeses(int meses, Date data) {
 		
 		int dias = meses * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(:data, a.dataNascimento) <= :dias  " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
+		
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where a.sexo = '" + Sexo.FEMEA + "' and DATEDIFF(:data, a.dataNascimento) <= :dias and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and p.data <= :data) ");
+		
 		query.setParameter("dias", dias);
 		query.setParameter("data", data);
-		
-		return (BigInteger) query.getSingleResult();
+
+		return BigInteger.valueOf((Long)query.getSingleResult());
 		
 	}
 	
 	public BigInteger countAllNovilhasIdadeEntreMeses(int mesesIdadeMinima, int mesesIdadeMaxima, Date data) {
 		int diasIdadeMinima = mesesIdadeMinima * 30;
 		int diasIdadeMaxima = mesesIdadeMaxima * 30;
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where DATEDIFF(:data, a.dataNascimento) between :min and :max " +
-				"and a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from cobertura c inner join parto p on (p.cobertura = c.id) where c.femea = a.id)");
+		
+		Query query = entityManager.createQuery(
+				"SELECT count(*) FROM Animal a where a.sexo = '" + Sexo.FEMEA + "' and "
+				+ "DATEDIFF(:data, a.dataNascimento) between :min and :max and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
+				+ "not exists (select 1 from Parto p where p.cobertura.femea = a and p.data <= :data) ");
+		
 		query.setParameter("min", diasIdadeMinima);
 		query.setParameter("max", diasIdadeMaxima);
 		query.setParameter("data", data);
-		
-		return (BigInteger) query.getSingleResult();
-	}
 
-	public BigInteger countAllFemeasEmLactacao() {
-		Object result = entityManager.createNativeQuery(" select count(*) from viewAnimaisAtivos a "
-				+ "inner join lactacao lc where lc.animal = a.id and lc.dataFim is null ").getSingleResult();
-		
-		return (BigInteger) result;
-	}
-
-	public BigInteger countAllFemeasSecas() {
-		Object result = entityManager.createNativeQuery("select count(*) from viewAnimaisAtivos a "
-				+ "WHERE (select lc.dataFim from lactacao lc where lc.animal = a.id order by lc.dataInicio desc limit 1) is not null").getSingleResult();
-		return (BigInteger) result;
+		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
 
 	public BigInteger countVacasDisponiveisParaCoberturaUltimos21Dias(int diasIdadeMinimaParaCobertura, int periodoVoluntarioEspera) {
@@ -600,14 +564,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "exists (select 1 from Cobertura c where  c.femea = a and c.situacaoCobertura = '" + SituacaoCobertura.PRENHA + "')");
 		return query.getResultList();
 	}
-
-	public BigInteger countDiasLactacao(Animal animal) {
-		Query query = entityManager.createNativeQuery(
-				"select DATEDIFF(current_date(), l.dataInicio) from Lactacao l where l.animal = :animal order by l.dataInicio desc limit 1");
-		query.setParameter("animal", animal);
-		return (BigInteger) query.getSingleResult();
-	}
-
 
 	@SuppressWarnings("unchecked")
 	public List<Animal> findFemeasCobertasSemParto() {

@@ -7,6 +7,7 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.service.PartoService;
+import br.com.milkmoney.util.DateUtil;
 
 @Service
 public class DataUltimoParto extends AbstractFichaAnimal {
@@ -19,7 +20,7 @@ public class DataUltimoParto extends AbstractFichaAnimal {
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
 		
-		Parto parto = partoService.findLastParto(animal);
+		Parto parto = partoService.findLastParto(animal, DateUtil.today);
 		ficha.setDataUltimoParto(parto != null ? parto.getData() : null);
 		
 	}

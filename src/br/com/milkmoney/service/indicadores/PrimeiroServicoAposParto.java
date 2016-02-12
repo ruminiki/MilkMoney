@@ -3,6 +3,7 @@ package br.com.milkmoney.service.indicadores;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,22 +58,28 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 	@Autowired private CoberturaDao coberturaDao;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		BigDecimal diasEntrePartoEPrimeiroServico = BigDecimal.ZERO;
 		int animaisComServicoAposParto = 0;
 				
-		List<Animal> animais = animalDao.findAnimaisComParto();
+		List<Animal> animais = animalDao.findAnimaisComParto(data);
 		
 		for ( Animal animal : animais ){
 			
-			Parto parto = partoDao.findLastParto(animal);
+			Parto parto = partoDao.findLastParto(animal, data);
+			
 			if ( parto != null ){
+				
 				Cobertura cobertura = coberturaDao.findFirstAfterDate(animal, parto.getData());
-				if ( cobertura != null ){
-					diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.add(
-							BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()))));
+				if ( cobertura != null && DateUtil.after(data, cobertura.getData()) ){
+					
+					long dias = ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()));
+					
+					diasEntrePartoEPrimeiroServico = diasEntrePartoEPrimeiroServico.add(BigDecimal.valueOf(dias));
 					animaisComServicoAposParto++;
+					
 				}
+				
 			}
 			
 		}

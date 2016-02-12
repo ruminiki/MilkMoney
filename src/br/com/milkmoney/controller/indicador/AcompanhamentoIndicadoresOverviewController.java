@@ -1,5 +1,7 @@
 package br.com.milkmoney.controller.indicador;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.function.Function;
 
 import javafx.application.Platform;
@@ -7,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -27,11 +30,14 @@ import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
+import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class AcompanhamentoIndicadoresOverviewController {
 
-	@FXML private VBox vbIndicadores, vbJan, vbFev, vbMar, vbAbr, vbMai, vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez;
+	@FXML private VBox  vbIndicadores, vbJan, vbFev, vbMar, vbAbr, vbMai, vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez;
+	@FXML private Label lblAno;
+	
 	@Autowired private IndicadorService service;
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
@@ -40,13 +46,20 @@ public class AcompanhamentoIndicadoresOverviewController {
 	private ObservableList<Indicador> data;
 	private Scene scene;
 	
+	private int ano = LocalDate.now().getYear();
+	
 	@FXML
 	public void initialize() {
 		//zootécnicos
-		data = service.findAllIndicadoresZootecnicosAsObservableList(false);
+		data = service.findAllIndicadoresZootecnicosAsObservableList(false, DateUtil.today);
+		data.addAll(service.findAllQuantitativosRebanhoAsObservableList(false, DateUtil.today));
+		lblAno.setText(String.valueOf(ano));
 	}
 	
 	private void carregaIndicadores(){
+		
+		clearAll();
+		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
@@ -55,20 +68,63 @@ public class AcompanhamentoIndicadoresOverviewController {
 				
 				for (Indicador indicador : data) {
 	
-					indicador = service.refreshValorApurado(indicador);
-					
 					BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
 					VBox.setVgrow(bdi, Priority.ALWAYS);
 					HBox.setHgrow(bdi, Priority.ALWAYS);
 					vbIndicadores.getChildren().add(bdi);
 					
-					BoxIndicadorSquare box = new BoxIndicadorSquare(indicador, editIndicador);
-					VBox.setVgrow(bdi, Priority.ALWAYS);
-					HBox.setHgrow(bdi, Priority.ALWAYS);
-					vbJan.getChildren().add(box);
-	
+					if ( indicador != null ){
+						if ( exibeBoxValorIndicador(1) ){
+							vbJan.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 1)));	
+						}
+						
+						if ( exibeBoxValorIndicador(2) ){
+							vbFev.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 2)));	
+						}
+							
+						if ( exibeBoxValorIndicador(3) ){
+							vbMar.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 3)));
+						}
+						
+						if ( exibeBoxValorIndicador(4) ){
+							vbAbr.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 4)));
+						}
+						
+						if ( exibeBoxValorIndicador(5) ){
+							vbMai.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 5)));
+						}
+						
+						if ( exibeBoxValorIndicador(6) ){
+							vbJun.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 6)));
+						}
+						
+						if ( exibeBoxValorIndicador(7) ){
+							vbJul.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 7)));
+						}
+						
+						if ( exibeBoxValorIndicador(8) ){
+							vbAgo.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 8)));
+						}
+						
+						if ( exibeBoxValorIndicador(9) ){
+							vbSet.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 9)));
+						}
+						
+						if ( exibeBoxValorIndicador(10) ){
+							vbOut.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 10)));
+						}
+						
+						if ( exibeBoxValorIndicador(11) ){
+							vbNov.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 11)));
+						}
+						
+						if ( exibeBoxValorIndicador(12) ){
+							vbDez.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 12)));
+						}
+						
+					}
+					
 				}
-	
 				
 				/*Platform.runLater(new Runnable() {
 					@Override
@@ -83,27 +139,36 @@ public class AcompanhamentoIndicadoresOverviewController {
 			}
 		});
 		
-		//quantitativos
-				/*data = service.findAllQuantitativosRebanhoAsObservableList();
-				
-				int row = 0;
-				col = 0;
-				
-				for ( Indicador indicador : data ){
-					
-					BoxIndicador box = new BoxIndicador(indicador, editIndicador);
-					GridPane.setConstraints(box, col, row);
-					
-					col++;
-					
-					if ( col == 5 ){
-						col = 0;
-						row++;
-					}
-					
-					gridQuantitativosRebanho.getChildren().add(box);
-					
-				}*/
+	}
+	
+	private void clearAll() {
+		vbIndicadores.getChildren().clear(); 
+		vbJan.getChildren().clear(); 
+		vbFev.getChildren().clear(); 
+		vbMar.getChildren().clear(); 
+		vbAbr.getChildren().clear(); 
+		vbMai.getChildren().clear(); 
+		vbJun.getChildren().clear(); 
+		vbJul.getChildren().clear(); 
+		vbAgo.getChildren().clear(); 
+		vbSet.getChildren().clear(); 
+		vbOut.getChildren().clear(); 
+		vbNov.getChildren().clear(); 
+		vbDez.getChildren().clear(); 
+	}
+
+	private BoxIndicadorSquare getBoxIndicador(Indicador indicador, Date data){
+		
+		indicador = service.refreshValorApurado(indicador, data);
+		BoxIndicadorSquare box = new BoxIndicadorSquare(indicador, editIndicador);
+		VBox.setVgrow(box, Priority.ALWAYS);
+		HBox.setHgrow(box, Priority.ALWAYS);
+		return box;
+		
+	}
+	
+	private boolean exibeBoxValorIndicador(int mes){
+		return (ano < LocalDate.now().getYear() || (ano == LocalDate.now().getYear() && LocalDate.now().getMonthValue() >= mes));
 	}
 	
 	Function<Indicador, Boolean> editIndicador = indicador -> {
@@ -116,6 +181,20 @@ public class AcompanhamentoIndicadoresOverviewController {
 		}
 		return true;
 	};
+	
+	@FXML
+	private void handleIncreaseAnoReferencia() {
+		ano++;
+		lblAno.setText(String.valueOf(ano));
+		carregaIndicadores();
+	}
+	
+	@FXML
+	private void handleDecreaseAnoReferencia() {
+		ano--;
+		lblAno.setText(String.valueOf(ano));
+		carregaIndicadores();
+	}
 	
 	public void showForm() {	
 		

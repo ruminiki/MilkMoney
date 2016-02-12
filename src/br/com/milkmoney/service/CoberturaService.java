@@ -1,7 +1,5 @@
 package br.com.milkmoney.service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -36,7 +34,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		CoberturaValidation.validate(cobertura);
 		CoberturaValidation.validaSituacaoAnimal(cobertura.getFemea());
-		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea()), Integer.valueOf(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)));
+		CoberturaValidation.validaFemeaSelecionada(cobertura, findByAnimal(cobertura.getFemea(), new Date()), Integer.valueOf(parametroService.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)));
 		CoberturaValidation.validaSobreposicaoCoberturas(cobertura, dao.findLastCoberturaAnimal(cobertura.getFemea()));
 		
 		return dao.persist(cobertura);
@@ -96,8 +94,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
-	public List<Cobertura> findByAnimal(Animal animal){
-		return dao.findByAnimal(animal);
+	public List<Cobertura> findByAnimal(Animal animal, Date data){
+		return dao.findByAnimal(animal, data);
 	}
 	
 	@Override
@@ -148,9 +146,9 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		return cobertura != null ? cobertura.getData() : null;
 	}
 	
-	public int getNumeroServicosPorConcepcao(Animal animal) {
+	public int getNumeroServicosPorConcepcao(Animal animal, Date data) {
 
-		Parto parto = partoService.findLastParto(animal);
+		Parto parto = partoService.findLastParto(animal, data);
 		if ( parto != null ){
 			List<Cobertura> coberturas = dao.findAllAfterDate(animal, parto.getData());
 			
@@ -161,21 +159,21 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			
 		}
 		
-		List<Cobertura> coberturas = dao.findByAnimal(animal);
+		List<Cobertura> coberturas = dao.findByAnimal(animal, data);
 		int index = 0;
 		
 		for (Cobertura cobertura : coberturas){
 			//conta quantas coberturas não tiveram parto, antes da última
-			//se a ultima cobertura é a que gerou o parto, conta ela e continua voltando nas coberturas até encontrar
-			//uma cobertura parida, que não deverá ser contada
+			//se a ultima cobertura é a que gerou o parto ou aborto, conta ela e continua voltando nas coberturas até encontrar
+			//uma cobertura parida/abortada, que não deverá ser contada
 			if ( index == 0 ){
-				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+				if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PARIDA + "|" + SituacaoCobertura.ABORTADA) ){
 					index++;
 					continue;
 				}
 			}
 			
-			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.PARIDA) ){
+			if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PARIDA + "|" + SituacaoCobertura.ABORTADA) ){
 				break;
 			}
 			
@@ -187,7 +185,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
-	public BigDecimal getMediaIntervaloPrimeiraCoberturaAtePrenhes(Animal animal) {
+/*	public BigDecimal getMediaIntervaloPrimeiraCoberturaAtePrenhes(Animal animal) {
 		
 		List<Cobertura> coberturas = dao.findByAnimal(animal);
 		int index = 0;
@@ -215,7 +213,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		return BigDecimal.ZERO;
 		
-	}
+	}*/
 
 	/*
 	 * Se a última cobertura estava prenha - 
@@ -273,28 +271,31 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	 * A data da última cobertura das vacas ainda não confirmadas gestantes
 	 * Ou a data em que o cálculo foi realizado.
 	 */
-	public int getDiasEmAberto(Animal animal) {
-		Parto ultimoParto = partoService.findLastParto(animal);
+	public int getDiasEmAberto(Animal animal, Date data) {
+		Parto ultimoParto = partoService.findLastParto(animal, data);
 		int diasEmAberto = 0;
 		if ( ultimoParto != null ){
 			
 			Cobertura primeiraCoberturaAposParto = dao.findFirstAfterDate(animal, ultimoParto.getData());
 			
-			if ( primeiraCoberturaAposParto != null ){
+			if ( primeiraCoberturaAposParto != null && DateUtil.before(primeiraCoberturaAposParto.getData(), data) ){
 				//A data da concepção das vacas gestantes
 				if ( primeiraCoberturaAposParto.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
-					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(primeiraCoberturaAposParto.getDataConfirmacaoPrenhes()));
+					Date dataFim = DateUtil.before(primeiraCoberturaAposParto.getDataConfirmacaoPrenhes(), data) ? primeiraCoberturaAposParto.getDataConfirmacaoPrenhes() : data;
+					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(dataFim));
 				}else{
 					//A data da última cobertura das vacas ainda não confirmadas gestantes
-					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(primeiraCoberturaAposParto.getData()));
+					Date dataFim = DateUtil.before(primeiraCoberturaAposParto.getData(), data) ? primeiraCoberturaAposParto.getData() : data;
+					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(dataFim));
 				}
 				
 			}else{
 				//Ou a data em que o cálculo foi realizado.
-				diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), LocalDate.now());
+				diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
 			}
 			
 		}
+		
 		return diasEmAberto;
 	}
 

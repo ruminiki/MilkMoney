@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.util.DateUtil;
 
 @Service
 public class SearchFemeasEmLactacao extends Search<Integer, Animal> {
@@ -16,7 +17,7 @@ public class SearchFemeasEmLactacao extends Search<Integer, Animal> {
 	
 	@Override
 	public ObservableList<Animal> doSearch(Object ...params) {
-		return FXCollections.observableArrayList(dao.findAllFemeasEmLactacao(params));
+		return FXCollections.observableArrayList(dao.findAllFemeasEmLactacao(DateUtil.today));
 	}
 	
 }

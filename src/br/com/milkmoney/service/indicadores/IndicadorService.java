@@ -1,5 +1,6 @@
 package br.com.milkmoney.service.indicadores;
 
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -48,16 +49,16 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		return FXCollections.observableArrayList(dao.findAll(Indicador.class));
 	}
 	
-	public Indicador refreshValorApurado(Indicador indicador){
-		return dao.refreshValorApurado(indicador);
+	public Indicador refreshValorApurado(Indicador indicador, Date data){
+		return dao.refreshValorApurado(indicador, data);
 	}
 	
-	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList(boolean refreshValorApurado) {
-		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos(refreshValorApurado));
+	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList(boolean refreshValorApurado, Date data) {
+		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos(refreshValorApurado, data));
 	}
 	
-	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList(boolean refreshValorApurado) {
-		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho(refreshValorApurado));
+	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList(boolean refreshValorApurado, Date data) {
+		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho(refreshValorApurado, data));
 	}
 	
 	@Override

@@ -2,7 +2,6 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +37,11 @@ public class TaxaServico extends AbstractCalculadorIndicador{
 	@Autowired private AnimalService animalService;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		
 		//período últimos 42 dias
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(42));
-		Date dataFim = DateUtil.asDate(LocalDate.now().minusDays(21));
+		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(42));
+		Date dataFim = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(21));
 		
 		//busca os animais disponíveis no período
 		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);

@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,13 @@ public class PeriodoServico extends AbstractCalculadorIndicador{
 	@Autowired AnimalDao animalDao;
 
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 		BigDecimal diasEmAberto = BigDecimal.ZERO;
 		
-		List<Animal> vacas = animalDao.findAnimaisComParto();
+		List<Animal> vacas = animalDao.findAnimaisComParto(data);
 		
 		for ( Animal femea : vacas ){
-			diasEmAberto = diasEmAberto.add(BigDecimal.valueOf(coberturaService.getDiasEmAberto(femea)));
+			diasEmAberto = diasEmAberto.add(BigDecimal.valueOf(coberturaService.getDiasEmAberto(femea, data)));
 		}
 		
 		if ( vacas != null && vacas.size() > 0 ){

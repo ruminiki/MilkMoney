@@ -12,6 +12,7 @@ public class DateUtil {
 	
 	/** O padrão usado para conversão. Mude como quiser. */
 	private static final String DATE_PATTERN = "dd/MM/yyyy";
+	public  static final Date today = new Date();
 	
 	/** O formatador de data. */
 	private static final DateTimeFormatter DATE_FORMATTER = 
@@ -139,5 +140,13 @@ public class DateUtil {
 		}
 		
 	}
+	
+	public static Date lastDayOfMonth(int year, int month){
+		
+		LocalDate ld = LocalDate.of(year, month, LocalDate.of(year, month, 01).lengthOfMonth());
+		return asDate(ld);
+		
+	}
+	
 }
 

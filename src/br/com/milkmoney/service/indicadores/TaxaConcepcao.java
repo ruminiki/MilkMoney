@@ -2,7 +2,6 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -43,13 +42,13 @@ public class TaxaConcepcao extends AbstractCalculadorIndicador{
 	@Autowired private CoberturaDao coberturaDao;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 
 		long coberturasRealizadas = 0;
 		long concepcoes = 0;
 		
-		Date dataInicio = DateUtil.asDate(LocalDate.now().minusDays(42));
-		Date dataFim = DateUtil.asDate(LocalDate.now().minusDays(21));
+		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(42));
+		Date dataFim = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(21));
 		
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		

@@ -14,10 +14,11 @@ import br.com.milkmoney.model.Parto;
 @Repository
 public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 
-	public Parto findLastParto(Animal animal) {
+	public Parto findLastParto(Animal animal, Date data) {
 		
-		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :animal order by p.data desc");
+		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :animal and p.data <= :data order by p.data desc");
 		query.setParameter("animal", animal);
+		query.setParameter("data", data);
 		query.setMaxResults(1);
 		
 		try{
@@ -58,20 +59,13 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Parto> findAllOrderByDataDesc() {
-		
-		Query query = entityManager.createQuery("SELECT p FROM Parto p order by p.data asc");
-		return query.getResultList();
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Parto> findUltimos2Partos(Animal femea) {
+	public List<Parto> findUltimos2PartosBeforeDate(Animal femea, Date data) {
 		
 		//busca os dois últimos partos do animal
-		Query queryParto = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :femea order by p.data desc");
-		queryParto.setMaxResults(2);
+		Query queryParto = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :femea and p.data <= :data order by p.data desc");
 		queryParto.setParameter("femea", femea);
+		queryParto.setParameter("data", data);
+		queryParto.setMaxResults(2);
 		
 		return queryParto.getResultList();
 		
@@ -103,6 +97,8 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 	public Parto findPartoPeriodo(Animal animal, Date dataInicio, Date dataFim) {
 		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.cobertura.femea = :animal and p.data between :dataInicio and :dataFim");
 		query.setParameter("animal", animal);
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
 		query.setMaxResults(1);
 		
 		try{
@@ -110,6 +106,13 @@ public class PartoDao extends AbstractGenericDao<Integer, Parto> {
 		}catch(NoResultException e){
 			return null;
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Parto> findAllOrderByDataDesc(Date data) {
+		Query query = entityManager.createQuery("SELECT p FROM Parto p where p.data <= :data order by p.data desc");
+		query.setParameter("data", data);
+		return query.getResultList();
 	}
 	
 }

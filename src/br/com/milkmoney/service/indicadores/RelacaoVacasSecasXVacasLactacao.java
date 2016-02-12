@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,10 @@ public class RelacaoVacasSecasXVacasLactacao extends AbstractCalculadorIndicador
 	@Autowired AnimalDao animalDao;
 	
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 
-		BigDecimal vacasSecas    = BigDecimal.valueOf(animalDao.countAllFemeasSecas().longValue());
-		BigDecimal vacasLactacao = BigDecimal.valueOf(animalDao.countAllFemeasEmLactacao().longValue());
+		BigDecimal vacasSecas    = BigDecimal.valueOf(animalDao.countAllFemeasAtivas(data).longValue());
+		BigDecimal vacasLactacao = BigDecimal.valueOf(animalDao.countAllFemeasAtivas(data).longValue());
 		BigDecimal relacao       = BigDecimal.ZERO;
 				
 		if ( vacasSecas.compareTo(BigDecimal.ZERO) > 0 ){

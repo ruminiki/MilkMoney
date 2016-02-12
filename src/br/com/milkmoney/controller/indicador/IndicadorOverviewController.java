@@ -27,6 +27,7 @@ import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
+import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class IndicadorOverviewController {
@@ -46,7 +47,7 @@ public class IndicadorOverviewController {
 	@FXML
 	public void initialize() {
 		//zootécnicos
-		data = service.findAllIndicadoresZootecnicosAsObservableList(false);
+		data = service.findAllIndicadoresZootecnicosAsObservableList(false, DateUtil.today);
 	}
 	
 	private void carregaIndicadores(){
@@ -60,7 +61,7 @@ public class IndicadorOverviewController {
 				
 				for (Indicador indicador : data) {
 	
-					indicador = service.refreshValorApurado(indicador);
+					indicador = service.refreshValorApurado(indicador, DateUtil.today);
 	
 					BoxIndicador box = new BoxIndicador(indicador, editIndicador);
 					GridPane.setConstraints(box, col, row);
@@ -80,7 +81,7 @@ public class IndicadorOverviewController {
 					@Override
 					public void run() {
 						lblEficienciaReprodutiva.setText(eficienciaReprodutiva
-								.getValue().toString() + "%");
+								.getValue(DateUtil.today).toString() + "%");
 					}
 				});
 				

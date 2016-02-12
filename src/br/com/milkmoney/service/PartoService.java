@@ -2,8 +2,8 @@ package br.com.milkmoney.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -70,8 +70,8 @@ public class PartoService implements IService<Integer, Parto>{
 		PartoValidation.validaEncerramentoLactacao(parto, lactacaoService.findLastBeforeDate(parto.getCobertura().getFemea(), parto.getCobertura().getData()));
 	}
 
-	public Parto findLastParto(Animal animal) {
-		return dao.findLastParto(animal);
+	public Parto findLastParto(Animal animal, Date data) {
+		return dao.findLastParto(animal, data);
 	}
 
 	//------FICHA ANIMAL
@@ -83,14 +83,14 @@ public class PartoService implements IService<Integer, Parto>{
 		return (int) dao.countCriasByAnimalAndSexo(animal, sexo);
 	}
 	
-	public int contaDiasLactacaoParto(Parto parto){
+	public int contaDiasLactacaoParto(Parto parto, Date data){
 		
 		BigDecimal diasEmLactacao = BigDecimal.ZERO;
 		
 		Lactacao lactacao = parto.getLactacao();
 		
 		if ( lactacao != null ){
-			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(lactacao.getDiasLactacao()));
+			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(lactacao.getDiasLactacao(data)));
 		}else{
 			
 			//Procura registro venda animal após o parto
@@ -118,34 +118,38 @@ public class PartoService implements IService<Integer, Parto>{
 			//se retornou zero é porque o ultimo parto não teve encerramento da lactação
 			//e o animal não foi vendido nem está morto.
 			//Nesse caso utilizar a data corrente para cálculo dos dias em lactação
-			diasEmLactacao = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), LocalDate.now()));
+			diasEmLactacao = BigDecimal.valueOf(ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(data)));
 		}
 		
 		return diasEmLactacao.intValue();
 		
 	}
 
-	public int getDiasEmLactacao(Animal animal) {
+	public int getDiasEmLactacao(Animal animal, Date dataFim) {
 		List<Parto> partos = dao.findByAnimal(animal);
 		int diasEmLactacao = 0;
 		
 		for ( Parto parto : partos ){
-			diasEmLactacao += contaDiasLactacaoParto(parto);
+			diasEmLactacao += contaDiasLactacaoParto(parto, dataFim);
 		}
 		if ( partos != null && partos.size() > 0 )
 			diasEmLactacao = BigDecimal.valueOf(diasEmLactacao).divide(BigDecimal.valueOf(partos.size()), 2, RoundingMode.HALF_EVEN).intValue();
 		return diasEmLactacao;
 	}
 
-	public int getIntervaloEntrePartos(Animal animal) {
-		List<Parto> partos = dao.findUltimos2Partos(animal);
+	public int getIntervaloEntrePartos(Animal animal, Date data) {
+		
+		List<Parto> partos = dao.findUltimos2PartosBeforeDate(animal, data);
 		int intervaloEntrePartos = 0;
+		
 		if ( partos != null && partos.size() == 2 ){
 			//soma o intervalo de meses entre um e outro
 			intervaloEntrePartos = BigDecimal.valueOf(ChronoUnit.MONTHS.between(DateUtil.asLocalDate(partos.get(1).getData()), 
 					DateUtil.asLocalDate(partos.get(0).getData()))).intValue();
 		}
+		
 		return intervaloEntrePartos;
+		
 	}
 
 	public List<Parto> findByAnimal(Animal animal) {

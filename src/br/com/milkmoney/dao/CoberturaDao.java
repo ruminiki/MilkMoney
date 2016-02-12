@@ -54,9 +54,10 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Cobertura> findByAnimal(Animal femea) {
-		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea order by c.data desc");
+	public List<Cobertura> findByAnimal(Animal femea, Date data) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.femea = :femea and c.data <= :data order by c.data desc");
 		query.setParameter("femea", femea);
+		query.setParameter("data", data);
 		
 		return query.getResultList();
 	}

@@ -2,7 +2,6 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -46,25 +45,23 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	@Autowired private AnimalDao animalDao;
 	@Autowired private AnimalService animalService;
 	
-	double DVG  = 0;   //dias de gestação do rebanho
-	double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
-	double DG   = 0;   //duração média da gestação
-	double R    = 85;  //período seco ideal
-	double N    = 0;   //número total de vacas consideradas
-	int    P    = 2;   //intervalo em anos
-	double DIAS = 365; //constante 
+	private double DVG  = 0;   //dias de gestação do rebanho
+	private double DVE  = 0;   //dias fora do rebanho (data de inicio até a primeira cobertura) e/ou (data venda/morte até a data fim)
+	private double DG   = 0;   //duração média da gestação
+	private double R    = 85;  //período seco ideal
+	private double N    = 0;   //número total de vacas consideradas
+	private int    P    = 2;   //intervalo em anos
+	private double DIAS = 365; //constante 
 	
-	//período avaliado (em anos)
-	//Date dataInicio = new GregorianCalendar(2013,0,01).getTime();
-	//Date dataFim = new GregorianCalendar(2014,11,31).getTime();
+	private Date   data = new Date();
 	
-	Date dataInicio = DateUtil.asDate(LocalDate.now().minusYears(P));
-	Date dataFim = new Date();
-		
 	@Override
-	public BigDecimal getValue() {
+	public BigDecimal getValue(Date data) {
 
 		DG = DVG = DVE = 0;
+		
+		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusYears(P));
+		Date dataFim = data;
 
 		//seleciona os animais que compõem o cálculo
 		//fêmeas com partos ou coberturas no período
@@ -76,7 +73,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim);
 		
 		for ( Animal animal : animais ){
-			getDVGAndDVEAnimal(animal);
+			getDVGAndDVEAnimal(animal, dataInicio, dataFim);
 		}
 		
 		N = animais.size();
@@ -88,16 +85,19 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 	
 	public BigDecimal getValue(Animal animal) {
 
+		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusYears(P));
+		Date dataFim = data;
+		
 		DG = DVG = DVE = 0;
 		N = 1;
 		
-		getDVGAndDVEAnimal(animal);
+		getDVGAndDVEAnimal(animal, dataInicio, dataFim);
 		
 		return calculaIndice();
 		
 	}
 	
-	private void getDVGAndDVEAnimal(Animal animal){
+	private void getDVGAndDVEAnimal(Animal animal, Date dataInicio, Date dataFim){
 		
 		List<Cobertura> coberturas = coberturaDao.findCoberturasIniciadasOuComPartoNoPeriodo(animal, dataInicio, dataFim);
 		
