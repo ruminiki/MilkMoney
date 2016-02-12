@@ -16,7 +16,7 @@ public class BoxDescricaoIndicador extends VBox {
 		this.indicador = indicador;
 		
 		this.setMaxHeight(30);
-		this.setMinHeight(40);
+		this.setMinHeight(30);
 		
 		this.buildBox();
 	}
