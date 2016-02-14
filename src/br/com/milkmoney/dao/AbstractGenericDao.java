@@ -25,6 +25,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
         	}else{
         		entityManager.merge(entity);	
         	}
+        	
         	entityManager.flush();
         	
         }catch(Exception e){

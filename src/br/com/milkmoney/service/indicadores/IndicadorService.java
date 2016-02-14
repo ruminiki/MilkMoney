@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.IndicadorDao;
 import br.com.milkmoney.model.Indicador;
+import br.com.milkmoney.model.ValorIndicador;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.validation.IndicadorValidation;
 
@@ -49,8 +50,8 @@ public class IndicadorService implements IService<Integer, Indicador>{
 		return FXCollections.observableArrayList(dao.findAll(Indicador.class));
 	}
 	
-	public Indicador refreshValorApurado(Indicador indicador, Date data){
-		return dao.refreshValorApurado(indicador, data);
+	public ValorIndicador refreshValorApurado(ValorIndicador valorIndicador, Date data){
+		return dao.refreshValorApurado(valorIndicador, data);
 	}
 	
 	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList(boolean refreshValorApurado, Date data) {

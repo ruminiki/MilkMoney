@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.model.Indicador;
+import br.com.milkmoney.model.ValorIndicador;
 import br.com.milkmoney.service.indicadores.AbstractCalculadorIndicador;
 
 @Repository
@@ -21,15 +22,18 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Indicador refreshValorApurado(Indicador indicador, Date data){
+	public ValorIndicador refreshValorApurado(ValorIndicador valorIndicador, Date data){
 		try {
 			
-			if ( indicador.getClasseCalculo() != null ){
-				Class<AbstractCalculadorIndicador> calculadorClass = (Class<AbstractCalculadorIndicador>) Class.forName(indicador.getClasseCalculo());
+			if ( valorIndicador.getIndicador().getClasseCalculo() != null ){
+				
+				Class<AbstractCalculadorIndicador> calculadorClass = (Class<AbstractCalculadorIndicador>) Class.forName(valorIndicador.getIndicador().getClasseCalculo());
 				AbstractCalculadorIndicador calculador = (AbstractCalculadorIndicador) MainApp.getBean(calculadorClass);
-				indicador.setValorApurado( calculador.getValue(data) );
-				this.persist(indicador);
-				return indicador;
+				
+				valorIndicador.setValor( calculador.getValue(data) );
+				
+				return valorIndicador;
+				
 			}
 			
 		} catch (Exception e) {
@@ -42,7 +46,6 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 	@Transactional
 	public Indicador findById(Class<Indicador> clazz, Integer id) {
 		Indicador indicador = super.findById(clazz, id);
-		//refreshValorApurado(indicador);
 		return indicador;
 	}
 
@@ -54,7 +57,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 
 		if ( refreshValorApurado ){
 			for ( Indicador indicador : indicadores ){
-				refreshValorApurado(indicador, data);
+				//refreshValorApurado(indicador, data);
 			}
 		}
 		
@@ -70,7 +73,7 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 		if ( refreshValorApurado ){
 			for ( Indicador indicador : indicadores ){
-				refreshValorApurado(indicador, data);
+				//refreshValorApurado(indicador, data);
 			}
 		}
 		
@@ -78,12 +81,4 @@ public class IndicadorDao extends AbstractGenericDao<Integer, Indicador> {
 		
 	}
 	
-	@Override @Transactional
-	public List<Indicador> findAll(Class<Indicador> clazz) {
-		List<Indicador> indicadores = new ArrayList<Indicador>();
-		//indicadores.addAll(findAllIndicadoresZootecnicos(true));
-		//indicadores.addAll(findAllQuantitativosRebanho(true));
-		return indicadores;
-	}
-
 }

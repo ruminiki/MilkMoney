@@ -32,6 +32,8 @@
 		<class>br.com.milkmoney.model.AnimalVendido</class>
 		<class>br.com.milkmoney.model.Touro</class>
 		<class>br.com.milkmoney.model.Indicador</class>
+    	<class>br.com.milkmoney.model.ValorIndicador</class>
+    	<class>br.com.milkmoney.model.ConfiguracaoIndicador</class>
 		<class>br.com.milkmoney.model.Parametro</class>
 		<class>br.com.milkmoney.model.Lactacao</class>
 		<class>br.com.milkmoney.model.FichaAnimal</class>

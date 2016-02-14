@@ -61,7 +61,7 @@ public class IndicadorOverviewController {
 				
 				for (Indicador indicador : data) {
 	
-					indicador = service.refreshValorApurado(indicador, DateUtil.today);
+					//indicador = service.refreshValorApurado(indicador, DateUtil.today);
 	
 					BoxIndicador box = new BoxIndicador(indicador, editIndicador);
 					GridPane.setConstraints(box, col, row);

@@ -4,6 +4,10 @@ ERROS e REQUISITOS
 - Refazer tela de indicadores, permitir acompanhar mês a mês durante o ano
 - Criar tabela acompanhamento indicador (indicador, mes, ano, valorInferior, valorSuperior, obetivo, valorApurado);
 - Criar thread para carregar os valores dos indicadores ao iniciar o sistema. Colocar um botão para atualizar...
+
+- Criar tela para configurar os valores das metas.
+
+
 - Ao passar o mouse sobre o valor, exibir o objetivo
 - Permitir ao usuário informar o formato decimal
 
@@ -21,7 +25,6 @@ ERROS e REQUISITOS
 - Filtrar número de serviços tela animals
 - Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
 
-- Fazer mapa de pontos do trajeto da pesquisa
 
 - Tá sendo permitido cadastrar parto de animal vendido/morto
 - Atribuir a entrega de leite ao fornecedor

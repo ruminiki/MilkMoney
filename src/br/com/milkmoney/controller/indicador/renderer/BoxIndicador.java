@@ -1,6 +1,5 @@
 package br.com.milkmoney.controller.indicador.renderer;
 
-import java.math.BigDecimal;
 import java.util.function.Function;
 
 import javafx.event.EventHandler;
@@ -11,9 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import br.com.milkmoney.model.Indicador;
-import br.com.milkmoney.model.ObjetivoIndicador;
-import br.com.milkmoney.service.indicadores.AbstractCalculadorIndicador;
-import br.com.milkmoney.util.NumberFormatUtil;
 
 public class BoxIndicador extends VBox {
 
@@ -38,21 +34,11 @@ public class BoxIndicador extends VBox {
 		
 		Label labelDescricao      = new Label(indicador.getDescricao());
 		Label labelValor          = new Label();
-		Label labelIntervaloIdeal = new Label("Ideal " + indicador.getMenorValorIdeal() + " e " + indicador.getMaiorValorIdeal());
+		//Label labelIntervaloIdeal = new Label("Ideal " + indicador.getMenorValorIdeal() + " e " + indicador.getMaiorValorIdeal());
 		
-		String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
+		//String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
 		
-		if ( indicador.getFormato().equals(AbstractCalculadorIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
-			labelValor.setText(NumberFormatUtil.decimalFormat(indicador.getValorApurado(), 2) + sufixo);
-		}
-		
-		if ( indicador.getFormato().equals(AbstractCalculadorIndicador.DECIMAL_FORMAT_UMA_CASA) ){
-			labelValor.setText(NumberFormatUtil.decimalFormat(indicador.getValorApurado(), 1) + sufixo);
-		}
-		
-		if ( indicador.getFormato().equals(AbstractCalculadorIndicador.INTEIRO_FORMAT) ){
-			labelValor.setText(NumberFormatUtil.intFormat(indicador.getValorApurado()) + sufixo);
-		}
+		//labelValor.setText(NumberFormatUtil.intFormat(indicador.getValorApurado()) + sufixo);
 		
 		vbValor.setAlignment(Pos.CENTER);
 		
@@ -70,7 +56,7 @@ public class BoxIndicador extends VBox {
 		labelDescricao.setFont(Font.font("System", 8));
 		
 		this.getChildren().clear();
-		this.getChildren().addAll(vbValor, labelDescricao, labelIntervaloIdeal);
+		//this.getChildren().addAll(vbValor, labelDescricao, labelIntervaloIdeal);
 	
 		//criar listener ao passar mouse
 		this.addEventHandler(MouseEvent.MOUSE_ENTERED,
@@ -103,7 +89,7 @@ public class BoxIndicador extends VBox {
 	}
 	
 	private void setStyle(){
-		if ( indicador.getObjetivo() != null && 
+		/*if ( indicador.getObjetivo() != null && 
 				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
 			
 			if ( indicador.getValorApurado().compareTo(indicador.getMenorValorIdeal()) >= 0 ){
@@ -176,7 +162,7 @@ public class BoxIndicador extends VBox {
 				vbValor.setStyle(styleAbaixo());
 			}
 		}
-		
+		*/
 	}
 	
 	private String styleAbaixo(){

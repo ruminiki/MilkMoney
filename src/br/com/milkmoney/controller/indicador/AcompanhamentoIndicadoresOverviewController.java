@@ -1,13 +1,17 @@
 package br.com.milkmoney.controller.indicador;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,159 +22,170 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import org.controlsfx.control.PopOver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorFormController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicadorSquare;
 import br.com.milkmoney.controller.root.RootLayoutController;
+import br.com.milkmoney.model.ConfiguracaoIndicador;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
+import br.com.milkmoney.model.ValorIndicador;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.util.Util;
 
 @Controller
 public class AcompanhamentoIndicadoresOverviewController {
 
-	@FXML private VBox  vbIndicadores, vbJan, vbFev, vbMar, vbAbr, vbMai, vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez;
+	@FXML private VBox  vbMain, vbIndicadores, vbJan, vbFev, vbMar, vbAbr, vbMai, 
+						vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez;
 	@FXML private Label lblAno;
 	
 	@Autowired private IndicadorService service;
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
+	@Autowired ConfiguracaoIndicadorFormController configuracaoIndicadorFormController;
 	
-	private ObservableList<Indicador> data;
-	private Scene scene;
+	private ObservableList<Indicador> data = FXCollections.observableArrayList();
 	
 	private int ano = LocalDate.now().getYear();
+	private List<VBox> vBoxes;
 	
 	@FXML
 	public void initialize() {
-		//zootécnicos
-		data = service.findAllIndicadoresZootecnicosAsObservableList(false, DateUtil.today);
-		data.addAll(service.findAllQuantitativosRebanhoAsObservableList(false, DateUtil.today));
 		lblAno.setText(String.valueOf(ano));
-	}
-	
-	private void carregaIndicadores(){
-		
-		clearAll();
+		vBoxes = new ArrayList<VBox>(Arrays.asList(vbJan, vbFev, vbMar, vbAbr, vbMai, 
+												   vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez));
 		
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-
-				scene.setCursor(Cursor.WAIT);
-				
-				for (Indicador indicador : data) {
-	
-					BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
-					VBox.setVgrow(bdi, Priority.ALWAYS);
-					HBox.setHgrow(bdi, Priority.ALWAYS);
-					vbIndicadores.getChildren().add(bdi);
-					
-					if ( indicador != null ){
-						if ( exibeBoxValorIndicador(1) ){
-							vbJan.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 1)));	
-						}
-						
-						if ( exibeBoxValorIndicador(2) ){
-							vbFev.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 2)));	
-						}
-							
-						if ( exibeBoxValorIndicador(3) ){
-							vbMar.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 3)));
-						}
-						
-						if ( exibeBoxValorIndicador(4) ){
-							vbAbr.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 4)));
-						}
-						
-						if ( exibeBoxValorIndicador(5) ){
-							vbMai.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 5)));
-						}
-						
-						if ( exibeBoxValorIndicador(6) ){
-							vbJun.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 6)));
-						}
-						
-						if ( exibeBoxValorIndicador(7) ){
-							vbJul.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 7)));
-						}
-						
-						if ( exibeBoxValorIndicador(8) ){
-							vbAgo.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 8)));
-						}
-						
-						if ( exibeBoxValorIndicador(9) ){
-							vbSet.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 9)));
-						}
-						
-						if ( exibeBoxValorIndicador(10) ){
-							vbOut.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 10)));
-						}
-						
-						if ( exibeBoxValorIndicador(11) ){
-							vbNov.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 11)));
-						}
-						
-						if ( exibeBoxValorIndicador(12) ){
-							vbDez.getChildren().add(getBoxIndicador(indicador, DateUtil.lastDayOfMonth(ano, 12)));
-						}
-						
-					}
-					
-				}
-				
-				/*Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						lblEficienciaReprodutiva.setText(eficienciaReprodutiva
-								.getValue().toString() + "%");
-					}
-				});*/
-				
-				scene.setCursor(Cursor.DEFAULT);
-				
+				montarTabela(false);
 			}
 		});
 		
 	}
 	
-	private void clearAll() {
+	private void montarTabela(boolean calcularIndicadores){
+		data.clear();
+		data.addAll(service.findAll());
+		clearTable();
+		
+		for (Indicador indicador : data) {
+
+			BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
+			VBox.setVgrow(bdi, Priority.ALWAYS);
+			HBox.setHgrow(bdi, Priority.ALWAYS);
+			vbIndicadores.getChildren().add(bdi);
+			
+			if ( indicador.getConfiguracaoIndicador(ano) == null ){
+				ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
+				ci.setAno(ano);
+				indicador.getConfiguracoesIndicador().add(ci);
+			}
+			
+			for ( Number n : getMesesAno() ){
+				
+				if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
+					ValorIndicador vi = new ValorIndicador(indicador);
+					vi.setValor(BigDecimal.ZERO);
+					vi.setAno(ano);
+					vi.setMes(n.intValue());
+					indicador.getValores().add(vi);
+				}
+				
+				if ( calcularIndicadores ){
+					service.refreshValorApurado(indicador.getValorIndicador(ano, n.intValue()), DateUtil.lastDayOfMonth(ano, n.intValue()));					
+				}
+				
+			}
+			
+			service.save(indicador);
+			
+		}
+		
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				for (Indicador indicador : data) {
+					
+					for ( Number n : getMesesAno() ){
+						
+						vBoxes.get(n.intValue() - 1).getChildren().add(
+								new BoxIndicadorSquare(indicador, ano, n.intValue(), editIndicador));
+						
+					}	
+					
+				}
+			}
+		});
+		
+	}
+	
+	@FXML
+	private void calcularIndicadores(){
+		
+		HBox message = new HBox();
+		message.setAlignment(Pos.CENTER);
+		message.setMinWidth(300);
+		message.setMinHeight(80);
+		message.getChildren().add(new Label("Aguarde..."));
+		
+		VBox.setVgrow(message, Priority.ALWAYS);
+		HBox.setHgrow(message, Priority.ALWAYS);
+		
+		PopOver notification = new PopOver();
+		notification.centerOnScreen();
+		notification.setArrowSize(0);
+		notification.setAutoHide(false);
+		notification.setDetachable(false);
+		notification.setContentNode(message);
+		notification.setCornerRadius(0);
+		
+		notification.showingProperty().addListener(
+				(observable, oldValue, newValue) -> {
+			if ( notification.isShowing() ){
+				
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						montarTabela(true);
+						notification.hide();
+					}
+				});
+				
+			}
+		});
+		
+		notification.show(vbMain.getScene().getWindow());
+		
+	}
+	
+	@FXML
+	private void definirMetas(){
+		//configuracaoIndicadorFormController.setObject();
+	}
+	
+	private ObservableList<Number> getMesesAno(){
+		int meses = ano < LocalDate.now().getYear() ? 12 : LocalDate.now().getMonthValue();
+		return Util.generateListNumbers(1, meses);
+	}
+	
+	private void clearTable() {
 		vbIndicadores.getChildren().clear(); 
-		vbJan.getChildren().clear(); 
-		vbFev.getChildren().clear(); 
-		vbMar.getChildren().clear(); 
-		vbAbr.getChildren().clear(); 
-		vbMai.getChildren().clear(); 
-		vbJun.getChildren().clear(); 
-		vbJul.getChildren().clear(); 
-		vbAgo.getChildren().clear(); 
-		vbSet.getChildren().clear(); 
-		vbOut.getChildren().clear(); 
-		vbNov.getChildren().clear(); 
-		vbDez.getChildren().clear(); 
+		for ( VBox v : vBoxes ){
+			v.getChildren().clear();
+		}
 	}
 
-	private BoxIndicadorSquare getBoxIndicador(Indicador indicador, Date data){
-		
-		indicador = service.refreshValorApurado(indicador, data);
-		BoxIndicadorSquare box = new BoxIndicadorSquare(indicador, editIndicador);
-		VBox.setVgrow(box, Priority.ALWAYS);
-		HBox.setHgrow(box, Priority.ALWAYS);
-		return box;
-		
-	}
-	
-	private boolean exibeBoxValorIndicador(int mes){
-		return (ano < LocalDate.now().getYear() || (ano == LocalDate.now().getYear() && LocalDate.now().getMonthValue() >= mes));
-	}
-	
 	Function<Indicador, Boolean> editIndicador = indicador -> {
 		if ( indicador != null ){
 			indicadorFormController.setState(State.UPDATE);
@@ -184,16 +199,18 @@ public class AcompanhamentoIndicadoresOverviewController {
 	
 	@FXML
 	private void handleIncreaseAnoReferencia() {
-		ano++;
-		lblAno.setText(String.valueOf(ano));
-		carregaIndicadores();
+		if ( ano < LocalDate.now().getYear() ){
+			ano++;
+			lblAno.setText(String.valueOf(ano));
+			montarTabela(false);			
+		}
 	}
 	
 	@FXML
 	private void handleDecreaseAnoReferencia() {
 		ano--;
 		lblAno.setText(String.valueOf(ano));
-		carregaIndicadores();
+		montarTabela(false);
 	}
 	
 	public void showForm() {	
@@ -205,15 +222,11 @@ public class AcompanhamentoIndicadoresOverviewController {
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
 
-		scene = new Scene(form);
+		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
-		dialogStage.setResizable(false);
-		
-		scene.setCursor(Cursor.WAIT);
 		
 		dialogStage.show();
 		
-		carregaIndicadores();
 	}
 	
 	public String getFormName(){

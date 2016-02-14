@@ -12,208 +12,226 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="546.0" prefWidth="1175.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.AcompanhamentoIndicadoresOverviewController">
+<AnchorPane fx:id="anchorPane" prefHeight="631.0" prefWidth="1281.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.AcompanhamentoIndicadoresOverviewController">
    <children>
-      <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="vbMain" alignment="CENTER" layoutX="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="CENTER" maxHeight="40.0">
+            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0" style="-fx-border-color: #CCC;" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
                <children>
-                  <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0" style="-fx-border-color: #CCC;" VBox.vgrow="NEVER">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="INDICADORES DA EFICIÊNCIA REPRODUTIVA" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Button>
-                        <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label text="Ano Referência">
-                     <font>
-                        <Font size="9.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <HBox fx:id="hbMain" alignment="CENTER_LEFT" spacing="1.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" minWidth="200.0" spacing="1.0">
-                           <children>
-                              <Label text="Indicadores" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbIndicadores" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Janeiro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbJan" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Fevereiro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbFev" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Março" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbMar" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Abril" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbAbr" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Maio" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbMai" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Junho" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbJun" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Julho" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbJul" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Agosto" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbAgo" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Setembro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbSet" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Outubro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbOut" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Novembro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbNov" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox>
-                     <children>
-                        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
-                           <children>
-                              <Label text="Dezembro" />
-                              <Separator prefWidth="200.0" />
-                           </children>
-                        </VBox>
-                        <VBox fx:id="vbDez" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
+                  <Label text="INDICADORES DA EFICIÊNCIA REPRODUTIVA" />
                </children>
             </HBox>
+            <HBox alignment="TOP_CENTER" maxHeight="30.0" spacing="3.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" maxHeight="35.0" VBox.vgrow="NEVER">
+                     <children>
+                        <HBox alignment="CENTER" maxHeight="40.0" prefHeight="100.0" prefWidth="100.0">
+                           <children>
+                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label text="Ano Referência">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                     <children>
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#definirMetas" text="Definir Metas" />
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#calcularIndicadores" text="Calcular" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="3.0" prefViewportHeight="546.0" prefViewportWidth="2013.0" style="-fx-box-border: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox fx:id="hbMain" alignment="CENTER_LEFT" spacing="1.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox maxWidth="1.7976931348623157E308" minWidth="200.0" spacing="2.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" minWidth="200.0" spacing="1.0" VBox.vgrow="NEVER">
+                                       <children>
+                                          <Label text="Indicadores" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbIndicadores" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Janeiro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbJan" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Fevereiro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbFev" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Março" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbMar" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Abril" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbAbr" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Maio" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbMai" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Junho" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbJun" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Julho" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbJul" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Agosto" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbAgo" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" prefHeight="200.0" prefWidth="100.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Setembro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbSet" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" prefHeight="200.0" prefWidth="100.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Outubro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbOut" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Novembro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbNov" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox maxWidth="50.0" spacing="2.0" HBox.hgrow="NEVER">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" minWidth="80.0" spacing="1.0">
+                                       <children>
+                                          <Label text="Dezembro" />
+                                          <Separator prefWidth="200.0" />
+                                       </children>
+                                    </VBox>
+                                    <VBox fx:id="vbDez" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </children>
