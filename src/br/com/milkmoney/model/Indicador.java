@@ -1,6 +1,7 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 
 import br.com.milkmoney.components.FieldRequired;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Entity
@@ -41,6 +43,8 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private StringProperty              formato = new SimpleStringProperty();
 	private StringProperty              sufixo = new SimpleStringProperty();
 	private StringProperty              classeCalculo = new SimpleStringProperty();
+	private StringProperty              menorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty              maiorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private List<ConfiguracaoIndicador> configuracoesIndicador = new ArrayList<ConfiguracaoIndicador>();
 	private List<ValorIndicador>        valores = new ArrayList<ValorIndicador>();
 	private int                         ordem;
@@ -153,7 +157,57 @@ public class Indicador extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ValorIndicador.class, cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@FieldRequired(message="menor valor ideal")
+	public BigDecimal getMenorValorIdeal() {
+		if ( getFormato().equals(FormatoIndicador.INTEIRO_FORMAT) ){
+			return NumberFormatUtil.intFromString(menorValorIdeal.get());
+		}
+		
+		if ( getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
+			return NumberFormatUtil.fromString(menorValorIdeal.get(), 2);
+		}
+		
+		if ( getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_UMA_CASA) ){
+			return NumberFormatUtil.fromString(menorValorIdeal.get(), 1);
+		}
+		return NumberFormatUtil.fromString(menorValorIdeal.get());
+	}
+
+	public void setMenorValorIdeal(BigDecimal menorValorIdeal) {
+		this.menorValorIdeal.set(NumberFormatUtil.decimalFormat(menorValorIdeal));
+	}
+	
+	public StringProperty menorValorIdealProperty(){
+		return menorValorIdeal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="maior valor ideal")
+	public BigDecimal getMaiorValorIdeal() {
+		if ( getFormato().equals(FormatoIndicador.INTEIRO_FORMAT) ){
+			return NumberFormatUtil.intFromString(maiorValorIdeal.get());
+		}
+		
+		if ( getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
+			return NumberFormatUtil.fromString(maiorValorIdeal.get(), 2);
+		}
+		
+		if ( getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_UMA_CASA) ){
+			return NumberFormatUtil.fromString(maiorValorIdeal.get(), 1);
+		}
+		return NumberFormatUtil.fromString(maiorValorIdeal.get());
+	}
+
+	public void setMaiorValorIdeal(BigDecimal maiorValorIdeal) {
+		this.maiorValorIdeal.set(NumberFormatUtil.decimalFormat(maiorValorIdeal));
+	}
+	
+	public StringProperty maiorValorIdealProperty(){
+		return maiorValorIdeal;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@OneToMany(orphanRemoval=true, targetEntity=ValorIndicador.class, cascade={CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	@JoinColumn(name="indicador")
 	public List<ValorIndicador> getValores() {
 		if ( valores == null )
@@ -176,7 +230,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfiguracaoIndicador.class, cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(orphanRemoval=true, targetEntity=ConfiguracaoIndicador.class, cascade={CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	@JoinColumn(name="indicador")
 	public List<ConfiguracaoIndicador> getConfiguracoesIndicador() {
 		if ( configuracoesIndicador == null )

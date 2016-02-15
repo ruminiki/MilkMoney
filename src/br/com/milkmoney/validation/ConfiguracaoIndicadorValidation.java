@@ -10,7 +10,7 @@ public class ConfiguracaoIndicadorValidation extends Validator {
 	
 		Validator.validate(configuracaoIndicador);
 		
-		if ( configuracaoIndicador.getMaiorValorIdeal().compareTo(configuracaoIndicador.getMenorValorIdeal()) < 0 ){
+		if ( configuracaoIndicador.getMaiorValorEsperado().compareTo(configuracaoIndicador.getMenorValorEsperado()) < 0 ){
 			throw new ValidationException(REGRA_NEGOCIO, "O segundo valor do intervalo ideal deve ser igual ou maior ao primeiro valor. Por favor, corrija e tente novamente.");
 		}
 		

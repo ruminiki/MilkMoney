@@ -65,7 +65,7 @@
                   </HBox>
                </children>
             </HBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="3.0" prefViewportHeight="546.0" prefViewportWidth="2013.0" style="-fx-box-border: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" layoutX="3.0" prefViewportHeight="546.0" prefViewportWidth="2013.0" style="-fx-box-border: transparent; -fx-background-color: transparent; -fx-selection-border: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
                <content>
                   <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -79,7 +79,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbIndicadores" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbIndicadores" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -91,7 +91,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbJan" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbJan" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -103,7 +103,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbFev" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbFev" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -115,7 +115,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbMar" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbMar" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -127,7 +127,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbAbr" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbAbr" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -139,7 +139,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbMai" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbMai" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -151,7 +151,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbJun" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbJun" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -163,7 +163,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbJul" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbJul" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -175,7 +175,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbAgo" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbAgo" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -187,7 +187,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbSet" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbSet" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -199,7 +199,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbOut" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbOut" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -211,7 +211,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbNov" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbNov" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                               <Separator orientation="VERTICAL" prefHeight="200.0" />
@@ -223,7 +223,7 @@
                                           <Separator prefWidth="200.0" />
                                        </children>
                                     </VBox>
-                                    <VBox fx:id="vbDez" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+                                    <VBox fx:id="vbDez" prefHeight="200.0" prefWidth="100.0" spacing="1.0" VBox.vgrow="ALWAYS" />
                                  </children>
                               </VBox>
                            </children>

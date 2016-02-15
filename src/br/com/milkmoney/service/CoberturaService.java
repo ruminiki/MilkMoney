@@ -276,21 +276,26 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		int diasEmAberto = 0;
 		if ( ultimoParto != null ){
 			
-			Cobertura primeiraCoberturaAposParto = dao.findFirstAfterDate(animal, ultimoParto.getData());
+			List<Cobertura> coberturasAposParto = dao.findAllAfterDate(animal, ultimoParto.getData());
 			
-			if ( primeiraCoberturaAposParto != null && DateUtil.before(primeiraCoberturaAposParto.getData(), data) ){
-				//A data da concepção das vacas gestantes
-				if ( primeiraCoberturaAposParto.getSituacaoCobertura().equals(SituacaoCobertura.PRENHA) ){
-					Date dataFim = DateUtil.before(primeiraCoberturaAposParto.getDataConfirmacaoPrenhes(), data) ? primeiraCoberturaAposParto.getDataConfirmacaoPrenhes() : data;
-					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(dataFim));
-				}else{
-					//A data da última cobertura das vacas ainda não confirmadas gestantes
-					Date dataFim = DateUtil.before(primeiraCoberturaAposParto.getData(), data) ? primeiraCoberturaAposParto.getData() : data;
-					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(dataFim));
+			for ( Cobertura c : coberturasAposParto ){
+				
+				if ( c != null && DateUtil.before(c.getData(), data) ){
+					//A data da cobertura que gerou a concepção
+					if ( c.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+						diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(c.getData()));
+					}else{
+						//a data atual para vacas vazias
+						if ( c.getSituacaoConfirmacaoPrenhes().equals(SituacaoCobertura.VAZIA) ){
+							diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
+						}
+					}
 				}
 				
-			}else{
-				//Ou a data em que o cálculo foi realizado.
+			}
+			
+			if ( coberturasAposParto == null || coberturasAposParto.size() <= 0 ){
+				//o animal não teve cobertura após o parto
 				diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
 			}
 			

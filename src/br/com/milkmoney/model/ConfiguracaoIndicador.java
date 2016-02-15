@@ -33,8 +33,8 @@ public class ConfiguracaoIndicador extends AbstractEntity implements Serializabl
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private StringProperty ano                  = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
-	private StringProperty menorValorIdeal      = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
-	private StringProperty maiorValorIdeal      = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty menorValorEsperado   = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty maiorValorEsperado   = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty objetivo             = new SimpleStringProperty(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL);
 	private ObjectProperty<Indicador> indicador = new SimpleObjectProperty<Indicador>();
 	
@@ -68,58 +68,58 @@ public class ConfiguracaoIndicador extends AbstractEntity implements Serializabl
 	}
 
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="menor valor ideal")
-	public BigDecimal getMenorValorIdeal() {
+	@FieldRequired(message="menor valor esperado")
+	public BigDecimal getMenorValorEsperado() {
 		if ( getIndicador() != null ){
 			if ( getIndicador().getFormato().equals(FormatoIndicador.INTEIRO_FORMAT) ){
-				return NumberFormatUtil.intFromString(menorValorIdeal.get());
+				return NumberFormatUtil.intFromString(menorValorEsperado.get());
 			}
 			
 			if ( getIndicador().getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
-				return NumberFormatUtil.fromString(menorValorIdeal.get(), 2);
+				return NumberFormatUtil.fromString(menorValorEsperado.get(), 2);
 			}
 			
 			if ( getIndicador().getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_UMA_CASA) ){
-				return NumberFormatUtil.fromString(menorValorIdeal.get(), 1);
+				return NumberFormatUtil.fromString(menorValorEsperado.get(), 1);
 			}
 		}
 		
-		return NumberFormatUtil.fromString(menorValorIdeal.get());
+		return NumberFormatUtil.fromString(menorValorEsperado.get());
 	}
 
-	public void setMenorValorIdeal(BigDecimal menorValorIdeal) {
-		this.menorValorIdeal.set(NumberFormatUtil.decimalFormat(menorValorIdeal));
+	public void setMenorValorEsperado(BigDecimal menorValorEsperado) {
+		this.menorValorEsperado.set(NumberFormatUtil.decimalFormat(menorValorEsperado));
 	}
 	
-	public StringProperty menorValorIdealProperty(){
-		return menorValorIdeal;
+	public StringProperty menorValorEsperadoProperty(){
+		return menorValorEsperado;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@FieldRequired(message="maior valor ideal")
-	public BigDecimal getMaiorValorIdeal() {
+	@FieldRequired(message="maior valor esperado")
+	public BigDecimal getMaiorValorEsperado() {
 		if ( getIndicador() != null ){
 			if ( getIndicador().getFormato().equals(FormatoIndicador.INTEIRO_FORMAT) ){
-				return NumberFormatUtil.intFromString(maiorValorIdeal.get());
+				return NumberFormatUtil.intFromString(maiorValorEsperado.get());
 			}
 			
 			if ( getIndicador().getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_DUAS_CASAS) ){
-				return NumberFormatUtil.fromString(maiorValorIdeal.get(), 2);
+				return NumberFormatUtil.fromString(maiorValorEsperado.get(), 2);
 			}
 			
 			if ( getIndicador().getFormato().equals(FormatoIndicador.DECIMAL_FORMAT_UMA_CASA) ){
-				return NumberFormatUtil.fromString(maiorValorIdeal.get(), 1);
+				return NumberFormatUtil.fromString(maiorValorEsperado.get(), 1);
 			}
 		}
-		return NumberFormatUtil.fromString(maiorValorIdeal.get());
+		return NumberFormatUtil.fromString(maiorValorEsperado.get());
 	}
 
-	public void setMaiorValorIdeal(BigDecimal maiorValorIdeal) {
-		this.maiorValorIdeal.set(NumberFormatUtil.decimalFormat(maiorValorIdeal));
+	public void setMaiorValorEsperado(BigDecimal maiorValorEsperado) {
+		this.maiorValorEsperado.set(NumberFormatUtil.decimalFormat(maiorValorEsperado));
 	}
 	
-	public StringProperty maiorValorIdealProperty(){
-		return maiorValorIdeal;
+	public StringProperty maiorValorEsperadoProperty(){
+		return maiorValorEsperado;
 	}
 
 	@Access(AccessType.PROPERTY)

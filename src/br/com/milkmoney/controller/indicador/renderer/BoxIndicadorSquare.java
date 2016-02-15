@@ -1,7 +1,6 @@
 package br.com.milkmoney.controller.indicador.renderer;
 
 import java.math.BigDecimal;
-import java.util.function.Function;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -20,11 +19,13 @@ public class BoxIndicadorSquare extends VBox {
 	public static final String DENTRO_INDICADO  = "DENTRO_INDICADO";
 	public static final String PIOR_INDICADO    = "PIOR_INDICADO";
 	
+	private Label labelValor;
+	
 	private Indicador indicador;
 	private ValorIndicador valorIndicador;
 	private ConfiguracaoIndicador configuracaoIndicador;
 	
-	public BoxIndicadorSquare(Indicador indicador, int ano, int mes, Function<Indicador, Boolean> functionEditIndicador) {
+	public BoxIndicadorSquare(Indicador indicador, int ano, int mes) {
 		
 		this.indicador = indicador;
 		this.valorIndicador = indicador.getValorIndicador(ano, mes);
@@ -45,11 +46,9 @@ public class BoxIndicadorSquare extends VBox {
 		
 		this.setAlignment(Pos.CENTER);
 		
-		Label labelValor = new Label();
-		String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
-		labelValor.setText(valorIndicador.getValor() + sufixo);
+		labelValor = new Label();
 		
-		setStyle();
+		setValue();
 		
 		labelValor.setFont(Font.font("System", 13));
 		labelValor.setStyle("-fx-text-fill: white;");
@@ -60,16 +59,22 @@ public class BoxIndicadorSquare extends VBox {
 		
 	}
 	
+	public void setValue() {
+		String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
+		labelValor.setText(valorIndicador.getValorFormatado() + sufixo);
+		setStyle();
+	}
+
 	private void setStyle(){
 		if ( configuracaoIndicador.getObjetivo() != null && 
 				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
 			
-			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorIdeal()) >= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorEsperado()) >= 0 ){
 				//se o indicador estiver até apenas 5% acima do valor mínimo - liga o alerta
-				if ( configuracaoIndicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
+				if ( configuracaoIndicador.getMenorValorEsperado().compareTo(BigDecimal.ZERO) > 0 && 
 						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
-						configuracaoIndicador.getMenorValorIdeal().add(
-								configuracaoIndicador.getMenorValorIdeal()
+						configuracaoIndicador.getMenorValorEsperado().add(
+								configuracaoIndicador.getMenorValorEsperado()
 									.multiply(BigDecimal.valueOf(0.05)))
 									.compareTo(valorIndicador.getValor()) >= 0 ){
 					this.setStyle(styleAlerta());	
@@ -85,12 +90,12 @@ public class BoxIndicadorSquare extends VBox {
 		if ( configuracaoIndicador.getObjetivo() != null && 
 				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ABAIXO_DO_INTERVALO_IDEAL) ){
 			//nesse caso o objetivo é manter dentrou ou abaixo do intervalo ideal
-			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorIdeal()) <= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorEsperado()) <= 0 ){
 				//se o indicador estiver até apenas 5% abaixo do valor máximo - liga o alerta
-				if ( configuracaoIndicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
+				if ( configuracaoIndicador.getMaiorValorEsperado().compareTo(BigDecimal.ZERO) > 0 &&
 						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
-						configuracaoIndicador.getMaiorValorIdeal().subtract(
-								configuracaoIndicador.getMaiorValorIdeal()
+						configuracaoIndicador.getMaiorValorEsperado().subtract(
+								configuracaoIndicador.getMaiorValorEsperado()
 								.multiply(BigDecimal.valueOf(0.05)))
 								.compareTo(valorIndicador.getValor()) <= 0 ){
 					this.setStyle(styleAlerta());	
@@ -105,23 +110,23 @@ public class BoxIndicadorSquare extends VBox {
 		if ( configuracaoIndicador.getObjetivo() != null && 
 				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL) ){
 			//nesse caso o objetivo é manter dentrou do intervalo ideal
-			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorIdeal()) >= 0 &&
-					valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorIdeal()) <= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorEsperado()) >= 0 &&
+					valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorEsperado()) <= 0 ){
 				
 				//se o indicador estiver até apenas 5% da margem inferior - liga o alerta
-				if ( configuracaoIndicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
+				if ( configuracaoIndicador.getMenorValorEsperado().compareTo(BigDecimal.ZERO) > 0 &&
 						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
-						configuracaoIndicador.getMenorValorIdeal().add(
-								configuracaoIndicador.getMenorValorIdeal()
+						configuracaoIndicador.getMenorValorEsperado().add(
+								configuracaoIndicador.getMenorValorEsperado()
 								.multiply(BigDecimal.valueOf(0.05)))
 								.compareTo(valorIndicador.getValor()) >= 0 ){
 					this.setStyle(styleAlerta());	
 				}else{
 					//se o indicador estiver até apenas 5% da margem superior - liga o alerta
-					if ( configuracaoIndicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
+					if ( configuracaoIndicador.getMaiorValorEsperado().compareTo(BigDecimal.ZERO) > 0 && 
 							valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
-							configuracaoIndicador.getMaiorValorIdeal().subtract(
-									configuracaoIndicador.getMaiorValorIdeal()
+							configuracaoIndicador.getMaiorValorEsperado().subtract(
+									configuracaoIndicador.getMaiorValorEsperado()
 										.multiply(BigDecimal.valueOf(0.05)))
 										.compareTo(valorIndicador.getValor()) <= 0 ){
 						this.setStyle(styleAlerta());	
@@ -147,5 +152,9 @@ public class BoxIndicadorSquare extends VBox {
 	
 	private String styleAlerta(){
 		return "-fx-background-color: #FFFF00;";
+	}
+
+	public Indicador getIndicador() {
+		return indicador;
 	}
 }

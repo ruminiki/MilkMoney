@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.indicador;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import javax.annotation.Resource;
 
@@ -19,6 +20,7 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 
 	@FXML private UCTextField       inputDescricao, inputSigla;
 	@FXML private TextArea          inputDefinicao;
+	@FXML private TextField         inputMenorValorIdeal, inputMaiorValorIdeal;
 	@FXML private ChoiceBox<String> inputFormato;
 	
 	@FXML
@@ -27,6 +29,8 @@ public class IndicadorFormController extends AbstractFormController<Integer, Ind
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		inputSigla.textProperty().bindBidirectional(getObject().siglaProperty());
 		inputDefinicao.textProperty().bindBidirectional(getObject().definicaoProperty());
+		inputMenorValorIdeal.textProperty().bindBidirectional(getObject().menorValorIdealProperty());
+		inputMaiorValorIdeal.textProperty().bindBidirectional(getObject().maiorValorIdealProperty());
 		inputFormato.setItems(FormatoIndicador.getItems());
 		inputFormato.valueProperty().bindBidirectional(getObject().formatoProperty());
 		

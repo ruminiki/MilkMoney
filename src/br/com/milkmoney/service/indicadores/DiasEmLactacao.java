@@ -1,15 +1,18 @@
 package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.milkmoney.dao.AnimalDao;
+import br.com.milkmoney.dao.LactacaoDao;
 import br.com.milkmoney.dao.PartoDao;
-import br.com.milkmoney.model.Parto;
+import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Lactacao;
 import br.com.milkmoney.service.PartoService;
 
 /**
@@ -31,27 +34,28 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 
 	@Autowired private PartoDao partoDao;
 	@Autowired private PartoService partoService;
+	@Autowired private AnimalDao animalDao;
+	@Autowired private LactacaoDao lactacaoDao;
 	
 	@Override
 	public BigDecimal getValue(Date data) {
-		BigDecimal diasEmLactacao = BigDecimal.ZERO;
-		int        totalPartos    = 0;
 		
-		List<Parto> partos = partoDao.findAllOrderByDataDesc(data);
+		BigInteger dias = BigInteger.ZERO;
+		//vacas em lactação
+		List<Animal> femeas = animalDao.findAllFemeasEmLactacao(data);
 		
-		for ( Parto parto : partos ){
+		for ( Animal animal : femeas ){
 			
-			BigDecimal diasLactacaoParto = BigDecimal.valueOf(partoService.contaDiasLactacaoParto(parto, data));
-			diasEmLactacao = diasEmLactacao.add(diasLactacaoParto);
-			totalPartos++;
+			Lactacao lactacao = lactacaoDao.findUltimaLactacaoAnimal(animal);
+			dias = dias.add(BigInteger.valueOf(lactacao.getDiasLactacao(data)));
 			
 		}
-		
-		if ( diasEmLactacao.compareTo(BigDecimal.ZERO) > 0 && totalPartos > 0 ){
-			diasEmLactacao = diasEmLactacao.divide(new BigDecimal(totalPartos), 2, RoundingMode.HALF_UP);
+
+		if ( dias.compareTo(BigInteger.ZERO) > 0 ){
+			return BigDecimal.valueOf(dias.divide(BigInteger.valueOf(femeas.size())).longValue());
 		}
-	
-		return diasEmLactacao;
+		
+		return BigDecimal.ZERO;
 		
 	}
 

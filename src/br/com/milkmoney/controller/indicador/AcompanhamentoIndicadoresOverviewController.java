@@ -11,7 +11,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -22,13 +22,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import org.controlsfx.control.PopOver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
-import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorFormController;
+import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicadorSquare;
 import br.com.milkmoney.controller.root.RootLayoutController;
@@ -52,7 +51,7 @@ public class AcompanhamentoIndicadoresOverviewController {
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
-	@Autowired ConfiguracaoIndicadorFormController configuracaoIndicadorFormController;
+	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
 	
 	private ObservableList<Indicador> data = FXCollections.observableArrayList();
 	
@@ -64,20 +63,16 @@ public class AcompanhamentoIndicadoresOverviewController {
 		lblAno.setText(String.valueOf(ano));
 		vBoxes = new ArrayList<VBox>(Arrays.asList(vbJan, vbFev, vbMar, vbAbr, vbMai, 
 												   vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez));
-		
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				montarTabela(false);
-			}
-		});
-		
+		configuraIndicadores();
 	}
 	
-	private void montarTabela(boolean calcularIndicadores){
+	private void configuraIndicadores(){
+		
 		data.clear();
 		data.addAll(service.findAll());
 		clearTable();
+		
+		vbMain.setDisable(true);
 		
 		for (Indicador indicador : data) {
 
@@ -86,30 +81,6 @@ public class AcompanhamentoIndicadoresOverviewController {
 			HBox.setHgrow(bdi, Priority.ALWAYS);
 			vbIndicadores.getChildren().add(bdi);
 			
-			if ( indicador.getConfiguracaoIndicador(ano) == null ){
-				ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
-				ci.setAno(ano);
-				indicador.getConfiguracoesIndicador().add(ci);
-			}
-			
-			for ( Number n : getMesesAno() ){
-				
-				if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
-					ValorIndicador vi = new ValorIndicador(indicador);
-					vi.setValor(BigDecimal.ZERO);
-					vi.setAno(ano);
-					vi.setMes(n.intValue());
-					indicador.getValores().add(vi);
-				}
-				
-				if ( calcularIndicadores ){
-					service.refreshValorApurado(indicador.getValorIndicador(ano, n.intValue()), DateUtil.lastDayOfMonth(ano, n.intValue()));					
-				}
-				
-			}
-			
-			service.save(indicador);
-			
 		}
 		
 		Platform.runLater(new Runnable() {
@@ -117,14 +88,35 @@ public class AcompanhamentoIndicadoresOverviewController {
 			public void run() {
 				for (Indicador indicador : data) {
 					
+					if ( indicador.getConfiguracaoIndicador(ano) == null ){
+						ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
+						ci.setMenorValorEsperado(indicador.getMenorValorIdeal());
+						ci.setMaiorValorEsperado(indicador.getMaiorValorIdeal());
+						ci.setAno(ano);
+						indicador.getConfiguracoesIndicador().add(ci);
+					}
+					
 					for ( Number n : getMesesAno() ){
 						
-						vBoxes.get(n.intValue() - 1).getChildren().add(
-								new BoxIndicadorSquare(indicador, ano, n.intValue(), editIndicador));
+						if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
+							ValorIndicador vi = new ValorIndicador(indicador);
+							vi.setValor(BigDecimal.ZERO);
+							vi.setAno(ano);
+							vi.setMes(n.intValue());
+							indicador.getValores().add(vi);
+						}
 						
+					}
+					
+					service.save(indicador);
+					
+					for ( Number n : getMesesAno() ){
+						vBoxes.get(n.intValue() - 1).getChildren().add(new BoxIndicadorSquare(indicador, ano, n.intValue()));
 					}	
 					
 				}
+				
+				vbMain.setDisable(false);
 			}
 		});
 		
@@ -132,46 +124,41 @@ public class AcompanhamentoIndicadoresOverviewController {
 	
 	@FXML
 	private void calcularIndicadores(){
+		vbMain.setDisable(true);
+		vbMain.layout();
 		
-		HBox message = new HBox();
-		message.setAlignment(Pos.CENTER);
-		message.setMinWidth(300);
-		message.setMinHeight(80);
-		message.getChildren().add(new Label("Aguarde..."));
-		
-		VBox.setVgrow(message, Priority.ALWAYS);
-		HBox.setHgrow(message, Priority.ALWAYS);
-		
-		PopOver notification = new PopOver();
-		notification.centerOnScreen();
-		notification.setArrowSize(0);
-		notification.setAutoHide(false);
-		notification.setDetachable(false);
-		notification.setContentNode(message);
-		notification.setCornerRadius(0);
-		
-		notification.showingProperty().addListener(
-				(observable, oldValue, newValue) -> {
-			if ( notification.isShowing() ){
+		Platform.runLater(() -> {
+			for ( Number n : getMesesAno() ){
 				
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						montarTabela(true);
-						notification.hide();
-					}
-				});
+				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
 				
-			}
+				for ( Node node : nodes ){
+					
+					BoxIndicadorSquare box = (BoxIndicadorSquare) node;
+					
+					service.refreshValorApurado(box.getIndicador().getValorIndicador(ano, n.intValue()), 
+							DateUtil.lastDayOfMonth(ano, n.intValue()));					
+					
+					box.setValue();
+					
+				}
+				
+				//salva os novos valores calculados
+				for ( Indicador i : data ){
+					service.save(i);
+				}
+				
+			}	
+			vbMain.setDisable(false);
+			vbMain.layout();
 		});
-		
-		notification.show(vbMain.getScene().getWindow());
 		
 	}
 	
 	@FXML
 	private void definirMetas(){
-		//configuracaoIndicadorFormController.setObject();
+		configuracaoIndicadorOverviewController.setAno(ano);
+		configuracaoIndicadorOverviewController.showForm();
 	}
 	
 	private ObservableList<Number> getMesesAno(){
@@ -202,7 +189,7 @@ public class AcompanhamentoIndicadoresOverviewController {
 		if ( ano < LocalDate.now().getYear() ){
 			ano++;
 			lblAno.setText(String.valueOf(ano));
-			montarTabela(false);			
+			configuraIndicadores();			
 		}
 	}
 	
@@ -210,7 +197,7 @@ public class AcompanhamentoIndicadoresOverviewController {
 	private void handleDecreaseAnoReferencia() {
 		ano--;
 		lblAno.setText(String.valueOf(ano));
-		montarTabela(false);
+		configuraIndicadores();
 	}
 	
 	public void showForm() {	

@@ -665,7 +665,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	@FXML
 	private void handleArvoreGenealogica(){
+		Animal animal = getObject();
 		arvoreGenealogicaOverviewController.showForm(getObject());
+		selecionaAnimal(animal);
 	}
 	
 	@FXML

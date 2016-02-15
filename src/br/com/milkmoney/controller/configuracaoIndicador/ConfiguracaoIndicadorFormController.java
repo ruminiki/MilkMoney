@@ -19,7 +19,7 @@ import br.com.milkmoney.service.IService;
 public class ConfiguracaoIndicadorFormController extends AbstractFormController<Integer, ConfiguracaoIndicador> {
 
 	@FXML private UCTextField       inputAno;
-	@FXML private TextField         inputMenorValorIdeal, inputMaiorValorIdeal, inputValorApurado;
+	@FXML private TextField         inputMenorValor, inputMaiorValor;
 	@FXML private TextArea          inputDefinicao;
 	@FXML private ChoiceBox<String> inputObjetivo, inputFormato;
 
@@ -27,8 +27,8 @@ public class ConfiguracaoIndicadorFormController extends AbstractFormController<
 	public void initialize() {
 		
 		inputAno.textProperty().bindBidirectional(getObject().anoProperty());
-		inputMenorValorIdeal.textProperty().bindBidirectional(getObject().menorValorIdealProperty());
-		inputMaiorValorIdeal.textProperty().bindBidirectional(getObject().maiorValorIdealProperty());
+		inputMenorValor.textProperty().bindBidirectional(getObject().menorValorEsperadoProperty());
+		inputMaiorValor.textProperty().bindBidirectional(getObject().maiorValorEsperadoProperty());
 		inputObjetivo.setItems(ObjetivoIndicador.getItems());
 		inputObjetivo.valueProperty().bindBidirectional(getObject().objetivoProperty());
 		
@@ -36,7 +36,7 @@ public class ConfiguracaoIndicadorFormController extends AbstractFormController<
 	
 	@Override
 	public String getFormName() {
-		return "view/indicador/ConfiguracaoIndicadorForm.fxml";
+		return "view/configuracaoIndicador/ConfiguracaoIndicadorForm.fxml";
 	}
 	
 	@Override

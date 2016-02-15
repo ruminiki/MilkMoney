@@ -2,6 +2,7 @@ package br.com.milkmoney.service;
 
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,14 @@ public class ConfiguracaoIndicadorService implements IService<Integer, Configura
 	@Override
 	public ObservableList<ConfiguracaoIndicador> defaultSearch(String param) {
 		throw new NotImplementedException();
+	}
+	
+	public ObservableList<ConfiguracaoIndicador> defaultSearch(Object[] param) {
+		return FXCollections.observableArrayList(dao.defaultSearch(param));
+	}
+	
+	public ObservableList<ConfiguracaoIndicador> findByYear(int ano) {
+		return FXCollections.observableArrayList(dao.findByYear(ano));
 	}
 
 	@Override
