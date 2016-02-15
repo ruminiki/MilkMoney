@@ -29,7 +29,6 @@ import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
-import br.com.milkmoney.service.searchers.SearchFemeas;
 import br.com.milkmoney.service.searchers.SearchMachos;
 import br.com.milkmoney.util.ImageUtil;
 
@@ -103,7 +102,6 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 	private void handleSelecionarMae() {
 		
 		animalReducedOverviewController.setObject(getObject().getMae());
-		animalReducedOverviewController.setSearch((SearchFemeas) MainApp.getBean(SearchFemeas.class));
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.NEW_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.EDIT_DISABLED, true);
 		animalReducedOverviewController.getFormConfig().put(AbstractOverviewController.REMOVE_DISABLED, true);

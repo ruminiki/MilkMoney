@@ -45,6 +45,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 	private StringProperty              classeCalculo = new SimpleStringProperty();
 	private StringProperty              menorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
 	private StringProperty              maiorValorIdeal = new SimpleStringProperty(String.valueOf(BigDecimal.ZERO));
+	private StringProperty              objetivo = new SimpleStringProperty(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL);
 	private List<ConfiguracaoIndicador> configuracoesIndicador = new ArrayList<ConfiguracaoIndicador>();
 	private List<ValorIndicador>        valores = new ArrayList<ValorIndicador>();
 	private int                         ordem;
@@ -207,7 +208,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ValorIndicador.class, cascade={CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(orphanRemoval=true, targetEntity=ValorIndicador.class, cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	@JoinColumn(name="indicador")
 	public List<ValorIndicador> getValores() {
 		if ( valores == null )
@@ -230,7 +231,7 @@ public class Indicador extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=ConfiguracaoIndicador.class, cascade={CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
+	@OneToMany(orphanRemoval=true, targetEntity=ConfiguracaoIndicador.class, cascade={CascadeType.MERGE, CascadeType.REMOVE}, fetch=FetchType.EAGER)
 	@JoinColumn(name="indicador")
 	public List<ConfiguracaoIndicador> getConfiguracoesIndicador() {
 		if ( configuracoesIndicador == null )
@@ -250,6 +251,20 @@ public class Indicador extends AbstractEntity implements Serializable {
 			}
 		}
 		return null;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="objetivo")
+	public String getObjetivo() {
+		return objetivo.get();
+	}
+
+	public void setObjetivo(String objetivo) {
+		this.objetivo.set(objetivo);
+	}
+	
+	public StringProperty objetivoProperty(){
+		return objetivo;
 	}
 	
 	@Override

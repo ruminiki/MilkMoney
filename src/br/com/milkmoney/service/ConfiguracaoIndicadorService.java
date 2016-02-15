@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import br.com.milkmoney.dao.ConfiguracaoIndicadorDao;
 import br.com.milkmoney.model.ConfiguracaoIndicador;
+import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.validation.ConfiguracaoIndicadorValidation;
 
 @Service
@@ -54,6 +55,10 @@ public class ConfiguracaoIndicadorService implements IService<Integer, Configura
 	public ObservableList<ConfiguracaoIndicador> findByYear(int ano) {
 		return FXCollections.observableArrayList(dao.findByYear(ano));
 	}
+	
+	public ObservableList<ConfiguracaoIndicador> findByYear(Indicador indicador, int ano) {
+		return FXCollections.observableArrayList(dao.findByYear(indicador, ano));
+	}
 
 	@Override
 	public void validate(ConfiguracaoIndicador configuracaoIndicador) {
@@ -64,6 +69,6 @@ public class ConfiguracaoIndicadorService implements IService<Integer, Configura
 	public ObservableList<ConfiguracaoIndicador> findAllAsObservableList() {
 		return null;
 	}
-	
+
 	
 }

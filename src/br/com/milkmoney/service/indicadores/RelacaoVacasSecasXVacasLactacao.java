@@ -25,8 +25,8 @@ public class RelacaoVacasSecasXVacasLactacao extends AbstractCalculadorIndicador
 	@Override
 	public BigDecimal getValue(Date data) {
 
-		BigDecimal vacasSecas    = BigDecimal.valueOf(animalDao.countAllFemeasAtivas(data).longValue());
-		BigDecimal vacasLactacao = BigDecimal.valueOf(animalDao.countAllFemeasAtivas(data).longValue());
+		BigDecimal vacasSecas    = BigDecimal.valueOf(animalDao.countAllFemeasSecas(data).longValue());
+		BigDecimal vacasLactacao = BigDecimal.valueOf(animalDao.countAllFemeasEmLactacao(data).longValue());
 		BigDecimal relacao       = BigDecimal.ZERO;
 				
 		if ( vacasSecas.compareTo(BigDecimal.ZERO) > 0 ){

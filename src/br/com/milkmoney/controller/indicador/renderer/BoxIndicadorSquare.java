@@ -21,12 +21,15 @@ public class BoxIndicadorSquare extends VBox {
 	
 	private Label labelValor;
 	
+	private int ano, mes;
 	private Indicador indicador;
 	private ValorIndicador valorIndicador;
 	private ConfiguracaoIndicador configuracaoIndicador;
 	
 	public BoxIndicadorSquare(Indicador indicador, int ano, int mes) {
 		
+		this.ano = ano;
+		this.mes = mes;
 		this.indicador = indicador;
 		this.valorIndicador = indicador.getValorIndicador(ano, mes);
 		this.configuracaoIndicador = indicador.getConfiguracaoIndicador(ano);
@@ -157,4 +160,15 @@ public class BoxIndicadorSquare extends VBox {
 	public Indicador getIndicador() {
 		return indicador;
 	}
+	
+	public void setIndicador(Indicador indicador){
+		this.indicador = indicador;
+		this.valorIndicador = indicador.getValorIndicador(ano, mes);
+		this.configuracaoIndicador = indicador.getConfiguracaoIndicador(ano);
+	}
+	
+	public ConfiguracaoIndicador getConfiguracaoIndicador(){
+		return this.configuracaoIndicador;
+	}
+	
 }

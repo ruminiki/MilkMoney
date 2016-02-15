@@ -71,6 +71,7 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 			if ( parto != null ){
 				
 				Cobertura cobertura = coberturaDao.findFirstAfterDate(animal, parto.getData());
+				
 				if ( cobertura != null && DateUtil.after(data, cobertura.getData()) ){
 					
 					long dias = ChronoUnit.DAYS.between(DateUtil.asLocalDate(parto.getData()), DateUtil.asLocalDate(cobertura.getData()));

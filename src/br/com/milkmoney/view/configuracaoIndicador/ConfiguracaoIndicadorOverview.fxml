@@ -9,49 +9,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="338.0" minWidth="672.0" prefHeight="338.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController">
+<AnchorPane maxHeight="454.0" minWidth="672.0" prefHeight="335.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController">
    <children>
       <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <TextField fx:id="inputPesquisa" alignment="CENTER" minHeight="30.0" minWidth="0.0" prefHeight="30.0" promptText="indicador, objetivo" HBox.hgrow="ALWAYS">
-                     <padding>
-                        <Insets right="5.0" top="5.0" />
-                     </padding>
-                     <HBox.margin>
-                        <Insets left="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button minHeight="30.0" minWidth="0.0" mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
-                     <children>
-                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Registros">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets right="5.0" />
-               </padding>
-            </HBox>
             <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
               <columns>
                 <TableColumn fx:id="indicadorColumn" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="-1.0" resizable="false" text="Indicador" />
                   <TableColumn fx:id="anoColumn" maxWidth="60.0" minWidth="60.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Ano" />
                 <TableColumn fx:id="descricaoColumn" maxWidth="300.0" minWidth="300.0" prefWidth="-1.0" text="Faixa Ideal">
                      <columns>
-                        <TableColumn fx:id="menorValorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Menor Valor" />
-                        <TableColumn fx:id="maiorValorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Maior Valor" />
+                        <TableColumn fx:id="menorValorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="De" />
+                        <TableColumn fx:id="maiorValorColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Até" />
                      </columns>
                   </TableColumn>
                   <TableColumn fx:id="objetivoColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Objetivo" />
@@ -63,7 +32,7 @@
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
                <children>
                   <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Configurar" />
-                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#closeForm" prefHeight="30.0" text="Cancelar" />
+                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#closeForm" prefHeight="30.0" text="Fechar" />
                </children>
             </HBox>
          </children>

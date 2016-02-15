@@ -165,7 +165,7 @@ public class BoxIndicador extends VBox {
 		*/
 	}
 	
-	private String styleAbaixo(){
+	/*private String styleAbaixo(){
 		return "-fx-border-color: #FF0000; -fx-border-radius: 50; -fx-border-width: 3";
 	}
 	
@@ -175,7 +175,7 @@ public class BoxIndicador extends VBox {
 	
 	private String styleAlerta(){
 		return "-fx-border-color: #FFFF00; -fx-border-radius: 50; -fx-border-width: 3";
-	}
+	}*/
 	
 	private void onMouseHover(){
 		vbValor.setStyle("-fx-border-color: #999; -fx-border-radius: 50");

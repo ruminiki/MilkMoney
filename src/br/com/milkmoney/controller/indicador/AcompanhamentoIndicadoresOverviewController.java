@@ -35,6 +35,8 @@ import br.com.milkmoney.model.ConfiguracaoIndicador;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.ValorIndicador;
+import br.com.milkmoney.service.ConfiguracaoIndicadorService;
+import br.com.milkmoney.service.ValorIndicadorService;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 import br.com.milkmoney.util.DateUtil;
@@ -48,6 +50,9 @@ public class AcompanhamentoIndicadoresOverviewController {
 	@FXML private Label lblAno;
 	
 	@Autowired private IndicadorService service;
+	@Autowired private ConfiguracaoIndicadorService configuracaoIndicadorService;
+	@Autowired private ValorIndicadorService valorIndicadorService;
+	
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
@@ -63,61 +68,67 @@ public class AcompanhamentoIndicadoresOverviewController {
 		lblAno.setText(String.valueOf(ano));
 		vBoxes = new ArrayList<VBox>(Arrays.asList(vbJan, vbFev, vbMar, vbAbr, vbMai, 
 												   vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez));
+		
+		data.clear();
+		data.addAll(service.findAll());
+		
 		configuraIndicadores();
+		
 	}
 	
 	private void configuraIndicadores(){
 		
-		data.clear();
-		data.addAll(service.findAll());
-		clearTable();
-		
 		vbMain.setDisable(true);
 		
-		for (Indicador indicador : data) {
-
-			BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
-			VBox.setVgrow(bdi, Priority.ALWAYS);
-			HBox.setHgrow(bdi, Priority.ALWAYS);
-			vbIndicadores.getChildren().add(bdi);
-			
-		}
-		
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				for (Indicador indicador : data) {
+		Platform.runLater(()->{
+			clearTable();
+			for (Indicador indicador : data) {
+				
+				if ( indicador.getConfiguracaoIndicador(ano) == null ){
+					ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
+					ci.setMenorValorEsperado(indicador.getMenorValorIdeal());
+					ci.setMaiorValorEsperado(indicador.getMaiorValorIdeal());
+					ci.setObjetivo(indicador.getObjetivo());
+					ci.setAno(ano);
+					indicador.getConfiguracoesIndicador().add(ci);
+				}
+				
+				for ( Number n : getMesesAno() ){
 					
-					if ( indicador.getConfiguracaoIndicador(ano) == null ){
-						ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
-						ci.setMenorValorEsperado(indicador.getMenorValorIdeal());
-						ci.setMaiorValorEsperado(indicador.getMaiorValorIdeal());
-						ci.setAno(ano);
-						indicador.getConfiguracoesIndicador().add(ci);
+					if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
+						ValorIndicador vi = new ValorIndicador(indicador);
+						vi.setValor(BigDecimal.ZERO);
+						vi.setAno(ano);
+						vi.setMes(n.intValue());
+						indicador.getValores().add(vi);
 					}
-					
-					for ( Number n : getMesesAno() ){
-						
-						if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
-							ValorIndicador vi = new ValorIndicador(indicador);
-							vi.setValor(BigDecimal.ZERO);
-							vi.setAno(ano);
-							vi.setMes(n.intValue());
-							indicador.getValores().add(vi);
-						}
-						
-					}
-					
-					service.save(indicador);
-					
-					for ( Number n : getMesesAno() ){
-						vBoxes.get(n.intValue() - 1).getChildren().add(new BoxIndicadorSquare(indicador, ano, n.intValue()));
-					}	
 					
 				}
 				
-				vbMain.setDisable(false);
+				service.save(indicador);
+				
 			}
+			//recarrega para preencher todos os ids das coleções inseridas
+			data.clear();
+			data.addAll(service.findAll());
+			
+			for (Indicador indicador : data) {
+
+				BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
+				VBox.setVgrow(bdi, Priority.ALWAYS);
+				HBox.setHgrow(bdi, Priority.ALWAYS);
+				vbIndicadores.getChildren().add(bdi);
+				
+			}
+			
+			for (Indicador indicador : data) {
+				for ( Number n : getMesesAno() ){
+					vBoxes.get(n.intValue() - 1).getChildren().add(new BoxIndicadorSquare(indicador, ano, n.intValue()));
+				}	
+			}
+			
+			vbMain.setDisable(false);
+			
 		});
 		
 	}
@@ -131,7 +142,6 @@ public class AcompanhamentoIndicadoresOverviewController {
 			for ( Number n : getMesesAno() ){
 				
 				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
-				
 				for ( Node node : nodes ){
 					
 					BoxIndicadorSquare box = (BoxIndicadorSquare) node;
@@ -149,16 +159,41 @@ public class AcompanhamentoIndicadoresOverviewController {
 				}
 				
 			}	
+			
 			vbMain.setDisable(false);
-			vbMain.layout();
+			
 		});
 		
 	}
 	
 	@FXML
 	private void definirMetas(){
+		
 		configuracaoIndicadorOverviewController.setAno(ano);
 		configuracaoIndicadorOverviewController.showForm();
+		
+		//força o refresh da meta
+		data.clear();
+		data.addAll(service.findAll());
+		
+		for (Indicador indicador : data) {
+			for ( Number n : getMesesAno() ){
+				
+				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
+				for ( Node node : nodes ){
+					
+					BoxIndicadorSquare box = (BoxIndicadorSquare) node;
+					if ( box.getIndicador().getId() == indicador.getId() ){
+						box.setIndicador(indicador);
+						box.setValue();						
+					}
+					
+				}
+				
+			}	
+			
+		}
+		
 	}
 	
 	private ObservableList<Number> getMesesAno(){
@@ -189,7 +224,7 @@ public class AcompanhamentoIndicadoresOverviewController {
 		if ( ano < LocalDate.now().getYear() ){
 			ano++;
 			lblAno.setText(String.valueOf(ano));
-			configuraIndicadores();			
+			configuraIndicadores();
 		}
 	}
 	
@@ -201,19 +236,16 @@ public class AcompanhamentoIndicadoresOverviewController {
 	}
 	
 	public void showForm() {	
-		
 		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
 		Stage dialogStage = new Stage();
 		dialogStage.setTitle(getFormTitle());
 		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
 		dialogStage.initOwner(MainApp.primaryStage);
-
+		dialogStage.setResizable(false);
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
-		
 		dialogStage.show();
-		
 	}
 	
 	public String getFormName(){

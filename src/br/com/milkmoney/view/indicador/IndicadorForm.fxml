@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="322.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.IndicadorFormController">
+<AnchorPane prefHeight="276.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.IndicadorFormController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -20,8 +20,6 @@
                 <RowConstraints maxHeight="28.0" minHeight="28.0" prefHeight="28.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="28.0" minHeight="28.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="161.0" minHeight="10.0" prefHeight="126.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="28.0" minHeight="28.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="28.0" minHeight="28.0" prefHeight="28.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Descrição: " />
@@ -30,16 +28,6 @@
                   <TextArea fx:id="inputDefinicao" prefHeight="113.0" prefWidth="380.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Sigla: " GridPane.rowIndex="1" />
                   <UCTextField fx:id="inputSigla" maxWidth="120.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label text="Formato: " GridPane.rowIndex="4" />
-                  <ChoiceBox fx:id="inputFormato" minWidth="253.0" prefHeight="25.0" prefWidth="296.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <children>
-                        <TextField fx:id="inputMenorValorIdeal" maxWidth="120.0" />
-                        <Label text="e" />
-                        <TextField fx:id="inputMaiorValorIdeal" maxWidth="120.0" />
-                     </children>
-                  </HBox>
-                  <Label text="Valor Ideal Entre: " GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

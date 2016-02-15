@@ -33,7 +33,6 @@ import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.LactacaoService;
 import br.com.milkmoney.service.ProducaoIndividualService;
 import br.com.milkmoney.service.RelatorioService;
-import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
 
 @Controller
 public class ProducaoIndividualOverviewController extends AbstractOverviewController<Integer, ProducaoIndividual>{
@@ -61,7 +60,6 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	
 	@Autowired private RelatorioService relatorioService;
 	@Autowired private LactacaoService lactacaoService;
-	@Autowired private SearchFemeasAtivas searchFemeasAtivas;
 	@Autowired private ProducaoIndividualFormController producaoIndividualFormController;
 	
 	private Animal animal;

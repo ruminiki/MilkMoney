@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -47,14 +48,34 @@ public class TaxaConcepcao extends AbstractCalculadorIndicador{
 		long coberturasRealizadas = 0;
 		long concepcoes = 0;
 		
-		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(42));
-		Date dataFim = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(21));
+		//analisa coberturas do ultimo mes
+		//Date dataInicio = DateUtil.asDate(LocalDate.of(DateUtil.asLocalDate(data).minusMonths(1).getYear(), DateUtil.asLocalDate(data).minusMonths(1).getMonthValue(), 01));
+		//Date dataFim    = DateUtil.asDate(DateUtil.asLocalDate(data).minusMonths(1));
+		
+		Date dataInicio = DateUtil.asDate(LocalDate.of(DateUtil.asLocalDate(data).getYear(), DateUtil.asLocalDate(data).getMonthValue(), 1));
+		Date dataFim    = data;
 		
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
-			if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
-				concepcoes ++;
+			if ( cobertura.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+				
+				if ( cobertura.getAborto() != null ){
+					if ( cobertura.getAborto().getData().compareTo(data) > 0 ){
+						concepcoes ++;
+					}
+				}
+				
+				if ( cobertura.getParto() != null ){
+					if ( cobertura.getParto().getData().compareTo(data) > 0 ){
+						concepcoes ++;
+					}
+				}
+				
+				if ( cobertura.getParto() == null && cobertura.getAborto() == null ){
+					concepcoes ++;
+				}
+				
 			}
 		}
 		

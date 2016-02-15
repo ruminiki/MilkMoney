@@ -2,6 +2,7 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -41,9 +42,9 @@ public class TaxaPrenhes extends AbstractCalculadorIndicador{
 
 		BigDecimal concepcoes = BigDecimal.ZERO;
 		
-		//período entre 42 e 21 dias atrás
-		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(42));
-		Date dataFim = DateUtil.asDate(DateUtil.asLocalDate(data).minusDays(21));
+		//analisa coberturas do ultimo mes
+		Date dataInicio = DateUtil.asDate(LocalDate.of(DateUtil.asLocalDate(data).getYear(), DateUtil.asLocalDate(data).getMonthValue(), 1));
+		Date dataFim    = data;
 		
 		//busca os animais disponíveis no período
 		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);
@@ -52,7 +53,7 @@ public class TaxaPrenhes extends AbstractCalculadorIndicador{
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
-			if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+			if ( cobertura.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
 				//contabiliza todas as concepções
 				concepcoes = concepcoes.add(BigDecimal.ONE);
 			}

@@ -94,10 +94,6 @@ public class AnimalService implements IService<Integer, Animal>{
 		return FXCollections.observableArrayList(dao.findAllFemeasAtivas(data));
 	}
 
-	public ObservableList<Animal> findAllReprodutoresAsObservableList() {
-		return findAllAsObservableList();
-	}
-
 	@Override
 	public void validate(Animal entity) {
 		AnimalValidation.validate(entity);
@@ -141,14 +137,6 @@ public class AnimalService implements IService<Integer, Animal>{
 		}
 		
 		return dao.countAllNovilhasIdadeAteXMeses(idadeMinima, data);
-	}
-	
-	public Long getNumeroPartos(Animal animal) {
-		return partoDao.countByAnimal(animal);
-	}
-	
-	public boolean isInLactacao(Date data, Animal animal) {
-		return dao.isInLactacao(data, animal);
 	}
 	
 	/*

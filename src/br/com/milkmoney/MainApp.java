@@ -34,9 +34,7 @@ import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController;
 import br.com.milkmoney.exception.GlobalExceptionHandler;
-import br.com.milkmoney.service.ApplicationUpdateService;
 
 public class MainApp extends Application {
 	

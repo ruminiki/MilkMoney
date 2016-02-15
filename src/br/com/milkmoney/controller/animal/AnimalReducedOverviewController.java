@@ -11,16 +11,12 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Raca;
 import br.com.milkmoney.service.IService;
-import br.com.milkmoney.service.searchers.SearchFemeasAtivas;
-import br.com.milkmoney.service.searchers.SearchMachos;
-import br.com.milkmoney.service.searchers.SearchReprodutoresAtivos;
 
 @Controller
 public class AnimalReducedOverviewController extends AbstractReducedOverviewController<Integer, Animal> {
@@ -47,24 +43,6 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 		
 		super.initialize(animalFormController);
 
-	}
-	
-	@FXML
-	private void handleFindFemeas(){
-		setSearch((SearchFemeasAtivas)MainApp.getBean(SearchFemeasAtivas.class));
-		refreshTableOverview();
-	}
-	
-	@FXML
-	private void handleFindMachos(){
-		setSearch((SearchMachos)MainApp.getBean(SearchMachos.class));
-		refreshTableOverview();
-	}
-	
-	@FXML
-	private void handleFindReprodutores(){
-		setSearch((SearchReprodutoresAtivos)MainApp.getBean(SearchReprodutoresAtivos.class));
-		refreshTableOverview();
 	}
 	
 	@Override

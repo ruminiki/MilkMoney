@@ -199,95 +199,21 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasCobertas() {
+	public List<Animal> findAllFemeasCobertas(Date data) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT distinct a FROM Cobertura c inner join c.femea a "
-				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		return query.getResultList();
+				+ "left join c.parto p on p.data > :data "
+				+ "left join c.aborto ab on ab.data > :data "
+				+ "WHERE c.data <= :data and "
+				+ "not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) and "
+				+ "not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data)");
 		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasCobertasNaoConfirmadas() {
-		
-		Query query = entityManager.createQuery(
-				"SELECT distinct a FROM Cobertura c inner join c.femea a "
-				+ "WHERE c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "') "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+		query.setParameter("data", data);
 		return query.getResultList();
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasNaoCobertas() {
-		
-		Query query = entityManager.createQuery(
-				"SELECT distinct a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' and "
-				+ "not exists (SELECT 1 FROM Cobertura c where c.situacaoCobertura in ('" + SituacaoCobertura.NAO_CONFIRMADA + "','" + SituacaoCobertura.PRENHA + "') and c.femea = a.id ) "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		
-		return query.getResultList();
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasLactacaoXDias(Integer dias) {
-		
-		Query query = entityManager.createQuery("SELECT a FROM Lactacao lc inner join lc.animal a "
-						+ "WHERE lc.dataFim is null and DATEDIFF(current_date(), lc.dataInicio) between 0 and :dias "
-						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		query.setParameter("dias", dias);
-		
-		return query.getResultList();
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasASecar() {
-		
-		Query query = entityManager.createQuery("SELECT a FROM Animal a "
-				+ "WHERE exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and DATEDIFF(current_date(), lc.dataInicio) >= 305 and lc.dataFim is null) "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		return query.getResultList();
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasSecas() {
-		
-		Query query = entityManager.createQuery("SELECT a FROM Animal a "
-				+ "WHERE not exists (SELECT 1 FROM Lactacao lc where lc.animal = a and lc.dataFim is null) "
-				+ "and exists (SELECT 1 FROM Parto p where p.cobertura.femea = a) "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
-		return query.getResultList();
-		
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasLactacaoMaisXDias(Integer dias) {
-		Query query = entityManager.createQuery(
-				"SELECT a FROM Lactacao lc inner join lc.animal a "
-				+ "WHERE DATEDIFF(current_date(), lc.dataInicio) >= :dias and lc.dataFim is null "
-				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id) order by lc.dataInicio");
-		query.setMaxResults(1);
-		query.setParameter("dias", dias);
-		
-		return query.getResultList();
-	}
-
-	/*
-	 *Recupera todos os animais em lactação em uma determinada data.
-	 *Se não for passado parâmetro, considera a data atual.
-	 */
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasEmLactacao(Date data) {
 		
@@ -300,9 +226,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 	}
 	
-	/*
-	 *Identifica se o animal está em lactação em uma determinada data.
-	 */
 	public Boolean isInLactacao(Date data, Animal animal) {
 		
 		Query query = entityManager.createQuery(
@@ -361,18 +284,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllAnimaisMortos() {
-		Query query = entityManager.createQuery("SELECT a FROM MorteAnimal m inner join m.animal a ");
-		return query.getResultList();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllAnimaisVendidos() {
-		Query query = entityManager.createQuery("SELECT a FROM VendaAnimal v inner join v.animal a");
-		return query.getResultList();
-	}
-	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAnimaisComParto(Date data) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
@@ -474,23 +385,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 
 		return BigInteger.valueOf((Long)query.getSingleResult());
 	}
-
-	public BigInteger countVacasDisponiveisParaCoberturaUltimos21Dias(int diasIdadeMinimaParaCobertura, int periodoVoluntarioEspera) {
-		//vacas disponíveis para serem cobertas:
-		//(1) não vendidas, (2) não mortas, (3) que não estejam cobertas(prenhas) no período, (3) não são recém paridas, (4) tem idade suficiente para cobertura
-		return (BigInteger) entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a where DATEDIFF(current_date(), a.dataNascimento) between 0 and " + diasIdadeMinimaParaCobertura + " and "
-				+ "not exists (select 1 from cobertura c where c.femea = a.id and DATEDIFF(current_date(), c.data) between 0 and 21 and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "','" + SituacaoCobertura.NAO_CONFIRMADA + "')) and "
-				+ "not exists (select 1 from parto p inner join cobertura c on (c.id = p.cobertura) where c.femea = a.id and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")").getSingleResult();
-	}
-
-	public BigInteger countAllAnimaisSemLactacao() {
-		Query query = entityManager.createNativeQuery(
-				"select count(*) from viewAnimaisAtivos a " +
-				"where a.sexo = '" + Sexo.FEMEA + "' and not exists "
-				+ "(select 1 from lactacao lc where lc.animal = a.id)");
-		return (BigInteger) query.getSingleResult();
-	}
 	
 	/*
 	 * Vacas disponíveis para serem cobertas:
@@ -516,65 +410,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasEmPeriodoVoluntarioEspera(int periodoVoluntarioEspera) {
-		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a Where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + periodoVoluntarioEspera + ")");
-		return query.getResultList();
-	}
-
-	/*
-	 * Esse método é utilizado para filtra os animais não cobertos 
-	 * dentro do período dos três primeiros ciclos após o parto.
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Animal> findFemeasNaoPrenhasXDiasAposParto(int dias) {
-		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a Where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) between 0 and " + dias + ") and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "'))");
-		return query.getResultList();
-	}
-	/*
-	 * Esse método é utilizado para filtra os animais não cobertos 
-	 * após já passados os três primeiros ciclos.
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Animal> findFemeasNaoPrenhasAposXDiasAposParto(int dias) {
-		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a Where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Parto p where p.cobertura.femea = a and DATEDIFF(current_date(), p.data) >= " + dias + ") and "
-				+ "not exists (select 1 from Cobertura c where c.femea = a and c.situacaoCobertura in ('" + SituacaoCobertura.PRENHA + "', '" + SituacaoCobertura.NAO_CONFIRMADA + "'))");
-		return query.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findFemeasPrenhas() {
-		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a Where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Cobertura c where  c.femea = a and c.situacaoCobertura = '" + SituacaoCobertura.PRENHA + "')");
-		return query.getResultList();
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findFemeasCobertasSemParto() {
-		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id) and "
-				+ "exists (select 1 from Cobertura c where c.femea.id = a.id ) and "
-				+ "not exists (select 1 from Parto p where p.cobertura.femea.id = a.id )");
-		
-		return query.getResultList();
-	}
 	/**
 	 * Seleciona os animais que compõem o cálculo da eficiência reprodutiva
 	 * Fêmeas com partos ou coberturas no período

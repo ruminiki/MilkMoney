@@ -290,6 +290,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 							diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
 						}
 					}
+				}else{
+					diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
 				}
 				
 			}

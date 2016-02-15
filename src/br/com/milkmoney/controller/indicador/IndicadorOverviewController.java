@@ -47,7 +47,7 @@ public class IndicadorOverviewController {
 	@FXML
 	public void initialize() {
 		//zootécnicos
-		data = service.findAllIndicadoresZootecnicosAsObservableList(false, DateUtil.today);
+		//data = service.findAllIndicadoresZootecnicosAsObservableList(false, DateUtil.today);
 	}
 	
 	private void carregaIndicadores(){

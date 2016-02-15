@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.ConfiguracaoIndicador;
+import br.com.milkmoney.model.Indicador;
 
 @Repository
 public class ConfiguracaoIndicadorDao extends AbstractGenericDao<Integer, ConfiguracaoIndicador> {
@@ -23,13 +24,23 @@ public class ConfiguracaoIndicadorDao extends AbstractGenericDao<Integer, Config
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<ConfiguracaoIndicador> findByYear(Indicador indicador, int ano) {
+
+		Query query = entityManager.createQuery("SELECT r FROM ConfiguracaoIndicador r WHERE ano = :ano and r.indicador = :indicador order by r.indicador.ordem");
+		query.setParameter("ano", ano);
+		query.setParameter("indicador", indicador);
+		
+		return query.getResultList();
+		
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<ConfiguracaoIndicador> findByYear(int ano) {
 
 		Query query = entityManager.createQuery("SELECT r FROM ConfiguracaoIndicador r WHERE ano = :ano order by r.indicador.ordem");
 		query.setParameter("ano", ano);
 		
 		return query.getResultList();
-		
 	}
 
 }

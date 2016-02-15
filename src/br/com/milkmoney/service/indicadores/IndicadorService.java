@@ -6,10 +6,10 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.milkmoney.dao.IndicadorDao;
 import br.com.milkmoney.model.Indicador;
@@ -23,7 +23,7 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	@Autowired private IndicadorDao dao;
 
 	@Override
-	@Transactional
+	@Transactional(propagation=Propagation.REQUIRED)
 	public boolean save(Indicador entity) {
 		validate(entity);
 		return dao.persist(entity);
@@ -52,14 +52,6 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	
 	public ValorIndicador refreshValorApurado(ValorIndicador valorIndicador, Date data){
 		return dao.refreshValorApurado(valorIndicador, data);
-	}
-	
-	public ObservableList<Indicador> findAllIndicadoresZootecnicosAsObservableList(boolean refreshValorApurado, Date data) {
-		return FXCollections.observableArrayList(dao.findAllIndicadoresZootecnicos(refreshValorApurado, data));
-	}
-	
-	public ObservableList<Indicador> findAllQuantitativosRebanhoAsObservableList(boolean refreshValorApurado, Date data) {
-		return FXCollections.observableArrayList(dao.findAllQuantitativosRebanho(refreshValorApurado, data));
 	}
 	
 	@Override
