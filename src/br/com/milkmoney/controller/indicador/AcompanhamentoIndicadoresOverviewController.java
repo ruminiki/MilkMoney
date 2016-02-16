@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -30,6 +31,7 @@ import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicadorSquare;
+import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.ConfiguracaoIndicador;
 import br.com.milkmoney.model.Indicador;
@@ -41,6 +43,7 @@ import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.Util;
+
 
 @Controller
 public class AcompanhamentoIndicadoresOverviewController {
@@ -63,6 +66,9 @@ public class AcompanhamentoIndicadoresOverviewController {
 	private int ano = LocalDate.now().getYear();
 	private List<VBox> vBoxes;
 	
+	Task<Void> task = null;
+	PopUpWait popUpWait = null;
+	
 	@FXML
 	public void initialize() {
 		lblAno.setText(String.valueOf(ano));
@@ -73,97 +79,130 @@ public class AcompanhamentoIndicadoresOverviewController {
 		data.addAll(service.findAll());
 		
 		configuraIndicadores();
-		
 	}
 	
 	private void configuraIndicadores(){
 		
 		vbMain.setDisable(true);
-		
-		Platform.runLater(()->{
-			clearTable();
-			for (Indicador indicador : data) {
+		/*Task<Void> t = new Task<Void>() {
+			
+			@Override
+			public Void call() throws InterruptedException {*/
 				
-				if ( indicador.getConfiguracaoIndicador(ano) == null ){
-					ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
-					ci.setMenorValorEsperado(indicador.getMenorValorIdeal());
-					ci.setMaiorValorEsperado(indicador.getMaiorValorIdeal());
-					ci.setObjetivo(indicador.getObjetivo());
-					ci.setAno(ano);
-					indicador.getConfiguracoesIndicador().add(ci);
-				}
-				
-				for ( Number n : getMesesAno() ){
+				clearTable();
+				for (Indicador indicador : data) {
 					
-					if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
-						ValorIndicador vi = new ValorIndicador(indicador);
-						vi.setValor(BigDecimal.ZERO);
-						vi.setAno(ano);
-						vi.setMes(n.intValue());
-						indicador.getValores().add(vi);
+					if ( indicador.getConfiguracaoIndicador(ano) == null ){
+						ConfiguracaoIndicador ci = new ConfiguracaoIndicador(indicador);
+						ci.setMenorValorEsperado(indicador.getMenorValorIdeal());
+						ci.setMaiorValorEsperado(indicador.getMaiorValorIdeal());
+						ci.setObjetivo(indicador.getObjetivo());
+						ci.setAno(ano);
+						indicador.getConfiguracoesIndicador().add(ci);
 					}
 					
+					for ( Number n : getMesesAno() ){
+						
+						if ( indicador.getValorIndicador(ano, n.intValue()) == null ){
+							ValorIndicador vi = new ValorIndicador(indicador);
+							vi.setValor(BigDecimal.ZERO);
+							vi.setAno(ano);
+							vi.setMes(n.intValue());
+							indicador.getValores().add(vi);
+						}
+						
+					}
+					
+					service.save(indicador);
+					
+				}
+				//recarrega para preencher todos os ids das coleções inseridas
+				data.clear();
+				data.addAll(service.findAll());
+				
+				for (Indicador indicador : data) {
+
+					BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
+					VBox.setVgrow(bdi, Priority.ALWAYS);
+					HBox.setHgrow(bdi, Priority.ALWAYS);
+					vbIndicadores.getChildren().add(bdi);
+					
 				}
 				
-				service.save(indicador);
+				for (Indicador indicador : data) {
+					for ( Number n : getMesesAno() ){
+						vBoxes.get(n.intValue() - 1).getChildren().add(new BoxIndicadorSquare(indicador, ano, n.intValue()));
+					}	
+				}
+				vbMain.setDisable(false);
+				/*return null;
 				
 			}
-			//recarrega para preencher todos os ids das coleções inseridas
-			data.clear();
-			data.addAll(service.findAll());
+		};
 			
-			for (Indicador indicador : data) {
-
-				BoxDescricaoIndicador bdi = new BoxDescricaoIndicador(indicador, editIndicador);
-				VBox.setVgrow(bdi, Priority.ALWAYS);
-				HBox.setHgrow(bdi, Priority.ALWAYS);
-				vbIndicadores.getChildren().add(bdi);
-				
-			}
-			
-			for (Indicador indicador : data) {
-				for ( Number n : getMesesAno() ){
-					vBoxes.get(n.intValue() - 1).getChildren().add(new BoxIndicadorSquare(indicador, ano, n.intValue()));
-				}	
-			}
-			
+		t.setOnSucceeded(e -> {
 			vbMain.setDisable(false);
-			
-		});
+		});*/
+		
+		/*Thread thread = new Thread(t);
+		thread.setDaemon(true);
+		thread.start();*/
 		
 	}
 	
 	@FXML
 	private void calcularIndicadores(){
+		
 		vbMain.setDisable(true);
-		vbMain.layout();
+		PopUpWait pp = new PopUpWait("Aguarde...");
 		
-		Platform.runLater(() -> {
-			for ( Number n : getMesesAno() ){
-				
-				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
-				for ( Node node : nodes ){
-					
-					BoxIndicadorSquare box = (BoxIndicadorSquare) node;
-					
-					service.refreshValorApurado(box.getIndicador().getValorIndicador(ano, n.intValue()), 
-							DateUtil.lastDayOfMonth(ano, n.intValue()));					
-					
-					box.setValue();
-					
-				}
-				
-				//salva os novos valores calculados
-				for ( Indicador i : data ){
-					service.save(i);
-				}
-				
-			}	
+		task = new Task<Void>() {
 			
+			@Override
+			public Void call() throws InterruptedException {
+				
+				double progressComplete = getMesesAno().size() * data.size();
+				double index = 0;
+				
+				for ( Number n : getMesesAno() ){
+					
+					ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
+					for ( Node node : nodes ){
+						
+						BoxIndicadorSquare box = (BoxIndicadorSquare) node;
+						
+						ValorIndicador vi = box.getIndicador().getValorIndicador(ano, n.intValue());
+						Date data = (n.intValue() == LocalDate.now().getMonthValue() ? new Date() : DateUtil.lastDayOfMonth(ano, n.intValue()));
+						service.refreshValorApurado(vi, data); 
+													
+						box.setValue();
+						
+						updateProgress(index++, progressComplete);
+					}
+					
+					//salva os novos valores calculados
+					for ( Indicador i : data ){
+						service.save(i);
+					}
+					
+				}	
+
+				return null;
+			}
+		};
+		
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
+		
+		pp.getProgressBar().progressProperty().bind(task.progressProperty());
+		pp.show(vbMain.getScene().getWindow());
+		
+		task.setOnSucceeded(e -> {
+			pp.hide();
 			vbMain.setDisable(false);
-			
 		});
-		
+			
 	}
 	
 	@FXML
@@ -245,6 +284,23 @@ public class AcompanhamentoIndicadoresOverviewController {
 		dialogStage.setResizable(false);
 		Scene scene = new Scene(form);
 		dialogStage.setScene(scene);
+		
+		/*dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent t) {
+				if ( task != null && task.isRunning() ){
+					t.consume();
+					Notifications.create().text("Por favor, aguarde a conclusão da operação!").showInformation();
+					dialogStage.show();
+					if ( popUpWait != null ){
+						popUpWait.show(dialogStage);
+					}
+				}else{
+					dialogStage.close();
+				}
+			}
+		});*/
+		
 		dialogStage.show();
 	}
 	
