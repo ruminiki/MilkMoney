@@ -31,7 +31,7 @@ import br.com.milkmoney.util.DateUtil;
 
 
 @Service
-public class TaxaPrenhes extends AbstractCalculadorIndicador{
+public class TaxaPrenhez extends AbstractCalculadorIndicador{
 
 	@Autowired private CoberturaDao coberturaDao;
 	@Autowired private AnimalDao animalDao;

@@ -22,7 +22,7 @@ import br.com.milkmoney.model.SituacaoCobertura;
 
 
 @Service
-public class PercentualVacasPrenhas extends AbstractCalculadorIndicador{
+public class PercentualVacasPrenhes extends AbstractCalculadorIndicador{
 
 	@Autowired AnimalDao animalDao;
 	@Autowired CoberturaDao coberturaDao;
@@ -30,7 +30,7 @@ public class PercentualVacasPrenhas extends AbstractCalculadorIndicador{
 	@Override
 	public BigDecimal getValue(Date data) {
 
-		BigDecimal   rebanho      = BigDecimal.valueOf(animalDao.countAllAtivos(data).longValue());
+		BigDecimal   rebanho      = BigDecimal.valueOf(animalDao.countAllVacasAtivas(data).longValue());
 		List<Animal> animais      = animalDao.findAllFemeasCobertas(data);
 		BigDecimal   vacasPrenhas = BigDecimal.ZERO;
 		BigDecimal   result       = BigDecimal.ZERO;

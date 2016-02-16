@@ -36,7 +36,7 @@ import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
 import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
 import br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
-import br.com.milkmoney.controller.indicador.AcompanhamentoIndicadoresOverviewController;
+import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
@@ -128,7 +128,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	//@Autowired private IndicadorOverviewController indicadorOverviewController;
-	@Autowired private AcompanhamentoIndicadoresOverviewController acompanhamentoIndicadoresOverviewController;
+	@Autowired private IndicadorOverviewController acompanhamentoIndicadoresOverviewController;
 	@Autowired private PartoFormController partoFormController;
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;

@@ -1,15 +1,17 @@
 package br.com.milkmoney.controller.indicador.renderer;
 
-import java.util.function.Function;
+import java.math.BigDecimal;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import br.com.milkmoney.model.ConfiguracaoIndicador;
 import br.com.milkmoney.model.Indicador;
+import br.com.milkmoney.model.ObjetivoIndicador;
+import br.com.milkmoney.model.ValorIndicador;
 
 public class BoxIndicador extends VBox {
 
@@ -17,14 +19,29 @@ public class BoxIndicador extends VBox {
 	public static final String DENTRO_INDICADO  = "DENTRO_INDICADO";
 	public static final String PIOR_INDICADO    = "PIOR_INDICADO";
 	
-	private Function<Indicador, Boolean> functionEditIndicador;
+	private Label labelValor;
+	
+	private int ano, mes;
 	private Indicador indicador;
+	private ValorIndicador valorIndicador;
+	private ConfiguracaoIndicador configuracaoIndicador;
 	
-	private VBox vbValor = new VBox();
-	
-	public BoxIndicador(Indicador indicador, Function<Indicador, Boolean> functionEditIndicador) {
+	public BoxIndicador(Indicador indicador, int ano, int mes) {
+		
+		this.ano = ano;
+		this.mes = mes;
 		this.indicador = indicador;
-		this.functionEditIndicador = functionEditIndicador;
+		this.valorIndicador = indicador.getValorIndicador(ano, mes);
+		this.configuracaoIndicador = indicador.getConfiguracaoIndicador(ano);
+		
+		this.setMaxHeight(30);
+		this.setMinHeight(30);
+		this.setMaxWidth(80);
+		this.setMinWidth(80);
+		
+		VBox.setVgrow(this, Priority.ALWAYS);
+		HBox.setHgrow(this, Priority.ALWAYS);
+		
 		this.buildBox();
 	}
 	
@@ -32,163 +49,126 @@ public class BoxIndicador extends VBox {
 		
 		this.setAlignment(Pos.CENTER);
 		
-		Label labelDescricao      = new Label(indicador.getDescricao());
-		Label labelValor          = new Label();
-		//Label labelIntervaloIdeal = new Label("Ideal " + indicador.getMenorValorIdeal() + " e " + indicador.getMaiorValorIdeal());
+		labelValor = new Label();
 		
-		//String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
+		setValue();
 		
-		//labelValor.setText(NumberFormatUtil.intFormat(indicador.getValorApurado()) + sufixo);
-		
-		vbValor.setAlignment(Pos.CENTER);
-		
-		vbValor.setMaxHeight(60);
-		vbValor.setMinHeight(60);
-		vbValor.setMaxWidth(60);
-		vbValor.setMinWidth(60);
-		
-		vbValor.getChildren().clear();
-		vbValor.getChildren().add(labelValor);
-		
-		setStyle();
-		
-		labelValor.setFont(Font.font("System", 15));
-		labelDescricao.setFont(Font.font("System", 8));
+		labelValor.setFont(Font.font("System", 13));
+		labelValor.setStyle("-fx-text-fill: white;");
+		labelValor.setWrapText(true);
 		
 		this.getChildren().clear();
-		//this.getChildren().addAll(vbValor, labelDescricao, labelIntervaloIdeal);
-	
-		//criar listener ao passar mouse
-		this.addEventHandler(MouseEvent.MOUSE_ENTERED,
-			new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					onMouseHover();
-				}
-		});
+		this.getChildren().addAll(labelValor);
 		
-		this.addEventHandler(MouseEvent.MOUSE_EXITED,
-			new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					onMouseExit();
-				}
-		});
-		
-		this.setOnMousePressed(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 1) {
-					onMouseClicked();
-				}
-				
-			}
-
-		});
 	}
 	
+	public void setValue() {
+		String sufixo =  indicador.getSufixo() != null ?  indicador.getSufixo() : "";
+		labelValor.setText(valorIndicador.getValorFormatado() + sufixo);
+		setStyle();
+	}
+
 	private void setStyle(){
-		/*if ( indicador.getObjetivo() != null && 
-				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
+		if ( configuracaoIndicador.getObjetivo() != null && 
+				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ACIMA_DO_INTERVALO_IDEAL) ){
 			
-			if ( indicador.getValorApurado().compareTo(indicador.getMenorValorIdeal()) >= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorEsperado()) >= 0 ){
 				//se o indicador estiver até apenas 5% acima do valor mínimo - liga o alerta
-				if ( indicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
-						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getMenorValorIdeal().add(
-									indicador.getMenorValorIdeal()
+				if ( configuracaoIndicador.getMenorValorEsperado().compareTo(BigDecimal.ZERO) > 0 && 
+						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
+						configuracaoIndicador.getMenorValorEsperado().add(
+								configuracaoIndicador.getMenorValorEsperado()
 									.multiply(BigDecimal.valueOf(0.05)))
-									.compareTo(indicador.getValorApurado()) >= 0 ){
-					vbValor.setStyle(styleAlerta());	
+									.compareTo(valorIndicador.getValor()) >= 0 ){
+					this.setStyle(styleAlerta());	
 				}else{
-					vbValor.setStyle(styleIdeal());					
+					this.setStyle(styleIdeal());					
 				}
 			}else{
-				vbValor.setStyle(styleAbaixo());
+				this.setStyle(styleAbaixo());
 			}
 			
 		}
 		
-		if ( indicador.getObjetivo() != null && 
-				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ABAIXO_DO_INTERVALO_IDEAL) ){
+		if ( configuracaoIndicador.getObjetivo() != null && 
+				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_OU_ABAIXO_DO_INTERVALO_IDEAL) ){
 			//nesse caso o objetivo é manter dentrou ou abaixo do intervalo ideal
-			if ( indicador.getValorApurado().compareTo(indicador.getMaiorValorIdeal()) <= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorEsperado()) <= 0 ){
 				//se o indicador estiver até apenas 5% abaixo do valor máximo - liga o alerta
-				if ( indicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getMaiorValorIdeal().subtract(
-								indicador.getMaiorValorIdeal()
+				if ( configuracaoIndicador.getMaiorValorEsperado().compareTo(BigDecimal.ZERO) > 0 &&
+						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
+						configuracaoIndicador.getMaiorValorEsperado().subtract(
+								configuracaoIndicador.getMaiorValorEsperado()
 								.multiply(BigDecimal.valueOf(0.05)))
-								.compareTo(indicador.getValorApurado()) <= 0 ){
-					vbValor.setStyle(styleAlerta());	
+								.compareTo(valorIndicador.getValor()) <= 0 ){
+					this.setStyle(styleAlerta());	
 				}else{
-					vbValor.setStyle(styleIdeal());					
+					this.setStyle(styleIdeal());					
 				}
 			}else{
-				vbValor.setStyle(styleAbaixo());
+				this.setStyle(styleAbaixo());
 			}
 		}
 		
-		if ( indicador.getObjetivo() != null && 
-				indicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL) ){
+		if ( configuracaoIndicador.getObjetivo() != null && 
+				configuracaoIndicador.getObjetivo().equals(ObjetivoIndicador.DENTRO_DO_INTERVALO_IDEAL) ){
 			//nesse caso o objetivo é manter dentrou do intervalo ideal
-			if ( indicador.getValorApurado().compareTo(indicador.getMenorValorIdeal()) >= 0 &&
-					indicador.getValorApurado().compareTo(indicador.getMaiorValorIdeal()) <= 0 ){
+			if ( valorIndicador.getValor().compareTo(configuracaoIndicador.getMenorValorEsperado()) >= 0 &&
+					valorIndicador.getValor().compareTo(configuracaoIndicador.getMaiorValorEsperado()) <= 0 ){
 				
 				//se o indicador estiver até apenas 5% da margem inferior - liga o alerta
-				if ( indicador.getMenorValorIdeal().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-						indicador.getMenorValorIdeal().add(
-								indicador.getMenorValorIdeal()
+				if ( configuracaoIndicador.getMenorValorEsperado().compareTo(BigDecimal.ZERO) > 0 &&
+						valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
+						configuracaoIndicador.getMenorValorEsperado().add(
+								configuracaoIndicador.getMenorValorEsperado()
 								.multiply(BigDecimal.valueOf(0.05)))
-								.compareTo(indicador.getValorApurado()) >= 0 ){
-					vbValor.setStyle(styleAlerta());	
+								.compareTo(valorIndicador.getValor()) >= 0 ){
+					this.setStyle(styleAlerta());	
 				}else{
 					//se o indicador estiver até apenas 5% da margem superior - liga o alerta
-					if ( indicador.getMaiorValorIdeal().compareTo(BigDecimal.ZERO) > 0 && 
-							indicador.getValorApurado().compareTo(BigDecimal.ZERO) > 0 &&
-							indicador.getMaiorValorIdeal().subtract(
-										indicador.getMaiorValorIdeal()
+					if ( configuracaoIndicador.getMaiorValorEsperado().compareTo(BigDecimal.ZERO) > 0 && 
+							valorIndicador.getValor().compareTo(BigDecimal.ZERO) > 0 &&
+							configuracaoIndicador.getMaiorValorEsperado().subtract(
+									configuracaoIndicador.getMaiorValorEsperado()
 										.multiply(BigDecimal.valueOf(0.05)))
-										.compareTo(indicador.getValorApurado()) <= 0 ){
-						vbValor.setStyle(styleAlerta());	
+										.compareTo(valorIndicador.getValor()) <= 0 ){
+						this.setStyle(styleAlerta());	
 					}else{
-						vbValor.setStyle(styleIdeal());		
+						this.setStyle(styleIdeal());		
 					}
 				}
 				
 			}else{
-				vbValor.setStyle(styleAbaixo());
+				this.setStyle(styleAbaixo());
 			}
 		}
-		*/
+		
 	}
 	
-	/*private String styleAbaixo(){
-		return "-fx-border-color: #FF0000; -fx-border-radius: 50; -fx-border-width: 3";
+	private String styleAbaixo(){
+		return "-fx-background-color: #FF0000;";
 	}
 	
 	private String styleIdeal(){
-		return "-fx-border-color: #33CC33; -fx-border-radius: 50; -fx-border-width: 3";
+		return "-fx-background-color: #33CC33;";
 	}
 	
 	private String styleAlerta(){
-		return "-fx-border-color: #FFFF00; -fx-border-radius: 50; -fx-border-width: 3";
-	}*/
-	
-	private void onMouseHover(){
-		vbValor.setStyle("-fx-border-color: #999; -fx-border-radius: 50");
-		vbValor.setCursor(Cursor.HAND);
+		return "-fx-background-color: #FFFF00;";
 	}
 
-	private void onMouseExit(){
-		this.setStyle();
-		vbValor.setCursor(Cursor.DEFAULT);
+	public Indicador getIndicador() {
+		return indicador;
 	}
 	
-	private void onMouseClicked(){
-		functionEditIndicador.apply(indicador);
-		buildBox();
+	public void setIndicador(Indicador indicador){
+		this.indicador = indicador;
+		this.valorIndicador = indicador.getValorIndicador(ano, mes);
+		this.configuracaoIndicador = indicador.getConfiguracaoIndicador(ano);
 	}
+	
+	public ConfiguracaoIndicador getConfiguracaoIndicador(){
+		return this.configuracaoIndicador;
+	}
+	
 }
