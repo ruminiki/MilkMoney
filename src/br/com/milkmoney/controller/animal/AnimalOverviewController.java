@@ -27,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.renderer.PopUpMenu;
 import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
@@ -454,8 +455,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			Object[] params = new Object[]{
 					table.getSelectionModel().getSelectedItem().getId()
 			};
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-					RelatorioService.FICHA_COMPLETA_ANIMAL, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+					RelatorioService.FICHA_COMPLETA_ANIMAL, params), table.getScene().getWindow());
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
@@ -658,9 +659,9 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			sb.toString()
 		};
 		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_ANIMAL, params);
-		
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FICHA_ANIMAL, params), MainApp.primaryStage);
+	
 	}
 	
 	@FXML

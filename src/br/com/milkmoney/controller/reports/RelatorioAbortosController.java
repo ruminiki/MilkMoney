@@ -8,6 +8,8 @@ import javafx.scene.control.DatePicker;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.util.DateUtil;
 
@@ -34,16 +36,14 @@ public class RelatorioAbortosController extends AbstractReport{
 		};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_ABORTOS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_ABORTOS, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_ABORTOS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_ABORTOS, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
 		
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.service.RelatorioService;
@@ -47,11 +48,10 @@ public class FormularioRegistroProducaoController extends AbstractReport{
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione um mês para executar o relatório.");
 		}
 		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FORMULARIO_CAMPO_REGISTRO_PRODUCAO, listMeses.getSelectionModel().getSelectedIndex() + 1);
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FORMULARIO_CAMPO_REGISTRO_PRODUCAO, listMeses.getSelectionModel().getSelectedIndex() + 1),MainApp.primaryStage);
 		
 		handleClose();
-		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
 
 }

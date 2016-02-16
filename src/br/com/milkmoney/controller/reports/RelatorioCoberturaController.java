@@ -11,8 +11,10 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.AnimalReducedOverviewController;
 import br.com.milkmoney.controller.touro.TouroReducedOverviewController;
@@ -113,17 +115,14 @@ public class RelatorioCoberturaController extends AbstractReport{
 		};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_COBERTURA, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_COBERTURA, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_COBERTURA, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_COBERTURA, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		
 	}
 

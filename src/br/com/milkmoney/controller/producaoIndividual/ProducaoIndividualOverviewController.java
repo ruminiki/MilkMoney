@@ -19,10 +19,12 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.PropertyDecimalValueFactory;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.TableCellIndexFactory;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
@@ -199,8 +201,8 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 				String.valueOf(lactacao.getId())
 		};
 		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-			RelatorioService.RELATORIO_CONTROLE_LEITEIRO_INDIVIDUAL, params);
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+			RelatorioService.RELATORIO_CONTROLE_LEITEIRO_INDIVIDUAL, params), MainApp.primaryStage);
 		
 	}
 	

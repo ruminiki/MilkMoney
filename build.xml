@@ -166,6 +166,8 @@
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>
+		
+		<delete dir="build" />
 	
 	</target>
 		

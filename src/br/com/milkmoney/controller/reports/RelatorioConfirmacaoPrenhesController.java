@@ -10,7 +10,9 @@ import javafx.scene.control.DatePicker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.model.Lote;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.service.LoteService;
@@ -48,17 +50,14 @@ public class RelatorioConfirmacaoPrenhesController extends AbstractReport{
 		};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		
 	}
 

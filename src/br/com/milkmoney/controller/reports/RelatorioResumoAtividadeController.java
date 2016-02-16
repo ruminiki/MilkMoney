@@ -7,7 +7,9 @@ import javafx.scene.control.TextField;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.MaskFieldUtil;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.service.RelatorioService;
 
 @Controller
@@ -30,16 +32,14 @@ public class RelatorioResumoAtividadeController extends AbstractReport{
 		Object[] params = new Object[]{inputAno.getText() != "" ? Integer.parseInt(inputAno.getText()) : LocalDate.now().getYear() };
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_RESUMO_ATIVIDADE, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
 		
 	}
 

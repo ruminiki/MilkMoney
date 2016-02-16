@@ -39,7 +39,7 @@ public class MediaDiasPosParto extends AbstractCalculadorIndicador{
 		for ( Animal animal : femeas ){
 			
 			Lactacao lactacao = lactacaoDao.findUltimaLactacaoAnimal(animal);
-			dias = dias.add(BigInteger.valueOf(lactacao.getDiasLactacao(data)));
+			dias = dias.add(BigInteger.valueOf(lactacao.getDuracaoLactacaoDias(data)));
 			
 		}
 

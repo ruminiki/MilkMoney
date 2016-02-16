@@ -12,12 +12,23 @@
    <children>
       <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0">
+            <HBox alignment="CENTER_RIGHT" minHeight="30.0" prefHeight="30.0">
                <children>
-                  <Label fx:id="lblCobertura" text="Atualização do Sistema">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblCobertura" text="Atualização do Sistema" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ProgressIndicator fx:id="progressIndicator" progress="0.0" visible="false" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxWidth="580.0" minWidth="580.0" scaleShape="false" style="-fx-focus-color: transparent;" />

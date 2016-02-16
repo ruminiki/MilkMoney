@@ -14,10 +14,16 @@
          <children>
             <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0">
                <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <Label fx:id="lblCobertura" text="Backup do Banco de Dados">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <ProgressIndicator fx:id="progressIndicator" progress="0.0" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
             <TextArea fx:id="taLog" cacheShape="false" centerShape="false" editable="false" focusTraversable="false" maxWidth="580.0" minWidth="580.0" prefHeight="142.0" prefWidth="580.0" scaleShape="false" style="-fx-focus-color: transparent;" />

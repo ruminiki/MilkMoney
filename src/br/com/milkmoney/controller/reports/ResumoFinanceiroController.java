@@ -8,8 +8,10 @@ import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.centroCusto.CentroCustoReducedOverviewController;
 import br.com.milkmoney.model.CentroCusto;
 import br.com.milkmoney.service.RelatorioService;
@@ -50,17 +52,14 @@ public class ResumoFinanceiroController extends AbstractReport{
 				centroCusto != null ? centroCusto.getDescricao() : "TODOS"};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RESUMO_FINANCEIRO, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RESUMO_FINANCEIRO, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RESUMO_FINANCEIRO, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RESUMO_FINANCEIRO, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		
 	}
 

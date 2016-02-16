@@ -8,7 +8,9 @@ import javafx.scene.control.DatePicker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.categoriaLancamentoFinanceiro.CategoriaLancamentoFinanceiroReducedOverviewController;
 import br.com.milkmoney.controller.centroCusto.CentroCustoReducedOverviewController;
 import br.com.milkmoney.model.CategoriaLancamentoFinanceiro;
@@ -67,17 +69,14 @@ public class RelatorioFinanceiroController extends AbstractReport{
 		};
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 		
 	}
 

@@ -25,8 +25,10 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
@@ -514,8 +516,8 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		Object[] params = new Object[]{
 				getObject().getId()
 		};
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.FICHA_COMPLETA_ANIMAL, params);
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.FICHA_COMPLETA_ANIMAL, params), MainApp.primaryStage);
 			
 	}
 	
@@ -564,8 +566,8 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		Object[] params = new Object[]{
 				getObject().getId()
 		};
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.IMPRIMIR_COBERTURAS_ANIMAL, params);
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.IMPRIMIR_COBERTURAS_ANIMAL, params), MainApp.primaryStage);
 		
 	}
 	

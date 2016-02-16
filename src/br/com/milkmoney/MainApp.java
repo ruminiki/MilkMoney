@@ -34,7 +34,9 @@ import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import br.com.milkmoney.controller.applicationUpdate.ApplicationUpdateController;
 import br.com.milkmoney.exception.GlobalExceptionHandler;
+import br.com.milkmoney.service.ApplicationUpdateService;
 
 public class MainApp extends Application {
 	
@@ -52,8 +54,8 @@ public class MainApp extends Application {
     //private ProgressBar               loadProgress;
     private Label                     progressText;
     
-	private static final boolean      SPLASH           = false;
-	private static final boolean      START_DATABASE   = false;
+	private static final boolean      SPLASH           = true;
+	private static final boolean      START_DATABASE   = true;
 		
 	private static ObjectProperty<Cursor> cursor = new SimpleObjectProperty<>(Cursor.DEFAULT);
 	
@@ -69,7 +71,7 @@ public class MainApp extends Application {
     		}
     	}
 		
-		/*ApplicationUpdateService applicationService = new ApplicationUpdateService();
+		ApplicationUpdateService applicationService = new ApplicationUpdateService();
 		String novaVersao = applicationService.getNumeroNovaVersao();
 		
 		if ( novaVersao != null ){
@@ -93,7 +95,7 @@ public class MainApp extends Application {
 				throw new RuntimeException(ioException);
 			}
 			
-		}*/
+		}
 		
 	}
 	

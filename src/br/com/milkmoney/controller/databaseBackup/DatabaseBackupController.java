@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ public class DatabaseBackupController {
 
 	@FXML private Button btnFinalizar, btnIniciar;
 	@FXML private TextArea taLog;
+	@FXML private ProgressIndicator progressIndicator;
 	
 	@Autowired private DatabaseBackupService databaseBackupService;
 	
@@ -44,9 +46,13 @@ public class DatabaseBackupController {
 		
 		Task<Void> task = databaseBackupService.backup();
 		
+		progressIndicator.progressProperty().bind(task.progressProperty());
+		progressIndicator.setVisible(true);
+		
 		task.setOnSucceeded(e -> {
 			btnFinalizar.setDisable(false);
-	    	
+			progressIndicator.setVisible(false);
+			
 	    	//verificar se não ocorreu erro...
 	    	btnFinalizar.setText("Fechar");
 	    	

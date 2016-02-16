@@ -36,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellTipoLancamentoFinanceiroFactory;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
@@ -538,8 +539,8 @@ public class LancamentoFinanceiroOverviewController {
 				0,//categoria
 				0//centroCusto
 		};
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params);
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_LANCAMENTOS_FINANCEIROS, params),MainApp.primaryStage);
 		
 	}
 

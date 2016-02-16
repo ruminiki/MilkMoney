@@ -2,6 +2,8 @@ package br.com.milkmoney.controller.reports;
 
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.RelatorioService;
@@ -34,17 +36,14 @@ public class RelatorioRankingAnimaisController extends AbstractSelectAnimalParam
 
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_RANKING_ANIMAIS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+				RelatorioService.RELATORIO_RANKING_ANIMAIS, params), MainApp.primaryStage);
 		}else{
-			relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_RANKING_ANIMAIS, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
+					RelatorioService.RELATORIO_RANKING_ANIMAIS, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();
-		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
-		
 	}
 
 }

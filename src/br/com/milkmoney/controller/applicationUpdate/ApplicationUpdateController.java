@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -19,6 +20,7 @@ public class ApplicationUpdateController {
 
 	@FXML private Button btnFinalizar, btnAtualizar;
 	@FXML private TextArea taLog;
+	@FXML private ProgressIndicator progressIndicator;
 	
 	private ApplicationUpdateService applicationService;
 	private String novaVersao;
@@ -42,8 +44,12 @@ public class ApplicationUpdateController {
 		
 		Task<Void> task = applicationService.update(novaVersao);
 		
+		progressIndicator.progressProperty().bind(task.progressProperty());
+		progressIndicator.setVisible(true);
+		
 		task.setOnSucceeded(e -> {
 			btnFinalizar.setDisable(false);
+			progressIndicator.setVisible(false);
 	    	
 	    	//verificar se não ocorreu erro...
 	    	btnFinalizar.setText("Fechar");

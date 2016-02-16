@@ -1,12 +1,7 @@
 ERROS e REQUISITOS
 
 
-X Refazer tela de indicadores, permitir acompanhar mês a mês durante o ano
-X Criar tabela acompanhamento indicador (indicador, mes, ano, valorInferior, valorSuperior, obetivo, valorApurado);
-X Criar tela para configurar os valores das metas.
-X Dias em lactação é o mesmo que média dias pos parto
-X Adicionar indicador, percentual de vacas prenhas e percentual de vacas em lactação
-- Colocar progress bar no relatório ficha do animais
+
 - Mostrar desfazer venda quando animal já estiver vendido
 - Ao remover a venda pela tela de venda não dá refresh na tela
 

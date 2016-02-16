@@ -28,16 +28,19 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicador;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
+import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.ConfiguracaoIndicador;
 import br.com.milkmoney.model.Indicador;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.ValorIndicador;
 import br.com.milkmoney.service.ConfiguracaoIndicadorService;
+import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.ValorIndicadorService;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
@@ -55,6 +58,7 @@ public class IndicadorOverviewController {
 	@Autowired private IndicadorService service;
 	@Autowired private ConfiguracaoIndicadorService configuracaoIndicadorService;
 	@Autowired private ValorIndicadorService valorIndicadorService;
+	@Autowired private RelatorioService relatorioService;
 	
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
@@ -276,6 +280,15 @@ public class IndicadorOverviewController {
 		ano--;
 		lblAno.setText(String.valueOf(ano));
 		configuraIndicadores();
+	}
+	
+	@FXML
+	private void imprimirIndicadores(){
+		Object[] params = new Object[]{ano};
+	
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+			RelatorioService.RELATORIO_INDICADORES, params), MainApp.primaryStage);
+
 	}
 	
 	public void showForm() {	

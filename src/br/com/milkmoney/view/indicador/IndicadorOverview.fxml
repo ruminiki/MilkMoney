@@ -26,41 +26,51 @@
             </HBox>
             <HBox alignment="TOP_CENTER" maxHeight="30.0" spacing="3.0">
                <children>
-                  <VBox alignment="TOP_CENTER" maxHeight="35.0" VBox.vgrow="NEVER">
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" HBox.hgrow="ALWAYS" />
+                  <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" maxHeight="40.0" prefHeight="100.0" prefWidth="100.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="35.0">
                            <children>
-                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                              <HBox alignment="CENTER" maxHeight="40.0" prefHeight="100.0" prefWidth="100.0">
+                                 <children>
+                                    <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleDecreaseAnoReferencia" text="&lt;" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Button>
+                                    <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets right="5.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <Label text="Ano Referência">
                                  <font>
-                                    <Font size="10.0" />
+                                    <Font size="9.0" />
                                  </font>
-                              </Button>
-                              <Label fx:id="lblAno" alignment="CENTER" disable="true" minWidth="70.0" text="0">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets right="5.0" />
-                                 </HBox.margin>
                               </Label>
-                              <Button focusTraversable="false" minHeight="30.0" mnemonicParsing="false" onAction="#handleIncreaseAnoReferencia" text="&gt;" textAlignment="CENTER">
-                                 <font>
-                                    <Font size="10.0" />
-                                 </font>
-                              </Button>
                            </children>
-                        </HBox>
-                        <Label text="Ano Referência">
-                           <font>
-                              <Font size="9.0" />
-                           </font>
-                        </Label>
+                        </VBox>
                      </children>
-                  </VBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="3.0">
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#definirMetas" text="Definir Metas" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#calcularIndicadores" text="Calcular" />
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#imprimirIndicadores" text="Imprimir">
+                           <HBox.margin>
+                              <Insets right="3.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                </children>

@@ -226,8 +226,8 @@ public class RootLayoutController {
     }
     
     @FXML
-    protected void handleReportNumerosRebanho(){
-    	openFormAsPopUp("view/reports/RelatorioNumerosRebanho.fxml", "Relatório Números do Rebanho");
+    protected void handleReportIndicadores(){
+    	openFormAsPopUp("view/reports/RelatorioIndicadores.fxml", "Relatório de Indicadores");
     }
     
     @FXML

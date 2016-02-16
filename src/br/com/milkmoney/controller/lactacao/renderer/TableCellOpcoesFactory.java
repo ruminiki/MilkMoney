@@ -10,7 +10,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import br.com.milkmoney.model.Lactacao;
 
@@ -54,7 +53,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 										encerrarLactacaoFunction.apply(tableRowProperty().get().getIndex());
 									}
 								});
-								VBox c = new VBox();
+								/*VBox c = new VBox();
 								c.setStyle("-fx-padding: 0; " +
 										"-fx-min-height: 24; -fx-min-width: 24;" +
 										"-fx-background-insets: 0;" +
@@ -63,7 +62,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 									    "-fx-background-position: center; " +
 									    "-fx-cursor: HAND; " +
 									    "-fx-border-width:0; ");
-								cell.getChildren().add(c);
+								cell.getChildren().add(c);*/
 								cell.getChildren().add(btnSecar);
 							}else{
 								Hyperlink btnDesfazer = new Hyperlink("Reabrir");
@@ -77,7 +76,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 										desfazerEncerramentoLactacaoFunction.apply(tableRowProperty().get().getIndex());
 									}
 								});
-								VBox c = new VBox();
+								/*VBox c = new VBox();
 								c.setStyle("-fx-padding: 0; " +
 										"-fx-min-height: 24; -fx-min-width: 24;" +
 										"-fx-background-insets: 0;" +
@@ -86,7 +85,7 @@ public class TableCellOpcoesFactory<S, String> implements Callback<TableColumn<S
 									    "-fx-background-position: center; " +
 									    "-fx-cursor: HAND; " +
 									    "-fx-border-width:0; ");
-								cell.getChildren().add(c);
+								cell.getChildren().add(c);*/
 								cell.getChildren().add(btnDesfazer);
 							}
 							

@@ -48,6 +48,12 @@ public class ApplicationUpdateService{
 						updateMessage("Iniciando a atualização para versão " + versao+"\n");
 						Thread.sleep(1000);
 						
+						//remove arquivos da última atualização
+						updateMessage("Preparando ambiente \n");
+						Thread.sleep(1000);
+						File dirUpdate = new File(DIR_UPDATE);
+						FileUtils.forceDelete(dirUpdate);
+						
 						File destination = new File(DIR_UPDATE + File.separator + versao);
 						FileUtils.forceMkdir(destination);
 						

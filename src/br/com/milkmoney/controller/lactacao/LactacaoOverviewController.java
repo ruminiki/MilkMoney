@@ -60,7 +60,7 @@ public class LactacaoOverviewController extends AbstractOverviewController<Integ
 		diasEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("diasLactacao"));
 		mesesEmLactacaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mesesLactacao"));
 		mediaProducaoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("mediaProducao"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("diasLactacao"));
+		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("dataInicio"));
 		opcoesColumn.setCellFactory(new TableCellOpcoesFactory<Lactacao,String>(encerrarLactacaoAnimal, desfazerEncerramentoLactacaoAnimal));
 		
 		lblHeader.setText(animal != null ? "LACTAÇÕES " + animal.toString() : "LACTAÇÕES");

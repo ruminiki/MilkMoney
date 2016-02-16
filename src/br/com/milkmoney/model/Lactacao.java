@@ -153,7 +153,7 @@ public class Lactacao extends AbstractEntity implements Serializable {
 		return motivoEncerramentoLactacao;
 	}
 	
-	public int getDiasLactacao(Date data) {
+	public int getDuracaoLactacaoDias(Date data) {
 		
 		Date df = null;
 		
@@ -166,7 +166,7 @@ public class Lactacao extends AbstractEntity implements Serializable {
 		return (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(getDataInicio()), DateUtil.asLocalDate(df));
 	}
 	
-	public int getMesesLactacao(Date data) {
+	public int getDuracaoLactacaoMeses(Date data) {
 		
 		Date df = null;
 		
@@ -178,6 +178,14 @@ public class Lactacao extends AbstractEntity implements Serializable {
 		
 		return (int) ChronoUnit.MONTHS.between(DateUtil.asLocalDate(getDataInicio()), DateUtil.asLocalDate(df));
 		
+	}
+	
+	public int getDiasLactacao(){
+		return getDuracaoLactacaoDias(DateUtil.today);
+	}
+	
+	public int getMesesLactacao(){
+		return getDuracaoLactacaoMeses(DateUtil.today);
 	}
 	
 	public Date getDataPrevistaEncerramento(){

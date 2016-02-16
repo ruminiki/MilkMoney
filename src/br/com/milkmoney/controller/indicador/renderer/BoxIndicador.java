@@ -154,7 +154,7 @@ public class BoxIndicador extends VBox {
 	}
 	
 	private String styleAlerta(){
-		return "-fx-background-color: #FFFF00;";
+		return "-fx-background-color: #FFFF0F;";
 	}
 
 	public Indicador getIndicador() {

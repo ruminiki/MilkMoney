@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.lancamentoFinanceiro.LancamentoFinanceiroFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
@@ -81,8 +82,8 @@ public class ServicoOverviewController extends AbstractOverviewController<Intege
 					servico.getPrestadorServico().toString()
 				};
 				
-			relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-						RelatorioService.RECIBO_SERVICO, params);
+			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+						RelatorioService.RECIBO_SERVICO, params), MainApp.primaryStage);
 			
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

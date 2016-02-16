@@ -90,7 +90,7 @@ public class PartoService implements IService<Integer, Parto>{
 		Lactacao lactacao = parto.getLactacao();
 		
 		if ( lactacao != null ){
-			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(lactacao.getDiasLactacao(data)));
+			diasEmLactacao = diasEmLactacao.add(BigDecimal.valueOf(lactacao.getDuracaoLactacaoDias(data)));
 		}else{
 			
 			//Procura registro venda animal após o parto

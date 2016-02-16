@@ -3,6 +3,8 @@ package br.com.milkmoney.controller.reports;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.MainApp;
+import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
@@ -31,12 +33,11 @@ public class FormularioRegistroCoberturaController extends AbstractSelectAnimalP
 		
 		sb.replace(sb.length(), sb.length(), "");
 		
-		relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-			RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA, sb.toString());
+		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
+			RelatorioService.FORMULARIO_CAMPO_REGISTRO_COBERTURA, sb.toString()), MainApp.primaryStage);
 		
 		super.handleClose();
 		
-		rootLayoutController.setMessage("O relatório está sendo executado...");
 	}
 	
 }
