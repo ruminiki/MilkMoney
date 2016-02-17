@@ -19,8 +19,8 @@
                   <TableColumn fx:id="tipoLancamentoFinanceiroColumn" maxWidth="30.0" minWidth="30.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
                   <TableColumn fx:id="descricaoColumn" minWidth="250.0" prefWidth="75.0" text="Descrição" />
                   <TableColumn fx:id="dataEmissaoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Emissão" />
-                  <TableColumn fx:id="dataPagamentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Pagamento" />
-                  <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Recebimento" />
+                  <TableColumn fx:id="dataVencimentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vencimento" />
+                  <TableColumn fx:id="dataPagamentoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" text="Pag./Rec." />
                   <TableColumn fx:id="categoriaLancamentoColumn" maxWidth="180.0" minWidth="150.0" prefWidth="75.0" text="Categoria" />
                   <TableColumn fx:id="centroCustoColumn" maxWidth="150.0" minWidth="120.0" prefWidth="75.0" text="Centro Custo" />
                   <TableColumn fx:id="valorColumn" editable="false" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" sortable="false" style="-fx-alignment: CENTER-RIGHT;" text="Valor" />

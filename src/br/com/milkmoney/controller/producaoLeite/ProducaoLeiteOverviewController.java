@@ -94,7 +94,10 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	public void handleEdit() {
 		//localiza o número de animais em lactação e popula o objeto
 		BigInteger animaisEmLactacaoData = animalService.countAnimaisEmLactacao(getObject().getData());
-		getObject().setNumeroVacasOrdenhadas(animaisEmLactacaoData.intValue());
+		
+		if ( getObject().getNumeroVacasOrdenhadas() <= 0 ){
+			getObject().setNumeroVacasOrdenhadas(animaisEmLactacaoData.intValue());			
+		}
 		
 		super.handleEdit();
 	}

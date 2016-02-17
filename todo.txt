@@ -1,6 +1,7 @@
 ERROS e REQUISITOS
 
-
+X Não alterado o número de vacas ordenhadas, caso o usuário já tenha informado
+X Corrigida ordem colunas visualização parcelas
 
 - Mostrar desfazer venda quando animal já estiver vendido
 - Ao remover a venda pela tela de venda não dá refresh na tela
