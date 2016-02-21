@@ -31,9 +31,9 @@ public class PercentualVacasLactacao extends AbstractCalculadorIndicador{
 				
 		if ( rebanho.compareTo(BigDecimal.ZERO) > 0 ){
 			if ( vacasLactacao.compareTo(BigDecimal.ZERO) > 0 ){
-				relacao = rebanho.divide(vacasLactacao, 2, RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
+				relacao = vacasLactacao.divide(rebanho, 2, RoundingMode.HALF_EVEN).multiply(BigDecimal.valueOf(100));
 			}else{
-				relacao = rebanho.multiply(BigDecimal.valueOf(100));
+				relacao = BigDecimal.ZERO;
 			}
 		}
 		

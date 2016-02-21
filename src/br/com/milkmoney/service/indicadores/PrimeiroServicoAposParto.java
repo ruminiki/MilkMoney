@@ -62,7 +62,7 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 		BigDecimal diasEntrePartoEPrimeiroServico = BigDecimal.ZERO;
 		int animaisComServicoAposParto = 0;
 				
-		List<Animal> animais = animalDao.findAnimaisComParto(data);
+		List<Animal> animais = animalDao.findAllVacasAtivas(data);
 		
 		for ( Animal animal : animais ){
 			

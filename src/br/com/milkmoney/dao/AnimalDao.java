@@ -157,6 +157,11 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 	}
 
+	/**
+	 * Todas as fêmeas, bezerras, vacas e novilhas.
+	 * @param data
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeasAtivas(Date data) {
 		
@@ -170,6 +175,27 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		return query.getResultList();
 
 	}
+	
+	/**
+	 * Localiza fêmeas com partos.
+	 * @param data
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Animal> findAllVacasAtivas(Date data) {
+		
+		Query query = entityManager.createQuery(
+				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
+						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
+						+ "and not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal.id = a.id and m.dataMorte <= :data)"
+						+ "and exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data <= :data) ");
+		
+		query.setParameter("data", data);
+		
+		return query.getResultList();
+
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<Animal> findAllFemeas() {
@@ -282,16 +308,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}catch ( NoResultException e ){
 			return BigInteger.ZERO;
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisComParto(Date data) {
-		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
-				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
-				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) and "
-				+ "exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data <= :data) ");
-		query.setParameter("data", data);
-		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

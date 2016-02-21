@@ -54,7 +54,7 @@ public class BoxIndicador extends VBox {
 		setValue();
 		
 		labelValor.setFont(Font.font("System", 13));
-		labelValor.setStyle("-fx-text-fill: white;");
+		labelValor.setStyle("-fx-text-fill: black;");
 		labelValor.setWrapText(true);
 		
 		this.getChildren().clear();

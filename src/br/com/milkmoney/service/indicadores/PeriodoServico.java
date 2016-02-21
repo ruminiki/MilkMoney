@@ -35,7 +35,7 @@ public class PeriodoServico extends AbstractCalculadorIndicador{
 	public BigDecimal getValue(Date data) {
 		BigDecimal diasEmAberto = BigDecimal.ZERO;
 		
-		List<Animal> vacas = animalDao.findAnimaisComParto(data);
+		List<Animal> vacas = animalDao.findAllVacasAtivas(data);
 		
 		for ( Animal femea : vacas ){
 			diasEmAberto = diasEmAberto.add(BigDecimal.valueOf(coberturaService.getDiasEmAberto(femea, data)));

@@ -31,7 +31,7 @@ public class PercentualVacasPrenhes extends AbstractCalculadorIndicador{
 	public BigDecimal getValue(Date data) {
 
 		BigDecimal   rebanho      = BigDecimal.valueOf(animalDao.countAllVacasAtivas(data).longValue());
-		List<Animal> animais      = animalDao.findAllFemeasCobertas(data);
+		List<Animal> animais      = animalDao.findAllVacasAtivas(data);
 		BigDecimal   vacasPrenhas = BigDecimal.ZERO;
 		BigDecimal   result       = BigDecimal.ZERO;
 		
