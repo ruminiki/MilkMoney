@@ -35,7 +35,7 @@ public class EvolucaoRebanho implements Serializable{
 	
 	public static ObservableList<EvolucaoRebanho> getItems(){
 		ObservableList<EvolucaoRebanho> e = FXCollections.observableArrayList();
-		List<String> variaveis = FXCollections.observableArrayList(EM_LACTACAO, SECAS, RELACAO_LACTACAO_SECOS, ZERO_A_UM_ANO, UM_A_DOIS_ANOS, DOIS_A_TRES_ANOS, TRES_A_QUATRO_ANOS, MAIS_QUATRO_ANOS);
+		List<String> variaveis = FXCollections.observableArrayList(EM_LACTACAO, SECAS, ZERO_A_UM_ANO, UM_A_DOIS_ANOS, DOIS_A_TRES_ANOS, TRES_A_QUATRO_ANOS, MAIS_QUATRO_ANOS);
 		for ( String s : variaveis ){
 			e.add(new EvolucaoRebanho(s));
 		}

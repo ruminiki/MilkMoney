@@ -1,12 +1,7 @@
 ERROS e REQUISITOS
 
-X Não alterado o número de vacas ordenhadas, caso o usuário já tenha informado
-X Corrigida ordem colunas visualização parcelas
 - Gráfico entrega leite
 - Observação cadastro vaca
-X % vacas em lactação
-X % vacas prenhes
-X Ração peixe não soma janeiro
 
 - Mostrar desfazer venda quando animal já estiver vendido
 - Ao remover a venda pela tela de venda não dá refresh na tela

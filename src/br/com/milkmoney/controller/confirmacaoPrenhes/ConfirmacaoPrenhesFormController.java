@@ -51,7 +51,7 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 	
 	@FXML
 	private void handleDesfazerConfirmacao(){
-		CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhes", "Tem certeza que deseja desfazer a confirmação de prenhes?");
+		CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhez", "Tem certeza que deseja desfazer a confirmação de prenhez?");
 		if (CustomAlert.response == ButtonType.OK) {
 			((CoberturaService)service).desfazerConfirmacaoPrenhes(getObject());
 			closeForm();

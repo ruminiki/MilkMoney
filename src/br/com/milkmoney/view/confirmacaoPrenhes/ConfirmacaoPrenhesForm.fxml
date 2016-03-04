@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="198.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
+<AnchorPane prefHeight="195.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -22,7 +22,7 @@
             </HBox>
             <VBox prefHeight="172.0" prefWidth="589.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <GridPane alignment="CENTER_LEFT" prefHeight="101.0" prefWidth="579.0" VBox.vgrow="SOMETIMES">
+                  <GridPane alignment="CENTER_LEFT" prefHeight="82.0" prefWidth="579.0" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="485.0" />

@@ -44,7 +44,7 @@ public class PopUpMenu extends PopOver {
 			column.setStyle("-fx-background-color: #FFF");
 			column.getChildren().add(createItem("Coberturas", coberturasFunction, "img/lista16.png"));
 			column.getChildren().add(createItem("Nova Cobertura", novaCoberturaFunction, "img/novacobertura16.png"));
-			column.getChildren().add(createItem("Confirmar Prenhes", confirmarPrenhesFunction, "img/confirmarprenhes16.png"));
+			column.getChildren().add(createItem("Confirmar Prenhez", confirmarPrenhesFunction, "img/confirmarprenhes16.png"));
 			column.getChildren().add(createItem("Novo Parto", novoPartoFunction, "img/novoparto16.png"));
 			container.getChildren().add(column);
 

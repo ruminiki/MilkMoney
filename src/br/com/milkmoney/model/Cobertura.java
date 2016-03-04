@@ -57,7 +57,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private Parto                       parto;
 	private Aborto                      aborto;
 	private StringProperty              situacaoCobertura            = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
-	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
+	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty(SituacaoCobertura.PRENHA);
 	
 	public Cobertura() {
 	}
