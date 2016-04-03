@@ -7,6 +7,9 @@ import java.time.LocalDate;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -14,6 +17,9 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +42,7 @@ import br.com.milkmoney.util.Util;
 @Controller
 public class ProducaoLeiteOverviewController extends AbstractOverviewController<Integer, ProducaoLeite> {
 
+	@FXML private VBox vGroup;
 	@FXML private TableColumn<ProducaoLeite, LocalDate> dataColumn;
 	@FXML private TableColumn<ProducaoLeite, String> numeroVacasOrdenhadasColumn;
 	@FXML private TableColumn<ProducaoLeite, String> volumeProduzidoColumn;
@@ -64,6 +71,10 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	private ObservableList<String> meses = Util.generateListMonths();
 	private ToggleGroup groupMes  = new ToggleGroup();
 	
+	private final CategoryAxis              xAxis     = new CategoryAxis();
+    private final NumberAxis                yAxis     = new NumberAxis();
+	private final LineChart<String, Number> lineChart = new LineChart<String,Number>(xAxis,yAxis);
+	
 	@FXML
 	public void initialize() {
 		
@@ -84,9 +95,18 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 		super.service = this.service;
 		service.configuraTabelaDiasMesSelecionado(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes()));
 		super.initialize((ProducaoLeiteFormController)MainApp.getBean(ProducaoLeiteFormController.class));
+		super.getTable().setContextMenu(null);
+		
+        xAxis.setLabel("Meses");
+        lineChart.setTitle("Variação Produção de Leite");
+        lineChart.setLegendVisible(true);
+        
+        VBox.setVgrow(lineChart, Priority.SOMETIMES);
+        HBox.setHgrow(lineChart, Priority.SOMETIMES);
+        
+        vGroup.getChildren().add(lineChart);
+
 		this.resume();
-		
-		
 		
 	}
 	
@@ -220,6 +240,14 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 			}
 			lblAno.setText(String.valueOf(selectedAnoReferencia));
 		}
+		
+		setChartData();
+		
+	}
+	
+	private void setChartData(){
+		lineChart.getData().clear();
+		lineChart.getData().addAll(service.getDataChart(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
 	}
 	
 	/**

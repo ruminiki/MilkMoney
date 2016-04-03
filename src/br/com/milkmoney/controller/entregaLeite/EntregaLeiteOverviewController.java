@@ -108,6 +108,7 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		super.service = this.service;
 		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
 		super.initialize((EntregaLeiteFormController) MainApp.getBean(EntregaLeiteFormController.class));
+		super.getTable().setContextMenu(null);
 		
         xAxis.setLabel("Meses");
         lineChart.setTitle("Variação Volume Entrega de Leite");

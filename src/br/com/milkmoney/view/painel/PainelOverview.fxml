@@ -17,16 +17,6 @@
                <children>
                   <Label text="Gráficos" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleFinanceiroChart" text="Financeiro" />
-                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handlePrecoLeiteChart" text="Preço Leite">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                  <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleProducaoLeiteChart" text="Produção Leite">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#handleCausaMorteAnimalChart" text="Causa Morte" />
                   <Button minWidth="100.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                </children>
