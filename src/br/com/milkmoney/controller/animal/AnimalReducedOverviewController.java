@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.TableCellDateFactory;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Raca;
@@ -26,7 +25,6 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 	@FXML private TableColumn<Animal, String> numeroColumn;
 	@FXML private TableColumn<Animal, Date>   dataNascimentoColumn;
 	@FXML private TableColumn<Raca,   String> racaColumn;
-	@FXML private TableColumn<Animal, String> opcoesColumn;
 	
 	@Autowired private AnimalFormController animalFormController;
 	
@@ -38,9 +36,6 @@ public class AnimalReducedOverviewController extends AbstractReducedOverviewCont
 		numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 		dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 		racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Animal,String>(selecionar));
-		
 		super.initialize(animalFormController);
 
 	}

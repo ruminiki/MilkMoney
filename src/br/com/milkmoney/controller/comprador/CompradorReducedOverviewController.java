@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.Comprador;
 import br.com.milkmoney.service.IService;
@@ -22,7 +21,6 @@ public class CompradorReducedOverviewController extends AbstractReducedOverviewC
 	@FXML private TableColumn<Comprador, String> telefoneSecundarioColumn;
 	@FXML private TableColumn<Comprador, String> emailColumn;
 	@FXML private TableColumn<Comprador, String> cpfCnpjColumn;
-	@FXML private TableColumn<Comprador, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
@@ -32,9 +30,6 @@ public class CompradorReducedOverviewController extends AbstractReducedOverviewC
 		telefonePrincipalColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("telefonePrincipal"));
 		telefoneSecundarioColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("telefoneSecundario"));
 		cpfCnpjColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("cpfCnpf"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<Comprador,String>("id"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<Comprador,String>(selecionar));
-	
 		super.initialize((CompradorFormController) MainApp.getBean(CompradorFormController.class));
 		
 	}

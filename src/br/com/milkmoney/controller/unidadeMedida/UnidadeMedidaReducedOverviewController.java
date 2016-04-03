@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.UnidadeMedida;
 import br.com.milkmoney.service.IService;
@@ -20,7 +19,6 @@ public class UnidadeMedidaReducedOverviewController extends AbstractReducedOverv
 	@FXML private TableColumn<UnidadeMedida, String> idColumn;
 	@FXML private TableColumn<UnidadeMedida, String> descricaoColumn;
 	@FXML private TableColumn<UnidadeMedida, String> siglaColumn;
-	@FXML private TableColumn<UnidadeMedida, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
@@ -28,8 +26,6 @@ public class UnidadeMedidaReducedOverviewController extends AbstractReducedOverv
 		idColumn.setCellValueFactory(new PropertyValueFactory<UnidadeMedida,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<UnidadeMedida,String>("descricao"));
 		siglaColumn.setCellValueFactory(new PropertyValueFactory<UnidadeMedida,String>("sigla"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<UnidadeMedida,String>("id"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<UnidadeMedida,String>(selecionar));
 		super.initialize((UnidadeMedidaFormController) MainApp.getBean(UnidadeMedidaFormController.class));
 		
 	}

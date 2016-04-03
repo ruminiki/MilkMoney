@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.service.CoberturaService;
-import br.com.milkmoney.util.DateUtil;
 
 @Service
 public class DataUltimaCobertura extends AbstractFichaAnimal {
@@ -18,7 +18,8 @@ public class DataUltimaCobertura extends AbstractFichaAnimal {
 		
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
-		ficha.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosPorConcepcao(animal, DateUtil.today));
+		Cobertura cobertura = coberturaService.findLastCoberturaAnimal(animal);
+		ficha.setDataUltimaCobertura(cobertura != null ? cobertura.getData() : null);
 		
 	}
 

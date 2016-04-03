@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.FinalidadeLote;
 import br.com.milkmoney.service.IService;
@@ -19,15 +18,12 @@ public class FinalidadeLoteReducedOverviewController extends AbstractReducedOver
 
 	@FXML private TableColumn<FinalidadeLote, String> idColumn;
 	@FXML private TableColumn<FinalidadeLote, String> descricaoColumn;
-	@FXML private TableColumn<FinalidadeLote, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 		
 		idColumn.setCellValueFactory(new PropertyValueFactory<FinalidadeLote,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<FinalidadeLote,String>("descricao"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<FinalidadeLote,String>("id"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<FinalidadeLote,String>(selecionar));
 		super.initialize((FinalidadeLoteFormController)MainApp.getBean(FinalidadeLoteFormController.class));
 		
 	}

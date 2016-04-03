@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.MotivoOcorrenciaFuncionario;
 import br.com.milkmoney.service.IService;
@@ -19,15 +18,12 @@ public class MotivoOcorrenciaFuncionarioReducedOverviewController extends Abstra
 
 	@FXML private TableColumn<MotivoOcorrenciaFuncionario, String> idColumn;
 	@FXML private TableColumn<MotivoOcorrenciaFuncionario, String> descricaoColumn;
-	@FXML private TableColumn<MotivoOcorrenciaFuncionario, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<MotivoOcorrenciaFuncionario,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<MotivoOcorrenciaFuncionario,String>("descricao"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<MotivoOcorrenciaFuncionario,String>("id"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<MotivoOcorrenciaFuncionario,String>(selecionar));
 		super.initialize((MotivoOcorrenciaFuncionarioFormController) MainApp.getBean(MotivoOcorrenciaFuncionarioFormController.class));
 		
 	}

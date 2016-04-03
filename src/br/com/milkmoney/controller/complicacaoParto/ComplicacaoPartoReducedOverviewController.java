@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
-import br.com.milkmoney.components.TableCellOptionSelectFactory;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.ComplicacaoParto;
 import br.com.milkmoney.service.IService;
@@ -19,16 +18,12 @@ public class ComplicacaoPartoReducedOverviewController extends AbstractReducedOv
 
 	@FXML private TableColumn<ComplicacaoParto, String> idColumn;
 	@FXML private TableColumn<ComplicacaoParto, String> descricaoColumn;
-	@FXML private TableColumn<ComplicacaoParto, String> opcoesColumn;
 
 	@FXML
 	public void initialize() {
 
 		idColumn.setCellValueFactory(new PropertyValueFactory<ComplicacaoParto,String>("id"));
 		descricaoColumn.setCellValueFactory(new PropertyValueFactory<ComplicacaoParto,String>("descricao"));
-		opcoesColumn.setCellValueFactory(new PropertyValueFactory<ComplicacaoParto,String>("id"));
-		opcoesColumn.setCellFactory(new TableCellOptionSelectFactory<ComplicacaoParto,String>(selecionar));
-
 		super.initialize((ComplicacaoPartoFormController) MainApp.getBean(ComplicacaoPartoFormController.class));
 		
 	}

@@ -1,18 +1,19 @@
 ERROS e REQUISITOS
 
-- Gráfico entrega leite
 - Observação cadastro vaca
-
 - Mostrar desfazer venda quando animal já estiver vendido
+- Gráfico entrega leite
+- Clique duplo no registro do animal - abrir dados secundários
 - Ao remover a venda pela tela de venda não dá refresh na tela
+- Refatorar navegação meses/anos gráficos
+- Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
+
 
 - Fazer backup das imagens dos animais
 
-- Refatorar navegação meses/anos gráficos
 - Reformular procedimento técnico de acordo com planilha Daieli
 - Projeção, permitir informar média e valor do litro
 - Filtrar número de serviços tela animals
-- Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
 
 - Tá sendo permitido cadastrar parto de animal vendido/morto
 - Atribuir a entrega de leite ao fornecedor

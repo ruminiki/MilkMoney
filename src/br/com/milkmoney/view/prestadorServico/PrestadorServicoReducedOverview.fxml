@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="581.0" prefHeight="311.0" prefWidth="735.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.prestadorServico.PrestadorServicoReducedOverviewController">
+<AnchorPane minWidth="581.0" prefHeight="311.0" prefWidth="672.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.prestadorServico.PrestadorServicoReducedOverviewController">
    <children>
       <VBox AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -20,7 +20,7 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
@@ -68,7 +68,6 @@
                      </columns>
                   </TableColumn>
                 <TableColumn fx:id="emailColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Email" />
-                  <TableColumn fx:id="opcoesColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Opções" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -76,6 +75,7 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#handleSelecionar" text="Selecionar" />
                   <Button mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
                   <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
                </children>

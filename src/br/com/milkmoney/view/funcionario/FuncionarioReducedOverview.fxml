@@ -20,7 +20,7 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="3.0" />
+                        <Insets />
                      </HBox.margin>
                   </TextField>
                   <Button mnemonicParsing="false" onAction="#clearFilter" prefHeight="30.0" style="-fx-background-color: #FFF;" text="Limpar Filtro" />
@@ -56,7 +56,6 @@
                 <TableColumn fx:id="nomeColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="97.0" resizable="false" text="Nome" />
                 <TableColumn fx:id="telefoneColumn" maxWidth="120.0" minWidth="120.0" prefWidth="-1.0" style="-fx-alignment: CENTER;" text="Telefone" />
                   <TableColumn fx:id="emailColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Email" />
-                  <TableColumn fx:id="opcoesColumn" maxWidth="80.0" minWidth="80.0" prefWidth="75.0" text="Opções" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -64,6 +63,7 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#handleSelecionar" text="Selecionar" />
                   <Button mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
                   <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
                </children>

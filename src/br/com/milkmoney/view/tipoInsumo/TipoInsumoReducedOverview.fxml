@@ -20,7 +20,7 @@
                         <Insets right="5.0" top="5.0" />
                      </padding>
                      <HBox.margin>
-                        <Insets left="5.0" />
+                        <Insets />
                      </HBox.margin>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -66,6 +66,7 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" prefHeight="100.0" prefWidth="200.0" spacing="3.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#handleSelecionar" text="Selecionar" />
                   <Button mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
                   <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
                </children>
