@@ -64,6 +64,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty            peso                     = new SimpleStringProperty();
 	private StringProperty            valor                    = new SimpleStringProperty();
 	private StringProperty            imagem                   = new SimpleStringProperty();
+	private StringProperty            observacao               = new SimpleStringProperty();
 	
 	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
@@ -151,6 +152,19 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	public StringProperty imagemProperty(){
 		return imagem;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacao() {
+		return this.observacao.get();
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao.set(observacao);
+	}
+	
+	public StringProperty observacaoProperty(){
+		return observacao;
 	}
 	
 	@Access(AccessType.PROPERTY)

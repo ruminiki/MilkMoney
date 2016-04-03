@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
@@ -36,6 +37,7 @@ import br.com.milkmoney.util.ImageUtil;
 public class AnimalFormController extends AbstractFormController<Integer, Animal> {
 
 	@FXML private UCTextField inputNumero, inputNome, inputMae, inputPai, inputValor, inputRaca;
+	@FXML private TextArea inputObservacao;
 	@FXML private DatePicker inputDataNascimento;
 	@FXML private ChoiceBox<String> inputFinalidadeAnimal, inputSexo;
 	@FXML private Button btnBuscarMae, btnBuscarPaiMontaNatural, btnBuscarPaiEnseminacaoArtificial, btnRemoverImagem;
@@ -53,6 +55,7 @@ public class AnimalFormController extends AbstractFormController<Integer, Animal
 		inputNome.textProperty().bindBidirectional(getObject().nomeProperty());
 		inputDataNascimento.valueProperty().bindBidirectional(getObject().dataNascimentoProperty());
 		inputValor.textProperty().bindBidirectional(getObject().valorProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		
 		inputSexo.setItems(Sexo.getItems());
 		inputSexo.valueProperty().bindBidirectional(getObject().sexoProperty());

@@ -20,7 +20,6 @@ public class PainelController {
 	@FXML private VBox group;
 	@Autowired PrecoLeiteChartController precoLeiteChartController;
 	@Autowired ProducaoLeiteChartController producaoLeiteChartController;
-	@Autowired EntregaLeiteChartController entregaLeiteChartController;
 	@Autowired CausaMorteAnimalChartController causaMorteAnimalChartController;
 	@Autowired FinanceiroChartController financeiroChartController;
 	
@@ -68,11 +67,6 @@ public class PainelController {
 	}
 	
 	@FXML
-	private void handleEntregaLeiteChart(){
-		changeItem((AnchorPane) MainApp.load(entregaLeiteChartController.getFormName()));
-	}
-	
-	@FXML
 	private void handleCausaMorteAnimalChart(){
 		group.getChildren().clear();
 		AnchorPane node = (AnchorPane) MainApp.load(causaMorteAnimalChartController.getFormName());
@@ -80,8 +74,4 @@ public class PainelController {
 		group.getChildren().add(node);
 	}
 	
-	//....
-	
-	
-
 }

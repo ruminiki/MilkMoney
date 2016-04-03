@@ -4,19 +4,18 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.EntregaLeiteDao;
 import br.com.milkmoney.model.EntregaLeite;
-import br.com.milkmoney.model.PrecoLeite;
 import br.com.milkmoney.model.ProducaoLeite;
 import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.util.Util;
@@ -39,11 +38,6 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 			entregaLeite.setVolume(totalEntregue);
 		}
 		
-		PrecoLeite precoLeite = precoLeiteService.findByMesAno(entregaLeite.getMesReferencia(), entregaLeite.getAnoReferencia());
-		if ( precoLeite != null ){
-			entregaLeite.setPrecoLeite(precoLeite);
-		}
-
 		EntregaLeiteValidation.validate(entregaLeite);
 		
 		return dao.persist(entregaLeite);	
@@ -111,20 +105,6 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 
 	}
 	
-	public void setPrecoLeite(ObservableList<EntregaLeite> data){
-		
-		for ( EntregaLeite entregaLeite : data ) {
-			
-			PrecoLeite precoLeite = precoLeiteService.findByMesAno(entregaLeite.getMesReferencia(), entregaLeite.getAnoReferencia());
-			if ( entregaLeite.getPrecoLeite() == null ){
-				entregaLeite.setPrecoLeite(precoLeite);
-			}
-			
-		}
-
-	}
-	
-	
 	/**
 	 * Carrega o total entregue no período selecionado.
 	 * 
@@ -170,6 +150,10 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
     	
     	return series;
     	
+	}
+
+	public EntregaLeite getPrimeiraEntrega() {
+		return dao.getPrimeiraEntrega();
 	}
 
 }

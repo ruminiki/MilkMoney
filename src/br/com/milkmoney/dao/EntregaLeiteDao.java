@@ -30,4 +30,14 @@ public class EntregaLeiteDao extends AbstractGenericDao<Integer, EntregaLeite> {
 		}
 	}
 
+	public EntregaLeite getPrimeiraEntrega() {
+		Query query = entityManager.createQuery("SELECT c FROM EntregaLeite c order by c.anoReferencia asc");
+		query.setMaxResults(1);
+		try{
+			return (EntregaLeite) query.getSingleResult();
+		}catch(NoResultException e){
+			return null;
+		}
+	}
+
 }

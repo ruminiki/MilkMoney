@@ -7,12 +7,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +40,7 @@ import br.com.milkmoney.util.Util;
 @Controller
 public class EntregaLeiteOverviewController extends AbstractOverviewController<Integer, EntregaLeite> {
 
-
+	@FXML private VBox vGroup;
 	@FXML private TableColumn<EntregaLeite, String> mesReferenciaColumn;
 	@FXML private TableColumn<EntregaLeite, LocalDate> dataInicioColumn;
 	@FXML private TableColumn<EntregaLeite, LocalDate> dataFimColumn;
@@ -54,6 +60,10 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 	@Autowired private EntregaLeiteService service;
 	@Autowired private PrecoLeiteService precoLeiteService;
 	@Autowired private PrecoLeiteFormController precoLeiteFormController;
+	
+	private final CategoryAxis xAxis = new CategoryAxis();
+    private final NumberAxis yAxis = new NumberAxis();
+    private final LineChart<String, Number> lineChart = new LineChart<String,Number>(xAxis,yAxis);
 	
 	private int selectedAnoReferencia = LocalDate.now().getYear();
 	private ObservableList<String> meses = Util.generateListMonths();
@@ -98,7 +108,23 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		super.service = this.service;
 		service.configuraMesesEntregaAnoReferencia(selectedAnoReferencia);
 		super.initialize((EntregaLeiteFormController) MainApp.getBean(EntregaLeiteFormController.class));
-		resume();
+		
+        xAxis.setLabel("Meses");
+        lineChart.setTitle("Variação Volume Entrega de Leite");
+        lineChart.setLegendVisible(true);
+        
+        VBox.setVgrow(lineChart, Priority.SOMETIMES);
+        HBox.setHgrow(lineChart, Priority.SOMETIMES);
+        
+        vGroup.getChildren().add(lineChart);
+        
+        resume();
+		
+	}
+	
+	private void setChartData(){
+		lineChart.getData().clear();
+		lineChart.getData().addAll(service.getDataChart(selectedAnoReferencia));
 	}
 	
 	/**
@@ -129,8 +155,6 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 	protected void refreshTableOverview() {
 		super.data.clear();
 		super.data.addAll(service.findAllByAnoAsObservableList(selectedAnoReferencia));
-		//carrega o preço do leite do mês e atualiza no registro de entrega
-		service.setPrecoLeite(data);
 	}
 
 	/**
@@ -156,6 +180,8 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		lblAno.setText(String.valueOf(selectedAnoReferencia));
 		table.getSelectionModel().clearSelection();
 		table.setFocusTraversable(false);
+		
+		setChartData();
 	}
 	
 	@FXML
@@ -176,9 +202,7 @@ public class EntregaLeiteOverviewController extends AbstractOverviewController<I
 		precoLeiteFormController.showForm();
 		
 		if ( precoLeiteFormController.getObject() != null ){
-			//recupera o novo preço do leite e atualiza a linha referente ao mês selecionado
-			getObject().setPrecoLeite(precoLeiteFormController.getObject());
-			table.getItems().set(table.getItems().indexOf(getObject()), getObject());
+			refreshTableOverview();
 			resume();
 		}
 		

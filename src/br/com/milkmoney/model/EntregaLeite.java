@@ -22,6 +22,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
+
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.util.NumberFormatUtil;
@@ -48,9 +50,12 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 	private StringProperty observacao = new SimpleStringProperty();
 	private StringProperty carregaMarcacoesMes = new SimpleStringProperty(SimNao.SIM);
 	
-	@Transient
-	private ObjectProperty<PrecoLeite> precoLeite = new SimpleObjectProperty<PrecoLeite>();
-
+	@Formula("(SELECT p.valorRecebido FROM precoLeite p WHERE p.mesReferencia = mesReferencia and p.anoReferencia = anoReferencia limit 1)")
+	private BigDecimal valorRecebido;
+	
+	@Formula("(SELECT p.valorMaximoPraticado FROM precoLeite p WHERE p.mesReferencia = mesReferencia and p.anoReferencia = anoReferencia limit 1)")
+	private BigDecimal valorMaximoPraticado;
+	
 	public EntregaLeite() {
 	}
 	
@@ -168,31 +173,24 @@ public class EntregaLeite extends AbstractEntity implements Serializable {
 	
 	@Transient
 	public BigDecimal getValorTotal() {
-		if ( getPrecoLeite() != null ){
-			return getPrecoLeite().getValorRecebido().multiply(getVolume());
+		if ( valorRecebido != null ){
+			return valorRecebido.multiply(getVolume());
 		}
 		return BigDecimal.ZERO;
-	}
-		
-	@Transient
-	public PrecoLeite getPrecoLeite() {
-		return precoLeite.get();
 	}
 	
-	public void setPrecoLeite(PrecoLeite precoLeite) {
-		this.precoLeite.set(precoLeite);
-	}
-
+	@Transient	
 	public BigDecimal getValorMaximoPraticado() {
-		if ( getPrecoLeite() != null ){
-			return getPrecoLeite().getValorMaximoPraticado();
+		if ( valorMaximoPraticado != null ){
+			return valorMaximoPraticado;
 		}
 		return BigDecimal.ZERO;
 	}
-
+	
+	@Transient
 	public BigDecimal getValorRecebido() {
-		if ( getPrecoLeite() != null ){
-			return getPrecoLeite().getValorRecebido();
+		if ( valorRecebido != null ){
+			return valorRecebido;
 		}
 		return BigDecimal.ZERO;
 	}

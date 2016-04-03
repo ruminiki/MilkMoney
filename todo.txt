@@ -1,9 +1,8 @@
 ERROS e REQUISITOS
 
-- Observação cadastro vaca
+X Observação cadastro vaca
 - Mostrar desfazer venda quando animal já estiver vendido
 - Gráfico entrega leite
-- Clique duplo no registro do animal - abrir dados secundários
 - Ao remover a venda pela tela de venda não dá refresh na tela
 - Refatorar navegação meses/anos gráficos
 - Criar opção: Com os selecionados, criar lote, marcar conf prenhes...

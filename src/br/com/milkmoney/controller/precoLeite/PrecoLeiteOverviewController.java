@@ -74,8 +74,7 @@ public class PrecoLeiteOverviewController extends AbstractOverviewController<Int
         
         super.service = this.service;
 		super.initialize(formController);
-        
-        //refreshTableOverview();
+		super.getTable().setContextMenu(null);
         
 	}
 	

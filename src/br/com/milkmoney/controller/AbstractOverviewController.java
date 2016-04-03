@@ -434,6 +434,10 @@ public abstract class AbstractOverviewController<K, E>{
 		this.formController = formController;
 	}
 	
+	public TableView<E> getTable(){
+		return table;
+	}
+	
 	
 
 }
