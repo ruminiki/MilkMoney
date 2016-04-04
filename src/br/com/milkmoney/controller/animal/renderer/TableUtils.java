@@ -9,11 +9,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+
+import org.springframework.stereotype.Component;
+
+import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController;
 import br.com.milkmoney.model.Animal;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import com.sun.javafx.scene.control.skin.TableViewSkin;
 
+@Component
 public class TableUtils {
 
 	/**
@@ -95,9 +101,10 @@ public class TableUtils {
 
 			@Override
 			public void handle(MouseEvent event) {
-				for (Object obj : table.getColumns()) {
-					((TableColumn<?, ?>) obj).setVisible(true);
-				}
+				MovimentacaoAnimalLoteFormController movimentacaoAnimalLoteFormController = 
+						(MovimentacaoAnimalLoteFormController)MainApp.getBean(MovimentacaoAnimalLoteFormController.class);
+				movimentacaoAnimalLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
+				movimentacaoAnimalLoteFormController.showForm();
 			}
 
 		});

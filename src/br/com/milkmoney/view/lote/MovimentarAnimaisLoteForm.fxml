@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import br.com.milkmoney.components.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="503.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController">
+   <children>
+      <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <children>
+            <GridPane minHeight="48.0" prefHeight="48.0" prefWidth="733.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="361.0" minWidth="10.0" prefWidth="48.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="668.0" minWidth="10.0" prefWidth="338.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="668.0" minWidth="10.0" prefWidth="65.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Lote: " />
+                  <TextField fx:id="inputLote" disable="true" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#handleBuscarLote" text="Buscar" GridPane.columnIndex="2">
+                     <GridPane.margin>
+                        <Insets left="3.0" />
+                     </GridPane.margin>
+                  </Button>
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <HBox spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="SOMETIMES">
+               <children>
+                  <VBox alignment="CENTER" spacing="3.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
+                           <children>
+                              <Label text="Animais Selecionados" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="listAnimaisSelecionados" focusTraversable="false" />
+                        <HBox alignment="CENTER" minHeight="60.0" spacing="3.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="150.0" style="-fx-border-color: #CCC;">
+                                 <children>
+                                    <Label text="Média Idade">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblMediaIdade" text="0">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="150.0" style="-fx-border-color: #CCC;">
+                                 <children>
+                                    <Label text="Média Lactações">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblMediaLactacoes" text="0">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="150.0" style="-fx-border-color: #CCC;">
+                                 <children>
+                                    <Label text="Total Animais">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblTotalAnimais" text="0">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="150.0" style="-fx-border-color: #CCC;">
+                                 <children>
+                                    <Label text="Média Produção">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lblMediaProducao" text="0">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
+               <children>
+                  <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" graphicTextGap="10.0" lineSpacing="5.0" mnemonicParsing="false" onAction="#handleSave" text="Salvar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
+               </children>
+               <VBox.margin>
+                  <Insets right="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

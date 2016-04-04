@@ -66,6 +66,8 @@ public class Animal extends AbstractEntity implements Serializable {
 	private StringProperty            imagem                   = new SimpleStringProperty();
 	private StringProperty            observacao               = new SimpleStringProperty();
 	
+	private ObjectProperty<Lote>      lote                     = new SimpleObjectProperty<Lote>();
+	
 	@Formula("(SELECT s.situacao FROM viewSituacaoAnimal s WHERE s.animal = id limit 1)")
 	private String situacaoAnimal;
 	
@@ -74,10 +76,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
-	
-	@Formula("(SELECT GROUP_CONCAT(l.descricao) FROM lote l inner join loteAnimal la on la.lote = l.id WHERE la.animal = id)")
-	private String lote;
-	
 	
 	public Animal() {}
 
@@ -295,6 +293,21 @@ public class Animal extends AbstractEntity implements Serializable {
 		this.situacaoAnimal = situacaoAnimal;
 	}
 	
+	@Access(AccessType.PROPERTY)
+	@ManyToOne(targetEntity=Lote.class, cascade=CascadeType.REFRESH)
+	@JoinColumn(name="lote")
+	public Lote getLote() {
+		return this.lote.get();
+	}
+
+	public void setLote(Lote lote) {
+		this.lote.set(lote);
+	}
+	
+	public ObjectProperty<Lote> loteProperty(){
+		return lote;
+	}
+	
 	//==========================
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
@@ -323,18 +336,6 @@ public class Animal extends AbstractEntity implements Serializable {
 
 	public void setNascimentoCadastrado(boolean nascimentoCadastrado) {
 		this.nascimentoCadastrado = nascimentoCadastrado;
-	}
-	
-	@Transient
-	public String getLote() {
-		if ( lote == null || lote.isEmpty() ){
-			return "--";
-		}
-		return lote;
-	}
-
-	public void setLote(String lote) {
-		this.lote = lote;
 	}
 	
 	@Transient
