@@ -71,7 +71,7 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 
 	@Override
 	public String getFormTitle() {
-		return "Confirmação Prenhes";
+		return "Confirmação Prenhez";
 	}
 	
 	@Override

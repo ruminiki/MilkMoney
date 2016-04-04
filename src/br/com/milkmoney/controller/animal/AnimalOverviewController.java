@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,6 +32,7 @@ import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.renderer.PopUpMenu;
 import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
+import br.com.milkmoney.controller.animal.renderer.TableUtils;
 import br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
@@ -75,6 +77,8 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
+
+import com.sun.javafx.scene.control.skin.TableViewSkin;
 
 @Controller
 public class AnimalOverviewController extends AbstractOverviewController<Integer, Animal> {
@@ -210,6 +214,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				resizeColunaTabela(table.getWidth());
 			}
 		});
+		
+		table.setSkin(new TableViewSkin<>(table));
+		TableUtils.addCustomTableMenu(table);
+		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 	}
 	

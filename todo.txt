@@ -2,11 +2,13 @@ ERROS e REQUISITOS
 
 X Observação cadastro vaca
 - Mostrar desfazer venda quando animal já estiver vendido
-- Gráfico entrega leite
+X Gráfico entrega leite, Produção de Leite
 - Ao remover a venda pela tela de venda não dá refresh na tela
-- Refatorar navegação meses/anos gráficos
+- Permitir a multipla seleção de animais com CTRL
+VANESSA AMOR DA MINHA VIDA 52
 - Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
-
+- Cada animal poderá estar ligado a um único lote
+- Criar observação no lote
 
 - Fazer backup das imagens dos animais
 
