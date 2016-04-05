@@ -35,9 +35,10 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 	public void initialize() {
 		
 		lblCobertura.setText(getObject().toString());
-		
 		inputData.valueProperty().bindBidirectional(getObject().dataConfirmacaoPrenhezProperty());
-		inputData.setValue(DateUtil.asLocalDate(getObject().getData()).plusDays(30));
+		if ( getObject().getDataConfirmacaoPrenhez() == null ){
+			inputData.setValue(DateUtil.asLocalDate(getObject().getData()).plusDays(30));	
+		}
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
 		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhezProperty());
 		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhez.getItems());

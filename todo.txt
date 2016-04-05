@@ -4,14 +4,19 @@ X Observação cadastro vaca
 - Mostrar desfazer venda quando animal já estiver vendido
 X Gráfico entrega leite, Produção de Leite
 - Ao remover a venda pela tela de venda não dá refresh na tela
-- Permitir a multipla seleção de animais com CTRL
-- atualizar tabela indicador prenhes para prenhez
+X Permitir a multipla seleção de animais com CTRL
+X atualizar tabela indicador prenhes para prenhez
 
   VANESSA AMOR DA MINHA VIDA 52
-- Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
-- Cada animal poderá estar ligado a um único lote
-- Criar observação no lote
+  
+X Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
+X Cada animal poderá estar ligado a um único lote
+X Criar observação no lote (criar no modelo ER)
+- Fazer confirmação prenhez em lote (validar preenchimento dos campos, ordem das datas...)
 - atualizar a tabela de animais após fazer a movimentação e a confirmação de prenhez em lote
+- impedir ordenação das colunas das tabelas
+
+
 
 - Fazer backup das imagens dos animais
 

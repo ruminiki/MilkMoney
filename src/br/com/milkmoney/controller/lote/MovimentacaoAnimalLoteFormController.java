@@ -73,6 +73,11 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 			super.closeForm();
 		}
 	}
+	
+	@Override
+	public void handleCancel() {
+		super.closeForm();
+	}
 
 	@Override
 	public String getFormName() {

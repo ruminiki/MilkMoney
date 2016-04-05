@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="467.0" prefWidth="545.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController">
+<AnchorPane prefHeight="467.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -19,11 +19,12 @@
             </HBox>
             <VBox prefHeight="172.0" prefWidth="589.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <TableView fx:id="tableAnimaisSelecionados" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="tableCoberturasSelecionados" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn fx:id="animalColumn" prefWidth="284.0" text="Animal" />
-                        <TableColumn fx:id="reprodutorColumn" prefWidth="157.0" text="Touro" />
-                      <TableColumn fx:id="dataCoberturaColumn" minWidth="0.0" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Data Cobertura" />
+                      <TableColumn fx:id="animalColumn" prefWidth="193.0" text="Animal" />
+                        <TableColumn fx:id="reprodutorColumn" prefWidth="148.0" text="Touro" />
+                      <TableColumn fx:id="dataCoberturaColumn" minWidth="0.0" prefWidth="99.0" style="-fx-alignment: CENTER;" text="Data Cobertura" />
+                        <TableColumn fx:id="situacaoColumn" prefWidth="169.0" text="Situaçao" />
                     </columns>
                   </TableView>
                   <GridPane alignment="CENTER_LEFT" minHeight="109.0" prefHeight="109.0" prefWidth="525.0" VBox.vgrow="SOMETIMES">

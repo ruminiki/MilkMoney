@@ -1,0 +1,4 @@
+UPDATE milkmoney.indicador set definicao = 'Mede o percentual de animais que ficam gestantes a cada 21 dias em relação ao número total de vacas que estavam disponíveis para enseminar no mesmo período. Vale lembrar que mesmo com uma Taxa de Concepção alta a Taxa de Prenhez (TP) pode ser baixa, pois a Taxa de Concepção (TC) se refere apenas aos animais inseminados no período, enquanto que a Taxa de Prenhez (TP) se refere a todos os animais que estavam disponíveis para serem inseminados. Por isso no geral ela é mais importante. Os valores ideias giram em torno de 25 a 35%.' WHERE id = 5;
+
+UPDATE milkmoney.indicador set descricao = '% DE VACAS PRENHAS', classeCalculo = 'br.com.milkmoney.service.indicadores.PercentualVacasPrenhas', definicao = 'Nesse indicador é registrado o percentual de vacas prenhas em relaçao ao total de vacas do rebanho.' WHERE id = 6;
+

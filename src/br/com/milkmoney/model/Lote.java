@@ -38,6 +38,7 @@ public class Lote extends AbstractEntity implements Serializable {
 	private ObjectProperty<FinalidadeLote> finalidadeLote = new SimpleObjectProperty<FinalidadeLote>();
 	private StringProperty                 ativo          = new SimpleStringProperty(SimNao.SIM);
 	private List<Animal>                   animais        = new ArrayList<Animal>();
+	private StringProperty                 observacao     = new SimpleStringProperty();
 	
 	public Lote() {
 	}
@@ -112,6 +113,19 @@ public class Lote extends AbstractEntity implements Serializable {
 
 	public void setAnimais(List<Animal> animais) {
 		this.animais = animais;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacao() {
+		return this.observacao.get();
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao.set(observacao);
+	}
+	
+	public StringProperty observacaoProperty(){
+		return observacao;
 	}
 
 	@Override

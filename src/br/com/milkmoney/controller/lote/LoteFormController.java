@@ -2,6 +2,7 @@ package br.com.milkmoney.controller.lote;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 
 import javax.annotation.Resource;
 
@@ -21,6 +22,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 	
 	@FXML private UCTextField inputPesquisa, inputDescricao, inputFinalidade;
 	@FXML private ComboBox<String> inputAtivo;
+	@FXML private TextArea inputObservacao;
 	@Autowired protected FinalidadeLoteReducedOverviewController finalidadeLoteReducedController;
 
 	@FXML
@@ -29,6 +31,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		inputAtivo.setItems(SimNao.getItems());
 		inputAtivo.valueProperty().bindBidirectional(getObject().ativoProperty());
+		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		if ( getObject() != null && getObject().getFinalidadeLote() != null ){
 			inputFinalidade.setText(getObject().getFinalidadeLote().getDescricao());
 		}
