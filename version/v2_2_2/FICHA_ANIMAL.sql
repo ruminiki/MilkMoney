@@ -1,0 +1,1 @@
+ALTER TABLE milkmoney.fichaAnimal CHANGE COLUMN numeroServicosAtePrenhes numeroServicosAtePrenhez INT NULL DEFAULT NULL COMMENT 'Número de serviços até a prenhez';

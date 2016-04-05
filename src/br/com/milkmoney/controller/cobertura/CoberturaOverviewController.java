@@ -18,11 +18,11 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
-import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhezHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarAbortoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
-import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.lactacao.LactacaoFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
@@ -58,7 +58,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private Label									lblHeader;
 	
 	@Autowired private CoberturaFormController          coberturaFormController;
-	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private AbortoFormController             abortoFormController;
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private LactacaoFormController           lactacaoFormController;
@@ -81,8 +81,8 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		tipoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("tipoCobertura"));
 		situacaoCoberturaColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("situacaoCobertura"));
 		statusColumn.setCellFactory(new TableCellSituacaoCoberturaFactory<Cobertura,String>("situacaoCobertura"));
-		dataConfirmacaoColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
-		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("metodoConfirmacaoPrenhes"));
+		dataConfirmacaoColumn.setCellFactory(new TableCellConfirmarPrenhezHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhez", confirmarPrenhez));
+		metodoConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("metodoConfirmacaoPrenhez"));
 		
 		super.initialize(coberturaFormController);
 		
@@ -194,15 +194,15 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		return true;
 	};
 	
-	Function<Integer, Boolean> confirmarPrenhes = index -> {
+	Function<Integer, Boolean> confirmarPrenhez = index -> {
 		table.getSelectionModel().select(index);
 		if ( table.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
 			return false;
 		}
 		
-		confirmacaoPrenhesFormController.setObject(getObject());
-    	confirmacaoPrenhesFormController.showForm();
+		confirmacaoPrenhezFormController.setObject(getObject());
+    	confirmacaoPrenhezFormController.showForm();
     	
 		refreshObjectInTableView.apply(service.findById(getObject().getId()));
 		return true;

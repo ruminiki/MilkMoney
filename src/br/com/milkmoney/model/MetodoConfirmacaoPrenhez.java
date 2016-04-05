@@ -3,7 +3,7 @@ package br.com.milkmoney.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MetodoConfirmacaoPrenhes {
+public class MetodoConfirmacaoPrenhez {
 	
 	public static final String ULTRASONOGRAFIA = "ULTRASONOGRAFIA";
 	public static final String TOQUE           = "TOQUE";

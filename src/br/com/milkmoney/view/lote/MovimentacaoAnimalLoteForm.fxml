@@ -24,7 +24,7 @@
                <children>
                   <Label text="Lote: " />
                   <TextField fx:id="inputLote" disable="true" GridPane.columnIndex="1" />
-                  <Button mnemonicParsing="false" onAction="#handleBuscarLote" text="Buscar" GridPane.columnIndex="2">
+                  <Button mnemonicParsing="false" onAction="#handleSelecionarLote" text="Buscar" GridPane.columnIndex="2">
                      <GridPane.margin>
                         <Insets left="3.0" />
                      </GridPane.margin>

@@ -8,24 +8,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="195.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController">
+<AnchorPane prefHeight="467.0" prefWidth="545.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
-            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0" style="-fx-border-color: #CCC;">
+            <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
                <children>
-                  <Label fx:id="lblCobertura" text="Label">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                  <Label text="Animais Selecionados" />
                </children>
             </HBox>
             <VBox prefHeight="172.0" prefWidth="589.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <GridPane alignment="CENTER_LEFT" prefHeight="82.0" prefWidth="579.0" VBox.vgrow="SOMETIMES">
+                  <TableView fx:id="tableAnimaisSelecionados" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="animalColumn" prefWidth="284.0" text="Animal" />
+                        <TableColumn fx:id="reprodutorColumn" prefWidth="157.0" text="Touro" />
+                      <TableColumn fx:id="dataCoberturaColumn" minWidth="0.0" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Data Cobertura" />
+                    </columns>
+                  </TableView>
+                  <GridPane alignment="CENTER_LEFT" minHeight="109.0" prefHeight="109.0" prefWidth="525.0" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="485.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="71.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="454.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints vgrow="SOMETIMES" />
@@ -55,7 +59,6 @@
                               <Insets />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnRemover" mnemonicParsing="false" onAction="#handleDesfazerConfirmacao" text="Remover" />
                         <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancelar" />
                      </children>
                      <padding>

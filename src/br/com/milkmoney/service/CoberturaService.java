@@ -58,7 +58,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 		try{
 			cobertura.setParto(null);
-			cobertura.setSituacaoCobertura(cobertura.getSituacaoConfirmacaoPrenhes());
+			cobertura.setSituacaoCobertura(cobertura.getSituacaoConfirmacaoPrenhez());
 			dao.persist(cobertura);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -67,13 +67,13 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	@Transactional
-	public void desfazerConfirmacaoPrenhes(Cobertura cobertura) {
+	public void desfazerConfirmacaoPrenhez(Cobertura cobertura) {
 		
 		try{
-			cobertura.setDataConfirmacaoPrenhes(null);
-			cobertura.setMetodoConfirmacaoPrenhes(null);
-			cobertura.setObservacaoConfirmacaoPrenhes(null);
-			cobertura.setSituacaoConfirmacaoPrenhes(null);
+			cobertura.setDataConfirmacaoPrenhez(null);
+			cobertura.setMetodoConfirmacaoPrenhez(null);
+			cobertura.setObservacaoConfirmacaoPrenhez(null);
+			cobertura.setSituacaoConfirmacaoPrenhez(null);
 			cobertura.setSituacaoCobertura(SituacaoCobertura.NAO_CONFIRMADA);
 			dao.persist(cobertura);
 		}catch(Exception e){
@@ -86,7 +86,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	public void desfazerRegistroAborto(Cobertura cobertura) {
 		try{
 			cobertura.setAborto(null);
-			cobertura.setSituacaoCobertura(cobertura.getSituacaoConfirmacaoPrenhes());
+			cobertura.setSituacaoCobertura(cobertura.getSituacaoConfirmacaoPrenhez());
 			dao.persist(cobertura);
 		}catch(Exception e){
 			throw new RuntimeException(e);
@@ -185,7 +185,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
-/*	public BigDecimal getMediaIntervaloPrimeiraCoberturaAtePrenhes(Animal animal) {
+/*	public BigDecimal getMediaIntervaloPrimeiraCoberturaAtePrenhez(Animal animal) {
 		
 		List<Cobertura> coberturas = dao.findByAnimal(animal);
 		int index = 0;
@@ -234,8 +234,8 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 			}
 			
 			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) ){
-				if ( cobertura.getDataConfirmacaoPrenhes() != null )
-					return DateUtil.asDate(DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhes()).plusDays(21));
+				if ( cobertura.getDataConfirmacaoPrenhez() != null )
+					return DateUtil.asDate(DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhez()).plusDays(21));
 			}
 			
 			if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.ABORTADA) ){
@@ -282,11 +282,11 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 				
 				if ( c != null && DateUtil.before(c.getData(), data) ){
 					//A data da cobertura que gerou a concepção
-					if ( c.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+					if ( c.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
 						diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(c.getData()));
 					}else{
 						//a data atual para vacas vazias
-						if ( c.getSituacaoConfirmacaoPrenhes().equals(SituacaoCobertura.VAZIA) ){
+						if ( c.getSituacaoConfirmacaoPrenhez().equals(SituacaoCobertura.VAZIA) ){
 							diasEmAberto = (int) ChronoUnit.DAYS.between(DateUtil.asLocalDate(ultimoParto.getData()), DateUtil.asLocalDate(data));
 						}
 					}

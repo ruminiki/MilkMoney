@@ -24,7 +24,7 @@ import br.com.milkmoney.util.DateUtil;
  * A taxa de concepção (TC) do rebanho, dividindo o número de vacas que ficaram gestantes no período de 21 dias 
  * pelo número de vacas inseminadas. 
  * 
- * A taxa de prenhez representa o número de vacas que ficaram prenhes em relação ao número de vacas APTAS a ficarem prenhes.
+ * A taxa de prenhez representa o número de vacas que ficaram prenhez em relação ao número de vacas APTAS a ficarem prenhez.
  * 
  * @author ruminiki
  */
@@ -53,7 +53,7 @@ public class TaxaPrenhez extends AbstractCalculadorIndicador{
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
-			if ( cobertura.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+			if ( cobertura.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
 				//contabiliza todas as concepções
 				concepcoes = concepcoes.add(BigDecimal.ONE);
 			}

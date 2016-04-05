@@ -317,6 +317,14 @@ public class Animal extends AbstractEntity implements Serializable {
 		return this.getSexo().substring(0, 1);
 	}
 	
+	public String getLoteFormatado(){
+		if ( getLote() == null ){
+			return "--";
+		}else{
+			return getLote().getDescricao();
+		}
+	}
+	
 	public StringProperty numeroNomeProperty(){
 		return new SimpleStringProperty(numero.get() + "-" + this.nome.get());
 	}

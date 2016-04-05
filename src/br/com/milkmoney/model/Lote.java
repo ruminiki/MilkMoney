@@ -13,6 +13,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -102,8 +103,9 @@ public class Lote extends AbstractEntity implements Serializable {
 	//@ManyToMany
 	//@JoinTable(name="loteAnimal", joinColumns={@JoinColumn(name="lote", referencedColumnName="id")},
 	//      inverseJoinColumns={@JoinColumn(name="animal", referencedColumnName="id")})
-	@OneToMany(orphanRemoval=false, targetEntity=Animal.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-	@JoinColumn(name="lote")
+	//@OneToMany(orphanRemoval=false, targetEntity=Animal.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	//@JoinColumn(name="lote")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "lote", cascade={CascadeType.MERGE})
 	public List<Animal> getAnimais() {
 		return animais;
 	}

@@ -61,46 +61,46 @@ public class LoteService implements IService<Integer, Lote>{
 		LoteValidation.validate(entity);
 	}
 
-	public Float getMediaIdadeAnimais(Lote lote) {
+	public Float getMediaIdadeAnimais(List<Animal> animais) {
 		
 		float somaIdade = 0F;
 		
-		for ( Animal animal : lote.getAnimais() ){
+		for ( Animal animal : animais ){
 		
 			somaIdade += animal.getIdade();
 			
 		}
 		
-		return BigDecimal.valueOf(somaIdade > 0 ? somaIdade / lote.getAnimais().size() : somaIdade)
+		return BigDecimal.valueOf(somaIdade > 0 ? somaIdade / animais.size() : somaIdade)
 				.setScale(2, RoundingMode.HALF_EVEN)
 				.floatValue();
 		
 	}
 
-	public Float getMediaLactacoesAnimais(Lote lote) {
+	public Float getMediaLactacoesAnimais(List<Animal> animais) {
 		
 		float somaLactacoes = 0F;
 		
-		for ( Animal animal : lote.getAnimais() ){
+		for ( Animal animal : animais ){
 		
 			somaLactacoes += lactacaoDao.countByAnimal(animal);
 			
 		}
 		
-		return BigDecimal.valueOf(somaLactacoes > 0 ? somaLactacoes / lote.getAnimais().size() : somaLactacoes)
+		return BigDecimal.valueOf(somaLactacoes > 0 ? somaLactacoes / animais.size() : somaLactacoes)
 				.setScale(2, RoundingMode.HALF_EVEN)
 				.floatValue();
 	}
 
-	public Float getMediaProducaoAnimais(Lote lote) {
+	public Float getMediaProducaoAnimais(List<Animal> animais) {
 		
 		float mediaAnimal = 0F;
 		
-		for ( Animal animal : lote.getAnimais() ){
+		for ( Animal animal : animais ){
 			mediaAnimal += producaoIndividualService.getMediaProducaoAnimal(animal);
 		}
 		
-		return BigDecimal.valueOf(mediaAnimal > 0 ? mediaAnimal / lote.getAnimais().size() : mediaAnimal)
+		return BigDecimal.valueOf(mediaAnimal > 0 ? mediaAnimal / animais.size() : mediaAnimal)
 				.setScale(2, RoundingMode.HALF_EVEN)
 				.floatValue();
 	}

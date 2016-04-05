@@ -288,7 +288,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                        <children>
                                           <Label fx:id="lblSituacaoUltimaCobertura" text="--" />
-                                          <Hyperlink fx:id="hlConfirmarPrenhes" text="confirmar" visible="false" />
+                                          <Hyperlink fx:id="hlConfirmarPrenhez" text="confirmar" visible="false" />
                                        </children>
                                     </HBox>
                                     <Label text="Último Tratamento: " GridPane.rowIndex="19" />

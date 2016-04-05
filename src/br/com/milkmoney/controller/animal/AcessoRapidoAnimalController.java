@@ -33,11 +33,11 @@ import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
-import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhesHyperlinkFactory;
+import br.com.milkmoney.controller.cobertura.renderer.TableCellConfirmarPrenhezHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarAbortoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellRegistrarPartoHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.renderer.TableCellSituacaoCoberturaFactory;
-import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
@@ -99,7 +99,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
 	lblUltimoTratamento, lblLote, lblEficienciaReprodutiva;
 	
-	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
+	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhez;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
@@ -118,7 +118,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	@Autowired private AnimalFormController animalFormController;
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private RacaReducedOverviewController racaReducedOverviewController;
-	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private RacaOverviewController racaController;
@@ -152,7 +152,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		reprodutorColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("reprodutor"));
 		dataPartoCoberturaColumn.setCellFactory(new TableCellRegistrarPartoHyperlinkFactory<Cobertura,String>("dataParto", registrarParto));
 		dataAbortoCoberturaColumn.setCellFactory(new TableCellRegistrarAbortoHyperlinkFactory<Cobertura,String>("dataAborto", registrarAborto));
-		dataConfirmacaoCoberturaColumn.setCellFactory(new TableCellConfirmarPrenhesHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhes", confirmarPrenhes));
+		dataConfirmacaoCoberturaColumn.setCellFactory(new TableCellConfirmarPrenhezHyperlinkFactory<Cobertura,String>("dataConfirmacaoPrenhez", confirmarPrenhez));
 		previsaoPartoCoberturaColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("previsaoParto"));
 		
 		tableCoberturas.setFixedCellSize(25);
@@ -269,7 +269,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 					fichaAnimal = fichaAnimalService.generateFichaAnimal(getObject(), fichaAnimalService.getAllFields());
 					
 					if ( fichaAnimal != null ){
-						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());
+						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhez());
 						lblDataUltimaCobertura.setText(fichaAnimal.getDataUltimaCobertura() != null ? DateUtil.format(fichaAnimal.getDataUltimaCobertura()) : "--"); 
 						lblProximoServico.setText(fichaAnimal.getProximoServico() != null ? DateUtil.format(fichaAnimal.getProximoServico()) : "--"); 
 						lblNumeroPartos.setText(""+fichaAnimal.getNumeroPartos() + " - "  + fichaAnimal.getNumeroCriasFemea() + "F" + " - " + fichaAnimal.getNumeroCriasMacho() + "M"); 
@@ -362,24 +362,24 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 							});
 						}
 						
-						hlConfirmarPrenhes.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
+						hlConfirmarPrenhez.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
 						if ( fichaAnimal.getDataUltimaCobertura() != null ){
 							if ( fichaAnimal.getSituacaoUltimaCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
-								hlConfirmarPrenhes.setText("confirmar");
+								hlConfirmarPrenhez.setText("confirmar");
 							}else{
 								if ( fichaAnimal.getSituacaoUltimaCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.VAZIA) ){
-									hlConfirmarPrenhes.setText("visualizar");
+									hlConfirmarPrenhez.setText("visualizar");
 								}else{
-									hlConfirmarPrenhes.setVisible(false);
+									hlConfirmarPrenhez.setVisible(false);
 								}
 							}
-							hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
+							hlConfirmarPrenhez.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
 									Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
 									if ( cobertura != null ){
-										confirmacaoPrenhesFormController.setObject(cobertura);
-								    	confirmacaoPrenhesFormController.showForm();
+										confirmacaoPrenhezFormController.setObject(cobertura);
+								    	confirmacaoPrenhezFormController.showForm();
 								    	refreshTableCoberturas();
 								    	handleFichaAnimal();
 									}
@@ -448,7 +448,7 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		return true;
 	};
 	
-	Function<Integer, Boolean> confirmarPrenhes = index -> {
+	Function<Integer, Boolean> confirmarPrenhez = index -> {
 		tableCoberturas.getSelectionModel().select(index);
 		if ( tableCoberturas.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
@@ -457,8 +457,8 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 		
 		Cobertura cobertura = tableCoberturas.getSelectionModel().getSelectedItem();
 		
-		confirmacaoPrenhesFormController.setObject(cobertura);
-    	confirmacaoPrenhesFormController.showForm();
+		confirmacaoPrenhezFormController.setObject(cobertura);
+    	confirmacaoPrenhezFormController.showForm();
     	
 		refreshTableCoberturas();
 		handleFichaAnimal();

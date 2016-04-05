@@ -6,13 +6,13 @@ import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 
 import org.springframework.stereotype.Component;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController;
 import br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController;
 import br.com.milkmoney.model.Animal;
 
@@ -20,7 +20,7 @@ import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import com.sun.javafx.scene.control.skin.TableViewSkin;
 
 @Component
-public class TableUtils {
+public class AnimalTableUtils {
 
 	/**
 	 * Make table menu button visible and replace the context menu with a custom context menu via reflection.
@@ -119,10 +119,10 @@ public class TableUtils {
 
 			@Override
 			public void handle(MouseEvent event) {
-
-				for (Object obj : table.getColumns()) {
-					((TableColumn<?, ?>) obj).setVisible(false);
-				}
+				ConfirmacaoPrenhezEmLoteFormController confirmacaoPrenhezEmLoteFormController = 
+						(ConfirmacaoPrenhezEmLoteFormController)MainApp.getBean(ConfirmacaoPrenhezEmLoteFormController.class);
+				confirmacaoPrenhezEmLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
+				confirmacaoPrenhezEmLoteFormController.showForm();
 			}
 
 		});

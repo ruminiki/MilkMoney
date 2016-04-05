@@ -19,8 +19,8 @@ public class TableCellRegistrarPartoHyperlinkFactory<S, LocalDate> implements Ca
 	private Function<Integer, Boolean> registrarPartoFunction;
 	private String property;
 	
-	public TableCellRegistrarPartoHyperlinkFactory(String property, Function<Integer, Boolean> confirmarPrenhesFunction) {
-		this.registrarPartoFunction = confirmarPrenhesFunction;
+	public TableCellRegistrarPartoHyperlinkFactory(String property, Function<Integer, Boolean> confirmarPrenhezFunction) {
+		this.registrarPartoFunction = confirmarPrenhezFunction;
 		this.property = property;
 	}
 

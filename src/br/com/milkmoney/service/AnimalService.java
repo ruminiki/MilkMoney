@@ -183,7 +183,7 @@ public class AnimalService implements IService<Integer, Animal>{
 				//se não tiver parto verificar se estiver vazia
 				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) ){
 					//se sim, somar a data de confirmacao + 21 dias e verificar se está dentro ou antes do periodo
-					if ( DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhes()).plusDays(21).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
+					if ( DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhez()).plusDays(21).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
 						result.add(animal);
 					}
 					continue;

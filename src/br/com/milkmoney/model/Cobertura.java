@@ -51,13 +51,13 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<Funcionario> funcionarioResponsavel       = new SimpleObjectProperty<Funcionario>();
 	private ObjectProperty<Servico>     servico                      = new SimpleObjectProperty<Servico>();
 	private StringProperty              observacao                   = new SimpleStringProperty();
-	private ObjectProperty<LocalDate>   dataConfirmacaoPrenhes       = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty              metodoConfirmacaoPrenhes     = new SimpleStringProperty();
-	private StringProperty              observacaoConfirmacaoPrenhes = new SimpleStringProperty();
+	private ObjectProperty<LocalDate>   dataConfirmacaoPrenhez       = new SimpleObjectProperty<LocalDate>();  
+	private StringProperty              metodoConfirmacaoPrenhez     = new SimpleStringProperty();
+	private StringProperty              observacaoConfirmacaoPrenhez = new SimpleStringProperty();
 	private Parto                       parto;
 	private Aborto                      aborto;
 	private StringProperty              situacaoCobertura            = new SimpleStringProperty(SituacaoCobertura.NAO_CONFIRMADA);
-	private StringProperty              situacaoConfirmacaoPrenhes   = new SimpleStringProperty(SituacaoCobertura.PRENHA);
+	private StringProperty              situacaoConfirmacaoPrenhez   = new SimpleStringProperty(SituacaoCobertura.PRENHA);
 	
 	public Cobertura() {
 	}
@@ -184,16 +184,16 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getSituacaoConfirmacaoPrenhes() {
-		return situacaoConfirmacaoPrenhes.get() == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoConfirmacaoPrenhes.get();
+	public String getSituacaoConfirmacaoPrenhez() {
+		return situacaoConfirmacaoPrenhez.get() == null ? SituacaoCobertura.NAO_CONFIRMADA : situacaoConfirmacaoPrenhez.get();
 	}
 
-	public void setSituacaoConfirmacaoPrenhes(String situacaoConfirmacaoPrenhes) {
-		this.situacaoConfirmacaoPrenhes.set(situacaoConfirmacaoPrenhes);
+	public void setSituacaoConfirmacaoPrenhez(String situacaoConfirmacaoPrenhez) {
+		this.situacaoConfirmacaoPrenhez.set(situacaoConfirmacaoPrenhez);
 	}
 	
-	public StringProperty situacaoConfirmacaoPrenhesProperty(){
-		return situacaoConfirmacaoPrenhes;
+	public StringProperty situacaoConfirmacaoPrenhezProperty(){
+		return situacaoConfirmacaoPrenhez;
 	}
 
 	@Access(AccessType.PROPERTY)
@@ -278,42 +278,42 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Access(AccessType.PROPERTY)
-	public Date getDataConfirmacaoPrenhes() {
-		return DateUtil.asDate(this.dataConfirmacaoPrenhes.get());
+	public Date getDataConfirmacaoPrenhez() {
+		return DateUtil.asDate(this.dataConfirmacaoPrenhez.get());
 	}
 	
-	public void setDataConfirmacaoPrenhes(Date dataConfirmacaoPrenhes) {
-		this.dataConfirmacaoPrenhes.set(DateUtil.asLocalDate(dataConfirmacaoPrenhes));
+	public void setDataConfirmacaoPrenhez(Date dataConfirmacaoPrenhez) {
+		this.dataConfirmacaoPrenhez.set(DateUtil.asLocalDate(dataConfirmacaoPrenhez));
 	}
 	
-	public ObjectProperty<LocalDate> dataConfirmacaoPrenhesProperty(){
-		return dataConfirmacaoPrenhes;
-	}
-	
-	@Access(AccessType.PROPERTY)
-	public String getMetodoConfirmacaoPrenhes() {
-		return metodoConfirmacaoPrenhes.get() == null || metodoConfirmacaoPrenhes.get().isEmpty() ? "--" : metodoConfirmacaoPrenhes.get();
-	}
-
-	public void setMetodoConfirmacaoPrenhes(String metodoConfirmacaoPrenhes) {
-		this.metodoConfirmacaoPrenhes.set(metodoConfirmacaoPrenhes);
-	}
-	
-	public StringProperty metodoConfirmacaoPrenhesProperty(){
-		return metodoConfirmacaoPrenhes;
+	public ObjectProperty<LocalDate> dataConfirmacaoPrenhezProperty(){
+		return dataConfirmacaoPrenhez;
 	}
 	
 	@Access(AccessType.PROPERTY)
-	public String getObservacaoConfirmacaoPrenhes() {
-		return observacaoConfirmacaoPrenhes.get();
+	public String getMetodoConfirmacaoPrenhez() {
+		return metodoConfirmacaoPrenhez.get() == null || metodoConfirmacaoPrenhez.get().isEmpty() ? "--" : metodoConfirmacaoPrenhez.get();
 	}
 
-	public void setObservacaoConfirmacaoPrenhes(String observacaoConfirmacaoPrenhes) {
-		this.observacaoConfirmacaoPrenhes.set(observacaoConfirmacaoPrenhes);
+	public void setMetodoConfirmacaoPrenhez(String metodoConfirmacaoPrenhez) {
+		this.metodoConfirmacaoPrenhez.set(metodoConfirmacaoPrenhez);
 	}
 	
-	public StringProperty observacaoConfirmacaoPrenhesProperty(){
-		return observacaoConfirmacaoPrenhes;
+	public StringProperty metodoConfirmacaoPrenhezProperty(){
+		return metodoConfirmacaoPrenhez;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	public String getObservacaoConfirmacaoPrenhez() {
+		return observacaoConfirmacaoPrenhez.get();
+	}
+
+	public void setObservacaoConfirmacaoPrenhez(String observacaoConfirmacaoPrenhez) {
+		this.observacaoConfirmacaoPrenhez.set(observacaoConfirmacaoPrenhez);
+	}
+	
+	public StringProperty observacaoConfirmacaoPrenhezProperty(){
+		return observacaoConfirmacaoPrenhez;
 	}
 	
 	public String getReprodutor(){

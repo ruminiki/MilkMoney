@@ -14,13 +14,13 @@ import br.com.milkmoney.model.Cobertura;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.util.DateUtil;
 
-public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
+public class TableCellConfirmarPrenhezHyperlinkFactory<S, LocalDate> implements Callback<TableColumn<S ,LocalDate>, TableCell<S, LocalDate>>{
 	
-	private Function<Integer, Boolean> confirmarPrenhesFunction;
+	private Function<Integer, Boolean> confirmarPrenhezFunction;
 	private String property;
 	
-	public TableCellConfirmarPrenhesHyperlinkFactory(String property, Function<Integer, Boolean> confirmarPrenhesFunction) {
-		this.confirmarPrenhesFunction = confirmarPrenhesFunction;
+	public TableCellConfirmarPrenhezHyperlinkFactory(String property, Function<Integer, Boolean> confirmarPrenhezFunction) {
+		this.confirmarPrenhezFunction = confirmarPrenhezFunction;
 		this.property = property;
 	}
 
@@ -55,7 +55,7 @@ public class TableCellConfirmarPrenhesHyperlinkFactory<S, LocalDate> implements 
 			            	hpS.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent event) {
-									confirmarPrenhesFunction.apply(tableRowProperty().get().getIndex());
+									confirmarPrenhezFunction.apply(tableRowProperty().get().getIndex());
 									hpS.setUnderline(false);
 									hpS.setVisited(false);
 								}

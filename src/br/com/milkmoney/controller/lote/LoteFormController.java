@@ -1,14 +1,7 @@
 package br.com.milkmoney.controller.lote;
 
-import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.input.MouseEvent;
 
 import javax.annotation.Resource;
 
@@ -18,95 +11,20 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.finalidadeLote.FinalidadeLoteReducedOverviewController;
-import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeLote;
 import br.com.milkmoney.model.Lote;
 import br.com.milkmoney.model.SimNao;
-import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.IService;
-import br.com.milkmoney.service.LoteService;
-import br.com.milkmoney.util.DateUtil;
 
 @Controller
 public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 	
 	@FXML private UCTextField inputPesquisa, inputDescricao, inputFinalidade;
 	@FXML private ComboBox<String> inputAtivo;
-	@FXML private ListView<Animal> listAnimais, listAnimaisSelecionados;
-	@FXML private Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
-	@FXML private Label lblTotalAnimais, lblMediaLactacoes, lblMediaProducao, lblMediaIdade;
-	
-	@Autowired protected AnimalService animalService;
 	@Autowired protected FinalidadeLoteReducedOverviewController finalidadeLoteReducedController;
 
 	@FXML
 	public void initialize() {
-		
-		if ( inputPesquisa != null ){
-			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue));
-			});
-		}
-		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
-		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		listAnimaisSelecionados.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
-		
-		// captura o evento de double click da table
-		listAnimais.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				
-				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					if ( !animalAlreadySelected(listAnimais.getSelectionModel().getSelectedItem()) ){
-						adicionarAnimalAoLote(listAnimais.getSelectionModel().getSelectedItem());
-					}
-					listAnimais.getSelectionModel().clearSelection();
-				}
-			}
-		});
-		
-		btnAdicionar.setOnAction(action -> {
-			
-			if ( listAnimais.getSelectionModel().getSelectedItems() != null ){
-				
-				for ( Animal animal : listAnimais.getSelectionModel().getSelectedItems() ){
-					
-					if ( !animalAlreadySelected(animal) ){
-						adicionarAnimalAoLote(animal);
-					}
-					
-				}
-				
-				listAnimais.getSelectionModel().clearSelection();
-				
-			}
-			
-		});
-		
-		btnAdicionarTodos.setOnAction(action -> {
-			
-			for ( Animal animal : listAnimais.getItems() ){
-				
-				if ( !animalAlreadySelected(animal) ){
-					adicionarAnimalAoLote(animal);
-				}
-				
-			}
-			
-		});
-		
-		btnRemover.setOnAction(action -> {
-			if ( listAnimaisSelecionados.getSelectionModel().getSelectedItem() != null ){
-				removerAnimalLote(listAnimaisSelecionados.getSelectionModel().getSelectedItem());
-			}
-		});
-		
-		btnRemoverTodos.setOnAction(action -> {
-			listAnimaisSelecionados.getItems().clear();
-			getObject().getAnimais().clear();
-			atualizaResumo();
-		});
 		
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		inputAtivo.setItems(SimNao.getItems());
@@ -115,37 +33,6 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 			inputFinalidade.setText(getObject().getFinalidadeLote().getDescricao());
 		}
 		
-		atualizaResumo();
-		
-	}
-	
-	private boolean animalAlreadySelected(Animal animal){
-		
-		for ( Animal a : listAnimaisSelecionados.getItems() ){
-			if ( a.getId() == animal.getId() )
-				return true;
-		}
-		
-		return false;
-	}
-	
-	private void atualizaResumo(){
-		lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-		lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
-		lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
-		lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
-	}
-	
-	private void adicionarAnimalAoLote(Animal animal){
-		listAnimaisSelecionados.getItems().add(animal);
-		getObject().getAnimais().add(animal);
-		atualizaResumo();
-	}
-	
-	private void removerAnimalLote(Animal animal){
-		listAnimaisSelecionados.getItems().remove(animal);
-		getObject().getAnimais().remove(animal);
-		atualizaResumo();
 	}
 	
 	@FXML

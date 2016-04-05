@@ -24,7 +24,7 @@ public class PopUpMenu extends PopOver {
 		
 		public PopUpMenu(Function<Animal, Boolean> coberturasFunction, 
 							Function<Animal, Boolean> novaCoberturaFunction,	
-							Function<Animal, Boolean> confirmarPrenhesFunction,
+							Function<Animal, Boolean> confirmarPrenhezFunction,
 							Function<Animal, Boolean> novoPartoFunction,
 							Function<Animal, Boolean> ultimaCoberturaFunction,
 							Function<Animal, Boolean> ultimoPartoFunction,
@@ -44,7 +44,7 @@ public class PopUpMenu extends PopOver {
 			column.setStyle("-fx-background-color: #FFF");
 			column.getChildren().add(createItem("Coberturas", coberturasFunction, "img/lista16.png"));
 			column.getChildren().add(createItem("Nova Cobertura", novaCoberturaFunction, "img/novacobertura16.png"));
-			column.getChildren().add(createItem("Confirmar Prenhez", confirmarPrenhesFunction, "img/confirmarprenhes16.png"));
+			column.getChildren().add(createItem("Confirmar Prenhez", confirmarPrenhezFunction, "img/confirmarprenhez16.png"));
 			column.getChildren().add(createItem("Novo Parto", novoPartoFunction, "img/novoparto16.png"));
 			container.getChildren().add(column);
 

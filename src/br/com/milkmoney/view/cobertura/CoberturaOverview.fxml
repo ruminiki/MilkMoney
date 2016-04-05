@@ -64,7 +64,7 @@
                 <TableColumn fx:id="dataColumn" maxWidth="80.0" minWidth="80.0" resizable="false" style="-fx-alignment: CENTER;" text="Data" />
                 <TableColumn fx:id="tipoCoberturaColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
                 <TableColumn fx:id="reprodutorColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" text="Reprodutor" />
-                  <TableColumn prefWidth="75.0" text="Diagnóstico Prenhes">
+                  <TableColumn prefWidth="75.0" text="Diagnóstico Prenhez">
                      <columns>
                         <TableColumn fx:id="dataConfirmacaoColumn" maxWidth="90.0" minWidth="90.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
                         <TableColumn fx:id="metodoConfirmacaoColumn" maxWidth="160.0" minWidth="160.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Método" />

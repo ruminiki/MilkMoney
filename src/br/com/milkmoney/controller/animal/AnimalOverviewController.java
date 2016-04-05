@@ -32,11 +32,11 @@ import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.animal.renderer.PopUpMenu;
 import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
-import br.com.milkmoney.controller.animal.renderer.TableUtils;
+import br.com.milkmoney.controller.animal.renderer.AnimalTableUtils;
 import br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
-import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
@@ -88,7 +88,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private TableColumn<Animal, Date> dataNascimentoColumn;
 	@FXML private TableColumn<Raca, String> racaColumn;
 	@FXML private TableColumn<Animal, String> numeroColumn;
-	@FXML private TableColumn<Animal, String> loteColumn;
+	@FXML private TableColumn<Lote, String> loteColumn;
 	@FXML private TableColumn<String, String> sexoColumn;
 	@FXML private TableColumn<Animal, String> situacaoAnimalColumn;
 	@FXML private TableColumn<Animal, Long> idadeColumn;
@@ -98,7 +98,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
 						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblBezerras, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
 						lblUltimoTratamento, lblLote, lblEficienciaReprodutiva;
-	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhes;
+	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhez;
 	@FXML private VBox sideBar;
 	
 	//filters
@@ -122,7 +122,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private RacaService racaService;
 	
 	//controllers
-	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private RacaOverviewController racaController;
@@ -150,7 +150,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				if ( popUpMenu == null ){
 					popUpMenu = new PopUpMenu(coberturas,
 							  novaCobertura, 
-							  confirmarPrenhes,
+							  confirmarPrenhez,
 							  novoParto,
 							  ultimaCobertura,
 							  ultimoParto,
@@ -167,7 +167,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				situacaoUltimaCobertura.setCellValueFactory(new PropertyValueFactory<Animal,String>("situacaoUltimaCobertura"));
 				numeroColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("numero"));
 				nomeColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("nome"));
-				loteColumn.setCellValueFactory(new PropertyValueFactory<Animal,String>("lote"));
+				loteColumn.setCellValueFactory(new PropertyValueFactory<Lote,String>("loteFormatado"));
 				dataNascimentoColumn.setCellFactory(new TableCellDateFactory<Animal,Date>("dataNascimento"));
 				idadeColumn.setCellValueFactory(new PropertyValueFactory<Animal,Long>("idade"));
 				racaColumn.setCellValueFactory(new PropertyValueFactory<Raca,String>("raca"));
@@ -216,7 +216,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		});
 		
 		table.setSkin(new TableViewSkin<>(table));
-		TableUtils.addCustomTableMenu(table);
+		AnimalTableUtils.addCustomTableMenu(table);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 	}
@@ -297,7 +297,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					fichaAnimal = fichaAnimalService.generateFichaAnimal(animal, fichaAnimalService.getAllFields());
 					
 					if ( fichaAnimal != null ){
-						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhes());
+						lblNumeroServicos.setText(""+fichaAnimal.getNumeroServicosAtePrenhez());
 						lblDataUltimaCobertura.setText(fichaAnimal.getDataUltimaCobertura() != null ? DateUtil.format(fichaAnimal.getDataUltimaCobertura()) : "--"); 
 						lblProximoServico.setText(fichaAnimal.getProximoServico() != null ? DateUtil.format(fichaAnimal.getProximoServico()) : "--"); 
 						lblNumeroPartos.setText(""+fichaAnimal.getNumeroPartos() + " - "  + fichaAnimal.getNumeroCriasFemea() + "F" + " - " + fichaAnimal.getNumeroCriasMacho() + "M"); 
@@ -367,21 +367,21 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 							});
 						}
 						
-						hlConfirmarPrenhes.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
+						hlConfirmarPrenhez.setVisible(fichaAnimal.getDataUltimaCobertura() != null);
 						if ( fichaAnimal.getDataUltimaCobertura() != null ){
 							if ( fichaAnimal.getSituacaoUltimaCobertura().equals(SituacaoCobertura.NAO_CONFIRMADA) ){
-								hlConfirmarPrenhes.setText("confirmar");
+								hlConfirmarPrenhez.setText("confirmar");
 							}else{
 								if ( fichaAnimal.getSituacaoUltimaCobertura().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.VAZIA) ){
-									hlConfirmarPrenhes.setText("visualizar");
+									hlConfirmarPrenhez.setText("visualizar");
 								}else{
-									hlConfirmarPrenhes.setVisible(false);
+									hlConfirmarPrenhez.setVisible(false);
 								}
 							}
-							hlConfirmarPrenhes.setOnAction(new EventHandler<ActionEvent>() {
+							hlConfirmarPrenhez.setOnAction(new EventHandler<ActionEvent>() {
 								@Override
 								public void handle(ActionEvent arg0) {
-									confirmarPrenhes.apply(getObject());
+									confirmarPrenhez.apply(getObject());
 								}
 							});
 						}
@@ -554,15 +554,15 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		return true;
 	};
 	
-	Function<Animal, Boolean> confirmarPrenhes = animal -> {
+	Function<Animal, Boolean> confirmarPrenhez = animal -> {
 		if ( animal != null ){
 			Cobertura cobertura = coberturaService.findLastCoberturaAnimal(getObject());
 			if ( cobertura != null ){
-				confirmacaoPrenhesFormController.setObject(cobertura);
-		    	confirmacaoPrenhesFormController.showForm();
+				confirmacaoPrenhezFormController.setObject(cobertura);
+		    	confirmacaoPrenhezFormController.showForm();
 		    	selecionaAnimal(animal);
 			}else{
-				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. Primeiro registre a cobertura para então registrar a confirmação de prenhes.");
+				CustomAlert.mensagemInfo("O animal selecionado ainda não tem cobertura registrada. Primeiro registre a cobertura para então registrar a confirmação de prenhez.");
 			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();

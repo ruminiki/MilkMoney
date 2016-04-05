@@ -5,10 +5,13 @@ X Observação cadastro vaca
 X Gráfico entrega leite, Produção de Leite
 - Ao remover a venda pela tela de venda não dá refresh na tela
 - Permitir a multipla seleção de animais com CTRL
-VANESSA AMOR DA MINHA VIDA 52
+- atualizar tabela indicador prenhes para prenhez
+
+  VANESSA AMOR DA MINHA VIDA 52
 - Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
 - Cada animal poderá estar ligado a um único lote
 - Criar observação no lote
+- atualizar a tabela de animais após fazer a movimentação e a confirmação de prenhez em lote
 
 - Fazer backup das imagens dos animais
 

@@ -26,7 +26,7 @@ import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.atividadesSemana.renderer.TableCellTextHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
-import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.lactacao.LactacaoFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.model.Cobertura;
@@ -53,7 +53,7 @@ import br.com.milkmoney.validation.CoberturaValidation;
 public class AtividadesSemanaOverviewController {
 
 	//COBERTURAS
-	@FXML private TableView<Cobertura> tableConfirmacaoPrenhes;
+	@FXML private TableView<Cobertura> tableConfirmacaoPrenhez;
 	@FXML private TableView<FichaAnimal> tableCoberturas;
 	@FXML private TableView<Cobertura> tablePartos;
 	@FXML private TableView<Lactacao>  tableEncerramentoLactacao;
@@ -81,7 +81,7 @@ public class AtividadesSemanaOverviewController {
 	@FXML private Label									lblHeader;
 		
 	@Autowired private CoberturaFormController          coberturaFormController;
-	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private AbortoFormController             abortoFormController;
 	@Autowired private PartoFormController              partoFormController;
 	@Autowired private LactacaoFormController           lactacaoFormController;
@@ -96,15 +96,15 @@ public class AtividadesSemanaOverviewController {
 	@FXML
 	public void initialize() {
 		
-		tableConfirmacaoPrenhes.setFixedCellSize(25);
+		tableConfirmacaoPrenhez.setFixedCellSize(25);
 		tableEncerramentoLactacao.setFixedCellSize(25);
 		tableCoberturas.setFixedCellSize(25);
 		
 		animalConfirmacaoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura,String>("femea"));
 		dataCoberturaConfirmacaoColumn.setCellFactory(new TableCellDateFactory<Cobertura,String>("data"));
-		registrarConfirmacaoColumn.setCellFactory(new TableCellTextHyperlinkFactory<Cobertura,String>("Confirmar", confirmarPrenhes));
+		registrarConfirmacaoColumn.setCellFactory(new TableCellTextHyperlinkFactory<Cobertura,String>("Confirmar", confirmarPrenhez));
 		
-		tableConfirmacaoPrenhes.setItems(FXCollections.observableArrayList(coberturaService.findAllNaoConfirmadas()));
+		tableConfirmacaoPrenhez.setItems(FXCollections.observableArrayList(coberturaService.findAllNaoConfirmadas()));
 		
 		animalCoberturaColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("animal"));
 		situacaoAnimalColumn.setCellValueFactory(new PropertyValueFactory<FichaAnimal,String>("situacaoAnimal"));
@@ -126,7 +126,7 @@ public class AtividadesSemanaOverviewController {
 		previsaoPartoColumn.setCellValueFactory(new PropertyValueFactory<Cobertura, String>("previsaoParto"));
 		registrarPartoColumn.setCellFactory(new TableCellTextHyperlinkFactory<Cobertura,String>("Registrar", registrarParto));
 		
-		tableConfirmacaoPrenhes.setItems(FXCollections.observableArrayList(coberturaService.findAllNaoConfirmadas()));
+		tableConfirmacaoPrenhez.setItems(FXCollections.observableArrayList(coberturaService.findAllNaoConfirmadas()));
 
 		animalEncerramentoColumn.setCellValueFactory(new PropertyValueFactory<Lactacao,String>("femea"));
 		duracaoLactacaoColumn.setCellFactory(new TableCellDateFactory<Lactacao,String>("getDiasLactacao"));
@@ -209,20 +209,20 @@ public class AtividadesSemanaOverviewController {
 	};
 	
 	
-	Function<Integer, Boolean> confirmarPrenhes = index -> {
-		tableConfirmacaoPrenhes.getSelectionModel().select(index);
-		if ( tableConfirmacaoPrenhes.getSelectionModel().getSelectedItem() == null ){
+	Function<Integer, Boolean> confirmarPrenhez = index -> {
+		tableConfirmacaoPrenhez.getSelectionModel().select(index);
+		if ( tableConfirmacaoPrenhez.getSelectionModel().getSelectedItem() == null ){
 			CustomAlert.nenhumRegistroSelecionado();
 			return false;
 		}
 		
-		Cobertura cobertura = tableConfirmacaoPrenhes.getSelectionModel().getSelectedItem();
+		Cobertura cobertura = tableConfirmacaoPrenhez.getSelectionModel().getSelectedItem();
 		
-		confirmacaoPrenhesFormController.setObject(cobertura);
-    	confirmacaoPrenhesFormController.showForm();
+		confirmacaoPrenhezFormController.setObject(cobertura);
+    	confirmacaoPrenhezFormController.showForm();
     			
     	if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.PRENHA + '|' + SituacaoCobertura.VAZIA) ){
-    		tableConfirmacaoPrenhes.getItems().remove(cobertura);
+    		tableConfirmacaoPrenhez.getItems().remove(cobertura);
     	}
 
     	return true;

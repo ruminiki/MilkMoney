@@ -31,7 +31,7 @@ import br.com.milkmoney.service.fichaAnimal.MediaProducaoUltimaLactacao;
 import br.com.milkmoney.service.fichaAnimal.NumeroCriasFemea;
 import br.com.milkmoney.service.fichaAnimal.NumeroCriasMacho;
 import br.com.milkmoney.service.fichaAnimal.NumeroPartos;
-import br.com.milkmoney.service.fichaAnimal.NumeroServicosAtePrenhes;
+import br.com.milkmoney.service.fichaAnimal.NumeroServicosAtePrenhez;
 import br.com.milkmoney.service.fichaAnimal.ProximoParto;
 import br.com.milkmoney.service.fichaAnimal.ProximoServico;
 import br.com.milkmoney.service.fichaAnimal.SituacaoUltimaCobertura;
@@ -105,7 +105,7 @@ public class FichaAnimalService{
 				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasFemea.class),
 				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasMacho.class),
 				(AbstractFichaAnimal)MainApp.getBean(NumeroPartos.class),
-				(AbstractFichaAnimal)MainApp.getBean(NumeroServicosAtePrenhes.class),
+				(AbstractFichaAnimal)MainApp.getBean(NumeroServicosAtePrenhez.class),
 				(AbstractFichaAnimal)MainApp.getBean(ProximoParto.class),
 				(AbstractFichaAnimal)MainApp.getBean(ProximoServico.class),
 				(AbstractFichaAnimal)MainApp.getBean(SituacaoUltimaCobertura.class),

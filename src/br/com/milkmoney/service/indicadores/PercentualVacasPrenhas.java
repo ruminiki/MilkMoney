@@ -22,7 +22,7 @@ import br.com.milkmoney.model.SituacaoCobertura;
 
 
 @Service
-public class PercentualVacasPrenhes extends AbstractCalculadorIndicador{
+public class PercentualVacasPrenhas extends AbstractCalculadorIndicador{
 
 	@Autowired AnimalDao animalDao;
 	@Autowired CoberturaDao coberturaDao;
@@ -38,7 +38,7 @@ public class PercentualVacasPrenhes extends AbstractCalculadorIndicador{
 		for ( Animal a : animais ){
 			Cobertura cobertura = coberturaDao.findFirstBeforeDate(a, data);
 			
-			if ( cobertura.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+			if ( cobertura.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
 				
 				if ( cobertura.getAborto() != null ){
 					if ( cobertura.getAborto().getData().compareTo(data) > 0 ){

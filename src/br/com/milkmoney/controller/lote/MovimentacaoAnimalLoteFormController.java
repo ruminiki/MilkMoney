@@ -26,7 +26,7 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 	@FXML private Label lblTotalAnimais, lblMediaLactacoes, lblMediaProducao, lblMediaIdade;
 	
 	@Autowired protected AnimalService animalService;
-	@Autowired protected LoteOverviewController loteOverviewController;
+	@Autowired protected LoteReducedOverviewController loteReducedOverviewController;
 	
 	private ObservableList<Animal> animaisSelecionados;
 	private Lote loteSelecionado;
@@ -40,17 +40,19 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 	}
 	
 	private void atualizaResumo(){
-		lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-		lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
-		lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
-		lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));
+		lblTotalAnimais.setText(String.valueOf(animaisSelecionados.size()));
+		lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(animaisSelecionados)));
+		lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(animaisSelecionados)));
+		lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(animaisSelecionados)));
 	}
 	
 	@FXML
 	private void handleSelecionarLote() {
 		
-		loteOverviewController.showForm();
-		loteSelecionado = loteOverviewController.getObject();
+		loteReducedOverviewController.showForm();
+		loteSelecionado = loteReducedOverviewController.getObject();
+		if ( loteSelecionado != null )
+			inputLote.setText(loteSelecionado.getDescricao());
 		
 	}
 	
@@ -63,8 +65,12 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 		if ( loteSelecionado != null ){
 			for ( Animal a : animaisSelecionados ){
 				a.setLote(loteSelecionado);
-				animalService.save(a);
 			}
+			
+			loteSelecionado.setAnimais(animaisSelecionados);
+			service.save(loteSelecionado);
+			
+			super.closeForm();
 		}
 	}
 

@@ -9,7 +9,7 @@ import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.util.DateUtil;
 
 @Service
-public class NumeroServicosAtePrenhes extends AbstractFichaAnimal {
+public class NumeroServicosAtePrenhez extends AbstractFichaAnimal {
 
 	@Autowired CoberturaService coberturaService;
 	
@@ -18,7 +18,7 @@ public class NumeroServicosAtePrenhes extends AbstractFichaAnimal {
 		
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
-		ficha.setNumeroServicosAtePrenhes(coberturaService.getNumeroServicosPorConcepcao(animal, DateUtil.today));
+		ficha.setNumeroServicosAtePrenhez(coberturaService.getNumeroServicosPorConcepcao(animal, DateUtil.today));
 		
 	}
 

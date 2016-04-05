@@ -21,7 +21,7 @@ import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
-import br.com.milkmoney.controller.confirmacaoPrenhes.ConfirmacaoPrenhesFormController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
@@ -71,7 +71,7 @@ public class PainelControleAnimalController extends AbstractOverviewController<I
 	@Autowired private AnimalFormController animalFormController;
 	@Autowired private TouroReducedOverviewController touroReducedOverviewController;
 	@Autowired private RacaReducedOverviewController racaReducedOverviewController;
-	@Autowired private ConfirmacaoPrenhesFormController confirmacaoPrenhesFormController;
+	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
 	@Autowired private CoberturaOverviewController coberturaOverviewController;
 	@Autowired private CoberturaFormController coberturaFormController;
 	@Autowired private RacaOverviewController racaController;

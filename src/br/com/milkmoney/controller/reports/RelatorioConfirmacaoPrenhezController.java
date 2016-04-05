@@ -20,7 +20,7 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.util.DateUtil;
 
 @Controller
-public class RelatorioConfirmacaoPrenhesController extends AbstractReport{
+public class RelatorioConfirmacaoPrenhezController extends AbstractReport{
 
 	@FXML private DatePicker inputDataDe, inputDataAte;
 	@FXML private UCTextField inputTouroInseminacaoArtificial, inputTouroMontaNatural;
@@ -51,10 +51,10 @@ public class RelatorioConfirmacaoPrenhesController extends AbstractReport{
 		
 		if ( toggleGroupFormato.getSelectedToggle().equals(btnPDF) ){
 			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
-				RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params), MainApp.primaryStage);
+				RelatorioService.RELATORIO_CONFIMACAO_PRENHEZ, params), MainApp.primaryStage);
 		}else{
 			WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.XLS_OUTPUT_FORMAT, 
-					RelatorioService.RELATORIO_CONFIMACAO_PRENHES, params), MainApp.primaryStage);
+					RelatorioService.RELATORIO_CONFIMACAO_PRENHEZ, params), MainApp.primaryStage);
 		}
 		
 		super.handleClose();

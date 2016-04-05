@@ -13,7 +13,7 @@ import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.service.CoberturaService;
 
 /**
- *Dias em aberto = período seco = período de serviço (tempo do parto até a prenhes)
+ *Dias em aberto = período seco = período de serviço (tempo do parto até a prenhez)
  *Para o cálculo do dias em aberto devemos considerar o número de dias do último parto até:
  *A data da concepção das vacas gestantes
  *A data da última cobertura das vacas ainda não confirmadas gestantes

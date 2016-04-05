@@ -24,7 +24,7 @@ import br.com.milkmoney.util.DateUtil;
  * Logo precisa ser buscado as coberturas realizadas entre 42 e 21 dias atrás e verificar quantas ficaram prenhas
  * ou não vazias e dividir pelo total de coberturas realizadas naquele período.
  * 
- * A taxa de prenhez representa o número de vacas que ficaram prenhes em relação ao número de vacas APTAS a ficarem prenhes.
+ * A taxa de prenhez representa o número de vacas que ficaram prenhez em relação ao número de vacas APTAS a ficarem prenhez.
  * 
  * **Correção
  * http://rehagro.com.br/plus/modulos/noticias/ler.php?cdnoticia=2394
@@ -58,7 +58,7 @@ public class TaxaConcepcao extends AbstractCalculadorIndicador{
 		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
-			if ( cobertura.getSituacaoConfirmacaoPrenhes().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
+			if ( cobertura.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){
 				
 				if ( cobertura.getAborto() != null ){
 					if ( cobertura.getAborto().getData().compareTo(data) > 0 ){

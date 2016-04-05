@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.confirmacaoPrenhes;
+package br.com.milkmoney.controller.confirmacaoPrenhez;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.model.Cobertura;
-import br.com.milkmoney.model.MetodoConfirmacaoPrenhes;
+import br.com.milkmoney.model.MetodoConfirmacaoPrenhez;
 import br.com.milkmoney.model.SituacaoCobertura;
 import br.com.milkmoney.service.CoberturaService;
 import br.com.milkmoney.service.IService;
@@ -23,7 +23,7 @@ import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
 
 @Controller
-public class ConfirmacaoPrenhesFormController extends AbstractFormController<Integer, Cobertura> {
+public class ConfirmacaoPrenhezFormController extends AbstractFormController<Integer, Cobertura> {
 
 	@FXML private DatePicker       inputData;
 	@FXML private Label            lblCobertura;
@@ -36,12 +36,12 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 		
 		lblCobertura.setText(getObject().toString());
 		
-		inputData.valueProperty().bindBidirectional(getObject().dataConfirmacaoPrenhesProperty());
+		inputData.valueProperty().bindBidirectional(getObject().dataConfirmacaoPrenhezProperty());
 		inputData.setValue(DateUtil.asLocalDate(getObject().getData()).plusDays(30));
 		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhesProperty());
-		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhes.getItems());
-		inputMetodoConfirmacao.valueProperty().bindBidirectional(getObject().metodoConfirmacaoPrenhesProperty());
+		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhezProperty());
+		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhez.getItems());
+		inputMetodoConfirmacao.valueProperty().bindBidirectional(getObject().metodoConfirmacaoPrenhezProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		
 		btnSalvar.setDisable(getObject().getParto() != null);
@@ -53,20 +53,20 @@ public class ConfirmacaoPrenhesFormController extends AbstractFormController<Int
 	private void handleDesfazerConfirmacao(){
 		CustomAlert.confirmarExclusao("Desfazer Confirmação de Prenhez", "Tem certeza que deseja desfazer a confirmação de prenhez?");
 		if (CustomAlert.response == ButtonType.OK) {
-			((CoberturaService)service).desfazerConfirmacaoPrenhes(getObject());
+			((CoberturaService)service).desfazerConfirmacaoPrenhez(getObject());
 			closeForm();
 		}
 	}
 	
 	@Override
 	protected void beforeSave() {
-		CoberturaValidation.validaConfirmacaoPrenhes(getObject());
-		getObject().setSituacaoCobertura(getObject().getSituacaoConfirmacaoPrenhes());
+		CoberturaValidation.validaConfirmacaoPrenhez(getObject());
+		getObject().setSituacaoCobertura(getObject().getSituacaoConfirmacaoPrenhez());
 	}
 	
 	@Override
 	public String getFormName() {
-		return "view/confirmacaoPrenhes/ConfirmacaoPrenhesForm.fxml";
+		return "view/confirmacaoPrenhez/ConfirmacaoPrenhezForm.fxml";
 	}
 
 	@Override

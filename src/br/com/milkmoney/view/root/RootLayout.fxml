@@ -65,7 +65,7 @@
                               <MenuItem mnemonicParsing="false" onAction="#handleReportPartosPrevistos" text="Partos Previstos" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportPartosRealizados" text="Partos Realizados" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportCobertura" text="Coberturas" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportConfirmacaoPrenhes" text="Confirmação Prenhes" />
+                              <MenuItem mnemonicParsing="false" onAction="#handleReportConfirmacaoPrenhez" text="Confirmação Prenhez" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportAbortos" text="Abortos" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportEncerramentoLactacao" text="Encerramento Lactação" />
                               <MenuItem mnemonicParsing="false" onAction="#handleReportProximosEncerramentosLactacao" text="Próximos Encerramentos" />

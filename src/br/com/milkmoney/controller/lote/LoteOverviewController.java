@@ -45,9 +45,9 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 				public void run() {
 					listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
 					lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-					lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject())));
-					lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject())));
-					lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject())));						
+					lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject().getAnimais())));
+					lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject().getAnimais())));
+					lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject().getAnimais())));						
 				}
 			});
 			

@@ -21,10 +21,10 @@
                            <children>
                               <HBox alignment="CENTER" minHeight="15.0" style="-fx-background-color: #CCC;" VBox.vgrow="NEVER">
                                  <children>
-                                    <Label text="Confirmações Prenhes" />
+                                    <Label text="Confirmações Prenhez" />
                                  </children>
                               </HBox>
-                              <TableView fx:id="tableConfirmacaoPrenhes" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="tableConfirmacaoPrenhez" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="animalConfirmacaoColumn" minWidth="150.0" prefWidth="75.0" text="Animal" />
                                   <TableColumn fx:id="dataCoberturaConfirmacaoColumn" maxWidth="90.0" minWidth="90.0" text="Data Cob." />
