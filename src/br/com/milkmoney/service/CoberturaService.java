@@ -94,6 +94,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 		
 	}
 	
+	public ObservableList<Cobertura> findByPeriodo(Date dataInicio, Date dataFim){
+		return FXCollections.observableArrayList(dao.findCoberturasPeriodo(dataInicio, dataFim));
+	}
+	
 	public List<Cobertura> findByAnimal(Animal animal, Date data){
 		return dao.findByAnimal(animal, data);
 	}
@@ -125,6 +129,10 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 
 	public ObservableList<Cobertura> defaultSearch(String param, Animal animal) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param, animal));
+	}
+	
+	public ObservableList<Cobertura> defaultSearch(String param, Date dataInicio, Date dataFim) {
+		return FXCollections.observableArrayList(dao.defaultSearch(param, dataInicio, dataFim));
 	}
 	
 	@Override

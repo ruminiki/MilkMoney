@@ -22,6 +22,7 @@
       						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
       					</accelerator>
       			 	  </MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCoberturas" text="Coberturas/Inseminações" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroLote" text="Lote" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroProcedimento" text="Procedimento" />
                         <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda de Animais" />

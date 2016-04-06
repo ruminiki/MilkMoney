@@ -110,6 +110,12 @@ public class RootLayoutController {
     }
     
     @FXML
+    protected void handleCadastroCoberturas() {
+    	openFormAsPopUp("view/cobertura/AcompanhamentoCoberturaOverview.fxml", "Coberturas");
+    }
+    
+    
+    @FXML
     protected void handleCadastroProcedimento() {
     	openForm("view/procedimento/ProcedimentoOverview.fxml");
     	setTitle("Rebanho > Procedimento");

@@ -340,6 +340,17 @@ public class Cobertura extends AbstractEntity implements Serializable {
 		return null;
 	}
 	
+	public String getSiglaTipoCobertura(){
+		switch (getTipoCobertura()) {
+		case TipoCobertura.MONTA_NATURAL:{
+			return "MN";
+		}case TipoCobertura.INSEMINACAO_ARTIFICIAL:{
+			return "IA";
+		}default:
+			return "";
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return " FÊMEA: " + getFemea().getNumeroNome() + " DATA: " + DateUtil.format(getData()) + 

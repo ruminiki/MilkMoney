@@ -50,7 +50,7 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	@FXML private TableColumn<ProducaoLeite, String> mediaProducaoColumn;
 	@FXML private TableColumn<ProducaoLeite, String> valorColumn;
 	@FXML private TableColumn<ProducaoLeite, String> observacaoColumn;
-	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez, tbReceita, tbDespesa;
+	@FXML private ToggleButton tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, tbSet, tbOut, tbNov, tbDez;
 	
 	@FXML private Label lblTotalEntregue;
 	@FXML private Label lblTotalProduzido;

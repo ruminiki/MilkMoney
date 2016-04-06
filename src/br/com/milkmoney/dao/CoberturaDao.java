@@ -22,12 +22,13 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 		Query query = entityManager.createQuery(
 				"select c from Cobertura c "
-				+ "left join c.touro t "
-				+ "left join c.semen s "
+				+ "left join c.touroMontaNatural tMN "
+				+ "left join c.touroInseminacaoArtificial tIA "
 				+ "WHERE (c.situacaoCobertura like :param or "
-				+ "t.numero like :param or "
-				+ "t.nome like :param or "
-				+ "s.touro.nome like :param or "
+				+ "tMN.numero like :param or "
+				+ "tMN.nome like :param or "
+				+ "tIA.codigo like :param or "
+				+ "tIA.nome like :param or "
 				+ "c.tipoCobertura like :param) order by c.data desc ");
 		query.setParameter("param", '%' + param + '%');
 		
@@ -39,16 +40,36 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 		
 		Query query = entityManager.createQuery(
 				"select c from Cobertura c "
-				+ "left join c.touroMontaNatural t "
-				+ "left join c.touroInseminacaoArtificial s "
+				+ "left join c.touroMontaNatural tMN "
+				+ "left join c.touroInseminacaoArtificial tIA "
 				+ "WHERE (c.situacaoCobertura like :param or "
-				+ "t.numero like :param or "
-				+ "t.nome like :param or "
-				+ "s.nome like :param or "
-				+ "s.codigo like :param or "
+				+ "tMN.numero like :param or "
+				+ "tMN.nome like :param or "
+				+ "tIA.codigo like :param or "
+				+ "tIA.nome like :param or "
 				+ "c.tipoCobertura like :param) and c.femea = :animal order by c.data desc ");
 		query.setParameter("param", '%' + param + '%');
 		query.setParameter("animal", animal);
+		
+		return query.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> defaultSearch(String param, Date dataInicio, Date dataFim) {
+		
+		Query query = entityManager.createQuery(
+				"select c from Cobertura c "
+				+ "left join c.touroMontaNatural tMN "
+				+ "left join c.touroInseminacaoArtificial tIA "
+				+ "WHERE (c.situacaoCobertura like :param or "
+				+ "tMN.numero like :param or "
+				+ "tMN.nome like :param or "
+				+ "tIA.codigo like :param or "
+				+ "tIA.nome like :param or "
+				+ "c.tipoCobertura like :param) and c.data between :dataInicio and :dataFim order by c.data desc ");
+		query.setParameter("param", '%' + param + '%');
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
 		
 		return query.getResultList();
 	}
