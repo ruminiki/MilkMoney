@@ -14,6 +14,8 @@ X Cada animal poderá estar ligado a um único lote
 X Criar observação no lote (criar no modelo ER)
 - Fazer confirmação prenhez em lote (validar preenchimento dos campos, ordem das datas...)
 - atualizar a tabela de animais após fazer a movimentação e a confirmação de prenhez em lote
+
+
 - impedir ordenação das colunas das tabelas
 
 

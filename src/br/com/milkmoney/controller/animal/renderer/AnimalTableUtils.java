@@ -1,4 +1,7 @@
 package br.com.milkmoney.controller.animal.renderer;
+import java.util.List;
+import java.util.function.Function;
+
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Side;
@@ -11,9 +14,6 @@ import javafx.scene.input.MouseEvent;
 
 import org.springframework.stereotype.Component;
 
-import br.com.milkmoney.MainApp;
-import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController;
-import br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController;
 import br.com.milkmoney.model.Animal;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
@@ -28,17 +28,21 @@ public class AnimalTableUtils {
 	 * IMPORTANT: Modification is only possible AFTER the table has been made visible, otherwise you'd get a NullPointerException
 	 * @param tableView
 	 */
-	public static void addCustomTableMenu( TableView<Animal> tableView) {
+	public static void addCustomTableMenu( TableView<Animal> tableView, 
+			Function<List<Animal>, Boolean> movimentarAnimaisLoteFunction, 
+			Function<List<Animal>, Boolean> confirmarPrenhezLoteFunction) {
 
 		// enable table menu
 		tableView.setTableMenuButtonVisible(true);
 		
 		// replace internal mouse listener with custom listener 
-		setCustomContextMenu( tableView);
+		setCustomContextMenu(tableView, movimentarAnimaisLoteFunction, confirmarPrenhezLoteFunction);
 
 	}
 	
-	private static void setCustomContextMenu( TableView<Animal> table ) {
+	private static void setCustomContextMenu( TableView<Animal> table, 
+			Function<List<Animal>, Boolean> movimentarAnimaisLoteFunction, 
+			Function<List<Animal>, Boolean> confirmarPrenhezLoteFunction ) {
 
 		TableViewSkin<?> tableSkin = (TableViewSkin<?>) table.getSkin();
 
@@ -68,7 +72,7 @@ public class AnimalTableUtils {
 					if( child.getStyleClass().contains( "show-hide-columns-button")) {
 						
 						// get the context menu
-						ContextMenu columnPopupMenu = createContextMenu( table);
+						ContextMenu columnPopupMenu = createContextMenu(table, movimentarAnimaisLoteFunction, confirmarPrenhezLoteFunction);
 						
 						// replace mouse listener
 				        child.setOnMousePressed(me -> {
@@ -88,7 +92,9 @@ public class AnimalTableUtils {
 	 * @param cm
 	 * @param table
 	 */
-	private static ContextMenu createContextMenu( TableView<Animal> table ) {
+	private static ContextMenu createContextMenu( TableView<Animal> table, 
+			Function<List<Animal>, Boolean> movimentarAnimaisLoteFunction, 
+			Function<List<Animal>, Boolean> confirmarPrenhezLoteFunction ) {
 		
 		ContextMenu cm = new ContextMenu();
 		
@@ -101,10 +107,7 @@ public class AnimalTableUtils {
 
 			@Override
 			public void handle(MouseEvent event) {
-				MovimentacaoAnimalLoteFormController movimentacaoAnimalLoteFormController = 
-						(MovimentacaoAnimalLoteFormController)MainApp.getBean(MovimentacaoAnimalLoteFormController.class);
-				movimentacaoAnimalLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
-				movimentacaoAnimalLoteFormController.showForm();
+				movimentarAnimaisLoteFunction.apply(table.getSelectionModel().getSelectedItems());
 			}
 
 		});
@@ -119,10 +122,7 @@ public class AnimalTableUtils {
 
 			@Override
 			public void handle(MouseEvent event) {
-				ConfirmacaoPrenhezEmLoteFormController confirmacaoPrenhezEmLoteFormController = 
-						(ConfirmacaoPrenhezEmLoteFormController)MainApp.getBean(ConfirmacaoPrenhezEmLoteFormController.class);
-				confirmacaoPrenhezEmLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
-				confirmacaoPrenhezEmLoteFormController.showForm();
+				confirmarPrenhezLoteFunction.apply(table.getSelectionModel().getSelectedItems());
 			}
 
 		});

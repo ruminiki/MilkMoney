@@ -57,7 +57,7 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController {
 					}
 				}
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					handleEdit();
+					selecionar();
 				}
 			}
 

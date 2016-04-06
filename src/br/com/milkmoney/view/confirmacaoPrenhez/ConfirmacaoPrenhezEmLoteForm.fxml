@@ -27,10 +27,11 @@
                         <TableColumn fx:id="situacaoColumn" prefWidth="169.0" text="Situaçao" />
                     </columns>
                   </TableView>
+                  <Label text="*São listados apenas os animais selecionados que tenham a última cobertura com situação igual a Não confirmada, Prenha ou Vazia." wrapText="true" />
                   <GridPane alignment="CENTER_LEFT" minHeight="109.0" prefHeight="109.0" prefWidth="525.0" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="71.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="454.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="73.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="529.0" minWidth="10.0" prefWidth="529.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints vgrow="SOMETIMES" />

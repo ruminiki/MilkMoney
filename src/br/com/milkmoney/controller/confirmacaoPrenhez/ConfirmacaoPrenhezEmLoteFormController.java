@@ -64,16 +64,14 @@ public class ConfirmacaoPrenhezEmLoteFormController extends AbstractFormControll
 			for ( Animal a : animaisSelecionados ){
 				Cobertura cobertura = coberturaService.findLastCoberturaAnimal(a);
 				
-				if ( cobertura.getSituacaoCobertura().matches( SituacaoCobertura.NAO_CONFIRMADA + "|" + 
+				if ( cobertura != null && 
+						cobertura.getSituacaoCobertura().matches( SituacaoCobertura.NAO_CONFIRMADA + "|" + 
 															   SituacaoCobertura.PRENHA + "|" + 
 															   SituacaoCobertura.VAZIA ) ){
 					coberturasAnimaisSelecionados.add(cobertura);
 				}
-				
 			}
-			
 		}
-		
 	}
 	
 	@FXML
@@ -96,6 +94,7 @@ public class ConfirmacaoPrenhezEmLoteFormController extends AbstractFormControll
 			c.setSituacaoConfirmacaoPrenhez(inputSituacaoCobertura.getValue());
 			c.setSituacaoCobertura(inputSituacaoCobertura.getValue());
 			c.setMetodoConfirmacaoPrenhez(inputMetodoConfirmacao.getValue());
+			c.setObservacaoConfirmacaoPrenhez(inputObservacao.getText());
 			coberturaService.save(c);
 		}
 		

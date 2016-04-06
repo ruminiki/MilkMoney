@@ -1,7 +1,10 @@
 package br.com.milkmoney.controller.lote;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -24,6 +27,7 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 	@FXML private TextField inputLote;
 	@FXML private ListView<Animal> listAnimaisSelecionados;
 	@FXML private Label lblTotalAnimais, lblMediaLactacoes, lblMediaProducao, lblMediaIdade;
+	@FXML private CheckBox cbSemLote;
 	
 	@Autowired protected AnimalService animalService;
 	@Autowired protected LoteReducedOverviewController loteReducedOverviewController;
@@ -35,6 +39,14 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 	public void initialize() {
 		
 		listAnimaisSelecionados.setItems(animaisSelecionados);
+		cbSemLote.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+				if ( !cbSemLote.isSelected() ){
+					loteSelecionado = null;
+					inputLote.setText(null);
+				}
+			};
+		});
 		atualizaResumo();
 		
 	}
@@ -71,6 +83,14 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 			service.save(loteSelecionado);
 			
 			super.closeForm();
+		}else{
+			if ( cbSemLote.isSelected() ){
+				for ( Animal a : animaisSelecionados ){
+					a.setLote(null);
+					animalService.save(a);
+				}
+				super.closeForm();
+			}
 		}
 	}
 	

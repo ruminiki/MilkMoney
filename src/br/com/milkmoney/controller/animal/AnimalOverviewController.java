@@ -3,6 +3,7 @@ package br.com.milkmoney.controller.animal;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 
 import javafx.application.Platform;
@@ -30,17 +31,19 @@ import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
 import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractOverviewController;
+import br.com.milkmoney.controller.animal.renderer.AnimalTableUtils;
 import br.com.milkmoney.controller.animal.renderer.PopUpMenu;
 import br.com.milkmoney.controller.animal.renderer.TableCellOpcoesFactory;
-import br.com.milkmoney.controller.animal.renderer.AnimalTableUtils;
 import br.com.milkmoney.controller.arvoreGenealogica.ArvoreGenealogicaOverviewController;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
 import br.com.milkmoney.controller.cobertura.CoberturaOverviewController;
+import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezEmLoteFormController;
 import br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController;
 import br.com.milkmoney.controller.evolucaoRebanho.EvolucaoRebanhoOverviewController;
 import br.com.milkmoney.controller.fichaAnimal.FichaAnimalOverviewController;
 import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
+import br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
@@ -138,6 +141,8 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
+	@Autowired private MovimentacaoAnimalLoteFormController movimentacaoAnimalLoteFormController;
+	@Autowired private ConfirmacaoPrenhezEmLoteFormController confirmacaoPrenhezEmLoteFormController;
 	
 	private FichaAnimal fichaAnimal;
 	private PopUpMenu popUpMenu = null;
@@ -216,7 +221,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		});
 		
 		table.setSkin(new TableViewSkin<>(table));
-		AnimalTableUtils.addCustomTableMenu(table);
+		AnimalTableUtils.addCustomTableMenu(table, movimentarAnimaisLote, confirmarPrenhezEmLote);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 	}
@@ -631,6 +636,28 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 				vendaAnimalFormController.showForm();
 				selecionaAnimal(animal);
 			}
+		}
+		return true;
+	};
+	
+	Function<List<Animal>, Boolean> movimentarAnimaisLote = animais -> {
+		if ( animais != null && animais.size() > 0 ){
+			movimentacaoAnimalLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
+			movimentacaoAnimalLoteFormController.showForm();
+			refreshTableOverview();
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
+		}
+		return true;
+	};
+	
+	Function<List<Animal>, Boolean> confirmarPrenhezEmLote = animais -> {
+		if ( animais != null && animais.size() > 0 ){
+			confirmacaoPrenhezEmLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
+			confirmacaoPrenhezEmLoteFormController.showForm();
+			refreshTableOverview();
+		}else{
+			CustomAlert.nenhumRegistroSelecionado();
 		}
 		return true;
 	};
