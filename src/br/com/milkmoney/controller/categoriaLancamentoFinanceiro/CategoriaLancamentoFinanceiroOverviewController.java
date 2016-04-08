@@ -1,65 +1,55 @@
 package br.com.milkmoney.controller.categoriaLancamentoFinanceiro;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.controller.AbstractOverviewController;
 import br.com.milkmoney.model.CategoriaLancamentoFinanceiro;
-import br.com.milkmoney.service.CategoriaLancamentoFinanceiroService;
+import br.com.milkmoney.service.IService;
 
 @Controller
-public class CategoriaLancamentoFinanceiroOverviewController {
+public class CategoriaLancamentoFinanceiroOverviewController extends AbstractOverviewController<Integer, CategoriaLancamentoFinanceiro> {
 
-	@FXML private TreeView<CategoriaLancamentoFinanceiro> treeView;
+	@FXML private ListView<CategoriaLancamentoFinanceiro> listCategorias;
 	@FXML private Label lblNumRegistros;
-	@FXML private TextField inputPesquisa;
-	@Autowired private CategoriaLancamentoFinanceiroFormController formController;
-	@Autowired private CategoriaLancamentoFinanceiroService service;
 	
-	private ObservableList<CategoriaLancamentoFinanceiro> data = FXCollections.observableArrayList();
-	private TreeItem<CategoriaLancamentoFinanceiro> rootNode = new TreeItem<CategoriaLancamentoFinanceiro>(new CategoriaLancamentoFinanceiro("Categorias"));
+	@Autowired private CategoriaLancamentoFinanceiroFormController formController;
 	
 	@FXML
 	public void initialize() {
 		
-		rootNode.setExpanded(true);
-
-		// captura o evento de double click da tree
-		treeView.setOnMousePressed(new EventHandler<MouseEvent>() {
+		listCategorias.setOnMousePressed(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					handleEdit();
+					handleDoubleClick();
+				}
+				
+				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 1) {
+					handleSelectItemTable();
 				}
 			}
 
 		});
 		
+		listCategorias.setContextMenu(getContextMenu());
+		super.initialize(formController);
 		
-		if ( inputPesquisa != null ){
-			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> refreshListOverview());
-		}
-		
-		data = service.findAllAsObservableList();
-		configuraTreeView();
 	}
 	
-	private void refreshListOverview(){
+	@Override
+	protected void refreshTableOverview() {
 		this.data.clear();
 		
 		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
@@ -68,121 +58,52 @@ public class CategoriaLancamentoFinanceiroOverviewController {
 		}else{
 			data = service.findAllAsObservableList();
 		}
-		configuraTreeView();
-	}
-	
-	private void configuraTreeView(){
 		
-		rootNode.getChildren().clear();
-		List<TreeItem<CategoriaLancamentoFinanceiro>> itensSemPai = new ArrayList<TreeItem<CategoriaLancamentoFinanceiro>>();
-		
-		for ( CategoriaLancamentoFinanceiro categoria : data ) {
-			
-			TreeItem<CategoriaLancamentoFinanceiro> newItem = new TreeItem<CategoriaLancamentoFinanceiro>(categoria);
-			newItem.setExpanded(true);
-			
-			for ( TreeItem<CategoriaLancamentoFinanceiro> itemSemPai : itensSemPai ){
-				if ( itemSemPai.getValue().getCategoriaSuperiora().getId() == newItem.getValue().getId() ){
-					newItem.getChildren().add(itemSemPai);
-					itensSemPai.remove(itemSemPai);
-					break;
-				}
-			}
-            
-            if (!percorreArvore(rootNode, newItem)) {
-            	//caso não tenha encontrado o item pai, armazena para continuar procurando
-            	if ( newItem.getValue().getCategoriaSuperiora() != null ){
-            		itensSemPai.add(newItem);
-            	}else{
-            		rootNode.getChildren().add(newItem);	
-            	}
-            	
-            }
-            
-        }
-		
-		if ( itensSemPai.size() > 0 ){
-			rootNode.getChildren().addAll(itensSemPai);	
-		}
-		
-		treeView.setRoot(rootNode);
-		lblNumRegistros.setText(String.valueOf(data.size()));
+		listCategorias.setItems(data);
 		
 	}
 	
-	private boolean percorreArvore(TreeItem<CategoriaLancamentoFinanceiro> root, TreeItem<CategoriaLancamentoFinanceiro> newItem){
-		
-        for (TreeItem<CategoriaLancamentoFinanceiro> i : root.getChildren()) {
-        	
-        	//verifica se o novo item é filho do item sendo verificado
-            if ( newItem.getValue().getCategoriaSuperiora() != null && 
-            		newItem.getValue().getCategoriaSuperiora().getId() == i.getValue().getId() ){
-            	
-            	i.getChildren().add(newItem);
-                return true;
-                
-            }else{
-            	if ( i.getValue().getCategoriaSuperiora() != null && 
-                		i.getValue().getCategoriaSuperiora().getId() == newItem.getValue().getId() ){
-                	
-            		root.getChildren().remove(i);
-            		newItem.getChildren().add(i);
-                    return true;
-            	}else{
-            		//entra dentro do ramo de uma arvore
-            		if ( i.getChildren() != null && i.getChildren().size() > 0 ){
-            			percorreArvore(i, newItem);
-            		}
-            	}
-            }
-        }
-        
-        return false;
-        
-	}
-	
-	@FXML
-	private void handleNew(){
-		formController.setObject(new CategoriaLancamentoFinanceiro());
-		formController.showForm();
-		refreshListOverview();
-	}
-	
-	@FXML 
-	private void handleEdit(){
-		if ( treeView.getSelectionModel().getSelectedItem() != null && treeView.getSelectionModel().getSelectedItem().getValue().getId() > 0 ){
-			formController.setObject(treeView.getSelectionModel().getSelectedItem().getValue());
-			formController.showForm();
-			refreshListOverview();
-		}
-	}
-	
-	@FXML
-	private void handleDelete(){
-		if ( treeView.getSelectionModel().getSelectedItem() != null && treeView.getSelectionModel().getSelectedItem().getValue().getId() > 0 ){
-			
+	@Override
+	protected void handleDelete() {
+		int selectedIndex = listCategorias.getSelectionModel().getSelectedIndex();
+		if (selectedIndex >= 0) {
 			CustomAlert.confirmarExclusao();
-			if (CustomAlert.response == ButtonType.OK) {
+			if ( CustomAlert.response == ButtonType.OK ) {
 				
 				try {
-					service.remove(treeView.getSelectionModel().getSelectedItem().getValue());
-					refreshListOverview();
+					service.remove(data.get(selectedIndex));
 				} catch (Exception e) {
 					CustomAlert.mensagemAlerta("", e.getMessage());
 					return;
 				}
 				
+				data.remove(selectedIndex);
+				updateLabelNumRegistros();
 			}
-			
+		} else {
+			CustomAlert.nenhumRegistroSelecionado();		
 		}
 	}
-
+	
+	@Override
+	protected void handleSelectItemTable() {
+		setObject(listCategorias.getSelectionModel().getSelectedItem());
+	}
+	
+	@Override
 	public String getFormTitle() {
 		return "Categoria de Lançamento";
 	}
 	
+	@Override
 	public String getFormName() {
 		return "view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroOverview.fxml";
+	}
+	
+	@Override
+	@Resource(name = "categoriaLancamentoFinanceiroService")
+	protected void setService(IService<Integer, CategoriaLancamentoFinanceiro> service) {
+		super.setService(service);
 	}
 	
 }

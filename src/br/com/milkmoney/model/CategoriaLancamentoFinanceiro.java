@@ -2,21 +2,16 @@ package br.com.milkmoney.model;
 
 import java.io.Serializable;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import br.com.milkmoney.components.FieldRequired;
@@ -31,10 +26,8 @@ public class CategoriaLancamentoFinanceiro extends AbstractEntity implements Ser
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private StringProperty                         descricao          = new SimpleStringProperty();
-	private SimpleObjectProperty<CategoriaLancamentoFinanceiro> categoriaSuperiora = new SimpleObjectProperty<CategoriaLancamentoFinanceiro>();
 	
 	public CategoriaLancamentoFinanceiro() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public CategoriaLancamentoFinanceiro(String descricao) {
@@ -63,7 +56,7 @@ public class CategoriaLancamentoFinanceiro extends AbstractEntity implements Ser
 		return descricao;
 	}
 	
-	@Access(AccessType.PROPERTY)
+	/*@Access(AccessType.PROPERTY)
 	@OneToOne(targetEntity=CategoriaLancamentoFinanceiro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="categoriaSuperiora")
 	public CategoriaLancamentoFinanceiro getCategoriaSuperiora() {
@@ -76,7 +69,7 @@ public class CategoriaLancamentoFinanceiro extends AbstractEntity implements Ser
 	
 	public ObjectProperty<CategoriaLancamentoFinanceiro> categoriaSuperioraProperty(){
 		return categoriaSuperiora;
-	}
+	}*/
 	
 	@Override
 	public String toString() {

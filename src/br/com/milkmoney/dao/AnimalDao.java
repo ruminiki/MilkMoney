@@ -411,11 +411,11 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * (4) tem idade suficiente para cobertura
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisAtivosComIdadeParaServicoNoPeriodo(int diasIdadeMinimaParaCobertura, Date dataInicio, Date dataFim) {
+	public List<Animal> findAnimaisAtivosComIdadeParaServicoNoPeriodo(int idadeMinimaParaCobertura, Date dataInicio, Date dataFim) {
 				
 		//busca animais que tinha idade suficiente e não estavam mortos nem vendidos
 		Query query = entityManager.createQuery(
-				"SELECT a FROM Animal a where DATEDIFF(:dataFim, a.dataNascimento) > " + diasIdadeMinimaParaCobertura + " and "
+				"SELECT a FROM Animal a where TIMESTAMPDIFF(MONTH, a.dataNascimento, :dataFim) >= " + idadeMinimaParaCobertura + " and "
 				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :dataInicio) and "
 				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :dataInicio) and "
 				+ "a.sexo = '" + Sexo.FEMEA + "'");

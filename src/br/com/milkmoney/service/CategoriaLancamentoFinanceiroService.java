@@ -28,7 +28,6 @@ public class CategoriaLancamentoFinanceiroService implements IService<Integer, C
 	@Override
 	@Transactional
 	public boolean remove(CategoriaLancamentoFinanceiro categoriaLancamentoFinanceiro) {
-		dao.configuraExclusaoCategoria(categoriaLancamentoFinanceiro);
 		return dao.remove(categoriaLancamentoFinanceiro);
 	}
 

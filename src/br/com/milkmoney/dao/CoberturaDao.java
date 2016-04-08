@@ -205,13 +205,27 @@ public class CoberturaDao extends AbstractGenericDao<Integer, Cobertura> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Cobertura> findCoberturasPeriodo(Date dataInicio, Date dataFim) {
+	public List<Cobertura> findAllCoberturasPeriodo(Date dataInicio, Date dataFim) {
 		Query query = entityManager.createQuery("SELECT c FROM Cobertura c WHERE c.data between :dataInicio and :dataFim order by c.data");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
 		
 		return query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Cobertura> findCoberturasPeriodoVacasAtivas(Date dataInicio, Date dataFim) {
+		Query query = entityManager.createQuery("SELECT c FROM Cobertura c "
+				+ "WHERE c.data between :dataInicio and :dataFim and "
+				+ "not exists (select 1 from VendaAnimal v where v.animal = c.femea and v.dataVenda <= :dataInicio) and "
+				+ "not exists (select 1 from MorteAnimal ma where ma.animal = c.femea and ma.dataMorte <= :dataInicio) "
+				+ "order by c.data ");
+		query.setParameter("dataInicio", dataInicio);
+		query.setParameter("dataFim", dataFim);
+		
+		return query.getResultList();
+	}
+
 
 	/**
 	 * Busca as coberturas que iniciaram ou tiveram parto no período selecionado.

@@ -75,6 +75,10 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	public void initialize(AbstractFormController<K, E> formController) {
 		
+		if ( table == null ){
+			table = new TableView<E>();
+		}
+		
 		this.formController = formController;
 		table.setFixedCellSize(25);
 		this.refreshTableOverview();

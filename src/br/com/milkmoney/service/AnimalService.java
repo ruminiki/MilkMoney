@@ -151,12 +151,12 @@ public class AnimalService implements IService<Integer, Animal>{
 			
 		List<Animal> result = new ArrayList<Animal>();
 		
-		int diasIdadeMinimaParaCobertura = 0;
+		int idadeMinimaCobertura = 0;
 		try{
 			//o parametro estara em meses, multiplicar por 30 para obter os dias
-			diasIdadeMinimaParaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA)) * 30;
+			idadeMinimaCobertura = Integer.parseInt(parametroDao.findBySigla(Parametro.IDADE_MINIMA_PARA_COBERTURA));
 		}catch(Exception e){
-			diasIdadeMinimaParaCobertura = 24 * 30;
+			idadeMinimaCobertura = 13;
 		}
 		
 		int periodoVoluntarioEspera = 0;
@@ -167,7 +167,7 @@ public class AnimalService implements IService<Integer, Animal>{
 		}
 		
 		//busca animais que tinha idade suficiente e não estavam mortos nem vendidos
-		List<Animal> animais = dao.findAnimaisAtivosComIdadeParaServicoNoPeriodo(diasIdadeMinimaParaCobertura, dataInicio, dataFim);
+		List<Animal> animais = dao.findAnimaisAtivosComIdadeParaServicoNoPeriodo(idadeMinimaCobertura, dataInicio, dataFim);
 		
 		for ( Animal animal : animais ){
 			//buscar ultima cobertura antes data inicio
@@ -180,10 +180,10 @@ public class AnimalService implements IService<Integer, Animal>{
 					}
 					continue;
 				}
-				//se não tiver parto verificar se estiver vazia
-				if ( cobertura.getSituacaoCobertura().equals(SituacaoCobertura.VAZIA) ){
-					//se sim, somar a data de confirmacao + 21 dias e verificar se está dentro ou antes do periodo
-					if ( DateUtil.asLocalDate(cobertura.getDataConfirmacaoPrenhez()).plusDays(21).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
+				//se não tiver parto verificar se estiver vazia ou abortada
+				if ( cobertura.getSituacaoCobertura().matches(SituacaoCobertura.VAZIA + "|" + SituacaoCobertura.ABORTADA) ){
+					//se sim, somar a data da cobertura + 18 dias e verificar se está dentro ou antes do periodo
+					if ( DateUtil.asLocalDate(cobertura.getData()).plusDays(18).compareTo(DateUtil.asLocalDate(dataFim)) <= 0 ){
 						result.add(animal);
 					}
 					continue;

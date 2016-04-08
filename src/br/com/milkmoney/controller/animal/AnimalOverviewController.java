@@ -224,6 +224,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		AnimalTableUtils.addCustomTableMenu(table, movimentarAnimaisLote, confirmarPrenhezEmLote);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
+		table.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.A && event.isControlDown()) {
+					table.getSelectionModel().selectAll();
+			    }
+			};
+		});
+		
 	}
 	
 	private void resizeColunaTabela(Number newWidth){
@@ -644,7 +652,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( animais != null && animais.size() > 0 ){
 			movimentacaoAnimalLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
 			movimentacaoAnimalLoteFormController.showForm();
-			refreshTableOverview();
+			for ( Animal a : animais ){
+				a.setLote(movimentacaoAnimalLoteFormController.getLoteSelecionado());
+				refreshObjectInTableView.apply(a);
+			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}
@@ -655,7 +666,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( animais != null && animais.size() > 0 ){
 			confirmacaoPrenhezEmLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
 			confirmacaoPrenhezEmLoteFormController.showForm();
-			refreshTableOverview();
+			//for (  )
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}

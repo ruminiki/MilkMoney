@@ -55,7 +55,7 @@ public class TaxaConcepcao extends AbstractCalculadorIndicador{
 		Date dataInicio = DateUtil.asDate(LocalDate.of(DateUtil.asLocalDate(data).getYear(), DateUtil.asLocalDate(data).getMonthValue(), 1));
 		Date dataFim    = data;
 		
-		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
+		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodoVacasAtivas(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
 			if ( cobertura.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){

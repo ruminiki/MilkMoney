@@ -3,7 +3,6 @@ package br.com.milkmoney.controller.categoriaLancamentoFinanceiro;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 
 import javax.annotation.Resource;
 
@@ -19,7 +18,6 @@ import br.com.milkmoney.service.IService;
 public class CategoriaLancamentoFinanceiroFormController extends AbstractFormController<Integer, CategoriaLancamentoFinanceiro> {
 
 	@FXML private UCTextField inputDescricao;
-	@FXML private ComboBox<CategoriaLancamentoFinanceiro> inputCategoriaLancamentoFinanceiroSuperiora;
 
 	private CategoriaLancamentoFinanceiro categoriaNull = new CategoriaLancamentoFinanceiro("");
 	private ObservableList<CategoriaLancamentoFinanceiro> data;
@@ -29,21 +27,8 @@ public class CategoriaLancamentoFinanceiroFormController extends AbstractFormCon
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
 		data = FXCollections.observableArrayList(categoriaNull);
 		data.addAll(((CategoriaLancamentoFinanceiroService)service).findAllAsObservableListOrderly());
-		inputCategoriaLancamentoFinanceiroSuperiora.setItems(data);
-		inputCategoriaLancamentoFinanceiroSuperiora.valueProperty().bindBidirectional(getObject().categoriaSuperioraProperty());
 	}
 	
-	@Override
-	protected void beforeSave() {
-		super.beforeSave();
-		
-		if ( getObject().getCategoriaSuperiora() != null && 
-			getObject().getCategoriaSuperiora().getId() <= 0 ){
-				getObject().setCategoriaSuperiora(null);
-		}
-		
-	}
-
 	@Override
 	public String getFormName() {
 		return "view/categoriaLancamentoFinanceiro/CategoriaLancamentoFinanceiroForm.fxml";
@@ -51,7 +36,7 @@ public class CategoriaLancamentoFinanceiroFormController extends AbstractFormCon
 	
 	@Override
 	public String getFormTitle() {
-		return "Categoria Despesa";
+		return "Categoria Lançamento Financeiro";
 	}
 	
 	@Override

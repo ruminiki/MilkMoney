@@ -49,7 +49,7 @@ public class TaxaServico extends AbstractCalculadorIndicador{
 		long vacasDisponiveis = animaisDisponiveis != null ? animaisDisponiveis.size() : 0;
 		
 		//busca todas as coberturas realizadas no periodo 
-		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
+		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodoVacasAtivas(dataInicio, dataFim); 
 		long vacasEnseminadas = coberturas != null ? coberturas.size() : 0;
 		
 		if ( vacasEnseminadas <= 0 || vacasDisponiveis <= 0 ){

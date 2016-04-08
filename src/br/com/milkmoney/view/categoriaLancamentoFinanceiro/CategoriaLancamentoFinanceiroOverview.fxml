@@ -11,48 +11,56 @@
 
 <AnchorPane minWidth="590.0" prefHeight="299.0" prefWidth="663.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.categoriaLancamentoFinanceiro.CategoriaLancamentoFinanceiroOverviewController">
    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="descrição">
-               <padding>
-                  <Insets right="5.0" top="5.0" />
-               </padding>
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </TextField>
-            <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <HBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="SOMETIMES">
+            <HBox alignment="CENTER_LEFT" maxHeight="30.0" prefHeight="30.0" spacing="5.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
-                  <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
-                  <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                  <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="descrição" HBox.hgrow="ALWAYS">
+                     <padding>
+                        <Insets right="5.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button mnemonicParsing="false" prefHeight="30.0" text="Pesquisar" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <HBox alignment="CENTER_LEFT" spacing="5.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleNew" prefHeight="30.0" text="Novo" />
+                        <Button layoutX="248.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Editar" />
+                        <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
+                     </children>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </HBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
+                     <children>
+                        <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Registros">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
-               <HBox.margin>
-                  <Insets right="50.0" />
-               </HBox.margin>
+               <padding>
+                  <Insets right="5.0" />
+               </padding>
             </HBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-         </children>
-         <padding>
-            <Insets right="5.0" />
-         </padding>
-      </HBox>
-      <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label text="Registros">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
+            <ListView fx:id="listCategorias" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+            </ListView>
          </children>
       </VBox>
-      <TreeView fx:id="treeView" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" />
    </children>
 </AnchorPane>

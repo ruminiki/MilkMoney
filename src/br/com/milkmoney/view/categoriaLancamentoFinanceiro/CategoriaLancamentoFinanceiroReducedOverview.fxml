@@ -51,10 +51,10 @@
                   <Insets right="5.0" />
                </padding>
             </HBox>
-            <TreeView fx:id="treeView" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="listCategorias" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="3.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#selecionar" text="Selecionar" />
+                  <Button mnemonicParsing="false" onAction="#handleSelecionar" text="Selecionar" />
                   <Button mnemonicParsing="false" onAction="#handleLimparSelecao" text="Limpar Seleção" />
                   <Button mnemonicParsing="false" onAction="#closeForm" text="Cancelar" />
                </children>

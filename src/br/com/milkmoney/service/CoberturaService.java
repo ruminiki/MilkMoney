@@ -95,7 +95,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	public ObservableList<Cobertura> findByPeriodo(Date dataInicio, Date dataFim){
-		return FXCollections.observableArrayList(dao.findCoberturasPeriodo(dataInicio, dataFim));
+		return FXCollections.observableArrayList(dao.findAllCoberturasPeriodo(dataInicio, dataFim));
 	}
 	
 	public List<Cobertura> findByAnimal(Animal animal, Date data){

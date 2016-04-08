@@ -50,7 +50,7 @@ public class TaxaPrenhez extends AbstractCalculadorIndicador{
 		List<Animal> animaisDisponiveis = animalService.findAnimaisDisponiveisParaCobertura(dataInicio, dataFim);
 		
 		//busca todas as coberturas realizadas no periodo 
-		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodo(dataInicio, dataFim); 
+		List<Cobertura> coberturas = coberturaDao.findCoberturasPeriodoVacasAtivas(dataInicio, dataFim); 
 		
 		for ( Cobertura cobertura : coberturas ){
 			if ( cobertura.getSituacaoConfirmacaoPrenhez().matches(SituacaoCobertura.PRENHA + "|" + SituacaoCobertura.NAO_CONFIRMADA) ){

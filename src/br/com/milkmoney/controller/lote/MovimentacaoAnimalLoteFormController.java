@@ -47,6 +47,8 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 				}
 			};
 		});
+		
+		loteSelecionado = null;
 		atualizaResumo();
 		
 	}
@@ -94,6 +96,10 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 		}
 	}
 	
+	public Lote getLoteSelecionado() {
+		return loteSelecionado;
+	}
+
 	@Override
 	public void handleCancel() {
 		super.closeForm();
