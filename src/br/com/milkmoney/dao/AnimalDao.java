@@ -110,7 +110,15 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 			
 		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null && !params.get(AnimalService.FILTER_SITUACAO_ANIMAL).equals(SituacaoAnimal.VENDIDO) ){
-			SQL.append("not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal = a) ");
+			SQL.append("not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal = a) and ");
+		}
+		
+		if ( params.get(AnimalService.FILTER_NUMERO_SERVICOS) != null ){
+			if ( !params.get(AnimalService.FILTER_NUMERO_SERVICOS).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
+				params.put(AnimalService.FILTER_NUMERO_SERVICOS, "= " + params.get(AnimalService.FILTER_NUMERO_SERVICOS).replaceAll("[^0-9]", ""));
+			}
+			SQL.append("exists (select 1 from FichaAnimal f where f.animal = a and ");
+			SQL.append("f.numeroServicosAtePrenhez " + params.get(AnimalService.FILTER_NUMERO_SERVICOS + ")"));
 		}
 		
 		if ( SQL.toString().toLowerCase().endsWith("and ") ){

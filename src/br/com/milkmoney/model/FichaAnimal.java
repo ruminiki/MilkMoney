@@ -116,7 +116,8 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	public void setNumeroCriasMacho(int numeroCriasMacho) {
 		this.numeroCriasMacho = numeroCriasMacho;
 	}
-
+	
+	@OneToOne
 	public Animal getAnimal() {
 		return animal;
 	}
