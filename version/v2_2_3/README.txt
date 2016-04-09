@@ -1,9 +1,9 @@
-X Carregar data última cobertura
-X Ajustar selecionar de telas secundárias
-X Observação cadastro vaca
-X Gráfico entrega leite, Produção de Leite
-X Permitir a multipla seleção de animais com CTRL
-X atualizar tabela indicador prenhes para prenhez
-X Criar opção: Com os selecionados, criar lote, marcar conf prenhes...
-X Cada animal poderá estar ligado a um único lote
-X Criar observação no lote (criar no modelo ER)
+X Ao atualizar a confirmação prenhez em lote, tentar não dar refresh na tabela
+X Fixar eficiência reprodutiva até 100%
+X Ao atualizar o lote, tentar não dar refresh na tabela
+X Ordem do relatório de partos adicionar ano
+X Criar tela para acompanhamento de coberturas mês a mês
+- Cálculo taxa prenhez acima 100%
+  - buscar maior cobertura do animal no mês pois podem ter animais com duas coberturas no mesmo mês
+X Tirar categoria superiora
+X Fazer opção botão direito mouse selecionar todos animais na tabela

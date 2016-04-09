@@ -1,16 +1,6 @@
 ERROS e REQUISITOS
 
-2.2.3
-X Criar tela para acompanhamento de coberturas mês a mês
-- Cálculo taxa prenhez acima 100%
-  - buscar maior cobertura do animal no mês pois podem ter animais com duas coberturas no mesmo mês
-  
-X Tirar categoria superiora
-- Fazer CTRL + A tabela animais
 - Fazer filtro de número de serviços
-X Fixar eficiência reprodutiva até 100%
-X Ao atualizar o lote, tentar não dar refresh na tabela
-X Ordem do relatório de partos adicionar ano
 
 - Mostrar desfazer venda quando animal já estiver vendido
 - Ao remover a venda pela tela de venda não dá refresh na tela

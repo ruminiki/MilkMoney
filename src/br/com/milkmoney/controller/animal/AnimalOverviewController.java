@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -146,6 +147,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	
 	private FichaAnimal fichaAnimal;
 	private PopUpMenu popUpMenu = null;
+	private MenuItem selecionarTodos = new MenuItem("Selecionar Todos");
 	
 	@FXML
 	public void initialize() {
@@ -217,6 +219,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 					table.getSelectionModel().select(0);
 				}
 				resizeColunaTabela(table.getWidth());
+				table.getContextMenu().getItems().add(selecionarTodos);
 			}
 		});
 		
@@ -224,12 +227,11 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		AnimalTableUtils.addCustomTableMenu(table, movimentarAnimaisLote, confirmarPrenhezEmLote);
 		table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
-		table.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.A && event.isControlDown()) {
-					table.getSelectionModel().selectAll();
-			    }
-			};
+		selecionarTodos.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override
+		    public void handle(ActionEvent event) {
+		    	table.getSelectionModel().selectAll();
+		    }
 		});
 		
 	}
@@ -666,7 +668,10 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		if ( animais != null && animais.size() > 0 ){
 			confirmacaoPrenhezEmLoteFormController.setAnimaisSelecionados(table.getSelectionModel().getSelectedItems());
 			confirmacaoPrenhezEmLoteFormController.showForm();
-			//for (  )
+			for ( Animal a : animais ){
+				a.setSituacaoUltimaCobertura(confirmacaoPrenhezEmLoteFormController.getNovaSituacaoCobertura());
+				refreshObjectInTableView.apply(a);
+			}
 		}else{
 			CustomAlert.nenhumRegistroSelecionado();
 		}

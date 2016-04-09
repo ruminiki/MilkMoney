@@ -37,8 +37,8 @@ public class ConfirmacaoPrenhezEmLoteFormController extends AbstractFormControll
 	@FXML private UCTextField                    inputObservacao;
 	
 	@Autowired private CoberturaService          coberturaService;
-	
 	private ObservableList<Cobertura>            coberturasAnimaisSelecionados = FXCollections.observableArrayList();
+	private String                               novaSituacaoCobertura;
 	
 	@FXML
 	public void initialize() {
@@ -95,6 +95,9 @@ public class ConfirmacaoPrenhezEmLoteFormController extends AbstractFormControll
 			c.setSituacaoCobertura(inputSituacaoCobertura.getValue());
 			c.setMetodoConfirmacaoPrenhez(inputMetodoConfirmacao.getValue());
 			c.setObservacaoConfirmacaoPrenhez(inputObservacao.getText());
+			
+			setNovaSituacaoCobertura(inputSituacaoCobertura.getValue());
+			
 			coberturaService.save(c);
 		}
 		
@@ -102,6 +105,14 @@ public class ConfirmacaoPrenhezEmLoteFormController extends AbstractFormControll
 		
 	}
 	
+	public String getNovaSituacaoCobertura() {
+		return novaSituacaoCobertura;
+	}
+
+	public void setNovaSituacaoCobertura(String novaSituacaoCobertura) {
+		this.novaSituacaoCobertura = novaSituacaoCobertura;
+	}
+
 	@Override
 	public void handleCancel() {
 		super.closeForm();
