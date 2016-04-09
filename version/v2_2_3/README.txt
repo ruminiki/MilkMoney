@@ -7,3 +7,4 @@ X Criar tela para acompanhamento de coberturas mês a mês
   - buscar maior cobertura do animal no mês pois podem ter animais com duas coberturas no mesmo mês
 X Tirar categoria superiora
 X Fazer opção botão direito mouse selecionar todos animais na tabela
+X No secar em, mostrar animais que já deveriam estar secos (data <= ...)

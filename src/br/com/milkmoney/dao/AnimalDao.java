@@ -102,7 +102,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		if ( params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) != null ){
 			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, params.get(AnimalService.FILTER_SECAR_EM_X_DIAS).replaceAll("[^0-9]", ""));
 			//SQL.append("exists (select 1 from Lactacao l where l.animal = a and l.dataFim is null) and ");
-			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and ADDDATE(lc.dataInicio, 305) between current_date() and ADDDATE(current_date(), " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") and lc.dataFim is null) and ");
+			SQL.append("exists (SELECT 1 FROM Lactacao lc WHERE lc.animal = a and ADDDATE(lc.dataInicio, 305) <= ADDDATE(current_date(), " + params.get(AnimalService.FILTER_SECAR_EM_X_DIAS) + ") and lc.dataFim is null) and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_SITUACAO_ANIMAL) != null && !params.get(AnimalService.FILTER_SITUACAO_ANIMAL).equals(SituacaoAnimal.MORTO) ){
