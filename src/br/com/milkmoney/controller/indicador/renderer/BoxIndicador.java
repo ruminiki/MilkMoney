@@ -146,15 +146,15 @@ public class BoxIndicador extends VBox {
 	}
 	
 	private String styleAbaixo(){
-		return "-fx-background-color: #FF0000;";
+		return "-fx-background-color: #FF4D4D;";
 	}
 	
 	private String styleIdeal(){
-		return "-fx-background-color: #33CC33;";
+		return "-fx-background-color: #5CD65C;";
 	}
 	
 	private String styleAlerta(){
-		return "-fx-background-color: #FFFF0F;";
+		return "-fx-background-color: #FFFF66;";
 	}
 
 	public Indicador getIndicador() {

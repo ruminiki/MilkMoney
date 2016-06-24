@@ -175,7 +175,7 @@ public class IndicadorOverviewController {
 						BoxIndicador box = (BoxIndicador) node;
 						
 						ValorIndicador vi = box.getIndicador().getValorIndicador(ano, n.intValue());
-						Date data = (n.intValue() == LocalDate.now().getMonthValue() ? new Date() : DateUtil.lastDayOfMonth(ano, n.intValue()));
+						Date data = ((n.intValue() == LocalDate.now().getMonthValue() && ano == LocalDate.now().getYear()) ? new Date() : DateUtil.lastDayOfMonth(ano, n.intValue()));
 						service.refreshValorApurado(vi, data); 
 													
 						updateProgress(index++, progressComplete);
