@@ -2,7 +2,6 @@ package br.com.milkmoney.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -140,7 +139,7 @@ public class PartoService implements IService<Integer, Parto>{
 
 	public int getIntervaloEntrePartos(Animal animal, Date data) {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		List<Parto> partos = dao.findUltimos2PartosBeforeDate(animal, data);
 		int intervaloEntrePartos = 0;

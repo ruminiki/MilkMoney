@@ -1,6 +1,7 @@
 ERROS e REQUISITOS
 
 - Fazer filtro de número de serviços
+- Ao cadastrar cobertura, se tiver alguma não confirmada anteriormente, marca ela como vazia após 30 dias.
 
 - Mostrar desfazer venda quando animal já estiver vendido
 - Ao remover a venda pela tela de venda não dá refresh na tela

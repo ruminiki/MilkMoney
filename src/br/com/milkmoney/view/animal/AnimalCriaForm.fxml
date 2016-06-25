@@ -44,7 +44,7 @@
                               <UCTextField fx:id="inputNome" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" />
                               
                               <Label text="Sexo: " GridPane.rowIndex="2" />
-                              <ChoiceBox fx:id="inputSexo" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ChoiceBox fx:id="inputSexo" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               
                                                
                               
@@ -53,7 +53,7 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Label>
-                              <DatePicker fx:id="inputDataNascimento" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <DatePicker fx:id="inputDataNascimento" disable="true" editable="false" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                               
                               <Label text="Mãe: " GridPane.rowIndex="3" />
                               <UCTextField fx:id="inputMae" disable="true" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
@@ -103,7 +103,7 @@
                   <HBox alignment="CENTER" minWidth="275.0" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#selecionarImagem" text="Carregar Imagem" />
-                        <Button fx:id="btnRemoverImagem" mnemonicParsing="false" onAction="#removerImagem" text="Remover" disable="true" />
+                        <Button fx:id="btnRemoverImagem" disable="true" mnemonicParsing="false" onAction="#removerImagem" text="Remover" />
                      </children>
                   </HBox>
                </children>

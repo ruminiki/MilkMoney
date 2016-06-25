@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -57,12 +58,10 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML private UCTextField                inputCobertura;
 	@FXML private DatePicker                 inputData, inputDataInicioLactacao;
 	@FXML private UCTextField                inputObservacao;
-	@FXML private ChoiceBox<String>          inputSituacaoNascimento;
-	@FXML private ChoiceBox<String>          inputSexo;
-	@FXML private ChoiceBox<String>          inputIncorporadoAoRebanho;
 	@FXML private ChoiceBox<String>          inputTipoParto;
 	@FXML private UCTextField                inputComplicacaoParto;
 	@FXML private UCTextField                inputPeso;
+	@FXML private CheckBox					 cbSituacaoVivo, cbSituacaoMorto, cbSexoMacho, cbSexoFemea, cbIncorporadoRebanho, cbNaoIncorporadoRebanho;	
 	
 	@FXML private Button btnSalvar, btnAdicionarCria, btnRemover;
 	
@@ -94,12 +93,36 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 			inputData.setValue(DateUtil.asLocalDate(getObject().getCobertura().getPrevisaoParto()));
 			inputDataInicioLactacao.setValue(inputData.getValue().plusDays(3));
 		}
-		
 		//cria
-		inputIncorporadoAoRebanho.setItems(SimNao.getItems());
-		inputSexo.setItems(Sexo.getItems());
-		inputSituacaoNascimento.setItems(SituacaoNascimento.getItems());
-		
+		cbSituacaoVivo.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				cbSituacaoMorto.setSelected(false);
+				cbIncorporadoRebanho.setDisable(false);
+				cbNaoIncorporadoRebanho.setDisable(false);
+			}
+		});
+		cbSituacaoMorto.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				cbSituacaoVivo.setSelected(false);
+				cbIncorporadoRebanho.setSelected(false);
+				cbIncorporadoRebanho.setDisable(true);
+				cbNaoIncorporadoRebanho.setSelected(true);
+				cbNaoIncorporadoRebanho.setDisable(true);
+			}
+		});
+		cbSexoMacho.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) cbSexoFemea.setSelected(false);	
+		});
+		cbSexoFemea.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) cbSexoMacho.setSelected(false);	
+		});
+		cbIncorporadoRebanho.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) cbNaoIncorporadoRebanho.setSelected(false);	
+		});
+		cbNaoIncorporadoRebanho.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) cbIncorporadoRebanho.setSelected(false);	
+		});
+
 		MaskFieldUtil.numeroInteiro(inputPeso);
 
 		//table crias
@@ -170,7 +193,7 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		animalCriaFormController.setState(State.CREATE_TO_SELECT);
 		Animal animal = new Animal(cria.getSexo());
 		animal.setPeso(cria.getPeso());
-		animal.setSexo(inputSexo.getSelectionModel().getSelectedItem());
+		animal.setSexo(cbSexoFemea.isSelected() ? Sexo.FEMEA : Sexo.MACHO);
 		animal.setRaca(getObject().getCobertura().getFemea().getRaca());
 		animal.setDataNascimento(DateUtil.asDate(inputData.getValue()));
 		
@@ -199,26 +222,35 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 	@FXML
 	protected void handleAdicionarCria() {
 		
-		if ( inputIncorporadoAoRebanho.getValue() != null && 
-				inputIncorporadoAoRebanho.getValue().equals(SimNao.SIM) ){
-			
-			if ( inputSituacaoNascimento.getValue() != null &&
-					inputSituacaoNascimento.getValue().equals(SituacaoNascimento.NASCIDO_VIVO) ){
-				
+		if ( !cbSexoFemea.isSelected() && !cbSexoMacho.isSelected() ){
+			CustomAlert.mensagemInfo("Por favor, selecione o sexo da cria e tente novamente!");
+			return;
+		}
+		
+		if ( !cbSituacaoVivo.isSelected() && !cbSituacaoMorto.isSelected() ){
+			CustomAlert.mensagemInfo("Por favor, selecione a situação de nascimento da cria e tente novamente!");
+			return;
+		}
+		
+		if ( !cbIncorporadoRebanho.isSelected() && !cbNaoIncorporadoRebanho.isSelected() ){
+			CustomAlert.mensagemInfo("Por favor, selecione se a cria será ou não incorporada ao rebanho e tente novamente!");
+			return;
+		}
+		
+		if ( cbIncorporadoRebanho.isSelected() ){
+			if ( cbSituacaoVivo.isSelected() ){
 				if ( cria.getAnimal() == null ){
 					cadastrarAnimal();
 					return;
 				}
-				
 			}
-			
 		}
 		
-		cria.setIncorporadoAoRebanho(inputIncorporadoAoRebanho.getValue());
+		cria.setIncorporadoAoRebanho(cbIncorporadoRebanho.isSelected() ? SimNao.SIM : SimNao.NAO);
 		cria.setParto(getObject());
 		cria.setPeso(NumberFormatUtil.fromString(inputPeso.getText()));
-		cria.setSexo(inputSexo.getValue());
-		cria.setSituacaoNascimento(inputSituacaoNascimento.getValue());
+		cria.setSexo(cbSexoFemea.isSelected() ? Sexo.FEMEA : Sexo.MACHO);
+		cria.setSituacaoNascimento(cbSituacaoVivo.isSelected() ? SituacaoNascimento.NASCIDO_VIVO : SituacaoNascimento.NASCIDO_MORTO);
 		
 		CriaValidation.validate(cria);
 		
@@ -227,10 +259,6 @@ public class PartoFormController extends AbstractFormController<Integer, Parto> 
 		data.addAll(getObject().getCrias());
 		
 		inputPeso.setText("");
-		inputIncorporadoAoRebanho.getSelectionModel().clearSelection();
-		inputSexo.getSelectionModel().clearSelection();
-		inputSituacaoNascimento.getSelectionModel().clearSelection();
-		
 		cria = new Cria(getObject());
 		
 	}

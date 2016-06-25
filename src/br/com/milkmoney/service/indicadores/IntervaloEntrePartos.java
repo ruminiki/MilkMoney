@@ -2,7 +2,6 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 		//vacas com mais de um parto
 		List<Animal> femeas = animalDao.findAnimaisComMaisDeUmParto(data);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
 		//System.out.println(sdf.format(data) + "\n");
 		
 		for ( Animal femea : femeas ){

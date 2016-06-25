@@ -2,7 +2,6 @@ package br.com.milkmoney.service.indicadores;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -85,11 +84,11 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		//busca os animais que farão parte do índice
 		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		double DVGANIMAL, DVEANIMAL;
 		DVGANIMAL=DVEANIMAL=0;
 		
-		System.out.println(sdf.format(data) + "\n");
+		//System.out.println(sdf.format(data) + "\n");
 		for ( Animal animal : animais ){
 			
 			DVGANIMAL = DVG;
@@ -100,7 +99,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 			DVGANIMAL = DVG - DVGANIMAL;
 			DVEANIMAL = DVE - DVEANIMAL;
 			
-			System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
+			//System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
 			
 			//getValue(animal);
 		}
@@ -124,7 +123,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		
 		BigDecimal ie = calculaIndice();
 		
-		System.out.println(animal.getNumeroNome() + ";" + ie.toString());
+		//System.out.println(animal.getNumeroNome() + ";" + ie.toString());
 		
 		return ie;
 		
@@ -226,7 +225,8 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 			try{
 				BigDecimal indice = BigDecimal.valueOf(index).setScale(0, RoundingMode.HALF_EVEN);
 				//padroniza para retornar no máximo 100%
-				return indice.compareTo(BigDecimal.valueOf(100)) > 0 ? BigDecimal.valueOf(100) : indice;
+				return indice;
+				//return indice.compareTo(BigDecimal.valueOf(100)) > 0 ? BigDecimal.valueOf(100) : indice;
 			}catch(Exception e){
 				return BigDecimal.ZERO;  
 			}
