@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,11 +38,32 @@ import br.com.milkmoney.service.fichaAnimal.ProximoServico;
 import br.com.milkmoney.service.fichaAnimal.SituacaoUltimaCobertura;
 import br.com.milkmoney.service.fichaAnimal.UltimoProcedimento;
 
-@Service
+@Service@SuppressWarnings("rawtypes")
 public class FichaAnimalService{
 
 	@Autowired private FichaAnimalDao dao;
 	@Autowired private AnimalService animalService;
+	
+	public static final Class DATA_ULTIMA_COBERTURA = DataUltimaCobertura.class;
+	public static final Class DATA_ULTIMO_PARTO = DataUltimoParto.class;
+	public static final Class DIAS_EM_ABERTO_ANIMAL = DiasEmAbertoAnimal.class;
+	public static final Class DIAS_EMLACTACAO_ANIMAL = DiasEmLactacaoAnimal.class;
+	public static final Class EFICIENCIA_REPRODUTIVA_ANIMAL = EficienciaReprodutivaAnimal.class;
+	public static final Class ENCERRAMENTO_LACTACAO = EncerramentoLactacao.class;
+	public static final Class IDADE_PRIMEIRA_COBERTURA = IdadePrimeiraCobertura.class;
+	public static final Class IDADE_PRIMEIRO_PARTO = IdadePrimeiroParto.class;
+	public static final Class INTERVALO_ENTRE_PARTOS_ANIMAL = IntervaloEntrePartosAnimal.class;
+	public static final Class LOTE_ANIMAL = LoteAnimal.class;
+	public static final Class MEDIA_PRODUCAO_ULTIMA_LACTACAO = MediaProducaoUltimaLactacao.class;
+	public static final Class NUMEROCRIAS_FEMEA = NumeroCriasFemea.class;
+	public static final Class NUMERO_CRIAS_MACHO = NumeroCriasMacho.class;
+	public static final Class NUMERO_PARTOS = NumeroPartos.class;
+	public static final Class NUMERO_SERVICOS_ATE_PRENHEZ = NumeroServicosAtePrenhez.class;
+	public static final Class PROXIMO_PARTO = ProximoParto.class;
+	public static final Class PROXIMO_SERVICO = ProximoServico.class;
+	public static final Class SITUACAO_ULTIMA_COBERTURA = SituacaoUltimaCobertura.class;
+	public static final Class ULTIMO_PROCEDIMENTO = UltimoProcedimento.class;
+	public static final Class EFICIENCIA_TEMPO_PRODUCAO = EficienciaTempoProducao.class;
 
 	public ObservableList<FichaAnimal> findAllEventosByAnimal(Animal animal) {
 		return FXCollections.observableArrayList(dao.findAllByAnimal(animal));
@@ -75,7 +97,7 @@ public class FichaAnimalService{
 	@Transactional
 	public void generateFichaForAll(Object ... params){
 		
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({ "unchecked" })
 		List<AbstractFichaAnimal> fieldsToLoad = (List) params[0];
 		
 		if ( fieldsToLoad == null ){
@@ -91,26 +113,32 @@ public class FichaAnimalService{
 	
 	public List<AbstractFichaAnimal> getAllFields(){
 		return Arrays.asList(new AbstractFichaAnimal[] {
-				(AbstractFichaAnimal)MainApp.getBean(DataUltimaCobertura.class),
-				(AbstractFichaAnimal)MainApp.getBean(DataUltimoParto.class),
-				(AbstractFichaAnimal)MainApp.getBean(DiasEmAbertoAnimal.class),
-				(AbstractFichaAnimal)MainApp.getBean(DiasEmLactacaoAnimal.class),
-				(AbstractFichaAnimal)MainApp.getBean(EficienciaReprodutivaAnimal.class),
-				(AbstractFichaAnimal)MainApp.getBean(EncerramentoLactacao.class),
-				(AbstractFichaAnimal)MainApp.getBean(IdadePrimeiraCobertura.class),
-				(AbstractFichaAnimal)MainApp.getBean(IdadePrimeiroParto.class),
-				(AbstractFichaAnimal)MainApp.getBean(IntervaloEntrePartosAnimal.class),
-				(AbstractFichaAnimal)MainApp.getBean(LoteAnimal.class),
-				(AbstractFichaAnimal)MainApp.getBean(MediaProducaoUltimaLactacao.class),
-				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasFemea.class),
-				(AbstractFichaAnimal)MainApp.getBean(NumeroCriasMacho.class),
-				(AbstractFichaAnimal)MainApp.getBean(NumeroPartos.class),
-				(AbstractFichaAnimal)MainApp.getBean(NumeroServicosAtePrenhez.class),
-				(AbstractFichaAnimal)MainApp.getBean(ProximoParto.class),
-				(AbstractFichaAnimal)MainApp.getBean(ProximoServico.class),
-				(AbstractFichaAnimal)MainApp.getBean(SituacaoUltimaCobertura.class),
-				(AbstractFichaAnimal)MainApp.getBean(UltimoProcedimento.class),
-				(AbstractFichaAnimal)MainApp.getBean(EficienciaTempoProducao.class)
+				(AbstractFichaAnimal)MainApp.getBean(DATA_ULTIMA_COBERTURA),
+				(AbstractFichaAnimal)MainApp.getBean(DATA_ULTIMO_PARTO),
+				(AbstractFichaAnimal)MainApp.getBean(DIAS_EM_ABERTO_ANIMAL),
+				(AbstractFichaAnimal)MainApp.getBean(DIAS_EMLACTACAO_ANIMAL),
+				(AbstractFichaAnimal)MainApp.getBean(EFICIENCIA_REPRODUTIVA_ANIMAL),
+				(AbstractFichaAnimal)MainApp.getBean(ENCERRAMENTO_LACTACAO),
+				(AbstractFichaAnimal)MainApp.getBean(IDADE_PRIMEIRA_COBERTURA),
+				(AbstractFichaAnimal)MainApp.getBean(IDADE_PRIMEIRO_PARTO),
+				(AbstractFichaAnimal)MainApp.getBean(INTERVALO_ENTRE_PARTOS_ANIMAL),
+				(AbstractFichaAnimal)MainApp.getBean(LOTE_ANIMAL),
+				(AbstractFichaAnimal)MainApp.getBean(MEDIA_PRODUCAO_ULTIMA_LACTACAO),
+				(AbstractFichaAnimal)MainApp.getBean(NUMEROCRIAS_FEMEA),
+				(AbstractFichaAnimal)MainApp.getBean(NUMERO_CRIAS_MACHO),
+				(AbstractFichaAnimal)MainApp.getBean(NUMERO_PARTOS),
+				(AbstractFichaAnimal)MainApp.getBean(NUMERO_SERVICOS_ATE_PRENHEZ),
+				(AbstractFichaAnimal)MainApp.getBean(PROXIMO_PARTO),
+				(AbstractFichaAnimal)MainApp.getBean(PROXIMO_SERVICO),
+				(AbstractFichaAnimal)MainApp.getBean(SITUACAO_ULTIMA_COBERTURA),
+				(AbstractFichaAnimal)MainApp.getBean(ULTIMO_PROCEDIMENTO),
+				(AbstractFichaAnimal)MainApp.getBean(EFICIENCIA_TEMPO_PRODUCAO)
+		});
+	}
+	
+	public List<AbstractFichaAnimal> getField(Class field){
+		return Arrays.asList(new AbstractFichaAnimal[] {
+				(AbstractFichaAnimal)MainApp.getBean(field)
 		});
 	}
 	
@@ -131,6 +159,20 @@ public class FichaAnimalService{
 		
 		
 	}
-	
+
+	public XYChart.Series<String, Number> getDataChart() {
+		
+    	XYChart.Series<String, Number> serieIndicador = new XYChart.Series<String, Number>();
+    	serieIndicador.setName("Valor Indicador");
+    	
+    	List<FichaAnimal> result = dao.findAll(FichaAnimal.class);
+    	
+    	for ( FichaAnimal fichaAnimal : result ){
+    		serieIndicador.getData().add(new XYChart.Data<String, Number>(fichaAnimal.getAnimal().getNumeroNome(), fichaAnimal.getEficienciaReprodutiva()));
+    	}
+    	
+    	return serieIndicador;
+    	
+	}
 	
 }

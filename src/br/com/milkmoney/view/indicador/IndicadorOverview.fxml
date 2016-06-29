@@ -66,6 +66,11 @@
                      <children>
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#calcularIndicadores" text="Calcular" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#definirMetas" text="Definir Metas" />
+                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#graficoEficiencia" text="Gráfico Eficiência">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#imprimirIndicadores" text="Imprimir">
                            <HBox.margin>
                               <Insets right="3.0" />

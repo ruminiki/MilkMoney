@@ -41,7 +41,6 @@ import br.com.milkmoney.model.State;
 import br.com.milkmoney.model.ValorIndicador;
 import br.com.milkmoney.service.ConfiguracaoIndicadorService;
 import br.com.milkmoney.service.RelatorioService;
-import br.com.milkmoney.service.ValorIndicadorService;
 import br.com.milkmoney.service.indicadores.EficienciaReprodutiva;
 import br.com.milkmoney.service.indicadores.IndicadorService;
 import br.com.milkmoney.util.DateUtil;
@@ -57,13 +56,13 @@ public class IndicadorOverviewController {
 	
 	@Autowired private IndicadorService service;
 	@Autowired private ConfiguracaoIndicadorService configuracaoIndicadorService;
-	@Autowired private ValorIndicadorService valorIndicadorService;
 	@Autowired private RelatorioService relatorioService;
 	
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
+	@Autowired IndicadorBubbleChartController indicadorBubbleChartController;
 	
 	private ObservableList<Indicador> data = FXCollections.observableArrayList();
 	
@@ -211,6 +210,11 @@ public class IndicadorOverviewController {
 			vbMain.setDisable(false);
 		});
 			
+	}
+	
+	@FXML
+	private void graficoEficiencia(){
+		indicadorBubbleChartController.showForm();
 	}
 	
 	@FXML
