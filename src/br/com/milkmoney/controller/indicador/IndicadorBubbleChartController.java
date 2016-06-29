@@ -35,19 +35,22 @@ public class IndicadorBubbleChartController {
 		final CategoryAxis xAxis = new CategoryAxis();
         final NumberAxis yAxis = new NumberAxis();
         
-        xAxis.setLabel("Meses");
+        xAxis.setLabel("Animais");
         
         linearChart = new LineChart<String,Number>(xAxis,yAxis);
         
-        linearChart.setTitle("Variação Preço do Leite");
+        linearChart.setTitle("Indicador");
         linearChart.setLegendVisible(true);
         
         VBox.setVgrow(linearChart, Priority.SOMETIMES);
         HBox.setHgrow(linearChart, Priority.SOMETIMES);
         
+        linearChart.getData().clear();
+        linearChart.getData().add(fichaAnimalService.mountDataChart(fichaAnimalService.generateFichaForAll(fichaAnimalService.getField(FichaAnimalService.EFICIENCIA_REPRODUTIVA_ANIMAL))));
+        
         vBoxChart.getChildren().add(linearChart);
         
-        generateChart();
+       // generateChart();
         
 	}
 	
@@ -62,7 +65,7 @@ public class IndicadorBubbleChartController {
 				
 		        fichaAnimalService.generateFichaForAll(fichaAnimalService.getField(FichaAnimalService.EFICIENCIA_REPRODUTIVA_ANIMAL));
 		        linearChart.getData().clear();
-		        linearChart.getData().add(fichaAnimalService.getDataChart());
+		        linearChart.getData().add(fichaAnimalService.mountDataChart(fichaAnimalService.generateFichaForAll(fichaAnimalService.getField(FichaAnimalService.EFICIENCIA_REPRODUTIVA_ANIMAL))));
 		        
 				return null;
 			}

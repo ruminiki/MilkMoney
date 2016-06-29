@@ -95,7 +95,9 @@ public class FichaAnimalService{
 	}
 	
 	@Transactional
-	public void generateFichaForAll(Object ... params){
+	public List<FichaAnimal> generateFichaForAll(Object ... params){
+		
+		List<FichaAnimal> fichas = new ArrayList<FichaAnimal>();
 		
 		@SuppressWarnings({ "unchecked" })
 		List<AbstractFichaAnimal> fieldsToLoad = (List) params[0];
@@ -106,8 +108,10 @@ public class FichaAnimalService{
 		
 		List<Animal> animais = animalService.findAll();
 		for ( Animal animal : animais ){
-			generateFichaAnimal(animal, fieldsToLoad);
+			fichas.add(generateFichaAnimal(animal, fieldsToLoad));
 		}
+		
+		return fichas;
 		
 	}
 	
@@ -160,14 +164,12 @@ public class FichaAnimalService{
 		
 	}
 
-	public XYChart.Series<String, Number> getDataChart() {
+	public XYChart.Series<String, Number> mountDataChart(List<FichaAnimal> fichas) {
 		
     	XYChart.Series<String, Number> serieIndicador = new XYChart.Series<String, Number>();
     	serieIndicador.setName("Valor Indicador");
     	
-    	List<FichaAnimal> result = dao.findAll(FichaAnimal.class);
-    	
-    	for ( FichaAnimal fichaAnimal : result ){
+    	for ( FichaAnimal fichaAnimal : fichas ){
     		serieIndicador.getData().add(new XYChart.Data<String, Number>(fichaAnimal.getAnimal().getNumeroNome(), fichaAnimal.getEficienciaReprodutiva()));
     	}
     	

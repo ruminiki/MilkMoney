@@ -12,19 +12,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="470.0" prefHeight="431.0" prefWidth="657.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.IndicadorBubbleChartController">
+<AnchorPane fx:id="anchorPane" maxHeight="470.0" prefHeight="418.0" prefWidth="1123.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.IndicadorBubbleChartController">
    <children>
       <VBox fx:id="vbMain" alignment="CENTER" layoutX="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" minHeight="30.0" prefHeight="30.0" style="-fx-border-color: #CCC;" VBox.vgrow="NEVER">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-               <children>
-                  <Label text="INDICADORES DA EFICIÊNCIA REPRODUTIVA" />
-               </children>
-            </HBox>
-            <VBox fx:id="vBoxChart" prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS" />
+            <VBox fx:id="vBoxChart" prefHeight="197.0" prefWidth="248.0" />
          </children>
       </VBox>
    </children>
