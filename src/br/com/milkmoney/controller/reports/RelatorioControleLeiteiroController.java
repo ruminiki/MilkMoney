@@ -30,7 +30,7 @@ public class RelatorioControleLeiteiroController extends AbstractSelectAnimalPar
 	}
 	
 	@Override
-	protected void handleExecutar(){
+	public void handleExecutar(){
 		
 		if ( listSelecionados.getItems().size() <= 0 ){
 			throw new ValidationException(Validator.CAMPO_OBRIGATORIO, "Por favor, selecione os animais para executar o relatório.");

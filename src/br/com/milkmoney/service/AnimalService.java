@@ -93,6 +93,10 @@ public class AnimalService implements IService<Integer, Animal>{
 	public ObservableList<Animal> findAllFemeasAtivasAsObservableList(Date data) {
 		return FXCollections.observableArrayList(dao.findAllFemeasAtivas(data));
 	}
+	
+	public List<Animal> findAllFemeasAtivas(Date data) {
+		return dao.findAllFemeasAtivas(data);
+	}
 
 	@Override
 	public void validate(Animal entity) {

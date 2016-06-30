@@ -170,7 +170,7 @@ public class FichaAnimalService{
     	serieIndicador.setName("Valor Indicador");
     	
     	for ( FichaAnimal fichaAnimal : fichas ){
-    		serieIndicador.getData().add(new XYChart.Data<String, Number>(fichaAnimal.getAnimal().getNumeroNome(), fichaAnimal.getEficienciaReprodutiva()));
+    		serieIndicador.getData().add(new XYChart.Data<String, Number>(fichaAnimal.getAnimal().getNumero(), fichaAnimal.getEficienciaReprodutiva()));
     	}
     	
     	return serieIndicador;

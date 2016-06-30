@@ -108,8 +108,24 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 		}
 	}
 	
+	public ListView<Animal> getListAnimais() {
+		return listAnimais;
+	}
+
+	public void setListAnimais(ListView<Animal> listAnimais) {
+		this.listAnimais = listAnimais;
+	}
+
+	public ListView<Animal> getListSelecionados() {
+		return listSelecionados;
+	}
+
+	public void setListSelecionados(ListView<Animal> listSelecionados) {
+		this.listSelecionados = listSelecionados;
+	}
+
 	@Override
-	protected void handleExecutar(){
+	public void handleExecutar(){
 		throw new NotImplementedException();
 	}
 	
