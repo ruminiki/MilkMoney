@@ -277,10 +277,10 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public BigInteger countAllFemeasEmLactacao(Date data) {
 		
 		Query query = entityManager.createQuery(
-				"SELECT count(*) FROM Lactacao lc "
+				"SELECT count(distinct lc.animal) FROM Lactacao lc "
 				+ "inner join lc.animal a WHERE :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
-				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
+				+ "and not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal.id = a.id and m.dataMorte <= :data) ");
 		query.setParameter("data", data);
 		
 		try{
