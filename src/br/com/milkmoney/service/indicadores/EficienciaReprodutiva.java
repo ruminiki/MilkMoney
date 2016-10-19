@@ -133,11 +133,11 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		DVGANIMAL = DVG - DVGANIMAL;
 		DVEANIMAL = DVE - DVEANIMAL;
 		
-		System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
+		//System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
 		
 		BigDecimal ie = calculaIndice();
 		
-		System.out.println(animal.getNumeroNome() + ";" + ie.toString());
+		//System.out.println(animal.getNumeroNome() + ";" + ie.toString());
 		
 		return ie;
 		

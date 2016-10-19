@@ -95,7 +95,6 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label text="Lote: " />
@@ -105,7 +104,6 @@
                         <Insets left="3.0" />
                      </GridPane.margin>
                   </Button>
-                  <CheckBox fx:id="cbSemLote" mnemonicParsing="false" text="Animais sem lote" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">

@@ -47,11 +47,7 @@
                <children>
                   <VBox spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
-                           <children>
-                              <Label text="Pesquisar animais" />
-                           </children>
-                        </HBox>
+                        <UCTextField fx:id="inputPesquisa" alignment="CENTER" promptText="pesquisar animais" />
                         <ListView fx:id="listAnimais" focusTraversable="false" />
                      </children>
                   </VBox>
