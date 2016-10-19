@@ -2,7 +2,9 @@ package br.com.milkmoney.controller.lote;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
@@ -36,22 +38,46 @@ public class LoteOverviewController extends AbstractOverviewController<Integer, 
 	}
 	
 	@Override
-	protected void handleSelectItemTable() {
-		super.handleSelectItemTable();
-		if ( getObject() != null ){
-			
-			Platform.runLater(new Runnable() {
+	protected void selectRowTableHandler(Lote lote) {
+		boolean isNewObject = getObject() == null || ( getObject() != null && lote != null && getObject().getId() != lote.getId());
+		super.selectRowTableHandler(lote);
+		
+		if ( isNewObject && lote != null){
+			table.getScene().setCursor(Cursor.WAIT);
+			listAnimais.setItems(FXCollections.observableArrayList(lote.getAnimais()));
+			Task<Void> task = new Task<Void>() {
 				@Override
-				public void run() {
-					listAnimais.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
-					lblTotalAnimais.setText(String.valueOf(getObject().getAnimais().size()));
-					lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(getObject().getAnimais())));
-					lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(getObject().getAnimais())));
-					lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(getObject().getAnimais())));						
+				public Void call() throws InterruptedException {
+					try{
+						listAnimais.setDisable(true);
+						handleSelectItemTable();	
+						
+						Platform.runLater(new Runnable() {
+						    @Override public void run() {
+								lblTotalAnimais.setText(String.valueOf(lote.getAnimais() != null ? lote.getAnimais().size() : 0));
+								lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(lote.getAnimais())));
+								lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(lote.getAnimais())));
+								lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(lote.getAnimais())));
+						    }
+						});
+						
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					return null;	
 				}
-			});
+			};
 			
+			Thread thread = new Thread(task);				
+			thread.setDaemon(true);
+			thread.start();
+			
+			task.setOnSucceeded(e -> {
+				listAnimais.setDisable(false);
+				table.getScene().setCursor(Cursor.DEFAULT);
+			});
 		}
+		
 	}
 	
 	@Override

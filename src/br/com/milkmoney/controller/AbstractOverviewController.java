@@ -170,6 +170,8 @@ public abstract class AbstractOverviewController<K, E>{
 				if (event.isSecondaryButtonDown()) {
 					handleRightClick();
 				}
+				
+				event.consume();
 			}
 
 		});

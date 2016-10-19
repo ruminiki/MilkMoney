@@ -25,11 +25,11 @@ import br.com.milkmoney.validation.CoberturaValidation;
 @Controller
 public class ConfirmacaoPrenhezFormController extends AbstractFormController<Integer, Cobertura> {
 
-	@FXML private DatePicker       inputData;
-	@FXML private Label            lblCobertura;
+	@FXML private DatePicker        inputData;
+	@FXML private Label             lblCobertura;
 	@FXML private ChoiceBox<String> inputSituacaoCobertura, inputMetodoConfirmacao;
-	@FXML private UCTextField      inputObservacao;
-	@FXML private Button           btnSalvar, btnRemover;
+	@FXML private UCTextField       inputObservacao;
+	@FXML private Button            btnSalvar, btnRemover;
 	
 	@FXML
 	public void initialize() {

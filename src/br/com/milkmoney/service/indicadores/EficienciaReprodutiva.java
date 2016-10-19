@@ -100,9 +100,9 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 			DVGANIMAL = DVG - DVGANIMAL;
 			DVEANIMAL = DVE - DVEANIMAL;
 			
-			System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
+			//System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
 			
-			//getValue(animal);
+			getValue(animal);
 		}
 		
 		N = animais.size();

@@ -64,7 +64,7 @@
                <children>
                   <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #CCC;">
                      <children>
-                        <Label fx:id="lblHeaderAnimais" text="ANIMAIS LOTE " />
+                        <Label fx:id="lblHeaderAnimais" text="Animais no lote" />
                      </children>
                   </HBox>
                   <ListView fx:id="listAnimais" focusTraversable="false" VBox.vgrow="SOMETIMES" />
