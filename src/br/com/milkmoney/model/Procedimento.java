@@ -1,6 +1,7 @@
 package br.com.milkmoney.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +31,7 @@ import javax.persistence.TemporalType;
 
 import br.com.milkmoney.components.FieldRequired;
 import br.com.milkmoney.util.DateUtil;
+import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Entity
@@ -40,14 +42,15 @@ public class Procedimento extends AbstractEntity implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private StringProperty                   descricao        = new SimpleStringProperty();
-	private ObjectProperty<LocalDate>        dataAgendada     = new SimpleObjectProperty<LocalDate>(LocalDate.now());
-	private ObjectProperty<LocalDate>        dataRealizacao   = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
-	private ObjectProperty<TipoProcedimento> tipoProcedimento = new SimpleObjectProperty<TipoProcedimento>();
-	private ObjectProperty<Servico>          servico          = new SimpleObjectProperty<Servico>();
-	private StringProperty                   responsavel      = new SimpleStringProperty();
-	private StringProperty                   observacao       = new SimpleStringProperty();
-	private List<Animal>                     animais          = new ArrayList<Animal>();
+	private StringProperty                   descricao         = new SimpleStringProperty();
+	private ObjectProperty<LocalDate>        dataAgendada      = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+	private ObjectProperty<LocalDate>        dataRealizacao    = new SimpleObjectProperty<LocalDate>(LocalDate.now());  
+	private ObjectProperty<TipoProcedimento> tipoProcedimento  = new SimpleObjectProperty<TipoProcedimento>();
+	private ObjectProperty<Servico>          servico           = new SimpleObjectProperty<Servico>();
+	private StringProperty                   responsavel       = new SimpleStringProperty();
+	private StringProperty                   observacao        = new SimpleStringProperty();
+	private StringProperty                   diasCarencia      = new SimpleStringProperty();
+	private List<Animal>                     animais           = new ArrayList<Animal>();
 	
 	public Procedimento() {
 	}
@@ -176,6 +179,28 @@ public class Procedimento extends AbstractEntity implements Serializable {
 
 	public StringProperty observacaoProperty(){
 		return observacao;
+	}
+	
+	@Access(AccessType.PROPERTY)
+	@FieldRequired(message="dias de carência")
+	public BigDecimal getDiasCarencia() {
+		return NumberFormatUtil.intFromString(this.diasCarencia.get());
+	}
+
+	public void setDiasCarencia(BigDecimal diasCarencia) {
+		this.diasCarencia.set(NumberFormatUtil.intFormat(diasCarencia));
+	}
+	
+	public StringProperty diasCarenciaProperty(){
+		return diasCarencia;
+	}
+	
+	public Boolean getCarenciaVigente() {
+		LocalDate ld = dataRealizacao.get().plusDays(getDiasCarencia().intValue());
+		if ( DateUtil.isAfterOrSameDate(DateUtil.asDate(ld), DateUtil.today) ){
+			return true;
+		}
+		return false;
 	}
 
 	@Override

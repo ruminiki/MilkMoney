@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.servico.ServicoFormController;
@@ -31,7 +32,7 @@ import br.com.milkmoney.util.DateUtil;
 @Controller
 public class ProcedimentoFormController extends AbstractFormController<Integer, Procedimento>  {
 	
-	@FXML private UCTextField inputPesquisa, inputDescricao, inputTipoProcedimento, inputServico, inputResponsavel;
+	@FXML private UCTextField inputPesquisa, inputDescricao, inputTipoProcedimento, inputServico, inputResponsavel, inputCarencia;
 	@FXML private TextArea inputObservacao;
 	@FXML private DatePicker inputDataAgendada, inputDataRealizacao;
 	@FXML private ListView<Animal> listAnimais, listAnimaisSelecionados;
@@ -109,6 +110,7 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		});
 		
 		inputDescricao.textProperty().bindBidirectional(getObject().descricaoProperty());
+		inputCarencia.textProperty().bindBidirectional(getObject().diasCarenciaProperty());
 		inputResponsavel.textProperty().bindBidirectional(getObject().responsavelProperty());
 		inputDataAgendada.valueProperty().bindBidirectional(getObject().dataAgendadaProperty());
 		inputDataRealizacao.valueProperty().bindBidirectional(getObject().dataRealizacaoProperty());
@@ -121,6 +123,9 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		if ( getObject() != null && getObject().getServico() != null ){
 			inputServico.setText(getObject().getServico().toString());
 		}
+		
+		//só permite números no campo dias de carência
+		MaskFieldUtil.numeroInteiroWithouMask(inputCarencia);
 		
 		habilitaDesabilitaBotoesCadastroServico();
 		

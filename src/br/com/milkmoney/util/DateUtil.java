@@ -141,6 +141,10 @@ public class DateUtil {
 		
 	}
 	
+	public static boolean isAfterOrSameDate(Date data1, Date data2) {
+		return after(data1, data2) || isSameDate(data1, data2);
+	}
+	
 	public static Date lastDayOfMonth(int year, int month){
 		
 		LocalDate ld = LocalDate.of(year, month, LocalDate.of(year, month, 01).lengthOfMonth());

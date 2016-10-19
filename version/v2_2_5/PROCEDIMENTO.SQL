@@ -1,0 +1,1 @@
+alter table procedimento add column diasCarencia decimal(19,2) not null default 0;

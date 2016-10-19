@@ -120,7 +120,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		double DVGANIMAL, DVEANIMAL;
 		DVGANIMAL=DVEANIMAL=0;
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusYears(P));
 		Date dataFim = data;

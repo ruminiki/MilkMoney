@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="482.0" prefWidth="875.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.procedimento.ProcedimentoOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="482.0" prefWidth="1097.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.procedimento.ProcedimentoOverviewController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -60,12 +60,19 @@
       </VBox>
       <HBox layoutX="5.0" layoutY="50.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
          <children>
-            <TableView fx:id="table" focusTraversable="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" HBox.hgrow="SOMETIMES">
+            <TableView fx:id="table" focusTraversable="false" pickOnBounds="false" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0" HBox.hgrow="SOMETIMES">
               <columns>
                   <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
-                  <TableColumn fx:id="tipoProcedimentoColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Tipo" />
-                <TableColumn fx:id="descricaoColumn" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" text="Descrição" />
-                  <TableColumn fx:id="responsavelColumn" minWidth="180.0" prefWidth="75.0" text="Responsável" />
+                  <TableColumn fx:id="tipoProcedimentoColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" text="Tipo" />
+                  <TableColumn minWidth="160.0" prefWidth="160.0" text="Carência">
+                     <columns>
+                        <TableColumn fx:id="diasCarenciaColumn" maxWidth="80.0" minWidth="50.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Dias" />
+                        <TableColumn fx:id="isCarenciaVigenteColumn" maxWidth="100.0" minWidth="70.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vigente" />
+                     </columns>
+                  </TableColumn>
+                <TableColumn fx:id="descricaoColumn" maxWidth="250.0" minWidth="300.0" prefWidth="-1.0" text="Descrição" />
+                  <TableColumn fx:id="responsavelColumn" maxWidth="150.0" minWidth="180.0" prefWidth="75.0" text="Responsável" />
+                  <TableColumn fx:id="observacaoColumn" prefWidth="75.0" text="Observação" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
