@@ -70,15 +70,15 @@ public class CurveFittedAreaChart extends AreaChart<Number, Number> {
     @Override
     protected void layoutPlotChildren() {
         super.layoutPlotChildren();
-        for (int seriesIndex = 0; seriesIndex < getDataSize(); seriesIndex++) {
+        for (int seriesIndex = 0; seriesIndex < _getDataSize(); seriesIndex++) {
             final XYChart.Series<Number, Number> series = getData().get(seriesIndex);
             final Path seriesLine = (Path) ((Group) series.getNode()).getChildren().get(1);
             final Path fillPath = (Path) ((Group) series.getNode()).getChildren().get(0);
             smooth(seriesLine.getElements(), fillPath.getElements());
         }
     }
-
-    private int getDataSize() {
+    
+    private int _getDataSize() {
         final ObservableList<XYChart.Series<Number, Number>> data = getData();
         return (data != null) ? data.size() : 0;
     }

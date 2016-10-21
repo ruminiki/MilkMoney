@@ -8,11 +8,8 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -22,15 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.ClosePath;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.PathElement;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,15 +130,9 @@ public class EficienciaReprodutivaMapController {
 
 	private void distribuiQuadrantes() {
 
-		/*
-		 * double scala = paneQuadrante.getWidth() / 100; double height =
-		 * paneQuadrante.getHeight(); double width = paneQuadrante.getWidth();
-		 */
-
-		int countPrimeiroQuadrante, countSegundoQuadrante, countTerceiroQuadrante, countQuartoQuadrante;
-
-		double x, y;
-
+		double countPrimeiroQuadrante, countSegundoQuadrante, countTerceiroQuadrante, countQuartoQuadrante;
+		countPrimeiroQuadrante = countSegundoQuadrante = countTerceiroQuadrante = countQuartoQuadrante = 0;
+		
 		Hashtable<Double, Double> mapPoints = new Hashtable<Double, Double>();
 
 		// separa em 12 pontos no gráfico de área
@@ -159,7 +143,12 @@ public class EficienciaReprodutivaMapController {
 			if (eficiencia > 100) {
 				eficiencia = 100D;
 			}
-
+			
+			countPrimeiroQuadrante = eficiencia <= 25 ? countPrimeiroQuadrante + 1 : countPrimeiroQuadrante; 
+			countSegundoQuadrante  = eficiencia > 25 && eficiencia <= 50 ? countSegundoQuadrante + 1 : countSegundoQuadrante;
+			countTerceiroQuadrante = eficiencia > 25 && eficiencia <= 50 ? countTerceiroQuadrante + 1 : countTerceiroQuadrante;
+			countQuartoQuadrante   = eficiencia > 75 ? countQuartoQuadrante + 1 : countQuartoQuadrante; 
+			
 			Double pointOnChart = getPointOfValue(eficiencia);
 
 			// se já existir o ponto, conta quantos para subir na vertical
@@ -186,8 +175,14 @@ public class EficienciaReprodutivaMapController {
 			serie.getData().add(new XYChart.Data<Number, Number>(key, percentual));
 
 		}
+		
 		areaChart.getData().clear();
 		areaChart.getData().add(serie);
+		
+		lblPrimeiroQuadrante.setText(Math.round(countPrimeiroQuadrante/fichas.size()*100) + "%");
+		lblSegundoQuadrante.setText(Math.round(countSegundoQuadrante/fichas.size()*100) + "%");
+		lblTerceiroQuadrante.setText(Math.round(countTerceiroQuadrante/fichas.size()*100) + "%");
+		lblQuartoQuadrante.setText(Math.round(countQuartoQuadrante/fichas.size()*100) + "%");
 
 	}
 
