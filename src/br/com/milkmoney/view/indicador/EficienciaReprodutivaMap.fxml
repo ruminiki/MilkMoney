@@ -74,7 +74,7 @@
             </HBox>
             <HBox alignment="CENTER" minHeight="250.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-width: ; : #;">
                <children>
-                  <Pane fx:id="panePrimeiroQuadrante" style="-fx-background-color: #ff8c66;" HBox.hgrow="ALWAYS" />
+                  <Pane fx:id="paneQuadrante" style="-fx-background-color: #ff8c66;" HBox.hgrow="ALWAYS" />
                </children>
                <padding>
                   <Insets left="2.0" right="2.0" />

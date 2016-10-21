@@ -1,6 +1,8 @@
 package br.com.milkmoney.controller.indicador;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -10,8 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.indicador.renderer.Ponto;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
@@ -48,7 +49,7 @@ public class EficienciaReprodutivaMapController {
 			}
         });
         
-        paneQuadrante.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #ff944d, #99e600)");
+        paneQuadrante.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #ff5c33, #66ff33)");
         
 	}
 
@@ -98,10 +99,38 @@ public class EficienciaReprodutivaMapController {
 	
 	private void distribuiQuadrantes(){
 		
-	    for ( FichaAnimal ficha : fichas ){
-	    
+		double scala  = paneQuadrante.getWidth() / 100;
+		double height = paneQuadrante.getHeight();
+		
+		double x, y;
+		
+		Hashtable<Double, List<Double>> mapPoints = new Hashtable<Double, List<Double>>();
+		
+		for ( FichaAnimal ficha : fichas ){
+
+			if ( ficha.getEficienciaReprodutiva().doubleValue() > 100 ){
+				ficha.setEficienciaReprodutiva(new BigDecimal(100));
+			}
+			
+			//se já existir o ponto, conta quantos para subir na vertical
+			if ( mapPoints.containsKey(ficha.getEficienciaReprodutiva().doubleValue()) ){
+				List<Double> listPoints = mapPoints.get(ficha.getEficienciaReprodutiva().doubleValue());
+				listPoints.add(ficha.getEficienciaReprodutiva().doubleValue());
+				y = height - 10 * listPoints.size();
+			}else{
+				List<Double> listPoints = new ArrayList<Double>();
+				listPoints.add(ficha.getEficienciaReprodutiva().doubleValue());
+				mapPoints.put(ficha.getEficienciaReprodutiva().doubleValue(), listPoints);
+				y = height - 10;				
+			}
+			
+			x = ficha.getEficienciaReprodutiva().doubleValue() * scala;
+			
+			Ponto ponto = new Ponto(x, y);
+			paneQuadrante.getChildren().add(ponto);
+
 	    	//primeiro quadrante (escala 250 px por 250 px)
-	    	if ( ficha.getEficienciaReprodutiva().intValue() <= 25 ){
+	    	/*if ( ficha.getEficienciaReprodutiva().intValue() <= 25 ){
     			Circle ponto = new Circle();
     			ponto.setLayoutY(25 - ficha.getEficienciaReprodutiva().doubleValue());
     			ponto.setLayoutX(ficha.getEficienciaReprodutiva().doubleValue() * 10);
