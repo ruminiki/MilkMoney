@@ -16,6 +16,7 @@ import javafx.stage.Window;
 import org.controlsfx.control.PopOver;
 
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.SituacaoAnimal;
 
 public class PopUpMenu extends PopOver {
 		
@@ -63,8 +64,8 @@ public class PopUpMenu extends PopOver {
 			column.setSpacing(5);
 			column.setStyle("-fx-background-color: #FFF");
 			
-			column.getChildren().add(createItem("Registrar Venda", vendaFunction, "img/venda16.png"));
-			column.getChildren().add(createItem("Registrar Morte", morteFunction, "img/morte16.png"));
+			column.getChildren().add(createItem("Reg. Venda", vendaFunction, "img/venda16.png"));
+			column.getChildren().add(createItem("Reg. Morte", morteFunction, "img/morte16.png"));
 			column.getChildren().add(createItem("Linha do Tempo", linhaTempoAnimalFunction, "img/timeline16.png"));
 			column.getChildren().add(createItem("Imprimir Ficha", fichaAnimalFunction, "img/ficha16.png"));
 			container.getChildren().add(new Separator(Orientation.VERTICAL));
@@ -135,6 +136,19 @@ public class PopUpMenu extends PopOver {
 		
 		protected void show(Window window, Animal animal) {
 			this.animal = animal;
+			
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				VBox column = (VBox)container.getChildren().get(4);
+				HBox item = (HBox) column.getChildren().get(0);
+				((Label)item.getChildren().get(1)).setText("Editar/rem. venda");
+			}
+			
+			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				VBox column = (VBox)container.getChildren().get(4);
+				HBox item = (HBox) column.getChildren().get(0);
+				((Label)item.getChildren().get(2)).setText("Editar/rem. morte");
+			}
+			
 			super.show(window);
 		}
 		
