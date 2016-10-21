@@ -30,15 +30,6 @@
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="30.0" text="Remover" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">
-               <children>
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-               </children>
-               <padding>
-                  <Insets right="60.0" />
-               </padding>
-            </HBox>
          </children>
          <padding>
             <Insets right="5.0" />

@@ -2,12 +2,11 @@ package br.com.milkmoney.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
+import javafx.scene.chart.PieChart;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,14 +59,11 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 		return null;
 	}
     
-    public ObservableList<Series<Number, String>> getDataChart(){
+    public ObservableList<PieChart.Data> getDataChart(){
 
-    	ObservableList<Series<Number, String>> series = FXCollections.observableArrayList();
-    	XYChart.Series<Number, String> serie;
+    	ObservableList<PieChart.Data> series = FXCollections.observableArrayList();
     	for ( CausaMorteAnimal c : causaMorteAnimalService.findAll() ){
-    		serie = new XYChart.Series<Number, String>();
-            serie.getData().add(new XYChart.Data<Number, String>(dao.countByCausa(c.getDescricao()), c.getDescricao()));
-            series.add(serie);
+    		series.add(new PieChart.Data(c.getDescricao(), dao.countByCausa(c.getDescricao())));
     	}
     	return series;
     	

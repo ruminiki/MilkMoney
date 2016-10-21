@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +38,7 @@ public class RootLayoutController {
 	@FXML private Label lblHeader, lblMessage, lblSistema;
 	@FXML private Hyperlink hlPropriedade;
 	@FXML private UCTextField inputNumeroAnimal;
+	@FXML private Button btnHome;
 	
 	private StringProperty message = new SimpleStringProperty();
 	
@@ -78,6 +81,11 @@ public class RootLayoutController {
 
 			}
 
+		});
+		
+		btnHome.setGraphic(new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/home.png"))));
+		btnHome.setOnAction(e -> {
+			MainApp.resetLayout();
 		});
 		
 	}

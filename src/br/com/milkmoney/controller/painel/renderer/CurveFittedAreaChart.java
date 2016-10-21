@@ -30,7 +30,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package br.com.milkmoney.controller.indicador.renderer;
+package br.com.milkmoney.controller.painel.renderer;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;

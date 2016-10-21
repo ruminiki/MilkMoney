@@ -4,31 +4,26 @@ import java.time.LocalDate;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.TableCellDecimalFactory;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.model.Projecao;
 import br.com.milkmoney.service.ProjecaoService;
 
 @Controller
-public class ProjecaoOverviewController {
+public class ProjecaoOverviewController extends AbstractWindowPopUp{
 
 	@FXML private TableView<Projecao> table;
 	@FXML private TableColumn<Projecao, String> periodoColumn, animaisLactacaoColumn, percentualVariacaoAnimaisLactacaoColumn;
@@ -112,24 +107,6 @@ public class ProjecaoOverviewController {
         VBox.setVgrow(lineChartFaturamento, Priority.SOMETIMES);
         HBox.setHgrow(lineChartFaturamento, Priority.SOMETIMES);
         vbChartFaturamento.getChildren().add(lineChartFaturamento);
-		
-	}
-	
-	public void showForm() {	
-		
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		dialogStage.setResizable(true);
-		dialogStage.setMaximized(false);
-		
-		dialogStage.show();
 		
 	}
 	

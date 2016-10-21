@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -19,20 +18,16 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.model.EvolucaoRebanho;
 import br.com.milkmoney.model.EvolucaoRebanhoValor;
 import br.com.milkmoney.service.EvolucaoRebanhoService;
@@ -41,7 +36,7 @@ import br.com.milkmoney.util.Util;
 import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
 @Controller
-public class EvolucaoRebanhoOverviewController{
+public class EvolucaoRebanhoOverviewController extends AbstractWindowPopUp{
 
 	@FXML private TableView<EvolucaoRebanho> table, tableVariavel;
 	@FXML private TableColumn<EvolucaoRebanho, String> categoriaColumn;
@@ -199,24 +194,6 @@ public class EvolucaoRebanhoOverviewController{
     	
     	lineChart.getProperties().put(TableViewSkinBase.RECREATE, Boolean.TRUE);
     	
-	}
-	
-	public void showForm() {	
-		
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		dialogStage.setResizable(true);
-		dialogStage.setMaximized(false);
-		
-		dialogStage.show();
-		
 	}
 	
 	public String getFormTitle() {

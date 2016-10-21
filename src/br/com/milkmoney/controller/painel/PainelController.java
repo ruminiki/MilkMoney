@@ -1,9 +1,6 @@
 package br.com.milkmoney.controller.painel;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -12,27 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.MainApp;
+import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 
 @Controller
 public class PainelController {
 	
 	//declarations
 	@FXML private VBox group;
-	@Autowired CausaMorteAnimalChartController causaMorteAnimalChartController;
-	@Autowired FinanceiroChartController financeiroChartController;
+	@Autowired private EficienciaReprodutivaMapController eficienciaReprodutivaMapController;
+	@Autowired private IndicadorOverviewController painelIndicadoresOverviewController;
+	@Autowired private CausaMorteAnimalChartController causaMorteAnimalChartController;
+	@Autowired private FinanceiroChartController financeiroChartController;
 	
 	@FXML
 	public void initialize() {
-		handleFinanceiroChart();
-	}
-	
-	private void changeItem(AnchorPane node){
-		
-		group.getChildren().clear();
-		VBox.setVgrow(node, Priority.SOMETIMES);
-        HBox.setHgrow(node, Priority.SOMETIMES);
-		group.getChildren().add(node);
-		
+
 	}
 	
 	@FXML
@@ -51,15 +42,22 @@ public class PainelController {
 	//handlers
 	@FXML
 	private void handleFinanceiroChart(){
-		changeItem((AnchorPane) MainApp.load(financeiroChartController.getFormName()));
+		financeiroChartController.showForm();
+	}
+	
+	@FXML 
+	private void handlePainelIndicadores(){
+		painelIndicadoresOverviewController.showForm();
+	}
+	
+	@FXML 
+	private void handleEficienciaReprodutivaChart(){
+		eficienciaReprodutivaMapController.showForm();
 	}
 	
 	@FXML
 	private void handleCausaMorteAnimalChart(){
-		group.getChildren().clear();
-		AnchorPane node = (AnchorPane) MainApp.load(causaMorteAnimalChartController.getFormName());
-		//VBox.setVgrow(node, Priority.SOMETIMES);		
-		group.getChildren().add(node);
+		causaMorteAnimalChartController.showForm();
 	}
 	
 }

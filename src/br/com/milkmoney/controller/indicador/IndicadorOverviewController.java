@@ -13,15 +13,10 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,10 +24,12 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.WaitReport;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicador;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
+import br.com.milkmoney.controller.painel.IndicadorBubbleChartController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.ConfiguracaoIndicador;
@@ -48,7 +45,7 @@ import br.com.milkmoney.util.Util;
 
 
 @Controller
-public class IndicadorOverviewController {
+public class IndicadorOverviewController extends AbstractWindowPopUp{
 
 	@FXML private VBox  vbMain, vbIndicadores, vbJan, vbFev, vbMar, vbAbr, vbMai, 
 						vbJun, vbJul, vbAgo, vbSet, vbOut, vbNov, vbDez;
@@ -63,7 +60,7 @@ public class IndicadorOverviewController {
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
 	@Autowired IndicadorBubbleChartController indicadorBubbleChartController;
-	@Autowired EficienciaReprodutivaMapController eficienciaReprodutivaMapController;
+	
 	
 	private ObservableList<Indicador> data = FXCollections.observableArrayList();
 	
@@ -216,7 +213,7 @@ public class IndicadorOverviewController {
 	@FXML
 	private void graficoEficiencia(){
 		//indicadorBubbleChartController.showForm();
-		eficienciaReprodutivaMapController.showForm();
+		
 	}
 	
 	@FXML
@@ -295,36 +292,6 @@ public class IndicadorOverviewController {
 		WaitReport.wait(relatorioService.executeRelatorio(GenericPentahoReport.PDF_OUTPUT_FORMAT, 
 			RelatorioService.RELATORIO_INDICADORES, params), MainApp.primaryStage);
 
-	}
-	
-	public void showForm() {	
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-		dialogStage.setResizable(false);
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		
-		/*dialogStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent t) {
-				if ( task != null && task.isRunning() ){
-					t.consume();
-					Notifications.create().text("Por favor, aguarde a conclusão da operação!").showInformation();
-					dialogStage.show();
-					if ( popUpWait != null ){
-						popUpWait.show(dialogStage);
-					}
-				}else{
-					dialogStage.close();
-				}
-			}
-		});*/
-		
-		dialogStage.show();
 	}
 	
 	public String getFormName(){

@@ -38,9 +38,7 @@
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <HBox alignment="CENTER_RIGHT" spacing="5.0">
                      <children>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#handleOpenIndicadores" text="Indicadores" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#gerarRelatorioAnaliseReprodutiva" text="Imprimir" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                         <Separator orientation="VERTICAL" prefHeight="200.0" />
                      </children>
                      <HBox.margin>

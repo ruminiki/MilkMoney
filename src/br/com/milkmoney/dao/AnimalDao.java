@@ -118,7 +118,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				params.put(AnimalService.FILTER_NUMERO_SERVICOS, "= " + params.get(AnimalService.FILTER_NUMERO_SERVICOS).replaceAll("[^0-9]", ""));
 			}
 			SQL.append("exists (select 1 from FichaAnimal f where f.animal = a and ");
-			SQL.append("f.numeroServicosAtePrenhez " + params.get(AnimalService.FILTER_NUMERO_SERVICOS + ")"));
+			SQL.append("f.numeroServicosAtePrenhez >= " + params.get(AnimalService.FILTER_NUMERO_SERVICOS + ")"));
 		}
 		
 		if ( SQL.toString().toLowerCase().endsWith("and ") ){

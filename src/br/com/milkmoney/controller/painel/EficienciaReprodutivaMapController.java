@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.indicador;
+package br.com.milkmoney.controller.painel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,24 +10,19 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.MainApp;
-import br.com.milkmoney.controller.indicador.renderer.CurveFittedAreaChart;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
+import br.com.milkmoney.controller.painel.renderer.CurveFittedAreaChart;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
 import br.com.milkmoney.service.AnimalService;
@@ -35,7 +30,7 @@ import br.com.milkmoney.service.FichaAnimalService;
 import br.com.milkmoney.util.DateUtil;
 
 @Controller
-public class EficienciaReprodutivaMapController {
+public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 
 	@FXML private VBox chartContainer;
 	@FXML private Label lblPrimeiroQuadrante, lblSegundoQuadrante, lblTerceiroQuadrante, lblQuartoQuadrante;
@@ -54,11 +49,9 @@ public class EficienciaReprodutivaMapController {
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				generateChart();
+				calculaEficiencia();
 			}
 		});
-
-		// paneQuadrante.setStyle("-fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #ff5c33, #66ff33)");
 
 		// gráfico
 		final NumberAxis xAxis = new NumberAxis(0, 100, 5);
@@ -81,7 +74,7 @@ public class EficienciaReprodutivaMapController {
 		chartContainer.getChildren().add(0, areaChart);
 	}
 
-	private void generateChart() {
+	private void calculaEficiencia() {
 
 		PopUpWait pp = new PopUpWait("Aguarde...");
 
@@ -96,17 +89,14 @@ public class EficienciaReprodutivaMapController {
 				double index = 0;
 
 				for (Animal animal : animais) {
-					fichas.add(fichaAnimalService.generateFichaAnimal(
-							animal,
-							fichaAnimalService
+					fichas.add(fichaAnimalService.generateFichaAnimal(animal,fichaAnimalService
 									.getField(FichaAnimalService.EFICIENCIA_REPRODUTIVA_ANIMAL)));
 					updateProgress(index++, progressComplete);
 				}
 
 				Collections.sort(fichas, new Comparator<FichaAnimal>() {
 					public int compare(FichaAnimal f1, FichaAnimal f2) {
-						return f1.getEficienciaReprodutiva().compareTo(
-								f2.getEficienciaReprodutiva());
+						return f1.getEficienciaReprodutiva().compareTo(f2.getEficienciaReprodutiva());
 					}
 				});
 
@@ -120,7 +110,7 @@ public class EficienciaReprodutivaMapController {
 		thread.start();
 
 		t.setOnSucceeded(e -> {
-			distribuiQuadrantes();
+			generateChart();
 			pp.hide();
 		});
 
@@ -128,7 +118,7 @@ public class EficienciaReprodutivaMapController {
 		pp.show(chartContainer.getScene().getWindow());
 	}
 
-	private void distribuiQuadrantes() {
+	private void generateChart() {
 
 		double countPrimeiroQuadrante, countSegundoQuadrante, countTerceiroQuadrante, countQuartoQuadrante;
 		countPrimeiroQuadrante = countSegundoQuadrante = countTerceiroQuadrante = countQuartoQuadrante = 0;
@@ -198,27 +188,12 @@ public class EficienciaReprodutivaMapController {
 		return 0D;
 	}
 
-	public void showForm() {
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(
-				new Image(ClassLoader
-						.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-		dialogStage.setResizable(false);
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		dialogStage.show();
-	}
-
 	public String getFormName() {
-		return "view/indicador/EficienciaReprodutivaMap.fxml";
+		return "view/painel/EficienciaReprodutivaMap.fxml";
 	}
 
 	public String getFormTitle() {
-		return "Gráfico de Quadrantes";
+		return "Gráfico da Eficiência Reprodutiva";
 	}
 
 }

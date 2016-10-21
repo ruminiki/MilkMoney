@@ -7,15 +7,10 @@ import java.util.function.Function;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.controller.aborto.AbortoFormController;
 import br.com.milkmoney.controller.atividadesSemana.renderer.TableCellTextHyperlinkFactory;
 import br.com.milkmoney.controller.cobertura.CoberturaFormController;
@@ -50,7 +46,7 @@ import br.com.milkmoney.validation.CoberturaValidation;
 
 
 @Controller
-public class AtividadesSemanaOverviewController {
+public class AtividadesSemanaOverviewController extends AbstractWindowPopUp{
 
 	//COBERTURAS
 	@FXML private TableView<Cobertura> tableConfirmacaoPrenhez;
@@ -136,24 +132,6 @@ public class AtividadesSemanaOverviewController {
 		tableEncerramentoLactacao.setItems(FXCollections.observableArrayList(
 											lactacaoService.findAllWithPrevisaoEncerramentoIn(new Date(), DateUtil.asDate(LocalDate.now().plusDays(7)))));
 
-	}
-	
-	public void showForm() {	
-		
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		dialogStage.setResizable(true);
-		dialogStage.setMaximized(false);
-		
-		dialogStage.show();
-		
 	}
 	
 	public String getFormTitle() {

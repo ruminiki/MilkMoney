@@ -143,9 +143,10 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
                            <children>
                               <UCTextField fx:id="inputNumeroAnimal" alignment="CENTER" promptText="número do animal" />
+                              <Button fx:id="btnHome" mnemonicParsing="false" prefWidth="79.0" text="Home" />
                            </children>
                         </HBox>
                      </children>

@@ -21,12 +21,13 @@ import org.springframework.stereotype.Controller;
 
 import br.com.milkmoney.components.MaskFieldUtil;
 import br.com.milkmoney.components.UCTextField;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.model.CentroCusto;
 import br.com.milkmoney.service.CentroCustoService;
 import br.com.milkmoney.service.LancamentoFinanceiroService;
 
 @Controller
-public class FinanceiroChartController {
+public class FinanceiroChartController extends AbstractWindowPopUp{
 
 	@FXML private VBox group;
 	@FXML private UCTextField inputAno;
@@ -99,6 +100,11 @@ public class FinanceiroChartController {
 	
 	public String getFormName(){
 		return "view/painel/FinanceiroChart.fxml";
+	}
+
+	@Override
+	public String getFormTitle() {
+		return "Gráfico Financeiro";
 	}
 
 }

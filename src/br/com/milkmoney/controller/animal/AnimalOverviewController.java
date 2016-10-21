@@ -46,6 +46,7 @@ import br.com.milkmoney.controller.indicador.IndicadorOverviewController;
 import br.com.milkmoney.controller.lactacao.LactacaoOverviewController;
 import br.com.milkmoney.controller.lote.MovimentacaoAnimalLoteFormController;
 import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
+import br.com.milkmoney.controller.painel.EficienciaReprodutivaMapController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
 import br.com.milkmoney.controller.projecao.ProjecaoOverviewController;
@@ -136,14 +137,14 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private LactacaoOverviewController lactacaoOverviewController;
 	@Autowired private FichaAnimalOverviewController fichaAnimalOverviewController;
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
-	//@Autowired private IndicadorOverviewController indicadorOverviewController;
-	@Autowired private IndicadorOverviewController acompanhamentoIndicadoresOverviewController;
 	@Autowired private PartoFormController partoFormController;
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
 	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
 	@Autowired private MovimentacaoAnimalLoteFormController movimentacaoAnimalLoteFormController;
 	@Autowired private ConfirmacaoPrenhezEmLoteFormController confirmacaoPrenhezEmLoteFormController;
+	@Autowired private EficienciaReprodutivaMapController eficienciaReprodutivaMapController;
+	@Autowired private IndicadorOverviewController painelIndicadoresOverviewController;
 	
 	private FichaAnimal fichaAnimal;
 	private PopUpMenu popUpMenu = null;
@@ -266,7 +267,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			params.put(AnimalService.FILTER_COBERTAS, inputCobertaInseminada.getValue() != null ? inputCobertaInseminada.getValue() : null);
 			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
 			params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
-			params.put(AnimalService.FILTER_NUMERO_SERVICOS, (">=2"));
+			//params.put(AnimalService.FILTER_NUMERO_SERVICOS, (">=2"));
 			table.getItems().setAll( ((AnimalService)service).fill(params) );
 			updateLabelNumRegistros();	
 		}
@@ -687,11 +688,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	}
 	
 	//-------------FILTRO RÁPIDO----------------------------------
-	
-	@FXML 
-	private void handleOpenIndicadores(){
-		acompanhamentoIndicadoresOverviewController.showForm();
-	}
 	
 	//------ANÁLISE REPORT----
 	@FXML

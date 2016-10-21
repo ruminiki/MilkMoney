@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="470.0" prefHeight="418.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.indicador.EficienciaReprodutivaMapController">
+<AnchorPane fx:id="anchorPane" maxHeight="470.0" prefHeight="418.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.painel.EficienciaReprodutivaMapController">
    <children>
       <VBox alignment="CENTER_RIGHT" layoutX="5.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -27,9 +27,9 @@
                   <Label text="Percentual do rebanho em cada quadrante / Estimativa de intervalo entre partos" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" maxHeight="30.0" maxWidth="1040.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #CCC;">
+            <HBox alignment="CENTER_RIGHT" maxHeight="30.0" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #CCC;">
                <children>
-                  <HBox alignment="CENTER" maxWidth="255.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -48,7 +48,7 @@
                      </children>
                   </HBox>
                   <Separator layoutX="505.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
-                  <HBox alignment="CENTER" maxWidth="255.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -67,7 +67,7 @@
                      </children>
                   </HBox>
                   <Separator layoutX="756.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
-                  <HBox alignment="CENTER" maxWidth="255.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>
@@ -86,7 +86,7 @@
                      </children>
                   </HBox>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <HBox alignment="CENTER" maxWidth="255.0" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                            <children>

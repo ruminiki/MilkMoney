@@ -3,21 +3,16 @@ package br.com.milkmoney.controller.lancamentoFinanceiro;
 import java.math.BigDecimal;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.TableCellDateFactory;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellSituacaoLancamentoFinanceiroFactory;
 import br.com.milkmoney.controller.lancamentoFinanceiro.renderer.TableCellTipoLancamentoFinanceiroFactory;
 import br.com.milkmoney.model.LancamentoFinanceiro;
@@ -26,7 +21,7 @@ import br.com.milkmoney.util.NumberFormatUtil;
 
 
 @Controller
-public class ParcelasOverviewController{
+public class ParcelasOverviewController extends AbstractWindowPopUp{
 	
 	//LANÇAMENTOS
 	@FXML private TableView<LancamentoFinanceiro> table;
@@ -83,26 +78,6 @@ public class ParcelasOverviewController{
 		lblSaldo.setText("R$ " + NumberFormatUtil.decimalFormat(saldo));
 		
 	}
-	
-	public void showForm(){
-    	
-    	AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-    	
-		Stage dialogStage = new Stage();
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		
-		dialogStage.setTitle(getFormTitle());
-		
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-
-		dialogStage.setResizable(false);
-		dialogStage.showAndWait();
-		
-    }
 	
 	public void setParcela(String parcela) {
 		this.parcela = parcela;

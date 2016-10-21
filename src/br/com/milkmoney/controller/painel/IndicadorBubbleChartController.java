@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.indicador;
+package br.com.milkmoney.controller.painel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,19 +8,14 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.HoveredThresholdNode;
 import br.com.milkmoney.components.WaitReport;
+import br.com.milkmoney.controller.AbstractWindowPopUp;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
@@ -39,7 +35,7 @@ import br.com.milkmoney.util.DateUtil;
 
 
 @Controller
-public class IndicadorBubbleChartController {
+public class IndicadorBubbleChartController extends AbstractWindowPopUp{
 
 	@FXML private VBox vBoxChart;
 	
@@ -148,21 +144,8 @@ public class IndicadorBubbleChartController {
 				RelatorioService.RELATORIO_RANKING_ANIMAIS, params), MainApp.primaryStage);
 	}
 	
-	public void showForm() {	
-		AnchorPane form = (AnchorPane) MainApp.load(getFormName());
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle(getFormTitle());
-		dialogStage.getIcons().add(new Image(ClassLoader.getSystemResourceAsStream(MainApp.APPLICATION_ICON)));
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.initOwner(MainApp.primaryStage);
-		dialogStage.setResizable(false);
-		Scene scene = new Scene(form);
-		dialogStage.setScene(scene);
-		dialogStage.show();
-	}
-	
 	public String getFormName(){
-		return "view/indicador/IndicadorBubbleChart.fxml";
+		return "view/painel/IndicadorBubbleChart.fxml";
 	}
 
 	public String getFormTitle() {

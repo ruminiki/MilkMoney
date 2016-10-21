@@ -73,14 +73,6 @@
                         </Label>
                      </children>
                   </GridPane>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="SOMETIMES">
-                     <children>
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
-                     </children>
-                     <padding>
-                        <Insets right="5.0" />
-                     </padding>
-                  </HBox>
                </children>
                <padding>
                   <Insets left="5.0" />
