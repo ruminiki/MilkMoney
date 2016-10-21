@@ -17,14 +17,14 @@ public class Ponto extends Circle {
 						Color.web("#ffffff")));
 
 		this.setFill(gradient);
-		this.setRadius(5);
+		this.setRadius(3);
 		//this.centerXProperty().set(x);
 		//this.centerYProperty().set(y);
 		this.setLayoutX(x);
 		this.setLayoutY(y);
-		this.setStrokeType(StrokeType.OUTSIDE);
+		/*this.setStrokeType(StrokeType.OUTSIDE);
 		this.setStroke(Color.web("#a3a375", 0.5));
-		this.setStrokeWidth(5);
+		this.setStrokeWidth(5);*/
 
 	}
 

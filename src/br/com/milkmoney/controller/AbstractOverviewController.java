@@ -75,6 +75,8 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	public void initialize(AbstractFormController<K, E> formController) {
 		
+		table.getStylesheets().add("css/table.css");
+		
 		if ( table == null ){
 			table = new TableView<E>();
 		}
