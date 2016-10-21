@@ -266,6 +266,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 			params.put(AnimalService.FILTER_COBERTAS, inputCobertaInseminada.getValue() != null ? inputCobertaInseminada.getValue() : null);
 			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
 			params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
+			params.put(AnimalService.FILTER_NUMERO_SERVICOS, (">=2"));
 			table.getItems().setAll( ((AnimalService)service).fill(params) );
 			updateLabelNumRegistros();	
 		}
