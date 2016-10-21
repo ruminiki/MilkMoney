@@ -207,7 +207,7 @@ public class MainApp extends Application {
 		    });*/ 
 	        
 	        Scene scene = new Scene(rootLayout);
-	        scene.getStylesheets().add("css/style.css");
+	        //scene.getStylesheets().add("css/style.css");
 	        
 	        primaryStage.setScene(scene);
 	        primaryStage.getScene().cursorProperty().bind(cursor);

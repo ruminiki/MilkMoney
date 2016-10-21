@@ -1,4 +1,4 @@
-.table-view:focused {
+/*.table-view:focused {
    /* -fx-background-color: #C8C8C8;
     -fx-background-insets: 0, 1, 2;*/
   -fx-background-color: #C8C8C8 /* or transparent or other preferred color */,-fx-box-border,-fx-control-inner-background;
@@ -35,3 +35,4 @@
 .table-view .column-header {
     -fx-background-color: transparent;
 }
+*/

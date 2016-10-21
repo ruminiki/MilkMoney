@@ -98,7 +98,6 @@ public class IndicadorBubbleChartController {
 				
 				Collections.sort(fichas, new Comparator<FichaAnimal>() {
 					public int compare(FichaAnimal f1, FichaAnimal f2) {
-						System.out.println(f1.getEficienciaReprodutiva() + " - " + f2.getEficienciaReprodutiva());
 						return f1.getEficienciaReprodutiva().compareTo(f2.getEficienciaReprodutiva());
 					}
 				});

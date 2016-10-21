@@ -63,6 +63,7 @@ public class IndicadorOverviewController {
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
 	@Autowired IndicadorBubbleChartController indicadorBubbleChartController;
+	@Autowired EficienciaReprodutivaMapController eficienciaReprodutivaMapController;
 	
 	private ObservableList<Indicador> data = FXCollections.observableArrayList();
 	
@@ -214,7 +215,8 @@ public class IndicadorOverviewController {
 	
 	@FXML
 	private void graficoEficiencia(){
-		indicadorBubbleChartController.showForm();
+		//indicadorBubbleChartController.showForm();
+		eficienciaReprodutivaMapController.showForm();
 	}
 	
 	@FXML
