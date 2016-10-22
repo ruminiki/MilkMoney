@@ -22,6 +22,7 @@ import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.finalidadeLote.FinalidadeLoteReducedOverviewController;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeLote;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.Lote;
 import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.service.AnimalService;
@@ -61,11 +62,11 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 		//controle de adição dos animais no lote
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue, 30));
+				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.UNLIMITED));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, 20));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.UNLIMITED));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		// captura o evento de double click da table

@@ -47,7 +47,7 @@ public class MainApp extends Application {
 	public  static final String       APPLICATION_ICON = "img/icon.png";
 	private static final String       SPLASH_IMAGE     = "img/splash.png";
     private static final int          SPLASH_HEIGHT    = 182;
-  	private static final String       DATABASE_START   = "database\\bin\\mysqld.exe";
+  	private static final String       DATABASE_START   = "database\\bin\\mysqld.exe --query_cache_size=16M --max_allowed_packet=1G --innodb_buffer_pool_size=384M --key_buffer=256M --thread_cache_size=8 --innodb_lock_wait_timeout=100";
   	//private static final String       DATABASE_STOP    = "database\\bin\\mysqld.exe -u root shutdown";
 
     private Pane                      splashLayout;

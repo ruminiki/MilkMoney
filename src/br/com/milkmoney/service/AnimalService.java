@@ -266,7 +266,7 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public List<Animal> fill(HashMap<String, String> params) {
-		return FXCollections.observableArrayList(dao.superSearch(params, Limit.TRINTA));
+		return FXCollections.observableArrayList(dao.superSearch(params, Limit.UNLIMITED));
 	}
 
 	public String getImagePath(Animal animal) {

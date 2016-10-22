@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -31,6 +33,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.model.AbstractEntity;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.State;
 import br.com.milkmoney.service.IService;
 import br.com.milkmoney.service.searchers.Search;
@@ -210,30 +213,53 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 
 	protected void refreshTableOverview(){
-		
-		this.data.clear();
-		this.table.getItems().clear();
-		
-		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
-				inputPesquisa.getText().length() > 0){
-			data.addAll(handleDefaultSearch());
-			setSearch(null);
-		}else{
-			if ( search != null ){
-				data.addAll(search.doSearch(searchParams));
-			}else{
-				this.data.addAll(service.findAll());
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() throws InterruptedException {
+				try{
+					Platform.runLater(new Runnable() {
+					    @Override public void run() {
+							table.setDisable(true);
+							data.clear();
+							table.getItems().clear();
+							
+							if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+									inputPesquisa.getText().length() > 0){
+								data.addAll(handleDefaultSearch());
+								setSearch(null);
+							}else{
+								if ( search != null ){
+									data.addAll(search.doSearch(searchParams));
+								}else{
+									data.addAll(service.findAll());
+								}
+							}
+							
+							table.setItems(data);
+							table.layout();
+							updateLabelNumRegistros();
+					    }
+					});
+									
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				return null;	
 			}
-		}
+		};
+				
+		Thread thread = new Thread(task);				
+		thread.setDaemon(true);
+		thread.start();
 		
-		table.setItems(data);
-		table.layout();
-		updateLabelNumRegistros();
+		task.setOnSucceeded(e -> {
+			table.setDisable(false);
+		});
 		
 	}
 	
 	public ObservableList<E> handleDefaultSearch() {
-		return service.defaultSearch(inputPesquisa.getText(), 30);
+		return service.defaultSearch(inputPesquisa.getText(), Limit.UNLIMITED);
 	}
 	
 	@FXML

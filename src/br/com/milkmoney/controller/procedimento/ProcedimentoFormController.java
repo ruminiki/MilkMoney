@@ -48,11 +48,11 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.TRINTA));
+				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.UNLIMITED));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.TRINTA));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.UNLIMITED));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		listAnimaisSelecionados.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
 		

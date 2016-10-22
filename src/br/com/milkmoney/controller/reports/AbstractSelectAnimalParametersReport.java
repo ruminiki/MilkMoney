@@ -31,11 +31,11 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 		
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.TRINTA));
+				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.UNLIMITED));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.TRINTA));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.UNLIMITED));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		// captura o evento de double click da table
