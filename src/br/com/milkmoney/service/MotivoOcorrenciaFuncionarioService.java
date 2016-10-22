@@ -45,7 +45,7 @@ public class MotivoOcorrenciaFuncionarioService implements IService<Integer, Mot
 	}
 	
 	@Override
-	public ObservableList<MotivoOcorrenciaFuncionario> defaultSearch(String param) {
+	public ObservableList<MotivoOcorrenciaFuncionario> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

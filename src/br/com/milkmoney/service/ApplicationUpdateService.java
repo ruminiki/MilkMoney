@@ -78,6 +78,18 @@ public class ApplicationUpdateService{
 					    File fileRun = new File(dirUpdate.getAbsolutePath() + File.separator  + versao + File.separator +  FILE_RUN);
 						
 						if ( fileRun != null ){
+							
+							if ( !fileRun.exists() ){
+								updateMessage("Arquivo não encontrado: " + fileRun.getAbsolutePath()+"\n");
+								fileRun = new File(dirUpdate.getAbsolutePath() + File.separator + FILE_RUN);
+								updateMessage("Tentando novamente em: " + fileRun.getAbsolutePath()+"\n");
+								if ( !fileRun.exists() ){
+									updateMessage("Arquivo não encontrado " + fileRun.getAbsolutePath()+"\n");
+									updateMessage("Atualização cancelada :( Por favor, contate o suporte.");
+									return null;
+								}	
+							}
+							
 							//executa script de atualização
 							updateMessage("Executando " + fileRun.getAbsolutePath()+"\n");
 							Thread.sleep(1000);

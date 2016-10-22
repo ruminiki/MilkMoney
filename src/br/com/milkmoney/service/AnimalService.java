@@ -1,6 +1,8 @@
 package br.com.milkmoney.service;
 
 import java.math.BigInteger;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +24,7 @@ import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -77,26 +80,44 @@ public class AnimalService implements IService<Integer, Animal>{
 
 	@Override
 	public List<Animal> findAll() {
-		return dao.findAll(Animal.class);
+		Instant start = Instant.now();
+		List<Animal> list = dao.findAll(Animal.class);
+		Instant end = Instant.now();
+		System.out.println("findAll: " + Duration.between(start, end));
+		return list;
 	}
 
 	public ObservableList<Animal> findAllAsObservableList() {
-		ObservableList<Animal> list = FXCollections.observableArrayList();
-		list.addAll(dao.findAll(Animal.class));
+		Instant start = Instant.now();
+		ObservableList<Animal> list = FXCollections.observableArrayList(findAll());
+		Instant end = Instant.now();
+		System.out.println("findAllAsObservableList: " + Duration.between(start, end));
 		return list;
 	}
 	
 	@Override
-	public ObservableList<Animal> defaultSearch(String param) {
-		return FXCollections.observableArrayList(dao.defultSearch(param));
+	public ObservableList<Animal> defaultSearch(String param, int limit) {
+		Instant start = Instant.now();
+		ObservableList<Animal> result = FXCollections.observableArrayList(dao.defaultSearch(param, limit));
+		Instant end = Instant.now();
+		System.out.println("defaultSearch: " + Duration.between(start, end));
+		return result;
 	}
 
-	public ObservableList<Animal> findAllFemeasAtivasAsObservableList(Date data) {
-		return FXCollections.observableArrayList(dao.findAllFemeasAtivas(data));
+	public ObservableList<Animal> findAllFemeasAtivasAsObservableList(Date data, int limit) {
+		Instant start = Instant.now();
+		ObservableList<Animal> result = FXCollections.observableArrayList(dao.findAllFemeasAtivas(data, limit));
+		Instant end = Instant.now();
+		System.out.println("findAllFemeasAtivasAsObservableList: " + Duration.between(start, end));
+		return result;
 	}
 	
-	public List<Animal> findAllFemeasAtivas(Date data) {
-		return dao.findAllFemeasAtivas(data);
+	public List<Animal> findAllFemeasAtivas(Date data, int limit) {
+		Instant start = Instant.now();
+		List<Animal> result = dao.findAllFemeasAtivas(data, limit);
+		Instant end = Instant.now();
+		System.out.println("findAllFemeasAtivas: " + Duration.between(start, end));
+		return result;
 	}
 
 	@Override
@@ -172,7 +193,7 @@ public class AnimalService implements IService<Integer, Animal>{
 		}
 		
 		//busca animais que tinha idade suficiente e não estavam mortos nem vendidos
-		List<Animal> animais = dao.findAnimaisAtivosComIdadeParaServicoNoPeriodo(idadeMinimaCobertura, dataInicio, dataFim);
+		List<Animal> animais = dao.findAnimaisAtivosComIdadeParaServicoNoPeriodo(idadeMinimaCobertura, dataInicio, dataFim, Limit.UNLIMITED);
 		
 		for ( Animal animal : animais ){
 			//buscar ultima cobertura antes data inicio
@@ -245,7 +266,7 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public List<Animal> fill(HashMap<String, String> params) {
-		return FXCollections.observableArrayList(dao.superSearch(params));
+		return FXCollections.observableArrayList(dao.superSearch(params, Limit.TRINTA));
 	}
 
 	public String getImagePath(Animal animal) {

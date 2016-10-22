@@ -69,7 +69,7 @@ public class ProducaoLeiteService implements IService<Integer, ProducaoLeite>{
 	}
 	
 	@Override
-	public ObservableList<ProducaoLeite> defaultSearch(String param) {
+	public ObservableList<ProducaoLeite> defaultSearch(String param, int limit) {
 		return null;
 	}
 	

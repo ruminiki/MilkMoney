@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.CoberturaService;
 
 /**
@@ -35,7 +36,7 @@ public class PeriodoServico extends AbstractCalculadorIndicador{
 	public BigDecimal getValue(Date data) {
 		BigDecimal diasEmAberto = BigDecimal.ZERO;
 		
-		List<Animal> vacas = animalDao.findAllVacasAtivas(data);
+		List<Animal> vacas = animalDao.findAllVacasAtivas(data, Limit.UNLIMITED);
 		
 		for ( Animal femea : vacas ){
 			diasEmAberto = diasEmAberto.add(BigDecimal.valueOf(coberturaService.getDiasEmAberto(femea, data)));

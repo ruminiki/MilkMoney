@@ -44,7 +44,7 @@ public class MotivoVendaAnimalService implements IService<Integer, MotivoVendaAn
 	}
 	
 	@Override
-	public ObservableList<MotivoVendaAnimal> defaultSearch(String param) {
+	public ObservableList<MotivoVendaAnimal> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

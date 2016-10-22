@@ -46,7 +46,7 @@ public class CentroCustoService implements IService<Integer, CentroCusto>{
 	}
 	
 	@Override
-	public ObservableList<CentroCusto> defaultSearch(String param) {
+	public ObservableList<CentroCusto> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

@@ -65,7 +65,7 @@ public class EntregaLeiteService implements IService<Integer, EntregaLeite>{
 	}
 	
 	@Override
-	public ObservableList<EntregaLeite> defaultSearch(String param) {
+	public ObservableList<EntregaLeite> defaultSearch(String param, int limit) {
 		return null;
 	}
 	

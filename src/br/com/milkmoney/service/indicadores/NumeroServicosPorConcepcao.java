@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.CoberturaService;
 
 /**
@@ -57,7 +58,7 @@ public class NumeroServicosPorConcepcao extends AbstractCalculadorIndicador{
 		long numeroServicos = 0;
 		long concepcoes = 0;
 		
-		List<Animal> animais = animalDao.findAllFemeasAtivas(data);
+		List<Animal> animais = animalDao.findAllFemeasAtivas(data, Limit.UNLIMITED);
 		
 		for ( Animal animal : animais ){
 			

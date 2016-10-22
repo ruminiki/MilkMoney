@@ -50,7 +50,7 @@ public class ParametroService implements IService<Integer, Parametro>{
 	}
 	
 	@Override
-	public ObservableList<Parametro> defaultSearch(String param) {
+	public ObservableList<Parametro> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricaoSigla(param));
 	}
 

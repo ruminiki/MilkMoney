@@ -46,7 +46,7 @@ public class FinalidadeLoteService implements IService<Integer, FinalidadeLote>{
 	}
 
 	@Override
-	public ObservableList<FinalidadeLote> defaultSearch(String param) {
+	public ObservableList<FinalidadeLote> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 	

@@ -46,7 +46,7 @@ public class CategoriaLancamentoFinanceiroService implements IService<Integer, C
 	}
 	
 	@Override
-	public ObservableList<CategoriaLancamentoFinanceiro> defaultSearch(String param) {
+	public ObservableList<CategoriaLancamentoFinanceiro> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

@@ -46,7 +46,7 @@ public class ComplicacaoPartoService implements IService<Integer, ComplicacaoPar
 	}
 	
 	@Override
-	public ObservableList<ComplicacaoParto> defaultSearch(String param) {
+	public ObservableList<ComplicacaoParto> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

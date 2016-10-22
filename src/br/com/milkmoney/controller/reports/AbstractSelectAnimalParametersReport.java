@@ -15,6 +15,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.util.DateUtil;
 
@@ -30,11 +31,11 @@ public class AbstractSelectAnimalParametersReport extends AbstractReport{
 		
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue));
+				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.TRINTA));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.TRINTA));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		// captura o evento de double click da table

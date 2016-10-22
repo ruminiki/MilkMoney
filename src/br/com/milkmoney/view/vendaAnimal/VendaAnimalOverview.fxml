@@ -55,9 +55,9 @@
       <TableView fx:id="table" cacheShape="false" centerShape="false" focusTraversable="false" scaleShape="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
         <columns>
             <TableColumn fx:id="dataVendaColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data Venda" />
-            <TableColumn fx:id="animalColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Animal" />
-            <TableColumn fx:id="motivoVendaColumn" maxWidth="200.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Motivo" />
-            <TableColumn fx:id="destinacaoAnimalColumn" maxWidth="200.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Destinação" />
+            <TableColumn fx:id="animalColumn" maxWidth="250.0" minWidth="250.0" prefWidth="75.0" text="Animal" />
+            <TableColumn fx:id="motivoVendaColumn" maxWidth="200.0" minWidth="150.0" prefWidth="75.0" text="Motivo" />
+            <TableColumn fx:id="destinacaoAnimalColumn" maxWidth="200.0" minWidth="150.0" prefWidth="75.0" text="Destinação" />
             <TableColumn fx:id="compradorColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="75.0" text="Comprador" />
             <TableColumn fx:id="valorColumn" maxWidth="150.0" minWidth="150.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Valor" />
         </columns>

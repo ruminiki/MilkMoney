@@ -20,6 +20,7 @@ import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.dao.VendaAnimalDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.MorteAnimal;
 import br.com.milkmoney.model.Parametro;
 import br.com.milkmoney.model.SituacaoCobertura;
@@ -83,7 +84,7 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		//abortos não são considerados nos dias gestantes
 		
 		//busca os animais que farão parte do índice
-		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim);
+		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim, Limit.UNLIMITED);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		double DVGANIMAL, DVEANIMAL;

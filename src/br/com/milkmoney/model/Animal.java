@@ -79,7 +79,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
 	
-	private FichaAnimal               fichaAnimal;
+	private FichaAnimal fichaAnimal;
 	
 	public Animal() {}
 
@@ -198,7 +198,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Raca.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Raca.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="raca")
 	@FieldRequired(message="raça")
 	public Raca getRaca() {
@@ -214,7 +214,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Animal.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="mae")
 	public Animal getMae() {
 		return mae.get();
@@ -229,7 +229,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Animal.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Animal.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="paiMontaNatural")
 	public Animal getPaiMontaNatural() {
 		return paiMontaNatural.get();
@@ -244,7 +244,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Touro.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Touro.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="paiEnseminacaoArtificial")
 	public Touro getPaiEnseminacaoArtificial() {
 		return this.paiEnseminacaoArtificial.get();
@@ -298,7 +298,7 @@ public class Animal extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=Lote.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=Lote.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="lote")
 	public Lote getLote() {
 		return this.lote.get();

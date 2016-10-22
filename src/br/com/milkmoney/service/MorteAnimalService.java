@@ -55,7 +55,7 @@ public class MorteAnimalService implements IService<Integer, MorteAnimal>{
 	}
 	
 	@Override
-	public ObservableList<MorteAnimal> defaultSearch(String param) {
+	public ObservableList<MorteAnimal> defaultSearch(String param, int limit) {
 		return null;
 	}
     

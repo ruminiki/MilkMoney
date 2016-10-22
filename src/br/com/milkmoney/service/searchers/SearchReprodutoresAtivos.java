@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 
 @Service
 public class SearchReprodutoresAtivos extends Search<Integer, Animal> {
@@ -16,7 +17,7 @@ public class SearchReprodutoresAtivos extends Search<Integer, Animal> {
 	
 	@Override
 	public ObservableList<Animal> doSearch(Object ...objects) {
-		return FXCollections.observableArrayList(dao.findAllReprodutoresAtivos());
+		return FXCollections.observableArrayList(dao.findAllReprodutoresAtivos(Limit.UNLIMITED));
 	}
 	
 }

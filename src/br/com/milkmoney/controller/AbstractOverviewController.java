@@ -75,7 +75,7 @@ public abstract class AbstractOverviewController<K, E>{
 	
 	public void initialize(AbstractFormController<K, E> formController) {
 		
-		table.getStylesheets().add("css/table.css");
+		//table.getStylesheets().add("css/table.css");
 		
 		if ( table == null ){
 			table = new TableView<E>();
@@ -233,7 +233,7 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 	
 	public ObservableList<E> handleDefaultSearch() {
-		return service.defaultSearch(inputPesquisa.getText());
+		return service.defaultSearch(inputPesquisa.getText(), 30);
 	}
 	
 	@FXML

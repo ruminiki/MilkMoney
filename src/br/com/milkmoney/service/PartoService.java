@@ -60,7 +60,7 @@ public class PartoService implements IService<Integer, Parto>{
 	}
 	
 	@Override
-	public ObservableList<Parto> defaultSearch(String param) {
+	public ObservableList<Parto> defaultSearch(String param, int limit) {
 		return null;
 	}
 

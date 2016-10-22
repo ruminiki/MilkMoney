@@ -44,7 +44,7 @@ public class ConfiguracaoIndicadorService implements IService<Integer, Configura
 	}
 	
 	@Override
-	public ObservableList<ConfiguracaoIndicador> defaultSearch(String param) {
+	public ObservableList<ConfiguracaoIndicador> defaultSearch(String param, int limit) {
 		throw new NotImplementedException();
 	}
 	

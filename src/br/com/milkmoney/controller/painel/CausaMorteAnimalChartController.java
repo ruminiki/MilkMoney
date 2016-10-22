@@ -29,7 +29,7 @@ public class CausaMorteAnimalChartController extends AbstractWindowPopUp{
         chart.setPrefWidth(200);
         
         chart.setTitle("Principais Causas de Mortes");
-        chart.setLegendVisible(false);
+        chart.setAnimated(true);
         
         chart.getData().clear();
         chart.getData().addAll(morteAnimalService.getDataChart());

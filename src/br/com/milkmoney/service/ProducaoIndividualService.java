@@ -120,7 +120,7 @@ public class ProducaoIndividualService implements IService<Integer, ProducaoIndi
 	}
 	
 	@Override
-	public ObservableList<ProducaoIndividual> defaultSearch(String param) {
+	public ObservableList<ProducaoIndividual> defaultSearch(String param, int limit) {
 		return null;
 	}
 	

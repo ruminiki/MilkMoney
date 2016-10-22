@@ -46,7 +46,7 @@ public class OcorrenciaFuncionarioService implements IService<Integer, Ocorrenci
 	}
 
 	@Override
-	public ObservableList<OcorrenciaFuncionario> defaultSearch(String param) {
+	public ObservableList<OcorrenciaFuncionario> defaultSearch(String param, int limit) {
 		return null;
 	}
 	

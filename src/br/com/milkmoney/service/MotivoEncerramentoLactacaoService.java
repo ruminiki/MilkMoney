@@ -46,7 +46,7 @@ public class MotivoEncerramentoLactacaoService implements IService<Integer, Moti
 	}
 	
 	@Override
-	public ObservableList<MotivoEncerramentoLactacao> defaultSearch(String param) {
+	public ObservableList<MotivoEncerramentoLactacao> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.AbstractEntity;
+import br.com.milkmoney.model.Limit;
 
 @Repository
 public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
@@ -52,6 +53,7 @@ public abstract class AbstractGenericDao<K, E> implements GenericDao<K, E> {
 	@SuppressWarnings("unchecked")
 	public List<E> findAll(Class<E> clazz) {
 		Query query = entityManager.createNamedQuery(clazz.getSimpleName()+".findAll", (clazz));
+		query.setMaxResults(Limit.TRINTA);
 		return query.getResultList();
 	}
 	

@@ -123,7 +123,7 @@ public class CoberturaService implements IService<Integer, Cobertura>{
 	}
 	
 	@Override
-	public ObservableList<Cobertura> defaultSearch(String param) {
+	public ObservableList<Cobertura> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

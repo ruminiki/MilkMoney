@@ -52,7 +52,7 @@ public class LoteService implements IService<Integer, Lote>{
 	}
 	
 	@Override
-	public ObservableList<Lote> defaultSearch(String param) {
+	public ObservableList<Lote> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

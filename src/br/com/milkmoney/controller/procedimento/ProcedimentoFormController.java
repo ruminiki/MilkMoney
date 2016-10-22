@@ -21,6 +21,7 @@ import br.com.milkmoney.controller.AbstractFormController;
 import br.com.milkmoney.controller.servico.ServicoFormController;
 import br.com.milkmoney.controller.tipoProcedimento.TipoProcedimentoReducedOverviewController;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.Procedimento;
 import br.com.milkmoney.model.Servico;
 import br.com.milkmoney.model.State;
@@ -47,11 +48,11 @@ public class ProcedimentoFormController extends AbstractFormController<Integer, 
 		
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue));
+				listAnimais.setItems(animalService.defaultSearch(newValue, Limit.TRINTA));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, Limit.TRINTA));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		listAnimaisSelecionados.setItems(FXCollections.observableArrayList(getObject().getAnimais()));
 		

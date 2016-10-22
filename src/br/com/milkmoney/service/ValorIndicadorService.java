@@ -42,7 +42,7 @@ public class ValorIndicadorService implements IService<Integer, ValorIndicador>{
 	}
 	
 	@Override
-	public ObservableList<ValorIndicador> defaultSearch(String param) {
+	public ObservableList<ValorIndicador> defaultSearch(String param, int limit) {
 		throw new NotImplementedException();
 	}
 	

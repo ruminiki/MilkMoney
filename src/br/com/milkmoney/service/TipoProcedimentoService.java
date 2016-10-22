@@ -48,7 +48,7 @@ public class TipoProcedimentoService implements IService<Integer, TipoProcedimen
 	}
 
 	@Override
-	public ObservableList<TipoProcedimento> defaultSearch(String param) {
+	public ObservableList<TipoProcedimento> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 	

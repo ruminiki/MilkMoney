@@ -45,7 +45,7 @@ public class CausaMorteAnimalService implements IService<Integer, CausaMorteAnim
 	}
 	
 	@Override
-	public ObservableList<CausaMorteAnimal> defaultSearch(String param) {
+	public ObservableList<CausaMorteAnimal> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

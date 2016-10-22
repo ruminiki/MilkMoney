@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.PartoService;
 
 /**
@@ -35,7 +36,7 @@ public class IntervaloEntrePartos extends AbstractCalculadorIndicador{
 		BigDecimal intervaloEntrePartos = BigDecimal.ZERO;
 		
 		//vacas com mais de um parto
-		List<Animal> femeas = animalDao.findAnimaisComMaisDeUmParto(data);
+		List<Animal> femeas = animalDao.findAnimaisComMaisDeUmParto(data, Limit.UNLIMITED);
 		
 		//SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
 		//System.out.println(sdf.format(data) + "\n");

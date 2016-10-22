@@ -59,7 +59,7 @@ public class PrecoLeiteService implements IService<Integer, PrecoLeite>{
 	}
 	
 	@Override
-	public ObservableList<PrecoLeite> defaultSearch(String param) {
+	public ObservableList<PrecoLeite> defaultSearch(String param, int limit) {
 		return null;
 	}
 

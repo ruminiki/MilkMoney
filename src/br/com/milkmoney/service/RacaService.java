@@ -46,7 +46,7 @@ public class RacaService implements IService<Integer, Raca>{
 	}
 	
 	@Override
-	public ObservableList<Raca> defaultSearch(String param) {
+	public ObservableList<Raca> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

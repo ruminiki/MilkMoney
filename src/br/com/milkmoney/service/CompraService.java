@@ -46,7 +46,7 @@ public class CompraService implements IService<Integer, Compra>{
 	}
 	
 	@Override
-	public ObservableList<Compra> defaultSearch(String param) {
+	public ObservableList<Compra> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

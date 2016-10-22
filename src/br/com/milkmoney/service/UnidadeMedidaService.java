@@ -46,7 +46,7 @@ public class UnidadeMedidaService implements IService<Integer, UnidadeMedida>{
 	}
 	
 	@Override
-	public ObservableList<UnidadeMedida> defaultSearch(String param) {
+	public ObservableList<UnidadeMedida> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

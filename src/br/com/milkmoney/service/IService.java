@@ -11,7 +11,7 @@ public interface IService<K, E> {
     E findById(K id);
     List<E> findAll();
     ObservableList<E> findAllAsObservableList();
-    ObservableList<E> defaultSearch(String param);
+    ObservableList<E> defaultSearch(String param, int limit);
     void validate(E entity);
     
     

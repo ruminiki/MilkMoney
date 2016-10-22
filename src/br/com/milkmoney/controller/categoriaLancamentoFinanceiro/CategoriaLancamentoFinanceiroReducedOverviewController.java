@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.controller.AbstractReducedOverviewController;
 import br.com.milkmoney.model.CategoriaLancamentoFinanceiro;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.IService;
 
 @Controller
@@ -51,7 +52,7 @@ public class CategoriaLancamentoFinanceiroReducedOverviewController extends Abst
 		
 		if ( inputPesquisa != null && inputPesquisa.getText() != null &&
 				inputPesquisa.getText().length() > 0){
-			data.addAll(service.defaultSearch(inputPesquisa.getText()));
+			data.addAll(service.defaultSearch(inputPesquisa.getText(), Limit.UNLIMITED));
 		}else{
 			data = service.findAllAsObservableList();
 		}

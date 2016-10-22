@@ -25,6 +25,7 @@ import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
 import br.com.milkmoney.controller.painel.renderer.CurveFittedAreaChart;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.FichaAnimalService;
 import br.com.milkmoney.util.DateUtil;
@@ -83,7 +84,7 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 			@Override
 			public Void call() throws InterruptedException {
 				fichas = new ArrayList<FichaAnimal>();
-				animais = animalService.findAllFemeasAtivas(DateUtil.today);
+				animais = animalService.findAllFemeasAtivas(DateUtil.today, Limit.UNLIMITED);
 
 				double progressComplete = animais.size();
 				double index = 0;
@@ -136,7 +137,7 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 			
 			countPrimeiroQuadrante = eficiencia <= 25 ? countPrimeiroQuadrante + 1 : countPrimeiroQuadrante; 
 			countSegundoQuadrante  = eficiencia > 25 && eficiencia <= 50 ? countSegundoQuadrante + 1 : countSegundoQuadrante;
-			countTerceiroQuadrante = eficiencia > 25 && eficiencia <= 50 ? countTerceiroQuadrante + 1 : countTerceiroQuadrante;
+			countTerceiroQuadrante = eficiencia > 50 && eficiencia <= 75 ? countTerceiroQuadrante + 1 : countTerceiroQuadrante;
 			countQuartoQuadrante   = eficiencia > 75 ? countQuartoQuadrante + 1 : countQuartoQuadrante; 
 			
 			Double pointOnChart = getPointOfValue(eficiencia);

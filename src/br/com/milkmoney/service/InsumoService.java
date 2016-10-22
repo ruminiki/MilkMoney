@@ -46,7 +46,7 @@ public class InsumoService implements IService<Integer, Insumo>{
 	}
 	
 	@Override
-	public ObservableList<Insumo> defaultSearch(String param) {
+	public ObservableList<Insumo> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.defaultSearch(param));
 	}
 

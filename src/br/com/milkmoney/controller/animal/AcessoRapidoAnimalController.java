@@ -2,7 +2,6 @@ package br.com.milkmoney.controller.animal;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.application.Platform;
@@ -72,8 +71,6 @@ import br.com.milkmoney.service.RelatorioService;
 import br.com.milkmoney.service.VendaAnimalService;
 import br.com.milkmoney.util.DateUtil;
 import br.com.milkmoney.validation.CoberturaValidation;
-import br.com.milkmoney.validation.MorteAnimalValidation;
-import br.com.milkmoney.validation.VendaAnimalValidation;
 
 @Controller
 public class AcessoRapidoAnimalController extends AbstractOverviewController<Integer, Animal> {
@@ -523,35 +520,33 @@ public class AcessoRapidoAnimalController extends AbstractOverviewController<Int
 	
 	@FXML
 	private void registrarDesfazerRegistroMorte() {
-		if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
-			
-			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Morte", "Tem certeza que deseja desfazer o registro de morte do animal?");
-			if (result.get() == ButtonType.OK) {
-				morteAnimalService.removeByAnimal(getObject());
+		if ( getObject() != null ){
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
+				CustomAlert.mensagemInfo("O animal já foi vendido, não é possível registrar a morte.");
+			}else{
+				MorteAnimal morteAnimal = morteAnimalService.findByAnimal(getObject());
+				if ( morteAnimal == null ){
+					morteAnimal = new MorteAnimal(getObject());
+				}
+				morteAnimalFormController.setObject(morteAnimal);
+				morteAnimalFormController.showForm();
 			}
-			
-		}else{
-			
-			MorteAnimalValidation.validaSituacaoAnimal(getObject());
-			
-			morteAnimalFormController.setObject(new MorteAnimal(getObject()));
-			morteAnimalFormController.showForm();
-			
 		}
 	}
 	
 	@FXML
 	private void registrarDesfazerRegistroVenda() {
-		if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
-			Optional<ButtonType> result = CustomAlert.confirmar("Desfazer Registro Venda", "Tem certeza que deseja desfazer o registro de venda do animal?");
-			if (result.get() == ButtonType.OK) {
-				vendaAnimalService.removeByAnimal(getObject());
+		if ( getObject() != null ){
+			if ( getObject().getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
+				CustomAlert.mensagemInfo("O animal está morto, não é possível registrar a venda.");
+			}else{
+				VendaAnimal vendaAnimal = vendaAnimalService.findByAnimal(getObject());
+				if ( vendaAnimal == null ){
+					vendaAnimal = new VendaAnimal(getObject());
+				}
+				vendaAnimalFormController.setObject(vendaAnimal);
+				vendaAnimalFormController.showForm();
 			}
-		}else{
-			VendaAnimalValidation.validaSituacaoAnimal(getObject());
-			vendaAnimalFormController.setAnimalVendido(getObject());
-			vendaAnimalFormController.setObject(new VendaAnimal());
-			vendaAnimalFormController.showForm();
 		}
 	}
 	

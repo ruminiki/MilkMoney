@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FinalidadeAnimal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.Sexo;
 import br.com.milkmoney.model.SimNao;
 import br.com.milkmoney.model.SituacaoAnimal;
@@ -22,7 +23,7 @@ import br.com.milkmoney.service.AnimalService;
 public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> defultSearch(String param) {
+	public List<Animal> defaultSearch(String param, int limit) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a "
 				+ "WHERE "
 				+ "a.nome like :param or a.numero like :param or "
@@ -31,12 +32,12 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "a.finalidadeAnimal like :param or "
 				+ "a.situacaoAnimal like :param");
 		query.setParameter("param", '%' + param + '%');
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> superSearch(HashMap<String, String> params) {
+	public List<Animal> superSearch(HashMap<String, String> params, int limit) {
 		
 		StringBuilder SQL = new StringBuilder("SELECT a FROM Animal a WHERE ");
 		
@@ -70,6 +71,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_PARTO) != null ){
+			params.put(AnimalService.FILTER_DIAS_POS_PARTO, params.get(AnimalService.FILTER_DIAS_POS_PARTO).replaceAll(" ", ""));
 			if ( !params.get(AnimalService.FILTER_DIAS_POS_PARTO).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_DIAS_POS_PARTO, "= " + params.get(AnimalService.FILTER_DIAS_POS_PARTO).replaceAll("[^0-9]", ""));
 			}
@@ -78,6 +80,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_DIAS_POS_COBERTURA) != null ){
+			params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).replaceAll(" ", ""));
 			if ( !params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, "= " + params.get(AnimalService.FILTER_DIAS_POS_COBERTURA).replaceAll("[^0-9]", ""));
 			}
@@ -86,6 +89,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_NUMERO_PARTOS) != null ){
+			params.put(AnimalService.FILTER_NUMERO_PARTOS, params.get(AnimalService.FILTER_NUMERO_PARTOS).replaceAll(" ", ""));
 			if ( !params.get(AnimalService.FILTER_NUMERO_PARTOS).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_NUMERO_PARTOS, "= " + params.get(AnimalService.FILTER_NUMERO_PARTOS).replaceAll("[^0-9]", ""));
 			}
@@ -114,6 +118,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		}
 		
 		if ( params.get(AnimalService.FILTER_NUMERO_SERVICOS) != null ){
+			params.put(AnimalService.FILTER_NUMERO_SERVICOS, params.get(AnimalService.FILTER_NUMERO_SERVICOS).replaceAll(" ", ""));
 			if ( !params.get(AnimalService.FILTER_NUMERO_SERVICOS).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
 				params.put(AnimalService.FILTER_NUMERO_SERVICOS, "= " + params.get(AnimalService.FILTER_NUMERO_SERVICOS).replaceAll("[^0-9]", ""));
 			}
@@ -130,6 +135,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 		} 
 		
 		Query query = entityManager.createQuery(SQL.toString());
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 	}
 	
@@ -151,8 +157,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findAllByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param");
 		query.setParameter("param", '%' + param + '%');
-		query.setMaxResults(15);
-		
 		return query.getResultList();
 	}
 	
@@ -160,8 +164,6 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	public List<Animal> findFemeasByNumeroNome(String param) {
 		Query query = entityManager.createQuery("SELECT a FROM Animal a WHERE a.nome like :param or a.numero like :param and a.sexo = '" + Sexo.FEMEA + "'");
 		query.setParameter("param", '%' + param + '%');
-		query.setMaxResults(15);
-		
 		return query.getResultList();
 	}
 
@@ -171,7 +173,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasAtivas(Date data) {
+	public List<Animal> findAllFemeasAtivas(Date data, int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
@@ -179,7 +181,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 						+ "and not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal.id = a.id and m.dataMorte <= :data)");
 		
 		query.setParameter("data", data);
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 
 	}
@@ -190,50 +192,56 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllVacasAtivas(Date data) {
+	public List<Animal> findAllVacasAtivas(Date data, int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = 'FÊMEA' "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m WHERE m.animal.id = a.id and m.dataMorte <= :data)"
-						+ "and exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data <= :data) ");
+						+ "and exists (select 1 from Parto p where p.cobertura.femea.id = a.id and p.data <= :data)");
 		
 		query.setParameter("data", data);
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeas() {
+	public List<Animal> findAllFemeas(int limit) {
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.FEMEA + "' ");
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllReprodutoresAtivos() {
+	public List<Animal> findAllReprodutoresAtivos(int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.MACHO + "' and a.finalidadeAnimal = '" + FinalidadeAnimal.REPRODUCAO + "' "
 						+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id) "
 						+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id)");
+		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllMachos() {
+	public List<Animal> findAllMachos(int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Animal a WHERE a.sexo = '" + Sexo.MACHO + "' ");
+		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
+		
 		return query.getResultList();
 		
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasCobertas(Date data) {
+	public List<Animal> findAllFemeasCobertas(Date data, int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT distinct a FROM Cobertura c inner join c.femea a "
@@ -244,23 +252,26 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data)");
 		
 		query.setParameter("data", data);
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 		
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAllFemeasEmLactacao(Date data) {
+	public List<Animal> findAllFemeasEmLactacao(Date data, int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Lactacao lc inner join lc.animal a WHERE :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
 				+ "and not exists (SELECT 1 FROM VendaAnimal v WHERE v.animal.id = a.id and v.dataVenda <= :data) "
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
 		query.setParameter("data", data);
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
+		
 		return query.getResultList();
 		
 	}
 	
-	public Boolean isInLactacao(Date data, Animal animal) {
+	public Boolean isInLactacao(Date data, Animal animal, int limit) {
 		
 		Query query = entityManager.createQuery(
 				"SELECT a FROM Lactacao lc inner join lc.animal a WHERE lc.animal = :animal and :data between lc.dataInicio and coalesce(lc.dataFim, current_date()) "
@@ -268,7 +279,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "and not exists (SELECT 1 FROM MorteAnimal m inner join m.animal am WHERE am.id = a.id and m.dataMorte <= :data) ");
 		query.setParameter("data", data);
 		query.setParameter("animal", animal);
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		try{
 			return query.getSingleResult() != null;
 		}catch ( NoResultException e ){
@@ -319,14 +330,14 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisComMaisDeUmParto(Date data) {
+	public List<Animal> findAnimaisComMaisDeUmParto(Date data, int limit) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
 				+ "not exists (select 1 from VendaAnimal v where v.animal.id = a.id and v.dataVenda <= :data) and "
 				+ "not exists (select 1 from MorteAnimal ma where ma.animal.id = a.id and ma.dataMorte <= :data) "
 				+ "group by a having (select count(p) from Parto p where p.cobertura.femea.id = a.id and p.data <= :data ) > 1 ");
 		query.setParameter("data", data);
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 		
 	}
@@ -419,7 +430,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * (4) tem idade suficiente para cobertura
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisAtivosComIdadeParaServicoNoPeriodo(int idadeMinimaParaCobertura, Date dataInicio, Date dataFim) {
+	public List<Animal> findAnimaisAtivosComIdadeParaServicoNoPeriodo(int idadeMinimaParaCobertura, Date dataInicio, Date dataFim, int limit) {
 				
 		//busca animais que tinha idade suficiente e não estavam mortos nem vendidos
 		Query query = entityManager.createQuery(
@@ -429,7 +440,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "a.sexo = '" + Sexo.FEMEA + "'");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
-		
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 		
 	}
@@ -444,7 +455,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Animal> findAnimaisParaCalculoEficiencia(Date dataInicio, Date dataFim) {
+	public List<Animal> findAnimaisParaCalculoEficiencia(Date dataInicio, Date dataFim, int limit) {
 		
 		Query query = entityManager.createQuery("SELECT a FROM Animal a where "
 				+ "("
@@ -457,6 +468,7 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				+ "exists (select 1 from MorteAnimal m where m.animal.id = a.id and m.dataMorte between :dataInicio and :dataFim )))");
 		query.setParameter("dataInicio", dataInicio);
 		query.setParameter("dataFim", dataFim);
+		if ( limit != Limit.UNLIMITED ) query.setMaxResults(limit);
 		return query.getResultList();
 
 	}

@@ -140,13 +140,21 @@ public class PopUpMenu extends PopOver {
 			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.VENDIDO) ){
 				VBox column = (VBox)container.getChildren().get(4);
 				HBox item = (HBox) column.getChildren().get(0);
-				((Label)item.getChildren().get(1)).setText("Editar/rem. venda");
+				((Label)item.getChildren().get(1)).setText("Editar/rem. Venda");
+			}else{
+				VBox column = (VBox)container.getChildren().get(4);
+				HBox item = (HBox) column.getChildren().get(0);
+				((Label)item.getChildren().get(1)).setText("Reg. Venda");
 			}
 			
 			if ( animal.getSituacaoAnimal().equals(SituacaoAnimal.MORTO) ){
 				VBox column = (VBox)container.getChildren().get(4);
-				HBox item = (HBox) column.getChildren().get(0);
-				((Label)item.getChildren().get(2)).setText("Editar/rem. morte");
+				HBox item = (HBox) column.getChildren().get(1);
+				((Label)item.getChildren().get(1)).setText("Editar/rem. Morte");
+			}else{
+				VBox column = (VBox)container.getChildren().get(4);
+				HBox item = (HBox) column.getChildren().get(1);
+				((Label)item.getChildren().get(1)).setText("Reg. Morte");
 			}
 			
 			super.show(window);

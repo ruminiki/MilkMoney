@@ -13,6 +13,7 @@ import br.com.milkmoney.dao.LactacaoDao;
 import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Lactacao;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.PartoService;
 
 /**
@@ -42,7 +43,7 @@ public class DiasEmLactacao extends AbstractCalculadorIndicador{
 		
 		BigInteger dias = BigInteger.ZERO;
 		//vacas em lactação
-		List<Animal> femeas = animalDao.findAllFemeasEmLactacao(data);
+		List<Animal> femeas = animalDao.findAllFemeasEmLactacao(data, Limit.UNLIMITED);
 		
 		for ( Animal animal : femeas ){
 			

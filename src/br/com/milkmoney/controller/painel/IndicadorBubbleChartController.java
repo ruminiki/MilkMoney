@@ -28,6 +28,7 @@ import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.FichaAnimal;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.service.AnimalService;
 import br.com.milkmoney.service.FichaAnimalService;
 import br.com.milkmoney.service.RelatorioService;
@@ -82,7 +83,7 @@ public class IndicadorBubbleChartController extends AbstractWindowPopUp{
 			@Override
 			public Void call() throws InterruptedException {
 				fichas = new ArrayList<FichaAnimal>();
-				animais = animalService.findAllFemeasAtivas(DateUtil.today);
+				animais = animalService.findAllFemeasAtivas(DateUtil.today, Limit.UNLIMITED);
 						
 				double progressComplete = animais.size();
 				double index = 0;

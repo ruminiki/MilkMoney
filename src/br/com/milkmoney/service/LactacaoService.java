@@ -61,7 +61,7 @@ public class LactacaoService implements IService<Integer, Lactacao>{
 	}
 	
 	@Override
-	public ObservableList<Lactacao> defaultSearch(String param) {
+	public ObservableList<Lactacao> defaultSearch(String param, int limit) {
 		return null;
 	}
 

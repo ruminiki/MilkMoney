@@ -53,7 +53,7 @@ public class PropriedadeService implements IService<Integer, Propriedade>{
 	}
 	
 	@Override
-	public ObservableList<Propriedade> defaultSearch(String param) {
+	public ObservableList<Propriedade> defaultSearch(String param, int limit) {
 		return FXCollections.observableArrayList(dao.findByDescricao(param));
 	}
 

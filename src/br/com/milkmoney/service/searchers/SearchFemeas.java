@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.model.Animal;
+import br.com.milkmoney.model.Limit;
 
 @Service
 public class SearchFemeas extends Search<Integer, Animal> {
@@ -16,7 +17,7 @@ public class SearchFemeas extends Search<Integer, Animal> {
 	
 	@Override
 	public ObservableList<Animal> doSearch(Object ...objects) {
-		return FXCollections.observableArrayList(dao.findAllFemeas());
+		return FXCollections.observableArrayList(dao.findAllFemeas(Limit.UNLIMITED));
 	}
 	
 }

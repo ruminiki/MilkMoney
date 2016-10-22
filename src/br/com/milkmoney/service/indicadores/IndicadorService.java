@@ -55,7 +55,7 @@ public class IndicadorService implements IService<Integer, Indicador>{
 	}
 	
 	@Override
-	public ObservableList<Indicador> defaultSearch(String param) {
+	public ObservableList<Indicador> defaultSearch(String param, int limit	) {
 		return null;
 	}
 

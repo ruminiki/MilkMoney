@@ -14,6 +14,7 @@ import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.dao.PartoDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.Parto;
 import br.com.milkmoney.util.DateUtil;
 
@@ -62,7 +63,7 @@ public class PrimeiroServicoAposParto extends AbstractCalculadorIndicador{
 		BigDecimal diasEntrePartoEPrimeiroServico = BigDecimal.ZERO;
 		int animaisComServicoAposParto = 0;
 				
-		List<Animal> animais = animalDao.findAllVacasAtivas(data);
+		List<Animal> animais = animalDao.findAllVacasAtivas(data, Limit.UNLIMITED);
 		
 		for ( Animal animal : animais ){
 			

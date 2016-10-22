@@ -61,11 +61,11 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 		//controle de adição dos animais no lote
 		if ( inputPesquisa != null ){
 			inputPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
-				listAnimais.setItems(animalService.defaultSearch(newValue));
+				listAnimais.setItems(animalService.defaultSearch(newValue, 30));
 			});
 		}
 		
-		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today));
+		listAnimais.setItems(animalService.findAllFemeasAtivasAsObservableList(DateUtil.today, 20));
 		listAnimais.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		// captura o evento de double click da table

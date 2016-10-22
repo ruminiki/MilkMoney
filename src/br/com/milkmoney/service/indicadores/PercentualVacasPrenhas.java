@@ -12,6 +12,7 @@ import br.com.milkmoney.dao.AnimalDao;
 import br.com.milkmoney.dao.CoberturaDao;
 import br.com.milkmoney.model.Animal;
 import br.com.milkmoney.model.Cobertura;
+import br.com.milkmoney.model.Limit;
 import br.com.milkmoney.model.SituacaoCobertura;
 
 /**
@@ -31,7 +32,7 @@ public class PercentualVacasPrenhas extends AbstractCalculadorIndicador{
 	public BigDecimal getValue(Date data) {
 
 		BigDecimal   rebanho      = BigDecimal.valueOf(animalDao.countAllVacasAtivas(data).longValue());
-		List<Animal> animais      = animalDao.findAllVacasAtivas(data);
+		List<Animal> animais      = animalDao.findAllVacasAtivas(data, Limit.UNLIMITED);
 		BigDecimal   vacasPrenhas = BigDecimal.ZERO;
 		BigDecimal   result       = BigDecimal.ZERO;
 		
