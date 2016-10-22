@@ -51,13 +51,13 @@ public class ApplicationUpdateService{
 						//remove arquivos da última atualização
 						updateMessage("Preparando ambiente \n");
 						Thread.sleep(1000);
+						
+						//recria o diretório de update
 						File dirUpdate = new File(DIR_UPDATE);
 						FileUtils.forceDelete(dirUpdate);
+						FileUtils.forceMkdir(dirUpdate);
 						
-						File destination = new File(DIR_UPDATE + File.separator + versao);
-						FileUtils.forceMkdir(destination);
-						
-						File fileUpdate = new File(destination.getAbsolutePath() + File.separator +  versao + ".zip");
+						File fileUpdate = new File(dirUpdate.getAbsolutePath() + File.separator +  versao + ".zip");
 						String URL = URL_UPDATE + versao + ".zip";
 						
 						updateMessage("Fazendo o download de " + URL+"\n");
@@ -74,8 +74,8 @@ public class ApplicationUpdateService{
 						updateMessage("Descompactando arquivos\n");
 						Thread.sleep(1000);
 						
-						FileUtil.unZip(fileUpdate, destination);
-					    File fileRun = new File(destination + File.separator +  FILE_RUN);
+						FileUtil.unZip(fileUpdate, dirUpdate);
+					    File fileRun = new File(dirUpdate.getAbsolutePath() + File.separator  + versao + File.separator +  FILE_RUN);
 						
 						if ( fileRun != null ){
 							//executa script de atualização
