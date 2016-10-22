@@ -213,6 +213,7 @@ public abstract class AbstractOverviewController<K, E>{
 	}
 
 	protected void refreshTableOverview(){
+		
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws InterruptedException {
@@ -255,7 +256,7 @@ public abstract class AbstractOverviewController<K, E>{
 		task.setOnSucceeded(e -> {
 			table.setDisable(false);
 		});
-		
+
 	}
 	
 	public ObservableList<E> handleDefaultSearch() {

@@ -25,7 +25,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -78,8 +77,6 @@ public class Animal extends AbstractEntity implements Serializable {
 	
 	@Formula("(SELECT (c.id > 0) FROM cria c WHERE c.animal = id LIMIT 1)")
 	private Boolean nascimentoCadastrado = false;
-	
-	private FichaAnimal fichaAnimal;
 	
 	public Animal() {}
 
@@ -312,16 +309,6 @@ public class Animal extends AbstractEntity implements Serializable {
 		return lote;
 	}
 	
-	@Access(AccessType.PROPERTY)
-	@OneToOne(fetch = FetchType.LAZY, mappedBy="animal", optional = true)
-	public FichaAnimal getFichaAnimal() {
-		return fichaAnimal;
-	}
-
-	public void setFichaAnimal(FichaAnimal fichaAnimal) {
-		this.fichaAnimal = fichaAnimal;
-	}
-
 	//==========================
 	public String getNumeroNome(){
 		return this.numero.get() + "-" + this.nome.get();
