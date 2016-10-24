@@ -14,6 +14,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -129,7 +130,7 @@ public class Servico extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="prestadorServico")
 	@FieldRequired(message="prestador de serviço")
 	public PrestadorServico getPrestadorServico() {
@@ -145,7 +146,7 @@ public class Servico extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity = LancamentoFinanceiro.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
+	@OneToOne(fetch = FetchType.LAZY, targetEntity = LancamentoFinanceiro.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
 	@JoinColumn(name="lancamentoFinanceiro")
 	public LancamentoFinanceiro getLancamentoFinanceiro() {
 		return lancamentoFinanceiro.get();

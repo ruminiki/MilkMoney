@@ -1,0 +1,1 @@
+start database\bin\mysqld.exe --query_cache_size=16M --max_allowed_packet=1G --innodb_buffer_pool_size=384M --key_buffer=256M --thread_cache_size=8 --innodb_lock_wait_timeout=100

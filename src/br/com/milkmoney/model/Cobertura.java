@@ -13,6 +13,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -225,7 +226,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="funcionarioResponsavel")
 	public Funcionario getFuncionarioResponsavel() {
 		return funcionarioResponsavel.get();
@@ -240,7 +241,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(orphanRemoval=true, targetEntity=Servico.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval=true, targetEntity=Servico.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="servico")
 	public Servico getServico() {
 		return servico.get();
@@ -255,7 +256,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(orphanRemoval=true, targetEntity=Parto.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval=true, targetEntity=Parto.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="parto")
 	public Parto getParto() {
 		return parto;
@@ -266,7 +267,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(orphanRemoval=true, targetEntity=Aborto.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval=true, targetEntity=Aborto.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="aborto")
 	public Aborto getAborto() {
 		return aborto;

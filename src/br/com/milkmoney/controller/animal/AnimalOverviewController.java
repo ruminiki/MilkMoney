@@ -11,6 +11,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -307,7 +308,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Override
 	protected void selectRowTableHandler(Animal animal) {
 		super.selectRowTableHandler(animal);
-		table.setDisable(false);
+		MainApp.setCursor(Cursor.WAIT);
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws InterruptedException {
@@ -316,7 +317,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						@Override
 						public void run() {
 							if ( animal != null ){
-								
 								fichaAnimal = fichaAnimalService.generateFichaAnimal(animal, fichaAnimalService.getAllFields());
 								
 								if ( fichaAnimal != null ){
@@ -434,7 +434,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		thread.start();
 		
 		task.setOnSucceeded(e -> {
-			table.setDisable(false);
+			MainApp.setCursor(Cursor.DEFAULT);
 		});
 		
 	}

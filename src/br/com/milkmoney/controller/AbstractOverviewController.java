@@ -419,6 +419,10 @@ public abstract class AbstractOverviewController<K, E>{
 		}
 		
 	}
+	
+	public Stage getDialogStage() {
+		return dialogStage;
+	}
 
 	public State getState() {
 		return state;

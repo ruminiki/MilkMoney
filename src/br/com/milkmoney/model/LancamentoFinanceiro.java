@@ -14,6 +14,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -152,7 +153,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	}
 
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="centroCusto")
 	@FieldRequired(message="centro de custo")
 	public CentroCusto getCentroCusto() {
@@ -168,7 +169,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="categoria")
 	@FieldRequired(message="categoria do lançamento")
 	public CategoriaLancamentoFinanceiro getCategoria() {
@@ -237,7 +238,7 @@ public class LancamentoFinanceiro extends AbstractEntity implements Serializable
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=Servico.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = false)
+	@OneToOne(fetch = FetchType.LAZY, targetEntity=Servico.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = false)
 	@JoinColumn(name="servico")
 	public Servico getServico() {
 		return servico;

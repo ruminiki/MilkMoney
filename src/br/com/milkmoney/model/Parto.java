@@ -15,6 +15,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -83,7 +84,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@ManyToOne(targetEntity=ComplicacaoParto.class, cascade=CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity=ComplicacaoParto.class, cascade=CascadeType.REFRESH)
 	@JoinColumn(name="complicacaoParto")
 	@FieldRequired(message="complicação do parto")
 	public ComplicacaoParto getComplicacaoParto() {
@@ -141,7 +142,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(targetEntity=Cobertura.class)
+	@OneToOne(fetch = FetchType.LAZY, targetEntity=Cobertura.class)
 	@JoinColumn(name="cobertura")
 	@FieldRequired(message="cobertura")
 	public Cobertura getCobertura() {
@@ -157,7 +158,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToMany(orphanRemoval=true, targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(fetch = FetchType.LAZY, orphanRemoval=true, targetEntity=Cria.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="parto")
 	public List<Cria> getCrias() {
 		if ( crias == null )
@@ -170,7 +171,7 @@ public class Parto extends AbstractEntity implements Serializable {
 	}
 	
 	@Access(AccessType.PROPERTY)
-	@OneToOne(orphanRemoval=true, targetEntity=Lactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.LAZY, orphanRemoval=true, targetEntity=Lactacao.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
 	@JoinColumn(name="lactacao")
 	public Lactacao getLactacao() {
 		return lactacao;
