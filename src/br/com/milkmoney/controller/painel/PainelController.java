@@ -23,7 +23,7 @@ public class PainelController {
 	@Autowired private IndicadorOverviewController painelIndicadoresOverviewController;
 	@Autowired private CausaMorteAnimalChartController causaMorteAnimalChartController;
 	@Autowired private FinanceiroChartController financeiroChartController;
-	@Autowired private IndicadorBubbleChartController indicadorBubbleChartController;
+	@Autowired private EficienciaReprodutivaChartController indicadorBubbleChartController;
 	
 	private static final String ICON_INDICADORES      = "img/indicadores_48.png";
 	private static final String ICON_EFICIENCIA       = "img/eficiencia_individual_48.png";

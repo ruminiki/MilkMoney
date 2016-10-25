@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -7,12 +8,74 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="150.0" prefHeight="150.0" prefWidth="167.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.CenteredMenuController">
+<AnchorPane minHeight="150.0" prefHeight="718.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.root.CenteredMenuController">
    <children>
-      <VBox alignment="CENTER" layoutX="5.0" layoutY="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox fx:id="hBoxOptions" alignment="CENTER" layoutX="10.0" layoutY="10.0" minHeight="130.0" spacing="10.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+            <HBox spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="TOP_CENTER" layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Rebanho">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="hbRebanho" spacing="3.0" VBox.vgrow="ALWAYS" />
+                        <Separator prefWidth="200.0" />
+                        <Label text="Financeiro">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="hbFinanceiro" layoutX="10.0" layoutY="30.0" maxHeight="200.0" spacing="3.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox fx:id="vbProducao" alignment="TOP_CENTER" maxWidth="200.0" spacing="3.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Produção">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Separator layoutX="526.0" layoutY="10.0" orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox alignment="TOP_CENTER" layoutX="532.0" layoutY="10.0" maxWidth="400.0" spacing="3.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Gráficos">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="3.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <VBox fx:id="vbGraficosColumn1" alignment="TOP_CENTER" spacing="3.0" HBox.hgrow="ALWAYS" />
+                              <VBox fx:id="vbGraficosColumn2" alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" spacing="3.0" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <VBox alignment="TOP_CENTER" maxHeight="350.0" spacing="3.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Relatórios">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox fx:id="hbRelatoriosLine1" spacing="3.0" VBox.vgrow="ALWAYS" />
+                  <HBox fx:id="hbRelatoriosLine2" spacing="3.0" VBox.vgrow="ALWAYS" />
+                  <HBox fx:id="hbRelatoriosLine3" spacing="3.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets top="3.0" />
+   </padding>
 </AnchorPane>

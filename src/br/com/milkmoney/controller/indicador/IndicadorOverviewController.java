@@ -29,7 +29,7 @@ import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOv
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicador;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
-import br.com.milkmoney.controller.painel.IndicadorBubbleChartController;
+import br.com.milkmoney.controller.painel.EficienciaReprodutivaChartController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.root.RootLayoutController;
 import br.com.milkmoney.model.ConfiguracaoIndicador;
@@ -59,7 +59,7 @@ public class IndicadorOverviewController extends AbstractWindowPopUp{
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
 	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
-	@Autowired IndicadorBubbleChartController indicadorBubbleChartController;
+	@Autowired EficienciaReprodutivaChartController indicadorBubbleChartController;
 	
 	
 	private ObservableList<Indicador> data = FXCollections.observableArrayList();

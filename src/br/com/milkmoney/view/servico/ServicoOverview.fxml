@@ -40,7 +40,6 @@
             <Button fx:id="btnRemoverFinanceiro" minHeight="30.0" mnemonicParsing="false" onAction="#removerLancamentoFinanceiro" text="Remover Financeiro" />
             <HBox alignment="CENTER_RIGHT" spacing="3.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button minHeight="30.0" mnemonicParsing="false" onAction="#closeForm" text="Fechar" />
                   <VBox alignment="CENTER" minHeight="50.0" prefWidth="50.0">
                      <children>
                         <Label fx:id="lblNumRegistros" alignment="CENTER" disable="true" text="0">

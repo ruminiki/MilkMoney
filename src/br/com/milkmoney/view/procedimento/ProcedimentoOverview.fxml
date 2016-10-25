@@ -55,7 +55,7 @@
               <columns>
                   <TableColumn fx:id="dataColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Data" />
                   <TableColumn fx:id="tipoProcedimentoColumn" maxWidth="180.0" minWidth="180.0" prefWidth="75.0" text="Tipo" />
-                  <TableColumn minWidth="160.0" prefWidth="160.0" text="Carência">
+                  <TableColumn minWidth="160.0" prefWidth="160.0" style="-fx-alignment: CENTER;" text="Carência">
                      <columns>
                         <TableColumn fx:id="diasCarenciaColumn" maxWidth="80.0" minWidth="50.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Dias" />
                         <TableColumn fx:id="isCarenciaVigenteColumn" maxWidth="100.0" minWidth="70.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Vigente" />

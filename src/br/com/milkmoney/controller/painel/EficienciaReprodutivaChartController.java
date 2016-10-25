@@ -36,7 +36,7 @@ import br.com.milkmoney.util.DateUtil;
 
 
 @Controller
-public class IndicadorBubbleChartController extends AbstractWindowPopUp{
+public class EficienciaReprodutivaChartController extends AbstractWindowPopUp{
 
 	@FXML private VBox vBoxChart;
 	

@@ -1,4 +1,4 @@
-package br.com.milkmoney.controller.painel.renderer;
+package br.com.milkmoney.controller.root.renderer;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -11,12 +11,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
-public class VBoxOption extends VBox {
+public class BoxOptionIconLeft extends HBox {
 	
-	public VBoxOption(String img, String legend) {
+	public BoxOptionIconLeft(String img, String legend) {
 		
 		VBox vbIcon = new VBox();
-		vbIcon.setAlignment(Pos.BOTTOM_CENTER);
+		vbIcon.setAlignment(Pos.CENTER);
 		ImageView icon = new ImageView(new Image(ClassLoader.getSystemResourceAsStream(img)));
 		HBox.setHgrow(vbIcon, Priority.ALWAYS);
 		VBox.setVgrow(vbIcon, Priority.ALWAYS);
@@ -32,9 +32,8 @@ public class VBoxOption extends VBox {
 		VBox.setVgrow(vbLegend, Priority.ALWAYS);
 		vbLegend.getChildren().add(label);
 		
-		/*label.setMinWidth(128);
-		HBox.setHgrow(label, Priority.ALWAYS);
-		VBox.setVgrow(label, Priority.ALWAYS);*/
+		HBox.setHgrow(this, Priority.ALWAYS);
+		VBox.setVgrow(this, Priority.ALWAYS);
 		
 		this.getChildren().addAll(vbIcon, vbLegend);
 		this.setAlignment(Pos.CENTER);
@@ -55,8 +54,6 @@ public class VBoxOption extends VBox {
 	
 	public java.lang.String styleOver(){
 		return  (
-				"-fx-min-height: 128; -fx-min-width: 128;" +
-				"-fx-max-height: 128; -fx-max-width: 128;" +
                 "-fx-cursor: HAND; " +
 			    "-fx-effect: dropshadow(three-pass-box, #CCC, 10, 0, 0, 0);" +
                 "-fx-background-color: cornsilk; " +
@@ -71,8 +68,6 @@ public class VBoxOption extends VBox {
 	
 	public java.lang.String styleDefault(){
 		return  (
-				"-fx-min-height: 128; -fx-min-width: 128;" +
-				"-fx-max-height: 128; -fx-max-width: 128;" +
                 "-fx-cursor: HAND; " +
                 "-fx-background-color: #c2c2a3; " +
                 "-fx-border-width:0; " +

@@ -15,75 +15,8 @@
          <children>
       		<MenuBar>
       			<menus>
-                  <Menu mnemonicParsing="false" text="Rebanho">
-                    <items>
-      				  <MenuItem mnemonicParsing="false" onAction="#handleCadastroAnimal" text="Animal">
-      					<accelerator>
-      						<KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
-      					</accelerator>
-      			 	  </MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCoberturas" text="Coberturas/Inseminações" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroLote" text="Lote" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroProcedimento" text="Procedimento" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroVendaAnimal" text="Venda de Animais" />
-                    </items>
-                  </Menu>
-      				<Menu mnemonicParsing="false" text="Produção">
-      					<items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroPrecoLeite" text="Preço Leite" />
-      						<MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoLeite" text="Produção Leite" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroEntregaLeite" text="Entrega Leite" />
-                       <!--  <MenuItem mnemonicParsing="false" onAction="#handleCadastroProducaoIndividual" text="Produção Individual" /> -->
-      					</items>
-      				</Menu>
-                  <Menu mnemonicParsing="false" text="Financeiro">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroLancamentoFinanceiro" text="Lançamentos" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroServico" text="Serviços" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                      <MenuItem mnemonicParsing="false" onAction="#handleCadastroInsumo" text="Insumos" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleCadastroCompra" text="Notas Fiscais Compra" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Relatórios">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportIndicadores" text="Indicadores de Desempenho" />
-                      <MenuItem mnemonicParsing="false" onAction="#handleReportResumoAtividade" text="Resumo da Atividade" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportRankingAnimais" text="Ranking Animais" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportProducao" text="Produção Mensal" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleReportServicos" text="Serviços" />
-                        <Menu mnemonicParsing="false" text="Financeiro">
-                          <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportResumoFinanceiro" text="Resumo Financeiro" />
-                            <MenuItem mnemonicParsing="false" onAction="#handleReportLancamentosFinanceiros" text="Relatório Lançamentos Financeiros" />
-                          </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Zootécnicos">
-                           <items>
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportFichaAnimal" text="Ficha Animal" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportControleLeiteiro" text="Controle Leiteiro" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportProcedimentosSanitarios" text="Procedimentos Sanitários" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportPartosPrevistos" text="Partos Previstos" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportPartosRealizados" text="Partos Realizados" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportCobertura" text="Coberturas" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportConfirmacaoPrenhez" text="Confirmação Prenhez" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportAbortos" text="Abortos" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportEncerramentoLactacao" text="Encerramento Lactação" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleReportProximosEncerramentosLactacao" text="Próximos Encerramentos" />
-                           </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Formulários de Campo">
-                          <items>
-                            <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroCobertura" text="Registro Cobertura" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroParto" text="Registro Parto" />
-                              <MenuItem mnemonicParsing="false" onAction="#handleFormularioCampoRegistroProducao" text="Registro Produção de Leite" />
-                          </items>
-                        </Menu>
-                     </items>
-                  </Menu>
       			<Menu mnemonicParsing="false" text="Miscelânea">
       				<items>
-                        <MenuItem mnemonicParsing="false" onAction="#handlePainel" text="Graficos" />
                         <Menu mnemonicParsing="false" text="Cadastros">
                            <items>
                               <MenuItem mnemonicParsing="false" onAction="#handleCadastroRaca" text="Raça" />
@@ -146,7 +79,6 @@
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
                            <children>
                               <UCTextField fx:id="inputNumeroAnimal" alignment="CENTER" promptText="número do animal" />
-                              <Button fx:id="btnHome" mnemonicParsing="false" prefWidth="79.0" text="Home" />
                            </children>
                         </HBox>
                      </children>

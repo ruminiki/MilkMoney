@@ -2,19 +2,19 @@ package br.com.milkmoney.controller.root;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -25,6 +25,7 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.UCTextField;
 import br.com.milkmoney.controller.animal.AcessoRapidoAnimalController;
 import br.com.milkmoney.controller.propriedade.PropriedadeReducedOverviewController;
+import br.com.milkmoney.controller.root.renderer.BoxOptionIconLeft;
 import br.com.milkmoney.exception.ValidationException;
 import br.com.milkmoney.model.Propriedade;
 import br.com.milkmoney.service.ApplicationUpdateService;
@@ -38,7 +39,7 @@ public class RootLayoutController {
 	@FXML private Label lblHeader, lblMessage, lblSistema;
 	@FXML private Hyperlink hlPropriedade;
 	@FXML private UCTextField inputNumeroAnimal;
-	@FXML private Button btnHome;
+	@FXML private HBox hBoxBreadCrumbs;
 	
 	private StringProperty message = new SimpleStringProperty();
 	
@@ -83,10 +84,15 @@ public class RootLayoutController {
 
 		});
 		
-		btnHome.setGraphic(new ImageView(new Image(ClassLoader.getSystemResourceAsStream("img/home.png"))));
-		btnHome.setOnAction(e -> {
-			MainApp.resetLayout();
-		});
+		BoxOptionIconLeft btnVoltar = new BoxOptionIconLeft("img/home.png", "Voltar");
+		btnVoltar.setOnMouseReleased(new EventHandler<Event>() {
+        	@Override
+        	public void handle(Event event) {
+        		MainApp.resetLayout();
+        	}
+        });
+		btnVoltar.setMaxWidth(80);
+		hBoxBreadCrumbs.getChildren().add(0, btnVoltar);
 		
 	}
 	
@@ -276,9 +282,33 @@ public class RootLayoutController {
     
     //MISCELÂNEA - GRÁFICOS
     @FXML
-    protected void handlePainel() {
-    	openForm("view/painel/PainelOverview.fxml");
-    	setTitle("Miscelânea > Gráficos");
+    protected void handleCadastroIndicadores() {
+    	openFormAsPopUp("view/indicador/IndicadorOverview.fxml", "Indicadores");
+    	setTitle("Miscelânea > Gráficos > Indicadores");
+    }
+    
+    @FXML
+    protected void handleGraficoFinanceiro() {
+    	openFormAsPopUp("view/painel/FinanceiroChart.fxml", "Gráfico Financeiro");
+    	setTitle("Miscelânea > Gráficos > Financeiro");
+    }
+    
+    @FXML
+    protected void handleGraficoCausaMorteAnimais() {
+    	openFormAsPopUp("view/painel/CausaMorteAnimalChart.fxml", "Causa Mortes");
+    	setTitle("Miscelânea > Gráficos > Causa Mortes");
+    }
+    
+    @FXML
+    protected void handleGraficoEficienciaReprodutivaIndividual() {
+    	openFormAsPopUp("view/painel/EficienciaReprodutivaChart.fxml", "Eficiência Reprodutiva");
+    	setTitle("Miscelânea > Gráficos > Eficiência Reprodutiva");
+    }
+    
+    @FXML
+    protected void handleGraficoEficienciaReprodutivaMap() {
+    	openFormAsPopUp("view/painel/EficienciaReprodutivaMap.fxml", "Eficiência Reprodutiva");
+    	setTitle("Miscelânea > Gráficos > Eficiência Reprodutiva");
     }
     
     @FXML
