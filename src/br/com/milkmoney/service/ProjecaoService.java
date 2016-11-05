@@ -33,6 +33,11 @@ public class ProjecaoService{
 	@Autowired private ProducaoLeiteService producaoLeiteService;
 	@Autowired private PrecoLeiteDao precoLeiteDao;
 	
+	private BigDecimal produtividade;
+	private BigDecimal precoLeite;
+	
+	private boolean isSimulacao = false;
+	
 	/*
 	 * JAN - FEV - MAR - ABR - MAI - JUN - JUL - AGO - SET - OUT - NOV - DEZ
 	 * |------| 10
@@ -98,18 +103,24 @@ public class ProjecaoService{
 	}
 	
 	private void setFaturamento(Projecao projecao){
-		PrecoLeite precoLeite = precoLeiteDao.findByMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
 		
-		if ( precoLeite != null ){
-			projecao.setFaturamentoMensal(precoLeite.getValor().multiply(projecao.getProducaoMensal()).setScale(1, RoundingMode.UP));
-			/*projecao.setPercentualVariacaFaturamentoMensal(projecao.getFaturamentoMensal()
-					.subtract(getFaturamentoMensalAtual())
-					.multiply(BigDecimal.valueOf(100))
-					.divide(getFaturamentoMensalAtual(), 1, RoundingMode.UP));*/
+		if ( isSimulacao() ){
+			projecao.setFaturamentoMensal(precoLeite.multiply(projecao.getProducaoMensal()).setScale(1, RoundingMode.UP));
+		}else{
+			PrecoLeite precoLeite = precoLeiteDao.findByMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
+			
+			if ( precoLeite != null ){
+				projecao.setFaturamentoMensal(precoLeite.getValor().multiply(projecao.getProducaoMensal()).setScale(1, RoundingMode.UP));
+			}			
 		}
+		
 	}
 
-	private BigDecimal getProducaoDiariaIndividualAtual(){
+	public BigDecimal getProducaoDiariaIndividualAtual(){
+		
+		if ( isSimulacao() ){//retorna o valor setado pelo usuário para a simulação
+			return getProdutividade();
+		}
 		
 		Date inicioMesAtual = DateUtil.asDate(LocalDate.now().withDayOfMonth(01));
 		Date fimMesAtual = DateUtil.asDate(LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth()));
@@ -129,45 +140,6 @@ public class ProjecaoService{
 		
 	}
 
-	@SuppressWarnings("unused")
-	private BigDecimal calculaPercentualVariacaoNumeroAnimaisSecos(int numeroAnimaisSecosPrevistos){
-		int animaisSecos = animalDao.countAllFemeasSecas(DateUtil.today).intValue();
-		
-		if ( animaisSecos > 0 )
-			return BigDecimal.valueOf((( numeroAnimaisSecosPrevistos - animaisSecos ) * 100) / animaisSecos);
-		
-		return BigDecimal.valueOf(numeroAnimaisSecosPrevistos * 100).setScale(2, RoundingMode.UP);
-		
-	}
-
-	@SuppressWarnings("unused")
-	private BigDecimal calculaPercentualVariacaoNumeroAnimaisLactacao(int numeroAnimaisLactacaoPrevistos){
-		int animaisLactacao = animalDao.countAllFemeasEmLactacao(DateUtil.today).intValue();
-		
-		if ( animaisLactacao > 0 )
-			return BigDecimal.valueOf((( numeroAnimaisLactacaoPrevistos - animaisLactacao ) * 100) / animaisLactacao);
-		
-		return BigDecimal.valueOf(numeroAnimaisLactacaoPrevistos * 100).setScale(2, RoundingMode.UP);
-		 
-	}
-	
-	@SuppressWarnings("unused")
-	private BigDecimal calculaPercentualVariacaoProducaoDiaria(BigDecimal producaoDiariaPrevista){
-		BigDecimal producaoDiariaAtual = getProducaoDiariaAtual();
-		
-		if ( producaoDiariaAtual.compareTo(BigDecimal.ZERO) > 0 ){
-			return producaoDiariaPrevista
-					.subtract(producaoDiariaAtual)
-					.multiply(BigDecimal.valueOf(100))
-					.divide(producaoDiariaAtual).setScale(2, RoundingMode.UP);
-		}
-		
-		return producaoDiariaPrevista
-				.multiply(BigDecimal.valueOf(100))
-				.setScale(2, RoundingMode.UP);
-		
-	}
-	
 	private BigDecimal getFaturamentoMensalAtual(){
 		PrecoLeite precoLeite = precoLeiteDao.findByMesAno(LocalDate.now().getMonthValue(), LocalDate.now().getYear());
 		
@@ -209,6 +181,34 @@ public class ProjecaoService{
 		
 	}
 	
+	// GETS E SETS
+	
+	public BigDecimal getProdutividade() {
+			return produtividade;
+	}
+	
+	public void setProdutividade(BigDecimal produtividade) {
+		this.produtividade = produtividade;
+	}
+	
+	public BigDecimal getPrecoLeite() {
+		return precoLeite;
+	}
+	
+	public void setPrecoLeite(BigDecimal precoLeite) {
+		this.precoLeite = precoLeite;
+	}
+	
+	public boolean isSimulacao() {
+		return isSimulacao;
+	}
+	
+	public void setSimulacao(boolean isSimulacao) {
+		this.isSimulacao = isSimulacao;
+	}
+	
+	//============	CHARTS ===================
+	
     public ObservableList<Series<String, Number>> getDataChartAnimaisLactacao(List<Projecao> projecoes){
 
     	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
@@ -237,7 +237,7 @@ public class ProjecaoService{
     	
     }
     
-    public ObservableList<Series<String, Number>> getDataChartAnimaisSecos(List<Projecao> projecoes){
+	public ObservableList<Series<String, Number>> getDataChartAnimaisSecos(List<Projecao> projecoes){
 
     	ObservableList<Series<String, Number>> series = FXCollections.observableArrayList();
     	

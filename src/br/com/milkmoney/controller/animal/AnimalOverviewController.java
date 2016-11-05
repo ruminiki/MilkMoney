@@ -51,7 +51,6 @@ import br.com.milkmoney.controller.morteAnimal.MorteAnimalFormController;
 import br.com.milkmoney.controller.painel.EficienciaReprodutivaMapController;
 import br.com.milkmoney.controller.parto.PartoFormController;
 import br.com.milkmoney.controller.producaoIndividual.ProducaoIndividualOverviewController;
-import br.com.milkmoney.controller.projecao.ProjecaoOverviewController;
 import br.com.milkmoney.controller.raca.RacaOverviewController;
 import br.com.milkmoney.controller.reports.GenericPentahoReport;
 import br.com.milkmoney.controller.vendaAnimal.VendaAnimalFormController;
@@ -141,7 +140,6 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@Autowired private ProducaoIndividualOverviewController producaoIndividualOverviewController;
 	@Autowired private PartoFormController partoFormController;
 	@Autowired private EvolucaoRebanhoOverviewController evolucaoRebanhoOverviewController;
-	@Autowired private ProjecaoOverviewController projecaoRebanhoOverviewController;
 	@Autowired private ArvoreGenealogicaOverviewController arvoreGenealogicaOverviewController;
 	@Autowired private MovimentacaoAnimalLoteFormController movimentacaoAnimalLoteFormController;
 	@Autowired private ConfirmacaoPrenhezEmLoteFormController confirmacaoPrenhezEmLoteFormController;
@@ -744,10 +742,4 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private void handleExibirEvolucaoRebanho(){
 		evolucaoRebanhoOverviewController.showForm();
 	}
-	
-	@FXML
-	private void handleExibirProjecaoRebanho(){
-		projecaoRebanhoOverviewController.showForm();
-	}
-	
 }

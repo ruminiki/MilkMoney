@@ -87,23 +87,22 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		List<Animal> animais = animalDao.findAnimaisParaCalculoEficiencia(dataInicio, dataFim, Limit.UNLIMITED);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		double DVGANIMAL, DVEANIMAL;
-		DVGANIMAL=DVEANIMAL=0;
+		//double DVGANIMAL, DVEANIMAL;
+		//DVGANIMAL=DVEANIMAL=0;
 		
 		System.out.println(sdf.format(data) + "\n");
 		for ( Animal animal : animais ){
 			
-			DVGANIMAL = DVG;
-			DVEANIMAL = DVE;
+			//DVGANIMAL = DVG;
+			//DVEANIMAL = DVE;
 			
 			getDVGAndDVEAnimal(animal, dataInicio, dataFim);
-			
-			DVGANIMAL = DVG - DVGANIMAL;
-			DVEANIMAL = DVE - DVEANIMAL;
+			//DVGANIMAL = DVG - DVGANIMAL;
+			//DVEANIMAL = DVE - DVEANIMAL;
 			
 			//System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
 			
-			getValue(animal);
+			//getValue(animal);
 		}
 		
 		N = animais.size();

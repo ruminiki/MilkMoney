@@ -9,19 +9,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="560.0" prefWidth="1281.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.projecao.ProjecaoOverviewController">
+<AnchorPane prefHeight="622.0" prefWidth="1281.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.projecao.ProjecaoOverviewController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" prefHeight="391.0" prefWidth="810.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <HBox alignment="CENTER" minHeight="30.0" style="-fx-border-color: #CCC;">
                <children>
-                  <Label fx:id="lblHeader" text="DIMENSIONAMENTO DO REBANHO E PRODUÇÃO" />
+                  <Label fx:id="lblHeader" text="Projeção de produção e faturamento" />
                </children>
             </HBox>
             <HBox spacing="5.0" VBox.vgrow="SOMETIMES">
                <children>
                   <VBox maxWidth="705.0" spacing="5.0" VBox.vgrow="SOMETIMES">
                      <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="705.0" spacing="3.0">
+                           <children>
+                              <Label text="Produtividade: " />
+                              <TextField fx:id="inputProdutividade" alignment="CENTER" prefWidth="75.0" />
+                              <Label text="Preço Leite: " />
+                              <TextField fx:id="inputPrecoLeite" alignment="CENTER" prefWidth="75.0" />
+                              <Button mnemonicParsing="false" onAction="#simular" prefHeight="25.0" prefWidth="72.0" text="Simular" />
+                           </children>
+                        </HBox>
                         <TableView fx:id="table" focusTraversable="false" maxHeight="270.0" maxWidth="705.0" minHeight="270.0" minWidth="705.0" prefHeight="305.0">
                           <columns>
                               <TableColumn fx:id="periodoColumn" maxWidth="100.0" minWidth="100.0" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Período" />

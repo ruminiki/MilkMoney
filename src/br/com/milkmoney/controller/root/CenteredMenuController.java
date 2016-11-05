@@ -200,7 +200,7 @@ public class CenteredMenuController {
 		
         //====== relatórios linha 1 ======
         
-        VBoxOption vBoxRelatorioFichaAnimais = new VBoxOption("img/menu/ficha_animais_48.png", "Ficha Animais");
+        VBoxOption vBoxRelatorioFichaAnimais = new VBoxOption(null, "Ficha Animais");
         vBoxRelatorioFichaAnimais.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -209,7 +209,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioFichaAnimais);
 		
-		VBoxOption vBoxRelatorioRankingAnimais = new VBoxOption("img/menu/ranking_animais_48.png", "Ranking Animais");
+		VBoxOption vBoxRelatorioRankingAnimais = new VBoxOption(null, "Ranking Animais");
 		vBoxRelatorioRankingAnimais.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -218,7 +218,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioRankingAnimais);
 		
-		VBoxOption vBoxRelatorioIndicadores = new VBoxOption("img/menu/indicadores_48.png", "Indicadores");
+		VBoxOption vBoxRelatorioIndicadores = new VBoxOption(null, "Indicadores");
 		vBoxRelatorioIndicadores.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -227,7 +227,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioIndicadores);
 		
-		VBoxOption vBoxRelatorioResumoAtividade = new VBoxOption("img/menu/resumo_atividade_48.png", "Resumo da Atividade");
+		VBoxOption vBoxRelatorioResumoAtividade = new VBoxOption(null, "Resumo da Atividade");
 		vBoxRelatorioResumoAtividade.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -236,7 +236,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioResumoAtividade);
 		
-		VBoxOption vBoxRelatorioProducao = new VBoxOption("img/menu/producao_48.png", "Produção");
+		VBoxOption vBoxRelatorioProducao = new VBoxOption(null, "Produção");
 		vBoxRelatorioProducao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -245,7 +245,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioProducao);
 		
-		VBoxOption vBoxRelatorioCoberturas = new VBoxOption("img/menu/coberturas_48.png", "Coberturas");
+		VBoxOption vBoxRelatorioCoberturas = new VBoxOption(null, "Coberturas");
 		vBoxRelatorioCoberturas.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -254,7 +254,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine1.getChildren().add(vBoxRelatorioCoberturas);
 		
-		VBoxOption vBoxRelatorioConfirmacaoPrenhez = new VBoxOption("img/menu/confirmacao_prenhez_48.png", "Confirmações de Prenhez");
+		VBoxOption vBoxRelatorioConfirmacaoPrenhez = new VBoxOption(null, "Confirmações de Prenhez");
 		vBoxRelatorioConfirmacaoPrenhez.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -265,7 +265,7 @@ public class CenteredMenuController {
 		
 		//====== relatórios linha 2 ======
 		
-		VBoxOption vBoxRelatorioPartosPrevistos = new VBoxOption("img/menu/partos_previstos_48.png", "Partos Previstos");
+		VBoxOption vBoxRelatorioPartosPrevistos = new VBoxOption(null, "Partos Previstos");
 		vBoxRelatorioPartosPrevistos.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -274,7 +274,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioPartosPrevistos);
 		
-		VBoxOption vBoxRelatorioPartosRealizados = new VBoxOption("img/menu/partos_realizados_48.png", "Partos Realizados");
+		VBoxOption vBoxRelatorioPartosRealizados = new VBoxOption(null, "Partos Realizados");
 		vBoxRelatorioPartosRealizados.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -283,7 +283,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioPartosRealizados);
 		
-		VBoxOption vBoxRelatorioAbortos = new VBoxOption("img/menu/abortos_48.png", "Abortos");
+		VBoxOption vBoxRelatorioAbortos = new VBoxOption(null, "Abortos");
 		vBoxRelatorioAbortos.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -292,7 +292,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioAbortos);
 		
-		VBoxOption vBoxRelatorioEncerramentoLactacao = new VBoxOption("img/menu/encerramento_lactacao_48.png", "Encerramentos Lactação");
+		VBoxOption vBoxRelatorioEncerramentoLactacao = new VBoxOption(null, "Encerramentos Lactação");
 		vBoxRelatorioEncerramentoLactacao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -301,7 +301,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioEncerramentoLactacao);
 		
-		VBoxOption vBoxRelatorioProximosEncerramentosLactacao = new VBoxOption("img/menu/proximos_encerramentos_48.png", "Próximos Encerramentos Lactação");
+		VBoxOption vBoxRelatorioProximosEncerramentosLactacao = new VBoxOption(null, "Próximos Encerramentos Lactação");
 		vBoxRelatorioProximosEncerramentosLactacao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -310,7 +310,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioProximosEncerramentosLactacao);
 		
-		VBoxOption vBoxRelatorioControleLeiteiro = new VBoxOption("img/menu/controle_leiteiro_48.png", "Controle Leiteiro");
+		VBoxOption vBoxRelatorioControleLeiteiro = new VBoxOption(null, "Controle Leiteiro");
 		vBoxRelatorioControleLeiteiro.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -319,7 +319,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine2.getChildren().add(vBoxRelatorioControleLeiteiro);
 		
-		VBoxOption vBoxRelatorioProcedimentosSanitarios = new VBoxOption("img/menu/procedimentos_sanitarios_48.png", "Procedimentos Sanitários");
+		VBoxOption vBoxRelatorioProcedimentosSanitarios = new VBoxOption(null, "Procedimentos Sanitários");
 		vBoxRelatorioProcedimentosSanitarios.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -330,7 +330,7 @@ public class CenteredMenuController {
 		
 		//====== relatórios linha 3 ======
 		
-		VBoxOption vBoxRelatorioServicos = new VBoxOption("img/menu/servicos_48.png", "Serviços");
+		VBoxOption vBoxRelatorioServicos = new VBoxOption(null, "Serviços");
 		vBoxRelatorioServicos.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -339,7 +339,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine3.getChildren().add(vBoxRelatorioServicos);
 		
-		VBoxOption vBoxRelatorioLancamentosFinanceiros = new VBoxOption("img/menu/lancamentos_financeiros_48.png", "Lançamentos Financeiros");
+		VBoxOption vBoxRelatorioLancamentosFinanceiros = new VBoxOption(null, "Lançamentos Financeiros");
 		vBoxRelatorioLancamentosFinanceiros.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -348,7 +348,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine3.getChildren().add(vBoxRelatorioLancamentosFinanceiros);
 		
-		VBoxOption vBoxRelatorioResumoFinanceiro = new VBoxOption("img/menu/resumo_financeiro_48.png", "Resumo Financeiro");
+		VBoxOption vBoxRelatorioResumoFinanceiro = new VBoxOption(null, "Resumo Financeiro");
 		vBoxRelatorioResumoFinanceiro.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -357,7 +357,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine3.getChildren().add(vBoxRelatorioResumoFinanceiro);
 		
-		VBoxOption vBoxFormularioCampoRegistroParto = new VBoxOption("img/menu/registro_partos_48.png", "Formulário Campo Registro Parto");
+		VBoxOption vBoxFormularioCampoRegistroParto = new VBoxOption(null, "Formulário Campo Registro Parto");
 		vBoxFormularioCampoRegistroParto.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -366,7 +366,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine3.getChildren().add(vBoxFormularioCampoRegistroParto);
 		
-		VBoxOption vBoxFormularioCampoRegistroCobertura = new VBoxOption("img/menu/registro_coberturas_48.png", "Formulário Campo Registro Coberturas");
+		VBoxOption vBoxFormularioCampoRegistroCobertura = new VBoxOption(null, "Formulário Campo Registro Coberturas");
 		vBoxFormularioCampoRegistroCobertura.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
@@ -375,7 +375,7 @@ public class CenteredMenuController {
         });
 		hbRelatoriosLine3.getChildren().add(vBoxFormularioCampoRegistroCobertura);
 		
-		VBoxOption vBoxFormularioCampoRegistroProducao = new VBoxOption("img/menu/registro_producao_48.png", "Formulário Campo Registro Produção");
+		VBoxOption vBoxFormularioCampoRegistroProducao = new VBoxOption(null, "Formulário Campo Registro Produção");
 		vBoxFormularioCampoRegistroProducao.setOnMouseReleased(new EventHandler<Event>() {
         	@Override
         	public void handle(Event event) {
