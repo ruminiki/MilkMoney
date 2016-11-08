@@ -103,7 +103,7 @@ public class AnimalService implements IService<Integer, Animal>{
 		System.out.println("defaultSearch: " + Duration.between(start, end));
 		return result;
 	}
-
+	
 	public ObservableList<Animal> findAllFemeasAtivasAsObservableList(Date data, int limit) {
 		Instant start = Instant.now();
 		ObservableList<Animal> result = FXCollections.observableArrayList(dao.findAllFemeasAtivas(data, limit));

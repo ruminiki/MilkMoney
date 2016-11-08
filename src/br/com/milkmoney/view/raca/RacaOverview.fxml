@@ -11,6 +11,7 @@
 
 <AnchorPane maxHeight="311.0" minWidth="672.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.raca.RacaOverviewController">
    <children>
+      <Pagination prefHeight="200.0" prefWidth="200.0" />
       <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TextField fx:id="inputPesquisa" alignment="CENTER" minWidth="250.0" prefHeight="30.0" promptText="descrição">

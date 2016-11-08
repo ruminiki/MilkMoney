@@ -38,7 +38,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="48 meses ou mais">
+                              <Label text="19 meses ou mais">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -57,7 +57,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="entre 47 e 24 meses">
+                              <Label text="entre 16 e 19 meses">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -76,7 +76,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="entre 23 e 16 meses">
+                              <Label text="entre 14 e 16 meses">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -95,7 +95,7 @@
                                     <Font size="24.0" />
                                  </font>
                               </Label>
-                              <Label text="entre 15 e 12 meses">
+                              <Label text="entre 12 e 14 meses">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
