@@ -106,7 +106,7 @@ public class Lote extends AbstractEntity implements Serializable {
 	//      inverseJoinColumns={@JoinColumn(name="animal", referencedColumnName="id")})
 	//@OneToMany(orphanRemoval=false, targetEntity=Animal.class, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	//@JoinColumn(name="lote")
-	@OneToMany(fetch = FetchType.LAZY, targetEntity=Animal.class, cascade={CascadeType.MERGE, CascadeType.REMOVE})
+	@OneToMany(fetch = FetchType.LAZY, targetEntity=Animal.class, cascade={CascadeType.MERGE})
 	@JoinColumn(name="lote")
 	public List<Animal> getAnimais() {
 		return animais;

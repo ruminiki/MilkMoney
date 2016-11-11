@@ -65,10 +65,12 @@ public class MovimentacaoAnimalLoteFormController extends AbstractFormController
 	protected void handleSave() {
 		if ( loteSelecionado != null ){
 			for ( Animal a : animaisSelecionados ){
-				a.setLote(loteSelecionado);
+				if ( a.getLote() == null || (a.getLote() != null && !(a.getLote().getId() == loteSelecionado.getId())) ){
+					a.setLote(loteSelecionado);
+					loteSelecionado.getAnimais().add(a);
+				}
 			}
-			
-			loteSelecionado.getAnimais().addAll(animaisSelecionados);
+
 			service.save(loteSelecionado);
 			
 			super.closeForm();
