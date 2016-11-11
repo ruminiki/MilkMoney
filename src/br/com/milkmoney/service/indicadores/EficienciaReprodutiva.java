@@ -177,9 +177,14 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 				//       |---------------------------|(período avaliado)
 				// IC|---**************************** (cobertura não confirmada e sem parto)
 				
-				//se o parto já deveria ter ocorrido, não considera pois o produtor esqueceu de marcar
+				//se a previsão para o parto for maior que a data atual, conta até a data atual
 				if ( cobertura.getPrevisaoParto().compareTo(dataFim) > 0 ){
 					DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(dataFim));						
+				}
+				
+				//se o parto já deveria ter ocorrido, considera a gestação até a data prevista para o parto
+				if ( cobertura.getPrevisaoParto().compareTo(dataFim) <= 0 ){
+					DVG += ChronoUnit.DAYS.between(DateUtil.asLocalDate(cobertura.getData()), DateUtil.asLocalDate(cobertura.getPrevisaoParto()));						
 				}
 				
 			}
