@@ -96,6 +96,15 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 			SQL.append("(select count(*) from Parto p where p.cobertura.femea = a) " + params.get(AnimalService.FILTER_NUMERO_PARTOS) + " and ");
 		}
 		
+		if ( params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA) != null ){
+			params.put(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA, params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA).replaceAll(" ", ""));
+			if ( !params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA).matches("(?i)>=[0-9]+|<=[0-9]+|=[0-9]+|<[0-9]+|>[0-9]+") ){
+				params.put(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA, "= " + params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA).replaceAll("[^0-9]", ""));
+			}
+			SQL.append("exists (select 1 from FichaAnimal f where f.animal = a and ");
+			SQL.append("f.eficienciaReprodutiva " + params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA) + ") and ");
+		}
+		
 		if ( params.get(AnimalService.FILTER_COBERTAS) != null ){
 			if ( params.get(AnimalService.FILTER_COBERTAS).equals(SimNao.NAO) ){
 				SQL.append("not ");

@@ -103,7 +103,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 						lblIdadePrimeiraCobertura, lblDiasEmLactacao, lblDiasEmAberto, lblIntervaloPrimeiroParto, lblDataSecar,
 						lblAnimal, lblDataUltimoParto, lblDataProximoParto, lblSituacaoUltimaCobertura, lblPai, lblMae, 
 						lblEmLactacao, lblSecas, lblNaoDefinidas, lblTotalVacas, lblBezerras, lblNovilhas, lblNumeroLactacoes, lblMediaProducao, 
-						lblUltimoTratamento, lblLote, lblEficienciaReprodutiva;
+						lblUltimoTratamento, lblLote, lblEficienciaReprodutiva, lblDiasGestacaoPeriodo;
 	@FXML private Hyperlink hlVisualizarUltimoParto, hlSecarAnimal, hlRegistrarParto, hlEditarCobertura, hlRegistrarCobertura, hlConfirmarPrenhez;
 	@FXML private VBox sideBar;
 	
@@ -113,7 +113,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	@FXML private ChoiceBox<String> inputSituacaoCobertura;
 	@FXML private ChoiceBox<Lote> inputLote;
 	@FXML private ChoiceBox<Raca> inputRaca;
-	@FXML private TextField inputIdadeDe, inputIdadeAte, inputDiasPosParto, inputDiasPosCobertura, inputNumeroPartos, inputSecarEmXDias;
+	@FXML private TextField inputIdadeDe, inputIdadeAte, inputDiasPosParto, inputDiasPosCobertura, inputNumeroPartos, inputSecarEmXDias, inputEficienciaReprodutiva;
 	
 	//services
 	@Autowired private MorteAnimalService morteAnimalService;
@@ -253,23 +253,49 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	private void handleEnterFilter(KeyEvent event){
 		
 		if ( event.getCode().equals(KeyCode.ENTER) ) {
-			HashMap<String, String> params = new HashMap<String, String>();
-			params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
-			params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);
-			params.put(AnimalService.FILTER_IDADE_DE, !inputIdadeDe.getText().isEmpty() ? inputIdadeDe.getText() : null);
-			params.put(AnimalService.FILTER_IDADE_ATE, !inputIdadeAte.getText().isEmpty() ? inputIdadeAte.getText() : null);
-			params.put(AnimalService.FILTER_LOTE, inputLote.getValue() != null ? String.valueOf(inputLote.getValue().getId()) : null);
-			params.put(AnimalService.FILTER_RACA, inputRaca.getValue() != null ? String.valueOf(inputRaca.getValue().getId()) : null);
-			params.put(AnimalService.FILTER_SEXO, inputSexo.getValue() != null ? inputSexo.getValue() : null);
-			params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
-			params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
-			params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
-			params.put(AnimalService.FILTER_COBERTAS, inputCobertaInseminada.getValue() != null ? inputCobertaInseminada.getValue() : null);
-			params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
-			params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
-			//params.put(AnimalService.FILTER_NUMERO_SERVICOS, (">=2"));
-			table.getItems().setAll( ((AnimalService)service).fill(params) );
-			updateLabelNumRegistros();	
+			MainApp.setCursor(Cursor.WAIT);
+			Task<Void> task = new Task<Void>() {
+				@Override
+				public Void call() throws InterruptedException {
+					try{
+						HashMap<String, String> params = new HashMap<String, String>();
+						params.put(AnimalService.FILTER_SITUACAO_ANIMAL, (inputSituacaoAnimal.getValue() != null ? inputSituacaoAnimal.getValue() : null));
+						params.put(AnimalService.FILTER_SITUACAO_COBERTURA, inputSituacaoCobertura.getValue() != null ? inputSituacaoCobertura.getValue() : null);
+						params.put(AnimalService.FILTER_IDADE_DE, !inputIdadeDe.getText().isEmpty() ? inputIdadeDe.getText() : null);
+						params.put(AnimalService.FILTER_IDADE_ATE, !inputIdadeAte.getText().isEmpty() ? inputIdadeAte.getText() : null);
+						params.put(AnimalService.FILTER_LOTE, inputLote.getValue() != null ? String.valueOf(inputLote.getValue().getId()) : null);
+						params.put(AnimalService.FILTER_RACA, inputRaca.getValue() != null ? String.valueOf(inputRaca.getValue().getId()) : null);
+						params.put(AnimalService.FILTER_SEXO, inputSexo.getValue() != null ? inputSexo.getValue() : null);
+						params.put(AnimalService.FILTER_DIAS_POS_PARTO, !inputDiasPosParto.getText().isEmpty() ? inputDiasPosParto.getText() : null);
+						params.put(AnimalService.FILTER_DIAS_POS_COBERTURA, !inputDiasPosCobertura.getText().isEmpty() ? inputDiasPosCobertura.getText() : null);
+						params.put(AnimalService.FILTER_NUMERO_PARTOS, !inputNumeroPartos.getText().isEmpty() ? inputNumeroPartos.getText() : null);
+						params.put(AnimalService.FILTER_COBERTAS, inputCobertaInseminada.getValue() != null ? inputCobertaInseminada.getValue() : null);
+						params.put(AnimalService.FILTER_SECAR_EM_X_DIAS, !inputSecarEmXDias.getText().isEmpty() ? inputSecarEmXDias.getText() : null);
+						params.put(AnimalService.FILTER_FINALIDADE_ANIMAL, (inputFinalidadeAnimal.getValue() != null ? inputFinalidadeAnimal.getValue() : null));
+						params.put(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA, !inputEficienciaReprodutiva.getText().isEmpty() ? inputEficienciaReprodutiva.getText() : null);
+						//params.put(AnimalService.FILTER_NUMERO_SERVICOS, (">=2"));
+						table.getItems().setAll( ((AnimalService)service).fill(params) );
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					return null;	
+				}
+			};
+		
+			Thread thread = new Thread(task);				
+			thread.setDaemon(true);
+			thread.start();
+			
+			task.setOnSucceeded(e -> {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						updateLabelNumRegistros();
+					}
+				});
+				MainApp.setCursor(Cursor.DEFAULT);
+			});
+			
 		}
 		
 		if (event.getCode().equals(KeyCode.ESCAPE)) {
@@ -294,6 +320,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 		inputDiasPosCobertura.clear();
 		inputNumeroPartos.clear(); 
 		inputSecarEmXDias.clear();
+		inputEficienciaReprodutiva.clear();
 
 		if ( inputPesquisa != null ){
 			inputPesquisa.clear();
@@ -336,7 +363,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 									lblUltimoTratamento.setText(fichaAnimal.getUltimoTratamento());
 									lblNumeroLactacoes.setText(fichaAnimal.getNumeroLactacoes() > 0 ? String.valueOf(fichaAnimal.getNumeroLactacoes()) : "--");
 									lblEficienciaReprodutiva.setText(fichaAnimal.getEficienciaReprodutiva() + "%");
-									
+									lblDiasGestacaoPeriodo.setText(String.valueOf(fichaAnimal.getDiasGestacaoPeriodo()));
 									//links
 									hlVisualizarUltimoParto.setVisible(fichaAnimal.getDataUltimoParto() != null);
 									if (fichaAnimal.getDataUltimoParto() != null){

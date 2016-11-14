@@ -18,6 +18,8 @@ public class EficienciaReprodutivaAnimal extends AbstractFichaAnimal {
 		Animal animal     = (Animal) params[1];
 		
 		ficha.setEficienciaReprodutiva(eficienciaReprodutiva.getValue(animal));
+		ficha.setDiasGestacaoPeriodo(Double.valueOf(eficienciaReprodutiva.getDVG()).intValue());
+		ficha.setDiasVacaExcessoPeriodo(Double.valueOf(eficienciaReprodutiva.getDVE()).intValue());
 		
 	}
 

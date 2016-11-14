@@ -117,21 +117,12 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		N = 1;
 		DG = DVG = DVE = 0;
 		
-		double DVGANIMAL, DVEANIMAL;
-		DVGANIMAL=DVEANIMAL=0;
-		
 		//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Date dataInicio = DateUtil.asDate(DateUtil.asLocalDate(data).minusYears(P));
 		Date dataFim = data;
 		
-		DVGANIMAL = DVG;
-		DVEANIMAL = DVE;
-		
 		getDVGAndDVEAnimal(animal, dataInicio, dataFim);
-		
-		DVGANIMAL = DVG - DVGANIMAL;
-		DVEANIMAL = DVE - DVEANIMAL;
 		
 		//System.out.println(animal.getNumeroNome() + ";" + sdf.format(dataInicio) + ";" + sdf.format(dataFim) + ";" + DVEANIMAL + ";" + DVGANIMAL );
 		
@@ -253,6 +244,12 @@ public class EficienciaReprodutiva extends AbstractCalculadorIndicador{
 		}
 		return BigDecimal.ZERO;
 	}
-	
-	
+
+	public double getDVG() {
+		return DVG;
+	}
+
+	public double getDVE() {
+		return DVE;
+	}
 }

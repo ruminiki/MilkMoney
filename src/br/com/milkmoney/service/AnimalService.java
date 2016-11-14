@@ -38,21 +38,23 @@ public class AnimalService implements IService<Integer, Animal>{
 	@Autowired private PartoDao partoDao;
 	@Autowired private CoberturaDao coberturaDao;
 	@Autowired private ParametroDao parametroDao;
+	@Autowired private FichaAnimalService fichaAnimalService;
 	
-	public static final String FILTER_SITUACAO_ANIMAL     = "FILTER_SITUACAO_ANIMAL";
-	public static final String FILTER_SITUACAO_COBERTURA  = "FILTER_SITUACAO_COBERTURA";
-	public static final String FILTER_LOTE                = "FILTER_LOTE";
-	public static final String FILTER_SEXO                = "FILTER_SEXO";
-	public static final String FILTER_RACA                = "FILTER_RACA";
-	public static final String FILTER_IDADE_DE            = "FILTER_IDADE_DE";
-	public static final String FILTER_IDADE_ATE           = "FILTER_IDADE_ATE";
-	public static final String FILTER_DIAS_POS_PARTO      = "FILTER_DIAS_POS_PARTO";
-	public static final String FILTER_DIAS_POS_COBERTURA  = "FILTER_DIAS_POS_COBERTURA";
-	public static final String FILTER_NUMERO_PARTOS       = "FILTER_NUMERO_PARTOS";
-	public static final String FILTER_COBERTAS 			  = "FILTER_COBERTAS";
-	public static final String FILTER_SECAR_EM_X_DIAS     = "FILTER_SECAR_EM_X_DIAS";
-	public static final String FILTER_FINALIDADE_ANIMAL   = "FILTER_FINALIDADE_ANIMAL";
-	public static final String FILTER_NUMERO_SERVICOS     = "FILTER_NUMERO_SERVICOS";
+	public static final String FILTER_EFICIENCIA_REPRODUTIVA = "FILTER_EFICIENCIA_REPRODUTIVA";
+	public static final String FILTER_SITUACAO_ANIMAL        = "FILTER_SITUACAO_ANIMAL";
+	public static final String FILTER_SITUACAO_COBERTURA     = "FILTER_SITUACAO_COBERTURA";
+	public static final String FILTER_LOTE                   = "FILTER_LOTE";
+	public static final String FILTER_SEXO                   = "FILTER_SEXO";
+	public static final String FILTER_RACA                   = "FILTER_RACA";
+	public static final String FILTER_IDADE_DE               = "FILTER_IDADE_DE";
+	public static final String FILTER_IDADE_ATE              = "FILTER_IDADE_ATE";
+	public static final String FILTER_DIAS_POS_PARTO         = "FILTER_DIAS_POS_PARTO";
+	public static final String FILTER_DIAS_POS_COBERTURA     = "FILTER_DIAS_POS_COBERTURA";
+	public static final String FILTER_NUMERO_PARTOS          = "FILTER_NUMERO_PARTOS";
+	public static final String FILTER_COBERTAS 			     = "FILTER_COBERTAS";
+	public static final String FILTER_SECAR_EM_X_DIAS        = "FILTER_SECAR_EM_X_DIAS";
+	public static final String FILTER_FINALIDADE_ANIMAL      = "FILTER_FINALIDADE_ANIMAL";
+	public static final String FILTER_NUMERO_SERVICOS        = "FILTER_NUMERO_SERVICOS";
 	
 	@Override
 	@Transactional
@@ -266,6 +268,10 @@ public class AnimalService implements IService<Integer, Animal>{
 	}
 
 	public List<Animal> fill(HashMap<String, String> params) {
+		//se buscar pela eficiência, atualiza o cálculo antes
+		if ( params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA) != null ){
+			fichaAnimalService.generateFichaAnimal(findAll(),fichaAnimalService.getField(FichaAnimalService.EFICIENCIA_REPRODUTIVA_ANIMAL));
+		}
 		return FXCollections.observableArrayList(dao.superSearch(params, Limit.UNLIMITED));
 	}
 

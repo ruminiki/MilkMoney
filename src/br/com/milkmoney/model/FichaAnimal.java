@@ -49,6 +49,8 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 	private Date       dataPrevisaoEncerramentoLactacao;
 	private BigDecimal eficienciaReprodutiva;
 	private int        mesesProduzindo;
+	private int        diasGestacaoPeriodo;
+	private int        diasVacaExcessoPeriodo;
 	private BigDecimal mesesProducaoIdeal;
 	private BigDecimal eficienciaTempoProducao;
 	@Transient
@@ -289,6 +291,22 @@ public class FichaAnimal extends AbstractEntity implements Serializable{
 
 	public void setEficienciaTempoProducao(BigDecimal eficienciaTempoProducao) {
 		this.eficienciaTempoProducao = eficienciaTempoProducao;
+	}
+
+	public int getDiasGestacaoPeriodo() {
+		return diasGestacaoPeriodo;
+	}
+
+	public void setDiasGestacaoPeriodo(int diasGestacaoPeriodo) {
+		this.diasGestacaoPeriodo = diasGestacaoPeriodo;
+	}
+
+	public int getDiasVacaExcessoPeriodo() {
+		return diasVacaExcessoPeriodo;
+	}
+
+	public void setDiasVacaExcessoPeriodo(int diasVacaExcessoPeriodo) {
+		this.diasVacaExcessoPeriodo = diasVacaExcessoPeriodo;
 	}
 	
 }
