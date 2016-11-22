@@ -51,16 +51,21 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 		{
 	        put(1,0D);
 	        put(2,12.5D);
-	        put(3,25D);
-	        put(4,37.5D);
-	        put(5,50D);
-	        put(6,62.5D);
-	        put(7,75D);
-	        put(8,87.5D);
-	        put(9,100D);
+	        put(3,37.5D);
+	        put(4,62.5D);
+	        put(5,87.5D);
+	        put(6,100D);
 		}
 	};
-
+	
+	private LinkedHashMap<Integer, Double> pointsZero = new LinkedHashMap<Integer, Double>(){
+		{
+	        put(1,25D);
+	        put(2,50D);
+	        put(3,75D);
+		}
+	};
+	
 	@FXML
 	public void initialize() {
 
@@ -169,6 +174,21 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 
 		}
 
+		//se tiverem pontos no gráfico sem animais, tem que setar zero 0
+		Collection<Double> points = pointsChart.values();
+		for ( Double point : points ) {
+			if ( !mapPoints.containsKey(point) ) {
+				mapPoints.put(point, 0D);
+			}
+		}
+		//marca os pontos que devem estar zerados - entre os quadrantes
+		points = pointsZero.values();
+		for ( Double point : points ) {
+			if ( !mapPoints.containsKey(point) ) {
+				mapPoints.put(point, 0D);
+			}
+		}
+		
 		XYChart.Series<Number, Number> serie = new XYChart.Series<Number, Number>();
 		serie.setName("Percentual rebanho");
 
