@@ -23,14 +23,13 @@ public class ConfiguracaoIndicadorDao extends AbstractGenericDao<Integer, Config
 		
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<ConfiguracaoIndicador> findByYear(Indicador indicador, int ano) {
+	public ConfiguracaoIndicador findByYear(Indicador indicador, int ano) {
 
 		Query query = entityManager.createQuery("SELECT r FROM ConfiguracaoIndicador r WHERE ano = :ano and r.indicador = :indicador order by r.indicador.ordem");
 		query.setParameter("ano", ano);
 		query.setParameter("indicador", indicador);
 		
-		return query.getResultList();
+		return (ConfiguracaoIndicador) query.getSingleResult();
 		
 	}
 

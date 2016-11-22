@@ -56,8 +56,8 @@ public class ConfiguracaoIndicadorService implements IService<Integer, Configura
 		return FXCollections.observableArrayList(dao.findByYear(ano));
 	}
 	
-	public ObservableList<ConfiguracaoIndicador> findByYear(Indicador indicador, int ano) {
-		return FXCollections.observableArrayList(dao.findByYear(indicador, ano));
+	public ConfiguracaoIndicador findByYear(Indicador indicador, int ano) {
+		return dao.findByYear(indicador, ano);
 	}
 
 	@Override

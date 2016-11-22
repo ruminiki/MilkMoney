@@ -25,7 +25,6 @@ import br.com.milkmoney.MainApp;
 import br.com.milkmoney.components.CustomAlert;
 import br.com.milkmoney.components.WaitReport;
 import br.com.milkmoney.controller.AbstractWindowPopUp;
-import br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController;
 import br.com.milkmoney.controller.indicador.renderer.BoxDescricaoIndicador;
 import br.com.milkmoney.controller.indicador.renderer.BoxIndicador;
 import br.com.milkmoney.controller.indicador.renderer.PopUpWait;
@@ -58,7 +57,6 @@ public class IndicadorOverviewController extends AbstractWindowPopUp{
 	@Autowired private IndicadorFormController indicadorFormController;
 	@Autowired private RootLayoutController rootLayoutController;
 	@Autowired private EficienciaReprodutiva eficienciaReprodutiva;
-	@Autowired ConfiguracaoIndicadorOverviewController configuracaoIndicadorOverviewController;
 	@Autowired EficienciaReprodutivaChartController indicadorBubbleChartController;
 	
 	
@@ -210,42 +208,6 @@ public class IndicadorOverviewController extends AbstractWindowPopUp{
 			
 	}
 	
-	@FXML
-	private void graficoEficiencia(){
-		//indicadorBubbleChartController.showForm();
-		
-	}
-	
-	@FXML
-	private void definirMetas(){
-		
-		configuracaoIndicadorOverviewController.setAno(ano);
-		configuracaoIndicadorOverviewController.showForm();
-		
-		//força o refresh da meta
-		data.clear();
-		data.addAll(service.findAll());
-		
-		for (Indicador indicador : data) {
-			for ( Number n : getMesesAno() ){
-				
-				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
-				for ( Node node : nodes ){
-					
-					BoxIndicador box = (BoxIndicador) node;
-					if ( box.getIndicador().getId() == indicador.getId() ){
-						box.setIndicador(indicador);
-						box.setValue();						
-					}
-					
-				}
-				
-			}	
-			
-		}
-		
-	}
-	
 	private ObservableList<Number> getMesesAno(){
 		int meses = ano < LocalDate.now().getYear() ? 12 : LocalDate.now().getMonthValue();
 		return Util.generateListNumbers(1, meses);
@@ -262,7 +224,20 @@ public class IndicadorOverviewController extends AbstractWindowPopUp{
 		if ( indicador != null ){
 			indicadorFormController.setState(State.UPDATE);
 			indicadorFormController.setObject(indicador);
+			indicadorFormController.setAno(ano);
 			indicadorFormController.showForm();
+			
+			for ( Number n : getMesesAno() ){
+				ObservableList<Node> nodes = vBoxes.get(n.intValue() - 1).getChildren();
+				for ( Node node : nodes ){
+					BoxIndicador box = (BoxIndicador) node;
+					if ( box.getIndicador().getId() == indicador.getId() ){
+						box.setIndicador(indicador);
+						box.setValue();						
+					}
+				}
+			}	
+			
 		} else {
 			CustomAlert.nenhumRegistroSelecionado();
 		}

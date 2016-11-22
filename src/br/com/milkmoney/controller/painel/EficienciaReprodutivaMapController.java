@@ -58,6 +58,7 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 		}
 	};
 	
+	@SuppressWarnings("serial")
 	private LinkedHashMap<Integer, Double> pointsZero = new LinkedHashMap<Integer, Double>(){
 		{
 	        put(1,25D);

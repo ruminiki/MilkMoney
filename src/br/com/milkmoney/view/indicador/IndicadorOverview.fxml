@@ -65,7 +65,6 @@
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#calcularIndicadores" text="Calcular" />
-                        <Button minHeight="30.0" mnemonicParsing="false" onAction="#definirMetas" text="Definir Metas" />
                         <Button minHeight="30.0" mnemonicParsing="false" onAction="#imprimirIndicadores" text="Imprimir">
                            <HBox.margin>
                               <Insets right="3.0" />

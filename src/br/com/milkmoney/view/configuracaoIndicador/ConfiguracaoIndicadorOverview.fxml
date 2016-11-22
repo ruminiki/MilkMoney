@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="361.0" minWidth="672.0" prefHeight="361.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController">
+<AnchorPane maxHeight="401.0" minWidth="672.0" prefHeight="401.0" prefWidth="825.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.configuracaoIndicador.ConfiguracaoIndicadorOverviewController">
    <children>
       <VBox spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -31,7 +31,6 @@
             </TableView>
             <HBox alignment="CENTER_RIGHT" minHeight="30.0" spacing="5.0">
                <children>
-                  <Button layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleEdit" prefHeight="30.0" text="Configurar" />
                   <Button layoutX="308.0" layoutY="259.0" mnemonicParsing="false" onAction="#closeForm" prefHeight="30.0" text="Fechar" />
                </children>
             </HBox>

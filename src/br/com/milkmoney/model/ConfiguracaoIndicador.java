@@ -44,6 +44,11 @@ public class ConfiguracaoIndicador extends AbstractEntity implements Serializabl
 	public ConfiguracaoIndicador(Indicador indicador) {
 		setIndicador(indicador);
 	}
+	
+	public ConfiguracaoIndicador(Indicador indicador, int ano) {
+		setIndicador(indicador);
+		setAno(ano);
+	}
 
 	public int getId() {
 		return id;
