@@ -315,7 +315,7 @@
                                           <Hyperlink onAction="#handleArvoreGenealogica" text="genealogia" />
                                        </children>
                                     </HBox>
-                                    <Label text="Dias Gestação (2 anos):" GridPane.rowIndex="1" />
+                                    <Label text="Dias Gestação (2 anos): " GridPane.rowIndex="1" />
                                     <Label fx:id="lblDiasGestacaoPeriodo" text="--" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font name="System Bold" size="12.0" />

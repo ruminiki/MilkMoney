@@ -1,10 +1,12 @@
 package br.com.milkmoney.controller.painel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javafx.application.Platform;
@@ -43,6 +45,21 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 	private List<Animal> animais;
 
 	private CurveFittedAreaChart areaChart;
+	
+	@SuppressWarnings("serial")
+	private LinkedHashMap<Integer, Double> pointsChart = new LinkedHashMap<Integer, Double>(){
+		{
+	        put(1,0D);
+	        put(2,12.5D);
+	        put(3,25D);
+	        put(4,37.5D);
+	        put(5,50D);
+	        put(6,62.5D);
+	        put(7,75D);
+	        put(8,87.5D);
+	        put(9,100D);
+		}
+	};
 
 	@FXML
 	public void initialize() {
@@ -178,15 +195,32 @@ public class EficienciaReprodutivaMapController extends AbstractWindowPopUp{
 	}
 
 	private Double getPointOfValue(Double eficiencia) {
-		Double chartScala = 100 / 12D; // quantos pontos terão no gráfico
-		for (double i = chartScala; i <= 100; i = i + chartScala) {
+		//Double chartScala = 100 / 9D; // quantos pontos terão no gráfico
+		
+		//precisa achar entre quais os dois pontos que a eficiência está
+		
+		Double  point0 = 0D;
+		
+		Collection<Double> points = pointsChart.values();
+		for ( Double point : points ) {
 
-			if (eficiencia <= i) {
-				return (double) Math.round(i);
+			if ( Math.round(eficiencia) == point ){
+				return point;
 			}
-
+			
+			if ( Math.round(eficiencia) < point ){
+				
+				Double distancePoint0 = eficiencia - point0;
+				Double distancePoint1 = point - eficiencia;
+					
+				return distancePoint0 < distancePoint1 ? point0 : point;
+			}
+		
+			point0 = point;
+			
 		}
 		return 0D;
+		
 	}
 
 	public String getFormName() {

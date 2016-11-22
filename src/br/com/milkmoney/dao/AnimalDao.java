@@ -102,7 +102,9 @@ public class AnimalDao extends AbstractGenericDao<Integer, Animal> {
 				params.put(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA, "= " + params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA).replaceAll("[^0-9]", ""));
 			}
 			SQL.append("exists (select 1 from FichaAnimal f where f.animal = a and ");
-			SQL.append("f.eficienciaReprodutiva " + params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA) + ") and ");
+			SQL.append("f.eficienciaReprodutiva " + params.get(AnimalService.FILTER_EFICIENCIA_REPRODUTIVA) + ") and "
+						+ "a.situacaoAnimal in ('" + SituacaoAnimal.EM_LACTACAO + "', '" + SituacaoAnimal.SECO + "', '" + SituacaoAnimal.NAO_DEFINIDA + "') and "
+					    + "a.sexo = '" + Sexo.FEMEA + "' and ");
 		}
 		
 		if ( params.get(AnimalService.FILTER_COBERTAS) != null ){
