@@ -5,8 +5,11 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -198,50 +201,69 @@ public class ProducaoLeiteOverviewController extends AbstractOverviewController<
 	protected void resume(){
 		
 		if ( data != null && data.size() > 0 ){
-			
-			int dias = 0;
-			BigDecimal totalEntregue = new BigDecimal(0);
-			BigDecimal totalProduzido = new BigDecimal(0);
-			BigDecimal valor = new BigDecimal(0);
-			int totalVacasOrdenhadas = 0;
-			
-			for (int i = 0; i < data.size(); i++){
-				
-				ProducaoLeite e = data.get(i);
-				
-				if ( e.getVolumeProduzido().compareTo(BigDecimal.ZERO) > 0 ){
-					dias++;
-					totalProduzido = totalProduzido.add(e.getVolumeProduzido());
-					totalVacasOrdenhadas += e.getNumeroVacasOrdenhadas();
+			vGroup.setCursor(Cursor.WAIT);
+			Task<Void> task = new Task<Void>() {
+				@Override
+				public Void call() throws InterruptedException {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							int dias = 0;
+							BigDecimal totalEntregue = new BigDecimal(0);
+							BigDecimal totalProduzido = new BigDecimal(0);
+							BigDecimal valor = new BigDecimal(0);
+							int totalVacasOrdenhadas = 0;
+							
+							for (int i = 0; i < data.size(); i++){
+								
+								ProducaoLeite e = data.get(i);
+								
+								if ( e.getVolumeProduzido().compareTo(BigDecimal.ZERO) > 0 ){
+									dias++;
+									totalProduzido = totalProduzido.add(e.getVolumeProduzido());
+									totalVacasOrdenhadas += e.getNumeroVacasOrdenhadas();
+								}
+								
+								totalEntregue = totalEntregue.add(e.getVolumeEntregue());
+								valor = valor.add(e.getValor());
+								
+							}
+							
+							lblTotalProduzido.setText(NumberFormatUtil.decimalFormat(totalProduzido));
+							lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
+							lblTotalVacasOrdenhadas.setText(String.valueOf(totalVacasOrdenhadas));
+							if ( totalProduzido.compareTo(BigDecimal.ZERO) > 0 && dias > 0 ){
+								lblMediaMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(dias), 2, RoundingMode.HALF_UP)));
+								if ( totalVacasOrdenhadas > 0 )  
+									lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(totalVacasOrdenhadas), 2, RoundingMode.HALF_UP)));
+								else
+									lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
+							}else{
+								lblMediaMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
+								lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
+							}
+							
+							lblValorEstimado.setText(NumberFormatUtil.decimalFormat(valor));
+							if ( !precoLeiteService.isPrecoCadastrado(meses.get(selectedMesReferencia-1), selectedAnoReferencia) ){
+								lblValorEstimado.setText("Cadastrar Preço");
+							}
+							lblAno.setText(String.valueOf(selectedAnoReferencia));
+							setChartData();
+						}
+						
+					});
+					return null;	
 				}
-				
-				totalEntregue = totalEntregue.add(e.getVolumeEntregue());
-				valor = valor.add(e.getValor());
-				
-			}
+			};
 			
-			lblTotalProduzido.setText(NumberFormatUtil.decimalFormat(totalProduzido));
-			lblTotalEntregue.setText(NumberFormatUtil.decimalFormat(totalEntregue));
-			lblTotalVacasOrdenhadas.setText(String.valueOf(totalVacasOrdenhadas));
-			if ( totalProduzido.compareTo(BigDecimal.ZERO) > 0 && dias > 0 ){
-				lblMediaMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(dias), 2, RoundingMode.HALF_UP)));
-				if ( totalVacasOrdenhadas > 0 )  
-					lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(totalProduzido.divide(new BigDecimal(totalVacasOrdenhadas), 2, RoundingMode.HALF_UP)));
-				else
-					lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
-			}else{
-				lblMediaMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
-				lblMediaProdutividadeMes.setText(NumberFormatUtil.decimalFormat(BigDecimal.ZERO));
-			}
+			Thread thread = new Thread(task);				
+			thread.setDaemon(true);
+			thread.start();
 			
-			lblValorEstimado.setText(NumberFormatUtil.decimalFormat(valor));
-			if ( !precoLeiteService.isPrecoCadastrado(meses.get(selectedMesReferencia-1), selectedAnoReferencia) ){
-				lblValorEstimado.setText("Cadastrar Preço");
-			}
-			lblAno.setText(String.valueOf(selectedAnoReferencia));
+			task.setOnSucceeded(e -> {
+				vGroup.setCursor(Cursor.DEFAULT);
+			});
 		}
-		
-		setChartData();
 		
 	}
 	

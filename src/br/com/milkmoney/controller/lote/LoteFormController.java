@@ -1,9 +1,10 @@
 package br.com.milkmoney.controller.lote;
 
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -11,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
 
@@ -39,6 +41,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 	@FXML protected ListView<Animal> listAnimais, listSelecionados;
 	@FXML protected Button btnAdicionar, btnAdicionarTodos, btnRemover, btnRemoverTodos;
 	@FXML private Label lblTotalAnimais, lblMediaLactacoes, lblMediaProducao, lblMediaIdade;
+	@FXML private VBox vbBoxGroup;
 	
 	@Autowired protected AnimalService animalService;
 	@Autowired protected FinalidadeLoteReducedOverviewController finalidadeLoteReducedController;
@@ -73,51 +76,32 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 		listAnimais.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				
 				if (event.isPrimaryButtonDown()	&& event.getClickCount() == 2) {
-					if ( !listSelecionados.getItems().contains(listAnimais.getSelectionModel().getSelectedItem()) ){
-						listSelecionados.getItems().add(listAnimais.getSelectionModel().getSelectedItem());
-					}
+					addAnimalSelecionado(listAnimais.getSelectionModel().getSelectedItem());
+					setTotais();
 					listAnimais.getSelectionModel().clearSelection();
 				}
 			}
 		});
 		
-		listSelecionados.getItems().addListener(new ListChangeListener<Animal>(){
-			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends Animal> arg0) {
-				setTotais();
-			}
-		});
-				
 		btnAdicionar.setOnAction(action -> {
-			
 			if ( listAnimais.getSelectionModel().getSelectedItems() != null ){
-				
 				for ( Animal animal : listAnimais.getSelectionModel().getSelectedItems() ){
-					
-					if ( !listSelecionados.getItems().contains(animal) ){
-						listSelecionados.getItems().add(animal);
-					}
-					
+					addAnimalSelecionado(animal);
 				}
-				
+				setTotais();
 				listAnimais.getSelectionModel().clearSelection();
-				
 			}
-			
 		});
 		
 		btnAdicionarTodos.setOnAction(action -> {
-			
-			for ( Animal animal : listAnimais.getItems() ){
-				
-				if ( !listSelecionados.getItems().contains(animal) ){
-					listSelecionados.getItems().add(animal);
+			if ( listAnimais.getSelectionModel().getSelectedItems() != null ){
+				for ( Animal animal : listAnimais.getItems() ){
+					addAnimalSelecionado(animal);
 				}
-				
+				setTotais();
+				listAnimais.getSelectionModel().clearSelection();
 			}
-			
 		});
 		
 		btnRemover.setOnAction(action -> {
@@ -125,6 +109,7 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 				Animal animal = listSelecionados.getSelectionModel().getSelectedItem();
 				animal.setLote(null);
 				listSelecionados.getItems().remove(animal);	
+				setTotais();
 			}
 		});
 		
@@ -133,21 +118,54 @@ public class LoteFormController extends AbstractFormController<Integer, Lote>  {
 				animal.setLote(null);
 			}
 			listSelecionados.getItems().clear();
+			setTotais();
 		});
 		
 		setTotais();
 	}
 	
+	private void addAnimalSelecionado(Animal animal){
+		boolean contains = false;
+		for ( Animal a1 : listSelecionados.getItems() ){
+			if ( a1.getId() == animal.getId() ){
+				contains = true;
+				break;
+			}
+		}
+		if ( !contains ){
+			listSelecionados.getItems().add(animal);
+		}
+	}
+	
 	private void setTotais(){
 		if ( getObject() != null ){
-			Platform.runLater(new Runnable() {
+			vbBoxGroup.setCursor(Cursor.WAIT);
+			Task<Void> task = new Task<Void>() {
 				@Override
-				public void run() {
-					lblTotalAnimais.setText(String.valueOf(listSelecionados.getItems().size()));
-					lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(listSelecionados.getItems())));
-					lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(listSelecionados.getItems())));
-					lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(listSelecionados.getItems())));						
+				public Void call() throws InterruptedException {
+					try{
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								lblTotalAnimais.setText(String.valueOf(listSelecionados.getItems().size()));
+								lblMediaIdade.setText(String.valueOf(((LoteService)service).getMediaIdadeAnimais(listSelecionados.getItems())));
+								lblMediaLactacoes.setText(String.valueOf(((LoteService)service).getMediaLactacoesAnimais(listSelecionados.getItems())));
+								lblMediaProducao.setText(String.valueOf(((LoteService)service).getMediaProducaoAnimais(listSelecionados.getItems())));						
+							}
+						});
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+					return null;	
 				}
+			};
+			
+			Thread thread = new Thread(task);				
+			thread.setDaemon(true);
+			thread.start();
+			
+			task.setOnSucceeded(e -> {
+				vbBoxGroup.setCursor(Cursor.DEFAULT);
 			});
 		}
 	}

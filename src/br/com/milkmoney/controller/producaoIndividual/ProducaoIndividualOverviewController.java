@@ -2,7 +2,10 @@ package br.com.milkmoney.controller.producaoIndividual;
 
 import java.time.LocalDate;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -161,29 +164,50 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	
 	@Override
 	protected void refreshTableOverview() {
-		data.clear();
-		
-		if ( lactacao == null ){
-			if ( tableLactacoes.getItems() != null && tableLactacoes.getItems().size() > 0 ){
-				//table.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
-				lactacao = tableLactacoes.getItems().get(tableLactacoes.getItems().size()-1);
-				//recarrega as lactações para atualizar a média de produção do período
-				//tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
-				//tableLactacoes.getSelectionModel().select(lactacao);
-				tableLactacoes.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
-				refreshTableOverview();
-			}else{
-				return;
+		table.setCursor(Cursor.WAIT);
+		table.setDisable(true);
+		Task<Void> task = new Task<Void>() {
+			@Override
+			public Void call() throws InterruptedException {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						data.clear();
+						
+						if ( lactacao == null ){
+							if ( tableLactacoes.getItems() != null && tableLactacoes.getItems().size() > 0 ){
+								//table.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
+								lactacao = tableLactacoes.getItems().get(tableLactacoes.getItems().size()-1);
+								//recarrega as lactações para atualizar a média de produção do período
+								//tableLactacoes.setItems(lactacaoService.findLactacoesAnimal(animal));
+								//tableLactacoes.getSelectionModel().select(lactacao);
+								tableLactacoes.getSelectionModel().clearAndSelect(tableLactacoes.getItems().size()-1);
+								refreshTableOverview();
+							}else{
+								return;
+							}
+						}else{
+							data.addAll(((ProducaoIndividualService)service).findByLactacao(lactacao));
+						}
+						
+						((ProducaoIndividualService)service).atualizaValorProducao(data);
+						
+						lineChart.getData().clear();
+						lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(lactacao));
+					}
+				});
+				return null;	
 			}
-		}else{
-			data.addAll(((ProducaoIndividualService)service).findByLactacao(lactacao));
-		}
+		};
 		
-		((ProducaoIndividualService)service).atualizaValorProducao(data);
+		Thread thread = new Thread(task);				
+		thread.setDaemon(true);
+		thread.start();
 		
-		lineChart.getData().clear();
-		lineChart.getData().addAll(((ProducaoIndividualService)service).getDataChart(lactacao));
-		
+		task.setOnSucceeded(e -> {
+			table.getScene().setCursor(Cursor.DEFAULT);
+			table.setDisable(false);
+		});
 	}
 	
 	@FXML

@@ -550,7 +550,7 @@ public class AnimalOverviewController extends AbstractOverviewController<Integer
 	Function<Animal, Boolean> coberturas = animal -> {
 		if ( animal != null ){
 			if ( getObject().getSexo().equals(Sexo.FEMEA) ){
-				coberturaOverviewController.setObject(new Cobertura(getObject()));
+				//coberturaOverviewController.setObject(new Cobertura(getObject()));
 				coberturaOverviewController.setFemea(getObject());
 				//se o animal tiver morto ou vendido apenas consulta as coberturas
 				boolean disabled = getObject().getSituacaoAnimal().matches(SituacaoAnimal.MORTO + "|" + SituacaoAnimal.VENDIDO);

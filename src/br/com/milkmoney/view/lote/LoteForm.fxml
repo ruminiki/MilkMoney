@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="618.0" prefWidth="785.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.lote.LoteFormController">
    <children>
-      <VBox prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox fx:id="vbBoxGroup" prefHeight="271.0" prefWidth="551.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane minHeight="90.0" prefHeight="138.0" prefWidth="733.0" VBox.vgrow="SOMETIMES">
               <columnConstraints>

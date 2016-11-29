@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="257.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaFormController">
+<AnchorPane prefHeight="257.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaFormController">
    <children>
-      <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox alignment="CENTER_LEFT" layoutX="64.0" layoutY="-42.0" prefHeight="150.0" prefWidth="380.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
          <children>
             <HBox alignment="CENTER" minHeight="20.0" style="-fx-background-color: #E8E8E8;">
                <children>
@@ -23,8 +23,8 @@
             </HBox>
             <GridPane fx:id="gridPane">
              <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="129.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="106.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="118.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="419.0" minWidth="10.0" prefWidth="127.0" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="89.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="125.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="417.0" minWidth="10.0" prefWidth="55.0" />

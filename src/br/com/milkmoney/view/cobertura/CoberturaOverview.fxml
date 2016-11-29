@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minWidth="590.0" prefHeight="405.0" prefWidth="1072.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
+<AnchorPane minWidth="590.0" prefHeight="405.0" prefWidth="1088.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.cobertura.CoberturaOverviewController">
    <children>
-      <VBox layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+      <VBox fx:id="vGroup" layoutX="5.0" layoutY="5.0" spacing="3.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
             <HBox alignment="CENTER_RIGHT" maxHeight="50.0" minHeight="50.0" spacing="3.0">
                <children>

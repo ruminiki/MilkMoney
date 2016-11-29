@@ -6,13 +6,16 @@ import java.time.LocalDate;
 import java.util.function.Function;
 
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
 
@@ -67,6 +70,7 @@ public class AcompanhamentoCoberturaOverviewController extends AbstractOverviewC
 	@FXML private Label                                 lblNaoConfirmadas, lblVazias, lblPrenhas, lblAbortadas, lblParidas, lblAno;
 	@FXML private ToggleButton                          tbJan, tbFev, tbMar, tbAbr, tbMai, tbJun, tbJul, tbAgo, 
 	                                                    tbSet, tbOut, tbNov, tbDez;
+	@FXML private VBox vBoxGroup;
 	
 	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
@@ -149,67 +153,83 @@ public class AcompanhamentoCoberturaOverviewController extends AbstractOverviewC
 	
 	@Override
 	protected void refreshTableOverview() {
-		Platform.runLater(new Runnable() {
+		vBoxGroup.setCursor(Cursor.WAIT);
+		table.setDisable(true);
+		Task<Void> task = new Task<Void>() {
 			@Override
-			public void run() {
-				
-				data.clear();
-				table.getItems().clear();
-				
-				if ( inputPesquisa != null && inputPesquisa.getText() != null &&
-						inputPesquisa.getText().length() > 0){
-					data.addAll(((CoberturaService)service).defaultSearch(inputPesquisa.getText(), DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
-					setSearch(null);
-				}else{
-					data.addAll( ((CoberturaService)service).findByPeriodo(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
-				}
-				
-				//atualiza labels totais por situação
-				int prenhas, vazias, abortadas, paridas, naoConfirmadas;
-				prenhas = vazias = abortadas = paridas = naoConfirmadas = 0;
-				
-				for ( Cobertura c : data ){
-					switch (c.getSituacaoCobertura()) {
-					case SituacaoCobertura.NAO_CONFIRMADA:{
-						naoConfirmadas++;
-						break;
-					}case SituacaoCobertura.PRENHA:{
-						prenhas++;
-						break;
-					}case SituacaoCobertura.VAZIA:
-						vazias++;
-						break;
-					case SituacaoCobertura.ABORTADA:
-						abortadas++;
-						break;
-					case SituacaoCobertura.PARIDA:
-						paridas++;
-						break;
-					default:
-						break;
+			public Void call() throws InterruptedException {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						data.clear();
+						table.getItems().clear();
+						
+						if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+								inputPesquisa.getText().length() > 0){
+							data.addAll(((CoberturaService)service).defaultSearch(inputPesquisa.getText(), DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
+							setSearch(null);
+						}else{
+							data.addAll( ((CoberturaService)service).findByPeriodo(DateUtil.asDate(dataInicioMes()), DateUtil.asDate(dataFimMes())));
+						}
+						
+						//atualiza labels totais por situação
+						int prenhas, vazias, abortadas, paridas, naoConfirmadas;
+						prenhas = vazias = abortadas = paridas = naoConfirmadas = 0;
+						
+						for ( Cobertura c : data ){
+							switch (c.getSituacaoCobertura()) {
+							case SituacaoCobertura.NAO_CONFIRMADA:{
+								naoConfirmadas++;
+								break;
+							}case SituacaoCobertura.PRENHA:{
+								prenhas++;
+								break;
+							}case SituacaoCobertura.VAZIA:
+								vazias++;
+								break;
+							case SituacaoCobertura.ABORTADA:
+								abortadas++;
+								break;
+							case SituacaoCobertura.PARIDA:
+								paridas++;
+								break;
+							default:
+								break;
+							}
+						}
+						
+						if ( data.size() > 0 ){
+							lblAbortadas.setText(abortadas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(abortadas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
+							lblVazias.setText(vazias + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(vazias)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
+							lblPrenhas.setText(prenhas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(prenhas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
+							lblParidas.setText(paridas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(paridas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
+							lblNaoConfirmadas.setText(naoConfirmadas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(naoConfirmadas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
+						}else{
+							lblAbortadas.setText("0");
+							lblVazias.setText("0");
+							lblPrenhas.setText("0");
+							lblParidas.setText("0");
+							lblNaoConfirmadas.setText("0");
+						}
+						
+						lblAno.setText(String.valueOf(selectedAnoReferencia));
+						
+						table.setItems(data);
+						table.layout();
+						updateLabelNumRegistros();
 					}
-				}
-				
-				if ( data.size() > 0 ){
-					lblAbortadas.setText(abortadas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(abortadas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
-					lblVazias.setText(vazias + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(vazias)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
-					lblPrenhas.setText(prenhas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(prenhas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
-					lblParidas.setText(paridas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(paridas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
-					lblNaoConfirmadas.setText(naoConfirmadas + " | " + BigDecimal.valueOf((Double.parseDouble(String.valueOf(naoConfirmadas)) / data.size()) * 100).setScale(0, RoundingMode.HALF_EVEN) + "%" );
-				}else{
-					lblAbortadas.setText("0");
-					lblVazias.setText("0");
-					lblPrenhas.setText("0");
-					lblParidas.setText("0");
-					lblNaoConfirmadas.setText("0");
-				}
-				
-				lblAno.setText(String.valueOf(selectedAnoReferencia));
-				
-				table.setItems(data);
-				table.layout();
-				updateLabelNumRegistros();
+				});
+				return null;	
 			}
+		};
+		
+		Thread thread = new Thread(task);				
+		thread.setDaemon(true);
+		thread.start();
+		
+		task.setOnSucceeded(e -> {
+			vBoxGroup.setCursor(Cursor.DEFAULT);
+			table.setDisable(false);
 		});
 		
 	}

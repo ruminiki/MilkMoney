@@ -2,10 +2,14 @@ package br.com.milkmoney.controller.cobertura;
 
 import java.util.function.Function;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 
 import javax.annotation.Resource;
 
@@ -56,6 +60,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@FXML private TableColumn<Cobertura, String>        dataConfirmacaoColumn;
 	@FXML private TableColumn<Cobertura, String>        metodoConfirmacaoColumn;
 	@FXML private Label									lblHeader;
+	@FXML private VBox                                  vGroup;
 	
 	@Autowired private CoberturaFormController          coberturaFormController;
 	@Autowired private ConfirmacaoPrenhezFormController confirmacaoPrenhezFormController;
@@ -86,7 +91,7 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 		
 		super.initialize(coberturaFormController);
 		
-		lblHeader.setText(femea != null ? femea.toString() : "ANIMAL NÃO SELECIOANDO");
+		lblHeader.setText(femea != null ? femea.toString() : "ANIMAL NÃO SELECIONADO");
 		
 	}
 	
@@ -98,21 +103,42 @@ public class CoberturaOverviewController extends AbstractOverviewController<Inte
 	@Override
 	protected void refreshTableOverview() {
 		if ( femea != null ){
+			vGroup.setCursor(Cursor.WAIT);
+			table.setDisable(true);
+			Task<Void> task = new Task<Void>() {
+				@Override
+				public Void call() throws InterruptedException {
+					Platform.runLater(new Runnable() {
+						@Override public void run() {
+							data.clear();
+							table.getItems().clear();
+							
+							if ( inputPesquisa != null && inputPesquisa.getText() != null &&
+									inputPesquisa.getText().length() > 0){
+								data.addAll(((CoberturaService)service).defaultSearch(inputPesquisa.getText(), femea));
+								setSearch(null);
+							}else{
+								data.addAll( ((CoberturaService)service).findByAnimal(femea, DateUtil.today));
+							}
+							
+							table.setItems(data);
+							table.layout();
+							updateLabelNumRegistros();
+						}
+					});
+					return null;	
+				}
+			};
 			
-			this.data.clear();
-			this.table.getItems().clear();
+			Thread thread = new Thread(task);				
+			thread.setDaemon(true);
+			thread.start();
 			
-			if ( inputPesquisa != null && inputPesquisa.getText() != null &&
-					inputPesquisa.getText().length() > 0){
-				data.addAll(((CoberturaService)service).defaultSearch(inputPesquisa.getText(), femea));
-				setSearch(null);
-			}else{
-				this.data.addAll( ((CoberturaService)service).findByAnimal(femea, DateUtil.today));
-			}
+			task.setOnSucceeded(e -> {
+				vGroup.setCursor(Cursor.DEFAULT);
+				table.setDisable(false);
+			});
 			
-			table.setItems(data);
-			table.layout();
-			updateLabelNumRegistros();
 		}
 	}
 	
