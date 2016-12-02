@@ -3,7 +3,7 @@ package br.com.milkmoney.controller.confirmacaoPrenhez;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
@@ -27,9 +27,9 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 
 	@FXML private DatePicker        inputData;
 	@FXML private Label             lblCobertura;
-	@FXML private ChoiceBox<String> inputSituacaoCobertura, inputMetodoConfirmacao;
 	@FXML private UCTextField       inputObservacao;
 	@FXML private Button            btnSalvar, btnRemover;
+	@FXML private CheckBox			cbPrenha, cbVazia, cbNaoConfirmada, cbUltrassonografia, cbToque, cbObservacao;
 	
 	@FXML
 	public void initialize() {
@@ -39,14 +39,69 @@ public class ConfirmacaoPrenhezFormController extends AbstractFormController<Int
 		if ( getObject().getDataConfirmacaoPrenhez() == null ){
 			inputData.setValue(DateUtil.asLocalDate(getObject().getData()).plusDays(30));	
 		}
-		inputSituacaoCobertura.setItems(SituacaoCobertura.getItems());
-		inputSituacaoCobertura.valueProperty().bindBidirectional(getObject().situacaoConfirmacaoPrenhezProperty());
-		inputMetodoConfirmacao.setItems(MetodoConfirmacaoPrenhez.getItems());
-		inputMetodoConfirmacao.valueProperty().bindBidirectional(getObject().metodoConfirmacaoPrenhezProperty());
 		inputObservacao.textProperty().bindBidirectional(getObject().observacaoProperty());
 		
 		btnSalvar.setDisable(getObject().getParto() != null);
 		btnRemover.setDisable(getObject().getParto() != null);
+		
+		//checkboxes situação
+		cbPrenha.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setSituacaoConfirmacaoPrenhez(SituacaoCobertura.PRENHA);
+				cbVazia.setSelected(false);
+				cbNaoConfirmada.setSelected(false);
+			}
+		});
+		
+		cbVazia.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setSituacaoConfirmacaoPrenhez(SituacaoCobertura.VAZIA);
+				cbPrenha.setSelected(false);
+				cbNaoConfirmada.setSelected(false);
+			}
+		});
+		
+		cbNaoConfirmada.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setSituacaoConfirmacaoPrenhez(SituacaoCobertura.NAO_CONFIRMADA);
+				cbPrenha.setSelected(false);
+				cbVazia.setSelected(false);
+			}
+		});
+		
+
+		//checkboxes método
+		cbUltrassonografia.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setMetodoConfirmacaoPrenhez(MetodoConfirmacaoPrenhez.ULTRASSONOGRAFIA);
+				cbToque.setSelected(false);
+				cbObservacao.setSelected(false);
+			}
+		});
+		
+		cbToque.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setMetodoConfirmacaoPrenhez(MetodoConfirmacaoPrenhez.TOQUE);
+				cbUltrassonografia.setSelected(false);
+				cbObservacao.setSelected(false);
+			}
+		});
+		
+		cbObservacao.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
+			if ( isNowSelected ) {
+				getObject().setMetodoConfirmacaoPrenhez(MetodoConfirmacaoPrenhez.OBSERVACAO);
+				cbToque.setSelected(false);
+				cbUltrassonografia.setSelected(false);
+			}
+		});
+		
+		cbPrenha.setSelected(getObject().getSituacaoConfirmacaoPrenhez().equals(SituacaoCobertura.PRENHA) ? true : false);
+		cbVazia.setSelected(getObject().getSituacaoConfirmacaoPrenhez().equals(SituacaoCobertura.VAZIA) ? true : false);
+		cbNaoConfirmada.setSelected(getObject().getSituacaoConfirmacaoPrenhez().equals(SituacaoCobertura.NAO_CONFIRMADA) ? true : false);
+		
+		cbUltrassonografia.setSelected(getObject().getMetodoConfirmacaoPrenhez().equals(MetodoConfirmacaoPrenhez.ULTRASSONOGRAFIA) ? true : false);
+		cbToque.setSelected(getObject().getMetodoConfirmacaoPrenhez().equals(MetodoConfirmacaoPrenhez.TOQUE) ? true : false);
+		cbObservacao.setSelected(getObject().getMetodoConfirmacaoPrenhez().equals(MetodoConfirmacaoPrenhez.OBSERVACAO) ? true : false);
 		
 	}
 	

@@ -53,7 +53,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	private ObjectProperty<Servico>     servico                      = new SimpleObjectProperty<Servico>();
 	private StringProperty              observacao                   = new SimpleStringProperty();
 	private ObjectProperty<LocalDate>   dataConfirmacaoPrenhez       = new SimpleObjectProperty<LocalDate>();  
-	private StringProperty              metodoConfirmacaoPrenhez     = new SimpleStringProperty();
+	private StringProperty              metodoConfirmacaoPrenhez     = new SimpleStringProperty(MetodoConfirmacaoPrenhez.OBSERVACAO);
 	private StringProperty              observacaoConfirmacaoPrenhez = new SimpleStringProperty();
 	private Parto                       parto;
 	private Aborto                      aborto;
@@ -293,7 +293,7 @@ public class Cobertura extends AbstractEntity implements Serializable {
 	
 	@Access(AccessType.PROPERTY)
 	public String getMetodoConfirmacaoPrenhez() {
-		return metodoConfirmacaoPrenhez.get() == null || metodoConfirmacaoPrenhez.get().isEmpty() ? "--" : metodoConfirmacaoPrenhez.get();
+		return metodoConfirmacaoPrenhez.get() == null || metodoConfirmacaoPrenhez.get().isEmpty() ? MetodoConfirmacaoPrenhez.OBSERVACAO : metodoConfirmacaoPrenhez.get();
 	}
 
 	public void setMetodoConfirmacaoPrenhez(String metodoConfirmacaoPrenhez) {

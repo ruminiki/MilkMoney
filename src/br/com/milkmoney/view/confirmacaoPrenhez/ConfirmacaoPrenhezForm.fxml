@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="203.0" prefWidth="599.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController">
+<AnchorPane prefHeight="211.0" prefWidth="629.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.milkmoney.controller.confirmacaoPrenhez.ConfirmacaoPrenhezFormController">
    <children>
       <VBox layoutX="5.0" layoutY="5.0" spacing="5.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <children>
@@ -23,27 +23,40 @@
             <Separator prefWidth="200.0" />
             <VBox prefHeight="172.0" prefWidth="589.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <GridPane alignment="CENTER_LEFT" prefHeight="82.0" prefWidth="579.0" VBox.vgrow="SOMETIMES">
+                  <GridPane alignment="CENTER_LEFT" prefHeight="131.0" prefWidth="609.0" VBox.vgrow="SOMETIMES">
                     <columnConstraints>
-                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="494.0" minWidth="10.0" prefWidth="485.0" />
+                      <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="312.0" minWidth="0.0" prefWidth="93.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="553.0" minWidth="10.0" prefWidth="516.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints vgrow="SOMETIMES" />
-                      <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
-                        <RowConstraints vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="55.0" minHeight="27.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="55.0" minHeight="27.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="55.0" minHeight="27.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="48.0" minHeight="27.0" prefHeight="27.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                     	  <Label text="Data: " />
-                        <Label text="Situação: " GridPane.rowIndex="1" />
+                     	  <Label text="Data: " GridPane.rowIndex="1" />
                         
-                                                                                                <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" GridPane.columnIndex="1" />
-                        <Label text="Obsevação: " GridPane.rowIndex="3" />
-                        <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Método: " GridPane.rowIndex="2" />
-                        <ChoiceBox fx:id="inputSituacaoCobertura" minWidth="180.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <ChoiceBox fx:id="inputMetodoConfirmacao" minWidth="180.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                                                <DatePicker fx:id="inputData" maxWidth="100.0" minWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Obsevação: " GridPane.rowIndex="4" />
+                        <UCTextField fx:id="inputObservacao" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Situação: " GridPane.rowIndex="2" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="223.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <children>
+                              <CheckBox fx:id="cbPrenha" mnemonicParsing="false" text="Prenha" />
+                              <CheckBox fx:id="cbVazia" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Vazia" />
+                              <CheckBox fx:id="cbNaoConfirmada" layoutX="68.0" layoutY="10.0" mnemonicParsing="false" text="Não Confirmada" />
+                           </children>
+                        </HBox>
+                        <Label text="Método: " GridPane.rowIndex="3" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="3.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <children>
+                              <CheckBox fx:id="cbUltrassonografia" mnemonicParsing="false" text="Ultrassonografia" />
+                              <CheckBox fx:id="cbToque" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Toque" />
+                              <CheckBox fx:id="cbObservacao" layoutX="68.0" layoutY="10.0" mnemonicParsing="false" text="Observação" />
+                           </children>
+                        </HBox>
                      </children>
                      <VBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

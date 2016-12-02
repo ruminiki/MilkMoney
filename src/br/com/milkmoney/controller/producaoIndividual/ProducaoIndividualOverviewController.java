@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -164,8 +163,6 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	
 	@Override
 	protected void refreshTableOverview() {
-		table.setCursor(Cursor.WAIT);
-		table.setDisable(true);
 		Task<Void> task = new Task<Void>() {
 			@Override
 			public Void call() throws InterruptedException {
@@ -204,10 +201,6 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 		thread.setDaemon(true);
 		thread.start();
 		
-		task.setOnSucceeded(e -> {
-			table.getScene().setCursor(Cursor.DEFAULT);
-			table.setDisable(false);
-		});
 	}
 	
 	@FXML
