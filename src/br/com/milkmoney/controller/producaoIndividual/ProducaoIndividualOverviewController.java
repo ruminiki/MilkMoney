@@ -207,10 +207,10 @@ public class ProducaoIndividualOverviewController extends AbstractOverviewContro
 	private void imprimir(){
 		
 		Lactacao lactacao = null;
-		if ( tableLactacoes.getItems().size() > 0 ){
-			lactacao = tableLactacoes.getItems().get(0);	
+		if ( tableLactacoes.getItems().size() > 0 && tableLactacoes.getSelectionModel().getSelectedItem() != null ){
+			lactacao = tableLactacoes.getSelectionModel().getSelectedItem();
 		}else{
-			CustomAlert.mensagemInfo("Nenhuma lactação selecionada.");
+			CustomAlert.mensagemInfo("Por favor, selecione uma lactação para que seja impresso o controle leiteiro.");
 			return;
 		}
 		

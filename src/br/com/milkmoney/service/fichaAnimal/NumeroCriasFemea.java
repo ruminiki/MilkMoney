@@ -18,7 +18,7 @@ public class NumeroCriasFemea extends AbstractFichaAnimal {
 		
 		FichaAnimal ficha = (FichaAnimal) params[0];
 		Animal animal     = (Animal) params[1];
-		ficha.setNumeroCriasMacho(partoService.countCriasByAnimalAndSexo(animal, Sexo.FEMEA));
+		ficha.setNumeroCriasFemea(partoService.countCriasByAnimalAndSexo(animal, Sexo.FEMEA));
 		
 	}
 
