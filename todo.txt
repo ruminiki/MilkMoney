@@ -1,27 +1,19 @@
 ERROS e REQUISITOS
 
-- Fazer filtro de número de serviços
-- Ao cadastrar cobertura, se tiver alguma não confirmada anteriormente, marca ela como vazia após 30 dias.
+- Fazer filtro de nÃºmero de serviÃ§os
+- Ao cadastrar cobertura, se tiver alguma nÃ£o confirmada anteriormente, marca ela como vazia apÃ³s 30 dias.
 
-- Mostrar desfazer venda quando animal já estiver vendido
-- Ao remover a venda pela tela de venda não dá refresh na tela
+- Mostrar desfazer venda quando animal jÃ¡ estiver vendido
+- Ao remover a venda pela tela de venda nÃ£o dÃ¡ refresh na tela
 
-  VANESSA AMOR DA MINHA VIDA 52
-  
 - Fazer backup das imagens dos animais
 
-- Reformular procedimento técnico de acordo com planilha Daieli
-- Projeção, permitir informar média e valor do litro
-- Filtrar número de serviços tela animals
+- Reformular procedimento tÃ©cnico de acordo com planilha
+- Filtrar nÃºmero de serviÃ§os tela animals
 
-- Tá sendo permitido cadastrar parto de animal vendido/morto
+- TÃ¡ sendo permitido cadastrar parto de animal vendido/morto
 - Atribuir a entrega de leite ao fornecedor
 - Associar o financeiro ao fornecedor
-- Fazer ficha igual a do Anderson...(confirmações de prenhes)
-- Corrigir busca pelo número quando existirem animais com mesmo número
 
-- Ajustar form de campo (repetição do cabeçalho...)
-
-- Fazer composição racial (PC...)
-- Adicionar informação CMT na pesagem do leite.
-- Fazer período de carência nos tratamentos (mostrar no relatório a data de liberação do animal)
+- Fazer composiÃ§Ã£o racial (PC...)
+- Adicionar informaÃ§Ã£o CMT na pesagem do leite.
